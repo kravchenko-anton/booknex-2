@@ -10,11 +10,6 @@
     "importHelpers": true,
     "target": "es2021",
     "module": "CommonJS",
-    "types": [
-      "node",
-      "jest",
-      "Multer"
-    ],
     "lib": [
       "es2021",
       "dom"
@@ -23,11 +18,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@booknex/my-prisma-schema": [
-        "my-prisma-schema/src/index.ts"
+      "@booknex/ui": [
+        "libs/ui/src/index.ts"
       ],
-      "@booknex/prisma": [
-        "apps/backend/prisma/src/index.ts"
+      "@booknex/ui/mobile": [
+        "libs/ui/mobile/src/index.ts"
+      ],
+      "@booknex/ui/web": [
+        "libs/ui/web/src/index.ts"
       ]
     }
   },

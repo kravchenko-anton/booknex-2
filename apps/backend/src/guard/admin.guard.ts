@@ -1,7 +1,6 @@
 import type { CanActivate, ExecutionContext } from '@nestjs/common'
 import { ForbiddenException, Injectable } from '@nestjs/common'
 import type { User } from '@prisma/client'
-
 @Injectable()
 export class AdminGuard implements CanActivate {
 	canActivate(context: ExecutionContext): boolean {

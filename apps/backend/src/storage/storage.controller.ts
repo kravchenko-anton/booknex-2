@@ -15,7 +15,7 @@ import { CurrentUser } from '../decorator/user.decorator'
 import { FilenameDto, ReplacementDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
 import { StorageFolderType } from './storage.types'
-import 'multer';
+
 @ApiTags('storage')
 @ApiBearerAuth()
 @Controller('storage')
