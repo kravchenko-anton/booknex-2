@@ -8,13 +8,31 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "target": "es2021",
+    "module": "CommonJS",
+    "types": [
+      "node",
+      "jest",
+      "Multer"
+    ],
+    "lib": [
+      "es2021",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@booknex/my-prisma-schema": [
+        "my-prisma-schema/src/index.ts"
+      ],
+      "@booknex/prisma": [
+        "apps/backend/prisma/src/index.ts"
+      ]
+    }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
