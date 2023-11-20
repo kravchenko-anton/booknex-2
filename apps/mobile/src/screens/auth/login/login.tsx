@@ -4,7 +4,6 @@ import Button from '@/components/ui/button/button'
 import Field from '@/components/ui/field/field'
 import { Title } from '@/components/ui/title/title'
 import { useAction } from '@/hooks/useAction'
-import { useTypedRoute } from '@/hooks/useTypedRoute'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
 import { Color } from '@/utils/color'
 import { emailRules, passwordRules } from '@/utils/input-validation'
@@ -13,9 +12,6 @@ import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
 
 const Login = () => {
-	const {
-		params: { defaultEmail }
-	} = useTypedRoute<'Login'>()
 	const { login } = useAction()
 	const { control, handleSubmit } = useForm<AuthFieldsType>({
 		mode: 'onSubmit'
@@ -34,7 +30,6 @@ const Login = () => {
 				</Title>
 				<Field
 					control={control}
-					defaultValue={defaultEmail}
 					name={'email'}
 					keyboardType={'email-address'}
 					placeholder={'Email'}

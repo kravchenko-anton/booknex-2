@@ -1,26 +1,20 @@
-import {
-	BorderRadiusSetting,
-	PaddingSetting
-} from '@/components/ui/global-settings'
-import {
-	BackgroundColorSetting,
-	BorderColorSetting,
-	IconColorSetting,
-	SizeSetting
-} from '@/components/ui/icon/icon-settings'
+import { BorderRadiusSetting, PaddingSetting } from '@/components/ui/global-settings'
+import { BackgroundColorSetting, BorderColorSetting, SizeSetting } from '@/components/ui/icon/icon-settings'
 import type { IconProperties } from '@/components/ui/icon/icon-types'
 import type { Style } from '@/types/global'
-import { Octicons } from '@expo/vector-icons'
+import { Color } from '@/utils/color'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Pressable } from 'react-native'
+import Svg from 'react-native-svg'
 
 const Icon: FC<IconProperties> = ({
-	name = 'alert',
+	icon,
 	variant = 'ghost',
 	size = 'small',
-	color,
-	backgroundColor,
+	color = Color.black,
+	backgroundColor = Color.gray,
+	fatness = 2,
 	style,
 	noPadding = false,
 	...properties
@@ -38,11 +32,9 @@ const Icon: FC<IconProperties> = ({
 			style as Style
 		]}
 		{...properties}>
-		<Octicons
-			name={name}
-			size={SizeSetting[size]}
-			color={color ?? IconColorSetting[variant]}
-		/>
+		<Svg width={SizeSetting[size]} height={SizeSetting[size]} stroke={color} strokeWidth={fatness} {...icon.properties}>
+			{icon.component}
+		</Svg>
 	</Pressable>
 )
 

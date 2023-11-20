@@ -1,4 +1,3 @@
-import AdminButton from '@/components/layout/admin-button'
 import type { ViewDefaultProperties } from '@/types/component-types'
 import type { FC, PropsWithChildren } from 'react'
 import { memo } from 'react'
@@ -13,7 +12,6 @@ const Layout: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 		<View className='flex-1 p-2' {...properties}>
 			{children}
 		</View>
-		<AdminButton />
 	</SafeAreaView>
 )
 

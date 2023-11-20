@@ -1,7 +1,4 @@
-import type {
-	HeaderProperties,
-	LeftHeaderElementType
-} from '@/components/header/header-types'
+import type { HeaderProperties, LeftHeaderElementType } from '@/components/header/header-types'
 import HamburgerMenu from '@/components/ui/hamburger-menu/hamburger-menu'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import { Title } from '@/components/ui/title/title'

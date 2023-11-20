@@ -1,24 +1,20 @@
+import Layout from '@/components/layout/layout'
 import Button from '@/components/ui/button/button'
 import Field from '@/components/ui/field/field'
 import { Title } from '@/components/ui/title/title'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
-import { popupAnimation } from '@/screens/auth/welcome/popup-animation'
 import { authService } from '@/services/auth-service'
-import { AnimatedView } from '@/types/component-types'
-import type { PopupTypes } from '@/types/global'
 import { Color } from '@/utils/color'
 import { useDebounce } from '@/utils/useDebounce'
 import { useMutation } from '@tanstack/react-query'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { View } from 'react-native'
 
-const CheckEmail: FC<
-	Pick<PopupTypes<'check-email' | 'description-card'>, 'isActivePopup'>
-> = ({ isActivePopup }) => {
+const CheckEmail: FC = () => {
 	const { control, watch } = useForm<{ email: string }>({ mode: 'onChange' })
 	const { navigate } = useTypedNavigation()
-	const { showAnimation } = popupAnimation(isActivePopup)
 	const emailField = useDebounce(watch('email'), 500)
 	const noValidEmail = !!(
 		emailField &&
@@ -36,7 +32,8 @@ const CheckEmail: FC<
 		checkEmailFunction()
 	}, [emailField])
 	return (
-		<AnimatedView style={showAnimation}>
+		<Layout className='relative justify-center p-4'>
+		<View>
 			<Title size={34} color={Color.secondary} weight='bold'>
 				Log in or Sign up
 			</Title>
@@ -56,9 +53,7 @@ const CheckEmail: FC<
 				className='mt-2'
 				width={'100%'}
 				onPress={() => {
-					navigate(isEmailExists?.isExist ? 'Login' : 'Registration', {
-						defaultEmail: emailField
-					})
+					navigate(isEmailExists?.isExist ? 'Login' : 'SelectGenres')
 				}}
 				text={
 					noValidEmail
@@ -68,7 +63,8 @@ const CheckEmail: FC<
 						: 'continue'
 				}
 			/>
-		</AnimatedView>
+		</View>
+		</Layout>
 	)
 }
 

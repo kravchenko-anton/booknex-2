@@ -1,4 +1,4 @@
-import { rootAction } from '@/redux/root-action'
+import { rootAction } from '../redux/root-action'
 import { bindActionCreators } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 

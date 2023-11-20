@@ -1,12 +1,8 @@
+import type { SvgProperties } from '@/icons/icons'
 import type { ViewDefaultProperties } from '@/types/component-types'
-import type { Octicons } from '@expo/vector-icons'
-import type { Dispatch, SetStateAction } from 'react'
-import type {
-	WithSpringConfig,
-	WithTimingConfig
-} from 'react-native-reanimated'
+import type { WithSpringConfig, WithTimingConfig } from 'react-native-reanimated'
 
-export type IconType = keyof typeof Octicons.glyphMap
+export type IconType = SvgProperties
 export interface IconProperties {
 	icon: IconType
 }
@@ -26,10 +22,6 @@ export interface DefaultModelFields {
 	updatedAt: string
 }
 
-export interface PopupTypes<T> {
-	isActivePopup: boolean
-	setIsActivePopup: Dispatch<SetStateAction<T>>
-}
 
 export type HamburgerMenuElementType = {
 	onPress: () => void

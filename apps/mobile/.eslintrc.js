@@ -24,18 +24,20 @@ module.exports = {
     'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:@typescript-eslint/stylistic'
   ],
-  root: true,
+  root: false,
   env: {
     node: true
   },
   ignorePatterns: [
-    '.eslintrc.js.js',
-    '*.js'  ],
+    '.eslintrc.js',
+    '*.js',
+    './src/screens/reading/reader/**'
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
-    project: './tsconfig.base.json',
+    project: './tsconfig.json',
     tsconfigRootDir: __dirname,
     sourceType: 'module'
   },
@@ -75,7 +77,7 @@ module.exports = {
       'LabeledStatement',
       'WithStatement'
     ],
-    'no-underscore-dangle': ['error', { allow: ['_count'] }],
+    'no-underscore-dangle': ['error', { allow: [] }],
     'no-void': ['error', { allowAsStatement: true }],
     'spaced-comment': [
       'error',
@@ -114,11 +116,8 @@ module.exports = {
         ignore: ['App.tsx', 'use']
       }
     ],
-    'unicorn/no-keyword-prefix': [
-      'error', { disallowedPrefixes: ['new', 'class'] }
-    ],
     // Disable rules
-
+    'unicorn/no-keyword-prefix': ['off'],
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/semi': 'off',

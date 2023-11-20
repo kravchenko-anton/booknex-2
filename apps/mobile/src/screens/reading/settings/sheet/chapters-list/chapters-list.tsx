@@ -25,7 +25,7 @@ const ChaptersList: FC = () => {
 							}}
 							weight={'bold'}
 							size={22}>
-							{toc.label.trim()}
+							{/* {toc.label.trim()}*/}
 						</Title>
 					</PressableContainer>
 				)

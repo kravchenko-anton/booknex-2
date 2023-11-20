@@ -7,11 +7,7 @@ import type { ViewProps } from 'react-native'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import type { WithSpringConfig } from 'react-native-reanimated'
-import Animated, {
-	runOnJS,
-	useAnimatedStyle,
-	useSharedValue
-} from 'react-native-reanimated'
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 
 const DEFAULT_THUMB_SIZE = 16
 const DEFAULT_MAX_TRACK_HEIGHT = 5

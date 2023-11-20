@@ -1,13 +1,6 @@
-import {
-	deleteTokensStorage,
-	saveTokensStorage
-} from '@/redux/auth/auth-helper'
-import type {
-	AuthFieldsType,
-	AuthResponseType,
-	RegisterFieldsType
-} from '@/redux/auth/auth-types'
-import { SERVER_URL, getAuthUrl } from '@/services/api-config'
+import { deleteTokensStorage, saveTokensStorage } from '@/redux/auth/auth-helper'
+import type { AuthFieldsType, AuthResponseType, RegisterFieldsType } from '@/redux/auth/auth-types'
+import { getAuthUrl, SERVER_URL } from '@/services/api-config'
 import { errorCatch } from '@/utils/catch-error'
 import { errorToast } from '@/utils/error-toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'

@@ -2,6 +2,7 @@ import BookCard from '@/components/book-card/book-card'
 import FlatList from '@/components/ui/flatlist/flatlist'
 import Icon from '@/components/ui/icon/icon'
 import { Title } from '@/components/ui/title/title'
+import { smartphone } from '@/icons/icons'
 import { Color } from '@/utils/color'
 import { shadeRGBColor } from '@/utils/shade-color'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -68,7 +69,7 @@ const BookCarousel = () => (
 			<View className='w-full flex-row items-center justify-between rounded-xl'>
 				<View className='flex-row items-center justify-between'>
 					<Icon
-						name={'device-mobile'}
+						icon={smartphone}
 						size={'medium'}
 						className='w-[40px] pb-0 pl-0 pt-0'
 					/>

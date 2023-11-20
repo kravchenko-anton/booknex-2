@@ -4,7 +4,6 @@ import { Title } from '@/components/ui/title/title'
 import { useSettingsList } from '@/screens/profile/settings/useSettingsList'
 import type { IconType } from '@/types/global'
 import { Color } from '@/utils/color'
-import { VERSION } from '@env'
 import { Pressable, View } from 'react-native'
 // TODO: сделать страницу настройки когда уже многое будет готово
 const Settings = () => {
@@ -52,14 +51,14 @@ const Settings = () => {
 				</View>
 			))}
 
-			<View className='mb-2 mt-4 w-full rounded-xl bg-dust p-4'>
-				<Title size={26} weight={'bold'} className='mb-2'>
-					About the application
-				</Title>
-				<Title size={18} weight={'bold'} color={Color.secondary}>
-					Version: {VERSION}
-				</Title>
-			</View>
+			{/* <View className='mb-2 mt-4 w-full rounded-xl bg-dust p-4'>*/}
+			{/*	<Title size={26} weight={'bold'} className='mb-2'>*/}
+			{/*		About the application*/}
+			{/*	</Title>*/}
+			{/*	<Title size={18} weight={'bold'} color={Color.secondary}>*/}
+			{/*		Version: */}
+			{/*	</Title>*/}
+			{/* </View>*/}
 		</HeaderScrollLayout>
 	)
 }

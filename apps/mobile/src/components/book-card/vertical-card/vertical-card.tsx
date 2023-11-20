@@ -1,7 +1,4 @@
-import {
-	heightSettings,
-	widthSettings
-} from '@/components/book-card/vertical-card/vertical-card-settings'
+import { heightSettings, widthSettings } from '@/components/book-card/vertical-card/vertical-card-settings'
 import type { VerticalBookCardProperties } from '@/components/book-card/vertical-card/vertical-card-types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import Image from '@/components/ui/image/image'

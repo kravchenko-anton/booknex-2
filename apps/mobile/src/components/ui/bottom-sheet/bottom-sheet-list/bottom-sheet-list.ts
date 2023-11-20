@@ -2,26 +2,9 @@ import ChaptersList from '@/screens/reading/settings/sheet/chapters-list/chapter
 import ReadingSettings from '@/screens/reading/settings/sheet/reading/reading-settings'
 import ReaderSearch from '@/screens/reading/settings/sheet/search/reader-search'
 import SelectTheme from '@/screens/reading/settings/sheet/select-theme/select-theme'
-import type { FC } from 'react'
+import type { SheetType } from './bottom-sheet-list-types';
+import { BottomSheetListEnum } from './bottom-sheet-list-types'
 
-// TODO: разделить на страницы
-
-export enum BottomSheetListPagesEnum {
-	reader = 'reader'
-}
-export enum BottomSheetListEnum {
-	readerSettings = 'reader/settings',
-	readerSearch = 'reader/Search',
-	readerNoteBook = 'reader/NoteBook',
-	readerChapters = 'reader/Chapters',
-	readerSelectTheme = 'reader/Select-theme'
-}
-
-export interface SheetType {
-	name: BottomSheetListEnum
-	snapPoints: (string | number)[]
-	component: FC
-}
 export const BottomSheetList: SheetType[] = [
 	{
 		name: BottomSheetListEnum.readerSettings,

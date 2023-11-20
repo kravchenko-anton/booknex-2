@@ -4,6 +4,7 @@ import { HeaderElementComponent } from '@/components/header/useHeader'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import { Title } from '@/components/ui/title/title'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { chevronLeft } from '@/icons/icons'
 import { AnimatedView } from '@/types/component-types'
 import { Color } from '@/utils/color'
 import type { FC } from 'react'
@@ -24,7 +25,7 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 			<View className='mt-auto flex-row items-center justify-between px-4 py-0.5'>
 				<View className='flex-row items-center'>
 					<AnimatedIcon
-						name={'arrow-left'}
+						icon={chevronLeft}
 						onPress={() => {
 							goBack()
 						}}

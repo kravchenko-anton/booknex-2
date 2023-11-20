@@ -1,10 +1,6 @@
 import type { AnimationConfigType } from '@/types/global'
 import { useMemo } from 'react'
-import {
-	useAnimatedStyle,
-	useSharedValue,
-	withTiming
-} from 'react-native-reanimated'
+import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
 export const usePressAnimation = ({
 	userConfig = { duration: 100 }

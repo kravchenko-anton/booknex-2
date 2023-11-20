@@ -2,11 +2,9 @@ import Icon from '@/components/ui/icon/icon'
 import Select from '@/components/ui/select/select'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { minus, plus } from '@/icons/icons'
 import type { ReaderFontsEnum } from '@/redux/reading-settings/reading-settings-slice'
-import {
-	fontSizeSettings,
-	ReaderFont
-} from '@/redux/reading-settings/reading-settings-slice'
+import { fontSizeSettings, ReaderFont } from '@/redux/reading-settings/reading-settings-slice'
 import LineHeightIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/line-height'
 import PageMarginIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/page-margin'
 import type { FC } from 'react'
@@ -57,14 +55,14 @@ const FontSettings: FC = () => {
 							onPress={() => {
 								changeFontSize(fontSize - 2)
 							}}
-							name='dash'
+							icon={minus}
 							size='medium'
 							color={colorScheme.colorPalette.text}
 						/>
 					</TouchableOpacity>
 					<TouchableOpacity>
 						<Icon
-							name='plus'
+							icon={plus}
 							style={{
 								borderColor:
 									colorScheme.colorPalette[

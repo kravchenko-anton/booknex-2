@@ -1,31 +1,22 @@
 import Header from '@/components/header/header'
 import Button from '@/components/ui/button/button'
+import FullScreenLoader from '@/components/ui/loader/big-loader'
 import { Title } from '@/components/ui/title/title'
-import { popupAnimation } from '@/screens/auth/welcome/popup-animation'
-import type { GenreType } from '@/services/types/genre-service-types'
-import { AnimatedView } from '@/types/component-types'
-import type { PopupTypes } from '@/types/global'
+import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { genreService } from '@/services/genre-service'
 import { Color } from '@/utils/color'
-import type { Dispatch, FC, SetStateAction } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import type { FC } from 'react';
+import { useState } from 'react'
 import { View } from 'react-native'
 
-export interface SelectGenresProperties
-	extends PopupTypes<'genres' | 'fields'> {
-	genres: GenreType[]
-	selectGenres: string[]
-	setSelectGenres: Dispatch<SetStateAction<string[]>>
-}
-
-const SelectGenres: FC<SelectGenresProperties> = ({
-	genres,
-	isActivePopup,
-	setSelectGenres,
-	selectGenres,
-	setIsActivePopup
-}) => {
-	const { showAnimation } = popupAnimation(isActivePopup)
+const SelectGenres: FC = () => {
+	const [selectGenres, setSelectGenres] = useState<string[]>([])
+	const { data: genres } = useQuery(['genres'], () => genreService.getGenres())
+	const { navigate } = useTypedNavigation()
+	if (!genres) return <FullScreenLoader />
 	return (
-		<AnimatedView style={showAnimation} className='h-full'>
+		<View  className='h-full'>
 			<Header />
 			<View>
 				<Title size={34} weight={'bold'} className='mb-2' numberOfLines={2}>
@@ -58,10 +49,12 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 				size={'large'}
 				text={'Next step'}
 				onPress={() => {
-					setIsActivePopup('fields')
+					navigate('Registration', {
+					selectGenres: selectGenres,
+					})
 				}}
 			/>
-		</AnimatedView>
+		</View>
 	)
 }
 

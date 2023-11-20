@@ -1,11 +1,4 @@
-import type {
-	FlatListProps,
-	ImageProps,
-	PressableProps,
-	ScrollViewProps,
-	TextProps,
-	ViewProps
-} from 'react-native'
+import type { FlatListProps, ImageProps, PressableProps, ScrollViewProps, TextProps, ViewProps } from 'react-native'
 import { Pressable, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 

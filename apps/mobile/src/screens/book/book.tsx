@@ -5,6 +5,7 @@ import FlatList from '@/components/ui/flatlist/flatlist'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import Image from '@/components/ui/image/image'
 import BigLoader from '@/components/ui/loader/big-loader'
+import { plus, x } from '@/icons/icons'
 import BookLayout from '@/screens/book/book-layout/book-layout'
 import StatisticCard from '@/screens/book/statistic-card/statistic-card'
 import { useBook } from '@/screens/book/useBook'
@@ -66,7 +67,7 @@ const Book = () => {
 					className='flex-1'
 				/>
 				<AnimatedIcon
-					name={isSmashedReadingBooks ? 'x' : 'plus'}
+					icon={isSmashedReadingBooks ? x : plus}
 					onPress={() => toggleReadingBooks()}
 					size={'medium'}
 					className='w-[50px]'

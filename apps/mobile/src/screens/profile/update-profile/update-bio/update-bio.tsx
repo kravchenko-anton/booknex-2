@@ -2,8 +2,8 @@ import Button from '@/components/ui/button/button'
 import Field from '@/components/ui/field/field'
 import { Title } from '@/components/ui/title/title'
 import type {
-	BioSectionProperties,
-	UserUpdateBioTypes
+  BioSectionProperties,
+  UserUpdateBioTypes
 } from '@/screens/profile/update-profile/update-bio/update-bio-types'
 import { useUpdateBio } from '@/screens/profile/update-profile/update-bio/useUpdateBio'
 import { emailRules, nameRules } from '@/utils/input-validation'

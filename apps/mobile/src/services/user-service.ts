@@ -3,10 +3,10 @@ import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-
 import { getUsersUrl } from '@/services/api-config'
 import { request } from '@/services/api/request.api'
 import type {
-	GetMoreType,
-	UserLibraryFieldsType,
-	UserLibraryType,
-	UserProfileTypes
+  GetMoreType,
+  UserLibraryFieldsType,
+  UserLibraryType,
+  UserProfileTypes
 } from '@/services/types/user-services-types'
 
 export const userServices = {

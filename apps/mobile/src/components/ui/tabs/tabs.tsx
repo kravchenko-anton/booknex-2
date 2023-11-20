@@ -1,7 +1,7 @@
 import Button from '@/components/ui/button/button'
 import type { Route, TabsProperties } from '@/components/ui/tabs/tabs-types'
 import { WINDOW_WIDTH } from '@/utils/dimensions'
-import type { FC } from 'react';
+import type { FC } from 'react'
 import { memo, useRef, useState } from 'react'
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'

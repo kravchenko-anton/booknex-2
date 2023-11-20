@@ -1,14 +1,10 @@
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import {
-	beforeLoad,
-	insertStyle,
-	scrollProgressDetect
-} from '@/screens/reading/reader/additional-function'
+import { beforeLoad, insertStyle, scrollProgressDetect } from '@/screens/reading/reader/additional-function'
 import { useReader } from '@/screens/reading/reader/useReader'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/utils/dimensions'
 import type { ReactNode } from 'react'
 import React, { useEffect, useRef } from 'react'
-import { View as RNView, TouchableWithoutFeedback } from 'react-native'
+import { TouchableWithoutFeedback, View as RNView } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { WebView } from 'react-native-webview'
 import type { ReaderProperties } from './types'

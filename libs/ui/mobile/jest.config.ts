@@ -1,5 +1,5 @@
 module.exports = {
-    displayName: 'ui-mobile',
+    displayName: 'colors-mobile',
     resolver: '@nx/jest/plugins/resolver',
     preset: 'jest-expo',
     transformIgnorePatterns: [

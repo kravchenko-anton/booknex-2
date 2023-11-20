@@ -14,6 +14,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
+const flexStyle = {
+  flex: 1
+}
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -36,7 +39,7 @@ export default function App() {
 					client={queryClient}
 					persistOptions={{ persister: asyncStoragePersister }}>
 					<EventProvider>
-						<GestureHandlerRootView className='flex-1'>
+						<GestureHandlerRootView style={flexStyle}>
 							<Navigation />
 							<BottomSheet />
 						</GestureHandlerRootView>

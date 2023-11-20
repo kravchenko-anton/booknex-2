@@ -1,5 +1,5 @@
-import { createContext } from 'react';
-import type { IEvent } from './hooks/use-event-store';
+import { createContext } from 'react'
+import type { IEvent } from './hooks/use-event-store'
 
 export type EventContextType = {
   events: IEvent[];

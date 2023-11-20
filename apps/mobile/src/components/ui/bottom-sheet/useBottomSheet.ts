@@ -1,4 +1,4 @@
-import { BottomSheetListPagesEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list'
+import { BottomSheetListPagesEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
 import { CalculateSnapPoints } from '@/components/ui/bottom-sheet/calculate-snap-point'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
@@ -10,14 +10,14 @@ import { useEffect } from 'react'
 import type { GestureResponderEvent } from 'react-native'
 import { Gesture } from 'react-native-gesture-handler'
 import {
-	Easing,
-	Extrapolation,
-	interpolate,
-	runOnJS,
-	useAnimatedStyle,
-	useSharedValue,
-	withSpring,
-	withTiming
+  Easing,
+  Extrapolation,
+  interpolate,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming
 } from 'react-native-reanimated'
 // TODO: сделать в bottomSheet всё максимально оптимизировано
 export const useBottomSheet = () => {
@@ -95,7 +95,7 @@ export const useBottomSheet = () => {
 		.onStart(() => (oldTranslationY.value = translationY.value))
 		.activeOffsetX([-20, 20])
 		.onUpdate(event => {
-			;`translationY.value = event.translationY + oldTranslationY.value`
+			translationY.value = event.translationY + oldTranslationY.value
 			translationY.value = Math.max(
 				translationY.value,
 				-Number(CalculatedSnapPoints.at(-1))

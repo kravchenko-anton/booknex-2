@@ -1,5 +1,7 @@
 import AnimatedHeader from '@/components/header/animated-header/animated-header'
-import type { LargeHeaderScrollLayoutProperties } from '@/components/layout/header-scroll-layout/header-scroll-layout-types'
+import type {
+  LargeHeaderScrollLayoutProperties
+} from '@/components/layout/header-scroll-layout/header-scroll-layout-types'
 import ScrollLayout from '@/components/layout/scroll-layout'
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'

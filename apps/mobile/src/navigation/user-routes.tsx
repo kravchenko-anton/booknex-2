@@ -1,3 +1,8 @@
+import Login from '@/screens/auth/login/login'
+import Register from '@/screens/auth/register/register'
+import SelectGenres from '@/screens/auth/register/select-genres/select-genres'
+import CheckEmail from '@/screens/auth/welcome/check-email/check-email'
+import Welcome from '@/screens/auth/welcome/welcome'
 import Author from '@/screens/author/author'
 import Featured from '@/screens/featured/featured'
 import Genre from '@/screens/genre/genre'
@@ -10,10 +15,9 @@ import Shelf from '@/screens/shelf/shelf'
 import Book from '../screens/book/book'
 import Profile from '../screens/profile/profile'
 import Search from '../screens/search/search'
-import { adminRoutes } from './admin-routes'
 import type { IRoute } from './navigation-types'
 
-export const userRoutes: IRoute[] = [
+export const routes: IRoute[] = [
 	{
 		name: 'Featured',
 		component: Featured
@@ -65,4 +69,26 @@ export const userRoutes: IRoute[] = [
 	}
 ]
 
-export const routes = [...userRoutes, ...adminRoutes]
+export const authRoutes: IRoute[] = [
+  {
+    name: 'Welcome',
+    component: Welcome
+  },
+  {
+    name: 'Login',
+    component: Login
+  },
+  {
+    name: 'Registration',
+    component: Register
+  },
+	{
+    name: 'CheckEmail',
+    component: CheckEmail
+  },
+	{
+		name: 'SelectGenres',
+		component: SelectGenres
+	}
+]
+

@@ -5,7 +5,7 @@ const initialState = {
 }
 
 const ReadingUiSlice = createSlice({
-	name: 'reading-ui',
+	name: 'reading-colors',
 	initialState,
 	reducers: {
 		toggleReadingUi: state => {

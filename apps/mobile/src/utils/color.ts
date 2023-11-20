@@ -14,19 +14,9 @@ export interface ColorsType {
 	white: '#ffffff'
 }
 
-export type LineColorType =
-	| '#666666'
-	| '#2B6B76'
-	| '#75471E'
-	| '#F2E4DC'
-	| '#FDF7F4'
-	| '#F9EFE8'
-	| '#000000'
-	| '#ffffff'
-	| '#DC3F41'
-	| '#FFBE0B'
-	| 'transparent'
-
+export type LineColorType = {
+	[K in keyof ColorsType]: ColorsType[K]
+}[keyof ColorsType];
 export interface ColorProperties {
 	color?: string | LineColorType
 }

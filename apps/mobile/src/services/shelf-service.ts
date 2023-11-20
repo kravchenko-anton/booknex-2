@@ -1,10 +1,6 @@
 import { getShelfUrl } from '@/services/api-config'
 import { request } from '@/services/api/request.api'
-import type {
-	ShelfManipulationType,
-	ShelfType,
-	ShortShelfType
-} from '@/services/types/shelf-service-types'
+import type { ShelfManipulationType, ShelfType, ShortShelfType } from '@/services/types/shelf-service-types'
 
 export const shelfService = {
 	async catalog() {

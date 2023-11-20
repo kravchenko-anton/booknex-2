@@ -12,10 +12,15 @@ export type TypeRootStackParameterList = {
 
 	Genre: { id: number }
 	Library: undefined
-	Login: { defaultEmail: string }
+	Login: undefined
+	Registration: { selectGenres: string[] }
+	CheckEmail: undefined
+	EnterField: {
+		selectGenres: string[]
+	}
+	SelectGenres: undefined
 	Profile: undefined
 	Reading: { id: number; epub: string }
-	Registration: { defaultEmail: string }
 	Search: undefined
 	Settings: undefined
 

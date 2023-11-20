@@ -1,7 +1,7 @@
 import type { ImageTypes } from '@/components/ui/image/image-types'
 import { getFileUrl } from '@/services/api-config'
 import { Color } from '@/utils/color'
-import type { FC } from 'react';
+import type { FC } from 'react'
 import { memo } from 'react'
 import { Image as DefaultImage } from 'react-native'
 
