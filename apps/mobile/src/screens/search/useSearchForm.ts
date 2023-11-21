@@ -1,4 +1,4 @@
-import { useDebounce } from '@/utils/useDebounce'
+import { useDebounce } from '@/hooks'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 

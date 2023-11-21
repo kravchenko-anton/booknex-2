@@ -8,34 +8,4 @@ export const authorService = {
 			url: getAuthorUrl(`/by-id/${id}`)
 		})
 	},
-	// admin
-
-	async create(dto: AuthorType) {
-		return request({
-			url: getAuthorUrl('/create'),
-			method: 'POST',
-			data: dto
-		})
-	},
-
-	async all() {
-		return request<AuthorType[]>({
-			url: getAuthorUrl('/all')
-		})
-	},
-
-	async delete(id: number) {
-		return request({
-			url: getAuthorUrl(`/delete/${id}`),
-			method: 'DELETE'
-		})
-	},
-
-	async update(id: number, dto: AuthorType) {
-		return request({
-			url: getAuthorUrl(`/update/${id}`),
-			method: 'PUT',
-			data: dto
-		})
-	}
 }

@@ -1,5 +1,4 @@
-import IconComponent from '@/components/ui/icon/icon'
-import { Title } from '@/components/ui/title/title'
+import { Icon, Title } from '@/components'
 import type { StatisticCardProperties } from '@/screens/book/statistic-card/statistic-card-types'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -10,7 +9,7 @@ const StatisticCard: FC<StatisticCardProperties> = ({
 	description
 }) => (
 		<View className='flex-row items-center'>
-			<IconComponent icon={icon}  size={'large'} className='pl-0' />
+			<Icon icon={icon}  size={'large'} className='pl-0' />
 			<View>
 				<Title size={22} weight={'bold'}>
 					{count}

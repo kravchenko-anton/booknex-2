@@ -1,15 +1,16 @@
+import { ChevronRight } from '@/../assets/icons'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
 import Icon from '@/components/ui/icon/icon'
-import { Title } from '@/components/ui/title/title'
+import Title from '@/components/ui/title/title'
+import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { ChevronRight } from '@/icons'
 import FontSettings from '@/screens/reading/settings/sheet/reading/font-settings/font-settings'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
 import { shadeRGBColor } from '@/utils/shade-color'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { useAction } from '../../../../../hooks/useAction'
+
 
 const ReadingSettings: FC = () => {
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)

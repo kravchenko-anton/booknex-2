@@ -1,7 +1,7 @@
 import { useHamburgerAnimation } from '@/components/ui/hamburger-menu/hamburger-animation'
 import type { HamburgerMenuProperties } from '@/components/ui/hamburger-menu/hamburger-menu-types'
 import Icon from '@/components/ui/icon/icon'
-import { Title } from '@/components/ui/title/title'
+import Title from '@/components/ui/title/title'
 import { AnimatedPressable, AnimatedView } from '@/types/component-types'
 import { Color } from '@/utils/color'
 import { WINDOW_HEIGHT } from '@/utils/dimensions'

@@ -1,5 +1,4 @@
-import HeaderScrollLayout from '@/components/layout/header-scroll-layout/header-scroll-layout'
-import { Title } from '@/components/ui/title/title'
+import { HeaderScrollLayout, Title } from '@/components'
 import { useSettingsList } from '@/screens/profile/settings/useSettingsList'
 import { Color } from '@/utils/color'
 import { Pressable, View } from 'react-native'

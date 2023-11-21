@@ -1,10 +1,8 @@
-import Layout from '@/components/layout/layout'
-import Button from '@/components/ui/button/button'
-import { Title } from '@/components/ui/title/title'
-import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { Button, Layout, Title } from '@/components'
+import { useTypedNavigation } from '@/hooks'
 import { Color } from '@/utils/color'
 import type { FC } from 'react'
-import type { ImageSourcePropType } from 'react-native';
+import type { ImageSourcePropType } from 'react-native'
 import { Image, View } from 'react-native'
 import image from '../../../../assets/icon.png'
 

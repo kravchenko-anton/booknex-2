@@ -1,5 +1,5 @@
 import { usePressAnimation } from '@/animations/press-animation'
-import { Title } from '@/components/ui/title/title'
+import { Title } from '@/components'
 import type { IMenuItem, TypeNavigate } from '@/navigation/bottom-menu/menu.interface'
 import { AnimatedPressable } from '@/types/component-types'
 import { Color } from '@/utils/color'

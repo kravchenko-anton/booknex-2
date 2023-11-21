@@ -1,5 +1,5 @@
 import Button from '@/components/ui/button/button'
-import { Title } from '@/components/ui/title/title'
+import Title from '@/components/ui/title/title'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { AnimatedPressable, AnimatedView } from '@/types/component-types'

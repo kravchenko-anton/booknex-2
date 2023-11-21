@@ -1,6 +1,4 @@
-import Button from '@/components/ui/button/button'
-import Field from '@/components/ui/field/field'
-import { Title } from '@/components/ui/title/title'
+import { Button, Field, Title } from '@/components'
 import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-password/update-password-types'
 import { useUpdatePassword } from '@/screens/profile/update-profile/update-password/useUpdatePassword'
 import { passwordRules } from '@/utils/input-validation'

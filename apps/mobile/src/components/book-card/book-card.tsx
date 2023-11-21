@@ -2,7 +2,7 @@ import { heightSettings, widthSettings } from '@/components/book-card/book-card-
 import type { BookCardProperties } from '@/components/book-card/book-card-types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import Image from '@/components/ui/image/image'
-import { Title } from '@/components/ui/title/title'
+import Title from '@/components/ui/title/title'
 import type { Style } from '@/types/global'
 import { Color } from '@/utils/color'
 import type { FC } from 'react'

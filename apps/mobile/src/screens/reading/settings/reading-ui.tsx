@@ -1,9 +1,7 @@
+import { ArrowLeft, BookHeart, CaseSenSitive, ListOrdered, MoreHorizontal, Search } from '@/../assets/icons'
+import { AnimatedIcon, Title } from '@/components'
 import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
-import AnimatedIcon from '@/components/ui/icon/animated-icon'
-import { Title } from '@/components/ui/title/title'
-import { useTypedNavigation } from '@/hooks/useTypedNavigation'
-import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { ArrowLeft, BookHeart, CaseSenSitive, ListOrdered, MoreHorizontal, Search } from '@/icons'
+import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
 import { useReadingAnimation } from '@/screens/reading/settings/reading-ui-animation'
 import { AnimatedView } from '@/types/component-types'
 import type { LineColorType } from '@/utils/color'
@@ -12,7 +10,6 @@ import { StatusBar } from 'expo-status-bar'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useAction } from '../../../hooks/useAction'
 
 export const shadeBackground = -15
 const ReadingUi: FC = () => {

@@ -1,5 +1,5 @@
 import type { FlatListProperties } from '@/components/ui/flatlist/flatlist-types'
-import { Title } from '@/components/ui/title/title'
+import Title from '@/components/ui/title/title'
 import { Color } from '@/utils/color'
 import { FlatList as DefaultFlatlist, View } from 'react-native'
 

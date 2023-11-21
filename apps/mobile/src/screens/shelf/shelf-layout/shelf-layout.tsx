@@ -1,6 +1,4 @@
-import Header from '@/components/header/header'
-import LargeHeaderScrollLayout from '@/components/layout/header-scroll-layout/large-header-scroll-layout'
-import { Title } from '@/components/ui/title/title'
+import { Header, LargeHeaderScrollLayout, Title } from '@/components'
 import type { ShelfLayoutProperties } from '@/screens/shelf/shelf-layout/shelf-layout-types'
 import { getFileUrl } from '@/services/api-config'
 import { Color } from '@/utils/color'

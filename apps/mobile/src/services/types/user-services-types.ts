@@ -26,7 +26,6 @@ export type UserStatisticsType = [
 ]
 export interface UserType extends DefaultModelFields, UserLibraryFieldsType {
 	email: string
-	isAdmin: boolean,
 	name: string,
 	picture: string
 }

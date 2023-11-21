@@ -1,7 +1,5 @@
-import Header from '@/components/header/header'
+import { Header, Image, Title } from '@/components'
 import LargeHeaderScrollLayout from '@/components/layout/header-scroll-layout/large-header-scroll-layout'
-import Image from '@/components/ui/image/image'
-import { Title } from '@/components/ui/title/title'
 import type { AuthorLayoutProperties } from '@/screens/author/author-layout/author-layout-types'
 import { Color } from '@/utils/color'
 import type { FC, PropsWithChildren } from 'react'

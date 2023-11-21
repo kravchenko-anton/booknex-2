@@ -1,12 +1,9 @@
-import Header from '@/components/header/header'
-import Button from '@/components/ui/button/button'
-import FullScreenLoader from '@/components/ui/loader/big-loader'
-import { Title } from '@/components/ui/title/title'
-import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { BigLoader, Button, Header, Title } from '@/components'
+import { useTypedNavigation } from '@/hooks'
 import { genreService } from '@/services/genre-service'
 import { Color } from '@/utils/color'
 import { useQuery } from '@tanstack/react-query'
-import type { FC } from 'react';
+import type { FC } from 'react'
 import { useState } from 'react'
 import { View } from 'react-native'
 
@@ -14,7 +11,7 @@ const SelectGenres: FC = () => {
 	const [selectGenres, setSelectGenres] = useState<string[]>([])
 	const { data: genres } = useQuery(['genres'], () => genreService.getGenres())
 	const { navigate } = useTypedNavigation()
-	if (!genres) return <FullScreenLoader />
+	if (!genres) return <BigLoader />
 	return (
 		<View  className='h-full'>
 			<Header />

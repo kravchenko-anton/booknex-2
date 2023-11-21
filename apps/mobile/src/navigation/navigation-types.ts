@@ -27,14 +27,9 @@ export type TypeRootStackParameterList = {
 	Shelf: { id: number }
 	UpdateProfile: undefined
 	Welcome: undefined
-
-	// Admin
-	Statistic: undefined
-	BookList: undefined
 }
 
 export interface IRoute {
 	component: ComponentType
-	isAdmin?: boolean
 	name: keyof TypeRootStackParameterList
 }

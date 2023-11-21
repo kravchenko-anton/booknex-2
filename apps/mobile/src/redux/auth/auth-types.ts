@@ -9,7 +9,7 @@ export interface RegisterFieldsType extends AuthFieldsType {
 	name?: string
 }
 
-export type IAuthState = Pick<UserType, 'email' | 'id' | 'isAdmin'>
+export type IAuthState = Pick<UserType, 'email' | 'id'>
 
 export interface TokensType {
 	accessToken: string
@@ -17,5 +17,5 @@ export interface TokensType {
 }
 
 export interface AuthResponseType extends TokensType {
-	user: Pick<UserType, 'id' | 'email' | 'isAdmin'>
+	user: Pick<UserType, 'id' | 'email'>
 }

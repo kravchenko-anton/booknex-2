@@ -1,4 +1,4 @@
-import { Bookmarked, Home, Search, User } from '@/icons'
+import { Bookmarked, Home, Search, User } from '@/../assets/icons'
 import type { IMenuItem } from './menu.interface'
 
 export const menuItems: IMenuItem[] = [

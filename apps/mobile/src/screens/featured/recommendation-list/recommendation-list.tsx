@@ -1,7 +1,5 @@
-import FlatList from '@/components/ui/flatlist/flatlist'
-import Icon from '@/components/ui/icon/icon'
-import { Title } from '@/components/ui/title/title'
-import { ThumbsUp } from '@/icons'
+import { ThumbsUp } from '@/../assets/icons'
+import { FlatList, Icon, Title } from '@/components'
 import type { RecommendationProperties } from '@/screens/featured/recommendation-list/recommendation-list-types'
 import { Color } from '@/utils/color'
 import { shadeRGBColor } from '@/utils/shade-color'
@@ -11,8 +9,9 @@ import { View } from 'react-native'
 
 const RecommendationList: FC<RecommendationProperties> = ({
 	...properties
-}) => (
-	<View className='relative mt-4 items-center px-2'>
+}) => {
+	if (properties?.data?.length === 0) return null;
+ return	<View className='relative mt-4 items-center px-2'>
 		<View className='absolute mb-4 h-full w-full rounded-[10px] bg-pale'>
 			<LinearGradient
 				colors={[Color.primary, shadeRGBColor(Color.primary, -50)]}
@@ -31,6 +30,5 @@ const RecommendationList: FC<RecommendationProperties> = ({
 		</Title>
 		<FlatList mt={0} horizontal className='mb-4' {...properties} />
 	</View>
-)
-
+}
 export default RecommendationList

@@ -2,7 +2,7 @@ import { heightSettings, widthSettings } from '@/components/book-card/vertical-c
 import type { VerticalBookCardProperties } from '@/components/book-card/vertical-card/vertical-card-types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import Image from '@/components/ui/image/image'
-import { Title } from '@/components/ui/title/title'
+import Title from '@/components/ui/title/title'
 import { Color } from '@/utils/color'
 import type { FC } from 'react'
 import { View } from 'react-native'

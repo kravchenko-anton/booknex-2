@@ -1,9 +1,9 @@
+import { ArrowLeft, Share as ShareIcon } from '@/../assets/icons'
 import type { HeaderProperties, LeftHeaderElementType } from '@/components/header/header-types'
 import HamburgerMenu from '@/components/ui/hamburger-menu/hamburger-menu'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
-import { Title } from '@/components/ui/title/title'
+import Title from '@/components/ui/title/title'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
-import { ArrowLeft, Share as ShareIcon } from '@/icons'
 import type { ColorProperties, LineColorType } from '@/utils/color'
 import { Share } from 'react-native'
 

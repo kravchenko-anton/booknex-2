@@ -1,5 +1,10 @@
 import { BorderRadiusSetting, PaddingSetting } from '@/components/ui/global-settings'
-import { BackgroundColorSetting, BorderColorSetting, SizeSetting } from '@/components/ui/icon/icon-settings'
+import {
+	BackgroundColorSetting,
+	BorderColorSetting,
+	IconColorSetting,
+	SizeSetting
+} from '@/components/ui/icon/icon-settings'
 import type { IconProperties } from '@/components/ui/icon/icon-types'
 import type { Style } from '@/types/global'
 import { Color } from '@/utils/color'
@@ -31,7 +36,7 @@ const Icon: FC<IconProperties> = ({
 			style as Style
 		]}
 		{...properties}>
-		<Icon width={SizeSetting[size]} strokeWidth={fatness} stroke={color} height={SizeSetting[size]} />
+		<Icon width={SizeSetting[size]} strokeWidth={fatness} stroke={color ?? IconColorSetting[variant]} height={SizeSetting[size]} />
 	</Pressable>
 )
 

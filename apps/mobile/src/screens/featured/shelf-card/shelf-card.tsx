@@ -1,5 +1,4 @@
-import PressableContainer from '@/components/pressable-container/pressable-container'
-import { Title } from '@/components/ui/title/title'
+import { PressableContainer, Title } from '@/components'
 import type { PressableDefaultProperties } from '@/types/component-types'
 import { Color } from '@/utils/color'
 import { LinearGradient } from 'expo-linear-gradient'

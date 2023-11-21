@@ -1,6 +1,6 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import Flatlist from '@/components/ui/flatlist/flatlist'
-import { Title } from '@/components/ui/title/title'
+import Title from '@/components/ui/title/title'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import type { FC } from 'react'
 

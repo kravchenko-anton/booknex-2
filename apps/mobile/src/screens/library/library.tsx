@@ -1,7 +1,4 @@
-import ScrollLayout from '@/components/layout/scroll-layout'
-import BigLoader from '@/components/ui/loader/big-loader'
-import { Title } from '@/components/ui/title/title'
-import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { BigLoader, ScrollLayout, Title } from '@/components'
 import BookCarousel from '@/screens/library/book-carousel/book-carousel'
 import { userServices } from '@/services/user-service'
 import { useQuery } from '@tanstack/react-query'
@@ -10,7 +7,6 @@ const Library = () => {
 	const { data: library } = useQuery(['user-library'], () =>
 		userServices.getLibrary()
 	)
-	const { navigate } = useTypedNavigation()
 	if (!library) return <BigLoader />
 	return (
 		<ScrollLayout className='p-2'>

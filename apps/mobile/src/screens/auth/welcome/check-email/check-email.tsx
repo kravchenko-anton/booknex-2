@@ -1,11 +1,7 @@
-import Layout from '@/components/layout/layout'
-import Button from '@/components/ui/button/button'
-import Field from '@/components/ui/field/field'
-import { Title } from '@/components/ui/title/title'
-import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { Button, Field, Layout, Title } from '@/components'
+import { useDebounce, useTypedNavigation } from '@/hooks'
 import { authService } from '@/services/auth-service'
 import { Color } from '@/utils/color'
-import { useDebounce } from '@/utils/useDebounce'
 import { useMutation } from '@tanstack/react-query'
 import type { FC } from 'react'
 import { useEffect } from 'react'
@@ -57,9 +53,9 @@ const CheckEmail: FC = () => {
 				}}
 				text={
 					noValidEmail
-						? isEmailExists?.isExist
+						? (isEmailExists?.isExist
 							? 'Sign in'
-							: 'Sign up'
+							: 'Sign up')
 						: 'continue'
 				}
 			/>

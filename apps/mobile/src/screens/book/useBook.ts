@@ -1,7 +1,7 @@
+import { Alert, Pen, Plus, Share as ShareIcon, Trash } from '@/../assets/icons'
 import { useToggle } from '@/hooks/useToggle/useToggle'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
-import { Alert, Pen, Plus, Share as ShareIcon, Trash } from '@/icons'
 import { bookService } from '@/services/book-service'
 import type { HamburgerMenuElementType } from '@/types/global'
 import { useQuery } from '@tanstack/react-query'
