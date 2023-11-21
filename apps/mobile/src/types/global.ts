@@ -1,8 +1,9 @@
-import type { SvgProperties } from '@/icons/icons'
 import type { ViewDefaultProperties } from '@/types/component-types'
+import type { FC } from 'react'
 import type { WithSpringConfig, WithTimingConfig } from 'react-native-reanimated'
+import type { SvgProps } from 'react-native-svg'
 
-export type IconType = SvgProperties
+export type IconType = FC<SvgProps>
 export interface IconProperties {
 	icon: IconType
 }

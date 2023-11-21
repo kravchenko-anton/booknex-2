@@ -6,14 +6,13 @@ import type { Style } from '@/types/global'
 import { Color } from '@/utils/color'
 import type { FC } from 'react'
 import { memo } from 'react'
-import Svg from 'react-native-svg'
 
 const AnimatedIcon: FC<IconProperties> = ({
-	icon,
+	icon: Icon,
 	variant = 'ghost',
 	size = 'small',
 	color = Color.black,
-	backgroundColor = Color.gray,
+	backgroundColor,
 	fatness = 2,
 	style,
 	noPadding = false,
@@ -32,9 +31,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 			style as Style
 		]}
 		{...properties}>
-		<Svg width={SizeSetting[size]} height={SizeSetting[size]} stroke={color} strokeWidth={fatness} {...icon.properties}>
-			{icon.component}
-		</Svg>
+		<Icon width={SizeSetting[size]} strokeWidth={fatness} stroke={color} height={SizeSetting[size]} />
 	</PressableContainer>
 )
 

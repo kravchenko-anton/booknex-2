@@ -1,9 +1,9 @@
 import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import { Title } from '@/components/ui/title/title'
-import { useAction } from '../../../hooks/useAction'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { ArrowLeft, BookHeart, CaseSenSitive, ListOrdered, MoreHorizontal, Search } from '@/icons'
 import { useReadingAnimation } from '@/screens/reading/settings/reading-ui-animation'
 import { AnimatedView } from '@/types/component-types'
 import type { LineColorType } from '@/utils/color'
@@ -12,6 +12,7 @@ import { StatusBar } from 'expo-status-bar'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useAction } from '../../../hooks/useAction'
 
 export const shadeBackground = -15
 const ReadingUi: FC = () => {
@@ -33,7 +34,7 @@ const ReadingUi: FC = () => {
 				]}
 				className='absolute z-50 h-[65px] w-full flex-row items-center justify-between px-2'>
 				<AnimatedIcon
-					name={'arrow-left'}
+					icon={ArrowLeft}
 					backgroundColor={
 						shadeRGBColor(
 							colorScheme.colorPalette.background,
@@ -46,7 +47,7 @@ const ReadingUi: FC = () => {
 					color={colorScheme.colorPalette.text}
 				/>
 				<AnimatedIcon
-					name={'kebab-horizontal'}
+					icon={MoreHorizontal}
 					backgroundColor={shadeRGBColor(
 						colorScheme.colorPalette.background,
 						shadeBackground
@@ -70,14 +71,14 @@ const ReadingUi: FC = () => {
 				className='h-18 absolute bottom-0 z-50 mt-0 w-full flex-1 pt-0'>
 				<View className='mt-0 flex-row items-center justify-between  px-4'>
 					<AnimatedIcon
-						name='list-unordered'
+					icon={ListOrdered}
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerChapters)}
 						size='large'
 						color={colorScheme.colorPalette.text}
 						className='pl-0'
 					/>
 					<AnimatedIcon
-						name='search'
+						icon={Search}
 						size='large'
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSearch)}
 						color={colorScheme.colorPalette.text}
@@ -91,12 +92,12 @@ const ReadingUi: FC = () => {
 					</Title>
 					<AnimatedIcon
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSettings)}
-						name='typography'
+						icon={CaseSenSitive}
 						size='large'
 						color={colorScheme.colorPalette.text}
 					/>
 					<AnimatedIcon
-						name='repo'
+						icon={BookHeart}
 						size='large'
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerNoteBook)}
 						className='pr-0'

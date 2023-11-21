@@ -3,6 +3,7 @@ import HamburgerMenu from '@/components/ui/hamburger-menu/hamburger-menu'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import { Title } from '@/components/ui/title/title'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { ArrowLeft, Share as ShareIcon } from '@/icons'
 import type { ColorProperties, LineColorType } from '@/utils/color'
 import { Share } from 'react-native'
 
@@ -54,7 +55,7 @@ export const HeaderElementComponent = (
 				properties.sharing && (
 					<AnimatedIcon
 						color={color}
-						name='share-android'
+						icon={ShareIcon}
 						className={padding}
 						size='medium'
 						onPress={() =>
@@ -82,7 +83,7 @@ export const useHeader = (
 	return {
 		leftComponent: properties.left.back ? (
 			<AnimatedIcon
-				name='arrow-left'
+				icon={ArrowLeft}
 				size='medium'
 				onPress={() => {
 					goBack()

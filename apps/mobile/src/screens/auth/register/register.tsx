@@ -6,11 +6,13 @@ import { Title } from '@/components/ui/title/title'
 import { useAction } from '@/hooks/useAction'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
+import { Close } from '@/icons'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
 import { AnimatedView } from '@/types/component-types'
 import { Color } from '@/utils/color'
 import { emailRules, passwordRules } from '@/utils/input-validation'
 import { useForm } from 'react-hook-form'
+
 const Register = () => {
 	const {
 		params: {  selectGenres }
@@ -29,7 +31,7 @@ const Register = () => {
 					color={Color.black}
 					left={{
 						icon: {
-							name: 'x',
+							icon: Close,
 							onPress: () => {
 								navigate('SelectGenres')
 							}

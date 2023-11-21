@@ -1,5 +1,5 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import Icon from '@/components/ui/icon/icon'
+import IconComponent from '@/components/ui/icon/icon'
 import { Title } from '@/components/ui/title/title'
 import type { LibraryListElementType } from '@/screens/library/library-card/library-card-types'
 import { Color } from '@/utils/color'
@@ -18,7 +18,7 @@ const LibraryCard: FC<LibraryListElementType> = ({
 			style={style}
 			{...properties}>
 			<View className='flex-row items-center justify-between'>
-				<Icon name={icon} size={'medium'} className='w-[40px] pb-0 pl-0 pt-0' />
+				<IconComponent icon={icon} size={'medium'} className='w-[40px] pb-0 pl-0 pt-0' />
 				<Title size={20} weight={'bold'}>
 					{name}
 				</Title>

@@ -8,6 +8,7 @@ import { Title } from '@/components/ui/title/title'
 import { useToggle } from '@/hooks/useToggle/useToggle'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
+import { Eye, EyeOff } from '@/icons'
 import ShelfLayout from '@/screens/shelf/shelf-layout/shelf-layout'
 import { shelfService } from '@/services/shelf-service'
 import { useQuery } from '@tanstack/react-query'
@@ -55,7 +56,7 @@ const Shelf = () => {
 				<AnimatedIcon
 					onPress={() => handleToggleUnWatchedShelves()}
 					disabled={isSmashedWatchedShelves}
-					name={isSmashedUnwatchedShelves ? 'eye-closed' : 'eye'}
+					icon={isSmashedUnwatchedShelves ? EyeOff : Eye}
 					className='mb-2 w-[50px]'
 					size={'medium'}
 					variant={'outlined'}

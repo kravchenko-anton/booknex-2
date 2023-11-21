@@ -1,7 +1,7 @@
 import { useToggle } from '@/hooks/useToggle/useToggle'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
-import { alert, pensil, plus, share, trash } from '@/icons/icons'
+import { Alert, Pen, Plus, Share as ShareIcon, Trash } from '@/icons'
 import { bookService } from '@/services/book-service'
 import type { HamburgerMenuElementType } from '@/types/global'
 import { useQuery } from '@tanstack/react-query'
@@ -27,12 +27,12 @@ export const useBook = () => {
 		// TODO: доделать список
 		{
 			title: isSmashedReadingBooks ? 'Delete' : 'Add',
-			icon: isSmashedReadingBooks ? trash : plus,
+			icon: isSmashedReadingBooks ? Trash : Plus,
 			onPress: () => toggleReadingBooks()
 		},
 		{
 			title: 'Share',
-			icon: share,
+			icon: ShareIcon,
 			onPress: () => {
 				Share.share({
 					message: `Wow! I see ${
@@ -43,14 +43,14 @@ export const useBook = () => {
 		},
 		{
 			title: 'Report problem',
-			icon: alert,
+			icon: Alert,
 			onPress: () => {
 				console.log('Report problem')
 			}
 		},
 		{
 			title: 'Write review',
-			icon: pensil,
+			icon: Pen,
 			onPress: () => {
 				console.log('Write review')
 			}

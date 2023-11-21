@@ -3,11 +3,11 @@ import ScrollLayout from '@/components/layout/scroll-layout'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import FlatList from '@/components/ui/flatlist/flatlist'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
-import Icon from '@/components/ui/icon/icon'
 import Image from '@/components/ui/image/image'
 import BigLoader from '@/components/ui/loader/big-loader'
 import { Title } from '@/components/ui/title/title'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { Pen, Settings } from '@/icons'
 import { userServices } from '@/services/user-service'
 import { Color } from '@/utils/color'
 import { useQuery } from '@tanstack/react-query'
@@ -28,7 +28,7 @@ const Profile = () => {
 						onPress: () => {
 							navigate('Settings')
 						},
-						name: 'gear'
+						icon: Settings
 					}
 				}}
 			/>
@@ -36,8 +36,9 @@ const Profile = () => {
 				<View className='relative'>
 					<Image height={140} width={140} url={profile.picture} />
 					<AnimatedIcon
-						name={'pencil'}
-						backgroundColor={Color.gray}
+						icon={Pen}
+						color={Color.white}
+						backgroundColor={Color.primary}
 						onPress={() => {
 							navigate('UpdateProfile')
 						}}
@@ -68,12 +69,6 @@ const Profile = () => {
 								{item.name}
 							</Title>
 						</View>
-						<Icon
-							name={item.icon}
-							size={'large'}
-							color={Color.secondary}
-							variant={'ghost'}
-						/>
 					</PressableContainer>
 				)}
 			/>

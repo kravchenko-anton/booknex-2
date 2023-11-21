@@ -5,7 +5,7 @@ import FlatList from '@/components/ui/flatlist/flatlist'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import Image from '@/components/ui/image/image'
 import BigLoader from '@/components/ui/loader/big-loader'
-import { plus, x } from '@/icons/icons'
+import { Clock, Close, Plus, ThumbsUp } from '@/icons'
 import BookLayout from '@/screens/book/book-layout/book-layout'
 import StatisticCard from '@/screens/book/statistic-card/statistic-card'
 import { useBook } from '@/screens/book/useBook'
@@ -34,19 +34,19 @@ const Book = () => {
 				<View className='flex-1 justify-between'>
 					<StatisticCard
 						description={'Duration'}
-						icon={'clock'}
+						icon={Clock}
 						count={`${Math.round(book.pages / 1.5 / 60)}h ${Math.round(
 							(book.pages / 1.5) % 60
 						)} min`}
 					/>
 					<StatisticCard
 						description={'Pages'}
-						icon={'book'}
+						icon={Book}
 						count={book.pages}
 					/>
 					<StatisticCard
 						description={'Liked'}
-						icon={'thumbsup'}
+						icon={ThumbsUp}
 						count={`${book.likedPercentage}%`}
 					/>
 				</View>
@@ -67,7 +67,7 @@ const Book = () => {
 					className='flex-1'
 				/>
 				<AnimatedIcon
-					icon={isSmashedReadingBooks ? x : plus}
+					icon={isSmashedReadingBooks ? Close : Plus}
 					onPress={() => toggleReadingBooks()}
 					size={'medium'}
 					className='w-[50px]'

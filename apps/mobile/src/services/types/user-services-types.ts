@@ -21,12 +21,8 @@ export type UserStatisticsType = [
 		count: string,
 		icon: IconType
 		name: 'Time in read'
-	},
-	{
-		count: string,
-		icon: IconType
-		name: 'Reading speed'
 	}
+
 ]
 export interface UserType extends DefaultModelFields, UserLibraryFieldsType {
 	email: string

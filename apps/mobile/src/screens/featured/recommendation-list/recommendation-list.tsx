@@ -1,6 +1,7 @@
 import FlatList from '@/components/ui/flatlist/flatlist'
 import Icon from '@/components/ui/icon/icon'
 import { Title } from '@/components/ui/title/title'
+import { ThumbsUp } from '@/icons'
 import type { RecommendationProperties } from '@/screens/featured/recommendation-list/recommendation-list-types'
 import { Color } from '@/utils/color'
 import { shadeRGBColor } from '@/utils/shade-color'
@@ -21,7 +22,7 @@ const RecommendationList: FC<RecommendationProperties> = ({
 			/>
 		</View>
 		<Icon
-			name='thumbsup'
+			icon={ThumbsUp}
 			size={'medium'}
 			className='mb-1 mt-4 h-[45px] w-[45px] bg-canvas p-2'
 		/>

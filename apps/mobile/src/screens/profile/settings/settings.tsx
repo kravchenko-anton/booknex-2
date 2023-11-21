@@ -1,8 +1,6 @@
 import HeaderScrollLayout from '@/components/layout/header-scroll-layout/header-scroll-layout'
-import Icon from '@/components/ui/icon/icon'
 import { Title } from '@/components/ui/title/title'
 import { useSettingsList } from '@/screens/profile/settings/useSettingsList'
-import type { IconType } from '@/types/global'
 import { Color } from '@/utils/color'
 import { Pressable, View } from 'react-native'
 // TODO: сделать страницу настройки когда уже многое будет готово
@@ -30,22 +28,23 @@ const Settings = () => {
 							onPress={() => listItem.onPress()}
 							className='flex-row items-center justify-between'>
 							<View className='flex-row items-center'>
-								<Icon
-									size={'small'}
-									name={listItem.icon as IconType}
-									noPadding
-									className='mr-2'
-									color={Color.secondary}
-								/>
+								{/* TODO: пофиксить иконку */}
+								{/* <Icon*/}
+								{/*	size={'small'}*/}
+								{/*	name={listItem.icon as IconType}*/}
+								{/*	noPadding*/}
+								{/*	className='mr-2'*/}
+								{/*	color={Color.secondary}*/}
+								{/* />*/}
 								<Title size={18} weight={'bold'} color={Color.secondary}>
 									{listItem.title}
 								</Title>
 							</View>
-							<Icon
-								size={'small'}
-								color={Color.secondary}
-								name='chevron-right'
-							/>
+							{/* <Icon*/}
+							{/*	size={'small'}*/}
+							{/*	color={Color.secondary}*/}
+							{/*	name='chevron-right'*/}
+							{/* />*/}
 						</Pressable>
 					))}
 				</View>

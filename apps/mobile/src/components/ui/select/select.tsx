@@ -3,6 +3,7 @@ import Icon from '@/components/ui/icon/icon'
 import ScrollView from '@/components/ui/scroll-view/scroll-view'
 import { Title } from '@/components/ui/title/title'
 import OutsidePressHandler from '@/hooks/outside-press/components/outside-press-handler'
+import { ChevronDown } from '@/icons'
 import type { ViewDefaultProperties } from '@/types/component-types'
 import type { LineColorType } from '@/utils/color'
 import { Color } from '@/utils/color'
@@ -52,7 +53,7 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 					pointerEvents={'none'}
 					noPadding
 					className='ml-2 h-6 w-6'
-					name={'chevron-down'}
+					icon={ChevronDown}
 					size='medium'
 					color={(properties.color || Color.white) as LineColorType}
 				/>

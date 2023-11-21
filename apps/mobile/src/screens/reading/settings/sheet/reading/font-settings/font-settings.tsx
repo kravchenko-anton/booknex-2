@@ -2,7 +2,7 @@ import Icon from '@/components/ui/icon/icon'
 import Select from '@/components/ui/select/select'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { minus, plus } from '@/icons/icons'
+import { Minus, Plus } from '@/icons'
 import type { ReaderFontsEnum } from '@/redux/reading-settings/reading-settings-slice'
 import { fontSizeSettings, ReaderFont } from '@/redux/reading-settings/reading-settings-slice'
 import LineHeightIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/line-height'
@@ -55,14 +55,14 @@ const FontSettings: FC = () => {
 							onPress={() => {
 								changeFontSize(fontSize - 2)
 							}}
-							icon={minus}
+							icon={Minus}
 							size='medium'
 							color={colorScheme.colorPalette.text}
 						/>
 					</TouchableOpacity>
 					<TouchableOpacity>
 						<Icon
-							icon={plus}
+							icon={Plus}
 							style={{
 								borderColor:
 									colorScheme.colorPalette[

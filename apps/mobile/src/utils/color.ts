@@ -16,9 +16,9 @@ export interface ColorsType {
 
 export type LineColorType = {
 	[K in keyof ColorsType]: ColorsType[K]
-}[keyof ColorsType];
+}[keyof ColorsType] 
 export interface ColorProperties {
-	color?: string | LineColorType
+	color?: LineColorType | string
 }
 
 export const Color = theme.colors as ColorsType

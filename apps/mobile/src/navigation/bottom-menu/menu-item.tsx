@@ -3,7 +3,6 @@ import { Title } from '@/components/ui/title/title'
 import type { IMenuItem, TypeNavigate } from '@/navigation/bottom-menu/menu.interface'
 import { AnimatedPressable } from '@/types/component-types'
 import { Color } from '@/utils/color'
-import { Octicons } from '@expo/vector-icons'
 import type { FC } from 'react'
 import { Pressable } from 'react-native'
 
@@ -26,11 +25,8 @@ const MenuItem: FC<IMenuItemProperties> = ({ currentRoute, item, nav }) => {
 			}}
 			{...pressFunctions}>
 			<AnimatedPressable style={animatedStyle} pointerEvents='none'>
-				<Octicons
-					name={item.icon}
-					size={30}
-					color={isActive ? Color.secondary : Color.gray}
-				/>
+				<item.icon width={30} strokeWidth={2} stroke={isActive ? Color.secondary : Color.gray} height={30} />
+
 			</AnimatedPressable>
 			<Title
 				size={16}
