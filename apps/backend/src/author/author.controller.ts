@@ -1,15 +1,7 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Post,
-	Put,
-	Query
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import { returnBookObject } from '../book/return.book.object'
+import type { InfoByIdOutput } from '../../../../libs/shared-types/src/author-types'
+import { returnBookObjects } from '../book/return.book.object'
 import { Auth } from '../decorator/auth.decorator'
 import { AuthorService } from './author.service'
 import { CreateAuthorDto, EditAuthorDto } from './dto/manipulation.author.dto'
@@ -22,13 +14,14 @@ export class AuthorController {
 
 	@Auth()
 	@Get('by-id/:id')
-	async infoById(@Param('id') id: string) {
+	async infoById(@Param('id') id: string):
+		Promise<InfoByIdOutput> {
 		return this.authorService.getAuthorById(+id, {
 			picture: true,
 			description: true,
 			color: true,
 			books: {
-				select: returnBookObject
+				select:  returnBookObjects
 			}
 		})
 	}
@@ -37,8 +30,8 @@ export class AuthorController {
 
 	@Auth('admin')
 	@Get('/all')
-	async all(@Query('cursor') cursorId: number) {
-		return this.authorService.all(+cursorId || undefined)
+	async all(@Query('searchTerm') searchTerm: number) {
+		return this.authorService.all(+searchTerm)
 	}
 
 	@Auth('admin')

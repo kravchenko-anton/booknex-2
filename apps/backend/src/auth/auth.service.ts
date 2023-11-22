@@ -1,13 +1,9 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException
-} from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import type { User } from '@prisma/client'
 import { hash, verify } from 'argon2'
-import { PrismaService } from '../utils/prisma.service'
 import { UserService } from '../user/user.service'
+import { PrismaService } from '../utils/prisma.service'
 import type { AuthDto, RegisterDto } from './dto/auth.dto'
 
 @Injectable()
@@ -122,8 +118,7 @@ export class AuthService {
 	private userFields(user: User) {
 		return {
 			id: user.id,
-			email: user.email,
-			isAdmin: user.isAdmin
+			email: user.email
 		}
 	}
 }

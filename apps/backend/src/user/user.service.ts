@@ -1,23 +1,12 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException
-} from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { hash, verify } from 'argon2'
-import { returnBookObject } from '../book/return.book.object'
-import { PrismaService } from '../utils/prisma.service'
+import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { returnShelfObject } from '../shelf/return.shelf.object'
-import type {
-	UserUpdateBioDto,
-	UserUpdatePasswordDto
-} from './dto/user.update.dto'
+import { PrismaService } from '../utils/prisma.service'
+import type { UserUpdateBioDto, UserUpdatePasswordDto } from './dto/user.update.dto'
 import { returnUserObject } from './return.user.object'
-import type {
-	UserLibraryCatalogType,
-	UserLibraryCategoryType,
-	UserStatisticsType
-} from './user.types'
+import type { UserLibraryCatalogType, UserLibraryCategoryType, UserStatisticsType } from './user.types'
 import {
 	CatalogTitleType,
 	DesignationType,
@@ -64,13 +53,11 @@ export class UserService {
 				{
 					name: CatalogTitleType.readingBooks,
 					type: UserLibraryFieldsEnum.readingBooks,
-					icon: 'book',
 					count: library._count.readingBooks
 				},
 				{
 					name: CatalogTitleType.finishedBooks,
 					type: UserLibraryFieldsEnum.finishedBooks,
-					icon: 'checklist',
 					count: library._count.finishedBooks
 				}
 			] as UserLibraryCatalogType[],
@@ -78,13 +65,11 @@ export class UserService {
 				{
 					name: CatalogTitleType.watchedShelves,
 					type: UserLibraryFieldsEnum.watchedShelves,
-					icon: 'eye',
 					count: library._count.watchedShelves
 				},
 				{
 					name: CatalogTitleType.hiddenShelves,
 					type: UserLibraryFieldsEnum.hiddenShelves,
-					icon: 'eye-closed',
 					count: library._count.hiddenShelves
 				}
 			] as UserLibraryCatalogType[]
@@ -98,7 +83,7 @@ export class UserService {
 			[type]: {
 				select:
 					'book' === DesignationType[type]
-						? returnBookObject
+						? returnBookObjectWithAuthor
 						: {
 								...returnShelfObject,
 								description: true
@@ -139,24 +124,20 @@ export class UserService {
 		const statistics: UserStatisticsType[] = [
 			{
 				name: 'Books read',
-				icon: 'book',
 				count: bookCount ?? 0
 			},
 			{
 				name: 'Pages read',
-				icon: 'log',
 				count: totalPageCount ?? 0
 			},
 			{
 				name: 'Time in read',
-				icon: 'hourglass',
 				count: `${Math.floor(totalTime / 3_600_000)}h ${Math.floor(
 					(totalTime % 3_600_000) / 60_000
 				)}min`
 			},
 			{
 				name: 'Reading speed',
-				icon: 'zap',
 				count:
 					totalPageCount && totalTime
 						? `${Math.floor(

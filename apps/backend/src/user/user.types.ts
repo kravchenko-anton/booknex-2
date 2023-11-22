@@ -1,5 +1,4 @@
 import type { Prisma } from '@prisma/client'
-import type { IconTypes } from '../utils/icon-types'
 
 export type UserLibraryCategoryType = keyof Pick<
 	Prisma.UserSelect,
@@ -42,11 +41,10 @@ export const userLibraryFields: UserLibraryCategoryType[] = [
 export interface UserStatisticsType {
 	name: 'Books read' | 'Pages read' | 'Time in read' | 'Reading speed'
 	count: number | string
-	icon: IconTypes
 }
 
 export interface UserLibraryCatalogType
-	extends Pick<UserStatisticsType, 'count' | 'icon'> {
+	extends Pick<UserStatisticsType, 'count'> {
 	name: keyof typeof CatalogTitleType
 	type: UserLibraryFieldsEnum
 }

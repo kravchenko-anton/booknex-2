@@ -3,12 +3,12 @@ import type { Prisma } from '@prisma/client'
 import { getAverageColor } from 'fast-average-color-node'
 import { returnAuthorObject } from '../author/return.author.object'
 import { GenreReturnObject } from '../genre/return.genre.object'
-import { PrismaService } from '../utils/prisma.service'
 import { UserService } from '../user/user.service'
 import { randomColor, shadeRGBColor } from '../utils/color.functions'
+import { PrismaService } from '../utils/prisma.service'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 import type { ReviewBookDto } from './dto/review.book.dto'
-import { returnBookObject } from './return.book.object'
+import { returnBookObjectWithAuthor } from './return.book.object'
 import { returnReviewsObject } from './return.reviews.object'
 
 @Injectable()
@@ -22,7 +22,7 @@ export class BookService {
 		const book = await this.prisma.book.findUnique({
 			where: { id },
 			select: {
-				...returnBookObject,
+				...returnBookObjectWithAuthor,
 				...selectObject
 			}
 		})
@@ -48,7 +48,7 @@ export class BookService {
 	async all(cursorId: number) {
 		return this.prisma.book.findMany({
 			take: 20,
-			select: returnBookObject,
+			select: returnBookObjectWithAuthor,
 			cursor: cursorId && { id: cursorId }
 		})
 	}
@@ -182,7 +182,7 @@ export class BookService {
 				}
 			},
 			select: {
-				...returnBookObject,
+				...returnBookObjectWithAuthor,
 				genre: { select: GenreReturnObject }
 			}
 		})

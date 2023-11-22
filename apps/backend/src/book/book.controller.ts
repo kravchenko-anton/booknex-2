@@ -1,13 +1,4 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Post,
-	Put,
-	Query
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
@@ -20,15 +11,12 @@ import { ReviewBookDto } from './dto/review.book.dto'
 @Controller('book')
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
-	@Auth('admin')
-	@Post('/create')
-	async create(@Body() dto: CreateBookDto) {
-		return this.bookService.create(dto)
-	}
+
 
 	@Get('/emotions')
 	@Auth()
-	async emotions() {
+	async emotions(): Promise<{ name: string,
+		path: string }[]> {
 		return this.bookService.emotions()
 	}
 
@@ -43,13 +31,13 @@ export class BookController {
 	}
 
 	@Auth()
-	@Get('by-id/:id')
+	@Get('/by-id/:id')
 	async infoById(@Param('id') bookId: string) {
 		return this.bookService.infoById(+bookId)
 	}
 
 	@Auth()
-	@Get('by-id/:id/reviews')
+	@Get('/by-id/:id/reviews')
 	async reviewsById(
 		@Param('id') bookId: string,
 		@Query('cursor') cursorId: number
@@ -64,6 +52,13 @@ export class BookController {
 	}
 
 	//  admin
+
+	@Auth('admin')
+	@Post('/create')
+	async create(@Body() dto: CreateBookDto) {
+		return this.bookService.create(dto)
+	}
+
 	@Auth('admin')
 	@Get('/all')
 	async all(@Query('cursor') cursorId: number) {

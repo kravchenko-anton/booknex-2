@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
-import { returnBookObject } from '../book/return.book.object'
-import { PrismaService } from '../utils/prisma.service'
+import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { abbrNumber } from '../utils/abbr-number'
+import { PrismaService } from '../utils/prisma.service'
 import type { CreateShelfDto } from './dto/create.shelf.dto'
 import type { UpdateShelfDto } from './dto/update.shelf.dto'
 import { returnShelfObject } from './return.shelf.object'
@@ -40,7 +40,7 @@ export class ShelfService {
 				},
 				books: {
 					select: {
-						...returnBookObject,
+						...returnBookObjectWithAuthor,
 						pages: true,
 						likedPercentage: true
 					}

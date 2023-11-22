@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { returnBookObject } from '../book/return.book.object'
+import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { PrismaService } from '../utils/prisma.service'
 
 @Injectable()
@@ -16,7 +16,7 @@ export class AdminService {
 			totalReadTime: totalTimeRead._sum.time,
 			mostReadBook: await this.prisma.book.findMany({
 				take: 2,
-				select: returnBookObject,
+				select: returnBookObjectWithAuthor,
 				orderBy: {
 					histories: {
 						_count: 'desc'

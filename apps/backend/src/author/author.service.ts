@@ -1,15 +1,8 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException
-} from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
-import { PrismaService } from '../utils/prisma.service'
 import { randomColor, shadeRGBColor } from '../utils/color.functions'
-import type {
-	CreateAuthorDto,
-	EditAuthorDto
-} from './dto/manipulation.author.dto'
+import { PrismaService } from '../utils/prisma.service'
+import type { CreateAuthorDto, EditAuthorDto } from './dto/manipulation.author.dto'
 import { returnAuthorObject } from './return.author.object'
 
 @Injectable()
@@ -27,15 +20,21 @@ export class AuthorService {
 		return author
 	}
 
-	async all(cursorId: number) {
+	async all(searchTerm: string | undefined) {
 		return this.prisma.author.findMany({
 			select: {
 				...returnAuthorObject,
 				picture: true,
 				description: true
 			},
-			cursor: cursorId && { id: cursorId },
-			take: 20
+			take: 20,
+			...(searchTerm && {
+				where: {
+					name: {
+						contains: searchTerm
+					}
+				}
+			}),
 		})
 	}
 

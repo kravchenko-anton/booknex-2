@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { returnBookObject } from '../book/return.book.object'
+import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 
@@ -55,7 +55,7 @@ export class CatalogService {
 	search(query: string) {
 		return this.prisma.book.findMany({
 			select: {
-				...returnBookObject,
+				...returnBookObjectWithAuthor,
 				likedPercentage: true,
 				pages: true
 			},
@@ -148,7 +148,7 @@ export class CatalogService {
 				popularity: 'desc'
 			},
 			select: {
-				...returnBookObject,
+				...returnBookObjectWithAuthor,
 				description: true,
 				color: true
 			},
@@ -170,7 +170,7 @@ export class CatalogService {
 			orderBy: {
 				popularity: 'desc'
 			},
-			select: returnBookObject
+			select: returnBookObjectWithAuthor
 		})
 	}
 
@@ -180,7 +180,7 @@ export class CatalogService {
 			orderBy: {
 				updatedAt: 'desc'
 			},
-			select: returnBookObject
+			select: returnBookObjectWithAuthor
 		})
 	}
 
@@ -191,7 +191,7 @@ export class CatalogService {
 				popularity: 'desc'
 			},
 			select: {
-				...returnBookObject,
+				...returnBookObjectWithAuthor,
 				pages: true
 			},
 			where: {
@@ -212,7 +212,7 @@ export class CatalogService {
 						updatedAt: 'desc'
 					},
 					take: 10,
-					select: returnBookObject
+					select: returnBookObjectWithAuthor
 				}
 			}
 		})
@@ -246,7 +246,7 @@ export class CatalogService {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: { popularity: 'desc' },
-			select: returnBookObject,
+			select: returnBookObjectWithAuthor,
 			where: {
 				genre: {
 					name: {

@@ -2,15 +2,14 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ThrottlerModule } from '@nestjs/throttler'
+import { AdminModule } from './admin/admin.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { AdminModule } from './admin/admin.module'
 import { AuthModule } from './auth/auth.module'
 import { AuthorModule } from './author/author.module'
 import { BookModule } from './book/book.module'
 import { CatalogModule } from './catalog/catalog.module'
 import { GenreModule } from './genre/genre.module'
-import { HistoryModule } from './history/history.module'
 import { ShelfModule } from './shelf/shelf.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
@@ -20,7 +19,6 @@ import { UserModule } from './user/user.module'
 		UserModule,
 		AuthModule,
 		CatalogModule,
-		HistoryModule,
 		GenreModule,
 		BookModule,
 		StorageModule,
