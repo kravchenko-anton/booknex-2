@@ -105,12 +105,7 @@ export class UserService {
 			picture: true
 		})
 
-		const {
-			_sum: { time: totalTime }
-		} = await this.prisma.history.aggregate({
-			where: { userId: id },
-			_sum: { time: true }
-		})
+
 
 		const {
 			_count: { id: bookCount },
@@ -129,22 +124,8 @@ export class UserService {
 			{
 				name: 'Pages read',
 				count: totalPageCount ?? 0
-			},
-			{
-				name: 'Time in read',
-				count: `${Math.floor(totalTime / 3_600_000)}h ${Math.floor(
-					(totalTime % 3_600_000) / 60_000
-				)}min`
-			},
-			{
-				name: 'Reading speed',
-				count:
-					totalPageCount && totalTime
-						? `${Math.floor(
-								totalPageCount / (totalTime / 3_600_000)
-						  )} pages/hour`
-						: 'unknown'
 			}
+
 		]
 		return {
 			...user,

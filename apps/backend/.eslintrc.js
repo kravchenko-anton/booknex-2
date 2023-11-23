@@ -31,7 +31,6 @@ module.exports = {
     'no-dupe-keys': 'error',
     'no-dupe-class-members': 'error',
     'no-duplicate-case': 'error',
-    "@typescript-eslint/no-unsafe-argument": ['off'],
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'warn',
     '@typescript-eslint/consistent-type-imports': 'error',
@@ -93,6 +92,7 @@ module.exports = {
         ignore: ['App.tsx', 'use']
       }
     ],
+    "@typescript-eslint/no-unsafe-argument": ['off'],
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/semi': 'off',

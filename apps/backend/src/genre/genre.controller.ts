@@ -1,5 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import type { AllGenreOutput } from '../../../../libs/shared-types/src/genre-types'
+import type { GenreByIdOutput } from '../../../../libs/shared-types/src/genre-types'
 import { Auth } from '../decorator/auth.decorator'
 import { GenreService } from './genre.service'
 
@@ -11,12 +13,12 @@ export class GenreController {
 	constructor(private readonly genreService: GenreService) {}
 
 	@Get()
-	async all() {
+	async all(): Promise<AllGenreOutput> {
 		return this.genreService.all()
 	}
 
 	@Get('/by-id/:id')
-	async byId(@Param('id') genreId: string) {
+	async byId(@Param('id') genreId: string): Promise<GenreByIdOutput> {
 		return this.genreService.byId(+genreId)
 	}
 }

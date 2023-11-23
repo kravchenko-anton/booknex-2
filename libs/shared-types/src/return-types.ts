@@ -5,13 +5,9 @@ export interface DefaultReturnType {
 export interface BookReturnType extends DefaultReturnType {
 	title: string,
 	picture: string,
-	likedPercentage: number
 }
 
 export interface BookReturnTypeWithAuthor extends BookReturnType {
-	title: string,
-	picture: string,
-	likedPercentage: number,
 	author: {
 		name: string
 	}
@@ -19,7 +15,14 @@ export interface BookReturnTypeWithAuthor extends BookReturnType {
 
 export interface AuthorReturnType extends DefaultReturnType {
   name: string
-  picture: string
-  description: string
-  books: BookReturnType[]
+}
+
+export interface GenreReturnType extends DefaultReturnType {
+	name: string
+}
+
+
+export interface ReviewReturnType extends DefaultReturnType {
+	text: string,
+	tags: string[]
 }

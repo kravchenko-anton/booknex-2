@@ -1,7 +1,6 @@
 import { Controller, Get } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { Prisma } from '@prisma/client'
-import type { GetFindResult } from '@prisma/client/runtime/library'
+import type { StatisticsOutput } from '../../../../libs/shared-types/src/admin-types'
 import { Auth } from '../decorator/auth.decorator'
 import { AdminService } from './admin.service'
 
@@ -12,18 +11,7 @@ export class AdminController {
 	constructor(private readonly adminService: AdminService) {}
 	@Auth('admin')
 	@Get('/statistics')
-	async statistics(): Promise<{
-		totalUsers: number
-		totalReadTime: number
-		mostReadBook: GetFindResult<
-			Prisma.$BookPayload,
-			{
-				take: number
-				select: Prisma.BookSelect
-				orderBy: { histories: { _count: string } }
-			}
-		>[]
-	}> {
+	async statistics(): Promise<StatisticsOutput> {
 		return this.adminService.statistics()
 	}
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
+import { ReturnGenreObject } from '../genre/return.genre.object'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 
 @Injectable()
 export class CatalogService {
 	constructor(private readonly prisma: PrismaService) {}
-
 	async catalog(userId: number) {
 		return {
 			mostRelatedGenres: await this.getMostRelatedGenres(userId),
@@ -43,11 +43,20 @@ export class CatalogService {
 			}
 		})
 		return [
-			...topGenres.slice(0, 2),
+			...topGenres.slice(0, 2).map(genre => ({
+        id: genre.id,
+        title: genre.name
+      })),
 			...topBooks.slice(0, 3),
-			...topGenres.slice(2, 3),
+			...topGenres.slice(2, 3).map(genre => ({
+				id: genre.id,
+				title: genre.name
+			})),
 			...topBooks.slice(3, 5),
-			...topGenres.slice(3, 5)
+			...topGenres.slice(3, 5).map(genre => ({
+				id: genre.id,
+				title: genre.name
+			}))
 		]
 	}
 
@@ -130,7 +139,7 @@ export class CatalogService {
 	}
 
 	private sortAndSliceGenres(
-		genres: { id: number; createdAt: Date; updatedAt: Date; name: string }[]
+		genres: { id: number; name: string }[]
 	) {
 		return genres
 			.sort(
@@ -151,16 +160,8 @@ export class CatalogService {
 				...returnBookObjectWithAuthor,
 				description: true,
 				color: true
-			},
-			where: {
-				histories: {
-					some: {
-						updatedAt: {
-							gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-						}
-					}
-				}
 			}
+
 		})
 	}
 
@@ -206,8 +207,8 @@ export class CatalogService {
 		return this.prisma.genre.findMany({
 			take: 5,
 			select: {
-				name: true,
-				books: {
+          ...ReturnGenreObject,
+      				books: {
 					orderBy: {
 						updatedAt: 'desc'
 					},
@@ -248,12 +249,13 @@ export class CatalogService {
 			orderBy: { popularity: 'desc' },
 			select: returnBookObjectWithAuthor,
 			where: {
-				genre: {
-					name: {
-						in:
-							genres.length > 0
-								? genres
-								: await this.prisma.user
+				genres: {
+					some: {
+						name: {
+							in:
+								genres.length > 0
+									? genres
+									: await this.prisma.user
 										.findUnique({
 											where: {
 												id: userId
@@ -270,6 +272,7 @@ export class CatalogService {
 										.then(initialGenres =>
 											initialGenres.map(genre => genre.name)
 										)
+						}
 					}
 				},
 				AND: {

@@ -70,6 +70,12 @@
       "library": {
         "unitTestRunner": "none"
       }
+    },
+    "@nx/next": {
+      "application": {
+        "style": "none",
+        "linter": "eslint"
+      }
     }
   }
 }

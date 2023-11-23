@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { getAverageColor } from 'fast-average-color-node'
 import { returnAuthorObject } from '../author/return.author.object'
-import { GenreReturnObject } from '../genre/return.genre.object'
+import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { randomColor, shadeRGBColor } from '../utils/color.functions'
 import { PrismaService } from '../utils/prisma.service'
@@ -45,18 +45,24 @@ export class BookService {
 		}
 	}
 
-	async all(cursorId: number) {
+	async all(searchTerm: string | undefined) {
 		return this.prisma.book.findMany({
 			take: 20,
 			select: returnBookObjectWithAuthor,
-			cursor: cursorId && { id: cursorId }
+			...(searchTerm && {
+				where: {
+					title: {
+						contains: searchTerm
+					}
+				}
+			}),
 		})
 	}
 
 	async create(dto: CreateBookDto) {
 		await this.prisma.book.create({
 			data: {
-				genre: {
+				majorGenre: {
 					connectOrCreate: {
 						where: { name: dto.majorGenre },
 						create: {
@@ -71,7 +77,8 @@ export class BookService {
 				pages: dto.pages,
 				description: dto.description,
 				picture: dto.picture,
-				file: dto.epub,
+				file: dto.file,
+				charapters: dto.charapters,
 				author: {
 					connect: {
 						name: dto.author.name
@@ -80,7 +87,13 @@ export class BookService {
 				color: shadeRGBColor(
 					await getAverageColor(dto.picture).then(color => color.hex),
 					-25
-				)
+				),
+				genres: {
+					connectOrCreate: dto.genres.map(g => ({
+						where: { name: g },
+						create: { name: g, color: shadeRGBColor(randomColor(), -50) }
+					}))
+				}
 			}
 		})
 	}
@@ -101,15 +114,20 @@ export class BookService {
 				pages: dto.pages || book.pages,
 				description: dto.description || book.description,
 				picture: dto.picture || book.picture,
+				file: dto.file || book.file,
+				charapters: dto.charapters || book.charapters,
 				author: {
 					connect: {
 						name: dto.author || book.author.name
 					}
 				},
-				genre: {
+				majorGenre: {
 					connect: {
-						name: dto.majorGenre || 'asd'
+						name: dto.majorGenre || book.majorGenre.name
 					}
+				},
+				genres: {
+					connect: dto.genres.map(g => ({ name: g }))
 				}
 			}
 		})
@@ -167,29 +185,36 @@ export class BookService {
 		const book = await this.prisma.book.findUnique({
 			where: { id: +id },
 			include: {
+				majorGenre: false,
 				author: {
 					select: returnAuthorObject
 				},
-				genre: { select: GenreReturnObject }
+				genres: { select: ReturnGenreObject }
 			}
 		})
-		if (!book) return new NotFoundException('Book not found').getResponse()
+		if (!book)  new NotFoundException('Book not found').getResponse()
+		const genreIds = book.genres.map(g => g.id)
 		const similarBooks = await this.prisma.book.findMany({
 			where: {
 				id: { not: +id },
-				genre: {
-					id: book.genre.id
-				}
+				genres: { some: { id: { in: genreIds } } }
 			},
 			select: {
 				...returnBookObjectWithAuthor,
-				genre: { select: GenreReturnObject }
+				genres: { select: ReturnGenreObject }
 			}
 		})
 
 		return {
 			...book,
-			similarBooks: similarBooks.slice(0, 10)
+			similarBooks: similarBooks
+				.sort(
+					(a, b) =>
+						b.genres.filter(g => genreIds.includes(g.id)).length -
+						a.genres.filter(g => genreIds.includes(g.id)).length
+				)
+				.slice(0, 10)
+				.map(({ genres, ...rest }) => ({ ...rest }))
 		}
 	}
 }

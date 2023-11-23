@@ -55,3 +55,6 @@ npm-debug.*
 web-build/
 cache/
 apps/mobile-e2e/artifacts
+
+# Next.js
+.next

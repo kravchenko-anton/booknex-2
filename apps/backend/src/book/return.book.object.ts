@@ -9,14 +9,12 @@ export const returnBookObjectWithAuthor: Prisma.BookSelect = {
 			name: true
 		}
 	},
-	picture: true,
-	likedPercentage: true
+	picture: true
 }
 
 
-export const returnBookObjects: Prisma.BookSelect = {
+export const returnBookObject: Pick<Prisma.BookSelect, 'title' | 'picture' | 'id'> = {
 	...defaultReturnObject,
 	title: true,
 	picture: true,
-	likedPercentage: true
 }

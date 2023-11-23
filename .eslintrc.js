@@ -118,7 +118,6 @@ module.exports = {
       'error', { disallowedPrefixes: ['new', 'class'] }
     ],
     // Disable rules
-
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/semi': 'off',

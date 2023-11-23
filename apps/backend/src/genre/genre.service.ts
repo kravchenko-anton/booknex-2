@@ -9,7 +9,13 @@ export class GenreService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	all() {
-		return this.prisma.genre.findMany()
+		return this.prisma.genre.findMany({
+			select: {
+				...defaultReturnObject,
+				name: true,
+				color: true
+			}
+		})
 	}
 
 	async byId(id: number) {
@@ -37,7 +43,7 @@ export class GenreService {
 				description: true
 			},
 			where: {
-				genre: {
+				majorGenre: {
 					id: +id
 				}
 			},
@@ -50,7 +56,7 @@ export class GenreService {
 			take: 10,
 			select: returnBookObjectWithAuthor,
 			where: {
-				genre: {
+				majorGenre: {
 					id: +id
 				}
 			},
@@ -68,7 +74,7 @@ export class GenreService {
 			select: {
 				...defaultReturnObject,
 				name: true,
-				books: {
+				majorBooks: {
 					select: returnBookObjectWithAuthor,
 					take: 10,
 					orderBy: {
@@ -86,7 +92,7 @@ export class GenreService {
 			where: {
 				books: {
 					some: {
-						genre: {
+						majorGenre: {
 							id: +id
 						}
 					}

@@ -1,6 +1,8 @@
 import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator'
+import type { CreateBookPayload, EditBookPayload } from '../../../../../libs/shared-types/src/book-types'
 
-export class CreateBookDto {
+
+export class CreateBookDto implements CreateBookPayload {
 	@IsString() title: string
 	@IsObject()
 	author: {
@@ -9,20 +11,30 @@ export class CreateBookDto {
 
 	@IsString() description: string
 	@IsString() picture: string
-	@IsString() epub: string
+	@IsString() @IsOptional() file: string
+	@IsNumber() @IsOptional() charapters: {
+		name: string
+		link: string
+	}[]
+
 	@IsNumber() pages: number
 	@IsNumber() likedPercentage: number
 	@IsNumber() popularity: number
 	@IsString() majorGenre: string
 	@IsString({ each: true }) genres: string[]
 }
-export class EditBookDto {
+export class EditBookDto implements EditBookPayload {
 	@IsString() @IsOptional() title: string
 	@IsString() @IsOptional() author: string
 	@IsString() @IsOptional() description: string
 	@IsString() @IsOptional() picture: string
-	@IsString() @IsOptional() epub: string
+	@IsString() @IsOptional() file: string
 	@IsNumber() @IsOptional() pages: number
+	@IsNumber() @IsOptional() charapters: {
+		name: string
+		link: string
+	}[]
+
 	@IsNumber() @IsOptional() likedPercentage: number
 	@IsNumber() @IsOptional() popularity: number
 	@IsString() @IsOptional() majorGenre: string

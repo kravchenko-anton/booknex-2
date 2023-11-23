@@ -1,5 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import type { BookByIdOutput, EmotionOutput } from '../../../../libs/shared-types/src/book-types'
+import type { GetEbpubOutput } from '../../../../libs/shared-types/src/book-types'
+import type { BookReturnTypeWithAuthor, ReviewReturnType } from '../../../../libs/shared-types/src/return-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'
@@ -15,8 +18,7 @@ export class BookController {
 
 	@Get('/emotions')
 	@Auth()
-	async emotions(): Promise<{ name: string,
-		path: string }[]> {
+	async emotions(): Promise<EmotionOutput> {
 		return this.bookService.emotions()
 	}
 
@@ -32,7 +34,7 @@ export class BookController {
 
 	@Auth()
 	@Get('/by-id/:id')
-	async infoById(@Param('id') bookId: string) {
+	async infoById(@Param('id') bookId: string): Promise<BookByIdOutput> {
 		return this.bookService.infoById(+bookId)
 	}
 
@@ -41,28 +43,28 @@ export class BookController {
 	async reviewsById(
 		@Param('id') bookId: string,
 		@Query('cursor') cursorId: number
-	) {
+	): Promise<ReviewReturnType[]> {
 		return this.bookService.reviewsById(+bookId, +cursorId || undefined)
 	}
 
 	@Auth()
 	@Get('/ebook/:id')
-	async ebookById(@Param('id') bookId: string) {
+	async ebookById(@Param('id') bookId: string): Promise<GetEbpubOutput> {
 		return this.bookService.ebookById(+bookId)
 	}
 
 	//  admin
 
 	@Auth('admin')
-	@Post('/create')
-	async create(@Body() dto: CreateBookDto) {
-		return this.bookService.create(dto)
+	@Get('/all')
+	async all(@Query('cursor') searchTerm: string): Promise<BookReturnTypeWithAuthor[]> {
+		return this.bookService.all(searchTerm)
 	}
 
 	@Auth('admin')
-	@Get('/all')
-	async all(@Query('cursor') cursorId: number) {
-		return this.bookService.all(+cursorId || undefined)
+	@Post('/create')
+	async create(@Body() dto: CreateBookDto) {
+		return this.bookService.create(dto)
 	}
 
 	@Auth('admin')
