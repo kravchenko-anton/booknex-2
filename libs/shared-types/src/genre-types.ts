@@ -1,21 +1,43 @@
-import type { AuthorReturnType, BookReturnTypeWithAuthor, DefaultReturnType } from './return-types'
+import type { Prisma } from '@prisma/client'
+import type { returnAuthorWithPicture } from '../../../apps/backend/src/author/return.author.object'
+import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
+import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 
-export type AllGenreOutput = (DefaultReturnType & {
-	name:string,
-	color: string
-})[]
+export type AllGenreOutput = Prisma.GenreGetPayload<{
+	select: typeof ReturnGenreObject &  {
+		color: true
+	}
+}>[]
 
- export type GenreByIdOutput = DefaultReturnType & {
-	name: string,
-	color: string,
-	similar: {
-		id: true
-	}[]
-	newestBooks: BookReturnTypeWithAuthor[],
-	bestSellers:BookReturnTypeWithAuthor[],
-	bestSellersFromSimilar: (DefaultReturnType & {
-		name: string,
-		majorBooks: BookReturnTypeWithAuthor[]
-	})[],
-	bestAuthors: AuthorReturnType[]
-}
+ export type GenreByIdOutput = Prisma.GenreGetPayload<{
+	 select: typeof ReturnGenreObject & {
+		 color: true,
+		 similar: {
+			 select: {
+				 id: true
+			 }
+		 }
+	 }
+ }> & {
+	 newestBooks: Prisma.BookGetPayload<{
+		 select: typeof  returnBookObjectWithAuthor & {
+			 color: true,
+			 description: true
+		 },
+	 }>[],
+	 bestSellers: Prisma.BookGetPayload<{
+		 select: typeof  returnBookObjectWithAuthor
+	 }>[],
+
+	 bestSellersFromSimilar: Prisma.GenreGetPayload<{
+		 select: typeof ReturnGenreObject & {
+			 majorBooks: {
+				 select: typeof returnBookObjectWithAuthor
+			 }
+		 }
+	 }>[]
+	 bestAuthors: Prisma.AuthorGetPayload<{
+		 select: typeof returnAuthorWithPicture
+	 }>[]
+
+	 }

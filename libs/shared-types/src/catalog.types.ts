@@ -1,16 +1,34 @@
-import type { BookReturnType, BookReturnTypeWithAuthor, GenreReturnType } from './return-types'
+import type { Prisma } from '@prisma/client'
+import type {
+	returnBookObjectWithAuthor,
+	returnBookObjectWithPages,
+	returnBookObjectWithStatistics,
+	returnColorBookObjectWithAuthor
+} from '../../../apps/backend/src/book/return.book.object'
+import type { ReturnGenreObject, ReturnGenreWithBooks } from '../../../apps/backend/src/genre/return.genre.object'
+
+type BookWithAuthor = Prisma.BookGetPayload<{
+	select: typeof returnBookObjectWithAuthor
+}>[]
+
+
+
+
 
 export interface CatalogOutput {
-	recommendations: BookReturnType[]
-	popularNow: BookReturnTypeWithAuthor[]
-	bestSellers: BookReturnTypeWithAuthor[]
-	newReleases: BookReturnTypeWithAuthor[]
-	sameBreath: BookReturnTypeWithAuthor[]
-	genres: {
-		name: string
-		books: BookReturnTypeWithAuthor[]
-	}[]
-	mostRelatedGenres: GenreReturnType[]
+	recommendations: BookWithAuthor
+	popularNow: Prisma.BookGetPayload<{
+		select: typeof returnColorBookObjectWithAuthor
+	}>[]
+	bestSellers: BookWithAuthor
+	newReleases: BookWithAuthor
+	sameBreath: Prisma.BookGetPayload<{
+		select: typeof returnBookObjectWithPages
+	}>[]
+	genres: ReturnGenreWithBooks
+	mostRelatedGenres: Prisma.GenreGetPayload<{
+		select: typeof ReturnGenreObject
+	}>[]
 }
 
 export type SearchExamplesOutput = {
@@ -19,7 +37,6 @@ export type SearchExamplesOutput = {
 }[]
 
 
-export type SearchOutput = (BookReturnType & {
-	likedPercentage: number,
-	pages: number
-})[]
+export type SearchOutput = Prisma.BookGetPayload<{
+	select: typeof returnBookObjectWithStatistics
+}>[]

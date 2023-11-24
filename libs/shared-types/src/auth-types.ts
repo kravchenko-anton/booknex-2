@@ -2,9 +2,7 @@ export interface CheckEmailOutput {
     isExist: boolean;
 }
 
-export interface CheckUsernamePayload {
-    email: string;
-}
+
 
 
 export interface AuthPayload {

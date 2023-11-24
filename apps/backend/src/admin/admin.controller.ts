@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { StatisticsOutput } from '../../../../libs/shared-types/src/admin-types'
+import type { StatisticsOutput } from '../../../../libs/shared-types/src'
 import { Auth } from '../decorator/auth.decorator'
 import { AdminService } from './admin.service'
 

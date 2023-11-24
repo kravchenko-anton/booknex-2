@@ -1,19 +1,16 @@
-import type { AuthorReturnType, BookReturnType } from './return-types'
+import type { Prisma } from '@prisma/client'
+import type { returnFullAuthorObject } from '../../../apps/backend/src/author/return.author.object'
+import type { returnAuthorObjectWithDescription } from '../../../apps/backend/src/author/return.author.object'
 
 
-export interface InfoByIdOutput extends AuthorReturnType {
-	picture: string;
-	description: string;
-	color: string;
-	books: BookReturnType[];
-}
+export type InfoByIdOutput = 	Prisma.AuthorGetPayload<{
+	select: typeof returnFullAuthorObject
+}>
 
-export type AllAuthorOutput = {
-  id: number
-  name: string
-  picture: string
-  description: string
-}[]
+export type AllAuthorOutput = Prisma.
+	AuthorGetPayload<{
+	select: typeof returnAuthorObjectWithDescription
+}>[]
 
 export interface CreateAuthorPayload {
 	name: string
