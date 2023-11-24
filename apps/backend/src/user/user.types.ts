@@ -38,16 +38,8 @@ export const userLibraryFields: UserLibraryCategoryType[] = [
 	UserLibraryFieldsEnum.hiddenShelves
 ]
 
-export interface UserStatisticsType {
-	name: 'Books read' | 'Pages read' | 'Time in read' | 'Reading speed'
-	count: number | string
-}
 
-export interface UserLibraryCatalogType
-	extends Pick<UserStatisticsType, 'count'> {
-	name: keyof typeof CatalogTitleType
-	type: UserLibraryFieldsEnum
-}
+
 
 export const idSelect = {
 	select: { id: true }

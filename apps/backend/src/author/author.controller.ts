@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type { AllAuthorOutput, InfoByIdOutput } from '../../../../libs/shared-types/src/author-types'
-import { returnBookObject } from '../book/return.book.object'
 import { Auth } from '../decorator/auth.decorator'
 import { AuthorService } from './author.service'
 import { CreateAuthorDto, EditAuthorDto } from './dto/manipulation.author.dto'
+import { returnFullAuthorObject } from './return.author.object'
 
 @ApiTags('author')
 @ApiBearerAuth()
@@ -16,14 +16,7 @@ export class AuthorController {
 	@Get('by-id/:id')
 	async infoById(@Param('id') id: string):
 		Promise<InfoByIdOutput> {
-		return this.authorService.getAuthorById(+id, {
-			picture: true,
-			description: true,
-			color: true,
-			books: {
-				select:  returnBookObject
-			}
-		})
+		return  this.authorService.getAuthorById(+id,  returnFullAuthorObject)
 	}
 
 	//  admin

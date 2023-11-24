@@ -1,9 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { randomColor, shadeRGBColor } from '../utils/color.functions'
+import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { CreateAuthorDto, EditAuthorDto } from './dto/manipulation.author.dto'
-import { returnAuthorObject } from './return.author.object'
+import { returnAuthorObject, returnAuthorObjectWithDescription } from './return.author.object'
 
 @Injectable()
 export class AuthorService {
@@ -16,17 +17,13 @@ export class AuthorService {
 				...selectObject
 			}
 		})
-		if (!author) throw new NotFoundException('Author not found').getResponse()
+		if (!author) throw new NotFoundException(`Author ${ErrorsEnum.Not_Found}`).getResponse()
 		return author
 	}
 
-	async all(searchTerm: string | undefined) {
+	async all(searchTerm: string) {
 		return this.prisma.author.findMany({
-			select: {
-				...returnAuthorObject,
-				picture: true,
-				description: true
-			},
+			select: returnAuthorObjectWithDescription,
 			take: 20,
 			...(searchTerm && {
 				where: {
@@ -61,7 +58,7 @@ export class AuthorService {
 			}
 		})
 		if (author.books.length > 0)
-			throw new BadRequestException('Author has books, cannot delete')
+			throw new BadRequestException('Author has books, cannot delete').getResponse()
 		return this.prisma.author.delete({ where: { id } })
 	}
 

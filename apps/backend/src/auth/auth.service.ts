@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt'
 import type { User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { UserService } from '../user/user.service'
+import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { AuthDto, RegisterDto } from './dto/auth.dto'
 
@@ -42,7 +43,7 @@ export class AuthService {
 			}
 		})
 		if (oldUser)
-			throw new BadRequestException('User already exists').getResponse()
+			throw new BadRequestException(`User ${ErrorsEnum.Already_Exist}`).getResponse()
 		const user = await this.prisma.user.create({
 			data: {
 				email: dto.email,
@@ -70,7 +71,7 @@ export class AuthService {
 
 	async refresh(refreshToken: string) {
 		const result: { id: number } = await this.jwt.verifyAsync(refreshToken)
-		if (!result) throw new BadRequestException('Invalid token').getResponse()
+		if (!result) throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
 		const user = await this.usersService.getUserById(result.id, {
 			email: true,
 			id: true

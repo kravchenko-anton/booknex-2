@@ -5,7 +5,9 @@ import { returnAuthorObject } from '../author/return.author.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { randomColor, shadeRGBColor } from '../utils/color.functions'
+import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
+import { defaultReturnObject } from '../utils/return.default.object'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 import type { ReviewBookDto } from './dto/review.book.dto'
 import { returnBookObjectWithAuthor } from './return.book.object'
@@ -26,7 +28,7 @@ export class BookService {
 				...selectObject
 			}
 		})
-		if (!book) throw new NotFoundException('Book not found').getResponse()
+		if (!book) throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
 		return book
 	}
 
@@ -38,14 +40,14 @@ export class BookService {
 				file: true
 			}
 		})
-		if (!book) throw new NotFoundException('Book not found').getResponse()
+		if (!book) throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
 		return {
 			charapters: book.charapters,
 			file: book.file
 		}
 	}
 
-	async all(searchTerm: string | undefined) {
+	async all(searchTerm: string) {
 		return this.prisma.book.findMany({
 			take: 20,
 			select: returnBookObjectWithAuthor,
@@ -136,6 +138,7 @@ export class BookService {
 	emotions() {
 		return this.prisma.emotion.findMany({
 			select: {
+				...defaultReturnObject,
 				name: true,
 				path: true
 			}
@@ -148,7 +151,7 @@ export class BookService {
 		const emoji = await this.prisma.emotion.findUnique({
 			where: { name: dto.emotion }
 		})
-		if (!emoji) throw new NotFoundException('Emotion not found').getResponse()
+		if (!emoji) throw new NotFoundException(`Emotion ${ErrorsEnum.Not_Found}`).getResponse()
 		await this.prisma.review.create({
 			data: {
 				user: {

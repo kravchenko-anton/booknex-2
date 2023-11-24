@@ -3,6 +3,7 @@ import type { Prisma } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { returnShelfObject } from '../shelf/return.shelf.object'
+import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { UserUpdateBioDto, UserUpdatePasswordDto } from './dto/user.update.dto'
 import { returnUserObject } from './return.user.object'
@@ -28,7 +29,7 @@ export class UserService {
 				...selectObject
 			}
 		})
-		if (!user) throw new NotFoundException('User not found').getResponse()
+		if (!user) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
 		return user
 	}
 
@@ -50,7 +51,7 @@ export class UserService {
 				}
 			}
 		})
-		if (!library) throw new NotFoundException('User not found').getResponse()
+		if (!library) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
 		return {
 			[UserLibraryFieldsEnum.readingBooks]: library.readingBooks,
 			[UserLibraryFieldsEnum.finishedBooks]: library.finishedBooks,
@@ -90,7 +91,7 @@ export class UserService {
 		})
 		const isPasswordValid = await verify(user.password, dto.oldPassword)
 		if (!isPasswordValid)
-			throw new BadRequestException('Invalid password').getResponse()
+			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
 		await this.prisma.user.update({
 			where: { id: userId },
 			data: {
@@ -117,11 +118,11 @@ export class UserService {
 			where: { email: dto.email }
 		})
 
-		if (!isSameUser) throw new NotFoundException('User not found').getResponse()
+		if (!isSameUser) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
 
 		if (isSameUser && isSameUser.id !== userId)
 			throw new BadRequestException(
-				'User with this email already exists'
+				`User with this email ${ErrorsEnum.Already_Exist}`
 			).getResponse()
 
 		const user = await this.getUserById(userId, {
@@ -137,10 +138,9 @@ export class UserService {
 		return this.getUserById(userId)
 	}
 
-	async all(cursorId: number) {
+	async all(searchTerm: string) {
 		return this.prisma.user.findMany({
 			take: 20,
-			cursor: cursorId && { id: cursorId },
 			select: {
 				...returnUserObject,
 				_count: {
@@ -150,7 +150,14 @@ export class UserService {
 						watchedShelves: true,
 						hiddenShelves: true
 					}
-				}
+				},
+				...(searchTerm && {
+					where: {
+						title: {
+							contains: searchTerm
+						}
+					}
+				})
 			}
 		})
 	}
@@ -173,7 +180,7 @@ export class UserService {
 			}
 		})
 		if (!favoriteList)
-			throw new NotFoundException('User not found').getResponse()
+			throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
 
 		return {
 			readingBooks: favoriteList.readingBooks.map(book => book.id),
@@ -185,7 +192,7 @@ export class UserService {
 
 	async toggle(userId: number, id: number, type: UserLibraryCategoryType) {
 		if (!userLibraryFields.includes(type))
-			throw new BadRequestException('Invalid type').getResponse()
+			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
 		const existBookOrShelf = await this.prisma[
 			DesignationType[type] as 'book'
 		].findFirst({
@@ -193,7 +200,7 @@ export class UserService {
 			select: { id: true }
 		})
 		if (!existBookOrShelf)
-			throw new NotFoundException(`${DesignationType[type]} not found`)
+			throw new NotFoundException(`${DesignationType[type]} ${ErrorsEnum.Not_Found}`).getResponse()
 
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect,

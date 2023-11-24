@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { returnAuthorObject } from '../author/return.author.object'
+import { returnAuthorWithPicture } from '../author/return.author.object'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
+import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
+import { ReturnGenreObject } from './return.genre.object'
 
 @Injectable()
 export class GenreService {
@@ -11,8 +13,7 @@ export class GenreService {
 	all() {
 		return this.prisma.genre.findMany({
 			select: {
-				...defaultReturnObject,
-				name: true,
+				...ReturnGenreObject,
 				color: true
 			}
 		})
@@ -24,8 +25,7 @@ export class GenreService {
 				id: +id
 			},
 			select: {
-				...defaultReturnObject,
-				name: true,
+				...ReturnGenreObject,
 				color: true,
 				similar: {
 					select: {
@@ -34,7 +34,7 @@ export class GenreService {
 				}
 			}
 		})
-		if (!genre) throw new NotFoundException('Genre not found').getResponse()
+		if (!genre) throw new NotFoundException(`Genre ${ErrorsEnum.Not_Found}`).getResponse()
 		const newestBooks = await this.prisma.book.findMany({
 			take: 10,
 			select: {
@@ -85,10 +85,7 @@ export class GenreService {
 		})
 		const bestAuthors = await this.prisma.author.findMany({
 			take: 10,
-			select: {
-				...returnAuthorObject,
-				picture: true
-			},
+			select: returnAuthorWithPicture,
 			where: {
 				books: {
 					some: {
@@ -106,11 +103,11 @@ export class GenreService {
 		})
 		return {
 			...genre,
-			similar: undefined,
 			newestBooks,
 			bestSellers,
 			bestSellersFromSimilar,
-			bestAuthors
+			bestAuthors,
+			similar: undefined
 		}
 	}
 }

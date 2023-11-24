@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { ShelfReturnType } from '../../../../libs/shared-types/src/return-types'
-import type { ShelfByIdOutput } from '../../../../libs/shared-types/src/shelf-types'
+import type { ShelfByIdOutput, ShelfCatalogOutput } from '../../../../libs/shared-types/src/shelf-types'
+import type { AllShelfOutput } from '../../../../libs/shared-types/src/shelf-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { CreateShelfDto, UpdateShelfDto } from './dto/shelf.dto'
@@ -14,7 +14,7 @@ export class ShelfController {
 	constructor(private readonly shelvesService: ShelfService) {}
 	@Get('/catalog')
 	@Auth()
-	async catalog(@CurrentUser('id') userId: number): Promise<ShelfReturnType[]> {
+	async catalog(@CurrentUser('id') userId: number): Promise<ShelfCatalogOutput> {
 		return this.shelvesService.catalog(userId)
 	}
 
@@ -27,8 +27,8 @@ export class ShelfController {
 	// admin
 	@Get('/all')
 	@Auth('admin')
-	async all(@Query('cursor') cursorId: number): Promise<ShelfReturnType[]> {
-		return this.shelvesService.all(+cursorId || undefined)
+	async all(@Query('searchTerm') searchTerm: string): Promise<AllShelfOutput> {
+		return this.shelvesService.all(searchTerm)
 	}
 
 	@Post('/create')

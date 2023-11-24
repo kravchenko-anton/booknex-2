@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
-import { abbrNumber } from '../utils/abbr-number'
+import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { CreateShelfDto, UpdateShelfDto } from './dto/shelf.dto'
 import { returnShelfObject } from './return.shelf.object'
@@ -19,7 +19,7 @@ export class ShelfService {
 				...selectObject
 			}
 		})
-		if (!shelf) throw new NotFoundException('Shelf not found').getResponse()
+		if (!shelf) throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
 		return shelf
 	}
 
@@ -47,20 +47,14 @@ export class ShelfService {
 			}
 		})
 
-		if (!shelf) throw new NotFoundException('Shelf not found').getResponse()
+		if (!shelf) throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
 		return {
 			...shelf,
 			_count: undefined,
-			statistics: [
-				{
-					title: 'Books',
-					count: shelf._count.books
-				},
-				{
-					title: 'Watched',
-					count: `${abbrNumber(shelf._count.watched, 1)}+`
-				}
-			]
+			statistics: {
+				'Books': shelf._count.books,
+				'Watched': shelf._count.watched,
+			}
 		}
 	}
 
@@ -100,11 +94,17 @@ export class ShelfService {
 		return [...likedShelves, ...otherShelves]
 	}
 
-	async all(cursorId: number) {
+	async all(searchTerm: string) {
 		return this.prisma.shelf.findMany({
 			take: 20,
 			select: returnShelfObject,
-			cursor: cursorId && { id: cursorId }
+			...(searchTerm && {
+				where: {
+					title: {
+						contains: searchTerm
+					}
+				}
+			}),
 		})
 	}
 
@@ -115,7 +115,7 @@ export class ShelfService {
 			}
 		})
 		if (shelfExists)
-			throw new NotFoundException('Shelf already exists').getResponse()
+			throw new NotFoundException(`Shelf ${ErrorsEnum.Already_Exist}`).getResponse()
 		return this.prisma.shelf.create({
 			data: {
 				title: dto.title,
@@ -145,7 +145,7 @@ export class ShelfService {
 				}
 			}
 		})
-		if (booksExists.length !== dto.books.length) throw new NotFoundException('Some books not found').getResponse()
+		if (booksExists.length !== dto.books.length) throw new NotFoundException(`Some books ${ErrorsEnum.Not_Found}`).getResponse()
 
 		return this.prisma.shelf.update({
 			where: {

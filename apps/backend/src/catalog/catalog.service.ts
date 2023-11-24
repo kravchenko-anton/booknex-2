@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common'
-import { returnBookObjectWithAuthor } from '../book/return.book.object'
+import {
+	returnBookObjectWithAuthor,
+	returnBookObjectWithPages,
+	returnColorBookObjectWithAuthor
+} from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
@@ -9,13 +13,13 @@ export class CatalogService {
 	constructor(private readonly prisma: PrismaService) {}
 	async catalog(userId: number) {
 		return {
-			mostRelatedGenres: await this.getMostRelatedGenres(userId),
-			recommendations: await this.getRecommendations(userId),
-			popularNow: await this.getPopularBooks(),
-			bestSellers: await this.getBestSellingBooks(),
-			newReleases: await this.getNewReleases(),
-			sameBreath: await this.getSameBreathBooks(),
-			genres: await this.getGenres()
+			mostRelatedGenres: await this.MostRelatedGenres(userId),
+			recommendations: await this.Recommendations(userId),
+			popularNow: await this.PopularBooks(),
+			bestSellers: await this.BestSellingBooks(),
+			newReleases: await this.NewReleases(),
+			sameBreath: await this.SameBreathBooks(),
+			genres: await this.Genres()
 		}
 	}
 
@@ -89,7 +93,7 @@ export class CatalogService {
 		})
 	}
 
-	private async getMostRelatedGenres(userId: number) {
+	private async MostRelatedGenres(userId: number) {
 		const genres = await this.prisma.genre.findMany({
 			select: {
 				...defaultReturnObject,
@@ -110,7 +114,7 @@ export class CatalogService {
 					},
 					{
 						name: {
-							in: await this.getUserInitialGenres(userId)
+							in: await this.UserInitialGenres(userId)
 						}
 					}
 				]
@@ -120,7 +124,7 @@ export class CatalogService {
 		return this.sortAndSliceGenres(genres)
 	}
 
-	private async getUserInitialGenres(userId: number) {
+	private async UserInitialGenres(userId: number) {
 		return this.prisma.user
 			.findUnique({
 				where: {
@@ -150,22 +154,18 @@ export class CatalogService {
 			.slice(0, 5)
 	}
 
-	private getPopularBooks() {
+	private PopularBooks() {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: {
 				popularity: 'desc'
 			},
-			select: {
-				...returnBookObjectWithAuthor,
-				description: true,
-				color: true
-			}
+			select: returnColorBookObjectWithAuthor
 
 		})
 	}
 
-	private getBestSellingBooks() {
+	private BestSellingBooks() {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: {
@@ -175,7 +175,7 @@ export class CatalogService {
 		})
 	}
 
-	private getNewReleases() {
+	private NewReleases() {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: {
@@ -185,16 +185,13 @@ export class CatalogService {
 		})
 	}
 
-	private getSameBreathBooks() {
+	private SameBreathBooks() {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: {
 				popularity: 'desc'
 			},
-			select: {
-				...returnBookObjectWithAuthor,
-				pages: true
-			},
+			select: returnBookObjectWithPages,
 			where: {
 				pages: {
 					lte: 160
@@ -203,12 +200,12 @@ export class CatalogService {
 		})
 	}
 
-	private getGenres() {
+	private Genres() {
 		return this.prisma.genre.findMany({
 			take: 5,
 			select: {
           ...ReturnGenreObject,
-      				books: {
+      		books: {
 					orderBy: {
 						updatedAt: 'desc'
 					},
@@ -219,7 +216,7 @@ export class CatalogService {
 		})
 	}
 
-	private async getRecommendations(userId: number) {
+	private async Recommendations(userId: number) {
 		const likedGenres = await this.prisma.genre.findMany({
 			select: {
 				name: true

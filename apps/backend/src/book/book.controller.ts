@@ -1,8 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { BookByIdOutput, EmotionOutput } from '../../../../libs/shared-types/src/book-types'
-import type { GetEbpubOutput } from '../../../../libs/shared-types/src/book-types'
-import type { BookReturnTypeWithAuthor, ReviewReturnType } from '../../../../libs/shared-types/src/return-types'
+import type {
+	AllBooksOutput,
+	BookByIdOutput,
+	EmotionOutput,
+	GetEbpubOutput,
+	ReviewByIdOutput
+} from '../../../../libs/shared-types/src/book-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'
@@ -43,7 +47,7 @@ export class BookController {
 	async reviewsById(
 		@Param('id') bookId: string,
 		@Query('cursor') cursorId: number
-	): Promise<ReviewReturnType[]> {
+	): Promise<ReviewByIdOutput> {
 		return this.bookService.reviewsById(+bookId, +cursorId || undefined)
 	}
 
@@ -57,7 +61,7 @@ export class BookController {
 
 	@Auth('admin')
 	@Get('/all')
-	async all(@Query('cursor') searchTerm: string): Promise<BookReturnTypeWithAuthor[]> {
+	async all(@Query('searchTerm') searchTerm: string): Promise<AllBooksOutput> {
 		return this.bookService.all(searchTerm)
 	}
 

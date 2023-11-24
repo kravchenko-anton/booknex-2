@@ -1,6 +1,6 @@
 import { Body, Controller, Param, Post, Put } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import type { AuthPayload, CheckEmailOutput, CheckUsernamePayload } from '../../../../libs/shared-types/src'
+import type { AuthPayload, CheckEmailOutput } from '../../../../libs/shared-types/src'
 import { AuthService } from './auth.service'
 import { AuthDto, RefreshDto, RegisterDto } from './dto/auth.dto'
 
@@ -9,7 +9,7 @@ import { AuthDto, RefreshDto, RegisterDto } from './dto/auth.dto'
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 	@Put('/check-email/:email')
-	async checkEmail(@Param('email') email: CheckUsernamePayload['email']):Promise<CheckEmailOutput> {
+	async checkEmail(@Param('email') email: string):Promise<CheckEmailOutput> {
 		return this.authService.checkEmail(email)
 	}
 
