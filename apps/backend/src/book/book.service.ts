@@ -118,7 +118,7 @@ export class BookService {
 				charapters: dto.charapters || book.charapters,
 				author: {
 					connect: {
-						name: dto.author || book.author.name
+						name: dto.author.name || book.author.name
 					}
 				},
 				majorGenre: {

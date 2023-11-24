@@ -1,14 +1,12 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post,
-	Query
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import type {
+	AllUsersOutput,
+	FavoriteListOutput,
+	ToggleOutput,
+	UserLibraryOutput,
+	UserProfileOutput
+} from '../../../../libs/shared-types/src/user-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { FilenameDto } from '../storage/dto/upload.dto'
@@ -23,25 +21,17 @@ export class UserController {
 	constructor(private readonly usersService: UserService) {}
 	@Auth()
 	@Get('/profile')
-	async profile(@CurrentUser('id') id: number) {
+	async profile(@CurrentUser('id') id: number): Promise<UserProfileOutput> {
 		return this.usersService.profile(+id)
 	}
 
 	@Auth()
 	@Get('/library')
-	async library(@CurrentUser('id') id: number) {
+	async library(@CurrentUser('id') id: number): Promise<UserLibraryOutput> {
 		return this.usersService.library(+id)
 	}
 
-	@Auth()
-	@Get('/library/:type')
-	async libraryByType(
-		@CurrentUser('id') id: number,
-		@Param('type')
-		type: UserLibraryCategoryType
-	) {
-		return this.usersService.libraryByType(+id, type)
-	}
+
 
 	@Auth()
 	@Post('/update-bio')
@@ -69,25 +59,25 @@ export class UserController {
 
 	@Auth()
 	@Get('/favorite-list')
-	async favoriteList(@CurrentUser('id') id: number) {
+	async favoriteList(@CurrentUser('id') id: number): Promise<FavoriteListOutput> {
 		return this.usersService.favoriteList(+id)
 	}
 
 	@Auth()
-	@Patch('/toggle/:type/:id')
+	@Patch('/toggle/:id')
 	async toggle(
 		@CurrentUser('id') userId: number,
 		@Param('id') id: string,
-		@Param('type')
+		@Query('type')
 		type: UserLibraryCategoryType
-	) {
+	): Promise<ToggleOutput> {
 		return this.usersService.toggle(userId, +id, type)
 	}
 
 	// admin
 	@Auth('admin')
 	@Get('/all')
-	async all(@Query('cursor') cursorId: number) {
+	async all(@Query('cursor') cursorId: number): Promise<AllUsersOutput> {
 		return this.usersService.all(+cursorId || undefined)
 	}
 

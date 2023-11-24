@@ -6,7 +6,7 @@ import { returnShelfObject } from '../shelf/return.shelf.object'
 import { PrismaService } from '../utils/prisma.service'
 import type { UserUpdateBioDto, UserUpdatePasswordDto } from './dto/user.update.dto'
 import { returnUserObject } from './return.user.object'
-import type { UserLibraryCatalogType, UserLibraryCategoryType, UserStatisticsType } from './user.types'
+import type { UserLibraryCategoryType } from './user.types'
 import {
 	CatalogTitleType,
 	DesignationType,
@@ -33,71 +33,32 @@ export class UserService {
 	}
 
 	async library(id: number) {
-		const library = await this.getUserById(id, {
-			email: false,
-			name: false,
-			id: false,
-			createdAt: false,
-			updatedAt: false,
-			_count: {
-				select: {
-					finishedBooks: true,
-					readingBooks: true,
-					watchedShelves: true,
-					hiddenShelves: true
+		const library = await this.prisma.user.findUnique({
+			where: { id },
+			select: {
+				readingBooks: {
+					select: returnBookObjectWithAuthor
+				},
+				finishedBooks: {
+					select: returnBookObjectWithAuthor
+				},
+				watchedShelves: {
+					select: returnShelfObject
+				},
+				hiddenShelves: {
+					select: returnShelfObject
 				}
 			}
 		})
+		if (!library) throw new NotFoundException('User not found').getResponse()
 		return {
-			books: [
-				{
-					name: CatalogTitleType.readingBooks,
-					type: UserLibraryFieldsEnum.readingBooks,
-					count: library._count.readingBooks
-				},
-				{
-					name: CatalogTitleType.finishedBooks,
-					type: UserLibraryFieldsEnum.finishedBooks,
-					count: library._count.finishedBooks
-				}
-			] as UserLibraryCatalogType[],
-			shelves: [
-				{
-					name: CatalogTitleType.watchedShelves,
-					type: UserLibraryFieldsEnum.watchedShelves,
-					count: library._count.watchedShelves
-				},
-				{
-					name: CatalogTitleType.hiddenShelves,
-					type: UserLibraryFieldsEnum.hiddenShelves,
-					count: library._count.hiddenShelves
-				}
-			] as UserLibraryCatalogType[]
+			[UserLibraryFieldsEnum.readingBooks]: library.readingBooks,
+			[UserLibraryFieldsEnum.finishedBooks]: library.finishedBooks,
+			[UserLibraryFieldsEnum.watchedShelves]: library.watchedShelves,
+			[UserLibraryFieldsEnum.hiddenShelves]: library.hiddenShelves,
 		}
 	}
 
-	async libraryByType(id: number, type: UserLibraryCategoryType) {
-		if (!userLibraryFields.includes(type))
-			throw new BadRequestException('Invalid type').getResponse()
-		const elements = await this.getUserById(id, {
-			[type]: {
-				select:
-					'book' === DesignationType[type]
-						? returnBookObjectWithAuthor
-						: {
-								...returnShelfObject,
-								description: true
-						  },
-				orderBy: {
-					createdAt: 'desc'
-				}
-			}
-		})
-		return {
-			title: CatalogTitleType[type],
-			[type]: elements[type]
-		}
-	}
 
 	async profile(id: number) {
 		const user = await this.getUserById(id, {
@@ -116,20 +77,10 @@ export class UserService {
 			_sum: { pages: true }
 		})
 
-		const statistics: UserStatisticsType[] = [
-			{
-				name: 'Books read',
-				count: bookCount ?? 0
-			},
-			{
-				name: 'Pages read',
-				count: totalPageCount ?? 0
-			}
-
-		]
 		return {
 			...user,
-			statistics
+			bookCount: bookCount ?? 0,
+			totalPageCount: totalPageCount ?? 0,
 		}
 	}
 
@@ -212,12 +163,24 @@ export class UserService {
 	}
 
 	async favoriteList(userId: number) {
-		return this.getUserById(+userId, {
-			readingBooks: idSelect,
-			finishedBooks: idSelect,
-			watchedShelves: idSelect,
-			hiddenShelves: idSelect
+		const favoriteList = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: {
+				readingBooks: idSelect,
+				finishedBooks: idSelect,
+				watchedShelves: idSelect,
+				hiddenShelves: idSelect
+			}
 		})
+		if (!favoriteList)
+			throw new NotFoundException('User not found').getResponse()
+
+		return {
+			readingBooks: favoriteList.readingBooks.map(book => book.id),
+			finishedBooks: favoriteList.finishedBooks.map(book => book.id),
+			watchedShelves: favoriteList.watchedShelves.map(shelf => shelf.id),
+			hiddenShelves: favoriteList.hiddenShelves.map(shelf => shelf.id)
+		}
 	}
 
 	async toggle(userId: number, id: number, type: UserLibraryCategoryType) {

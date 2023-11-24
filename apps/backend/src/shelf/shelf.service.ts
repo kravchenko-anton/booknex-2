@@ -3,8 +3,7 @@ import type { Prisma } from '@prisma/client'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { abbrNumber } from '../utils/abbr-number'
 import { PrismaService } from '../utils/prisma.service'
-import type { CreateShelfDto } from './dto/create.shelf.dto'
-import type { UpdateShelfDto } from './dto/update.shelf.dto'
+import type { CreateShelfDto, UpdateShelfDto } from './dto/shelf.dto'
 import { returnShelfObject } from './return.shelf.object'
 
 @Injectable()
@@ -67,10 +66,7 @@ export class ShelfService {
 
 	async catalog(userId: number) {
 		const likedShelves = await this.prisma.shelf.findMany({
-			select: {
-				...returnShelfObject,
-				picture: true
-			},
+			select: returnShelfObject,
 			where: {
 				watched: {
 					some: {
@@ -81,9 +77,7 @@ export class ShelfService {
 		})
 		const otherShelves = await this.prisma.shelf.findMany({
 			take: 10,
-			select: {
-				...returnShelfObject
-			},
+			select: returnShelfObject,
 			orderBy: {
 				watched: {
 					_count: 'desc'
@@ -107,9 +101,9 @@ export class ShelfService {
 	}
 
 	async all(cursorId: number) {
-		console.log(cursorId)
 		return this.prisma.shelf.findMany({
 			take: 20,
+			select: returnShelfObject,
 			cursor: cursorId && { id: cursorId }
 		})
 	}
@@ -151,9 +145,8 @@ export class ShelfService {
 				}
 			}
 		})
-		if (booksExists.length !== dto.books.length) {
-			throw new NotFoundException('Some books not found').getResponse()
-		}
+		if (booksExists.length !== dto.books.length) throw new NotFoundException('Some books not found').getResponse()
+
 		return this.prisma.shelf.update({
 			where: {
 				id: +id

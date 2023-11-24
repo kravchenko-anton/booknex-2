@@ -1,6 +1,8 @@
 import { IsEmail, IsOptional, MinLength } from 'class-validator'
+import type { UserUpdatePasswordPayload, UserUpdatePayload } from '../../../../../libs/shared-types/src/user-types'
 
-export class UserUpdateBioDto {
+
+export class UserUpdateBioDto implements UserUpdatePayload {
 	@IsEmail()
 	email: string
 
@@ -8,7 +10,7 @@ export class UserUpdateBioDto {
 	name: string
 }
 
-export class UserUpdatePasswordDto {
+export class UserUpdatePasswordDto implements UserUpdatePasswordPayload {
 	@MinLength(8, {
 		message: 'Password is too short. Minimal length is characters'
 	})
