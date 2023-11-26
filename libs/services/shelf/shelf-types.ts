@@ -1,5 +1,5 @@
-import type { returnShelfObject } from '@/backend/shelf/return.shelf.object'
 import type { Prisma } from '@prisma/client'
+import type { returnShelfObject } from '../../../apps/backend/src/shelf/return.shelf.object'
 
 export type ShelfByIdOutput = Prisma.ShelfGetPayload<{
 	select: typeof returnShelfObject & {

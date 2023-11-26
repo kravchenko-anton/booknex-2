@@ -1,4 +1,4 @@
-import type { StorageFolderType } from '@/backend/storage/storage.types'
+import type { StorageFolderType } from '../../../apps/backend/src/storage/storage.types'
 
 export type UploadOutput = {
 	name: string

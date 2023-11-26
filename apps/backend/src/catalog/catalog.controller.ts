@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { CatalogOutput, SearchExamplesOutput, SearchOutput } from '../../../../libs/shared-types/src/catalog.types'
+import type { CatalogOutput, SearchExamplesOutput, SearchOutput } from '../../../../libs/services/catalog/catalog.types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { CatalogService } from './catalog.service'

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { UploadOutput } from '../../../../libs/shared-types/src/storage-types'
+import type { UploadOutput } from '../../../../libs/services/storage/storage-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { FilenameDto, ReplacementDto } from './dto/upload.dto'

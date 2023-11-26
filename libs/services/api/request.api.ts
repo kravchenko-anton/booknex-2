@@ -1,7 +1,7 @@
-import instance from '@/services/api/interceptors'
-import { errorCatch } from '@/utils/catch-error'
-import { errorToast } from '@/utils/error-toast'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { errorCatch } from '../../../apps/mobile/src/utils/catch-error'
+import { errorToast } from '../../../apps/mobile/src/utils/error-toast'
+import instance from './interceptors'
 
 export const request = async <T>(config: AxiosRequestConfig) => {
 	const onSuccess = (response: AxiosResponse<T>) => response.data

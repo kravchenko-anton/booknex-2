@@ -1,6 +1,6 @@
-import type { AuthPayload, CheckEmailOutput } from '@/shared-types/auth-types'
 import { Body, Controller, Param, Post, Put } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
+import type { AuthPayload, CheckEmailOutput } from '../../../../libs/services/auth/auth-types'
 import { AuthService } from './auth.service'
 import { AuthDto, RefreshDto, RegisterDto } from './dto/auth.dto'
 

@@ -1,10 +1,9 @@
-import type {
-	returnBookObjectWithAuthor,
-	returnBookObjectWithPages, returnBookObjectWithStatistics,
-	returnColorBookObjectWithAuthor
-} from '@/backend/book/return.book.object'
-import type { ReturnGenreObject, ReturnGenreWithBooks } from '@/backend/genre/return.genre.object'
 import type { Prisma } from '@prisma/client'
+import type {
+	returnBookObjectWithAuthor, returnBookObjectWithPages, returnBookObjectWithStatistics,
+	returnColorBookObjectWithAuthor
+} from '../../../apps/backend/src/book/return.book.object'
+import type { ReturnGenreObject, ReturnGenreWithBooks } from '../../../apps/backend/src/genre/return.genre.object'
 
 type BookWithAuthor = Prisma.BookGetPayload<{
 	select: typeof returnBookObjectWithAuthor

@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator'
-import type { ReviewBookPayload } from '../../../../../libs/shared-types/src/book-types'
+import type { ReviewBookPayload } from '../../../../../libs/services/book/book-types'
 
 export class ReviewBookDto implements ReviewBookPayload {
 	@IsString()

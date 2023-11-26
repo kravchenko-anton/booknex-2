@@ -1,6 +1,13 @@
-import type { AllBooksOutput, BookByIdOutput, EmotionOutput, ReviewByIdOutput } from '@/shared-types/book-types'
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import type {
+	AllBooksOutput,
+	BookByIdOutput,
+	EbpubOutput,
+	EmotionOutput,
+	ReviewByIdOutput
+} from '../../../../libs/services/book/book-types'
+
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'
@@ -47,7 +54,7 @@ export class BookController {
 
 	@Auth()
 	@Get('/ebook/:id')
-	async ebookById(@Param('id') bookId: string): Promise<GetEbpubOutput> {
+	async ebookById(@Param('id') bookId: string): Promise<EbpubOutput> {
 		return this.bookService.ebookById(+bookId)
 	}
 

@@ -1,5 +1,5 @@
 import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator'
-import type { BookPayload } from '../../../../../libs/shared-types/src/book-types'
+import type { BookPayload } from '../../../../../libs/services/book/book-types'
 
 
 export class CreateBookDto implements BookPayload {

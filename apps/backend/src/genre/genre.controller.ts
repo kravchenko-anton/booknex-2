@@ -1,7 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { AllGenreOutput } from '../../../../libs/shared-types/src/genre-types'
-import type { GenreByIdOutput } from '../../../../libs/shared-types/src/genre-types'
+import type { AllGenreOutput, GenreByIdOutput } from '../../../../libs/services/genre/genre-types'
 import { Auth } from '../decorator/auth.decorator'
 import { GenreService } from './genre.service'
 

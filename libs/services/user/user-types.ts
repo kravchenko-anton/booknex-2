@@ -1,8 +1,8 @@
-import type { returnBookObjectWithAuthor } from '@/backend/book/return.book.object'
-import type { returnShelfObject } from '@/backend/shelf/return.shelf.object'
-import type { returnUserObject } from '@/backend/user/return.user.object'
-import type { UserLibraryFieldsEnum } from '@/backend/user/user.types'
 import type { Prisma } from '@prisma/client'
+import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
+import type { returnShelfObject } from '../../../apps/backend/src/shelf/return.shelf.object'
+import type { returnUserObject } from '../../../apps/backend/src/user/return.user.object'
+import type { UserLibraryFieldsEnum } from '../../../apps/backend/src/user/user.types'
 
 export type UserProfileOutput = Prisma.UserGetPayload<{
 	select: typeof returnUserObject & {

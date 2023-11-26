@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator'
-import type { FileUploadPayload, ReplacementPayload } from '../../../../../libs/shared-types/src/storage-types'
+import type { FileUploadPayload, ReplacementPayload } from '../../../../../libs/services/storage/storage-types'
 import { StorageFolderType } from '../storage.types'
 
 

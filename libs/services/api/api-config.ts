@@ -1,6 +1,7 @@
 export const SERVER_URL = 'http://10.0.2.2:7777' + '/api'
 export const getAuthUrl = (string: string) => `/auth${string}`
 export const getUsersUrl = (string: string) => `/user${string}`
+export const getAdminUrl = (string: string) => `/admin${string}`
 export const getGenresUrl = (string: string) => `/genre${string}`
 export const getCatalogUrl = (string: string) => `/catalog${string}`
 export const getStorageUrl = (string: string) => `/storage${string}`

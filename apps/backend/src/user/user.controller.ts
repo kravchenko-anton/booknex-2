@@ -6,7 +6,7 @@ import type {
 	ToggleOutput,
 	UserLibraryOutput,
 	UserProfileOutput
-} from '../../../../libs/shared-types/src/user-types'
+} from '../../../../libs/services/user/user-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { FilenameDto } from '../storage/dto/upload.dto'

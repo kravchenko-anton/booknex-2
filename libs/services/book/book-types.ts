@@ -1,9 +1,9 @@
-import type { returnAuthorObject } from '@/backend/author/return.author.object'
-import type { returnBookObjectWithAuthor } from '@/backend/book/return.book.object'
-import type { returnReviewsObject } from '@/backend/book/return.reviews.object'
-import type { ReturnGenreObject } from '@/backend/genre/return.genre.object'
-import type { defaultReturnObject } from '@/backend/utils/return.default.object'
 import type { Prisma } from '@prisma/client'
+import type { returnAuthorObject } from '../../../apps/backend/src/author/return.author.object'
+import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
+import type { returnReviewsObject } from '../../../apps/backend/src/book/return.reviews.object'
+import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
+import type { defaultReturnObject } from '../../../apps/backend/src/utils/return.default.object'
 
 export type EmotionOutput = Prisma.EmotionGetPayload<{
 	select: typeof  defaultReturnObject & {

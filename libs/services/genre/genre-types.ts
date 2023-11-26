@@ -1,7 +1,7 @@
-import type { returnAuthorWithPicture } from '@/backend/author/return.author.object'
-import type { returnBookObjectWithAuthor } from '@/backend/book/return.book.object'
-import type { ReturnGenreObject } from '@/backend/genre/return.genre.object'
 import type { Prisma } from '@prisma/client'
+import type { returnAuthorWithPicture } from '../../../apps/backend/src/author/return.author.object'
+import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
+import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 
 export type AllGenreOutput = Prisma.GenreGetPayload<{
 	select: typeof ReturnGenreObject &  {
