@@ -1,6 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "paths": {
+      "@/shared-types/*": ["./libs/shared-types/*"],
+    },
     "outDir": "../../dist/out-tsc",
     "module": "ES2022",
     "types": [

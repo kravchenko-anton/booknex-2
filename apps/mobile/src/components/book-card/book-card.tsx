@@ -4,7 +4,8 @@ import PressableContainer from '@/components/pressable-container/pressable-conta
 import Image from '@/components/ui/image/image'
 import Title from '@/components/ui/title/title'
 import type { Style } from '@/types/global'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
+
 import type { FC } from 'react'
 import { memo } from 'react'
 

@@ -1,7 +1,8 @@
 import { Button, Field, Layout, Title } from '@/components'
 import { useDebounce, useTypedNavigation } from '@/hooks'
 import { authService } from '@/services/auth-service'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
+
 import { useMutation } from '@tanstack/react-query'
 import type { FC } from 'react'
 import { useEffect } from 'react'

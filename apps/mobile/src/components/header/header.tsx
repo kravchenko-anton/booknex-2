@@ -1,6 +1,7 @@
 import type { HeaderProperties } from '@/components/header/header-types'
 import { useHeader } from '@/components/header/useHeader'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
+
 import type { FC } from 'react'
 import { View } from 'react-native'
 

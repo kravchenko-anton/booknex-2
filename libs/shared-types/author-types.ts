@@ -1,6 +1,5 @@
+import type { returnAuthorObjectWithDescription, returnFullAuthorObject } from '@/backend/author/return.author.object'
 import type { Prisma } from '@prisma/client'
-import type { returnFullAuthorObject } from '../../../apps/backend/src/author/return.author.object'
-import type { returnAuthorObjectWithDescription } from '../../../apps/backend/src/author/return.author.object'
 
 
 export type InfoByIdOutput = 	Prisma.AuthorGetPayload<{

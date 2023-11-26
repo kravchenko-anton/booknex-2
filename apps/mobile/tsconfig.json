@@ -9,7 +9,13 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "@/ui/*": [
+        "../../libs/ui/*"
+      ],
+      "@/icons": [
+        "./assets/icons/index.ts"
+      ],
     },
     "allowJs": true
   }

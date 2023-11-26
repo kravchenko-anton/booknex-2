@@ -3,21 +3,21 @@ import { CalculateSnapPoints } from '@/components/ui/bottom-sheet/calculate-snap
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { shadeBackground } from '@/screens/reading/settings/reading-ui'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { SCREEN_HEIGHT } from '@/utils/dimensions'
 import { shadeRGBColor } from '@/utils/shade-color'
 import { useEffect } from 'react'
 import type { GestureResponderEvent } from 'react-native'
 import { Gesture } from 'react-native-gesture-handler'
 import {
-  Easing,
-  Extrapolation,
-  interpolate,
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming
+	Easing,
+	Extrapolation,
+	interpolate,
+	runOnJS,
+	useAnimatedStyle,
+	useSharedValue,
+	withSpring,
+	withTiming
 } from 'react-native-reanimated'
 // TODO: сделать в bottomSheet всё максимально оптимизировано
 export const useBottomSheet = () => {

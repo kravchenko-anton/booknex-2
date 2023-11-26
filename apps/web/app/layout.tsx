@@ -1,4 +1,5 @@
 import { Space_Grotesk } from 'next/font/google'
+import type { ReactNode } from 'react'
 import Providers from '../providers/query-provider'
 import './global.css'
 
@@ -13,7 +14,7 @@ const SpaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <html lang="en">

@@ -2,7 +2,7 @@ import { Pen, Settings } from '@/../assets/icons'
 import { AnimatedIcon, BigLoader, FlatList, Header, Image, PressableContainer, ScrollLayout, Title } from '@/components'
 import { useTypedNavigation } from '@/hooks'
 import { userServices } from '@/services/user-service'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { useQuery } from '@tanstack/react-query'
 import { View } from 'react-native'
 

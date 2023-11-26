@@ -1,15 +1,15 @@
-import { ChevronLeft } from '@/../assets/icons'
 import type { AnimatedHeaderProperties } from '@/components/header/animated-header/animated-header-types'
 import { useHeaderAnimation } from '@/components/header/animated-header/header-animation'
 import { HeaderElementComponent } from '@/components/header/useHeader'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import Title from '@/components/ui/title/title'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
-import { AnimatedView } from '@/types/component-types'
-import { Color } from '@/utils/color'
+import { ChevronLeft } from '@/icons'
+import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { AnimatedView } from 'src/components/animated'
 
 const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 	const { goBack } = useTypedNavigation()

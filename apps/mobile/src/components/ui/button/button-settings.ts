@@ -1,4 +1,4 @@
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 
 export const BackgroundColor = {
 	primary: Color.primary,

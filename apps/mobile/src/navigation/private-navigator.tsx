@@ -1,5 +1,5 @@
 import { useAuth } from '@/hooks/useAuth'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import type { FC } from 'react'
 

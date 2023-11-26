@@ -1,4 +1,4 @@
-import { AnimatedView } from '@/types/component-types'
+import { AnimatedView } from '@/components/animated'
 import React, { useEffect, useRef } from 'react'
 import type { ViewProps } from 'react-native'
 import useEvent from '../hooks/use-event'

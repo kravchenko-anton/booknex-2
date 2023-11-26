@@ -1,6 +1,6 @@
 import { Button, Layout, Title } from '@/components'
 import { useTypedNavigation } from '@/hooks'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import type { ImageSourcePropType } from 'react-native'
 import { Image, View } from 'react-native'

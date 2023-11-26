@@ -1,6 +1,6 @@
 import { fontSettings } from '@/components/ui/title/title-settings'
 import type { TitleProperties } from '@/components/ui/title/title-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Text } from 'react-native'

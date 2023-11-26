@@ -1,5 +1,5 @@
 import type { Theme } from '@/screens/reading/reader/types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 
 export const ImportantProperty = (property: string | number) =>
 	property + ' !important'

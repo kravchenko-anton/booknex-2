@@ -2,7 +2,7 @@ import { usePressAnimation } from '@/animations/press-animation'
 import { Title } from '@/components'
 import type { IMenuItem, TypeNavigate } from '@/navigation/bottom-menu/menu.interface'
 import { AnimatedPressable } from '@/types/component-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { Pressable } from 'react-native'
 

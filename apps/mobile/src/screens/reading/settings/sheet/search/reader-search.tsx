@@ -1,6 +1,6 @@
 import Field from '@/components/ui/field/field'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'

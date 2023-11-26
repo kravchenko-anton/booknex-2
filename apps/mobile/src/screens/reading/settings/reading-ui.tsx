@@ -4,7 +4,7 @@ import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-l
 import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
 import { useReadingAnimation } from '@/screens/reading/settings/reading-ui-animation'
 import { AnimatedView } from '@/types/component-types'
-import type { LineColorType } from '@/utils/color'
+import type { LineColorType } from '@/ui/colors'
 import { shadeRGBColor } from '@/utils/shade-color'
 import { StatusBar } from 'expo-status-bar'
 import type { FC } from 'react'

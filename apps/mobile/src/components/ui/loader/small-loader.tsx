@@ -1,4 +1,4 @@
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { memo } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 

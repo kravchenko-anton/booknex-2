@@ -1,6 +1,7 @@
 import { Header, LargeHeaderScrollLayout, Title } from '@/components'
 import type { BookLayoutProperties } from '@/screens/book/book-layout/book-layout-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
+
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'
 

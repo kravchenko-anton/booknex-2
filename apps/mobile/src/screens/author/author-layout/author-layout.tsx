@@ -1,7 +1,8 @@
 import { Header, Image, Title } from '@/components'
 import LargeHeaderScrollLayout from '@/components/layout/header-scroll-layout/large-header-scroll-layout'
+
 import type { AuthorLayoutProperties } from '@/screens/author/author-layout/author-layout-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'
 

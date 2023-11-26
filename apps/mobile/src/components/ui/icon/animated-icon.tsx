@@ -1,5 +1,4 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import { BorderRadiusSetting, PaddingSetting } from '@/components/ui/global-settings'
 import {
 	BackgroundColorSetting,
 	BorderColorSetting,
@@ -8,7 +7,8 @@ import {
 } from '@/components/ui/icon/icon-settings'
 import type { IconProperties } from '@/components/ui/icon/icon-types'
 import type { Style } from '@/types/global'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
+import { BorderRadiusSetting, PaddingSetting } from '@/ui/ui-style'
 import type { FC } from 'react'
 import { memo } from 'react'
 

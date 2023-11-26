@@ -1,12 +1,6 @@
+import type { AllBooksOutput, BookByIdOutput, EmotionOutput, ReviewByIdOutput } from '@/shared-types/book-types'
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type {
-	AllBooksOutput,
-	BookByIdOutput,
-	EmotionOutput,
-	GetEbpubOutput,
-	ReviewByIdOutput
-} from '../../../../libs/shared-types/src/book-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'

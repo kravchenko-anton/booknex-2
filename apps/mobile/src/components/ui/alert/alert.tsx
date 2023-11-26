@@ -1,10 +1,9 @@
 import Button from '@/components/ui/button/button'
 import Title from '@/components/ui/title/title'
-import { useAction } from '@/hooks/useAction'
-import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { AnimatedPressable, AnimatedView } from '@/types/component-types'
+import { useAction, useTypedSelector } from '@/hooks'
 import type { FC } from 'react'
 import { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated'
+import { AnimatedPressable, AnimatedView } from 'src/components/animated'
 // TODO: возможно пофиксить анимацию (может быть баганая)
 
 const Alert: FC = () => {

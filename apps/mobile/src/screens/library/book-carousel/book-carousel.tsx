@@ -1,6 +1,7 @@
 import { Smartphone } from '@/../assets/icons'
 import { BookCard, FlatList, Icon, Title } from '@/components'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
+
 import { shadeRGBColor } from '@/utils/shade-color'
 import { LinearGradient } from 'expo-linear-gradient'
 import { View } from 'react-native'

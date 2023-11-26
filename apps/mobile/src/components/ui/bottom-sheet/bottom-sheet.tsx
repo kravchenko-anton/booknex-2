@@ -1,5 +1,5 @@
+import { AnimatedView } from '@/components/animated'
 import { useBottomSheet } from '@/components/ui/bottom-sheet/useBottomSheet'
-import { AnimatedView } from '@/types/component-types'
 import { SCREEN_HEIGHT } from '@/utils/dimensions'
 import { StatusBar } from 'expo-status-bar'
 import type { FC } from 'react'

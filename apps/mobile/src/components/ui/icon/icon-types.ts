@@ -1,5 +1,5 @@
 import type { PressableDefaultProperties } from '@/types/component-types'
-import type { ColorProperties, LineColorType } from '@/utils/color'
+import type { ColorProperties, LineColorType } from '@/ui/colors'
 import type { FC } from 'react'
 import type { SvgProps } from 'react-native-svg'
 

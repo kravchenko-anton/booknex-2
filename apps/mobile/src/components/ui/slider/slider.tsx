@@ -1,5 +1,5 @@
 import type { ViewDefaultProperties } from '@/types/component-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { WINDOW_WIDTH } from '@/utils/dimensions'
 import type { ComponentType } from 'react'
 import React, { memo } from 'react'

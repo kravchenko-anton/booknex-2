@@ -1,6 +1,6 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { PressableDefaultProperties } from '@/types/component-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { View } from 'react-native'
 

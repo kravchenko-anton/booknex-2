@@ -1,6 +1,6 @@
 import { PressableContainer, Title } from '@/components'
 import type { PressableDefaultProperties } from '@/types/component-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { LinearGradient } from 'expo-linear-gradient'
 import type { FC } from 'react'
 import { ImageBackground } from 'react-native'

@@ -9,7 +9,8 @@ import BigLoader from '@/components/ui/loader/big-loader'
 import BookLayout from '@/screens/book/book-layout/book-layout'
 import StatisticCard from '@/screens/book/statistic-card/statistic-card'
 import { useBook } from '@/screens/book/useBook'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
+
 import { View } from 'react-native'
 
 const Book = () => {

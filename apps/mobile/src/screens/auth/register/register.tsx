@@ -3,7 +3,7 @@ import { Button, Field, Header, Layout, Title } from '@/components'
 import { useAction, useTypedNavigation, useTypedRoute } from '@/hooks'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
 import { AnimatedView } from '@/types/component-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { emailRules, passwordRules } from '@/utils/input-validation'
 import { useForm } from 'react-hook-form'
 

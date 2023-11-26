@@ -1,7 +1,7 @@
 import { BigLoader, Button, Header, Title } from '@/components'
 import { useTypedNavigation } from '@/hooks'
 import { genreService } from '@/services/genre-service'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { useQuery } from '@tanstack/react-query'
 import type { FC } from 'react'
 import { useState } from 'react'

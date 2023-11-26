@@ -1,9 +1,9 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import { BackgroundColor, TextColor, TextSize, TextWeight } from '@/components/ui/button/button-settings'
 import type { ButtonProperties } from '@/components/ui/button/button-types'
-import { BorderRadiusSetting, PaddingSetting } from '@/components/ui/global-settings'
 import Title from '@/components/ui/title/title'
 import type { Style } from '@/types/global'
+import { BorderRadiusSetting, PaddingSetting } from '@/ui/ui-style'
 import { memo } from 'react'
 
 const Button = ({

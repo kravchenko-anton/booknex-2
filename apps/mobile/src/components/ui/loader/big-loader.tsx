@@ -1,5 +1,6 @@
-import type { LineColorType } from '@/utils/color'
-import { Color } from '@/utils/color'
+import type { LineColorType } from '@/ui/colors';
+import { Color } from '@/ui/colors'
+
 import type { FC } from 'react'
 import { memo } from 'react'
 import { ActivityIndicator, View } from 'react-native'

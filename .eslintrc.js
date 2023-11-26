@@ -111,6 +111,7 @@ module.exports = {
       }
     ],
     // Disable rules
+    "@typescript-eslint/quotes": "off",
     'unicorn/no-keyword-prefix': ['off'],
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/comma-dangle': 'off',

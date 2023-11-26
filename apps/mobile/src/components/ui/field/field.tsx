@@ -1,6 +1,7 @@
 import Title from '@/components/ui/title/title'
 import { fontSettings } from '@/components/ui/title/title-settings'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
+
 import type { Path, PathValue } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'

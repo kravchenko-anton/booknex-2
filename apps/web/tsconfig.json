@@ -11,6 +11,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
+    "paths": {
+      "@/shared-types/*": [
+        "./libs/shared-types/*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"

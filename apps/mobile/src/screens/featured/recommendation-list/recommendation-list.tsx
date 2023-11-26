@@ -1,7 +1,7 @@
 import { ThumbsUp } from '@/../assets/icons'
 import { FlatList, Icon, Title } from '@/components'
 import type { RecommendationProperties } from '@/screens/featured/recommendation-list/recommendation-list-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { shadeRGBColor } from '@/utils/shade-color'
 import { LinearGradient } from 'expo-linear-gradient'
 import type { FC } from 'react'

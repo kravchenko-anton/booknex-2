@@ -1,6 +1,6 @@
 import { usePressAnimation } from '@/animations/press-animation'
+import { AnimatedPressable } from '@/components/animated'
 import type { PressableDefaultProperties } from '@/types/component-types'
-import { AnimatedPressable } from '@/types/component-types'
 import type { FC, PropsWithChildren } from 'react'
 import { memo } from 'react'
 

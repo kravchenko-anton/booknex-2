@@ -1,6 +1,6 @@
 import { HeaderScrollLayout, Title } from '@/components'
 import { useSettingsList } from '@/screens/profile/settings/useSettingsList'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { Pressable, View } from 'react-native'
 // TODO: сделать страницу настройки когда уже многое будет готово
 const Settings = () => {

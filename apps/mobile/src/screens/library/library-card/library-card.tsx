@@ -1,6 +1,6 @@
 import { Icon, PressableContainer, Title } from '@/components'
 import type { LibraryListElementType } from '@/screens/library/library-card/library-card-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { View } from 'react-native'
 

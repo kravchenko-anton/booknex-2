@@ -1,5 +1,5 @@
 import { fontSettings } from '@/components/ui/title/title-settings'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { Text } from 'react-native'
 import RnToast, { BaseToast } from 'react-native-toast-message'

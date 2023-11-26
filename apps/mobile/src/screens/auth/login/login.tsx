@@ -1,7 +1,7 @@
 import { Button, Field, Header, Layout, Title } from '@/components'
 import { useAction } from '@/hooks'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
-import { Color } from '@/utils/color'
+import { Color } from '@/ui/colors'
 import { emailRules, passwordRules } from '@/utils/input-validation'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
