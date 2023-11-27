@@ -1,4 +1,5 @@
 'use client';
+import { NextUIProvider } from '@nextui-org/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { PropsWithChildren } from 'react'
 
@@ -15,8 +16,10 @@ function Providers({ children }: PropsWithChildren) {
 	return (
 		<QueryClientProvider
 			client={queryClient}>
+		<NextUIProvider>
 			{children}
-	</QueryClientProvider>
+		</NextUIProvider>
+		</QueryClientProvider>
 )
 }
 

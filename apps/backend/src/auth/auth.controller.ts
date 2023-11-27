@@ -18,7 +18,7 @@ export class AuthController {
 		return this.authService.register(dto)
 	}
 
-	@Post('/login')
+	@Post('/page.tsx')
 	async login(@Body() dto: AuthDto):Promise<AuthPayload> {
 		return this.authService.login(dto)
 	}

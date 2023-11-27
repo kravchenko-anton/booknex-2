@@ -16,6 +16,9 @@
       "@/icons": [
         "./assets/icons/index.ts"
       ],
+      "@/global/*": [
+        "../../libs/global/*"
+      ],
     },
     "allowJs": true
   }

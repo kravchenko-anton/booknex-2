@@ -79,7 +79,7 @@ var AuthController = /** @class */ (function () {
     ], AuthController.prototype, "register");
     __decorate([
         (0, common_1.UsePipes)(new common_1.ValidationPipe()),
-        (0, common_1.Post)("/login"),
+        (0, common_1.Post)("/page.tsx"),
         __param(0, (0, common_1.Body)())
     ], AuthController.prototype, "login");
     __decorate([

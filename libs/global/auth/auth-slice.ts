@@ -1,6 +1,6 @@
-import { login, logout, register } from '@/redux/auth/auth-action'
-import type { IAuthState } from '@/redux/auth/auth-types'
 import { createSlice } from '@reduxjs/toolkit'
+import { login, logout, register } from './auth-action'
+import type { IAuthState } from './auth-types'
 
 const initialState = {
 	isLoading: false,

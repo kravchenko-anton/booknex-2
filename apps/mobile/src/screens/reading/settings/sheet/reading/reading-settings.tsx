@@ -3,11 +3,11 @@ import PressableContainer from '@/components/pressable-container/pressable-conta
 import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
 import Icon from '@/components/ui/icon/icon'
 import Title from '@/components/ui/title/title'
+import { shadeRGBColor } from '@/global/utils/shade-color'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import FontSettings from '@/screens/reading/settings/sheet/reading/font-settings/font-settings'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
-import { shadeRGBColor } from '@/utils/shade-color'
 import type { FC } from 'react'
 import { View } from 'react-native'
 

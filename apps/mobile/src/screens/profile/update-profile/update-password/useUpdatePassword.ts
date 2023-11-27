@@ -1,6 +1,6 @@
+import { errorCatch } from '@/global/utils/catch-error'
 import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-password/update-password-types'
 import { userServices } from '@/services/user-service'
-import { errorCatch } from '@/utils/catch-error'
 import { useMutation } from '@tanstack/react-query'
 import Toast from 'react-native-toast-message'
 

@@ -24,7 +24,7 @@ const Image: FC<ImageTypes> = ({
 				{
 					width,
 					height: fullSize ? '100%' : height,
-					backgroundColor: Color.dust,
+					backgroundColor: Color.shade,
 					borderRadius
 				},
 				style

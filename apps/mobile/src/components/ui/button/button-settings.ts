@@ -4,10 +4,10 @@ export const BackgroundColor = {
 	primary: Color.primary,
 	secondary: Color.secondary,
 	ghost: Color.white,
-	dust: Color.dust,
-	pale: Color.pale,
-	danger: Color.alert,
-	warning: Color.highlight,
+	dust: Color.foreground,
+	pale: Color.shade,
+	danger: Color.danger,
+	warning: Color.warning,
 	success: Color.primary
 }
 

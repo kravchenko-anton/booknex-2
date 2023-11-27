@@ -3,5 +3,14 @@
 @tailwind utilities;
 
 body {
-	@apply bg-canvas
+	@apply text-white bg-background dark h-full
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+	@apply text-white font-bold
+}
+
+p, span, a, li {
+	@apply text-gray font-medium
 }

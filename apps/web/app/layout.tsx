@@ -18,7 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-    <body className={`${SpaceGrotesk.className}`}><Providers>{children}</Providers></body>
+    <body className={`${SpaceGrotesk.className}`}>
+    <Providers>
+    {children}
+    </Providers>
+    </body>
     </html>
   )
 }

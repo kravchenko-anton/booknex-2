@@ -18,18 +18,22 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@booknex/global": [
+        "libs/global/src/index.ts"
+      ],
       "@booknex/ui": [
         "libs/ui/src/index.ts"
       ],
       "@booknex/ui/mobile": [
         "libs/ui/mobile/src/index.ts"
       ],
-      "@booknex/ui/web": [
-        "libs/ui/web/src/index.ts"
-      ],
       "@booknex/ui/shared": [
         "libs/shared-types/src/index.ts"
       ],
+      "@booknex/ui/web": [
+        "libs/ui/web/src/index.ts"
+      ]
+
     }
   },
   "exclude": [

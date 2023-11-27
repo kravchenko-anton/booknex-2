@@ -10,7 +10,7 @@ import type { FieldProperties } from './filed-types'
 const Field = <T extends Record<string, any>>({
 	wrapperStyle,
 	wrapperClassName,
-	backgroundColor = Color.dust,
+	backgroundColor = Color.vibrant,
 	borderColor = Color.secondary,
 	color = Color.secondary,
 	...properties
@@ -25,7 +25,7 @@ const Field = <T extends Record<string, any>>({
 				<View
 					style={[
 						{
-							borderColor: error ? Color.alert : borderColor,
+							borderColor: error ? Color.danger : borderColor,
 							backgroundColor
 						},
 						wrapperStyle
@@ -48,7 +48,7 @@ const Field = <T extends Record<string, any>>({
 					/>
 				</View>
 				{error && (
-					<Title color={Color.alert} size={16}>
+					<Title color={Color.danger} size={16}>
 						{error.message ?? 'error!'}
 					</Title>
 				)}

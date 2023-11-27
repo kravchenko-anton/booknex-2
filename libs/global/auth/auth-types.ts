@@ -1,4 +1,15 @@
-import type { UserType } from '@/services/types/user-services-types'
+ interface DefaultModelFields {
+	createdAt: string
+	id: number
+	updatedAt: string
+}
+
+interface UserType extends DefaultModelFields {
+	email: string
+	name: string,
+	picture: string
+}
+
 
 export interface AuthFieldsType extends Pick<UserType, 'email'> {
 	password: string

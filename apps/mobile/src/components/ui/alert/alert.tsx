@@ -1,6 +1,6 @@
 import Button from '@/components/ui/button/button'
 import Title from '@/components/ui/title/title'
-import { useAction, useTypedSelector } from '@/hooks'
+import { useAction, useTypedSelector } from '@/hooks/'
 import type { FC } from 'react'
 import { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated'
 import { AnimatedPressable, AnimatedView } from 'src/components/animated'

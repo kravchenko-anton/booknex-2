@@ -1,5 +1,5 @@
-import { errorCatch } from '@/utils/catch-error'
 import Toast from 'react-native-toast-message'
+import { errorCatch } from './catch-error'
 
 export const errorToast = (error: unknown) => {
 	Toast.show({
@@ -9,3 +9,4 @@ export const errorToast = (error: unknown) => {
 		autoHide: true
 	})
 }
+

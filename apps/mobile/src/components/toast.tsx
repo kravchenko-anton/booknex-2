@@ -6,7 +6,7 @@ import RnToast, { BaseToast } from 'react-native-toast-message'
 
 const options = (color: string) => ({
 	style: {
-		backgroundColor: Color.pale,
+		backgroundColor: Color.shade,
 		alignItems: 'center' as const,
 		borderRadius: 8,
 		borderLeftColor: color,

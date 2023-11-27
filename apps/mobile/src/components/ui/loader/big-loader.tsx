@@ -1,4 +1,4 @@
-import type { LineColorType } from '@/ui/colors';
+import type { LineColorType } from '@/ui/colors'
 import { Color } from '@/ui/colors'
 
 import type { FC } from 'react'
@@ -9,7 +9,7 @@ interface BigLoaderProperties {
 	backgroundColor?: LineColorType | string
 }
 const BigLoader: FC<BigLoaderProperties> = ({
-	backgroundColor = Color.canvas
+	backgroundColor = Color.background
 }) => (
 	<View
 		style={{

@@ -1,10 +1,9 @@
-import { deleteTokensStorage, saveTokensStorage } from '@/redux/auth/auth-helper'
-import type { AuthFieldsType, AuthResponseType, RegisterFieldsType } from '@/redux/auth/auth-types'
-import { getAuthUrl, SERVER_URL } from '@/services/api-config'
-import { errorCatch } from '@/utils/catch-error'
-import { errorToast } from '@/utils/error-toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { getAuthUrl, SERVER_URL } from '../../services/api/api-config'
+import { errorToast } from '../utils/error-toast'
+import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
+import type { AuthFieldsType, AuthResponseType, RegisterFieldsType } from './auth-types'
 
 export const register = createAsyncThunk<AuthResponseType, RegisterFieldsType>(
 	'auth/register',
@@ -27,11 +26,11 @@ export const register = createAsyncThunk<AuthResponseType, RegisterFieldsType>(
 )
 
 export const login = createAsyncThunk<AuthResponseType, AuthFieldsType>(
-	'auth/login',
+	'auth/page.tsx',
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const loginResponse = await axios
-				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/login'), {
+				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/page.tsx'), {
 					email,
 					password
 				})
@@ -71,7 +70,7 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 	try {
 		await deleteTokensStorage()
 	} catch (error) {
-		errorToast(errorCatch(error))
+		errorToast(error)
 	}
 	return {}
 })
