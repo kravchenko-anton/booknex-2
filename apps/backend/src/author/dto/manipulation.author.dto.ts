@@ -1,5 +1,5 @@
 import { IsArray, IsOptional, IsString } from 'class-validator'
-import type { CreateAuthorPayload, EditAuthorPayload } from '../../../../../libs/services/author/author-types'
+import type { CreateAuthorPayload, EditAuthorPayload } from '../../../../../libs/global/services-types/author-types'
 
 export class CreateAuthorDto implements CreateAuthorPayload {
 	@IsString() name: string

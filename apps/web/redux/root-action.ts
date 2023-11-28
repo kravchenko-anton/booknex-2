@@ -1,4 +1,4 @@
-import * as authActions from '../../../libs/global/auth/auth-action'
+import * as authActions from './auth/auth-action'
 
 export const rootAction = {
 	...authActions,

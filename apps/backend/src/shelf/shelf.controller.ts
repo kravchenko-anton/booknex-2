@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { AllShelfOutput, ShelfByIdOutput, ShelfCatalogOutput } from '../../../../libs/services/shelf/shelf-types'
+import type { AllShelfOutput, ShelfByIdOutput, ShelfCatalogOutput } from '../../../../libs/global/services-types/shelf-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { CreateShelfDto, UpdateShelfDto } from './dto/shelf.dto'

@@ -1,5 +1,5 @@
-import { authReducer } from '@/global/auth/auth-slice'
 import { alertReducer } from '@/redux/alert/alert-slice'
+import { authReducer } from '@/redux/auth/auth-slice'
 import { BottomSheetReducer } from '@/redux/bottom-sheet-slice/bottom-sheet-slice'
 import { EpubReaderReducer } from '@/redux/epub-reader-slice/epub-reader-slice'
 import { ReadingSettingsReducer } from '@/redux/reading-settings/reading-settings-slice'

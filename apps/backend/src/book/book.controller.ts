@@ -6,7 +6,7 @@ import type {
 	EbpubOutput,
 	EmotionOutput,
 	ReviewByIdOutput
-} from '../../../../libs/services/book/book-types'
+} from '../../../../libs/global/services-types/book-types'
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'

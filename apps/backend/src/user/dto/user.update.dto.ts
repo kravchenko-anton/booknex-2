@@ -1,5 +1,5 @@
 import { IsEmail, IsOptional, MinLength } from 'class-validator'
-import type { UserUpdatePasswordPayload, UserUpdatePayload } from '../../../../../libs/services/user/user-types'
+import type { UserUpdatePasswordPayload, UserUpdatePayload } from '../../../../../libs/global/services-types/user-types'
 
 
 export class UserUpdateBioDto implements UserUpdatePayload {

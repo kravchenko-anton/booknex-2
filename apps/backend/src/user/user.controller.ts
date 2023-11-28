@@ -2,11 +2,11 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestj
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllUsersOutput,
-	FavoriteListOutput,
-	ToggleOutput,
+	FavoriteListOutput, ToggleOutput,
 	UserLibraryOutput,
 	UserProfileOutput
-} from '../../../../libs/services/user/user-types'
+} from '../../../../libs/global/services-types/user-types'
+
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { FilenameDto } from '../storage/dto/upload.dto'

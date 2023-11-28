@@ -1,6 +1,6 @@
 import { Body, Controller, Param, Post, Put } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import type { AuthPayload, CheckEmailOutput } from '../../../../libs/services/auth/auth-types'
+import type { AuthPayload, CheckEmailOutput } from '../../../../libs/global/services-types/auth-types'
 import { AuthService } from './auth.service'
 import { AuthDto, RefreshDto, RegisterDto } from './dto/auth.dto'
 
@@ -18,7 +18,7 @@ export class AuthController {
 		return this.authService.register(dto)
 	}
 
-	@Post('/page.tsx')
+	@Post('/login')
 	async login(@Body() dto: AuthDto):Promise<AuthPayload> {
 		return this.authService.login(dto)
 	}

@@ -1,4 +1,4 @@
-import { rtkQueryErrorLogger } from '@/global/middlewares/error.middleware'
+import { rtkQueryErrorLogger } from '@/redux/middlewares/error.middleware'
 import { reducers } from '@/redux/root-reducer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { configureStore } from '@reduxjs/toolkit'

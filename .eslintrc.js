@@ -71,7 +71,7 @@ module.exports = {
       'LabeledStatement',
       'WithStatement'
     ],
-    'no-underscore-dangle': ['error', { allow: [] }],
+    'no-underscore-dangle': ['error', { allow: ["_isRetry"] }],
     'no-void': ['error', { allowAsStatement: true }],
     'spaced-comment': [
       'error',
@@ -112,7 +112,7 @@ module.exports = {
     ],
     // Disable rules
     "@typescript-eslint/quotes": "off",
-    'unicorn/no-keyword-prefix': ['off'],
+    'unicorn/no-keyword-prefix': 'off',
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/semi': 'off',

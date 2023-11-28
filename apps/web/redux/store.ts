@@ -1,13 +1,12 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { configureStore } from '@reduxjs/toolkit'
 import { persistReducer, persistStore } from 'redux-persist'
-import { rtkQueryErrorLogger } from '../../../libs/global/middlewares/error.middleware'
-import { reducers } from '../../mobile/src/redux/root-reducer'
+import storage from 'redux-persist/es/storage'
+import { reducers } from './root-reducer'
 
 const persistConfig = {
 	key: 'root',
-	storage: AsyncStorage,
-	whitelist: ['readingSettings', 'auth']
+	storage: storage,
+	whitelist: ['auth']
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)
@@ -17,7 +16,7 @@ export const store = configureStore({
 		getDefaultMiddleware({
 			serializableCheck: false,
 			immutableCheck: false
-		}).concat(rtkQueryErrorLogger)
+		})
 })
 export const persistor = persistStore(store)
 
