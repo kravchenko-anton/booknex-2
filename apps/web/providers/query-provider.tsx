@@ -16,7 +16,6 @@ function Providers({ children }: PropsWithChildren) {
 			},
 		},
 	})
-
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor} >

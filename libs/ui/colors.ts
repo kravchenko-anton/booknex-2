@@ -9,6 +9,7 @@ export const Color = {
     black: '#000000' as "#000000",
     white: '#ffffff' as "#ffffff",
     danger: '#DC3F41' as "#DC3F41",
+    success: '#4CAF50' as "#4CAF50",
     warning: '#FFBE0B' as "#FFBE0B",
     transparent: 'transparent' as "transparent",
 }

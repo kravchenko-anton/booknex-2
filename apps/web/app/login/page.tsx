@@ -3,16 +3,13 @@ import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
 import { Controller, useForm } from 'react-hook-form'
 import { useAction } from '../../hooks/useAction'
-import { useAuth } from '../../hooks/useAuth'
 import type { AuthFieldsType } from '../../redux/auth/auth-types'
 
 export default  function Page() {
-	const { user } = useAuth()
   const { login } = useAction()
   const {  handleSubmit, control } = useForm<AuthFieldsType>({
     mode: 'onSubmit'
   })
-
   const onSubmit = (data: AuthFieldsType) => login(data)
 	return (
 		<div className='w-screen h-screen items-center justify-center flex'>
