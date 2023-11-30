@@ -25,3 +25,7 @@ export type LineColorType = {
 export interface ColorProperties {
   color?: LineColorType | string
 }
+
+
+
+

@@ -1,5 +1,4 @@
 'use client';
-import { NextUIProvider } from '@nextui-org/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { PropsWithChildren } from 'react'
 import { Toaster } from 'react-hot-toast'
@@ -21,9 +20,7 @@ function Providers({ children }: PropsWithChildren) {
 			<PersistGate persistor={persistor} >
 		<QueryClientProvider
 			client={queryClient}>
-		<NextUIProvider>
 			{children}
-		</NextUIProvider>
 			<Toaster   toastOptions={{
         style: {
           background: Color.vibrant,

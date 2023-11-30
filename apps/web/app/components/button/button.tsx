@@ -1,27 +1,49 @@
-import type { FC } from 'react'
-import { shadeRGBColor } from '../../../../../libs/global/utils/shade-color'
+import type { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react'
 import { Color } from '../../../../../libs/ui/colors'
 import Spiner from '../spiner/spiner'
 
-interface ButtonProperties {
+interface ButtonProperties
+  extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   isLoading?: boolean
   disabled?: boolean
-  color: keyof typeof Color
-  children?: React.ReactNode
+  size?: 'sm' | 'md' | 'lg'
+  color?: keyof Omit<typeof Color, 'background' | 'black' | 'white' | "transparent">
+  children?: string
+  fullWidth?: boolean
  }
-const Button: FC<ButtonProperties> = ({ children, color = "vibrant", disabled = false, isLoading = false }) => {
+
+
+  const colorPallete = {
+    gray: "bg-gray text-white hover:bg-vibrant",
+    foreground: "bg-foreground text-white hover:bg-vibrant",
+    vibrant: "bg-vibrant text-white hover:bg-foreground",
+    shade: "bg-shade text-white hover:bg-foreground",
+    primary: "bg-primary text-white hover:bg-secondary",
+    secondary: "bg-secondary text-white hover:bg-primary",
+    danger: "bg-danger text-white hover:bg-danger",
+    success: "bg-success text-white hover:bg-success",
+    warning: "bg-warning text-white hover:bg-warning",
+  }
+
+const sizeProperty = {
+  sm: 'px-2 py-1 text-sm',
+  md: 'px-3 py-2 text-md',
+  lg: 'px-4 py-3 text-lg',
+}
+const Button: FC<ButtonProperties> = ({ children, fullWidth, size = 'sm', color = Color.gray, disabled = false, isLoading = false, className = 'hover:bg-primary', ...rest }) => {
   return <button
-    type="button"
-    data-te-ripple-init
     disabled={disabled || isLoading}
-    data-te-ripple-color={shadeRGBColor(color, 10)}
     style={{
-      backgroundColor: Color[color],
+      opacity: disabled || isLoading ? 0.5 : 1,
+      cursor: disabled || isLoading ? 'not-allowed' : 'pointer',
+      width: fullWidth ? '100%' : 'auto'
     }}
-    className="inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-    {isLoading ? <Spiner color={shadeRGBColor(color, 50)
-    } /> : children}
+    className={`p-2 px-3 justify-center rounded-lg flex gap-2 items-center font-semibold duration-200 ease-linear ${colorPallete[color]} ${sizeProperty[size]} ${className}`} {...rest}>
+  {isLoading  && <Spiner size={size} color={'white'} /> }
+  {children}
   </button>
 }
 
 export default Button
+
+

@@ -1,29 +1,34 @@
-import type { ChangeEvent, FC, FocusEvent } from 'react'
-import { shadeRGBColor } from '../../../../../libs/global/utils/shade-color'
-import { Color } from '../../../../../libs/ui/colors'
+import type { ChangeEvent, FC, FocusEvent, InputHTMLAttributes } from 'react'
+import type { Color } from '../../../../../libs/ui/colors'
 
-interface InputProperties {
+interface InputProperties extends InputHTMLAttributes<HTMLInputElement> {
   error?: string | null
   placeholder?: string
   value?: string
-  background?: keyof typeof Color
+  color?: keyof Pick<typeof Color, "gray" | "foreground" | "vibrant" | "shade" | 'background'
+  >
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void
 }
-const Input: FC<InputProperties> = ({ background = Color.shade, onBlur, value, placeholder, onChange, error }) => {
+
+const colorPallete = {
+  gray: "bg-gray placeholder-white text-white hover:bg-vibrant focus:bg-vibrant",
+  foreground: "bg-foreground placeholder-white text-white hover:bg-vibrant focus:bg-vibrant",
+  vibrant: "bg-vibrant placeholder-white text-white hover:bg-gray focus:bg-gray",
+  shade: "bg-shade placeholder-white text-white hover:bg-foreground focus:bg-foreground",
+  background: "bg-background placeholder-white text-white hover:bg-foreground focus:bg-foreground"
+}
+const Input: FC<InputProperties> = ({ color = 'foreground', className, onBlur, value, placeholder, onChange, error, ...rest }) => {
   return <>
     <input
-      type="text"
       placeholder={placeholder}
       value={value}
       onBlur={onBlur}
       onChange={onChange}
-      style={{
-        backgroundColor: background,
-      }}
-      className={`w-full rounded px-4 py-2 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${`hover: ${shadeRGBColor(background, 10)}`} ${error ? 'border-red-500' : 'border-gray-400'}`}
+      className={`w-full rounded-xl px-4 py-3 text-sm text-gray duration-200 border-0 ease-linear focus:outline-0 focus:shadow-outline ${colorPallete[color]} ${error ? 'border-danger' : ''} ${className}`}
+      {...rest}
     />
-    {!!error && <p className="text-red-500 text-xs italic">{error}</p>}
+    {!!error && <p className="text-danger text-xs italic">{error}</p>}
   </>
 
 }

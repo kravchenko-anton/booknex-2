@@ -1,7 +1,10 @@
-import type { FC, PropsWithChildren } from 'react'
+import type { FC, HTMLAttributes, PropsWithChildren } from 'react'
 
-const Layout: FC<PropsWithChildren> = ({ children }) => {
-  return <div className='mt-[70px]'> {children}</div>
+interface LayoutProperties extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {
+
+}
+const Layout: FC<LayoutProperties> = ({ children, ...rest }) => {
+  return <div className='mt-[70px]' {...rest}> {children}</div>
 }
 
 export default Layout
