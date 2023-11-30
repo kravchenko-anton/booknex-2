@@ -35,11 +35,11 @@ const Field = <T extends Record<string, any>>({
 						autoCapitalize='none'
 						onBlur={onBlur}
 						onChangeText={onChange}
-						keyboardAppearance='default'
-						renderToHardwareTextureAndroid={true}
 						placeholderTextColor={color}
 						defaultValue={properties.defaultValue}
 						value={(value ?? '').toString()}
+						keyboardAppearance='default'
+						renderToHardwareTextureAndroid={true}
 						className='text-base text-secondary'
 						style={{
 							fontFamily: fontSettings.bold
