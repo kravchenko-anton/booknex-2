@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react'
-import { Color } from '../../../../../libs/ui/colors'
+import { Color } from '../../../../libs/ui/colors'
 import Spiner from '../spiner/spiner'
 
 interface ButtonProperties
@@ -36,9 +36,9 @@ const Button: FC<ButtonProperties> = ({ children, fullWidth, size = 'sm', color 
     style={{
       opacity: disabled || isLoading ? 0.5 : 1,
       cursor: disabled || isLoading ? 'not-allowed' : 'pointer',
-      width: fullWidth ? '100%' : 'auto'
+      width: fullWidth ? '100%' : 'auto',
     }}
-    className={`p-2 px-3 justify-center rounded-lg flex gap-2 items-center font-semibold duration-200 ease-linear ${colorPallete[color]} ${sizeProperty[size]} ${className}`} {...rest}>
+    className={`p-2 px-3 justify-center rounded-lg flex gap-2 items-center font-semibold duration-200 ease-linear ${colorPallete[color]} ${sizeProperty[size]} ${className || ''}`} {...rest}>
   {isLoading  && <Spiner size={size} color={'white'} /> }
   {children}
   </button>

@@ -1,5 +1,6 @@
 import { Button, Field, Layout, Title } from '@/components'
-import { useDebounce, useTypedNavigation } from '@/hooks'
+import { useTypedNavigation } from '@/hooks'
+import { useDebounce } from '@/hooks/useDebounce'
 import { authService } from '@/services/auth-service'
 import { Color } from '@/ui/colors'
 

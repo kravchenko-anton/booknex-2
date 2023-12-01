@@ -1,10 +1,10 @@
 import { Close } from '@/../assets/icons'
 import { Button, Field, Header, Layout, Title } from '@/components'
+import { AnimatedView } from '@/components/animated'
+import { emailRules, passwordRules } from '@/global/utils/input-validation'
 import { useAction, useTypedNavigation, useTypedRoute } from '@/hooks'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
-import { AnimatedView } from '@/types/component-types'
 import { Color } from '@/ui/colors'
-import { emailRules, passwordRules } from '@/utils/input-validation'
 import { useForm } from 'react-hook-form'
 
 const Register = () => {

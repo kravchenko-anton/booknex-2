@@ -56,7 +56,7 @@ model Book {
   color           String       @default("#264653")
   pages           Int
   likedPercentage Int
-  visible         Boolean      @default(true)
+  visible         Boolean      @default(false)
   popularity      Int          @default(0)
   majorGenre      Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres          Genre[]      @relation("BookGenre")
@@ -66,10 +66,24 @@ model Book {
   readingBy       User[]       @relation("ReadingBooks")
   authorId        Int
   mainGenreId     Int
-  complaints      complaints[]
+  complaints      Complaints[]
 }
 
-model complaints {
+model GoodReadBook {
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  title             String   @unique
+  author            String
+  authorPicture     String
+  authorDescription String
+  description       String
+  picture           String
+  pages             Int
+  genres            String[]
+}
+
+model Complaints {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -106,7 +120,7 @@ model User {
   readingBooks   Book[]       @relation("ReadingBooks")
   watchedShelves Shelf[]      @relation("WatchedShelves")
   hiddenShelves  Shelf[]      @relation("HhiddenShelves")
-  complaints     complaints[]
+  complaints     Complaints[]
 }
 
 model Shelf {

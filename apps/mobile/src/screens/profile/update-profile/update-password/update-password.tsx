@@ -1,7 +1,7 @@
 import { Button, Field, Title } from '@/components'
+import { passwordRules } from '@/global/utils/input-validation'
 import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-password/update-password-types'
 import { useUpdatePassword } from '@/screens/profile/update-profile/update-password/useUpdatePassword'
-import { passwordRules } from '@/utils/input-validation'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
 

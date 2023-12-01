@@ -2,7 +2,7 @@ import type { FC } from 'react'
 
 const Page: FC = () => {
 	console.log(Page)
-	return <div>Dashboard</div>
+	return <div>Author</div>
 }
 
 export default Page

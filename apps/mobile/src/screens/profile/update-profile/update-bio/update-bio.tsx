@@ -1,10 +1,10 @@
 import { Button, Field, Title } from '@/components'
+import { emailRules, nameRules } from '@/global/utils/input-validation'
 import type {
 	BioSectionProperties,
 	UserUpdateBioTypes
 } from '@/screens/profile/update-profile/update-bio/update-bio-types'
 import { useUpdateBio } from '@/screens/profile/update-profile/update-bio/useUpdateBio'
-import { emailRules, nameRules } from '@/utils/input-validation'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
