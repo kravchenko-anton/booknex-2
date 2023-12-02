@@ -30,7 +30,7 @@ export default function Sidebar(): JSX.Element {
 						<ul className="p-0  text-sm justify-between flex md:block">
 							{
 								iconsList.map((icon) => {
-										return  <li className="rounded-sm w-full">
+										return  <li className="rounded-sm w-full" key={icon.link}>
 											<a
 												href={icon.link}
 												className="flex items-center justify-center  p-2 hover:text-white ease-linear duration-100 rounded-md"

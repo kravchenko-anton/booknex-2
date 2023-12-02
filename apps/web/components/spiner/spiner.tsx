@@ -6,8 +6,8 @@ export interface SpinerProperties {
 }
 
 const spinnerSizeSettigs = {
-  sm: "w-5 h-5",
-  md: "w-8 h-8",
+  sm: "w-4 h-4",
+  md: "w-5 h-5",
   lg: "w-12 h-12",
 }
 const Spiner: FC<SpinerProperties> = ({ size = 'sm', color = 'primary' }) => {

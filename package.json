@@ -27,6 +27,7 @@
     "@tanstack/query-async-storage-persister": "^4.35.0",
     "@tanstack/react-query": "^4.35.0",
     "@tanstack/react-query-persist-client": "^4.35.0",
+    "@tanstack/react-table": "^8.10.7",
     "argon2": "^0.30.3",
     "axios": "^1.0.0",
     "cache-manager": "^5.2.3",

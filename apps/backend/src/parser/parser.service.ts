@@ -11,7 +11,7 @@ export class ParserService {
 
   async all(searchTerm: string) {
     return this.prisma.goodReadBook.findMany({
-      take: 20,
+      take: 100,
       select: {
         ...defaultReturnObject,
         title: true,
@@ -22,17 +22,48 @@ export class ParserService {
         authorName: true,
         genres: true,
         picture: true,
+        popularity: true
       },
       ...(searchTerm && {
         where: {
-          title: {
-            contains: searchTerm
-          }
+        OR: [
+          {
+            title: {
+              contains: searchTerm,
+              mode: 'insensitive'
+            }
+          },
+          {
+            authorName: {
+              contains: searchTerm,
+              mode: 'insensitive'
+            }
+          },
+          {
+            authorDescription: {
+              contains: searchTerm,
+              mode: 'insensitive'
+            }
+          },
+          {
+            description: {
+              contains: searchTerm,
+              mode: 'insensitive'
+            }
+          },
+        ]
         }
       }),
     })
   }
 
+  async delete(id: number) {
+    return this.prisma.goodReadBook.delete({
+      where: {
+        id
+      }
+    })
+  }
 
   async parse(dto: ParserDto) {
     const goodReadBook = await this.prisma.goodReadBook.findMany({
@@ -53,7 +84,6 @@ export class ParserService {
       if (
         request.resourceType() === 'media' ||
         request.resourceType() === 'font' ||
-        request.resourceType() === 'image' ||
         request.resourceType() === 'stylesheet' ||
         request.resourceType() === 'manifest' ||
         [
@@ -195,10 +225,9 @@ export class ParserService {
         })
 
         const genres = await page.evaluate(() => {
-          const genres = document.querySelectorAll(
+          const genres:any = document.querySelectorAll(
             'div.BookPageMetadataSection > div.BookPageMetadataSection__genres > ul > span:nth-child(1) > span > a > .Button__labelItem'
           )
-          // @ts-expect-error
           return [...genres].map(genre => genre.textContent) ?? ['No genres']
         })
         if (rating < 40_000) continue
