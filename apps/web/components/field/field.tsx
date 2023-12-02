@@ -43,7 +43,7 @@ const Field = <T extends Record<string, any>>({
           onChange={onChange}
           defaultValue={properties.defaultValue}
           value={(value ?? '').toString()}
-          className={`w-full rounded-xl px-4 py-3 text-sm text-gray duration-200 border-0 ease-linear focus:outline-0 focus:shadow-outline ${colorPallete[color]} ${error ? 'border-danger' : ''} ${className || ''}`}
+          className={`w-full rounded-md px-4 py-3 text-sm text-gray duration-200 border-0 ease-linear focus:outline-0 focus:shadow-outline ${colorPallete[color]} ${error ? 'border-danger' : ''} ${className || ''}`}
           {...properties}
         />
         {!!error && <p className={`text-danger text-xs italic`}>{error.message}</p>}

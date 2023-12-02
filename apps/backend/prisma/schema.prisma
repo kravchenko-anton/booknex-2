@@ -74,13 +74,15 @@ model GoodReadBook {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   title             String   @unique
-  author            String
+  authorName        String
   authorPicture     String
   authorDescription String
   description       String
   picture           String
   pages             Int
-  genres            String[]
+  popularity        Int
+  
+  genres String[]
 }
 
 model Complaints {

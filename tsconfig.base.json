@@ -32,7 +32,8 @@
       ],
       "@booknex/ui/web": [
         "libs/ui/web/src/index.ts"
-      ]
+      ],
+      "react": [ "./node_modules/@types/react" ]
 
     }
   },

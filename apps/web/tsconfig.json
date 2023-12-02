@@ -1,13 +1,29 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": false,
+    "skipLibCheck": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "react": [
+        "../../node_modules/@types/react"
+      ]
+    },
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
@@ -19,8 +35,7 @@
     "types": [
       "jest",
       "node"
-    ],
-    "strictNullChecks": true
+    ]
   },
   "include": [
     "**/*.ts",
@@ -29,7 +44,7 @@
     "**/*.jsx",
     "../../apps/web/.next/types/**/*.ts",
     "../../dist/apps/web/.next/types/**/*.ts",
-    "next-env.d.ts",
+    "next-env.d.ts"
   ],
   "exclude": [
     "node_modules",

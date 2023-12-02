@@ -13,6 +13,7 @@ import { GenreModule } from './genre/genre.module'
 import { ShelfModule } from './shelf/shelf.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
+import { ParserModule } from './parser/parser.module';
 
 @Module({
 	imports: [
@@ -35,7 +36,8 @@ import { UserModule } from './user/user.module'
 		}),
 		AdminModule,
 		ShelfModule,
-		AuthorModule
+		AuthorModule,
+		ParserModule
 	],
 	controllers: [AppController],
 	providers: [AppService, ConfigService]

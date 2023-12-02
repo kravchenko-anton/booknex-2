@@ -1,3 +1,4 @@
+// @ts-nocheck
 export { ReactComponent as ArrowLeft } from '../arrow-left.svg';
 export { ReactComponent as BookHeart } from '../book-heart.svg';
 export { ReactComponent as Alert } from '../alert-triangle.svg';

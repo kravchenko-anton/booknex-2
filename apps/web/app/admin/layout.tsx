@@ -6,7 +6,7 @@ const AdminLayout: FC<PropsWithChildren> = ({ children }) => {
 
 	return <div className='mt-[70px] md:flex'>
 		<Sidebar/>
-		<div className={`w-full md:ml-14 ease-linear duration-200 p-2 md:w-[
+		<div className={`w-full md:ml-14 ease-linear duration-200 p-4 md:w-[
 		  calc(100% - 56px)
 		]`}>
 		{children}

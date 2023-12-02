@@ -1,7 +1,6 @@
 // import { S3Client } from '@aws-sdk/client-s3'
 // import process from 'node:process'
 // import puppeteer from 'puppeteer'
-// import { uploadBook } from './upload-book'
 //
 // export const GoodreadsParser = async () => {
 // 	const browser = await puppeteer.launch({

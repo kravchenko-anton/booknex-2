@@ -21,7 +21,7 @@ export default  function Page() {
 				<Field
 					rules={passwordRules}
 					control={control}
-					name="password" type="password" errorClassName='mb-4'  placeholder="Enter your password" />
+					name="password" type="password"   placeholder="Enter your password" />
 				<Button
 					onClick={handleSubmit(onSubmit)}
 				size={'lg'} fullWidth color={'primary'}>

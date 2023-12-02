@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react'
-import { Color } from '../../../../libs/ui/colors'
+import type { Color } from '../../../../libs/ui/colors'
 import Spiner from '../spiner/spiner'
 
 interface ButtonProperties
@@ -30,7 +30,7 @@ const sizeProperty = {
   md: 'px-3 py-2 text-md',
   lg: 'px-4 py-3 text-lg',
 }
-const Button: FC<ButtonProperties> = ({ children, fullWidth, size = 'sm', color = Color.gray, disabled = false, isLoading = false, className = 'hover:bg-primary', ...rest }) => {
+const Button: FC<ButtonProperties> = ({ children, fullWidth, size = 'md', color = 'vibrant', disabled = false, isLoading = false, className, ...rest }) => {
   return <button
     disabled={disabled || isLoading}
     style={{
@@ -38,7 +38,7 @@ const Button: FC<ButtonProperties> = ({ children, fullWidth, size = 'sm', color 
       cursor: disabled || isLoading ? 'not-allowed' : 'pointer',
       width: fullWidth ? '100%' : 'auto',
     }}
-    className={`p-2 px-3 justify-center rounded-lg flex gap-2 items-center font-semibold duration-200 ease-linear ${colorPallete[color]} ${sizeProperty[size]} ${className || ''}`} {...rest}>
+    className={`p-2 px-3 justify-center rounded-md flex gap-2 items-center font-semibold duration-200 ease-linear ${colorPallete[color]} ${sizeProperty[size]} ${className || ''}`} {...rest}>
   {isLoading  && <Spiner size={size} color={'white'} /> }
   {children}
   </button>
