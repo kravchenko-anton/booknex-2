@@ -1,6 +1,9 @@
 import { getBookUrl } from '@/services/api-config'
 import { request } from '@/services/api/request.api'
-import type { BookByIdType, ReviewType } from '@/services/types/book-service-types'
+import type {
+	BookByIdType,
+	ReviewType
+} from '@/services/types/book-service-types'
 
 export const bookService = {
 	async byId(id: number) {

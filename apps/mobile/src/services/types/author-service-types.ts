@@ -2,10 +2,10 @@ import type { ShortBookType } from '@/services/types/book-service-types'
 import type { DefaultModelFields } from '@/types/global'
 
 export interface AuthorType extends DefaultModelFields {
-	books: ShortBookType[],
-	color: string,
+	books: ShortBookType[]
+	color: string
 	description: string
-	name: string,
+	name: string
 	picture: string
 }
 

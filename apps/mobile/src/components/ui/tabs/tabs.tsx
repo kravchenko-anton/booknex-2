@@ -24,19 +24,19 @@ const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 					data={routes}
 					// If you add ref, the types break
 					renderItem={({ item: tab }: { item: Route }) => (
-							<Button
-								size={'medium'}
-								onPress={() => {
-									const index: number = routes.findIndex(
-										route => route.key === tab.key
-									)
-									tabListReference.current?.scrollToIndex({ index })
-									flatListReference.current?.scrollToIndex({ index })
-								}}
-								variant={activeTab === tab.key ? 'primary' : 'dust'}
-								text={tab.title}
-							/>
-						)}
+						<Button
+							size={'medium'}
+							onPress={() => {
+								const index: number = routes.findIndex(
+									route => route.key === tab.key
+								)
+								tabListReference.current?.scrollToIndex({ index })
+								flatListReference.current?.scrollToIndex({ index })
+							}}
+							variant={activeTab === tab.key ? 'primary' : 'dust'}
+							text={tab.title}
+						/>
+					)}
 				/>
 			</View>
 			<FlatList
@@ -57,14 +57,14 @@ const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 				renderToHardwareTextureAndroid={true}
 				data={routes}
 				renderItem={({ item }) => (
-						<View
-							style={{
-								maxWidth: WINDOW_WIDTH,
-								width: WINDOW_WIDTH
-							}}>
-							{item.component}
-						</View>
-					)}
+					<View
+						style={{
+							maxWidth: WINDOW_WIDTH,
+							width: WINDOW_WIDTH
+						}}>
+						{item.component}
+					</View>
+				)}
 			/>
 		</View>
 	)

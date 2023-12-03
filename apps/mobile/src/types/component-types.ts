@@ -1,5 +1,11 @@
-import type { FlatListProps, ImageProps, PressableProps, ScrollViewProps, TextProps, ViewProps } from 'react-native'
-
+import type {
+	FlatListProps,
+	ImageProps,
+	PressableProps,
+	ScrollViewProps,
+	TextProps,
+	ViewProps
+} from 'react-native'
 
 export type ViewDefaultProperties = Pick<
 	ViewProps,

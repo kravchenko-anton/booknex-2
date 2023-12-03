@@ -1,4 +1,12 @@
-import { BigLoader, BookCard, FlatList, Image, PressableContainer, RainbowBookCard, Title } from '@/components'
+import {
+	BigLoader,
+	BookCard,
+	FlatList,
+	Image,
+	PressableContainer,
+	RainbowBookCard,
+	Title
+} from '@/components'
 import GenreLayout from '@/screens/genre/genre-layout'
 import { useGenre } from '@/screens/genre/useGenre'
 import { removeEmoji } from '@/utils/remove-emoji'

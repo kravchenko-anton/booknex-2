@@ -13,21 +13,23 @@ const Title: FC<TitleProperties> = ({
 	center = false,
 	style,
 	...properties
-  }) => {
-	return 	<Text
-		style={[
-			{
-				fontFamily: fontSettings[weight],
-				fontSize: size,
-				textAlign: center ? 'center' : 'left',
-				color: properties.color ?? Color.black
-			},
-			style
-		]}
-		numberOfLines={numberOfLines}
-		{...properties}>
-		{children}
-	</Text>
+}) => {
+	return (
+		<Text
+			style={[
+				{
+					fontFamily: fontSettings[weight],
+					fontSize: size,
+					textAlign: center ? 'center' : 'left',
+					color: properties.color ?? Color.black
+				},
+				style
+			]}
+			numberOfLines={numberOfLines}
+			{...properties}>
+			{children}
+		</Text>
+	)
 }
 
 export default memo(Title)

@@ -9,4 +9,3 @@ export const errorToast = (error: unknown) => {
 		autoHide: true
 	})
 }
-

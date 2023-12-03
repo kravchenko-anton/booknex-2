@@ -1,20 +1,27 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException
+} from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { returnShelfObject } from '../shelf/return.shelf.object'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import type { UserUpdateBioDto, UserUpdatePasswordDto } from './dto/user.update.dto'
+import type {
+	UserUpdateBioDto,
+	UserUpdatePasswordDto
+} from './dto/user.update.dto'
 import { returnUserObject } from './return.user.object'
 import type { UserLibraryCategoryType } from './user.types'
 import {
 	CatalogTitleType,
 	DesignationType,
-	idSelect,
-	userLibraryFields,
 	UserLibraryFieldsEnum,
-	UserOppositeToggle
+	UserOppositeToggle,
+	idSelect,
+	userLibraryFields
 } from './user.types'
 
 @Injectable()
@@ -29,7 +36,8 @@ export class UserService {
 				...selectObject
 			}
 		})
-		if (!user) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!user)
+			throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
 		return user
 	}
 
@@ -51,23 +59,21 @@ export class UserService {
 				}
 			}
 		})
-		if (!library) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!library)
+			throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
 		return {
 			[UserLibraryFieldsEnum.readingBooks]: library.readingBooks,
 			[UserLibraryFieldsEnum.finishedBooks]: library.finishedBooks,
 			[UserLibraryFieldsEnum.watchedShelves]: library.watchedShelves,
-			[UserLibraryFieldsEnum.hiddenShelves]: library.hiddenShelves,
+			[UserLibraryFieldsEnum.hiddenShelves]: library.hiddenShelves
 		}
 	}
-
 
 	async profile(id: number) {
 		const user = await this.getUserById(id, {
 			...returnUserObject,
 			picture: true
 		})
-
-
 
 		const {
 			_count: { id: bookCount },
@@ -81,7 +87,7 @@ export class UserService {
 		return {
 			...user,
 			bookCount: bookCount ?? 0,
-			totalPageCount: totalPageCount ?? 0,
+			totalPageCount: totalPageCount ?? 0
 		}
 	}
 
@@ -118,7 +124,8 @@ export class UserService {
 			where: { email: dto.email }
 		})
 
-		if (!isSameUser) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!isSameUser)
+			throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
 
 		if (isSameUser && isSameUser.id !== userId)
 			throw new BadRequestException(
@@ -200,7 +207,9 @@ export class UserService {
 			select: { id: true }
 		})
 		if (!existBookOrShelf)
-			throw new NotFoundException(`${DesignationType[type]} ${ErrorsEnum.Not_Found}`).getResponse()
+			throw new NotFoundException(
+				`${DesignationType[type]} ${ErrorsEnum.Not_Found}`
+			).getResponse()
 
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect,

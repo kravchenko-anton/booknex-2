@@ -1,13 +1,12 @@
 import type { AuthPayload } from '../../../../libs/global/services-types/auth-types'
 
-
-export interface AuthFieldsType  {
-  email: string
+export interface AuthFieldsType {
+	email: string
 	password: string
 }
 
 export interface RegisterFieldsType extends AuthFieldsType {
-	genres: string[],
+	genres: string[]
 	name?: string
 }
 

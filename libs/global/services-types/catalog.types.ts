@@ -1,17 +1,18 @@
 import type { Prisma } from '@prisma/client'
 import type {
-	returnBookObjectWithAuthor, returnBookObjectWithPages, returnBookObjectWithStatistics,
+	returnBookObjectWithAuthor,
+	returnBookObjectWithPages,
+	returnBookObjectWithStatistics,
 	returnColorBookObjectWithAuthor
 } from '../../../apps/backend/src/book/return.book.object'
-import type { ReturnGenreObject, ReturnGenreWithBooks } from '../../../apps/backend/src/genre/return.genre.object'
+import type {
+	ReturnGenreObject,
+	ReturnGenreWithBooks
+} from '../../../apps/backend/src/genre/return.genre.object'
 
 type BookWithAuthor = Prisma.BookGetPayload<{
 	select: typeof returnBookObjectWithAuthor
 }>[]
-
-
-
-
 
 export interface CatalogOutput {
 	recommendations: BookWithAuthor
@@ -30,10 +31,9 @@ export interface CatalogOutput {
 }
 
 export type SearchExamplesOutput = {
-	id: number,
+	id: number
 	title: string
 }[]
-
 
 export type SearchOutput = Prisma.BookGetPayload<{
 	select: typeof returnBookObjectWithStatistics

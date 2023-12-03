@@ -19,7 +19,8 @@ export class ShelfService {
 				...selectObject
 			}
 		})
-		if (!shelf) throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!shelf)
+			throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
 		return shelf
 	}
 
@@ -47,13 +48,14 @@ export class ShelfService {
 			}
 		})
 
-		if (!shelf) throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!shelf)
+			throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
 		return {
 			...shelf,
 			_count: undefined,
 			statistics: {
-				'Books': shelf._count.books,
-				'Watched': shelf._count.watched,
+				Books: shelf._count.books,
+				Watched: shelf._count.watched
 			}
 		}
 	}
@@ -104,7 +106,7 @@ export class ShelfService {
 						contains: searchTerm
 					}
 				}
-			}),
+			})
 		})
 	}
 
@@ -115,7 +117,9 @@ export class ShelfService {
 			}
 		})
 		if (shelfExists)
-			throw new NotFoundException(`Shelf ${ErrorsEnum.Already_Exist}`).getResponse()
+			throw new NotFoundException(
+				`Shelf ${ErrorsEnum.Already_Exist}`
+			).getResponse()
 		return this.prisma.shelf.create({
 			data: {
 				title: dto.title,
@@ -145,7 +149,10 @@ export class ShelfService {
 				}
 			}
 		})
-		if (booksExists.length !== dto.books.length) throw new NotFoundException(`Some books ${ErrorsEnum.Not_Found}`).getResponse()
+		if (booksExists.length !== dto.books.length)
+			throw new NotFoundException(
+				`Some books ${ErrorsEnum.Not_Found}`
+			).getResponse()
 
 		return this.prisma.shelf.update({
 			where: {

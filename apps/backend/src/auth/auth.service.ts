@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import type { User } from '@prisma/client'
 import { hash, verify } from 'argon2'
@@ -43,7 +47,9 @@ export class AuthService {
 			}
 		})
 		if (oldUser)
-			throw new BadRequestException(`User ${ErrorsEnum.Already_Exist}`).getResponse()
+			throw new BadRequestException(
+				`User ${ErrorsEnum.Already_Exist}`
+			).getResponse()
 		const user = await this.prisma.user.create({
 			data: {
 				email: dto.email,
@@ -71,7 +77,8 @@ export class AuthService {
 
 	async refresh(refreshToken: string) {
 		const result: { id: number } = await this.jwt.verifyAsync(refreshToken)
-		if (!result) throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
+		if (!result)
+			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
 		const user = await this.usersService.getUserById(result.id, {
 			email: true,
 			id: true
@@ -120,7 +127,7 @@ export class AuthService {
 		return {
 			id: user.id,
 			email: user.email,
-      isAdmin: user.isAdmin,
+			isAdmin: user.isAdmin
 		}
 	}
 }

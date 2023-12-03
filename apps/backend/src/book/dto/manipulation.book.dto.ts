@@ -1,7 +1,6 @@
 import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator'
 import type { BookPayload } from '../../../../../libs/global/services-types/book-types'
 
-
 export class CreateBookDto implements BookPayload {
 	@IsString() title: string
 	@IsObject()
@@ -23,7 +22,7 @@ export class CreateBookDto implements BookPayload {
 	@IsString() majorGenre: string
 	@IsString({ each: true }) genres: string[]
 }
-export class EditBookDto implements Partial<BookPayload>  {
+export class EditBookDto implements Partial<BookPayload> {
 	@IsString() @IsOptional() title: string
 	@IsString() @IsOptional() author: {
 		name: string

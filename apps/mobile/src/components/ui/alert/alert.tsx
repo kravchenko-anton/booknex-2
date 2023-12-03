@@ -22,7 +22,7 @@ const Alert: FC = () => {
 			<AnimatedPressable
 				entering={FadeInDown}
 				onTouchStart={event => event.stopPropagation()}
-				className='z-50 w-11/12 items-center rounded-xl bg-dust p-4'>
+				className='bg-dust z-50 w-11/12 items-center rounded-xl p-4'>
 				<Title size={28} className='mb-4 mt-2' center weight={'bold'}>
 					{alert.title}
 				</Title>

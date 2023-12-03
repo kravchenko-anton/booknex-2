@@ -1,6 +1,9 @@
 import { getGenresUrl } from '@/services/api-config'
 import { request } from '@/services/api/request.api'
-import type { GenreByIdType, GenreType } from '@/services/types/genre-service-types'
+import type {
+	GenreByIdType,
+	GenreType
+} from '@/services/types/genre-service-types'
 
 export const genreService = {
 	async getGenres() {

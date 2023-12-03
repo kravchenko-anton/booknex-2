@@ -6,5 +6,5 @@ export const errorToast = (error: unknown) => {
 }
 
 export const successToast = (message: string) => {
-  toast.success(message)
+	toast.success(message)
 }

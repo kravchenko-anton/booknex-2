@@ -6,8 +6,8 @@ import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.g
 import type { defaultReturnObject } from '../../../apps/backend/src/utils/return.default.object'
 
 export type EmotionOutput = Prisma.EmotionGetPayload<{
-	select: typeof  defaultReturnObject & {
-		name: true,
+	select: typeof defaultReturnObject & {
+		name: true
 		path: true
 	}
 }>[]
@@ -18,19 +18,19 @@ export interface ReviewBookPayload {
 	comment: string
 }
 
-export type BookByIdOutput = ((Prisma.BookGetPayload<{
+export type BookByIdOutput = Prisma.BookGetPayload<{
 	include: {
-		majorGenre: false,
+		majorGenre: false
 		author: {
 			select: typeof returnAuthorObject
-		},
+		}
 		genres: { select: typeof ReturnGenreObject }
 	}
-}>) & {
-	similarBooks: (Prisma.BookGetPayload<{
+}> & {
+	similarBooks: Prisma.BookGetPayload<{
 		select: typeof returnBookObjectWithAuthor
-	}>)[]
-})
+	}>[]
+}
 
 export type AllBooksOutput = Prisma.BookGetPayload<{
 	select: typeof returnBookObjectWithAuthor
@@ -40,30 +40,27 @@ export type ReviewByIdOutput = Prisma.ReviewGetPayload<{
 	select: typeof returnReviewsObject
 }>[]
 export interface BookPayload {
-	title: string;
+	title: string
 	author: {
-		name: string;
-	};
-	description: string;
-	picture: string;
-file: string
-charapters: {
-	name: string
-	link: string
-}[]
-	pages: number;
-	likedPercentage: number;
-	popularity: number;
-	majorGenre: string;
-	genres: string[];
+		name: string
+	}
+	description: string
+	picture: string
+	file: string
+	charapters: {
+		name: string
+		link: string
+	}[]
+	pages: number
+	likedPercentage: number
+	popularity: number
+	majorGenre: string
+	genres: string[]
 }
-
-
-
 
 export type EbpubOutput = Prisma.BookGetPayload<{
 	select: {
-		charapters: true,
+		charapters: true
 		file: true
 	}
 }>

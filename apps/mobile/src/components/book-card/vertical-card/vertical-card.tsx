@@ -1,4 +1,7 @@
-import { heightSettings, widthSettings } from '@/components/book-card/vertical-card/vertical-card-settings'
+import {
+	heightSettings,
+	widthSettings
+} from '@/components/book-card/vertical-card/vertical-card-settings'
 import type { VerticalBookCardProperties } from '@/components/book-card/vertical-card/vertical-card-types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import Image from '@/components/ui/image/image'
@@ -12,7 +15,7 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 		style={{
 			height: heightSettings[card.image.size]
 		}}
-		className='mb-1.5 w-full flex-row rounded-lg bg-dust p-2'
+		className='bg-dust mb-1.5 w-full flex-row rounded-lg p-2'
 		{...card}>
 		<Image
 			url={card.image.uri}
@@ -39,7 +42,7 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 					{card.buttons.map(
 						({
 							label,
-							backgroundColor = Color.pale,
+							backgroundColor = Color.shade,
 							color = Color.black,
 							...properties
 						}) => (

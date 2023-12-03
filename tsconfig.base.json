@@ -1,5 +1,5 @@
 {
-  "compileOnSave": false,
+  "compileOnSave": true,
   "compilerOptions": {
     "rootDir": ".",
     "sourceMap": true,
@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2021",
-    "module": "CommonJS",
+    "module": "ES2022",
     "lib": [
       "es2021",
       "dom"

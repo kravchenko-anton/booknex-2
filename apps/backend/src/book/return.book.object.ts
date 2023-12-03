@@ -1,7 +1,10 @@
 import type { Prisma } from '@prisma/client'
 import { defaultReturnObject } from '../utils/return.default.object'
 
-export const returnBookObjectWithAuthor: Pick<Prisma.BookSelect, 'title' | 'picture' | 'author' | keyof typeof defaultReturnObject> = {
+export const returnBookObjectWithAuthor: Pick<
+	Prisma.BookSelect,
+	'title' | 'picture' | 'author' | keyof typeof defaultReturnObject
+> = {
 	...defaultReturnObject,
 	title: true,
 	picture: true,
@@ -9,9 +12,8 @@ export const returnBookObjectWithAuthor: Pick<Prisma.BookSelect, 'title' | 'pict
 		select: {
 			name: true
 		}
-	},
+	}
 }
-
 
 export const returnColorBookObjectWithAuthor = {
 	...returnBookObjectWithAuthor,
@@ -20,16 +22,19 @@ export const returnColorBookObjectWithAuthor = {
 }
 
 export const returnBookObjectWithPages = {
-		...returnBookObjectWithAuthor,
-		pages: true
+	...returnBookObjectWithAuthor,
+	pages: true
 }
 export const returnBookObjectWithStatistics = {
 	...returnBookObjectWithAuthor,
 	likedPercentage: true,
 	pages: true
 }
-export const returnBookObject: Pick<Prisma.BookSelect, 'title' | 'picture' | keyof typeof defaultReturnObject> = {
+export const returnBookObject: Pick<
+	Prisma.BookSelect,
+	'title' | 'picture' | keyof typeof defaultReturnObject
+> = {
 	...defaultReturnObject,
 	title: true,
-	picture: true,
+	picture: true
 }

@@ -1,5 +1,12 @@
-import type { AllShelfOutput, ShelfByIdOutput, ShelfCatalogOutput } from '../../../../libs/global/services-types/shelf-types'
-import type { CreateShelfDto, UpdateShelfDto } from '../../../backend/src/shelf/dto/shelf.dto'
+import type {
+	AllShelfOutput,
+	ShelfByIdOutput,
+	ShelfCatalogOutput
+} from '../../../../libs/global/services-types/shelf-types'
+import type {
+	CreateShelfDto,
+	UpdateShelfDto
+} from '../../../backend/src/shelf/dto/shelf.dto'
 import { getShelfUrl } from '../api/api-config'
 import { request } from '../api/request.api'
 
@@ -17,7 +24,6 @@ export const shelfService = {
 			method: 'GET'
 		})
 	},
-
 
 	async all(searchTerm: string) {
 		return request<AllShelfOutput>({
@@ -37,7 +43,6 @@ export const shelfService = {
 		})
 	},
 
-
 	async delete(id: number) {
 		return request({
 			url: getShelfUrl(`/delete/${id}`),
@@ -52,6 +57,4 @@ export const shelfService = {
 			data: dto
 		})
 	}
-
-
 }

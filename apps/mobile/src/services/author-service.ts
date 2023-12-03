@@ -7,5 +7,5 @@ export const authorService = {
 		return request<AuthorType>({
 			url: getAuthorUrl(`/by-id/${id}`)
 		})
-	},
+	}
 }

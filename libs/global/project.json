@@ -1,20 +1,16 @@
 {
-  "name": "global",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/global/src",
-  "projectType": "library",
-  "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
-      "options": {
-        "lintFilePatterns": [
-          "libs/global/**/*.ts"
-        ]
-      }
-    }
-  },
-  "tags": []
+	"name": "global",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/global/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/global/**/*.ts"]
+			}
+		}
+	},
+	"tags": []
 }

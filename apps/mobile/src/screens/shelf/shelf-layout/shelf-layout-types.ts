@@ -1,5 +1,5 @@
 export interface ShelfLayoutProperties {
-	backgroundImage: string,
+	backgroundImage: string
 	title: string
 }
 

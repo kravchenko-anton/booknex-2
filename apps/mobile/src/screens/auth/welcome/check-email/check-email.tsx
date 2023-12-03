@@ -31,37 +31,37 @@ const CheckEmail: FC = () => {
 	}, [emailField])
 	return (
 		<Layout className='relative justify-center p-4'>
-		<View>
-			<Title size={34} color={Color.secondary} weight='bold'>
-				Log in or Sign up
-			</Title>
-			<Title size={18} color={Color.gray} className='mb-4' weight='light'>
-				Enter your email to continue
-			</Title>
-			<Field
-				control={control}
-				name={'email'}
-				keyboardType='email-address'
-				placeholder={'Enter you Email'}
-			/>
-			<Button
-				size={'medium'}
-				disabled={!noValidEmail}
-				variant={isEmailExists?.isExist ? 'secondary' : 'primary'}
-				className='mt-2'
-				width={'100%'}
-				onPress={() => {
-					navigate(isEmailExists?.isExist ? 'Login' : 'SelectGenres')
-				}}
-				text={
-					noValidEmail
-						? (isEmailExists?.isExist
-							? 'Sign in'
-							: 'Sign up')
-						: 'continue'
-				}
-			/>
-		</View>
+			<View>
+				<Title size={34} color={Color.secondary} weight='bold'>
+					Log in or Sign up
+				</Title>
+				<Title size={18} color={Color.gray} className='mb-4' weight='light'>
+					Enter your email to continue
+				</Title>
+				<Field
+					control={control}
+					name={'email'}
+					keyboardType='email-address'
+					placeholder={'Enter you Email'}
+				/>
+				<Button
+					size={'medium'}
+					disabled={!noValidEmail}
+					variant={isEmailExists?.isExist ? 'secondary' : 'primary'}
+					className='mt-2'
+					width={'100%'}
+					onPress={() => {
+						navigate(isEmailExists?.isExist ? 'Login' : 'SelectGenres')
+					}}
+					text={
+						noValidEmail
+							? isEmailExists?.isExist
+								? 'Sign in'
+								: 'Sign up'
+							: 'continue'
+					}
+				/>
+			</View>
 		</Layout>
 	)
 }

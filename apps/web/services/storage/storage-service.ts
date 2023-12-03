@@ -1,6 +1,9 @@
 import 'multer'
 import type { UploadOutput } from '../../../../libs/global/services-types/storage-types'
-import type { FilenameDto, ReplacementDto } from '../../../backend/src/storage/dto/upload.dto'
+import type {
+	FilenameDto,
+	ReplacementDto
+} from '../../../backend/src/storage/dto/upload.dto'
 import type { StorageFolderType } from '../../../backend/src/storage/storage.types'
 import { getStorageUrl } from '../api/api-config'
 import { request } from '../api/request.api'
@@ -14,10 +17,7 @@ export const storageService = {
 		})
 	},
 
-	async replacement(
-		file: Express.Multer.File,
-		dto: ReplacementDto
-	) {
+	async replacement(file: Express.Multer.File, dto: ReplacementDto) {
 		return request({
 			url: getStorageUrl('/replacement'),
 			method: 'POST',
@@ -28,10 +28,7 @@ export const storageService = {
 		})
 	},
 
-	async upload(
-		file: Express.Multer.File,
-		folder: StorageFolderType
-	) {
+	async upload(file: Express.Multer.File, folder: StorageFolderType) {
 		return request<UploadOutput>({
 			url: getStorageUrl(`/${folder}`),
 			method: 'POST',
@@ -41,5 +38,4 @@ export const storageService = {
 			}
 		})
 	}
-
 }

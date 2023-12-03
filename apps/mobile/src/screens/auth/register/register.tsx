@@ -1,15 +1,15 @@
-import { Close } from '@/../assets/icons'
 import { Button, Field, Header, Layout, Title } from '@/components'
 import { AnimatedView } from '@/components/animated'
 import { emailRules, passwordRules } from '@/global/utils/input-validation'
 import { useAction, useTypedNavigation, useTypedRoute } from '@/hooks'
+import { Close } from '@/icons'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
 import { Color } from '@/ui/colors'
 import { useForm } from 'react-hook-form'
 
 const Register = () => {
 	const {
-		params: {  selectGenres }
+		params: { selectGenres }
 	} = useTypedRoute<'Registration'>()
 	const { register } = useAction()
 	const { control, handleSubmit } = useForm<RegisterFieldsType>()

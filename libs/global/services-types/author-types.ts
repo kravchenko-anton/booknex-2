@@ -4,13 +4,11 @@ import type {
 	returnFullAuthorObject
 } from '../../../apps/backend/src/author/return.author.object'
 
-
-export type InfoByIdOutput = 	Prisma.AuthorGetPayload<{
+export type InfoByIdOutput = Prisma.AuthorGetPayload<{
 	select: typeof returnFullAuthorObject
 }>
 
-export type AllAuthorOutput = Prisma.
-	AuthorGetPayload<{
+export type AllAuthorOutput = Prisma.AuthorGetPayload<{
 	select: typeof returnAuthorObjectWithDescription
 }>[]
 
@@ -27,4 +25,3 @@ export interface EditAuthorPayload {
 	description?: string
 	books?: number[]
 }
-

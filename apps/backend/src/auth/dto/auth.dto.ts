@@ -10,7 +10,7 @@ export class AuthDto {
 	@IsString()
 	password: string
 }
-export class RegisterDto extends AuthDto  {
+export class RegisterDto extends AuthDto {
 	@IsString()
 	@IsOptional()
 	name: string

@@ -5,9 +5,8 @@ import { PrismaService } from '../utils/prisma.service'
 export class AdminService {
 	constructor(private readonly prisma: PrismaService) {}
 	async statistics() {
-
 		return {
-			totalUsers: await this.prisma.user.count(),
+			totalUsers: await this.prisma.user.count()
 		}
 	}
 }

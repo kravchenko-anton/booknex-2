@@ -15,7 +15,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
 const flexStyle = {
-  flex: 1
+	flex: 1
 }
 const queryClient = new QueryClient({
 	defaultOptions: {

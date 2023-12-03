@@ -6,7 +6,6 @@ import { errorToast, successToast } from '../../utils/toast'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type { AuthFieldsType, AuthResponseType } from './auth-types'
 
-
 export const login = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	'auth/login',
 	async ({ email, password }, thunkAPI) => {
@@ -17,13 +16,14 @@ export const login = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 					password
 				})
 				.then(response => response.data)
-      if (!loginResponse.user.isAdmin)  return thunkAPI.rejectWithValue('You are not admin')
+			if (!loginResponse.user.isAdmin)
+				return thunkAPI.rejectWithValue('You are not admin')
 			await saveTokensStorage({
 				accessToken: loginResponse.accessToken,
 				refreshToken: loginResponse.refreshToken
 			})
 
-      successToast('Login successfully')
+			successToast('Login successfully')
 			return loginResponse
 		} catch (error) {
 			errorToast(error)

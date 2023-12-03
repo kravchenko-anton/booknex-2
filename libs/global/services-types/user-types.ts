@@ -18,30 +18,30 @@ export interface UserLibraryOutput {
 		select: {
 			readingBooks: {
 				select: typeof returnBookObjectWithAuthor
-			},
+			}
 		}
-	}>['readingBooks'],
+	}>['readingBooks']
 	[UserLibraryFieldsEnum.finishedBooks]: Prisma.UserGetPayload<{
 		select: {
 			finishedBooks: {
 				select: typeof returnBookObjectWithAuthor
-			},
+			}
 		}
-	}>['finishedBooks'],
-	[UserLibraryFieldsEnum.watchedShelves]:Prisma.UserGetPayload<{
+	}>['finishedBooks']
+	[UserLibraryFieldsEnum.watchedShelves]: Prisma.UserGetPayload<{
 		select: {
 			watchedShelves: {
 				select: typeof returnShelfObject
-			},
+			}
 		}
-	}>['watchedShelves'],
-	[UserLibraryFieldsEnum.hiddenShelves]:Prisma.UserGetPayload<{
+	}>['watchedShelves']
+	[UserLibraryFieldsEnum.hiddenShelves]: Prisma.UserGetPayload<{
 		select: {
 			hiddenShelves: {
 				select: typeof returnShelfObject
-			},
+			}
 		}
-	}>['hiddenShelves'],
+	}>['hiddenShelves']
 }
 
 export interface UserUpdatePayload {
@@ -54,28 +54,25 @@ export interface UserUpdatePasswordPayload {
 	oldPassword: string
 }
 
-
 export interface FavoriteListOutput {
-	readingBooks: number[],
-	finishedBooks: number[],
-	watchedShelves: number[],
+	readingBooks: number[]
+	finishedBooks: number[]
+	watchedShelves: number[]
 	hiddenShelves: number[]
 }
 
-
 export interface ToggleOutput {
-	message: string,
+	message: string
 	isExist: boolean
 }
-
 
 export type AllUsersOutput = Prisma.UserGetPayload<{
 	select: typeof returnUserObject & {
 		_count: {
 			select: {
-				finishedBooks: true,
-				readingBooks: true,
-				watchedShelves: true,
+				finishedBooks: true
+				readingBooks: true
+				watchedShelves: true
 				hiddenShelves: true
 			}
 		}

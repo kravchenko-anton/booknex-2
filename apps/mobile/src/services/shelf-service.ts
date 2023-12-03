@@ -1,6 +1,9 @@
 import { getShelfUrl } from '@/services/api-config'
 import { request } from '@/services/api/request.api'
-import type { ShelfType, ShortShelfType } from '@/services/types/shelf-service-types'
+import type {
+	ShelfType,
+	ShortShelfType
+} from '@/services/types/shelf-service-types'
 
 export const shelfService = {
 	async catalog() {
@@ -14,7 +17,7 @@ export const shelfService = {
 			ShelfType & {
 				statistics: [
 					{
-						count: number | string,
+						count: number | string
 						title: string
 					}
 				]
@@ -22,6 +25,5 @@ export const shelfService = {
 		>({
 			url: getShelfUrl(`/by-id/${id}`)
 		})
-	},
-
+	}
 }

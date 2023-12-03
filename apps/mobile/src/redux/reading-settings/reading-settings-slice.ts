@@ -1,5 +1,8 @@
 import type { ThemePackType } from '@/screens/reading/settings/sheet/reading/theme-pack'
-import { defaultTheme, themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
+import {
+	defaultTheme,
+	themePack
+} from '@/screens/reading/settings/sheet/reading/theme-pack'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 

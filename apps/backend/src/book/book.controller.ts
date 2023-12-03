@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+	Query
+} from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllBooksOutput,
@@ -19,7 +28,6 @@ import { ReviewBookDto } from './dto/review.book.dto'
 @Controller('book')
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
-
 
 	@Get('/emotions')
 	@Auth()

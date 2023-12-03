@@ -13,7 +13,7 @@ const SelectGenres: FC = () => {
 	const { navigate } = useTypedNavigation()
 	if (!genres) return <BigLoader />
 	return (
-		<View  className='h-full'>
+		<View className='h-full'>
 			<Header />
 			<View>
 				<Title size={34} weight={'bold'} className='mb-2' numberOfLines={2}>
@@ -47,7 +47,7 @@ const SelectGenres: FC = () => {
 				text={'Next step'}
 				onPress={() => {
 					navigate('Registration', {
-					selectGenres: selectGenres,
+						selectGenres: selectGenres
 					})
 				}}
 			/>

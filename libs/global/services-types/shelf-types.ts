@@ -7,8 +7,8 @@ export type ShelfByIdOutput = Prisma.ShelfGetPayload<{
 	}
 }> & {
 	statistics: {
-		'Books': number
-		'Watched': number
+		Books: number
+		Watched: number
 	}
 }
 

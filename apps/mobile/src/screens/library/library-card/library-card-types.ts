@@ -4,6 +4,6 @@ import type { IconProperties } from '@/types/global'
 export interface LibraryListElementType
 	extends IconProperties,
 		PressableDefaultProperties {
-	count: number,
+	count: number
 	name: string
 }

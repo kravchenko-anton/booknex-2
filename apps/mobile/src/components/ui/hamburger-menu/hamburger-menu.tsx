@@ -74,9 +74,7 @@ const HamburgerMenu: FC<HamburgerMenuProperties> = ({
 					]}
 					className='absolute top-14 z-50 min-w-[180px] rounded-md bg-white p-3'>
 					{elements.map(element => (
-						<View
-							key={element.title}
-							className='flex-row items-center'>
+						<View key={element.title} className='flex-row items-center'>
 							<Icon icon={element.icon} size={'small'} />
 							<Title
 								className='py-3'

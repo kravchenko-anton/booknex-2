@@ -1,3 +1,3 @@
 export interface StatisticsOutput {
-  totalUsers: number
+	totalUsers: number
 }

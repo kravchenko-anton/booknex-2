@@ -70,25 +70,24 @@ export const routes: IRoute[] = [
 ]
 
 export const authRoutes: IRoute[] = [
-  {
-    name: 'Welcome',
-    component: Welcome
-  },
-  {
-    name: 'Login',
-    component: Login
-  },
-  {
-    name: 'Registration',
-    component: Register
-  },
 	{
-    name: 'CheckEmail',
-    component: CheckEmail
-  },
+		name: 'Welcome',
+		component: Welcome
+	},
+	{
+		name: 'Login',
+		component: Login
+	},
+	{
+		name: 'Registration',
+		component: Register
+	},
+	{
+		name: 'CheckEmail',
+		component: CheckEmail
+	},
 	{
 		name: 'SelectGenres',
 		component: SelectGenres
 	}
 ]
-

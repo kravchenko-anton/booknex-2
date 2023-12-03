@@ -15,7 +15,7 @@ const Library = () => {
 			</Title>
 			<BookCarousel />
 			{
-			// 	Сделать тут карусели по типу headWay
+				// 	Сделать тут карусели по типу headWay
 			}
 			{/* <FlatList*/}
 			{/*	mt={25}*/}

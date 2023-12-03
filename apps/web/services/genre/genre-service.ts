@@ -1,4 +1,7 @@
-import type { AllGenreOutput, GenreByIdOutput } from '../../../../libs/global/services-types/genre-types'
+import type {
+	AllGenreOutput,
+	GenreByIdOutput
+} from '../../../../libs/global/services-types/genre-types'
 import { getGenresUrl } from '../api/api-config'
 import { request } from '../api/request.api'
 

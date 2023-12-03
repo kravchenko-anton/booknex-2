@@ -2,6 +2,7 @@ declare module '*.png'
 declare module '*.jpeg'
 declare module '*.jpg'
 declare module '*.svg' {
-  const content: string;
-	export default content;
+	import type { FC } from 'react'
+	const content: FC<React.SVGProps>
+	export default content
 }

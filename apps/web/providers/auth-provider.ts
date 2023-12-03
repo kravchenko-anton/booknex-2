@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import { redirect, usePathname } from 'next/navigation'
 import type { FC, PropsWithChildren } from 'react'
 import { useEffect, useLayoutEffect } from 'react'
@@ -6,16 +6,16 @@ import { useAuth } from '../../../apps/web/hooks/useAuth'
 import { useAction } from '../hooks/useAction'
 import { errorToast } from '../utils/toast'
 
-export const AuthProvider:FC<PropsWithChildren> = ({ children }) => {
+export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { user } = useAuth()
-  const pathname  = usePathname()
+	const pathname = usePathname()
 	const { getNewToken, logout } = useAction()
 	useLayoutEffect(() => {
-    if (pathname === '/login' && user) {
-      redirect('/admin/dashboard')
-    } else if (pathname !== '/login' && !user) {
-      redirect('/login')
-    }
+		if (pathname === '/login' && user) {
+			redirect('/admin/dashboard')
+		} else if (pathname !== '/login' && !user) {
+			redirect('/login')
+		}
 
 		const checkToken = async () => {
 			const accessToken = window.sessionStorage.getItem('accessToken')
@@ -43,6 +43,5 @@ export const AuthProvider:FC<PropsWithChildren> = ({ children }) => {
 		checkRefreshToken()
 	}, [])
 
-
-  return children
+	return children
 }

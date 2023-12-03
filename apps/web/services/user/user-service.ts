@@ -1,14 +1,17 @@
 import type {
-  FavoriteListOutput, ToggleOutput,
-  UserLibraryOutput,
-  UserProfileOutput
+	FavoriteListOutput,
+	ToggleOutput,
+	UserLibraryOutput,
+	UserProfileOutput
 } from '../../../../libs/global/services-types/user-types'
 import type { FilenameDto } from '../../../backend/src/storage/dto/upload.dto'
-import type { UserUpdateBioDto, UserUpdatePasswordDto } from '../../../backend/src/user/dto/user.update.dto'
+import type {
+	UserUpdateBioDto,
+	UserUpdatePasswordDto
+} from '../../../backend/src/user/dto/user.update.dto'
 import type { UserLibraryCategoryType } from '../../../backend/src/user/user.types'
 import { getUsersUrl } from '../api/api-config'
 import { request } from '../api/request.api'
-
 
 export const userServices = {
 	async profile() {
@@ -33,7 +36,7 @@ export const userServices = {
 		})
 	},
 
-async updatePassword(dto: UserUpdatePasswordDto) {
+	async updatePassword(dto: UserUpdatePasswordDto) {
 		return request({
 			url: getUsersUrl('/update-password'),
 			method: 'POST',
@@ -66,7 +69,6 @@ async updatePassword(dto: UserUpdatePasswordDto) {
 		})
 	},
 
-
 	async all(searchTerm: string) {
 		return request({
 			url: getUsersUrl('/all'),
@@ -83,5 +85,4 @@ async updatePassword(dto: UserUpdatePasswordDto) {
 			method: 'DELETE'
 		})
 	}
-
 }

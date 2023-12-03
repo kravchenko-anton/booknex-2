@@ -48,9 +48,9 @@ export class CatalogService {
 		})
 		return [
 			...topGenres.slice(0, 2).map(genre => ({
-        id: genre.id,
-        title: genre.name
-      })),
+				id: genre.id,
+				title: genre.name
+			})),
 			...topBooks.slice(0, 3),
 			...topGenres.slice(2, 3).map(genre => ({
 				id: genre.id,
@@ -142,9 +142,7 @@ export class CatalogService {
 			.then(genres => genres.map(genre => genre.name))
 	}
 
-	private sortAndSliceGenres(
-		genres: { id: number; name: string }[]
-	) {
+	private sortAndSliceGenres(genres: { id: number; name: string }[]) {
 		return genres
 			.sort(
 				(a, b) =>
@@ -161,7 +159,6 @@ export class CatalogService {
 				popularity: 'desc'
 			},
 			select: returnColorBookObjectWithAuthor
-
 		})
 	}
 
@@ -204,8 +201,8 @@ export class CatalogService {
 		return this.prisma.genre.findMany({
 			take: 5,
 			select: {
-          ...ReturnGenreObject,
-      		books: {
+				...ReturnGenreObject,
+				books: {
 					orderBy: {
 						updatedAt: 'desc'
 					},
@@ -253,22 +250,22 @@ export class CatalogService {
 								genres.length > 0
 									? genres
 									: await this.prisma.user
-										.findUnique({
-											where: {
-												id: userId
-											},
-											select: {
-												selectedGenre: {
-													select: {
-														name: true
+											.findUnique({
+												where: {
+													id: userId
+												},
+												select: {
+													selectedGenre: {
+														select: {
+															name: true
+														}
 													}
 												}
-											}
-										})
-										.selectedGenre()
-										.then(initialGenres =>
-											initialGenres.map(genre => genre.name)
-										)
+											})
+											.selectedGenre()
+											.then(initialGenres =>
+												initialGenres.map(genre => genre.name)
+											)
 						}
 					}
 				},

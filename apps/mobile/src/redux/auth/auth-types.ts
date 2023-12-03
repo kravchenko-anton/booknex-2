@@ -1,4 +1,4 @@
- interface DefaultModelFields {
+interface DefaultModelFields {
 	createdAt: string
 	id: number
 	updatedAt: string
@@ -6,17 +6,16 @@
 
 interface UserType extends DefaultModelFields {
 	email: string
-	name: string,
+	name: string
 	picture: string
 }
-
 
 export interface AuthFieldsType extends Pick<UserType, 'email'> {
 	password: string
 }
 
 export interface RegisterFieldsType extends AuthFieldsType {
-	genres: string[],
+	genres: string[]
 	name?: string
 }
 

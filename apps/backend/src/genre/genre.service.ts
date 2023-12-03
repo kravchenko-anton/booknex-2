@@ -34,7 +34,8 @@ export class GenreService {
 				}
 			}
 		})
-		if (!genre) throw new NotFoundException(`Genre ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!genre)
+			throw new NotFoundException(`Genre ${ErrorsEnum.Not_Found}`).getResponse()
 		const newestBooks = await this.prisma.book.findMany({
 			take: 10,
 			select: {

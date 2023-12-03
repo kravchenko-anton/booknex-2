@@ -32,9 +32,10 @@ const Welcome: FC = () => {
 						weight={'light'}>
 						Booknex is your go-to app for reading and discovering books. With a
 						user-friendly interface, it offers an extensive library and
-						personalized book recommendations. Whether you're a seasoned reader or
-						just looking for your next great read, Booknex simplifies the book
-						discovery process and lets you dive right into your favorite stories.
+						personalized book recommendations. Whether you're a seasoned reader
+						or just looking for your next great read, Booknex simplifies the
+						book discovery process and lets you dive right into your favorite
+						stories.
 					</Title>
 
 					<Button

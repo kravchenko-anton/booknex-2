@@ -7,10 +7,10 @@ export const getAccessToken = async () => {
 
 export const saveTokensStorage = async (data: TokensType) => {
 	window.sessionStorage.setItem('accessToken', data.accessToken)
-  window.sessionStorage.setItem('refreshToken', data.refreshToken)
+	window.sessionStorage.setItem('refreshToken', data.refreshToken)
 }
 
 export const deleteTokensStorage = async () => {
-  window.sessionStorage.removeItem('accessToken')
-  window.sessionStorage.removeItem('refreshToken')
+	window.sessionStorage.removeItem('accessToken')
+	window.sessionStorage.removeItem('refreshToken')
 }

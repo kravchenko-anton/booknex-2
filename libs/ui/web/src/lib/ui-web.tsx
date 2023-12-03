@@ -1,19 +1,11 @@
-export interface UiWebProps {
-}
-
-
+export interface UiWebProps {}
 
 export function UiWeb(props: UiWebProps) {
-  return (
-    <div>
+	return (
+		<div>
+			<h1>Welcome to UiWeb!</h1>
+		</div>
+	)
+}
 
-      <h1>Welcome to UiWeb!</h1>
-
-    </div>
-  );
-};
-
-
-export default UiWeb;
-
-
+export default UiWeb

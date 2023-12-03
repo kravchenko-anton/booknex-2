@@ -1,8 +1,8 @@
-import { Smartphone } from '@/../assets/icons'
 import { BookCard, FlatList, Icon, Title } from '@/components'
+import { Smartphone } from '@/global/icons/react-native'
+import { shadeRGBColor } from '@/global/utils/shade-color'
 import { Color } from '@/ui/colors'
 
-import { shadeRGBColor } from '@/utils/shade-color'
 import { LinearGradient } from 'expo-linear-gradient'
 import { View } from 'react-native'
 //			<Reader className='px-4'>
@@ -23,7 +23,7 @@ const BookCarousel = () => (
 	<View className='mt-2'>
 		<LinearGradient
 			colors={[Color.primary, shadeRGBColor(Color.primary, -30)]}
-			className='h-[230px] w-full items-center justify-center rounded-t-2xl bg-primary'>
+			className='bg-primary h-[230px] w-full items-center justify-center rounded-t-2xl'>
 			<FlatList
 				horizontal
 				data={[
@@ -63,7 +63,7 @@ const BookCarousel = () => (
 			/>
 		</LinearGradient>
 
-		<View className='h-[60px] items-center justify-center rounded-b-xl bg-dust px-4'>
+		<View className='bg-dust h-[60px] items-center justify-center rounded-b-xl px-4'>
 			<View className='w-full flex-row items-center justify-between rounded-xl'>
 				<View className='flex-row items-center justify-between'>
 					<Icon

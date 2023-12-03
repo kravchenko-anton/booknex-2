@@ -1,6 +1,15 @@
-import { Pen, Settings } from '@/../assets/icons'
-import { AnimatedIcon, BigLoader, FlatList, Header, Image, PressableContainer, ScrollLayout, Title } from '@/components'
+import {
+	AnimatedIcon,
+	BigLoader,
+	FlatList,
+	Header,
+	Image,
+	PressableContainer,
+	ScrollLayout,
+	Title
+} from '@/components'
 import { useTypedNavigation } from '@/hooks'
+import { Pen, Settings } from '@/icons'
 import { userServices } from '@/services/user-service'
 import { Color } from '@/ui/colors'
 import { useQuery } from '@tanstack/react-query'
@@ -53,7 +62,7 @@ const Profile = () => {
 				className='my-2'
 				data={profile.statistics}
 				renderItem={({ item }) => (
-					<PressableContainer className='flex-row items-center justify-between rounded-xl bg-dust p-4'>
+					<PressableContainer className='bg-dust flex-row items-center justify-between rounded-xl p-4'>
 						<View>
 							<Title weight={'bold'} size={24}>
 								{item.count}

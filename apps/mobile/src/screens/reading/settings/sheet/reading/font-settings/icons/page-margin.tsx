@@ -14,7 +14,7 @@ const PageMarginIcon: FC<PageMarginIconProperties> = ({
 	...properties
 }) => (
 	<PressableContainer
-		className='m-0 h-[32px] justify-between border-2 border-b-0 border-gray'
+		className='border-gray m-0 h-[32px] justify-between border-2 border-b-0'
 		{...properties}>
 		{Array.from({ length: 4 })
 			.fill(0)

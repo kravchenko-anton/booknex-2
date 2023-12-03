@@ -1,5 +1,10 @@
 import type { Style } from '@/types/global'
-import type { Control, FieldPath, FieldValues, RegisterOptions } from 'react-hook-form'
+import type {
+	Control,
+	FieldPath,
+	FieldValues,
+	RegisterOptions
+} from 'react-hook-form'
 import type { KeyboardTypeOptions, TextInputProps } from 'react-native'
 
 export interface FieldProperties<T extends FieldValues>

@@ -3,8 +3,8 @@ import { useHeaderAnimation } from '@/components/header/animated-header/header-a
 import { HeaderElementComponent } from '@/components/header/useHeader'
 import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import Title from '@/components/ui/title/title'
-import { ChevronLeft } from '@/global/icons/react-native'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { ChevronLeft } from '@/icons'
 import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -20,7 +20,7 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 	const { top } = useSafeAreaInsets()
 	return (
 		<AnimatedView
-			className='absolute left-0 right-0 z-50 bg-canvas'
+			className='bg-canvas absolute left-0 right-0 z-50'
 			style={[{ top }, headerStyle]}>
 			<View className='mt-auto flex-row items-center justify-between px-4 py-0.5'>
 				<View className='flex-row items-center'>

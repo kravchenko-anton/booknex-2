@@ -8,31 +8,30 @@ export interface UserProfileTypes
 }
 export type UserStatisticsType = [
 	{
-		count: number,
+		count: number
 		icon: IconType
 		name: 'Books read'
 	},
 	{
-		count: number,
+		count: number
 		icon: IconType
 		name: 'Pages read'
 	},
 	{
-		count: string,
+		count: string
 		icon: IconType
 		name: 'Time in read'
 	}
-
 ]
 export interface UserType extends DefaultModelFields, UserLibraryFieldsType {
 	email: string
-	name: string,
+	name: string
 	picture: string
 }
 export interface UserLibraryFieldsType {
-	finishedBooks: ShortBookType[],
+	finishedBooks: ShortBookType[]
 	hiddenShelves: ShortShelfType[]
-	readingBooks: ShortBookType[],
+	readingBooks: ShortBookType[]
 	watchedShelves: ShortShelfType[]
 }
 
@@ -44,9 +43,9 @@ export const DesignationType = {
 }
 
 type UserLibraryElementType = {
-	count: number,
-	icon: IconType,
-	name: string,
+	count: number
+	icon: IconType
+	name: string
 	type: keyof UserLibraryFieldsType
 }
 

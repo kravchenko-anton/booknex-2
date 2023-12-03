@@ -13,7 +13,7 @@ const UpdateBio: FC<BioSectionProperties> = ({ defaultEmail, defaultName }) => {
 	const { control, handleSubmit } = useForm<UserUpdateBioTypes>()
 	const { onSubmit } = useUpdateBio()
 	return (
-		<View className='mt-8 rounded-2xl bg-dust p-4'>
+		<View className='bg-dust mt-8 rounded-2xl p-4'>
 			<Title weight={'bold'} className='mb-2' size={24}>
 				Basic information
 			</Title>

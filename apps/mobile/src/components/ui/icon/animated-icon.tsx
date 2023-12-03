@@ -36,7 +36,12 @@ const AnimatedIcon: FC<IconProperties> = ({
 			style as Style
 		]}
 		{...properties}>
-		<Icon width={SizeSetting[size]} strokeWidth={fatness} stroke={color ?? IconColorSetting[variant]} height={SizeSetting[size]} />
+		<Icon
+			width={SizeSetting[size]}
+			strokeWidth={fatness}
+			stroke={color ?? IconColorSetting[variant]}
+			height={SizeSetting[size]}
+		/>
 	</PressableContainer>
 )
 

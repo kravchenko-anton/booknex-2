@@ -1,11 +1,18 @@
-import { ArrowLeft, BookHeart, CaseSenSitive, ListOrdered, MoreHorizontal, Search } from '@/../assets/icons'
 import { AnimatedIcon, Title } from '@/components'
+import { AnimatedView } from '@/components/animated'
 import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
+import {
+	ArrowLeft,
+	BookHeart,
+	CaseSenSitive,
+	ListOrdered,
+	MoreHorizontal,
+	Search
+} from '@/global/icons/react-native'
+import { shadeRGBColor } from '@/global/utils/shade-color'
 import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
 import { useReadingAnimation } from '@/screens/reading/settings/reading-ui-animation'
-import { AnimatedView } from '@/types/component-types'
 import type { LineColorType } from '@/ui/colors'
-import { shadeRGBColor } from '@/utils/shade-color'
 import { StatusBar } from 'expo-status-bar'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -68,7 +75,7 @@ const ReadingUi: FC = () => {
 				className='h-18 absolute bottom-0 z-50 mt-0 w-full flex-1 pt-0'>
 				<View className='mt-0 flex-row items-center justify-between  px-4'>
 					<AnimatedIcon
-					icon={ListOrdered}
+						icon={ListOrdered}
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerChapters)}
 						size='large'
 						color={colorScheme.colorPalette.text}

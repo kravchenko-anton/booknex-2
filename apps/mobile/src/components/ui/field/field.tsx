@@ -40,7 +40,7 @@ const Field = <T extends Record<string, any>>({
 						value={(value ?? '').toString()}
 						keyboardAppearance='default'
 						renderToHardwareTextureAndroid={true}
-						className='text-base text-secondary'
+						className='text-secondary text-base'
 						style={{
 							fontFamily: fontSettings.bold
 						}}

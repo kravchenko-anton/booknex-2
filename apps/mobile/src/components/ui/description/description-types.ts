@@ -7,9 +7,9 @@ export type DescriptionProperties = Omit<
 	'numberOfLines'
 > &
 	ColorProperties & {
-		center?: boolean,
-		children: string | number | undefined,
-		defaultSentences?: number,
-		size?: number,
+		center?: boolean
+		children: string | number | undefined
+		defaultSentences?: number
+		size?: number
 		weight?: keyof typeof fontSettings
 	}

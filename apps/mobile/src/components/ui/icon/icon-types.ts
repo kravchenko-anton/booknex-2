@@ -7,7 +7,7 @@ export interface IconProperties
 	extends PressableDefaultProperties,
 		ColorProperties {
 	backgroundColor?: LineColorType | string
-	icon:FC<SvgProps>
+	icon: FC<SvgProps>
 	fatness?: number
 	noPadding?: boolean
 	size: 'small' | 'medium' | 'large'

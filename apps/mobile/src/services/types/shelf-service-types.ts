@@ -1,4 +1,7 @@
-import type { BookType, ShortBookType } from '@/services/types/book-service-types'
+import type {
+	BookType,
+	ShortBookType
+} from '@/services/types/book-service-types'
 import type { DefaultModelFields } from '@/types/global'
 
 export interface ShelfType extends DefaultModelFields {

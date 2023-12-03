@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { errorCatch } from '../../../../libs/global/utils/catch-error'
-import { deleteTokensStorage, getAccessToken } from '../../redux/auth/auth-helper'
+import {
+	deleteTokensStorage,
+	getAccessToken
+} from '../../redux/auth/auth-helper'
 import { SERVER_URL } from './api-config'
 import { getNewTokens } from './helper.auth'
 

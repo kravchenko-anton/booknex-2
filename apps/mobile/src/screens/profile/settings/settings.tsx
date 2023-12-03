@@ -17,7 +17,7 @@ const Settings = () => {
 			</Title>
 
 			{settingsList.map(item => (
-				<View key={item.title} className='mt-4 w-full rounded-xl bg-dust p-4'>
+				<View key={item.title} className='bg-dust mt-4 w-full rounded-xl p-4'>
 					<Title size={26} weight={'bold'} className='mb-2'>
 						{item.title}
 					</Title>

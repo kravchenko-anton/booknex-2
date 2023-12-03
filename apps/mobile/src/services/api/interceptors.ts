@@ -1,7 +1,7 @@
+import { errorCatch } from '@/global/utils/catch-error'
 import { deleteTokensStorage, getAccessToken } from '@/redux/auth/auth-helper'
 import { SERVER_URL } from '@/services/api-config'
 import { getNewTokens } from '@/services/api/helper.auth'
-import { errorCatch } from '@/utils/catch-error'
 import axios from 'axios'
 
 const instance = axios.create({

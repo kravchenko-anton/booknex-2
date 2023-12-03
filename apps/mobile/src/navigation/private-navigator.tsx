@@ -18,14 +18,12 @@ const PrivateNavigator: FC = () => {
 				animation: 'fade',
 				headerShown: false,
 				contentStyle: {
-					backgroundColor: Color.canvas
+					backgroundColor: Color.foreground
 				}
 			}}>
-			{user ? (
-				routes.map(route => <Stack.Screen key={route.name} {...route} />)
-				) : (
-			authRoutes.map(route => <Stack.Screen key={route.name} {...route} />)
-			)}
+			{user
+				? routes.map(route => <Stack.Screen key={route.name} {...route} />)
+				: authRoutes.map(route => <Stack.Screen key={route.name} {...route} />)}
 		</Stack.Navigator>
 	)
 }

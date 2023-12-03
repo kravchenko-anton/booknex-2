@@ -4,7 +4,7 @@ import { ParserController } from './parser.controller'
 import { ParserService } from './parser.service'
 
 @Module({
-  controllers: [ParserController],
-  providers: [ParserService, PrismaService],
+	controllers: [ParserController],
+	providers: [ParserService, PrismaService]
 })
 export class ParserModule {}

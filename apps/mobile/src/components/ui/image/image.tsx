@@ -14,23 +14,23 @@ const Image: FC<ImageTypes> = ({
 	fullSize,
 	...properties
 }) => (
-		<DefaultImage
-			source={{
-				uri: getFileUrl(url),
+	<DefaultImage
+		source={{
+			uri: getFileUrl(url),
+			width,
+			height
+		}}
+		style={[
+			{
 				width,
-				height
-			}}
-			style={[
-				{
-					width,
-					height: fullSize ? '100%' : height,
-					backgroundColor: Color.shade,
-					borderRadius
-				},
-				style
-			]}
-			{...properties}
-		/>
-	)
+				height: fullSize ? '100%' : height,
+				backgroundColor: Color.shade,
+				borderRadius
+			},
+			style
+		]}
+		{...properties}
+	/>
+)
 
 export default memo(Image)

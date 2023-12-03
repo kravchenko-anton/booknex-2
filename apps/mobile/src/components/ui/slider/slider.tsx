@@ -7,7 +7,11 @@ import type { ViewProps } from 'react-native'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import type { WithSpringConfig } from 'react-native-reanimated'
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import Animated, {
+	runOnJS,
+	useAnimatedStyle,
+	useSharedValue
+} from 'react-native-reanimated'
 
 const DEFAULT_THUMB_SIZE = 16
 const DEFAULT_MAX_TRACK_HEIGHT = 5
@@ -42,26 +46,26 @@ export type SliderProperties = SliderStyleProperties &
 		trumbInside?: boolean
 		activeOffsetX?: number | number[]
 	}
- const Slider = ({
-	                 initialValue,
-	                 minValue = 0,
-	                 maxValue = 10,
-	                 step,
-	                 borderRadius,
-	                 trumbInside,
-	                 onIndexChange,
-	                 ThumbComponent = View,
-	                 maxTrackColor = Color.primary,
-	                 minTrackColor = Color.gray,
-	                 thumbSize = DEFAULT_THUMB_SIZE,
-	                 thumbColor = Color.white,
-	                 touchSlop = 10,
-	                 width = DEFAULT_SLIDER_WIDTH,
-	                 springConfig,
-	                 activeOffsetX = [-10, 10],
-	                 ...properties
-                 }: SliderProperties) => {
-	const radius = thumbSize / 2;
+const Slider = ({
+	initialValue,
+	minValue = 0,
+	maxValue = 10,
+	step,
+	borderRadius,
+	trumbInside,
+	onIndexChange,
+	ThumbComponent = View,
+	maxTrackColor = Color.primary,
+	minTrackColor = Color.gray,
+	thumbSize = DEFAULT_THUMB_SIZE,
+	thumbColor = Color.white,
+	touchSlop = 10,
+	width = DEFAULT_SLIDER_WIDTH,
+	springConfig,
+	activeOffsetX = [-10, 10],
+	...properties
+}: SliderProperties) => {
+	const radius = thumbSize / 2
 	console.log(width)
 	const CalcWidth = trumbInside ? width - DEFAULT_THUMB_SIZE / 2 : width
 	const CalcMin = trumbInside ? DEFAULT_THUMB_SIZE / 2 : 0

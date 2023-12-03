@@ -1,7 +1,10 @@
-import { BottomSheetList } from '../../components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list'
-import type { BottomSheetListEnum, SheetType } from '../../components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
+import { BottomSheetList } from '../../components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list'
+import type {
+	BottomSheetListEnum,
+	SheetType
+} from '../../components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
 // TODO: сделать слайс
 const initialState = {
 	bottomSheet: null as null | SheetType

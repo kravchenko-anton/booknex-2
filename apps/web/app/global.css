@@ -3,19 +3,24 @@
 @tailwind utilities;
 
 body {
-	@apply text-white bg-background  h-full
+	@apply bg-background h-full  text-white;
 }
 
-
-h1, h2, h3, h4, h5, h6 {
-	@apply text-white font-bold
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@apply font-bold text-white;
 }
 
-p, span, a, li {
-	@apply text-gray font-medium
+p,
+span,
+a,
+li {
+	@apply text-gray font-medium;
 }
-
-
 
 ::-webkit-scrollbar {
 	display: none;

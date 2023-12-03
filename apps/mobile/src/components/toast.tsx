@@ -29,46 +29,46 @@ const options = (color: string) => ({
 })
 
 const Toast: FC = () => (
-		<RnToast
-			autoHide={true}
-			visibilityTime={3000}
-			position={'top'}
-			config={{
-				success: properties => (
-					<BaseToast
-						renderTrailingIcon={() => (
-							<Text className='items-center justify-center  pr-3 text-3xl'>
-								🎉
-							</Text>
-						)}
-						{...properties}
-						{...options('#3F612D')}
-					/>
-				),
-				info: properties => (
-					<BaseToast
-						renderTrailingIcon={() => (
-							<Text className='items-center justify-center  pr-3 text-3xl'>
-								⚠️
-							</Text>
-						)}
-						{...properties}
-						{...options('#F9C74F')}
-					/>
-				),
-				error: properties => (
-					<BaseToast
-						renderTrailingIcon={() => (
-							<Text className='items-center justify-center  pr-3 text-3xl'>
-								🚨
-							</Text>
-						)}
-						{...properties}
-						{...options('#D7263D')}
-					/>
-				)
-			}}
-		/>
-	)
+	<RnToast
+		autoHide={true}
+		visibilityTime={3000}
+		position={'top'}
+		config={{
+			success: properties => (
+				<BaseToast
+					renderTrailingIcon={() => (
+						<Text className='items-center justify-center  pr-3 text-3xl'>
+							🎉
+						</Text>
+					)}
+					{...properties}
+					{...options('#3F612D')}
+				/>
+			),
+			info: properties => (
+				<BaseToast
+					renderTrailingIcon={() => (
+						<Text className='items-center justify-center  pr-3 text-3xl'>
+							⚠️
+						</Text>
+					)}
+					{...properties}
+					{...options('#F9C74F')}
+				/>
+			),
+			error: properties => (
+				<BaseToast
+					renderTrailingIcon={() => (
+						<Text className='items-center justify-center  pr-3 text-3xl'>
+							🚨
+						</Text>
+					)}
+					{...properties}
+					{...options('#D7263D')}
+				/>
+			)
+		}}
+	/>
+)
 
 export default Toast

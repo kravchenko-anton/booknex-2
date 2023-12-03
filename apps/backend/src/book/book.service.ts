@@ -28,7 +28,8 @@ export class BookService {
 				...selectObject
 			}
 		})
-		if (!book) throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!book)
+			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
 		return book
 	}
 
@@ -40,7 +41,8 @@ export class BookService {
 				file: true
 			}
 		})
-		if (!book) throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!book)
+			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
 		return {
 			charapters: book.charapters,
 			file: book.file
@@ -57,7 +59,7 @@ export class BookService {
 						contains: searchTerm
 					}
 				}
-			}),
+			})
 		})
 	}
 
@@ -151,7 +153,10 @@ export class BookService {
 		const emoji = await this.prisma.emotion.findUnique({
 			where: { name: dto.emotion }
 		})
-		if (!emoji) throw new NotFoundException(`Emotion ${ErrorsEnum.Not_Found}`).getResponse()
+		if (!emoji)
+			throw new NotFoundException(
+				`Emotion ${ErrorsEnum.Not_Found}`
+			).getResponse()
 		await this.prisma.review.create({
 			data: {
 				user: {
@@ -195,7 +200,7 @@ export class BookService {
 				genres: { select: ReturnGenreObject }
 			}
 		})
-		if (!book)  new NotFoundException('Book not found').getResponse()
+		if (!book) new NotFoundException('Book not found').getResponse()
 		const genreIds = book.genres.map(g => g.id)
 		const similarBooks = await this.prisma.book.findMany({
 			where: {

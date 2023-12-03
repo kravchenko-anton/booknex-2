@@ -5,7 +5,7 @@ import { getAuthUrl, SERVER_URL } from './api-config'
 
 export const getNewTokens = async () => {
 	try {
-		const refreshToken =  window.sessionStorage.getItem('refreshToken')
+		const refreshToken = window.sessionStorage.getItem('refreshToken')
 		const response = await axios
 			.post<string, { data: AuthResponseType }>(
 				SERVER_URL + getAuthUrl('/access-token'),

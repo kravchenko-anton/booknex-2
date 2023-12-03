@@ -1,4 +1,9 @@
-import { useAnimatedStyle, useDerivedValue, withSpring, withTiming } from 'react-native-reanimated'
+import {
+	useAnimatedStyle,
+	useDerivedValue,
+	withSpring,
+	withTiming
+} from 'react-native-reanimated'
 
 export const useHamburgerAnimation = (
 	isShow: { value: boolean },

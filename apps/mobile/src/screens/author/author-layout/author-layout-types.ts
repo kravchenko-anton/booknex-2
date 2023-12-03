@@ -1,5 +1,5 @@
 export interface AuthorLayoutProperties {
-	backgroundColor: string,
-	name: string,
+	backgroundColor: string
+	name: string
 	picture: string
 }

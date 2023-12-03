@@ -11,20 +11,19 @@ import { getBookUrl } from '../api/api-config'
 import { request } from '../api/request.api'
 
 export const bookService = {
-		async emotions() {
+	async emotions() {
 		return request<EmotionOutput>({
 			url: getBookUrl('/emotions')
 		})
-		},
+	},
 
-	async review( bookId: string, dto: ReviewBookPayload) {
+	async review(bookId: string, dto: ReviewBookPayload) {
 		return request({
 			method: 'POST',
 			url: getBookUrl(`/review/${bookId}`),
 			data: dto
 		})
 	},
-
 
 	async infoById(id: number) {
 		return request<BookByIdOutput>({

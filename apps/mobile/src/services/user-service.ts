@@ -62,7 +62,7 @@ export const userServices = {
 	},
 
 	async toggle(type: keyof UserLibraryFieldsType, id: number) {
-		return request<{ isExist: boolean, message: string; }>({
+		return request<{ isExist: boolean; message: string }>({
 			url: getUsersUrl(`/toggle/${type}/${id}`),
 			method: 'PATCH'
 		})

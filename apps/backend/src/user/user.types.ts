@@ -38,9 +38,6 @@ export const userLibraryFields: UserLibraryCategoryType[] = [
 	UserLibraryFieldsEnum.hiddenShelves
 ]
 
-
-
-
 export const idSelect = {
 	select: { id: true }
 }

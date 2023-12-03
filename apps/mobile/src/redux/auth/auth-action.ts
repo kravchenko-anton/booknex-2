@@ -2,7 +2,11 @@ import { getAuthUrl, SERVER_URL } from '@/services/api-config'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
-import type { AuthFieldsType, AuthResponseType, RegisterFieldsType } from './auth-types'
+import type {
+	AuthFieldsType,
+	AuthResponseType,
+	RegisterFieldsType
+} from './auth-types'
 
 export const register = createAsyncThunk<AuthResponseType, RegisterFieldsType>(
 	'auth/register',
@@ -68,6 +72,8 @@ export const getNewToken = createAsyncThunk<AuthResponseType, string>(
 export const logout = createAsyncThunk('auth/logout', async () => {
 	try {
 		await deleteTokensStorage()
-	} catch { /* empty */ }
+	} catch {
+		/* empty */
+	}
 	return {}
 })

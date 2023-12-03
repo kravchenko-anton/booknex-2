@@ -9,7 +9,7 @@ const UpdatePassword = () => {
 	const { control, handleSubmit } = useForm<EditPasswordTypes>()
 	const { onSubmit } = useUpdatePassword()
 	return (
-		<View className='mb-4 mt-8 rounded-2xl bg-dust p-4'>
+		<View className='bg-dust mb-4 mt-8 rounded-2xl p-4'>
 			<Title weight={'bold'} className='mb-2' size={24}>
 				Password
 			</Title>

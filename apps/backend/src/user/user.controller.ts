@@ -1,8 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Patch,
+	Post,
+	Query
+} from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllUsersOutput,
-	FavoriteListOutput, ToggleOutput,
+	FavoriteListOutput,
+	ToggleOutput,
 	UserLibraryOutput,
 	UserProfileOutput
 } from '../../../../libs/global/services-types/user-types'
@@ -31,8 +41,6 @@ export class UserController {
 		return this.usersService.library(+id)
 	}
 
-
-
 	@Auth()
 	@Post('/update-bio')
 	async updateBio(
@@ -59,7 +67,9 @@ export class UserController {
 
 	@Auth()
 	@Get('/favorite-list')
-	async favoriteList(@CurrentUser('id') id: number): Promise<FavoriteListOutput> {
+	async favoriteList(
+		@CurrentUser('id') id: number
+	): Promise<FavoriteListOutput> {
 		return this.usersService.favoriteList(+id)
 	}
 

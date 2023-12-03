@@ -1,7 +1,15 @@
-import { Eye, EyeOff } from '@/../assets/icons'
-import { AnimatedIcon, BigLoader, Button, Description, FlatList, Title, VerticalCard } from '@/components'
+import {
+	AnimatedIcon,
+	BigLoader,
+	Button,
+	Description,
+	FlatList,
+	Title,
+	VerticalCard
+} from '@/components'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { useToggle } from '@/hooks/useToggle/useToggle'
+import { Eye, EyeOff } from '@/icons'
 import ShelfLayout from '@/screens/shelf/shelf-layout/shelf-layout'
 import { shelfService } from '@/services/shelf-service'
 import { useQuery } from '@tanstack/react-query'
@@ -37,7 +45,7 @@ const Shelf = () => {
 	if (!shelf) return <BigLoader />
 	return (
 		<ShelfLayout title={shelf.title} backgroundImage={shelf.picture}>
-			<View className='mx-auto mt-[-40px] w-4/5 flex-row justify-between rounded-xl bg-dust p-2 px-4 pb-1 pt-2'>
+			<View className='bg-dust mx-auto mt-[-40px] w-4/5 flex-row justify-between rounded-xl p-2 px-4 pb-1 pt-2'>
 				<Button
 					variant={isSmashedWatchedShelves ? 'secondary' : 'primary'}
 					onPress={() => handleToggleWatchedShelves()}
@@ -67,7 +75,7 @@ const Shelf = () => {
 					</View>
 				))}
 			</View>
-			<View className='mx-2 mt-4 rounded-xl  bg-pale p-4'>
+			<View className='bg-pale mx-2 mt-4  rounded-xl p-4'>
 				<Description defaultSentences={2} size={22} weight={'regular'}>
 					{shelf.description}
 				</Description>

@@ -1,3 +1,3 @@
 export const defaultReturnObject = {
-	id: true,
+	id: true
 }
