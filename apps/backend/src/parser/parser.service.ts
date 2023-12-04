@@ -10,7 +10,6 @@ export class ParserService {
 
 	async all(searchTerm: string) {
 		return this.prisma.goodReadBook.findMany({
-			take: 100,
 			select: {
 				...defaultReturnObject,
 				title: true,
@@ -101,7 +100,7 @@ export class ParserService {
 				request.continue()
 			}
 		})
-		await page.goto(dto.url + '?page=' + dto.page, {
+		page.goto(dto.url + '?page=' + dto.page, {
 			waitUntil: 'domcontentloaded'
 		})
 		await page.waitForSelector('.tableList')
@@ -126,7 +125,7 @@ export class ParserService {
 		for (let BooksIndex = 0; BooksIndex < books.length; BooksIndex++) {
 			try {
 				const book = books[BooksIndex]
-				await page.goto(book.link, {
+				page.goto(book.link, {
 					waitUntil: 'domcontentloaded'
 				})
 				await page.waitForSelector('div.BookPageTitleSection > div > h1')

@@ -14,6 +14,5 @@ module.exports = {
 			transparent: tailwindcssColors.transparent
 		}
 	},
-	darkMode: 'class',
 	plugins: []
 }

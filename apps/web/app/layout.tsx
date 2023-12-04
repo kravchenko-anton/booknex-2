@@ -15,7 +15,7 @@ const SpaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
 export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang='en'>
-			<body className={`${SpaceGrotesk.className}`}>
+			<body className={`${SpaceGrotesk.className}`} id='body'>
 				<Providers>
 					<AuthProvider>
 						<Navbar />

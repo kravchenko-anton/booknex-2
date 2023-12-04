@@ -30,15 +30,15 @@ export interface FieldProperties<T extends FieldValues>
 }
 
 const colorPallete = {
-	gray: 'bg-gray placeholder-white text-white hover:bg-vibrant focus:bg-vibrant',
+	gray: 'bg-gray placeholder-white text-white border-2 border-transparent hover:border-foreground focus:border-vibrant',
 	foreground:
-		'bg-foreground placeholder-white text-white hover:bg-vibrant focus:bg-vibrant',
+		'bg-foreground placeholder-white text-white border-2 border-transparent hover:border-foreground focus:border-vibrant',
 	vibrant:
-		'bg-vibrant placeholder-white text-white hover:bg-gray focus:bg-gray',
+		'bg-vibrant placeholder-white text-white border-2 border-transparent hover:border-gray focus:border-gray',
 	shade:
-		'bg-shade placeholder-white text-white hover:bg-foreground focus:bg-foreground',
+		'bg-shade placeholder-white text-white border-2 border-transparent hover:border-foreground focus:border-foreground',
 	background:
-		'bg-background placeholder-white text-white hover:bg-foreground focus:bg-foreground'
+		'bg-background border-2 border-transparent placeholder-white text-white hover:border-foreground focus:border-foreground'
 }
 
 const Field = <T extends Record<string, any>>({

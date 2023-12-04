@@ -1,11 +1,18 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
 import type { ParserDtoPayload } from '../../../../../libs/global/services-types/parser-types'
+import { useDebounce } from '../../../../mobile/src/hooks/useDebounce'
+import { useAction } from '../../../hooks/useAction'
+import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { parserService } from '../../../services/parser/parser-services'
 import { successToast } from '../../../utils/toast'
 
 export const useParser = () => {
+	const { showPopup, closePopup, updateLastParsedData } = useAction()
+	const { lastParsedData } = useTypedSelector(state => state.parser)
+	const { control, watch } = useForm()
 	const QueryClient = useQueryClient()
-	const { mutateAsync: parse, isLoading } = useMutation(
+	const { mutateAsync: parse, isLoading: parseLoading } = useMutation(
 		['parse good-reads books'],
 		(dto: ParserDtoPayload) => parserService.parse(dto),
 		{
@@ -15,16 +22,8 @@ export const useParser = () => {
 			}
 		}
 	)
-
-	return {
-		parse,
-		isLoading
-	}
-}
-
-export const useDeleteFromParser = () => {
-	const QueryClient = useQueryClient()
-	const { mutateAsync: deleteFromParser, isLoading } = useMutation(
+	const search = useDebounce(watch('search'), 500)
+	const { mutateAsync: deleteFromParser } = useMutation(
 		['delete from parser'],
 		(id: number) => parserService.delete(id),
 		{
@@ -34,9 +33,21 @@ export const useDeleteFromParser = () => {
 			}
 		}
 	)
+	const { data: goodReadsBooks, isLoading: goodReadsLoading } = useQuery(
+		['good-reads books' + (search || '')],
+		() => parserService.all(search)
+	)
 
 	return {
+		parse,
+		parseLoading,
 		deleteFromParser,
-		isLoading
+		goodReadsBooks,
+		goodReadsLoading,
+		control,
+		showPopup,
+		lastParsedData,
+		updateLastParsedData,
+		closePopup
 	}
 }

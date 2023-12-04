@@ -4,10 +4,10 @@ export const Color = {
 	shade: '#16181d' as '#16181d',
 	background: '#191c22' as '#191c22',
 	primary: '#0d6d8c' as '#0d6d8c',
-	secondary: '#0d6d8c' as '#0d6d8c',
+	secondary: '#087ea4' as '#087ea4',
 
 	black: '#000000' as '#000000',
-	gray: '#90989f' as '#90989f',
+	gray: '#959caf' as '#959caf',
 	white: '#ffffff' as '#ffffff',
 
 	danger: '#DC3F41' as '#DC3F41',

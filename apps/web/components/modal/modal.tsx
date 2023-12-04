@@ -1,19 +1,26 @@
 import type { FC, PropsWithChildren } from 'react'
+import { Close } from '../../../../libs/global/icons/react'
+import { useAction } from '../../hooks/useAction'
+import { useClickAway } from '../../hooks/useOutsideClick'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
 
-interface ModalProperties {
-	isOpen: boolean
-}
-const Modal: FC<PropsWithChildren<ModalProperties>> = ({
-	isOpen,
-	children
-}) => {
+const Modal: FC<PropsWithChildren> = () => {
+	const { popup } = useTypedSelector(state => state.popup)
+	const { closePopup } = useAction()
+	const reference = useClickAway(() => closePopup())
 	return (
 		<div
-			className={`bg-shade fixed left-0 top-0 z-50 h-full w-full bg-opacity-50 ${
-				isOpen ? 'block' : 'hidden'
+			className={`bg-shade absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-opacity-90 ${
+				popup ? 'block' : 'hidden'
 			}`}>
-			<div className='mx-auto my-20 h-[500px] w-[500px] rounded-xl bg-white'>
-				{children}
+			<div ref={reference} className='bg-foreground relative rounded-xl'>
+				<Close
+					onClick={() => closePopup()}
+					className='absolute right-0 top-[-30px] z-50 cursor-pointer'
+					width={20}
+					height={20}
+				/>
+				{popup}
 			</div>
 		</div>
 	)

@@ -59,7 +59,7 @@ export const Navbar = () => {
 						<li className='my-7 font-semibold md:my-0 md:ml-8 ' key={link.link}>
 							<a
 								href={link.link}
-								className='text-gray  duration-500 hover:text-white'>
+								className='text-gray font-bold duration-500 hover:text-white'>
 								{link.name}
 							</a>
 						</li>
