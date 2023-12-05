@@ -45,6 +45,10 @@ const Select: FC<Omit<Props, 'styles'>> = ({ ...properties }) => {
 					'&:hover': {
 						color: Color.white
 					}
+				}),
+				multiValue: provided => ({
+					...provided,
+					backgroundColor: Color.gray
 				})
 			}}
 			{...properties}

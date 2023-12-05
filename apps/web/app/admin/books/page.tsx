@@ -1,5 +1,6 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { Search } from '../../../../../libs/global/icons/react'
@@ -15,6 +16,7 @@ const Page: FC = () => {
 		['books books' + (search || '')],
 		() => bookService.all(search)
 	)
+	const router = useRouter()
 	return (
 		<div className='w-full'>
 			<div className='flex w-full items-center justify-between'>
@@ -27,7 +29,10 @@ const Page: FC = () => {
 						name={'search'}
 						placeholder='Search...'
 					/>
-					<Button size={'sm'} color='primary'>
+					<Button
+						size={'sm'}
+						onClick={() => router.push('admin/books/create')}
+						color='primary'>
 						Create
 					</Button>
 				</div>
@@ -41,8 +46,6 @@ const Page: FC = () => {
 							<th className='min-w-[50px]   p-3'>Id</th>
 							<th className='min-w-[120px]  p-3'>Picture</th>
 							<th className='min-w-[100px]  p-3'>Title</th>
-							<th className='min-w-[100px]  p-3'>Description</th>
-							<th className='min-w-[100px]  p-3'>Genres</th>
 							<th className='min-w-[100px] p-3'>Actions</th>
 						</tr>
 					</thead>
@@ -59,20 +62,13 @@ const Page: FC = () => {
 									/>
 								</td>
 								<td className='p-3'>{book.title}</td>
-								<td className='p-3'>{book.description}</td>
-								<td className='p-3'>
-									{book.genres.map(genre => (
-										<span
-											key={genre.id}
-											className='bg-background mr-1 rounded-md px-2 py-1'>
-											{genre.name}
-										</span>
-									))}
-								</td>
 								<td className='p-3'>
 									<div className='flex gap-2'>
 										<Button size={'sm'} color='primary'>
 											Edit
+										</Button>
+										<Button size={'sm'} color='warning'>
+											Hide
 										</Button>
 										<Button size={'sm'} color='danger'>
 											Delete

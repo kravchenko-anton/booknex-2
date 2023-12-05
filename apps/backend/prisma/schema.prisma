@@ -44,20 +44,22 @@ model Emotion {
 }
 
 model Book {
-  id              Int          @id @default(autoincrement())
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  title           String       @unique
-  author          Author       @relation(fields: [authorId], references: [id])
-  description     String
-  picture         String
-  charapters      Json[]
-  file            String
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String   @unique
+  author      Author   @relation(fields: [authorId], references: [id])
+  description String
+  picture     String
+
+  charapters Json[]
+  file       String
+
   color           String       @default("#264653")
   pages           Int
   likedPercentage Int
-  visible         Boolean      @default(false)
   popularity      Int          @default(0)
+  visible         Boolean      @default(false)
   majorGenre      Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres          Genre[]      @relation("BookGenre")
   reviews         Review[]
@@ -81,7 +83,7 @@ model GoodReadBook {
   picture           String
   pages             Int
   popularity        Int
-  
+
   genres String[]
 }
 

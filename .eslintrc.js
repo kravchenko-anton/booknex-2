@@ -60,7 +60,7 @@ module.exports = {
 		'react-native/no-single-element-style-arrays': 2,
 		'max-len': [
 			'error',
-			{ code: 200, ignoreTemplateLiterals: true, ignoreUrls: true }
+			{ code: 500, ignoreTemplateLiterals: true, ignoreUrls: true }
 		],
 		'no-param-reassign': ['error', { props: false }],
 		'no-restricted-syntax': [

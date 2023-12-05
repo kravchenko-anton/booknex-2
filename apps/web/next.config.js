@@ -9,6 +9,9 @@ const { composePlugins, withNx } = require('@nx/next')
 const nextConfig = {
 	nx: {
 		svgr: true
+	},
+	env: {
+		TINYMCE: process.env.TINYMCE
 	}
 }
 

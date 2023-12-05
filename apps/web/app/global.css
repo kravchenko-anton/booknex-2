@@ -25,3 +25,6 @@ li {
 ::-webkit-scrollbar {
 	display: none;
 }
+.mce-content-body {
+	background: #eeeeee
+}
