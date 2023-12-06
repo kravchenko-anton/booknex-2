@@ -25,6 +25,21 @@ export const parserService = {
 			timeout: 0
 		})
 	},
+	async unfold(file: FormData) {
+		return request<
+			{
+				title: string | null
+				content: string | null
+			}[]
+		>({
+			url: getParserUrl(`/unfold`),
+			method: 'GET',
+			data: file,
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			}
+		})
+	},
 
 	async delete(id: number) {
 		return request({

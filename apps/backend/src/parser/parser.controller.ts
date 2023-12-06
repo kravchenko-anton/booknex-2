@@ -3,10 +3,15 @@ import {
 	Controller,
 	Delete,
 	Get,
+	MaxFileSizeValidator,
 	Param,
+	ParseFilePipe,
 	Post,
-	Query
+	Query,
+	UploadedFile,
+	UseInterceptors
 } from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
 import type { AllGoodReadBookOutput } from '../../../../libs/global/services-types/parser-types'
 import { Auth } from '../decorator/auth.decorator'
 import { ParserDto } from './dto/parser.dto'
@@ -27,6 +32,23 @@ export class ParserController {
 	@Post('/parse')
 	async parse(@Body() dto: ParserDto) {
 		return this.parserService.parse(dto)
+	}
+
+	@Get('/unfold')
+	@UseInterceptors(FileInterceptor('file'))
+	async unfold(
+		@UploadedFile(
+			new ParseFilePipe({
+				validators: [
+					new MaxFileSizeValidator({
+						maxSize: 10_000_000
+					})
+				]
+			})
+		)
+		file: Express.Multer.File
+	) {
+		return this.parserService.unfold(file)
 	}
 
 	@Delete('/delete/:id')

@@ -22,6 +22,7 @@ import { StorageFolderType } from './storage.types'
 @Controller('storage')
 export class StorageController {
 	constructor(private readonly uploadService: StorageService) {}
+
 	@Auth()
 	@Post('/delete')
 	async delete(@Body() dto: FilenameDto) {

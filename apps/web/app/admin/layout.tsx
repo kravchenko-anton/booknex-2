@@ -9,7 +9,7 @@ const AdminLayout: FC<PropsWithChildren> = ({ children }) => {
 			<div
 				className={`md:w-[ calc(100% - 56px) ] w-full
 		  p-4 duration-200 ease-linear
-		md:ml-14`}>
+		md:ml-16`}>
 				{children}
 			</div>
 		</div>

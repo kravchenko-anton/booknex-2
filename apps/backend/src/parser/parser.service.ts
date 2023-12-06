@@ -1,8 +1,15 @@
 import { Injectable } from '@nestjs/common'
+import EPub, { TocElement } from 'epub'
 import puppeteer from 'puppeteer'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 import type { ParserDto } from './dto/parser.dto'
+
+interface Chapter {
+	id: string
+	title: string
+	content: string
+}
 
 @Injectable()
 export class ParserService {
@@ -62,6 +69,56 @@ export class ParserService {
 			}
 		})
 	}
+	
+	async unfold(file: Express.Multer.File) {
+		return new Promise((resolve) => {
+			const epub = new EPub(file.buffer as unknown as string);
+			epub.on('end', function () {
+				const flow: Promise<Chapter | null>[] = epub.flow.map((chapter: TocElement) => {
+					return new Promise<Chapter | null>((resolve, reject) => {
+						epub.getChapter(chapter.id, (error, text) => {
+							if (error) {
+								console.log(error);
+								reject(error);
+								return;
+							}
+							
+							const content = `${
+								chapter.title ? `<section id="${chapter.title}"></section>` : ''
+							} ${text
+								.replaceAll(/ href="[^"]*"/g, '')
+								.replaceAll(/ id="[^"]*"/g, '')
+								.replaceAll(/ class="[^"]*"/g, '')
+								.replaceAll(/ xmlns="[^"]*"/g, '')
+								.replaceAll(
+									/<(?!\/?(?:h[1-6]|span|div|p|i|u|abbr|address|code|q|ul|li|ol|br|strong|em|mark|a|del|sub|sup|ins|b|blockquote|cite|dfn|kbd|pre|samp|small|time|var)\b)[^>]+>/gi,
+									''
+								)
+								.toString()}`;
+							
+							resolve({
+								id: chapter.id,
+								title: chapter.title,
+								content: content
+							});
+						});
+					});
+				});
+				Promise.all(flow).then((chapters: (Chapter | null)[]) => {
+					const validChapters = chapters.filter((chapter): chapter is Chapter => chapter.content !== null);
+					const result =  validChapters.map((chapter) => {
+						return {
+							title: chapter.title,
+							content: chapter.content
+						};
+					})
+					resolve(result);
+				});
+			});
+			
+			epub.parse();
+		});
+	}
 
 	async parse(dto: ParserDto) {
 		const goodReadBook = await this.prisma.goodReadBook.findMany({
@@ -106,7 +163,7 @@ export class ParserService {
 		await page.waitForSelector('.tableList')
 		const books = await page.evaluate(() => {
 			const books = document.querySelectorAll('.tableList tr')
-			// @ts-expect-error
+			// @ts-ignore
 			return [...books].map((book, index) => {
 				const link = book.querySelector('.bookTitle').getAttribute('href')
 				const ratingAvg = book.querySelector('.minirating')

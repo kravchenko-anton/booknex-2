@@ -17,7 +17,7 @@ export const storageService = {
 		})
 	},
 
-	async replacement(file: Express.Multer.File, dto: ReplacementDto) {
+	async replacement(file: FormData, dto: ReplacementDto) {
 		return request({
 			url: getStorageUrl('/replacement'),
 			method: 'POST',
@@ -28,7 +28,7 @@ export const storageService = {
 		})
 	},
 
-	async upload(file: Express.Multer.File, folder: StorageFolderType) {
+	async upload(file: FormData, folder: StorageFolderType) {
 		return request<UploadOutput>({
 			url: getStorageUrl(`/${folder}`),
 			method: 'POST',
