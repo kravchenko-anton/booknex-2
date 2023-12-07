@@ -25,7 +25,7 @@ export const parserService = {
 			timeout: 0
 		})
 	},
-	async unfold(file: FormData) {
+	unfold(file: FormData) {
 		return request<
 			{
 				title: string | null
@@ -33,7 +33,7 @@ export const parserService = {
 			}[]
 		>({
 			url: getParserUrl(`/unfold`),
-			method: 'GET',
+			method: 'POST',
 			data: file,
 			headers: {
 				'Content-Type': 'multipart/form-data'

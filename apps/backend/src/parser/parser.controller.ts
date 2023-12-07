@@ -34,14 +34,14 @@ export class ParserController {
 		return this.parserService.parse(dto)
 	}
 
-	@Get('/unfold')
+	@Post('/unfold')
 	@UseInterceptors(FileInterceptor('file'))
 	async unfold(
 		@UploadedFile(
 			new ParseFilePipe({
 				validators: [
 					new MaxFileSizeValidator({
-						maxSize: 10_000_000
+						maxSize: 10_000_000_000
 					})
 				]
 			})

@@ -23,8 +23,33 @@ li {
 }
 
 ::-webkit-scrollbar {
-	display: none;
+	width: 0.5rem;
+	height: 0.5rem;
+	@apply bg-background;
 }
-.mce-content-body {
-	background: #eeeeee
+
+::-webkit-scrollbar-thumb {
+	@apply bg-vibrant rounded-xl;
 }
+
+::-webkit-scrollbar-track {
+	@apply bg-transparent;
+}
+
+::-webkit-scrollbar-corner {
+	@apply bg-transparent;
+}
+pre {
+	padding: 1rem;
+	border-radius: 3px;
+}
+
+ code {
+	text-align: left;
+	white-space: pre-wrap;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: break-word;
+	line-height: 1.5;
+}
+
