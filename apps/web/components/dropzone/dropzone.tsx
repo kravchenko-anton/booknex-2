@@ -7,8 +7,21 @@ import { Color } from '../../../../libs/ui/colors'
 
 interface DropzoneProperties extends HTMLAttributes<HTMLDivElement> {
 	options?: DropzoneOptions
+	size?: 'sm' | 'md' | 'lg'
 	onFileDelete?: (file: File) => void
 	onDropFile: (files: File[] | File) => void
+}
+
+const sizeSettings = {
+	sm: 'p-4',
+	md: 'p-8',
+	lg: 'p-12'
+}
+
+const maxWidhtSettings = {
+	sm: 'max-w-md',
+	md: 'max-w-xl',
+	lg: 'max-w-2xl'
 }
 
 const Dropzone = ({
@@ -17,6 +30,7 @@ const Dropzone = ({
 	options,
 	onFileDelete,
 	style,
+	size = 'sm',
 	...properties
 }: DropzoneProperties) => {
 	const [files, setFiles] = useState<File[]>([])
@@ -29,8 +43,10 @@ const Dropzone = ({
 		...options
 	})
 	return (
-		<div className={className} style={style}>
-			<div className='flex gap-2 overflow-y-scroll'>
+		<div
+			className={`${maxWidhtSettings[size]} ${className || ''}`}
+			style={style}>
+			<div className='flex gap-2 overflow-scroll'>
 				{files.length > 0 &&
 					files.map(file => (
 						<div key={file.name} className=' items-center '>
@@ -49,7 +65,7 @@ const Dropzone = ({
 										setFiles(files.filter(f => f.name !== file.name))
 										onFileDelete(file)
 									}}
-									className='border-foreground mb-2 items-center justify-center border-2 p-2 text-center'>
+									className={`border-foreground mb-2 items-center justify-center border-2 text-center`}>
 									<File
 										color={Color.white}
 										className='mx-auto mb-1'
@@ -68,7 +84,7 @@ const Dropzone = ({
 			</div>
 			<div
 				{...getRootProps()}
-				className={`border-foreground mt-2 flex cursor-pointer items-center  justify-center  rounded-md border-2 p-5`}
+				className={`border-foreground mt-2 flex cursor-pointer items-center  justify-center  rounded-md border-2  ${sizeSettings[size]}`}
 				{...properties}>
 				<input {...getInputProps()} />
 				<p className='flex items-center gap-2'>

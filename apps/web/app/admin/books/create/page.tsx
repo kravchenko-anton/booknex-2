@@ -1,69 +1,34 @@
 'use client'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { Editor } from '@tinymce/tinymce-react'
 import type { FC } from 'react'
-import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { Close, Pen } from '../../../../../../libs/global/icons/react'
-import { useDebounce } from '../../../../../mobile/src/hooks/useDebounce'
+import { Controller } from 'react-hook-form'
+import { Close } from '../../../../../../libs/global/icons/react'
 import Button from '../../../../components/button/button'
 import Dropzone from '../../../../components/dropzone/dropzone'
 import Field from '../../../../components/field/field'
 import Select from '../../../../components/select/select'
-import { authorService } from '../../../../services/author/author-service'
-import { genreService } from '../../../../services/genre/genre-service'
-import { parserService } from '../../../../services/parser/parser-services'
-import { errorToast, successToast } from '../../../../utils/toast'
+import TextEditor from '../../../../components/text-editor/text-editor'
+import { useBookCompose } from './useBook'
+import { useCreate } from './useCreate'
 
 const Page: FC = () => {
-	const { control, handleSubmit, setValue } = useForm<{
-		title: string
-		picture: File
-		pages: number
-		genres: string[]
-		author: string
-		file: {
-			file: File
-			characters: {
-				name: string
-				link: string
-			}[]
-		}
-		popularity: number
-		color: string
-		likedPercentage: number
-		description: string
-	}>()
-	const [authorSearch, setAuthorSearch] = useState('')
-	const seachAuthor = useDebounce(authorSearch, 500)
-	const { data: genre } = useQuery(['genres'], () => genreService.all())
-	const { data: authors } = useQuery(['authors'], () =>
-		authorService.all(seachAuthor)
-	)
-
-	const [books, setBooks] = useState<
-		{
-			name: string
-			filePath: string
-			content: {
-				title: string
-
-				content: string
-			}[]
-		}[]
-	>()
-	const { mutateAsync: unfold } = useMutation(
-		['upload ebook'],
-		(formData: FormData) => parserService.unfold(formData),
-		{
-			onSuccess: () => {
-				successToast('File uploaded')
-			},
-			onError: () => {
-				errorToast('Error while uploading book')
-			}
-		}
-	)
+	const {
+		books,
+		deleteBook,
+		updateTocContent,
+		updateTocTitle,
+		updateCharacterTitle,
+		removeToc,
+		uploadBook
+	} = useBookCompose()
+	const {
+		unfold,
+		control,
+		handleSubmit,
+		setValue,
+		genre,
+		setAuthorSearch,
+		authors
+	} = useCreate()
 
 	return (
 		<form
@@ -73,47 +38,23 @@ const Page: FC = () => {
 			<h1 className='mb-4 text-center text-3xl font-medium'>
 				Create book from scratch
 			</h1>
-			<div className='flex  justify-between gap-10'>
+			<div className=' flex justify-between gap-5'>
 				<div className='w-1/2'>
-					<Field
-						control={control}
-						rules={{
-							required: 'Title is required',
-							minLength: {
-								value: 3,
-								message: 'Title must be at least 3 characters long'
-							}
-						}}
-						name={'title'}
-						placeholder='Title'
-					/>
-					<div className='mt-2 flex  justify-between'>
+					<div className='mt-2 flex justify-between gap-3'>
+						<Field
+							control={control}
+							className='w-1/2'
+							name={'title'}
+							placeholder='Title'
+						/>
 						<Field
 							type={'number'}
 							control={control}
-							rules={{
-								required: 'Pages is required',
-								min: {
-									value: 1,
-									message: 'Pages must be greater than 0'
-								}
-							}}
 							name={'pages'}
 							placeholder='Pages'
 						/>
 						<Field
 							type={'number'}
-							rules={{
-								required: 'Liked Percentage is required',
-								min: {
-									value: 1,
-									message: 'Liked Percentage must be greater than 0'
-								},
-								max: {
-									value: 100,
-									message: 'Liked Percentage must be less than 100'
-								}
-							}}
 							control={control}
 							name={'likedPercentage'}
 							placeholder={'Liked Percentage'}
@@ -121,17 +62,6 @@ const Page: FC = () => {
 						<Field
 							type={'number'}
 							control={control}
-							rules={{
-								required: 'Popularity is required',
-								min: {
-									value: 1,
-									message: 'Popularity must be greater than 0'
-								},
-								max: {
-									value: 100,
-									message: 'Popularity must be less than 100'
-								}
-							}}
 							className='mb-2'
 							name={'popularity'}
 							placeholder={'Popularity'}
@@ -141,13 +71,11 @@ const Page: FC = () => {
 						<div className='w-1/2'>
 							<h1 className='mb-2'>Picture</h1>
 							<Dropzone
-								className='h-[140px]'
+								size='lg'
 								onDropFile={acceptedFiles => {
 									setValue('picture', acceptedFiles[0])
 								}}
 							/>
-						</div>
-						<div className='w-1/2'>
 							<h1 className='mb-2 mt-4 flex gap-5'>
 								Genres <p className='text-gray'>First genre be main</p>
 							</h1>
@@ -178,44 +106,51 @@ const Page: FC = () => {
 									</>
 								)}
 							/>
-							<h1 className='mb-2 mt-4'>Author</h1>
-							<Controller
-								control={control}
-								name={'author'}
-								rules={{
-									required: 'Author required'
+						</div>
+						<div className='w-1/2'>
+							<h1 className='mt-2  text-xl'>Book file</h1>
+							<Dropzone
+								size='lg'
+								options={{
+									multiple: true,
+									accept: {
+										'application/epub+zip': ['.epub']
+									}
 								}}
-								render={({
-									field: { value, onChange, onBlur },
-									fieldState: { error }
-								}) => (
-									<>
-										<Select
-											value={value}
-											onBlur={onBlur}
-											onChange={onChange}
-											options={authors?.map(author => ({
-												label: author.name,
-												value: author.name
-											}))}
-											onInputChange={value => {
-												setAuthorSearch(value)
-											}}
-											isSearchable
-											placeholder={'Select author'}
-										/>
-										{!!error && (
-											<p className={`text-danger mt-0.5 text-xs italic`}>
-												{error.message}
-											</p>
-										)}
-									</>
-								)}
+								onFileDelete={file => deleteBook(file.name)}
+								onDropFile={files => {
+									for (const file of files) {
+										const formData = new FormData()
+										formData.append(
+											'file',
+											new Blob([file], { type: 'application/epub+zip' })
+										)
+										unfold(formData).then(data => {
+											uploadBook(file.name, data)
+										})
+									}
+								}}
+							/>
+							<div className='mb-2 mt-4 flex gap-3'>
+								<h1 className=''>Author</h1>
+								<Button size='sm'>Create</Button>
+							</div>
+
+							<Select
+								options={authors?.map(author => ({
+									label: author.name,
+									value: author.name
+								}))}
+								onBlur={value => {
+									setAuthorSearch(value.target.value)
+								}}
+								isSearchable
+								placeholder={'Select author'}
 							/>
 						</div>
 					</div>
 				</div>
-				<div className='w-1/2'>
+				<div className='h-max w-1/2'>
 					<Controller
 						control={control}
 						name={'description'}
@@ -225,21 +160,12 @@ const Page: FC = () => {
 						}) => (
 							<>
 								<h1 className='mb-2'>Description</h1>
-								<Editor
+								<TextEditor
 									value={value}
 									onBlur={onBlur}
 									onChange={onChange}
-									apiKey={process.env.TINYMCE}
-									init={{
-										height: 300,
-										skin: 'oxide-dark',
-										content_css: 'dark',
-										plugins:
-											'anchor autolink charmap codesample preview lists media searchreplace  visualblocks wordcount checklist mediaembed casechange pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-										toolbar:
-											'undo redo | blocks  fontsize | bold italic underline strikethrough  align lineheight |  removeformat'
-									}}
-									initialValue='This is the initial content of the editor.'
+									placeholder='Enter description'
+									className='h-[300px]'
 								/>
 								{!!error && (
 									<p className={`text-danger mt-0.5 text-xs italic`}>
@@ -252,73 +178,15 @@ const Page: FC = () => {
 				</div>
 			</div>
 
-			<h1 className='my-5 text-center text-3xl'>Book file</h1>
-			<Dropzone
-				options={{
-					multiple: true,
-					accept: {
-						'application/epub+zip': ['.epub']
-					}
-				}}
-				className='mx-auto w-[400px]'
-				onFileDelete={file => {
-					setBooks(previous => {
-						return previous?.filter(book => book.filePath !== file.path)
-					})
-				}}
-				onDropFile={files => {
-					for (const file of files) {
-						const formData = new FormData()
-						formData.append(
-							'file',
-							new Blob([file], { type: 'application/epub+zip' })
-						)
-						unfold(formData).then(data => {
-							console.log(data, file)
-							setBooks(previous => {
-								if (previous)
-									return [
-										...previous,
-										{
-											name: file.name,
-											filePath: file.path,
-											content: data
-										}
-									]
-								return [
-									{
-										name: file.name,
-										filePath: file.path,
-										content: data
-									}
-								]
-							})
-						})
-					}
-				}}
-			/>
 			{books && (
-				<div className='mt-4 flex grid grid-cols-2 gap-5'>
+				<div className='mt-14  grid grid-cols-2 gap-2'>
 					{books.map(book => (
 						<div
 							key={book.name}
 							className='bg-foreground mb-4 mr-1 rounded-xl p-3'>
 							<input
-								onChange={event => {
-									setBooks(previous => {
-										if (previous) {
-											return previous.map(previousBook => {
-												if (previousBook.filePath === book.filePath) {
-													return {
-														...previousBook,
-														name: event.target.value
-													}
-												}
-												return previousBook
-											})
-										}
-										return previous
-									})
+								onBlur={event => {
+									updateCharacterTitle(event.target.value, book.name)
 								}}
 								defaultValue={book.name}
 								className={`bg-vibrant hover:border-foreground focus:border-foreground focus:shadow-outline mb-4 w-full  rounded-md border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0`}
@@ -330,47 +198,38 @@ const Page: FC = () => {
 										className='mb-2 flex w-full items-center justify-between gap-2'>
 										<input
 											defaultValue={content.title}
+											onBlur={event => {
+												updateTocTitle(
+													content.title,
+													book.name,
+													event.target.value
+												)
+											}}
 											className={`bg-foreground border-gray w-full rounded-md border-0 px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2`}
 										/>
 										<div className='flex gap-2'>
-											<Pen
-												width={36}
-												height={36}
-												className='bg-primary cursor-pointer rounded-xl px-2'
-											/>
 											<Close
 												width={36}
 												height={36}
 												onClick={() => {
-													setBooks(previous => {
-														if (previous) {
-															return previous.map(previousBook => {
-																if (previousBook.filePath === book.filePath) {
-																	return {
-																		...previousBook,
-																		content: previousBook.content.filter(
-																			previousContent =>
-																				previousContent.title !== content.title
-																		)
-																	}
-																}
-																return previousBook
-															})
-														}
-														return previous
-													})
+													removeToc(book.name, content.title)
 												}}
 												className='bg-vibrant cursor-pointer rounded-xl p-2'
 											/>
 										</div>
 									</div>
-									<pre className='text-gray mb-2 font-mono'>
-										<code>
-											{content.content.length > 400
-												? content.content.slice(0, 400) + '...'
-												: content.content}
-										</code>
-									</pre>
+									<TextEditor
+										value={content.content}
+										onBlur={event => {
+											updateTocContent(
+												content.title,
+												book.name,
+												event.target.value
+											)
+										}}
+										color='background'
+										className='min-h-[340px] w-full rounded-md border-0 px-4 py-2 font-mono text-sm duration-200 ease-linear'
+									/>
 								</div>
 							))}
 						</div>
