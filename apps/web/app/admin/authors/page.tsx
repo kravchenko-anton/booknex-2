@@ -1,13 +1,15 @@
 'use client'
-import { useQuery } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { Search } from '../../../../../libs/global/icons/react'
 import { useDebounce } from '../../../../mobile/src/hooks/useDebounce'
 import Button from '../../../components/button/button'
 import Field from '../../../components/field/field'
+import { useAction } from '../../../hooks/useAction'
+import { getFileUrl } from '../../../services/api/api-config'
 import { authorService } from '../../../services/author/author-service'
+import CreateAuthorPopup from './create-author-popup'
 
 const Page: FC = () => {
 	const { control, watch } = useForm()
@@ -16,11 +18,12 @@ const Page: FC = () => {
 		['authors' + (search || '')],
 		() => authorService.all(search)
 	)
-	const router = useRouter()
+	const queryClient = useQueryClient()
+	const { closePopup, showPopup } = useAction()
 	return (
 		<div className='w-full'>
 			<div className='flex w-full items-center justify-between'>
-				<h1 className='text-3xl font-medium'>Books</h1>
+				<h1 className='text-3xl font-medium'>Authors</h1>
 				<div className='flex gap-5'>
 					<Field
 						control={control}
@@ -31,8 +34,17 @@ const Page: FC = () => {
 					/>
 					<Button
 						size={'sm'}
-						onClick={() => router.push('admin/books/create')}
-						color='primary'>
+						color='primary'
+						onClick={() => {
+							showPopup(
+								<CreateAuthorPopup
+									onCreate={() => {
+										closePopup()
+										queryClient.invalidateQueries(['authors'])
+									}}
+								/>
+							)
+						}}>
 						Create
 					</Button>
 				</div>
@@ -57,7 +69,7 @@ const Page: FC = () => {
 								<td className='p-3'>
 									<img
 										className='h-20 w-20 rounded-md'
-										src={author.picture}
+										src={getFileUrl(author.picture)}
 										alt={author.name}
 									/>
 								</td>

@@ -5,11 +5,23 @@ import { useDropzone } from 'react-dropzone'
 import { File, Pen } from '../../../../libs/global/icons/react'
 import { Color } from '../../../../libs/ui/colors'
 
-interface DropzoneProperties extends HTMLAttributes<HTMLDivElement> {
+export interface DropzoneProperties extends HTMLAttributes<HTMLDivElement> {
 	options?: DropzoneOptions
 	size?: 'sm' | 'md' | 'lg'
+	color?: keyof Pick<
+		typeof Color,
+		'gray' | 'foreground' | 'vibrant' | 'shade' | 'background'
+	>
 	onFileDelete?: (file: File) => void
 	onDropFile: (files: File[] | File) => void
+}
+
+const colorPallete = {
+	gray: 'border-gray',
+	foreground: 'border-foreground',
+	vibrant: 'border-vibrant',
+	shade: 'border-shade',
+	background: 'border-background'
 }
 
 const sizeSettings = {
@@ -19,16 +31,17 @@ const sizeSettings = {
 }
 
 const maxWidhtSettings = {
-	sm: 'max-w-md',
-	md: 'max-w-xl',
-	lg: 'max-w-2xl'
+	sm: 'max-w-sm',
+	md: 'max-w-md',
+	lg: 'max-w-lg'
 }
 
 const Dropzone = ({
-	onDropFile,
+	onDropFile = () => {},
 	className,
-	options,
-	onFileDelete,
+	options = {},
+	color = 'foreground',
+	onFileDelete = () => {},
 	style,
 	size = 'sm',
 	...properties
@@ -46,11 +59,15 @@ const Dropzone = ({
 		<div
 			className={`${maxWidhtSettings[size]} ${className || ''}`}
 			style={style}>
-			<div className='flex gap-2 overflow-scroll'>
+			<div
+				className={`flex gap-2 overflow-scroll ${
+					files.length === 0 && 'hidden'
+				}`}>
 				{files.length > 0 &&
 					files.map(file => (
-						<div key={file.name} className=' items-center '>
-							{Object.values(options?.accept).includes(['image']) ? (
+						<div key={file.name} className='items-center'>
+							{options.accept &&
+							Object.values(options?.accept).includes(['image']) ? (
 								<img
 									onClick={() => {
 										setFiles(files.filter(f => f.name !== file.name))
@@ -65,7 +82,7 @@ const Dropzone = ({
 										setFiles(files.filter(f => f.name !== file.name))
 										onFileDelete(file)
 									}}
-									className={`border-foreground mb-2 items-center justify-center border-2 text-center`}>
+									className={`mb-2 items-center justify-center border-2 text-center ${colorPallete[color]}`}>
 									<File
 										color={Color.white}
 										className='mx-auto mb-1'
@@ -84,7 +101,7 @@ const Dropzone = ({
 			</div>
 			<div
 				{...getRootProps()}
-				className={`border-foreground mt-2 flex cursor-pointer items-center  justify-center  rounded-md border-2  ${sizeSettings[size]}`}
+				className={`mt-2 flex cursor-pointer items-center  justify-center  rounded-md border-2  ${sizeSettings[size]} ${colorPallete[color]}`}
 				{...properties}>
 				<input {...getInputProps()} />
 				<p className='flex items-center gap-2'>

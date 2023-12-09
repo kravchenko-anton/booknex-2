@@ -22,7 +22,7 @@ const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 					bounces={false}
 					ItemSeparatorComponent={() => <View className='w-[10px]' />}
 					data={routes}
-					// If you add ref, the types break
+					// If you add ref, the types.ts break
 					renderItem={({ item: tab }: { item: Route }) => (
 						<Button
 							size={'medium'}

@@ -4,7 +4,7 @@
 // import * as process from 'node:process'
 // import prompts from 'prompts'
 // import type { Page } from 'puppeteer'
-// import { StorageFolderEnum } from '../src/storage/storage.types'
+// import { StorageFolderEnum } from '../src/storage/storage.types.ts'
 // import { randomColor, shadeRGBColor } from '../src/utils/color.functions'
 // import { simplifyString } from '../src/utils/string.functions'
 // import { customLinkSelect } from './aditional.functions'

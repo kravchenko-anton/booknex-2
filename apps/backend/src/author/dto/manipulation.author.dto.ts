@@ -8,7 +8,6 @@ export class CreateAuthorDto implements CreateAuthorPayload {
 	@IsString() name: string
 	@IsString() description: string
 	@IsString() picture: string
-	@IsArray() books: number[]
 }
 export class EditAuthorDto implements EditAuthorPayload {
 	@IsString() @IsOptional() name: string

@@ -54,10 +54,7 @@ export class AuthorService {
 				name: dto.name,
 				picture: dto.picture,
 				color: shadeRGBColor(randomColor(), -50),
-				description: dto.description,
-				books: {
-					connect: dto.books.map(id => ({ id }))
-				}
+				description: dto.description
 			}
 		})
 	}

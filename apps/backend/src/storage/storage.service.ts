@@ -8,7 +8,7 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import process from 'node:process'
 import { ErrorsEnum } from '../utils/errors'
-import { simplifyString } from '../utils/string.functions'
+import { optimizeFilename } from '../utils/string.functions'
 import type { StorageFolderType } from './storage.types'
 import { StorageFolderArray, UserStorageFolderArray } from './storage.types'
 
@@ -66,7 +66,7 @@ export class StorageService {
 		await this.S3.send(
 			new PutObjectCommand({
 				Bucket: this.configService.get('AWS_BUCKET'),
-				Key: `${folder}/${simplifyString(filename)}`,
+				Key: `${folder}/${optimizeFilename(filename)}`,
 				Body: file,
 				ACL: 'public-read',
 				ContentDisposition: 'inline'
@@ -75,7 +75,7 @@ export class StorageService {
 			throw new BadRequestException(ErrorsEnum.Unknow_Error).getResponse()
 		})
 		return {
-			name: `${folder}/${simplifyString(filename)}`
+			name: `${folder}/${optimizeFilename(filename)}`
 		}
 	}
 }

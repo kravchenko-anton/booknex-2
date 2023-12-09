@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from 'react'
+import type { InputHTMLAttributes, PropsWithChildren } from 'react'
 import type {
 	Control,
 	FieldPath,
@@ -7,26 +7,27 @@ import type {
 	PathValue
 } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
-import type { InputProperties } from './input'
-import Input from './input'
+import type { TextAreaProperties } from './text-area'
+import TextArea from './text-area'
 
-export interface FieldProperties<T extends FieldValues>
+interface FomrTextEditorProperties<T extends FieldValues>
 	extends Omit<
-			InputHTMLAttributes<HTMLInputElement>,
+			InputHTMLAttributes<HTMLTextAreaElement>,
 			'onChange' | 'onChangeText' | 'value' | 'testID' | 'color'
 		>,
-		Pick<InputProperties, 'color' | 'icon'> {
+		Pick<TextAreaProperties, 'color'> {
 	control: Control<T>
 	name: FieldPath<T>
+	placeholder?: string
 }
 
-const Field = <T extends Record<string, any>>({
+const FormTextEditor = <T extends Record<string, any>>({
+	children = '',
 	color = 'foreground',
 	className,
 	style,
-	icon: Icon,
 	...properties
-}: FieldProperties<T>): JSX.Element | null => {
+}: PropsWithChildren<FomrTextEditorProperties<T>>) => {
 	return (
 		<Controller
 			control={properties.control}
@@ -37,15 +38,14 @@ const Field = <T extends Record<string, any>>({
 				fieldState: { error }
 			}) => (
 				<div className={className} style={style}>
-					<Input
+					<TextArea
 						onBlur={onBlur}
 						onChange={onChange}
 						color={color}
-						isError={!!error}
 						value={value}
-						icon={Icon}
-						{...properties}
-					/>
+						{...properties}>
+						{children}
+					</TextArea>
 					{!!error && (
 						<p className={`text-danger mt-0.5 text-xs italic`}>
 							{error.message}
@@ -57,4 +57,4 @@ const Field = <T extends Record<string, any>>({
 	)
 }
 
-export default Field
+export default FormTextEditor

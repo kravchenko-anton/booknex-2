@@ -16,7 +16,6 @@ export interface CreateAuthorPayload {
 	name: string
 	picture: string
 	description: string
-	books: number[]
 }
 
 export interface EditAuthorPayload {

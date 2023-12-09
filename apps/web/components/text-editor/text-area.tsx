@@ -1,12 +1,13 @@
-import type { FC, HTMLAttributes, PropsWithChildren } from 'react'
+import type { FC, InputHTMLAttributes, PropsWithChildren } from 'react'
 
-type TextEditorProperties = {
-	value?: string
+export interface TextAreaProperties
+	extends InputHTMLAttributes<HTMLTextAreaElement> {
+	placeholder?: string
 	color?: keyof Pick<
 		typeof colorPallete,
 		'gray' | 'foreground' | 'vibrant' | 'shade' | 'background'
 	>
-} & HTMLAttributes<HTMLTextAreaElement>
+}
 const colorPallete = {
 	gray: 'bg-gray placeholder-white text-white border-2 border-transparent hover:border-foreground focus:border-vibrant',
 	foreground:
@@ -18,23 +19,22 @@ const colorPallete = {
 	background:
 		'bg-background border-2 border-transparent placeholder-white text-white hover:border-foreground focus:border-foreground'
 }
-const TextEditor: FC<PropsWithChildren<TextEditorProperties>> = ({
-	children,
+const TextArea: FC<PropsWithChildren<TextAreaProperties>> = ({
+	children = '',
 	color = 'foreground',
 	className,
-	value,
-	...rest
+	style,
+	...properties
 }) => {
 	return (
 		<textarea
-			value={value}
 			className={`h-full w-full resize-none rounded-lg p-4 focus:outline-0  ${
 				colorPallete[color]
 			} ${className || ''}`}
-			{...rest}>
+			{...properties}>
 			{children}
 		</textarea>
 	)
 }
 
-export default TextEditor
+export default TextArea

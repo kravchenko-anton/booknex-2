@@ -1,8 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDebounce } from '../../../../../mobile/src/hooks/useDebounce'
-import { authorService } from '../../../../services/author/author-service'
+import { z } from 'zod'
 import { genreService } from '../../../../services/genre/genre-service'
 import { parserService } from '../../../../services/parser/parser-services'
 import { errorToast, successToast } from '../../../../utils/toast'
@@ -20,31 +19,66 @@ export const useCreate = () => {
 			}
 		}
 	)
-	const { control, handleSubmit, setValue } = useForm<{
-		title: string
-		picture: Blob
-		pages: number
-		genres: string[]
-		author: number
-		popularity: number
-		color: string
-		likedPercentage: number
-		description: string
-	}>()
-
-	const [authorSearch, setAuthorSearch] = useState('')
-	const seachAuthor = useDebounce(authorSearch, 500)
-	const { data: genre } = useQuery(['genres'], () => genreService.all())
-	const { data: authors } = useQuery(['authors'], () =>
-		authorService.all(seachAuthor)
-	)
-	return {
-		unfold,
+	const validationSchema = z.object({
+		title: z
+			.string()
+			.refine(value => value && value.length > 0, 'Title is required'),
+		picture: z.custom<File>(v => v instanceof File),
+		pages: z.number().refine(value => value > 0, {
+			message: 'At least one page is required'
+		}),
+		likedPercentage: z.number().refine(value => value > 0, {
+			message: 'At least one like is required'
+		}),
+		description: z.string().refine(value => value && value.length > 0, {
+			message: 'Description is required'
+		}),
+		popularity: z.number().refine(value => value > 0, {
+			message: 'At least one view is required'
+		}),
+		author: z.object({
+			label: z.string(),
+			value: z.number()
+		}),
+		books: z.array(
+			z
+				.object({
+					name: z.string().refine(value => !value.includes('.epub'), {
+						message: 'File must be a .epub file'
+					}),
+					content: z.array(
+						z.object({
+							title: z.string(),
+							content: z.string()
+						})
+					)
+				})
+				.refine(value => value.name.length > 0, {
+					message: 'File is required'
+				})
+		),
+		genres: z.array(z.string()).refine(value => value.length > 2, {
+			message: 'At least two genre is required'
+		})
+	})
+	type ValidationSchemaType = z.infer<typeof validationSchema>
+	const {
 		control,
 		handleSubmit,
 		setValue,
-		setAuthorSearch,
-		genre,
-		authors
+		formState: { errors }
+	} = useForm<ValidationSchemaType>({
+		resolver: zodResolver(validationSchema)
+	})
+
+	const { data: genre } = useQuery(['genres'], () => genreService.all())
+
+	return {
+		unfold,
+		control,
+		errors,
+		handleSubmit,
+		setValue,
+		genre
 	}
 }
