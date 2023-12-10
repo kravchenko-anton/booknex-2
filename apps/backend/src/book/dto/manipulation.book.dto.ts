@@ -5,40 +5,38 @@ export class CreateBookDto implements BookPayload {
 	@IsString() title: string
 	@IsObject()
 	author: {
-		name: string
+		id: number
 	}
 
 	@IsString() description: string
 	@IsString() picture: string
 	@IsString() @IsOptional() file: string
-	@IsNumber() @IsOptional() charapters: {
+	@IsObject({ each: true }) @IsOptional() charapters: {
 		name: string
 		link: string
 	}[]
 
 	@IsNumber() pages: number
-	@IsNumber() likedPercentage: number
 	@IsNumber() popularity: number
-	@IsString() majorGenre: string
-	@IsString({ each: true }) genres: string[]
+	@IsNumber({}, { each: true }) genres: number[]
 }
 export class EditBookDto implements Partial<BookPayload> {
-	@IsString() @IsOptional() title: string
-	@IsString() @IsOptional() author: {
-		name: string
+	@IsString() title: string
+	@IsObject()
+	author: {
+		id: number
 	}
 
 	@IsString() @IsOptional() description: string
 	@IsString() @IsOptional() picture: string
 	@IsString() @IsOptional() file: string
 	@IsNumber() @IsOptional() pages: number
-	@IsNumber() @IsOptional() charapters: {
+	@IsObject({ each: true }) @IsOptional() charapters: {
 		name: string
 		link: string
 	}[]
 
 	@IsNumber() @IsOptional() likedPercentage: number
 	@IsNumber() @IsOptional() popularity: number
-	@IsString() @IsOptional() majorGenre: string
-	@IsString({ each: true }) @IsOptional() genres: string[]
+	@IsNumber({}, { each: true }) @IsOptional() genres: number[]
 }

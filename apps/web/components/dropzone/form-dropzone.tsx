@@ -11,18 +11,20 @@ export interface FormDropZoneProperties<T extends FieldValues>
 		>,
 		Pick<
 			DropzoneProperties,
-			'size' | 'options' | 'color' | 'onFileDelete' | 'onDropFile'
+			| 'size'
+			| 'options'
+			| 'color'
+			| 'onFileDelete'
+			| 'onDropFile'
+			| 'defaultFiles'
 		> {
 	control: Control<T>
 	name: FieldPath<T>
 }
 
 const FormDropzone = <T extends Record<string, any>>({
-	onDropFile,
 	className,
-	options,
 	color = 'foreground',
-	onFileDelete,
 	style,
 	size = 'sm',
 	...properties
@@ -36,9 +38,6 @@ const FormDropzone = <T extends Record<string, any>>({
 				<div className={className} style={style}>
 					<Dropzone
 						size={size}
-						onDropFile={onDropFile}
-						options={options}
-						onFileDelete={onFileDelete}
 						onBlur={onBlur}
 						onChange={onChange}
 						color={color}

@@ -69,7 +69,7 @@ module.exports = {
 			'LabeledStatement',
 			'WithStatement'
 		],
-		'no-underscore-dangle': ['error', { allow: ['_isRetry'] }],
+		'no-underscore-dangle': ['error', { allow: ['_isRetry', "_count"] }],
 		'no-void': ['error', { allowAsStatement: true }],
 		'spaced-comment': [
 			'error',

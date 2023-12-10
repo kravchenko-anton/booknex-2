@@ -1,5 +1,5 @@
 'use client'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { Search } from '../../../../../libs/global/icons/react'
@@ -9,14 +9,26 @@ import Field from '../../../components/field/field'
 import { useAction } from '../../../hooks/useAction'
 import { getFileUrl } from '../../../services/api/api-config'
 import { authorService } from '../../../services/author/author-service'
-import CreateAuthorPopup from './create-author-popup'
+import { successToast } from '../../../utils/toast'
+import CreateAuthorPopup from './popup/create'
 
 const Page: FC = () => {
 	const { control, watch } = useForm()
+	const QueryClient = useQueryClient()
 	const search = useDebounce(watch('search'), 500)
 	const { data: authors, isLoading } = useQuery(
 		['authors' + (search || '')],
 		() => authorService.all(search)
+	)
+	const { mutateAsync: deleteAuthor } = useMutation(
+		['delete  author'],
+		(id: number) => authorService.delete(id),
+		{
+			onSuccess: () => {
+				successToast('Author deleted')
+				QueryClient.invalidateQueries(['authors'])
+			}
+		}
 	)
 	const queryClient = useQueryClient()
 	const { closePopup, showPopup } = useAction()
@@ -82,7 +94,10 @@ const Page: FC = () => {
 										<Button size={'sm'} color='warning'>
 											Hide
 										</Button>
-										<Button size={'sm'} color='danger'>
+										<Button
+											onClick={() => deleteAuthor(author.id)}
+											size={'sm'}
+											color='danger'>
 											Delete
 										</Button>
 									</div>

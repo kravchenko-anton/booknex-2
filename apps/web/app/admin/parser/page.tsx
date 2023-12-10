@@ -1,27 +1,53 @@
 'use client'
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
+import { useForm } from 'react-hook-form'
 import { Search } from '../../../../../libs/global/icons/react'
+import type { ParserDtoPayload } from '../../../../../libs/global/services-types/parser-types'
 import { nFormatter } from '../../../../../libs/global/utils/number-formater'
+import { useDebounce } from '../../../../mobile/src/hooks/useDebounce'
 import Button from '../../../components/button/button'
 import Field from '../../../components/field/field'
-import NewParsePopup from './new-parse-popup'
-import { useParser } from './useParser'
+import { useAction } from '../../../hooks/useAction'
+import { useTypedSelector } from '../../../hooks/useTypedSelector'
+import { parserService } from '../../../services/parser/parser-services'
+import { successToast } from '../../../utils/toast'
+import CreateAuthorPopup from '../authors/popup/create'
+import NewParse from './popup/new-parse'
 
 const Parser: FC = () => {
-	const {
-		parse,
-		lastParsedData,
-		parseLoading,
-		control,
-		goodReadsLoading,
-		updateLastParsedData,
-		goodReadsBooks,
-		showPopup,
-		closePopup,
-		deleteFromParser
-	} = useParser()
-
+	const { control, watch } = useForm()
+	const QueryClient = useQueryClient()
+	const { showPopup, closePopup, updateLastParsedData } = useAction()
+	const { lastParsedData } = useTypedSelector(state => state.parser)
+	const { mutateAsync: parse, isLoading: parseLoading } = useMutation(
+		['parse good-reads books'],
+		(dto: ParserDtoPayload) => parserService.parse(dto),
+		{
+			onSuccess: () => {
+				successToast('Books parsed')
+				QueryClient.invalidateQueries(['good-reads books'])
+			}
+		}
+	)
+	const { mutateAsync: deleteFromParser } = useMutation(
+		['delete from parser'],
+		(id: number) => parserService.delete(id),
+		{
+			onSuccess: () => {
+				successToast('Book deleted')
+				QueryClient.invalidateQueries(['good-reads books'])
+			}
+		}
+	)
+	const search = useDebounce(watch('search'), 500) || ''
+	const { data: goodReadsBooks } = useQuery(['goodRead books' + search], () =>
+		parserService.all(search)
+	)
+	const router = useRouter()
+	console.log(goodReadsBooks)
 	return (
 		<div className='w-full'>
 			<div className='flex w-full items-center justify-between'>
@@ -39,7 +65,7 @@ const Parser: FC = () => {
 						isLoading={parseLoading}
 						onClick={() =>
 							showPopup(
-								<NewParsePopup
+								<NewParse
 									defaultValues={{
 										link: lastParsedData?.url || '',
 										page: lastParsedData?.page + 1 || 0
@@ -63,9 +89,7 @@ const Parser: FC = () => {
 					</Button>
 				</div>
 			</div>
-			{!goodReadsBooks || goodReadsLoading ? (
-				<div>Loading...</div>
-			) : (
+			{goodReadsBooks ? (
 				<table className='bg-shade mt-4 w-full rounded-xl'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
@@ -80,58 +104,114 @@ const Parser: FC = () => {
 					</thead>
 
 					<tbody>
-						{goodReadsBooks.map(book => (
-							<tr
-								key={book.title}
-								className='border-foreground max-h-[100px] items-center  justify-center border-b-2'>
-								<td className='min-w-[60px]  text-center '>{book.id}</td>
-								<td className='  h-[160px] '>
-									<img
-										src={book.picture}
-										className='bottom-shade mx-auto w-[100px] rounded-xl'
-										alt={book.title}
-									/>
-								</td>
-								<td className='h-[100px]  min-w-[100px]   text-left'>
-									{book.title} <br />{' '}
-									<p className='text-primary'>{book.authorName}</p>
-									{book.pages} 📖 | {nFormatter(book.popularity)} 👍
-								</td>
-								<td className='min-w-[100px] p-2'>
-									{book.description.slice(0, 500) + '...'}
-								</td>
-								<td className='min-w-[100px] max-w-[220px] p-2'>
-									<img
-										src={book.authorPicture}
-										className='mb-1 h-[50px] w-[50px] rounded-xl'
-										alt={book.title}
-									/>
-									{book.authorDescription.slice(0, 100) + '...'}
-								</td>
-								<td className='min-w-[100px]'>{book.genres.join(',  ')}</td>
+						{goodReadsBooks.map(book => {
+							let blob = null
 
-								<td className='min-w-[120px] p-2'>
-									<div>
-										<Button
-											className='mb-2'
-											fullWidth
-											color='success'
-											size='sm'>
-											Create
-										</Button>
-										<Button
-											color='danger'
-											fullWidth
-											size='sm'
-											onClick={() => deleteFromParser(book.id)}>
-											Delete
-										</Button>
-									</div>
-								</td>
-							</tr>
-						))}
+							const getBlob = async () => {
+								const response = await fetch(book.authorPicture)
+								return new Blob([await response.blob()])
+							}
+
+							getBlob().then(fetchBlob => {
+								blob = fetchBlob
+							})
+							return (
+								<tr
+									key={book.title + book.authorName}
+									className='border-foreground max-h-[100px] items-center  justify-center border-b-2'>
+									<td className='min-w-[60px]  text-center '>{book.id}</td>
+									<td className='  h-[160px] '>
+										<img
+											src={book.picture}
+											className='bottom-shade mx-auto w-[100px] rounded-xl'
+											alt={book.title}
+										/>
+									</td>
+									<td className='h-[100px]  min-w-[100px]   text-left'>
+										{book.title} <br />{' '}
+										<p className='text-primary'>{book.authorName}</p>
+										{book.pages} 📖 | {nFormatter(book.popularity)} 👍
+									</td>
+									<td className='min-w-[100px] p-2'>
+										{book.description.slice(0, 500) + '...'}
+									</td>
+									<td className='min-w-[100px] max-w-[220px] p-2'>
+										<img
+											src={book.authorPicture}
+											className='mb-1 h-[50px] w-[50px] rounded-xl'
+											alt={book.title}
+										/>
+										{book.authorDescription.slice(0, 100) + '...'}
+									</td>
+									<td className='flex min-w-[100px] max-w-[320px] flex-wrap'>
+										{book.genres.map(genre => (
+											<p
+												key={genre.name}
+												className='bg-foreground m-1  rounded-xl p-1.5 text-white'>
+												{genre.name}
+											</p>
+										))}
+									</td>
+
+									<td className='min-w-[120px] p-2'>
+										<div>
+											<Button
+												className='mb-2'
+												fullWidth
+												color='success'
+												onClick={() => {
+													showPopup(
+														<CreateAuthorPopup
+															onCreate={({ id, name }) => {
+																closePopup()
+																router.push(
+																	'/admin/books/create' +
+																		'?' +
+																		new URLSearchParams({
+																			defaultValues: JSON.stringify({
+																				author: {
+																					id,
+																					name
+																				},
+																				title: book.title,
+																				description: book.description,
+																				pages: book.pages.toString(),
+																				popularity: book.popularity.toString(),
+																				genres: book.genres
+																			})
+																		}).toString()
+																)
+															}}
+															defaultValues={{
+																name: book.authorName,
+																description: book.authorDescription,
+																picture: {
+																	blob,
+																	name: `${book.authorName}.png`
+																}
+															}}
+														/>
+													)
+												}}
+												size='sm'>
+												Create
+											</Button>
+											<Button
+												color='danger'
+												fullWidth
+												size='sm'
+												onClick={() => deleteFromParser(book.id)}>
+												Delete
+											</Button>
+										</div>
+									</td>
+								</tr>
+							)
+						})}
 					</tbody>
 				</table>
+			) : (
+				<div>Loading...</div>
 			)}
 		</div>
 	)

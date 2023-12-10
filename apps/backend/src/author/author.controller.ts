@@ -11,6 +11,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllAuthorOutput,
+	CreateAuthorOutput,
 	InfoByIdOutput
 } from '../../../../libs/global/services-types/author-types'
 import { Auth } from '../decorator/auth.decorator'
@@ -40,7 +41,7 @@ export class AuthorController {
 
 	@Auth('admin')
 	@Post('/create')
-	async create(@Body() dto: CreateAuthorDto) {
+	async create(@Body() dto: CreateAuthorDto): Promise<CreateAuthorOutput> {
 		return this.authorService.create(dto)
 	}
 

@@ -14,6 +14,7 @@ export interface DropzoneProperties extends HTMLAttributes<HTMLDivElement> {
 	>
 	onFileDelete?: (file: File) => void
 	onDropFile: (files: File[] | File) => void
+	defaultFiles?: File[]
 }
 
 const colorPallete = {
@@ -38,7 +39,8 @@ const maxWidhtSettings = {
 
 const Dropzone = ({
 	onDropFile = () => {},
-	className,
+	className = '',
+	defaultFiles = [],
 	options = {},
 	color = 'foreground',
 	onFileDelete = () => {},
@@ -46,7 +48,7 @@ const Dropzone = ({
 	size = 'sm',
 	...properties
 }: DropzoneProperties) => {
-	const [files, setFiles] = useState<File[]>([])
+	const [files, setFiles] = useState<File[]>(defaultFiles)
 	const onDrop = useCallback(acceptedFiles => {
 		setFiles(acceptedFiles)
 		onDropFile(acceptedFiles)
@@ -56,16 +58,14 @@ const Dropzone = ({
 		...options
 	})
 	return (
-		<div
-			className={`${maxWidhtSettings[size]} ${className || ''}`}
-			style={style}>
+		<div className={`${maxWidhtSettings[size]} ${className}`} style={style}>
 			<div
 				className={`flex gap-2 overflow-scroll ${
 					files.length === 0 && 'hidden'
 				}`}>
 				{files.length > 0 &&
 					files.map(file => (
-						<div key={file.name} className='items-center'>
+						<div key={file.name + 'asd'} className='items-center'>
 							{options.accept &&
 							Object.values(options?.accept).includes(['image']) ? (
 								<img
@@ -75,6 +75,7 @@ const Dropzone = ({
 									}}
 									className='h-20 w-20 rounded-md bg-transparent'
 									src={URL.createObjectURL(file)}
+									alt={file.name}
 								/>
 							) : (
 								<div

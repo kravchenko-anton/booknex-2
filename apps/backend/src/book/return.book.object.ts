@@ -27,7 +27,6 @@ export const returnBookObjectWithPages = {
 }
 export const returnBookObjectWithStatistics = {
 	...returnBookObjectWithAuthor,
-	likedPercentage: true,
 	pages: true
 }
 export const returnBookObject: Pick<

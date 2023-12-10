@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { getAverageColor } from 'fast-average-color-node'
+import { getFileUrl } from '../../../web/services/api/api-config'
 import { returnAuthorObject } from '../author/return.author.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
-import { randomColor, shadeRGBColor } from '../utils/color.functions'
+import { shadeRGBColor } from '../utils/color.functions'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
@@ -67,16 +68,11 @@ export class BookService {
 		await this.prisma.book.create({
 			data: {
 				majorGenre: {
-					connectOrCreate: {
-						where: { name: dto.majorGenre },
-						create: {
-							name: dto.majorGenre,
-							color: shadeRGBColor(randomColor(), -50)
-						}
+					connect: {
+						id: dto.genres[0]
 					}
 				},
 				title: dto.title,
-				likedPercentage: dto.likedPercentage,
 				popularity: dto.popularity,
 				pages: dto.pages,
 				description: dto.description,
@@ -85,18 +81,17 @@ export class BookService {
 				charapters: dto.charapters,
 				author: {
 					connect: {
-						name: dto.author.name
+						id: dto.author.id
 					}
 				},
 				color: shadeRGBColor(
-					await getAverageColor(dto.picture).then(color => color.hex),
+					await getAverageColor(getFileUrl(dto.picture)).then(
+						color => color.hex
+					),
 					-25
 				),
 				genres: {
-					connectOrCreate: dto.genres.map(g => ({
-						where: { name: g },
-						create: { name: g, color: shadeRGBColor(randomColor(), -50) }
-					}))
+					connect: dto.genres.map(g => ({ id: g }))
 				}
 			}
 		})
@@ -113,7 +108,6 @@ export class BookService {
 			where: { id: book.id },
 			data: {
 				title: dto.title || book.title,
-				likedPercentage: dto.likedPercentage || book.likedPercentage,
 				popularity: dto.popularity || book.popularity,
 				pages: dto.pages || book.pages,
 				description: dto.description || book.description,
@@ -122,16 +116,16 @@ export class BookService {
 				charapters: dto.charapters || book.charapters,
 				author: {
 					connect: {
-						name: dto.author.name || book.author.name
+						id: dto.author.id
 					}
 				},
 				majorGenre: {
 					connect: {
-						name: dto.majorGenre || book.majorGenre.name
+						id: dto.genres[0]
 					}
 				},
 				genres: {
-					connect: dto.genres.map(g => ({ name: g }))
+					connect: dto.genres.map(g => ({ id: g }))
 				}
 			}
 		})

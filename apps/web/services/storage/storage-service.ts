@@ -1,10 +1,9 @@
-import 'multer'
 import type { UploadOutput } from '../../../../libs/global/services-types/storage-types'
 import type {
 	FilenameDto,
 	ReplacementDto
 } from '../../../backend/src/storage/dto/upload.dto'
-import type { StorageFolderType } from '../../../backend/src/storage/storage.types'
+import type { StorageFolderEnum } from '../../../backend/src/storage/storage.types'
 import { getStorageUrl } from '../api/api-config'
 import { request } from '../api/request.api'
 
@@ -28,7 +27,7 @@ export const storageService = {
 		})
 	},
 
-	async upload(file: FormData, folder: StorageFolderType) {
+	async upload(file: FormData, folder: StorageFolderEnum) {
 		return request<UploadOutput>({
 			url: getStorageUrl(`/${folder}`),
 			method: 'POST',

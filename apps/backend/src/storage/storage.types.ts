@@ -1,5 +1,5 @@
 export enum StorageFolderEnum {
-	epubs = 'epubs',
+	ebooks = 'ebooks',
 	booksCovers = 'books-covers',
 	userPictures = 'user-pictures',
 	authorPictures = 'author-pictures'
@@ -7,7 +7,7 @@ export enum StorageFolderEnum {
 
 export type StorageFolderType = keyof typeof StorageFolderEnum
 export const StorageFolderArray: string[] = [
-	StorageFolderEnum.epubs,
+	StorageFolderEnum.ebooks,
 	StorageFolderEnum.authorPictures,
 	StorageFolderEnum.booksCovers,
 	StorageFolderEnum.userPictures

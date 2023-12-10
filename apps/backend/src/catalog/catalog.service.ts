@@ -69,7 +69,6 @@ export class CatalogService {
 		return this.prisma.book.findMany({
 			select: {
 				...returnBookObjectWithAuthor,
-				likedPercentage: true,
 				pages: true
 			},
 			where: {

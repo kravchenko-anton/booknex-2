@@ -7,6 +7,7 @@ import { Search } from '../../../../../libs/global/icons/react'
 import { useDebounce } from '../../../../mobile/src/hooks/useDebounce'
 import Button from '../../../components/button/button'
 import Field from '../../../components/field/field'
+import { getFileUrl } from '../../../services/api/api-config'
 import { bookService } from '../../../services/book/book-service'
 
 const Page: FC = () => {
@@ -57,7 +58,7 @@ const Page: FC = () => {
 								<td className='p-3'>
 									<img
 										className='h-20 w-20 rounded-md'
-										src={book.picture}
+										src={getFileUrl(book.picture)}
 										alt={book.title}
 									/>
 								</td>

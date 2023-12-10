@@ -50,7 +50,7 @@ const Button: FC<ButtonProperties> = ({
 	color = 'vibrant',
 	disabled = false,
 	isLoading = false,
-	className,
+	className = '',
 	...rest
 }) => {
 	return (
@@ -61,9 +61,7 @@ const Button: FC<ButtonProperties> = ({
 				cursor: disabled || isLoading ? 'not-allowed' : 'pointer',
 				width: fullWidth ? '100%' : 'auto'
 			}}
-			className={`flex items-center justify-center gap-2 rounded-md p-2 px-3 font-semibold duration-200 ease-linear ${
-				colorPallete[color]
-			} ${sizeProperty[size]} ${className || ''}`}
+			className={`flex items-center justify-center gap-2 rounded-md p-2 px-3 font-semibold duration-200 ease-linear ${colorPallete[color]} ${sizeProperty[size]} ${className}`}
 			{...rest}>
 			{isLoading && <Spiner size={size} color={'white'} />}
 			{!!Icon && !isLoading && (

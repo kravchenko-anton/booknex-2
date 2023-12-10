@@ -1,5 +1,6 @@
 import type {
 	AllAuthorOutput,
+	CreateAuthorOutput,
 	InfoByIdOutput
 } from '../../../../libs/global/services-types/author-types'
 import type {
@@ -23,7 +24,7 @@ export const authorService = {
 		})
 	},
 
-	async create(dto: CreateAuthorDto) {
+	async create(dto: CreateAuthorDto): Promise<CreateAuthorOutput> {
 		return request({
 			url: getAuthorUrl('/create'),
 			method: 'POST',

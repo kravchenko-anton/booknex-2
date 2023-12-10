@@ -41,8 +41,7 @@ export class ShelfService {
 				books: {
 					select: {
 						...returnBookObjectWithAuthor,
-						pages: true,
-						likedPercentage: true
+						pages: true
 					}
 				}
 			}

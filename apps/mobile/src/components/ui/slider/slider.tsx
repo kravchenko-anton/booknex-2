@@ -98,7 +98,7 @@ const Slider = ({
 		.maxPointers(1)
 		.minPointers(1)
 		.activeOffsetX(activeOffsetX)
-		.onStart(e => {
+		.onStart(() => {
 			start.value = translateX.value
 		})
 		.onUpdate(e => {

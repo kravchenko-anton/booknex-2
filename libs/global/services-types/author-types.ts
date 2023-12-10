@@ -1,5 +1,6 @@
 import type { Prisma } from '@prisma/client'
-import type {
+import {
+	returnAuthorObject,
 	returnAuthorObjectWithDescription,
 	returnFullAuthorObject
 } from '../../../apps/backend/src/author/return.author.object'
@@ -11,6 +12,10 @@ export type InfoByIdOutput = Prisma.AuthorGetPayload<{
 export type AllAuthorOutput = Prisma.AuthorGetPayload<{
 	select: typeof returnAuthorObjectWithDescription
 }>[]
+
+export type CreateAuthorOutput = Prisma.AuthorGetPayload<{
+	select: typeof returnAuthorObject
+}>
 
 export interface CreateAuthorPayload {
 	name: string

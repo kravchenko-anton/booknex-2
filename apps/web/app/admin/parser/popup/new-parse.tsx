@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import Button from '../../../components/button/button'
-import Field from '../../../components/field/field'
+import Button from '../../../../components/button/button'
+import Field from '../../../../components/field/field'
 
 interface NewParserPopupProperties {
 	onSubmit: (data: { link: string; page: number }) => void
@@ -11,7 +11,7 @@ interface NewParserPopupProperties {
 	}
 }
 
-const NewParsePopup: FC<NewParserPopupProperties> = ({
+const NewParse: FC<NewParserPopupProperties> = ({
 	onSubmit,
 	defaultValues
 }) => {
@@ -47,4 +47,4 @@ const NewParsePopup: FC<NewParserPopupProperties> = ({
 	)
 }
 
-export default NewParsePopup
+export default NewParse

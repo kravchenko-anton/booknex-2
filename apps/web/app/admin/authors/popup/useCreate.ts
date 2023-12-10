@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
-import { StorageFolderEnum } from '../../../../backend/src/storage/storage.types'
-import { storageService } from '../../../../mobile/src/services/storage-service'
-import { authorService } from '../../../services/author/author-service'
-import { errorToast, successToast } from '../../../utils/toast'
+import { StorageFolderEnum } from '../../../../../backend/src/storage/storage.types'
+import { authorService } from '../../../../services/author/author-service'
+import { storageService } from '../../../../services/storage/storage-service'
+import { errorToast, successToast } from '../../../../utils/toast'
 
-export const useCreateAuthor = () => {
+export const useCreate = () => {
 	const { mutateAsync: create } = useMutation(
 		['create  author'],
 		({
@@ -61,11 +61,14 @@ export const useCreateAuthor = () => {
 		const formData = new FormData()
 		formData.append('file', picture.blob, picture.name)
 		const { name: uploadPictureName } = await UploadAuthorPhoto(formData)
-		await create({
+		const autor = await create({
 			name,
 			picture: uploadPictureName,
 			description
 		})
+		return {
+			...autor
+		}
 	}
 
 	return {

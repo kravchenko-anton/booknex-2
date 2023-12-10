@@ -1,9 +1,5 @@
 'use client'
 import { useForm } from 'react-hook-form'
-import {
-	emailRules,
-	passwordRules
-} from '../../../../libs/global/utils/input-validation'
 import Button from '../../components/button/button'
 import Field from '../../components/field/field'
 import { useAction } from '../../hooks/useAction'
@@ -22,12 +18,10 @@ export default function Page() {
 				<Field
 					name={'email'}
 					control={control}
-					rules={emailRules}
 					type='email'
 					placeholder='Enter your email'
 				/>
 				<Field
-					rules={passwordRules}
 					control={control}
 					className='my-1.5'
 					name='password'

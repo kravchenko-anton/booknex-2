@@ -18,7 +18,7 @@ type RichEditorProperties = {
 		onChange: EventHandler<unknown>
 		onBlur: EEventHandler<'blur'>
 	}
-const RichEditor: FC<RichEditorProperties> = ({
+const HtmlEditor: FC<RichEditorProperties> = ({
 	className,
 	style,
 	...properties
@@ -86,4 +86,4 @@ const RichEditor: FC<RichEditorProperties> = ({
 	)
 }
 
-export default RichEditor
+export default HtmlEditor

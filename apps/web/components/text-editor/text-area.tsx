@@ -22,15 +22,13 @@ const colorPallete = {
 const TextArea: FC<PropsWithChildren<TextAreaProperties>> = ({
 	children = '',
 	color = 'foreground',
-	className,
+	className = '',
 	style,
 	...properties
 }) => {
 	return (
 		<textarea
-			className={`h-full w-full resize-none rounded-lg p-4 focus:outline-0  ${
-				colorPallete[color]
-			} ${className || ''}`}
+			className={`placeholder-gray h-full w-full resize-none rounded-lg p-4 text-white focus:outline-0  ${colorPallete[color]} ${className}`}
 			{...properties}>
 			{children}
 		</textarea>

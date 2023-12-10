@@ -57,6 +57,13 @@ export class AuthorService {
 				description: dto.description
 			}
 		})
+
+		return this.prisma.author.findFirst({
+			where: {
+				name: dto.name
+			},
+			select: returnAuthorObject
+		})
 	}
 
 	async delete(id: number) {

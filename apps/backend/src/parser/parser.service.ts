@@ -293,6 +293,18 @@ export class ParserService {
 				})
 				if (rating < 40_000) continue
 				if (goodReadBook.some(b => b.title === title.trim())) continue
+				const goodGenres = await this.prisma.genre.findMany({
+					where: {
+						OR: genres.map(genre => {
+							return {
+								name: {
+									contains: genre,
+									mode: 'insensitive'
+								}
+							}
+						})
+					}
+				})
 				await this.prisma.goodReadBook.create({
 					data: {
 						title: title.trim(),
@@ -302,7 +314,13 @@ export class ParserService {
 						description,
 						picture,
 						pages,
-						genres,
+						genres: {
+							connect: goodGenres.map(genre => {
+								return {
+									name: genre.name
+								}
+							})
+						},
 						popularity: rating
 					}
 				})

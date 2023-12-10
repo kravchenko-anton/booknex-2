@@ -10,7 +10,7 @@ const Modal: FC<PropsWithChildren> = () => {
 	const reference = useClickAway(() => closePopup())
 	return (
 		<div
-			className={`bg-shade absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-opacity-90 ${
+			className={`bg-shade fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-opacity-90 ${
 				popup ? 'block' : 'hidden'
 			}`}>
 			<div ref={reference} className='bg-foreground relative rounded-xl'>

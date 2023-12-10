@@ -42,7 +42,7 @@ export type ReviewByIdOutput = Prisma.ReviewGetPayload<{
 export interface BookPayload {
 	title: string
 	author: {
-		name: string
+		id: number
 	}
 	description: string
 	picture: string
@@ -52,10 +52,8 @@ export interface BookPayload {
 		link: string
 	}[]
 	pages: number
-	likedPercentage: number
 	popularity: number
-	majorGenre: string
-	genres: string[]
+	genres: number[]
 }
 
 export type EbpubOutput = Prisma.BookGetPayload<{

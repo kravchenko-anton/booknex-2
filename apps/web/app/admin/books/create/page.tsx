@@ -1,26 +1,26 @@
 'use client'
-import { useMutation } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
 import type { FC } from 'react'
-import { useState } from 'react'
-import { Controller } from 'react-hook-form'
-import AsyncSelect from 'react-select/async'
+import { useEffect } from 'react'
 import { Close } from '../../../../../../libs/global/icons/react'
 import Button from '../../../../components/button/button'
 import Dropzone from '../../../../components/dropzone/dropzone'
 import FormDropzone from '../../../../components/dropzone/form-dropzone'
 import { ErrorMessage } from '../../../../components/error-block/error-block'
 import Field from '../../../../components/field/field'
-import Select from '../../../../components/select/select'
-import { selectStyle } from '../../../../components/select/select-settings'
+import FormAsyncSelect from '../../../../components/select/async/form-select'
+import FormSelect from '../../../../components/select/form-select'
 import FormTextEditor from '../../../../components/text-editor/form-text-editor'
 import TextArea from '../../../../components/text-editor/text-area'
-import { useAction } from '../../../../hooks/useAction'
-import { authorService } from '../../../../services/author/author-service'
-import CreateAuthorPopup from '../../authors/create-author-popup'
+import { errorToast, successToast } from '../../../../utils/toast'
+import CreateAuthorPopup from '../../authors/popup/create'
 import { useBookCompose } from './useBook'
 import { useCreate } from './useCreate'
+import type { CreateBookValidationSchemaType } from './validation'
 
 const Page: FC = () => {
+	const searchParameters = useSearchParams()
+
 	const {
 		books,
 		deleteBook,
@@ -30,25 +30,91 @@ const Page: FC = () => {
 		removeToc,
 		uploadBook
 	} = useBookCompose()
-	const { unfold, control, handleSubmit, setValue, genre, errors } = useCreate()
-	const { mutateAsync: authors, isLoading: authorsLoading } = useMutation(
-		['authors'],
-		(authorSearch: string) => authorService.all(authorSearch)
-	)
-	const [asyncSelectInputValue, setAsyncSelectInputValue] = useState('')
-	const { showPopup, closePopup } = useAction()
-	const onSubmit = () => {
-		setValue('books', books)
-		handleSubmit(data => {
-			console.log(data)
-		})()
+	const {
+		unfold,
+		control,
+		handleSubmit,
+		authors,
+		authorsLoading,
+		showPopup,
+		closePopup,
+		genres,
+		uploadBook: uploadBookApi,
+		UploadBookHtml,
+		UploadBookPhoto,
+		setValue,
+		errors
+	} = useCreate()
+	useEffect(() => {
+		if (searchParameters.get('defaultValues')) {
+			const defaultValues = JSON.parse(searchParameters.get('defaultValues'))
+			setValue('title', defaultValues.title)
+			setValue('pages', Number(defaultValues.pages))
+			setValue('popularity', Number(defaultValues.popularity))
+			setValue('description', defaultValues.description)
+			setValue('author', {
+				label: defaultValues.author.name,
+				value: Number(defaultValues.author.id)
+			})
+			setValue(
+				'genres',
+				defaultValues.genres.map(genre => {
+					return {
+						label: genre.name,
+						value: Number(genre.id)
+					}
+				})
+			)
+		}
+	}, [])
+	const onSubmit = async (data: CreateBookValidationSchemaType) => {
+		const formData = new FormData()
+		formData.append('file', data.picture.blob, data.picture.name)
+		const { name: uploadPicture } = await UploadBookPhoto(formData)
+		const formDataHtml = new FormData()
+		formDataHtml.append(
+			'file',
+			new Blob(
+				[
+					data.books
+						.map(book => book.content.map(content => content.content).join(''))
+						.join('')
+				],
+				{ type: 'text/html' }
+			),
+			data.title + '.html'
+		)
+		const { name: uploadHtml } = await UploadBookHtml(formDataHtml)
+		await uploadBookApi({
+			title: data.title,
+			description: data.description,
+			picture: uploadPicture,
+			charapters: data.books.flatMap(book =>
+				book.content.map(content => {
+					return {
+						name: content.title,
+						link: content.title
+					}
+				})
+			),
+			author: {
+				id: Number(data.author.value)
+			},
+			genres: data.genres.map(genre => genre.value),
+			file: uploadHtml,
+			pages: Number(data.pages),
+			popularity: Number(data.popularity)
+		})
+			.then(() => {
+				successToast('Book created')
+			})
+			.catch(() => {
+				errorToast('Error while creating book')
+			})
 	}
-	console.log(errors, 'errors')
 	return (
 		<div>
-			<h1 className='mb-4 text-center text-3xl font-medium'>
-				Create book from scratch
-			</h1>
+			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
 			<div className=' flex justify-between gap-5'>
 				<div className='w-1/2'>
 					<div className='mt-2 flex justify-between gap-3'>
@@ -63,12 +129,6 @@ const Page: FC = () => {
 							control={control}
 							name={'pages'}
 							placeholder='Pages'
-						/>
-						<Field
-							type={'number'}
-							control={control}
-							name={'likedPercentage'}
-							placeholder={'Liked Percentage'}
 						/>
 						<Field
 							type={'number'}
@@ -133,7 +193,10 @@ const Page: FC = () => {
 									}
 								}}
 								onDropFile={acceptedFiles => {
-									setValue('picture', acceptedFiles[0])
+									setValue('picture', {
+										name: acceptedFiles[0].name,
+										blob: new Blob([acceptedFiles[0]])
+									})
 								}}
 							/>
 						</div>
@@ -143,32 +206,16 @@ const Page: FC = () => {
 							<h1 className='mb-2 mt-4 flex gap-5'>
 								Genres <p className='text-gray'>First genre be main</p>
 							</h1>
-							<Controller
+							<FormSelect
 								control={control}
 								name={'genres'}
-								render={({
-									field: { value, onChange, onBlur },
-									fieldState: { error }
-								}) => (
-									<>
-										<Select
-											value={value}
-											onBlur={onBlur}
-											onChange={onChange}
-											isMulti
-											options={genre?.map(genre => ({
-												label: genre.name,
-												value: genre.name
-											}))}
-											placeholder={'Select genres'}
-										/>
-										{!!error && (
-											<p className={`text-danger mt-0.5 text-xs italic`}>
-												{error.message}
-											</p>
-										)}
-									</>
-								)}
+								isMulti
+								options={genres?.map(genre => ({
+									label: genre.name,
+									value: genre.id
+								}))}
+								isSearchable
+								placeholder={'Select genres'}
 							/>
 						</div>
 						<div className='w-1/2'>
@@ -178,9 +225,12 @@ const Page: FC = () => {
 									onClick={() => {
 										showPopup(
 											<CreateAuthorPopup
-												onCreate={({ name }) => {
+												onCreate={({ id, name }) => {
 													closePopup()
-													setAsyncSelectInputValue(name)
+													setValue('author', {
+														label: name,
+														value: id
+													})
 												}}
 											/>
 										)
@@ -189,40 +239,20 @@ const Page: FC = () => {
 									Create
 								</Button>
 							</div>
-							<Controller
+							<FormAsyncSelect
 								control={control}
 								name={'author'}
-								render={({
-									field: { value, onChange, onBlur },
-									fieldState: { error }
-								}) => (
-									<>
-										<AsyncSelect
-											value={value}
-											onChange={onChange}
-											onBlur={onBlur}
-											inputValue={asyncSelectInputValue}
-											onInputChange={value => setAsyncSelectInputValue(value)}
-											styles={selectStyle}
-											isLoading={authorsLoading}
-											loadOptions={authorSearch =>
-												authors(authorSearch).then(data =>
-													data.map(author => ({
-														label: author.name,
-														value: author.id
-													}))
-												)
-											}
-											isSearchable
-											placeholder={'Select author'}
-										/>
-										{!!error && (
-											<p className={`text-danger mt-0.5 text-xs italic`}>
-												{error.message}
-											</p>
-										)}
-									</>
-								)}
+								isLoading={authorsLoading}
+								loadOptions={authorSearch =>
+									authors(authorSearch).then(data =>
+										data.map(author => ({
+											label: author.name,
+											value: author.id
+										}))
+									)
+								}
+								isSearchable
+								placeholder={'Select author'}
 							/>
 						</div>
 					</div>
@@ -296,7 +326,14 @@ const Page: FC = () => {
 					/>
 				</div>
 			)}
-			<Button className='mt-8' onClick={() => onSubmit()} color='primary'>
+			<Button
+				className='mt-8'
+				onClick={() => {
+					setValue('books', books)
+					handleSubmit(onSubmit)()
+					console.log('submit')
+				}}
+				color='primary'>
 				Create
 			</Button>
 		</div>
