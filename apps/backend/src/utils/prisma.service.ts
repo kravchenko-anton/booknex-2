@@ -2,6 +2,10 @@ import type { OnModuleInit } from '@nestjs/common'
 import { Injectable } from '@nestjs/common'
 import { PrismaClient } from '@prisma/client'
 
+declare global {
+	var prisma: PrismaService | undefined
+}
+
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
 	private static instance: PrismaService
@@ -29,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 		global.prisma = new PrismaService()
 	}
 
-	prisma = global.prisma as PrismaService
+	prisma = global.prisma
 }
 
 export default prisma

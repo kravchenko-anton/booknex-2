@@ -1,4 +1,4 @@
-export function optimizeFilename(filename) {
+export function optimizeFilename(filename: string) {
 	// Split the filename and extension
 	const [name, extension] = filename.split(/\.(?=[^.]+$)/)
 

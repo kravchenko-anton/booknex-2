@@ -16,8 +16,8 @@ interface CreateAuthorPopupProperties {
 }
 
 const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
-	defaultValues,
-	onCreate
+	defaultValues = {},
+	onCreate = () => {}
 }) => {
 	const { control, handleSubmit, setValue } =
 		useForm<CreateAuthorValidationSchemaType>({
@@ -31,7 +31,6 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 		}
 		handleSubmit(data => {
 			createAuthor(data).then(({ id, name }) => {
-				console.log('onCreate', id, name)
 				onCreate({ id, name })
 			})
 		})()
@@ -52,7 +51,7 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 				control={control}
 				name='picture'
 				size='lg'
-				defaultFiles={[defaultValues.picture.blob]}
+				defaultFiles={[defaultValues.picture?.blob]}
 				color='vibrant'
 				options={{
 					multiple: false,
@@ -70,7 +69,7 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 				color='shade'
 				type='text'
 				control={control}
-				name={'description'}
+				name='description'
 				placeholder='Enter description'
 				className='mt-4 h-[150px]'
 			/>

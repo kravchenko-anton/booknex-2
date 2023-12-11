@@ -12,7 +12,7 @@ import { bookService } from '../../../services/book/book-service'
 
 const Page: FC = () => {
 	const { control, watch } = useForm()
-	const search = useDebounce(watch('search'), 500)
+	const search = useDebounce(watch('search') as string, 500) || ''
 	const { data: books, isLoading } = useQuery(
 		['books books' + (search || '')],
 		() => bookService.all(search)
@@ -27,13 +27,14 @@ const Page: FC = () => {
 						control={control}
 						icon={Search}
 						className='mb-0 h-full'
-						name={'search'}
+						name='search'
 						placeholder='Search...'
 					/>
 					<Button
-						size={'sm'}
+						size='sm'
 						onClick={() => router.push('admin/books/create')}
-						color='primary'>
+						color='primary'
+					>
 						Create
 					</Button>
 				</div>
@@ -65,13 +66,13 @@ const Page: FC = () => {
 								<td className='p-3'>{book.title}</td>
 								<td className='p-3'>
 									<div className='flex gap-2'>
-										<Button size={'sm'} color='primary'>
+										<Button size='sm' color='primary'>
 											Edit
 										</Button>
-										<Button size={'sm'} color='warning'>
+										<Button size='sm' color='warning'>
 											Hide
 										</Button>
-										<Button size={'sm'} color='danger'>
+										<Button size='sm' color='danger'>
 											Delete
 										</Button>
 									</div>

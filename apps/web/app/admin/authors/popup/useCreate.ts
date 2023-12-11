@@ -1,10 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
 import { StorageFolderEnum } from '../../../../../backend/src/storage/storage.types'
 import { authorService } from '../../../../services/author/author-service'
-import { storageService } from '../../../../services/storage/storage-service'
+import { useUploadFile } from '../../../../utils/files'
 import { errorToast, successToast } from '../../../../utils/toast'
 
 export const useCreate = () => {
+	const { upload } = useUploadFile()
 	const { mutateAsync: create } = useMutation(
 		['create  author'],
 		({
@@ -22,27 +23,8 @@ export const useCreate = () => {
 				description
 			}),
 		{
-			onSuccess: () => {
-				successToast('Author created')
-			},
-			onError: () => {
-				errorToast('An error occurred while creating the author')
-			}
-		}
-	)
-
-	const { mutateAsync: UploadAuthorPhoto } = useMutation(
-		['upload author photo'],
-		(formData: FormData) =>
-			storageService.upload(formData, StorageFolderEnum.authorPictures),
-		{
-			onError: () => {
-				errorToast({
-					text1: 'Upload author photo',
-					text2: 'An error occurred',
-					type: 'error'
-				})
-			}
+			onSuccess: () => successToast('Author created'),
+			onError: () => errorToast('An error occurred while creating the author')
 		}
 	)
 
@@ -58,9 +40,11 @@ export const useCreate = () => {
 		}
 		description: string
 	}) => {
-		const formData = new FormData()
-		formData.append('file', picture.blob, picture.name)
-		const { name: uploadPictureName } = await UploadAuthorPhoto(formData)
+		const { name: uploadPictureName } = await upload({
+			name: picture.name,
+			blob: picture.blob,
+			folder: StorageFolderEnum.authorPictures
+		})
 		const autor = await create({
 			name,
 			picture: uploadPictureName,

@@ -49,12 +49,12 @@ export class ShelfService {
 
 		if (!shelf)
 			throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
+		const { _count, ...rest } = shelf
 		return {
-			...shelf,
-			_count: undefined,
+			...rest,
 			statistics: {
-				Books: shelf._count.books,
-				Watched: shelf._count.watched
+				Books: _count.books,
+				Watched: _count.watched
 			}
 		}
 	}

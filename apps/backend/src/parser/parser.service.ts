@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import type { TocElement } from 'epub'
 import EPub from 'epub'
 import puppeteer from 'puppeteer'
@@ -72,59 +72,69 @@ export class ParserService {
 	}
 
 	async unfold(file: Express.Multer.File) {
+		if (!file.buffer && file.mimetype !== 'application/epub+zip')
+			throw new BadRequestException('Invalid file')
 		return new Promise(resolve => {
 			const epub = new EPub(file.buffer as unknown as string)
 			epub.on('end', function () {
 				const flow: Promise<Chapter | null>[] = epub.flow.map(
 					(chapter: TocElement) => {
 						return new Promise<Chapter | null>((resolve, reject) => {
-							epub.getChapter(chapter.id, (error, text) => {
-								if (error) {
-									console.log(error)
-									reject(error)
-									return
-								}
+							try {
+								epub.getChapter(chapter.id, (error, text) => {
+									if (error) {
+										return null
+									}
 
-								const content = `${
-									chapter.title
-										? `<section id="${chapter.title}"></section>`
-										: ''
-								} ${text
-									.replaceAll(/ href="[^"]*"/g, '')
-									.replaceAll(/ id="[^"]*"/g, '')
-									.replaceAll(/ class="[^"]*"/g, '')
-									.replaceAll(/ xmlns="[^"]*"/g, '')
-									.replaceAll(
-										/<(?!\/?(?:h[1-6]|span|div|p|i|u|abbr|address|code|q|ul|li|ol|br|strong|em|mark|a|del|sub|sup|ins|b|blockquote|cite|dfn|kbd|pre|samp|small|time|var)\b)[^>]+>/gi,
-										''
-									)
-									.toString()}`
+									const content = `${
+										chapter.title
+											? `<section id="${chapter.title}"></section>`
+											: ''
+									} ${text
+										.replaceAll(/ href="[^"]*"/g, '')
+										.replaceAll(/ id="[^"]*"/g, '')
+										.replaceAll(/ class="[^"]*"/g, '')
+										.replaceAll(/ xmlns="[^"]*"/g, '')
+										.replaceAll(
+											/<(?!\/?(?:h[1-6]|span|div|p|i|u|abbr|address|code|q|ul|li|ol|br|strong|em|mark|a|del|sub|sup|ins|b|blockquote|cite|dfn|kbd|pre|samp|small|time|var)\b)[^>]+>/gi,
+											''
+										)
+										.toString()}`
 
-								resolve({
-									id: chapter.id,
-									title: chapter.title,
-									content: content
+									resolve({
+										id: chapter.id,
+										title: chapter.title,
+										content: content
+									})
 								})
-							})
+							} catch (error) {
+								console.log(error)
+								new BadRequestException('Invaid file or error')
+							}
 						})
 					}
 				)
-				Promise.all(flow).then((chapters: (Chapter | null)[]) => {
-					const validChapters = chapters.filter(
-						(chapter): chapter is Chapter => chapter.content !== null
-					)
-					resolve(
-						validChapters.map(chapter => {
-							return {
-								title: chapter.title ?? chapter.id ?? 'No title',
-								content: chapter.content
-							}
-						})
-					)
-				})
+				Promise.all(flow)
+					.then((chapters: (Chapter | null)[]) => {
+						const validChapters = chapters.filter(
+							(chapter): chapter is Chapter => chapter.content !== null
+						)
+						resolve(
+							validChapters.map(chapter => {
+								return {
+									title: chapter.title ?? chapter.id ?? 'No title',
+									content: chapter.content ?? 'No content'
+								}
+							})
+						)
+					})
+					.catch(() => {
+						throw new BadRequestException('Invaid file or error')
+					})
 			})
-
 			epub.parse()
+		}).catch(() => {
+			throw new BadRequestException('Invaid file or error')
 		})
 	}
 

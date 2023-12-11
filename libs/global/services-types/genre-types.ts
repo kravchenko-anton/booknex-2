@@ -12,11 +12,6 @@ export type AllGenreOutput = Prisma.GenreGetPayload<{
 export type GenreByIdOutput = Prisma.GenreGetPayload<{
 	select: typeof ReturnGenreObject & {
 		color: true
-		similar: {
-			select: {
-				id: true
-			}
-		}
 	}
 }> & {
 	newestBooks: Prisma.BookGetPayload<{

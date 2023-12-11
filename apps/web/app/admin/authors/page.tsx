@@ -15,7 +15,7 @@ import CreateAuthorPopup from './popup/create'
 const Page: FC = () => {
 	const { control, watch } = useForm()
 	const QueryClient = useQueryClient()
-	const search = useDebounce(watch('search'), 500)
+	const search = useDebounce(watch('search') as string, 500) || ''
 	const { data: authors, isLoading } = useQuery(
 		['authors' + (search || '')],
 		() => authorService.all(search)
@@ -41,11 +41,11 @@ const Page: FC = () => {
 						control={control}
 						icon={Search}
 						className='mb-0 h-full'
-						name={'search'}
+						name='search'
 						placeholder='Search...'
 					/>
 					<Button
-						size={'sm'}
+						size='sm'
 						color='primary'
 						onClick={() => {
 							showPopup(
@@ -56,7 +56,8 @@ const Page: FC = () => {
 									}}
 								/>
 							)
-						}}>
+						}}
+					>
 						Create
 					</Button>
 				</div>
@@ -88,16 +89,17 @@ const Page: FC = () => {
 								<td className='p-3'>{author.name}</td>
 								<td className='p-3'>
 									<div className='flex gap-2'>
-										<Button size={'sm'} color='primary'>
+										<Button size='sm' color='primary'>
 											Edit
 										</Button>
-										<Button size={'sm'} color='warning'>
+										<Button size='sm' color='warning'>
 											Hide
 										</Button>
 										<Button
 											onClick={() => deleteAuthor(author.id)}
-											size={'sm'}
-											color='danger'>
+											size='sm'
+											color='danger'
+										>
 											Delete
 										</Button>
 									</div>

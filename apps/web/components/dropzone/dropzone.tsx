@@ -13,7 +13,7 @@ export interface DropzoneProperties extends HTMLAttributes<HTMLDivElement> {
 		'gray' | 'foreground' | 'vibrant' | 'shade' | 'background'
 	>
 	onFileDelete?: (file: File) => void
-	onDropFile: (files: File[] | File) => void
+	onDropFile: (files: File[]) => void
 	defaultFiles?: File[]
 }
 

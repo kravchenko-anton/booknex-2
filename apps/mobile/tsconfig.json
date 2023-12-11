@@ -2,7 +2,7 @@
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
 		"jsx": "react-jsx",
-		"strict": false,
+		"strict": true,
 		"noImplicitThis": false,
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",

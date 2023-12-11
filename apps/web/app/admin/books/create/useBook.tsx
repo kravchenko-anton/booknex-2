@@ -102,7 +102,7 @@ export const useBookCompose = () => {
 		})
 	}
 
-	const uploadBook = (
+	const upload = (
 		name: string,
 		content: {
 			title: string
@@ -114,15 +114,15 @@ export const useBookCompose = () => {
 				return [
 					...previous,
 					{
-						name: name,
-						content: content
+						name: name || '',
+						content: content || []
 					}
 				]
 			}
 			return [
 				{
-					name: name,
-					content: content
+					name: name || '',
+					content: content || []
 				}
 			]
 		})
@@ -130,11 +130,13 @@ export const useBookCompose = () => {
 
 	return {
 		books,
-		deleteBook,
-		updateCharacterTitle,
-		removeToc,
-		updateTocTitle,
-		updateTocContent,
-		uploadBook
+		booksFunctions: {
+			delete: deleteBook,
+			upload,
+			updateTocContent,
+			updateTocTitle,
+			updateCharacterTitle,
+			removeToc
+		}
 	}
 }

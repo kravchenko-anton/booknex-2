@@ -102,13 +102,14 @@ export class GenreService {
 				}
 			}
 		})
+
+		const { similar, ...rest } = genre
 		return {
-			...genre,
+			...rest,
 			newestBooks,
 			bestSellers,
 			bestSellersFromSimilar,
-			bestAuthors,
-			similar: undefined
+			bestAuthors
 		}
 	}
 }

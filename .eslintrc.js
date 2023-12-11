@@ -7,21 +7,21 @@ module.exports = {
 		'unicorn',
 		'react-native',
 		'jsx-a11y',
+		'react',
 		'jsx-expressions'
 	],
 	extends: [
 		'airbnb-typescript',
-		'airbnb-typescript/base',
-		'eslint:recommended',
 		'plugin:unicorn/all',
 		'plugin:sonarjs/recommended',
 		'plugin:jsx-a11y/recommended',
+		'plugin:react/recommended',
 		'plugin:react-native/all',
 		'plugin:react-hooks/recommended',
-		'plugin:@typescript-eslint/eslint-recommended',
 		'plugin:@typescript-eslint/strict',
+		'plugin:@typescript-eslint/stylistic',
 		'plugin:@typescript-eslint/stylistic-type-checked',
-		'plugin:@typescript-eslint/stylistic'
+		'plugin:@typescript-eslint/strict-type-checked'
 	],
 	root: true,
 	ignorePatterns: ['*.js'],
@@ -34,9 +34,18 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
-		'no-dupe-keys': 'error',
-		'no-dupe-class-members': 'error',
-		'no-duplicate-case': 'error',
+		'react/jsx-curly-brace-presence': [
+			'error',
+			{ props: `never`, children: 'never' }
+		],
+		'react/jsx-props-no-spreading': 'off',
+		'react/react-in-jsx-scope': 'off',
+		'react/require-default-props': [
+			'error',
+			{ ignoreFunctionalComponents: true }
+		],
+		'@typescript-eslint/quotes': ['error', 'single'],
+		'@typescript-eslint/prefer-as-const': 'error',
 		'@typescript-eslint/no-non-null-assertion': 'warn',
 		'@typescript-eslint/no-non-null-asserted-optional-chain': 'warn',
 		'@typescript-eslint/consistent-type-imports': 'error',
@@ -46,11 +55,9 @@ module.exports = {
 		'@typescript-eslint/no-explicit-any': 'error',
 		'@typescript-eslint/no-extra-non-null-assertion': 'error',
 		'max-params': ['error', 4],
-		'arrow-body-style': ['off', 'as-needed'],
 		complexity: ['error', 10],
 		'no-nested-ternary': 'error',
 		'no-unneeded-ternary': 'error',
-		// 'no-ternary': 'error',
 		'jsx-expressions/strict-logical-expressions': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
 		'react-native/no-unused-styles': 2,
@@ -69,7 +76,7 @@ module.exports = {
 			'LabeledStatement',
 			'WithStatement'
 		],
-		'no-underscore-dangle': ['error', { allow: ['_isRetry', "_count"] }],
+		'no-underscore-dangle': ['error', { allow: ['_isRetry', '_count'] }],
 		'no-void': ['error', { allowAsStatement: true }],
 		'spaced-comment': [
 			'error',
@@ -88,16 +95,37 @@ module.exports = {
 			{ selector: 'default', format: null },
 			{
 				selector: 'variable',
-				format: null,
+				format: ['camelCase'],
 				types: ['boolean', 'string', 'number']
 			},
 			{
 				selector: 'variableLike',
-				format: ['camelCase', 'PascalCase', 'UPPER_CASE']
+				format: ['camelCase'],
+				filter: {
+					regex: '^_count$|^_isRetry$|',
+					match: false
+				}
 			},
 			{ selector: 'parameter', format: null },
-			{ selector: 'memberLike', format: ['camelCase', 'PascalCase'] },
-			{ selector: 'typeLike', format: ['PascalCase'] },
+			{
+				selector: 'memberLike',
+				format: ['camelCase']
+			},
+			{
+				selector: 'typeLike',
+				format: ['PascalCase']
+			},
+			{
+				selector: 'typeParameter',
+				format: ['PascalCase'],
+				suffix: ['Properties', 'Type', 'Enum']
+			},
+			{
+				selector: 'variable',
+				types: ['boolean'],
+				format: ['PascalCase'],
+				prefix: ['is', 'should', 'has', 'can', 'did', 'will']
+			},
 			{ selector: 'property', format: null },
 			{ selector: 'enumMember', format: null }
 		],
@@ -108,10 +136,6 @@ module.exports = {
 				ignore: ['App.tsx', 'use']
 			}
 		],
-		// Disable rules
-		'@typescript-eslint/quotes': 'off',
-		'@typescript-eslint/prefer-as-const': 'off',
-		'unicorn/no-keyword-prefix': 'off',
 		'@typescript-eslint/no-confusing-void-expression': 'off',
 		'@typescript-eslint/comma-dangle': 'off',
 		'@typescript-eslint/semi': 'off',
@@ -125,9 +149,8 @@ module.exports = {
 		'@typescript-eslint/no-unsafe-member-access': 'off',
 		'@typescript-eslint/no-unnecessary-condition': 'off',
 		'@typescript-eslint/consistent-type-definitions': 'off',
-		'@typescript-eslint/prefer-nullish-coalescing': 'off',
+		'@typescript-eslint/prefer-nullish-coalescing': 'warn',
 		'@typescript-eslint/no-throw-literal': 'off',
-
 		'no-shadow': 'off',
 		'no-mixed-spaces-and-tabs': 'off',
 		'class-methods-use-this': 'off',
@@ -138,7 +161,6 @@ module.exports = {
 		'unicorn/no-null': 'off',
 		'react-native/no-raw-text': 'off',
 		'react/jsx-filename-extension': 'off',
-
 		'import/no-extraneous-dependencies': 'off',
 		'import/extensions': 'off'
 	}

@@ -15,6 +15,7 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { parserService } from '../../../services/parser/parser-services'
 import { successToast } from '../../../utils/toast'
 import CreateAuthorPopup from '../authors/popup/create'
+import type { DeafultCreateBookValuesType } from '../books/create/useForm'
 import NewParse from './popup/new-parse'
 
 const Parser: FC = () => {
@@ -42,7 +43,7 @@ const Parser: FC = () => {
 			}
 		}
 	)
-	const search = useDebounce(watch('search'), 500) || ''
+	const search = useDebounce(watch('search') as string, 500) || ''
 	const { data: goodReadsBooks } = useQuery(['goodRead books' + search], () =>
 		parserService.all(search)
 	)
@@ -57,18 +58,18 @@ const Parser: FC = () => {
 						control={control}
 						icon={Search}
 						className='mb-0 h-full'
-						name={'search'}
+						name='search'
 						placeholder='Search...'
 					/>
 					<Button
-						size={'sm'}
+						size='sm'
 						isLoading={parseLoading}
 						onClick={() =>
 							showPopup(
 								<NewParse
 									defaultValues={{
-										link: lastParsedData?.url || '',
-										page: lastParsedData?.page + 1 || 0
+										link: lastParsedData?.url ?? '',
+										page: (lastParsedData && lastParsedData.page + 1) ?? 0
 									}}
 									onSubmit={data => {
 										parse({
@@ -84,8 +85,9 @@ const Parser: FC = () => {
 								/>
 							)
 						}
-						color='primary'>
-						{'Parsing'}
+						color='primary'
+					>
+						Parsing
 					</Button>
 				</div>
 			</div>
@@ -105,37 +107,28 @@ const Parser: FC = () => {
 
 					<tbody>
 						{goodReadsBooks.map(book => {
-							let blob = null
-
-							const getBlob = async () => {
-								const response = await fetch(book.authorPicture)
-								return new Blob([await response.blob()])
-							}
-
-							getBlob().then(fetchBlob => {
-								blob = fetchBlob
-							})
 							return (
 								<tr
 									key={book.title + book.authorName}
-									className='border-foreground max-h-[100px] items-center  justify-center border-b-2'>
+									className='border-foreground items-center  justify-center border-b-2'
+								>
 									<td className='min-w-[60px]  text-center '>{book.id}</td>
-									<td className='  h-[160px] '>
+									<td className='h-[110px]'>
 										<img
 											src={book.picture}
-											className='bottom-shade mx-auto w-[100px] rounded-xl'
+											className='bottom-shade mx-auto w-[80px] rounded-xl'
 											alt={book.title}
 										/>
 									</td>
-									<td className='h-[100px]  min-w-[100px]   text-left'>
+									<td className='h-[100px]  min-w-[140px]   text-left'>
 										{book.title} <br />{' '}
 										<p className='text-primary'>{book.authorName}</p>
 										{book.pages} 📖 | {nFormatter(book.popularity)} 👍
 									</td>
 									<td className='min-w-[100px] p-2'>
-										{book.description.slice(0, 500) + '...'}
+										{book.description.slice(0, 300) + '...'}
 									</td>
-									<td className='min-w-[100px] max-w-[220px] p-2'>
+									<td className='min-w-[300px] max-w-[220px] p-2'>
 										<img
 											src={book.authorPicture}
 											className='mb-1 h-[50px] w-[50px] rounded-xl'
@@ -143,11 +136,12 @@ const Parser: FC = () => {
 										/>
 										{book.authorDescription.slice(0, 100) + '...'}
 									</td>
-									<td className='flex min-w-[100px] max-w-[320px] flex-wrap'>
+									<td className='flex min-w-[200px] flex-wrap'>
 										{book.genres.map(genre => (
 											<p
 												key={genre.name}
-												className='bg-foreground m-1  rounded-xl p-1.5 text-white'>
+												className='bg-foreground m-1  rounded-xl p-1.5 text-white'
+											>
 												{genre.name}
 											</p>
 										))}
@@ -159,7 +153,11 @@ const Parser: FC = () => {
 												className='mb-2'
 												fullWidth
 												color='success'
-												onClick={() => {
+												onClick={async () => {
+													const blob = await fetch(book.authorPicture).then(
+														result => result.blob()
+													)
+													console.log(blob)
 													showPopup(
 														<CreateAuthorPopup
 															onCreate={({ id, name }) => {
@@ -175,10 +173,10 @@ const Parser: FC = () => {
 																				},
 																				title: book.title,
 																				description: book.description,
-																				pages: book.pages.toString(),
-																				popularity: book.popularity.toString(),
+																				pages: book.pages,
+																				popularity: book.popularity,
 																				genres: book.genres
-																			})
+																			} as DeafultCreateBookValuesType)
 																		}).toString()
 																)
 															}}
@@ -193,14 +191,16 @@ const Parser: FC = () => {
 														/>
 													)
 												}}
-												size='sm'>
+												size='sm'
+											>
 												Create
 											</Button>
 											<Button
 												color='danger'
 												fullWidth
 												size='sm'
-												onClick={() => deleteFromParser(book.id)}>
+												onClick={() => deleteFromParser(book.id)}
+											>
 												Delete
 											</Button>
 										</div>

@@ -2,7 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     //TODO: сделать стрик true и пофиксить всё ошибки обложив всё типами
-    "strict": false,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "strictNullChecks": false,
     "outDir": "../../dist/out-tsc",
     "module": "ES2022",
     "types": [
