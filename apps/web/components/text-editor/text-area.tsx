@@ -1,4 +1,4 @@
-import type { FC, InputHTMLAttributes, PropsWithChildren } from 'react'
+import type { FC, InputHTMLAttributes } from 'react'
 
 export interface TextAreaProperties
 	extends InputHTMLAttributes<HTMLTextAreaElement> {
@@ -19,8 +19,8 @@ const colorPallete = {
 	background:
 		'bg-background border-2 border-transparent placeholder-white text-white hover:border-foreground focus:border-foreground'
 }
-const TextArea: FC<PropsWithChildren<TextAreaProperties>> = ({
-	children = '',
+const TextArea: FC<TextAreaProperties> = ({
+	children,
 	color = 'foreground',
 	className = '',
 	style,
@@ -28,10 +28,10 @@ const TextArea: FC<PropsWithChildren<TextAreaProperties>> = ({
 }) => {
 	return (
 		<textarea
+			value={properties.value}
 			className={`placeholder-gray h-full w-full resize-none rounded-lg p-4 text-white focus:outline-0  ${colorPallete[color]} ${className}`}
-			{...properties}>
-			{children}
-		</textarea>
+			{...properties}
+		/>
 	)
 }
 

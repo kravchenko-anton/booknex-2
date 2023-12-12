@@ -34,6 +34,7 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'unicorn/no-keyword-prefix': ['off'],
 		'react/jsx-curly-brace-presence': [
 			'error',
 			{ props: `never`, children: 'never' }

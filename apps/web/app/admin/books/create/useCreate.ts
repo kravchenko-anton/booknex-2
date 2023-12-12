@@ -49,7 +49,13 @@ export const useCreate = () => {
 					[
 						data.books
 							.map(book =>
-								book.content.map(content => content.content).join('')
+								book.content
+									.map(
+										content =>
+											`<label id='${book.name + '/' + content.title}' />` +
+											content.content
+									)
+									.join('')
 							)
 							.join('')
 					],
@@ -61,14 +67,17 @@ export const useCreate = () => {
 				title: data.title,
 				description: data.description,
 				picture: uploadPicture,
-				charapters: data.books.flatMap(book =>
-					book.content.map(content => {
-						return {
-							name: content.title,
-							link: content.title
-						}
-					})
-				),
+				charapters: data.books.map(book => {
+					return {
+						name: book.name,
+						children: book.content.map(content => {
+							return {
+								name: content.title,
+								link: book.name + '/' + content.title
+							}
+						})
+					}
+				}),
 				author: {
 					id: Number(data.author.value)
 				},

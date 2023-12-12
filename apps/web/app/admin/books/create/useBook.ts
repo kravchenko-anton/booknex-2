@@ -9,7 +9,7 @@ export const useBookCompose = () => {
 				content: string
 			}[]
 		}[]
-	>()
+	>([])
 
 	const deleteBook = (name: string) => {
 		setBooks(previous => {
@@ -17,14 +17,14 @@ export const useBookCompose = () => {
 		})
 	}
 
-	const updateCharacterTitle = (newValue: string, name: string) => {
+	const updateCharacterTitle = (value: string, name: string) => {
 		setBooks(previous => {
 			if (previous) {
 				return previous.map(previousBook => {
 					if (previousBook.name === name) {
 						return {
 							...previousBook,
-							name: newValue
+							name: value
 						}
 					}
 					return previousBook
@@ -35,20 +35,19 @@ export const useBookCompose = () => {
 	}
 
 	const removeToc = (name: string, title: string) => {
-		setBooks(previous => {
-			if (previous) {
-				return previous.map(previousBook => {
-					if (previousBook.name === name) {
+		setBooks(previousState => {
+			if (previousState) {
+				return books.map(book => {
+					if (book.name === name) {
 						return {
-							...previousBook,
-							content: previousBook.content.filter(
-								previousContent => previousContent.title !== title
-							)
+							...book,
+							content: book.content.filter(content => content.title !== title)
 						}
 					}
-					return previousBook
+					return book
 				})
 			}
+			return previousState
 		})
 	}
 

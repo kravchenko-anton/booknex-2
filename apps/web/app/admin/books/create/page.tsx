@@ -100,7 +100,7 @@ const Page: FC = () => {
 								options={{
 									multiple: false,
 									accept: {
-										image: ['.jpg', '.jpeg', '.png']
+										'image/*': ['.jpg', '.jpeg', '.png']
 									}
 								}}
 								onDropFile={acceptedFiles => {
@@ -195,7 +195,7 @@ const Page: FC = () => {
 								/>
 								{book.content.map(content => (
 									<div
-										key={content.title + book.name}
+										key={content.title + book.name + content.content}
 										className='bg-shade m-2 rounded-lg p-2'
 									>
 										<div className='mb-2 flex w-full items-center justify-between gap-2'>
@@ -223,7 +223,7 @@ const Page: FC = () => {
 										</div>
 
 										<TextArea
-											value={content.content}
+											defaultValue={content.content}
 											onBlur={event => {
 												booksFunctions.updateTocContent(
 													content.title,
@@ -255,8 +255,9 @@ const Page: FC = () => {
 						return
 					}
 					form.setValue('books', books)
-					form.submitBook()
-					router.push('/admin/books')
+					form.submitBook().then(() => {
+						router.push('/admin/books/')
+					})
 				}}
 				color='primary'
 			>

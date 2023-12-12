@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, PropsWithChildren } from 'react'
+import type { InputHTMLAttributes } from 'react'
 import type {
 	Control,
 	FieldPath,
@@ -27,7 +27,7 @@ const FormTextEditor = <T extends Record<string, any>>({
 	className,
 	style,
 	...properties
-}: PropsWithChildren<FomrTextEditorProperties<T>>) => {
+}: FomrTextEditorProperties<T>) => {
 	return (
 		<Controller
 			control={properties.control}
@@ -43,13 +43,10 @@ const FormTextEditor = <T extends Record<string, any>>({
 						onChange={onChange}
 						color={color}
 						value={value}
-						{...properties}>
-						{children}
-					</TextArea>
+						{...properties}
+					/>
 					{!!error && (
-						<p className={`text-danger mt-0.5 text-xs italic`}>
-							{error.message}
-						</p>
+						<p className='text-danger mt-0.5 text-xs italic'>{error.message}</p>
 					)}
 				</div>
 			)}

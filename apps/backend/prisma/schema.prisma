@@ -21,6 +21,15 @@ model Genre {
   similar        Genre[]        @relation("Similar")
 }
 
+model activity {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  Book      Book?    @relation(fields: [bookId], references: [id])
+  bookId    Int?
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
 model Review {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
@@ -69,6 +78,7 @@ model Book {
   authorId    Int
   mainGenreId Int
   complaints  Complaints[]
+  activities  activity[]
 }
 
 model GoodReadBook {
@@ -125,6 +135,7 @@ model User {
   watchedShelves Shelf[]      @relation("WatchedShelves")
   hiddenShelves  Shelf[]      @relation("HhiddenShelves")
   complaints     Complaints[]
+  activity       activity[]
 }
 
 model Shelf {

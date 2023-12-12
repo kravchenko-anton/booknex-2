@@ -53,7 +53,17 @@ export class BookService {
 	async all(searchTerm: string) {
 		return this.prisma.book.findMany({
 			take: 20,
-			select: returnBookObjectWithAuthor,
+			select: {
+				...returnBookObjectWithAuthor,
+				genres: { select: ReturnGenreObject },
+				pages: true,
+				popularity: true,
+				description: true,
+				majorGenre: {
+					select: ReturnGenreObject
+				}
+				// TODO: сделать тут статистику посещаемости книги за месяц, год и тд
+			},
 			...(searchTerm && {
 				where: {
 					title: {

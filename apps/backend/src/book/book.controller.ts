@@ -81,6 +81,14 @@ export class BookController {
 	}
 
 	@Auth('admin')
+	@Post('/select')
+	async select(@Body() dto: { id: number }) {
+		return this.bookService.select(dto.id)
+	}
+
+	@Auth('admin')
+	@Post('/toggle-visible/:id/:visible')
+	@Auth('admin')
 	@Put('/update/:id')
 	async update(@Param('id') bookId: string, @Body() dto: EditBookDto) {
 		return this.bookService.update(+bookId, dto)

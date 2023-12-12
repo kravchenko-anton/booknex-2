@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react'
 import { useCallback, useState } from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
 import { useDropzone } from 'react-dropzone'
-import { File, Pen } from '../../../../libs/global/icons/react'
+import { Edit, File } from '../../../../libs/global/icons/react'
 import { Color } from '../../../../libs/ui/colors'
 
 export interface DropzoneProperties extends HTMLAttributes<HTMLDivElement> {
@@ -49,10 +49,14 @@ const Dropzone = ({
 	...properties
 }: DropzoneProperties) => {
 	const [files, setFiles] = useState<File[]>(defaultFiles)
-	const onDrop = useCallback(acceptedFiles => {
-		setFiles(acceptedFiles)
-		onDropFile(acceptedFiles)
-	}, [])
+	const onDrop = useCallback(
+		(acceptedFiles: File[]) => {
+			setFiles([...files, ...acceptedFiles])
+			console.log([...files, ...acceptedFiles], 'files')
+			onDropFile(acceptedFiles)
+		},
+		[files, onDropFile]
+	)
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop,
 		...options
@@ -62,10 +66,11 @@ const Dropzone = ({
 			<div
 				className={`flex gap-2 overflow-scroll ${
 					files.length === 0 && 'hidden'
-				}`}>
+				}`}
+			>
 				{files.length > 0 &&
 					files.map(file => (
-						<div key={file.name + 'asd'} className='items-center'>
+						<div key={file.name + file.type} className='items-center'>
 							{options.accept &&
 							Object.values(options?.accept).includes(['image']) ? (
 								<img
@@ -83,7 +88,8 @@ const Dropzone = ({
 										setFiles(files.filter(f => f.name !== file.name))
 										onFileDelete(file)
 									}}
-									className={`mb-2 items-center justify-center border-2 text-center ${colorPallete[color]}`}>
+									className={`mb-2 items-center justify-center border-2 text-center ${colorPallete[color]}`}
+								>
 									<File
 										color={Color.white}
 										className='mx-auto mb-1'
@@ -92,7 +98,8 @@ const Dropzone = ({
 									/>
 									<span
 										className='text-gray text-xs'
-										style={{ maxWidth: '100px' }}>
+										style={{ maxWidth: '100px' }}
+									>
 										{file.name}
 									</span>
 								</div>
@@ -103,10 +110,11 @@ const Dropzone = ({
 			<div
 				{...getRootProps()}
 				className={`mt-2 flex cursor-pointer items-center  justify-center  rounded-md border-2  ${sizeSettings[size]} ${colorPallete[color]}`}
-				{...properties}>
+				{...properties}
+			>
 				<input {...getInputProps()} />
 				<p className='flex items-center gap-2'>
-					<Pen color={Color.white} width={20} height={20} /> Select or drag and
+					<Edit color={Color.white} width={20} height={20} /> Select or drag and
 					drop a picture here
 				</p>
 			</div>

@@ -24,7 +24,11 @@ export const createBookValidationSchema = z.object({
 	books: z.array(
 		z
 			.object({
-				name: z.string(),
+				name: z
+					.string()
+					.refine(value => value.replaceAll(/(\.epub|\.pdf)/g, '') === value, {
+						message: 'File extension is not allowed'
+					}),
 				content: z.array(
 					z.object({
 						title: z.string(),
