@@ -1,5 +1,5 @@
+import type { FlatlistDefaultProperties } from '@/components/component-types'
 import type { TitleProperties } from '@/components/ui/title/title-types'
-import type { FlatlistDefaultProperties } from '@/types/component-types'
 import type { RefObject } from 'react'
 import type { FlatList, ListRenderItem } from 'react-native'
 

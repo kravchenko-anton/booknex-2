@@ -8,6 +8,7 @@ import { ChevronLeft } from '@/icons'
 import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { View } from 'react-native'
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AnimatedView } from 'src/components/animated'
 
@@ -21,7 +22,8 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 	return (
 		<AnimatedView
 			className='bg-canvas absolute left-0 right-0 z-50'
-			style={[{ top }, headerStyle]}>
+			style={[{ top }, headerStyle]}
+		>
 			<View className='mt-auto flex-row items-center justify-between px-4 py-0.5'>
 				<View className='flex-row items-center'>
 					<AnimatedIcon
@@ -29,11 +31,11 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 						onPress={() => {
 							goBack()
 						}}
-						size={'medium'}
+						size='medium'
 						className='pl-0'
 						color={Color.black}
 					/>
-					<Title size={18} className='w-3/4' weight={'bold'}>
+					<Title size={18} className='w-3/4' weight='bold'>
 						{properties.title}
 					</Title>
 				</View>

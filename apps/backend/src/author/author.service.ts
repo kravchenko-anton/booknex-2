@@ -36,8 +36,34 @@ export class AuthorService {
 
 	async all(searchTerm: string) {
 		return this.prisma.author.findMany({
-			select: returnAuthorObjectWithDescription,
+			select: {
+				...returnAuthorObjectWithDescription,
+				books: {
+					select: {
+						id: true,
+						picture: true,
+						visible: true
+					}
+				}
+			},
 			take: 20,
+			...(searchTerm && {
+				where: {
+					name: {
+						contains: searchTerm
+					}
+				}
+			})
+		})
+	}
+
+	async allSelect(searchTerm: string) {
+		return this.prisma.author.findMany({
+			take: 20,
+			select: {
+				id: true,
+				name: true
+			},
 			...(searchTerm && {
 				where: {
 					name: {

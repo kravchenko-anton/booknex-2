@@ -11,21 +11,23 @@ const Settings = () => {
 				transientValue: 80,
 				title: 'Settings'
 			}}
-			className='px-2'>
-			<Title size={32} weight={'bold'}>
+			className='px-2'
+		>
+			<Title size={32} weight='bold'>
 				Settings
 			</Title>
 
 			{settingsList.map(item => (
 				<View key={item.title} className='bg-dust mt-4 w-full rounded-xl p-4'>
-					<Title size={26} weight={'bold'} className='mb-2'>
+					<Title size={26} weight='bold' className='mb-2'>
 						{item.title}
 					</Title>
 					{item.list.map(listItem => (
 						<Pressable
 							key={listItem.title}
 							onPress={() => listItem.onPress()}
-							className='flex-row items-center justify-between'>
+							className='flex-row items-center justify-between'
+						>
 							<View className='flex-row items-center'>
 								{/* TODO: пофиксить иконку */}
 								{/* <Icon*/}
@@ -35,7 +37,7 @@ const Settings = () => {
 								{/*	className='mr-2'*/}
 								{/*	color={Color.secondary}*/}
 								{/* />*/}
-								<Title size={18} weight={'bold'} color={Color.secondary}>
+								<Title size={18} weight='bold' color={Color.secondary}>
 									{listItem.title}
 								</Title>
 							</View>

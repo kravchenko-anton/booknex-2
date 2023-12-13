@@ -20,7 +20,8 @@ const ShelfLayout: FC<PropsWithChildren<ShelfLayoutProperties>> = ({
 		headerChildren={
 			<ImageBackground
 				source={{ uri: getFileUrl(properties.backgroundImage) }}
-				className='h-[250px]'>
+				className='h-[250px]'
+			>
 				<View className='flex-1 bg-[#0000009a] p-4 pt-0'>
 					<Header
 						color={Color.white}
@@ -32,13 +33,15 @@ const ShelfLayout: FC<PropsWithChildren<ShelfLayoutProperties>> = ({
 						size={26}
 						color={Color.white}
 						center={true}
-						weight={'bold'}
-						numberOfLines={2}>
+						weight='bold'
+						numberOfLines={2}
+					>
 						{properties.title}
 					</Title>
 				</View>
 			</ImageBackground>
-		}>
+		}
+	>
 		{children}
 	</LargeHeaderScrollLayout>
 )

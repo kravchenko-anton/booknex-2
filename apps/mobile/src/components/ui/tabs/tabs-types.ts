@@ -1,4 +1,4 @@
-import type { ViewDefaultProperties } from '@/types/component-types'
+import type { ViewDefaultProperties } from '@/components/component-types'
 
 export interface Route {
 	component: JSX.Element

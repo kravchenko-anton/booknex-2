@@ -36,7 +36,8 @@ const ReadingUi: FC = () => {
 					},
 					headerAnimation
 				]}
-				className='absolute z-50 h-[65px] w-full flex-row items-center justify-between px-2'>
+				className='absolute z-50 h-[65px] w-full flex-row items-center justify-between px-2'
+			>
 				<AnimatedIcon
 					icon={ArrowLeft}
 					backgroundColor={
@@ -45,7 +46,7 @@ const ReadingUi: FC = () => {
 							shadeBackground
 						) as LineColorType
 					}
-					size={'medium'}
+					size='medium'
 					className='w-[50px]'
 					onPress={() => goBack()}
 					color={colorScheme.colorPalette.text}
@@ -57,7 +58,7 @@ const ReadingUi: FC = () => {
 						shadeBackground
 					)}
 					className='w-[50px]'
-					size={'medium'}
+					size='medium'
 					color={colorScheme.colorPalette.text as LineColorType}
 				/>
 			</AnimatedView>
@@ -72,7 +73,8 @@ const ReadingUi: FC = () => {
 						)
 					}
 				]}
-				className='h-18 absolute bottom-0 z-50 mt-0 w-full flex-1 pt-0'>
+				className='h-18 absolute bottom-0 z-50 mt-0 w-full flex-1 pt-0'
+			>
 				<View className='mt-0 flex-row items-center justify-between  px-4'>
 					<AnimatedIcon
 						icon={ListOrdered}
@@ -90,8 +92,9 @@ const ReadingUi: FC = () => {
 					<Title
 						size={24}
 						center
-						weight={'bold'}
-						color={colorScheme.colorPalette.primary}>
+						weight='bold'
+						color={colorScheme.colorPalette.primary}
+					>
 						{(readerProgress || 0) + '%'}
 					</Title>
 					<AnimatedIcon

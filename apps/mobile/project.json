@@ -9,7 +9,8 @@
 			"dependsOn": ["ensure-symlink", "sync-deps"],
 			"options": {
 				"port": 8081,
-				"clear": true
+				"clear": true,
+				"dev": true
 			}
 		},
 		"serve": {

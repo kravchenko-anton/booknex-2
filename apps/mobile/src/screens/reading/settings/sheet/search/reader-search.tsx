@@ -15,8 +15,8 @@ const ReaderSearch: FC = () => {
 				color={Color.white}
 				borderColor={colorScheme.theme.p.color}
 				control={control}
-				name={'searchTerm'}
-				placeholder={'Type something...'}
+				name='searchTerm'
+				placeholder='Type something...'
 			/>
 		</View>
 	)

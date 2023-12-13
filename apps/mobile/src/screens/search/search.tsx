@@ -22,8 +22,8 @@ const Search = () => {
 		<Layout className='h-full'>
 			<Field
 				control={control}
-				name={'searchTerm'}
-				placeholder={'Type something...'}
+				name='searchTerm'
+				placeholder='Type something...'
 			/>
 			{searchTerm ? (
 				<View className='flex-1'>
@@ -66,9 +66,9 @@ const Search = () => {
 					data={topSearches}
 					renderItem={({ item }) => (
 						<Button
-							size={'large'}
+							size='large'
 							className='items-start'
-							variant={'dust'}
+							variant='dust'
 							onPress={() => {
 								navigate(item.name ? 'Genre' : 'Book', {
 									id: item.id

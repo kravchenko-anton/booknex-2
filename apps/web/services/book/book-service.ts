@@ -1,5 +1,6 @@
 import type {
 	AllBooksOutput,
+	AllSelectBooksOutput,
 	BookByIdOutput,
 	BookPayload,
 	EbpubOutput,
@@ -7,7 +8,7 @@ import type {
 	ReviewBookPayload,
 	ReviewByIdOutput
 } from '../../../../libs/global/services-types/book-types'
-import { getBookUrl } from '../api/api-config'
+import { getAuthorUrl, getBookUrl } from '../api/api-config'
 import { request } from '../api/request.api'
 
 export const bookService = {
@@ -52,6 +53,19 @@ export const bookService = {
 			params: {
 				searchTerm
 			}
+		})
+	},
+
+	async allSelect(searchTerm?: string) {
+		return request<AllSelectBooksOutput>({
+			url: getAuthorUrl('/all/select'),
+			params: { searchTerm }
+		})
+	},
+	async toggleVisible(id: number) {
+		return request({
+			method: 'PUT',
+			url: getBookUrl(`/toggle-visible/${id}`)
 		})
 	},
 

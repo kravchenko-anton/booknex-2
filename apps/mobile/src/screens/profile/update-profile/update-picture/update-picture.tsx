@@ -14,10 +14,10 @@ const UpdatePicture: FC<UpdatePictureProperties> = ({ picture }) => {
 			<View className=' w-full px-4 pb-2'>
 				<Button
 					className='mt-4 w-full'
-					variant={'primary'}
+					variant='primary'
 					onPress={() => updatePicture()}
-					size={'medium'}
-					text={'Change photo'}
+					size='medium'
+					text='Change photo'
 				/>
 			</View>
 		</View>

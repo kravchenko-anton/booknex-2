@@ -34,6 +34,12 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'@typescript-eslint/no-unsafe-call': 'off',
+		'@typescript-eslint/no-unsafe-assignment': 'off',
+		'@typescript-eslint/no-unsafe-return': 'off',
+		'@typescript-eslint/prefer-nullish-coalescing': 'off',
+		'@typescript-eslint/prefer-as-const': 'off',
+		'@typescript-eslint/no-redundant-type-constituents': 'off',
 		'unicorn/no-keyword-prefix': ['off'],
 		'react/jsx-curly-brace-presence': [
 			'error',
@@ -46,7 +52,6 @@ module.exports = {
 			{ ignoreFunctionalComponents: true }
 		],
 		'@typescript-eslint/quotes': ['error', 'single'],
-		'@typescript-eslint/prefer-as-const': 'error',
 		'@typescript-eslint/no-non-null-assertion': 'warn',
 		'@typescript-eslint/no-non-null-asserted-optional-chain': 'warn',
 		'@typescript-eslint/consistent-type-imports': 'error',
@@ -103,7 +108,7 @@ module.exports = {
 				selector: 'variableLike',
 				format: ['camelCase'],
 				filter: {
-					regex: '^_count$|^_isRetry$|',
+					regex: '^_count$|^_isRetry$|^ai_request$|',
 					match: false
 				}
 			},

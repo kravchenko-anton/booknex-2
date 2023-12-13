@@ -26,13 +26,15 @@ const SelectTheme: FC = () => {
 									: theme.colorPalette.background,
 							backgroundColor: theme.colorPalette.background
 						}}
-						className='mb-8 flex-row items-center justify-between rounded-xl border-2 p-4'>
+						className='mb-8 flex-row items-center justify-between rounded-xl border-2 p-4'
+					>
 						<Title
 							style={{
 								color: theme.colorPalette.text
 							}}
-							weight={'bold'}
-							size={22}>
+							weight='bold'
+							size={22}
+						>
 							{theme.title}
 						</Title>
 						<View className='flex-row items-center'>

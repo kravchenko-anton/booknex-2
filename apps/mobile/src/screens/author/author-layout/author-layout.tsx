@@ -2,9 +2,9 @@ import { Header, Image, Title } from '@/components'
 import LargeHeaderScrollLayout from '@/components/layout/header-scroll-layout/large-header-scroll-layout'
 
 import type { AuthorLayoutProperties } from '@/screens/author/author-layout/author-layout-types'
-import { Color } from '@/ui/colors'
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'
+import { Color } from '../../../../../../libs/ui/colors'
 
 const AuthorLayout: FC<PropsWithChildren<AuthorLayoutProperties>> = ({
 	children,
@@ -23,7 +23,8 @@ const AuthorLayout: FC<PropsWithChildren<AuthorLayoutProperties>> = ({
 				style={{
 					backgroundColor: properties.backgroundColor
 				}}
-				className='h-[250px]'>
+				className='h-[250px]'
+			>
 				<View className='flex-1 bg-[#0000009a]  p-4 pt-0'>
 					<Header
 						color={Color.white}
@@ -41,13 +42,15 @@ const AuthorLayout: FC<PropsWithChildren<AuthorLayoutProperties>> = ({
 						size={26}
 						color={Color.white}
 						center={true}
-						weight={'bold'}
-						numberOfLines={2}>
+						weight='bold'
+						numberOfLines={2}
+					>
 						{properties.name}
 					</Title>
 				</View>
 			</View>
-		}>
+		}
+	>
 		{children}
 	</LargeHeaderScrollLayout>
 )

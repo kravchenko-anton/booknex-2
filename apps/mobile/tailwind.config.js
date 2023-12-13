@@ -1,15 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-const { Color } = require('../../libs/ui/colors')
-const tailwindcssColors = require('tailwindcss/colors')
-const Colors = (({ transparent, ...o }) => o)(Color)
-
-module.exports = {
-	content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
-	theme: {
-		colors: {
-			...Colors,
-			transparent: tailwindcssColors.transparent
-		}
-	},
-	plugins: []
+const colors = require('tailwindcss/colors')
+export const content = ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}']
+export const theme = {
+	colors: {
+		transparent: colors.transparent
+	}
 }
+export const plugins = []

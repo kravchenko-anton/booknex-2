@@ -2,7 +2,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { Search } from '../../../../../libs/global/icons/react'
+import { Edit, Search, Trash } from '../../../../../libs/global/icons/react'
+import { Color } from '../../../../../libs/ui/colors'
 import { useDebounce } from '../../../../mobile/src/hooks/useDebounce'
 import Button from '../../../components/button/button'
 import Field from '../../../components/field/field'
@@ -11,6 +12,7 @@ import { getFileUrl } from '../../../services/api/api-config'
 import { authorService } from '../../../services/author/author-service'
 import { successToast } from '../../../utils/toast'
 import CreateAuthorPopup from './popup/create'
+import AuthorDescription from './popup/description-popup'
 
 const Page: FC = () => {
 	const { control, watch } = useForm()
@@ -68,44 +70,86 @@ const Page: FC = () => {
 				<table className='bg-shade mt-4 w-full rounded-xl'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
-							<th className='min-w-[50px]   p-3'>Id</th>
-							<th className='min-w-[120px]  p-3'>Picture</th>
-							<th className='min-w-[100px]  p-3'>Title</th>
+							<th className='min-w-[40px]   p-3'>Id</th>
+							<th className='min-w-[100px]  p-3'>Picture</th>
+							<th className='min-w-[140px]  p-3'>Name</th>
+							<th className='min-w-[200px]  p-3'>Description</th>
+							<th className='min-w-[150px]  p-3'>Books</th>
 							<th className='min-w-[100px] p-3'>Actions</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						{authors.map(author => (
-							<tr key={author.id} className='border-foreground border-b-2'>
-								<td className='p-3'>{author.id}</td>
-								<td className='p-3'>
-									<img
-										className='h-20 w-20 rounded-md'
-										src={getFileUrl(author.picture)}
-										alt={author.name}
-									/>
-								</td>
-								<td className='p-3'>{author.name}</td>
-								<td className='p-3'>
-									<div className='flex gap-2'>
-										<Button size='sm' color='primary'>
-											Edit
-										</Button>
-										<Button size='sm' color='warning'>
-											Hide
-										</Button>
+						{authors.map(author => {
+							return (
+								<tr
+									key={author.description + author.name}
+									className='border-foreground h-[90px]  items-center justify-center border-b-2'
+								>
+									<td className='w-[40px] max-w-[40px] text-center '>
+										{author.id}
+									</td>
+									<td className='w-[100px] max-w-[100px]'>
+										<img
+											src={getFileUrl(author.picture)}
+											className='bottom-shade mx-auto w-[80px] rounded-xl'
+											alt={author.name}
+										/>
+									</td>
+									<td className='w-[140px] max-w-[140px]  text-left'>
+										<h2 className='mb-2 text-white'>{author.name}</h2>
+									</td>
+									<td className='w-[500px] min-w-[500px] p-2'>
+										<p className='mb-2 text-sm'>
+											{author.description.slice(0, 200) + '...'}
+										</p>
 										<Button
-											onClick={() => deleteAuthor(author.id)}
+											color='primary'
+											onClick={() => {
+												showPopup(
+													<AuthorDescription text={author.description} />
+												)
+											}}
 											size='sm'
-											color='danger'
 										>
-											Delete
+											💬 Full Description
 										</Button>
-									</div>
-								</td>
-							</tr>
-						))}
+									</td>
+									<td className=' flex min-w-[200px] max-w-full overflow-y-scroll  p-2'>
+										{author.books.map(book => (
+											<img
+												src={getFileUrl(book.picture)}
+												className='w-[100px] rounded-xl'
+												alt={author.name}
+											/>
+										))}
+									</td>
+
+									<td className='w-[100px]  p-2'>
+										<div className='flex gap-2'>
+											<Edit
+												width={25}
+												className='cursor-pointer'
+												height={25}
+												color={Color.warning}
+											/>
+
+											<Trash
+												width={25}
+												className='cursor-pointer'
+												height={25}
+												onClick={() => {
+													deleteAuthor(author.id)
+												}}
+												color={Color.danger}
+												fullWidth
+												size='sm'
+											/>
+										</div>
+									</td>
+								</tr>
+							)
+						})}
 					</tbody>
 				</table>
 			)}

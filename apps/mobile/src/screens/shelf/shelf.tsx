@@ -50,7 +50,7 @@ const Shelf = () => {
 					variant={isSmashedWatchedShelves ? 'secondary' : 'primary'}
 					onPress={() => handleToggleWatchedShelves()}
 					className='mr-1.5 flex-1'
-					size={'medium'}
+					size='medium'
 					disabled={isSmashedUnwatchedShelves}
 					text={isSmashedWatchedShelves ? 'Cancel watching' : 'Start watching'}
 				/>
@@ -59,24 +59,24 @@ const Shelf = () => {
 					disabled={isSmashedWatchedShelves}
 					icon={isSmashedUnwatchedShelves ? EyeOff : Eye}
 					className='mb-2 w-[50px]'
-					size={'medium'}
-					variant={'outlined'}
+					size='medium'
+					variant='outlined'
 				/>
 			</View>
 			<View className='flex-row items-center justify-center gap-5 pt-4'>
 				{shelf.statistics.map(item => (
 					<View className='items-center' key={item.title}>
-						<Title size={32} weight={'bold'}>
+						<Title size={32} weight='bold'>
 							{item.count}
 						</Title>
-						<Title size={22} weight={'regular'}>
+						<Title size={22} weight='regular'>
 							{item.title}
 						</Title>
 					</View>
 				))}
 			</View>
 			<View className='bg-pale mx-2 mt-4  rounded-xl p-4'>
-				<Description defaultSentences={2} size={22} weight={'regular'}>
+				<Description defaultSentences={2} size={22} weight='regular'>
 					{shelf.description}
 				</Description>
 			</View>

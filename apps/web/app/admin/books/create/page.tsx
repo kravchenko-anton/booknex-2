@@ -1,5 +1,4 @@
 'use client'
-import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 import { Close } from '../../../../../../libs/global/icons/react'
@@ -12,7 +11,6 @@ import FormAsyncSelect from '../../../../components/select/async/form-select'
 import FormSelect from '../../../../components/select/form-select'
 import FormTextEditor from '../../../../components/text-editor/form-text-editor'
 import TextArea from '../../../../components/text-editor/text-area'
-import { genreService } from '../../../../services/genre/genre-service'
 import { blobFormData } from '../../../../utils/files'
 
 import CreateAuthorPopup from '../../authors/popup/create'
@@ -22,8 +20,7 @@ import { useCreate } from './useCreate'
 const Page: FC = () => {
 	const { books, booksFunctions } = useBookCompose()
 	const router = useRouter()
-	const { unfold, author, popup, form } = useCreate()
-	const { data: genres } = useQuery(['genres'], () => genreService.all())
+	const { unfold, select, popup, form } = useCreate()
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -121,7 +118,7 @@ const Page: FC = () => {
 								control={form.control}
 								name='genres'
 								isMulti
-								options={genres?.map(genre => {
+								options={select.genres?.map(genre => {
 									return {
 										label: genre.name,
 										value: genre.id
@@ -156,9 +153,9 @@ const Page: FC = () => {
 							<FormAsyncSelect
 								control={form.control}
 								name='author'
-								isLoading={author.loading}
+								isLoading={select.author.loading}
 								loadOptions={authorSearch =>
-									author.load(authorSearch).then(data =>
+									select.author.load(authorSearch).then(data =>
 										data.map(author => {
 											return {
 												label: author.name,

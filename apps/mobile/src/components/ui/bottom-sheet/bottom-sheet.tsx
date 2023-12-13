@@ -31,9 +31,10 @@ const BottomSheet: FC = () => {
 						},
 						bottomSheetStyle
 					]}
-					className='absolute w-full flex-1 pt-3.5'>
+					className='absolute w-full flex-1 pt-3.5'
+				>
 					<View
-						pointerEvents={'none'}
+						pointerEvents='none'
 						className='bg-gray mb-3 mt-1 h-[6px] w-[50px] items-center justify-center self-center rounded-full'
 					/>
 					<bottomSheet.component />

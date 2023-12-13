@@ -62,9 +62,10 @@ const Genre = () => {
 				renderItem={({ item: author }) => (
 					<PressableContainer
 						className='w-[120px]'
-						onPress={() => navigate.Author(author.id)}>
+						onPress={() => navigate.Author(author.id)}
+					>
 						<Image url={author.picture} width={120} height={120} />
-						<Title size={16} center weight={'bold'}>
+						<Title size={16} center weight='bold'>
 							{author.name}
 						</Title>
 					</PressableContainer>

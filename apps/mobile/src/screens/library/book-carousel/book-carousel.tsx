@@ -23,7 +23,8 @@ const BookCarousel = () => (
 	<View className='mt-2'>
 		<LinearGradient
 			colors={[Color.primary, shadeRGBColor(Color.primary, -30)]}
-			className='bg-primary h-[230px] w-full items-center justify-center rounded-t-2xl'>
+			className='bg-primary h-[230px] w-full items-center justify-center rounded-t-2xl'
+		>
 			<FlatList
 				horizontal
 				data={[
@@ -68,14 +69,14 @@ const BookCarousel = () => (
 				<View className='flex-row items-center justify-between'>
 					<Icon
 						icon={Smartphone}
-						size={'medium'}
+						size='medium'
 						className='w-[40px] pb-0 pl-0 pt-0'
 					/>
-					<Title size={20} weight={'bold'}>
+					<Title size={20} weight='bold'>
 						Available offline
 					</Title>
 				</View>
-				<Title size={20} weight={'regular'} color={Color.secondary}>
+				<Title size={20} weight='regular' color={Color.secondary}>
 					{0}
 				</Title>
 			</View>

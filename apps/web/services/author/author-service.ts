@@ -1,5 +1,6 @@
 import type {
 	AllAuthorOutput,
+	AllSelectAuthorOutput,
 	CreateAuthorOutput,
 	InfoByIdOutput
 } from '../../../../libs/global/services-types/author-types'
@@ -20,6 +21,13 @@ export const authorService = {
 	async all(searchTerm?: string) {
 		return request<AllAuthorOutput>({
 			url: getAuthorUrl('/all'),
+			params: { searchTerm }
+		})
+	},
+
+	async allSelect(searchTerm?: string) {
+		return request<AllSelectAuthorOutput>({
+			url: getAuthorUrl('/all/select'),
 			params: { searchTerm }
 		})
 	},

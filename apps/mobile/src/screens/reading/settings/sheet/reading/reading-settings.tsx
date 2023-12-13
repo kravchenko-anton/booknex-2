@@ -30,18 +30,20 @@ const ReadingSettings: FC = () => {
 											: theme.colorPalette.background
 								}}
 								onPress={() => changeTheme(theme.slug)}
-								className='rounded-xl border-2 p-2 px-4'>
+								className='rounded-xl border-2 p-2 px-4'
+							>
 								<Title
-									weight={'semiBold'}
+									weight='semiBold'
 									size={18}
-									style={{ color: theme.colorPalette.text }}>
+									style={{ color: theme.colorPalette.text }}
+								>
 									{theme.title}
 								</Title>
 							</PressableContainer>
 						)
 					}),
 					<PressableContainer
-						key={'other theme'}
+						key='other theme'
 						style={{
 							backgroundColor: shadeRGBColor(
 								colorScheme.colorPalette.background,
@@ -51,12 +53,14 @@ const ReadingSettings: FC = () => {
 						onPress={() =>
 							openBottomSheet(BottomSheetListEnum.readerSelectTheme)
 						}
-						className='flex-row items-center rounded-xl p-2 px-4'>
+						className='flex-row items-center rounded-xl p-2 px-4'
+					>
 						<Title
 							color={colorScheme.colorPalette.text}
-							weight={'semiBold'}
-							size={18}>
-							{'Other'}
+							weight='semiBold'
+							size={18}
+						>
+							Other
 						</Title>
 						<Icon
 							noPadding

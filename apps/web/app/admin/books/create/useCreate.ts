@@ -1,9 +1,10 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import type { BookPayload } from '../../../../../../libs/global/services-types/book-types'
 import { StorageFolderEnum } from '../../../../../backend/src/storage/storage.types'
 import { useAction } from '../../../../hooks/useAction'
 import { authorService } from '../../../../services/author/author-service'
 import { bookService } from '../../../../services/book/book-service'
+import { genreService } from '../../../../services/genre/genre-service'
 import { parserService } from '../../../../services/parser/parser-services'
 import { useUploadFile } from '../../../../utils/files'
 import { errorToast, successToast } from '../../../../utils/toast'
@@ -33,8 +34,9 @@ export const useCreate = () => {
 	)
 	const { mutateAsync: authors, isLoading: authorsLoading } = useMutation(
 		['authors'],
-		(authorSearch: string) => authorService.all(authorSearch)
+		(authorSearch: string) => authorService.allSelect(authorSearch)
 	)
+	const { data: genres } = useQuery(['genres'], () => genreService.all())
 
 	const submitBook = handleSubmit(
 		async (data: CreateBookValidationSchemaType) => {
@@ -95,9 +97,12 @@ export const useCreate = () => {
 		}
 	)
 	return {
-		author: {
-			load: authors,
-			loading: authorsLoading
+		select: {
+			author: {
+				load: authors,
+				loading: authorsLoading
+			},
+			genres
 		},
 		popup: {
 			show: showPopup,

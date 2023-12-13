@@ -1,4 +1,4 @@
-import type { PressableDefaultProperties } from '@/types/component-types'
+import type { PressableDefaultProperties } from '@/components/component-types'
 import type { LineColorType } from '@/ui/colors'
 
 export interface VerticalBookCardProperties extends PressableDefaultProperties {

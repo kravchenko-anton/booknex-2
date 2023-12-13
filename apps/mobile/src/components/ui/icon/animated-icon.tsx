@@ -7,10 +7,13 @@ import {
 } from '@/components/ui/icon/icon-settings'
 import type { IconProperties } from '@/components/ui/icon/icon-types'
 import type { Style } from '@/types/global'
-import { Color } from '@/ui/colors'
-import { BorderRadiusSetting, PaddingSetting } from '@/ui/ui-style'
 import type { FC } from 'react'
 import { memo } from 'react'
+import { Color } from '../../../../../../libs/ui/colors'
+import {
+	BorderRadiusSetting,
+	PaddingSetting
+} from '../../../../../../libs/ui/ui-style'
 
 const AnimatedIcon: FC<IconProperties> = ({
 	icon: Icon,
@@ -35,7 +38,8 @@ const AnimatedIcon: FC<IconProperties> = ({
 			},
 			style as Style
 		]}
-		{...properties}>
+		{...properties}
+	>
 		<Icon
 			width={SizeSetting[size]}
 			strokeWidth={fatness}

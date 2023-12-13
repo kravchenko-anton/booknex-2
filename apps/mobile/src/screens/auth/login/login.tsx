@@ -18,30 +18,30 @@ const Login = () => {
 		<Layout>
 			<Header />
 			<View className='mt-[20%]'>
-				<Title size={34} weight={'bold'} className='mb-2'>
+				<Title size={34} weight='bold' className='mb-2'>
 					Welcome back
 				</Title>
-				<Title size={18} weight={'light'} color={Color.gray} className='mb-4'>
+				<Title size={18} weight='light' color={Color.gray} className='mb-4'>
 					Enter your credentials to continue
 				</Title>
 				<Field
 					control={control}
-					name={'email'}
-					keyboardType={'email-address'}
-					placeholder={'Email'}
+					name='email'
+					keyboardType='email-address'
+					placeholder='Email'
 					rules={emailRules}
 				/>
 				<Field
 					control={control}
-					name={'password'}
-					placeholder={'Password'}
+					name='password'
+					placeholder='Password'
 					secureTextEntry={true}
 					rules={passwordRules}
 				/>
 				<Button
 					onPress={handleSubmit(onSubmit)}
-					size={'medium'}
-					text={'Sign in'}
+					size='medium'
+					text='Sign in'
 					className='mt-2'
 				/>
 			</View>

@@ -13,7 +13,7 @@ export class CreateBookDto implements BookPayload {
 	@IsString() @IsOptional() file: string
 	@IsObject({ each: true }) @IsOptional() charapters: {
 		name: string
-		link: string
+		children: { name: string; link: string }[]
 	}[]
 
 	@IsNumber() pages: number
@@ -33,7 +33,7 @@ export class EditBookDto implements Partial<BookPayload> {
 	@IsNumber() @IsOptional() pages: number
 	@IsObject({ each: true }) @IsOptional() charapters: {
 		name: string
-		link: string
+		children: { name: string; link: string }[]
 	}[]
 
 	@IsNumber() @IsOptional() likedPercentage: number

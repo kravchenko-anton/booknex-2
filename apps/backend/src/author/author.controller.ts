@@ -11,6 +11,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllAuthorOutput,
+	AllSelectAuthorOutput,
 	CreateAuthorOutput,
 	InfoByIdOutput
 } from '../../../../libs/global/services-types/author-types'
@@ -37,6 +38,14 @@ export class AuthorController {
 	@Get('/all')
 	async all(@Query('searchTerm') searchTerm: string): Promise<AllAuthorOutput> {
 		return this.authorService.all(searchTerm)
+	}
+
+	@Auth('admin')
+	@Get('/all/select')
+	async allSelect(
+		@Query('searchTerm') searchTerm: string
+	): Promise<AllSelectAuthorOutput> {
+		return this.authorService.allSelect(searchTerm)
 	}
 
 	@Auth('admin')

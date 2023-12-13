@@ -18,13 +18,15 @@ const ChaptersList: FC = () => {
 						style={{
 							backgroundColor: colorScheme.colorPalette.background
 						}}
-						className='mb-4 rounded-xl p-4'>
+						className='mb-4 rounded-xl p-4'
+					>
 						<Title
 							style={{
 								color: colorScheme.colorPalette.text
 							}}
-							weight={'bold'}
-							size={22}>
+							weight='bold'
+							size={22}
+						>
 							toc
 							{/* {toc.label.trim()}*/}
 						</Title>

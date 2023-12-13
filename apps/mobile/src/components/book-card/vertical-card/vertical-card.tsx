@@ -16,7 +16,8 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 			height: heightSettings[card.image.size]
 		}}
 		className='bg-dust mb-1.5 w-full flex-row rounded-lg p-2'
-		{...card}>
+		{...card}
+	>
 		<Image
 			url={card.image.uri}
 			height={heightSettings[card.image.size]}
@@ -33,7 +34,8 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 					weight='light'
 					numberOfLines={card.descriptionLines}
 					className='mb-2 mt-1'
-					color={Color.gray}>
+					color={Color.gray}
+				>
 					{card.description}
 				</Title>
 			</View>
@@ -50,12 +52,13 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 								key={label}
 								size={16}
 								className='rounded-xl p-2'
-								weight={'medium'}
+								weight='medium'
 								style={{
 									backgroundColor: backgroundColor,
 									color: color
 								}}
-								{...properties}>
+								{...properties}
+							>
 								{label}
 							</Title>
 						)

@@ -54,8 +54,8 @@ const Featured = () => {
 				renderItem={({ item: genre }) => (
 					<Button
 						onPress={() => navigate('Genre', { id: genre.id })}
-						size={'medium'}
-						variant={'ghost'}
+						size='medium'
+						variant='ghost'
 						text={genre.name}
 						className='px-4'
 					/>

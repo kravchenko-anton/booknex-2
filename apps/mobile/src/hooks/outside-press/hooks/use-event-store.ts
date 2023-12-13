@@ -9,7 +9,7 @@ export interface IEvent {
 export default function useEventStore() {
 	const [events, setEvents] = useState<IEvent[]>([])
 	const [skippedEventId, setSkippedEventId] = useState<string>('')
-	const eventActions = useMemo(
+	return useMemo(
 		() => ({
 			events,
 			appendEvent: (newEvent: IEvent) =>
@@ -24,6 +24,4 @@ export default function useEventStore() {
 		}),
 		[skippedEventId, events]
 	)
-
-	return eventActions
 }

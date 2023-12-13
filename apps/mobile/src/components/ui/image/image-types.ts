@@ -1,4 +1,4 @@
-import type { ImageDefaultProperties } from '@/types/component-types'
+import type { ImageDefaultProperties } from '@/components/component-types'
 import type { Dimensions } from '@/types/global'
 
 export interface ImageTypes

@@ -1,4 +1,4 @@
-import type { PressableDefaultProperties } from '@/types/component-types'
+import type { PressableDefaultProperties } from '@/components/component-types'
 
 export type ButtonProperties = PressableDefaultProperties & {
 	size: 'small' | 'medium' | 'large'

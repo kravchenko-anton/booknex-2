@@ -16,10 +16,10 @@ const SelectGenres: FC = () => {
 		<View className='h-full'>
 			<Header />
 			<View>
-				<Title size={34} weight={'bold'} className='mb-2' numberOfLines={2}>
+				<Title size={34} weight='bold' className='mb-2' numberOfLines={2}>
 					Choose your favorite genres
 				</Title>
-				<Title size={18} weight={'light'} color={Color.gray} className='mb-4'>
+				<Title size={18} weight='light' color={Color.gray} className='mb-4'>
 					Select at least 3 genres
 				</Title>
 			</View>
@@ -32,7 +32,7 @@ const SelectGenres: FC = () => {
 								: setSelectGenres([...selectGenres, genre.name])
 						}}
 						key={genre.id}
-						size={'medium'}
+						size='medium'
 						text={genre.name}
 						variant={selectGenres.includes(genre.name) ? 'primary' : 'dust'}
 						className='mr-3'
@@ -42,9 +42,9 @@ const SelectGenres: FC = () => {
 			<Button
 				className='mt-auto'
 				disabled={selectGenres.length < 3}
-				variant={'secondary'}
-				size={'large'}
-				text={'Next step'}
+				variant='secondary'
+				size='large'
+				text='Next step'
 				onPress={() => {
 					navigate('Registration', {
 						selectGenres: selectGenres

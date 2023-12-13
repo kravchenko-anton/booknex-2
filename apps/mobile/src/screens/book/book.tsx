@@ -30,19 +30,20 @@ const Book = () => {
 			author={{
 				...book.author,
 				navigate: navigate.author
-			}}>
+			}}
+		>
 			<View className='flex-row justify-between px-4'>
 				<View className='flex-1 justify-between'>
 					<StatisticCard
-						description={'Duration'}
+						description='Duration'
 						icon={Clock}
 						count={`${Math.round(book.pages / 1.5 / 60)}h ${Math.round(
 							(book.pages / 1.5) % 60
 						)} min`}
 					/>
-					<StatisticCard description={'Pages'} icon={Book} count={book.pages} />
+					<StatisticCard description='Pages' icon={Book} count={book.pages} />
 					<StatisticCard
-						description={'Liked'}
+						description='Liked'
 						icon={ThumbsUp}
 						count={`${book.likedPercentage}%`}
 					/>
@@ -59,16 +60,16 @@ const Book = () => {
 					onPress={() => {
 						navigate.reading()
 					}}
-					text={'Read'}
-					size={'medium'}
+					text='Read'
+					size='medium'
 					className='flex-1'
 				/>
 				<AnimatedIcon
 					icon={isSmashedReadingBooks ? Close : Plus}
 					onPress={() => toggleReadingBooks()}
-					size={'medium'}
+					size='medium'
 					className='w-[50px]'
-					variant={'outlined'}
+					variant='outlined'
 					color={Color.primary}
 				/>
 			</View>
@@ -85,13 +86,13 @@ const Book = () => {
 						onPress={() => {
 							navigate.genre(genre.id)
 						}}
-						variant={'ghost'}
-						size={'small'}
+						variant='ghost'
+						size='small'
 						text={genre.name}
 					/>
 				)}
 			/>
-			<Description size={18} className='mt-2 px-4' weight={'light'}>
+			<Description size={18} className='mt-2 px-4' weight='light'>
 				{book.description}
 			</Description>
 

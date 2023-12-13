@@ -14,14 +14,15 @@ const LibraryCard: FC<LibraryListElementType> = ({
 	<PressableContainer
 		className='bg-dust w-full flex-row items-center justify-between rounded-xl p-4'
 		style={style}
-		{...properties}>
+		{...properties}
+	>
 		<View className='flex-row items-center justify-between'>
-			<Icon icon={icon} size={'medium'} className='w-[40px] pb-0 pl-0 pt-0' />
-			<Title size={20} weight={'bold'}>
+			<Icon icon={icon} size='medium' className='w-[40px] pb-0 pl-0 pt-0' />
+			<Title size={20} weight='bold'>
 				{name}
 			</Title>
 		</View>
-		<Title size={20} weight={'regular'} color={Color.secondary}>
+		<Title size={20} weight='regular' color={Color.secondary}>
 			{count}
 		</Title>
 	</PressableContainer>

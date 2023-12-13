@@ -37,14 +37,15 @@ export default function App() {
 			<PersistGate persistor={persistor} loading={<FullScreenLoader />}>
 				<PersistQueryClientProvider
 					client={queryClient}
-					persistOptions={{ persister: asyncStoragePersister }}>
+					persistOptions={{ persister: asyncStoragePersister }}
+				>
 					<EventProvider>
 						<GestureHandlerRootView style={flexStyle}>
 							<Navigation />
 							<BottomSheet />
 						</GestureHandlerRootView>
 					</EventProvider>
-					<StatusBar style={'dark'} />
+					<StatusBar style='dark' />
 					<Toast />
 					<Alert />
 				</PersistQueryClientProvider>

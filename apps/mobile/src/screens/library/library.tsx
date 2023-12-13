@@ -10,7 +10,7 @@ const Library = () => {
 	if (!library) return <BigLoader />
 	return (
 		<ScrollLayout className='p-2'>
-			<Title size={26} weight={'bold'}>
+			<Title size={26} weight='bold'>
 				My books
 			</Title>
 			<BookCarousel />

@@ -40,16 +40,16 @@ const CheckEmail: FC = () => {
 				</Title>
 				<Field
 					control={control}
-					name={'email'}
+					name='email'
 					keyboardType='email-address'
-					placeholder={'Enter you Email'}
+					placeholder='Enter you Email'
 				/>
 				<Button
-					size={'medium'}
+					size='medium'
 					disabled={!noValidEmail}
 					variant={isEmailExists?.isExist ? 'secondary' : 'primary'}
 					className='mt-2'
-					width={'100%'}
+					width='100%'
 					onPress={() => {
 						navigate(isEmailExists?.isExist ? 'Login' : 'SelectGenres')
 					}}

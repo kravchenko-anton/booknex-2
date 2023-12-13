@@ -1,4 +1,4 @@
-import type { ScrollViewDefaultProperties } from '@/types/component-types'
+import type { ScrollViewDefaultProperties } from '@/components/component-types'
 import type { FC } from 'react'
 import { ScrollView as DefaultScrollView } from 'react-native'
 
@@ -12,8 +12,9 @@ const ScrollView: FC<ScrollViewDefaultProperties> = ({ ...properties }) => (
 		alwaysBounceVertical={false}
 		bounces={false}
 		bouncesZoom={false}
-		decelerationRate={'normal'}
-		{...properties}>
+		decelerationRate='normal'
+		{...properties}
+	>
 		{properties.children}
 	</DefaultScrollView>
 )

@@ -24,28 +24,31 @@ const BookLayout: FC<PropsWithChildren<BookLayoutProperties>> = ({
 				style={{
 					backgroundColor: properties.backgroundColor
 				}}
-				className='h-[230px] p-4 pt-0'>
+				className='h-[230px] p-4 pt-0'
+			>
 				<Header
 					color={Color.white}
 					right={{
 						sharing: `Wow! I see ${properties.title} book on Booknex and I think you will like it too!`
 					}}
 				/>
-				<Title size={26} color={Color.white} weight={'bold'} numberOfLines={2}>
+				<Title size={26} color={Color.white} weight='bold' numberOfLines={2}>
 					{properties.title}
 				</Title>
 				<Title
 					size={18}
 					className='mt-2 w-1/2'
-					weight={'bold'}
+					weight='bold'
 					onPress={() => {
 						properties.author.navigate(properties.author.id)
 					}}
-					color={Color.shade}>
+					color={Color.shade}
+				>
 					{properties.author.name}
 				</Title>
 			</View>
-		}>
+		}
+	>
 		{children}
 	</LargeHeaderScrollLayout>
 )

@@ -32,32 +32,28 @@ const Register = () => {
 						}
 					}}
 				/>
-				<Title size={34} weight={'bold'} className='mb-2 mt-[20%]'>
+				<Title size={34} weight='bold' className='mb-2 mt-[20%]'>
 					Tell us about yourself
 				</Title>
-				<Title size={18} weight={'light'} color={Color.gray} className='mb-4'>
+				<Title size={18} weight='light' color={Color.gray} className='mb-4'>
 					Enter your credentials to continue
 				</Title>
-				<Field control={control} name={'name'} placeholder={'Name'} />
+				<Field control={control} name='name' placeholder='Name' />
 				<Field
 					control={control}
-					name={'email'}
-					keyboardType={'email-address'}
+					name='email'
+					keyboardType='email-address'
 					rules={emailRules}
-					placeholder={'Email'}
+					placeholder='Email'
 				/>
 				<Field
 					control={control}
-					name={'password'}
+					name='password'
 					rules={passwordRules}
-					placeholder={'Password'}
+					placeholder='Password'
 					secureTextEntry
 				/>
-				<Button
-					size={'large'}
-					text={'Sign up'}
-					onPress={handleSubmit(onSubmit)}
-				/>
+				<Button size='large' text='Sign up' onPress={handleSubmit(onSubmit)} />
 			</AnimatedView>
 		</Layout>
 	)

@@ -20,7 +20,7 @@
 		},
 		"android": {
 			"softwareKeyboardLayoutMode": "pan",
-
+			"package": "com.booker",
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#F9EFE8"

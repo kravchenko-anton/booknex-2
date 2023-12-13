@@ -21,7 +21,8 @@ const Welcome: FC = () => {
 						size={36}
 						color={Color.secondary}
 						className='mb-2'
-						weight={'bold'}>
+						weight='bold'
+					>
 						Booknex
 					</Title>
 					<Title
@@ -29,7 +30,8 @@ const Welcome: FC = () => {
 						color={Color.gray}
 						numberOfLines={10}
 						className='w-full  text-center'
-						weight={'light'}>
+						weight='light'
+					>
 						Booknex is your go-to app for reading and discovering books. With a
 						user-friendly interface, it offers an extensive library and
 						personalized book recommendations. Whether you're a seasoned reader
@@ -42,10 +44,10 @@ const Welcome: FC = () => {
 						onPress={() => {
 							navigate('CheckEmail')
 						}}
-						size={'large'}
-						text={'Get Started'}
+						size='large'
+						text='Get Started'
 						className=' mt-6'
-						width={'100%'}
+						width='100%'
 					/>
 				</View>
 			</View>

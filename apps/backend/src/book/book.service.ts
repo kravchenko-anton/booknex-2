@@ -58,11 +58,42 @@ export class BookService {
 				genres: { select: ReturnGenreObject },
 				pages: true,
 				popularity: true,
+				visible: true,
 				description: true,
 				majorGenre: {
 					select: ReturnGenreObject
 				}
 				// TODO: сделать тут статистику посещаемости книги за месяц, год и тд
+			},
+			...(searchTerm && {
+				where: {
+					title: {
+						contains: searchTerm
+					}
+				}
+			})
+		})
+	}
+
+	async toggleVisible(id: number) {
+		const book = await this.getBookById(id, {
+			visible: true
+		})
+		console.log(!book.visible)
+		await this.prisma.book.update({
+			where: { id: book.id },
+			data: {
+				visible: !book.visible
+			}
+		})
+	}
+
+	async allSelect(searchTerm: string) {
+		return this.prisma.book.findMany({
+			take: 20,
+			select: {
+				id: true,
+				title: true
 			},
 			...(searchTerm && {
 				where: {

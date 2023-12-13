@@ -1,5 +1,5 @@
+import type { PressableDefaultProperties } from '@/components/component-types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import type { PressableDefaultProperties } from '@/types/component-types'
 import { Color } from '@/ui/colors'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -15,7 +15,8 @@ const PageMarginIcon: FC<PageMarginIconProperties> = ({
 }) => (
 	<PressableContainer
 		className='border-gray m-0 h-[32px] justify-between border-2 border-b-0'
-		{...properties}>
+		{...properties}
+	>
 		{Array.from({ length: 4 })
 			.fill(0)
 			.map((_, index) => {

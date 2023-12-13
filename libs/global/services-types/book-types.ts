@@ -31,12 +31,19 @@ export type BookByIdOutput = Prisma.BookGetPayload<{
 		select: typeof returnBookObjectWithAuthor
 	}>[]
 }
+export type AllSelectBooksOutput = Prisma.BookGetPayload<{
+	select: {
+		id: true
+		title: true
+	}
+}>[]
 
 export type AllBooksOutput = Prisma.BookGetPayload<{
 	select: typeof returnBookObjectWithAuthor & {
 		genres: { select: typeof ReturnGenreObject }
 		pages: true
 		popularity: true
+		visible: true
 		description: true
 		majorGenre: {
 			select: typeof ReturnGenreObject

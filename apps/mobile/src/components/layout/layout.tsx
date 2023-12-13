@@ -1,4 +1,4 @@
-import type { ViewDefaultProperties } from '@/types/component-types'
+import type { ViewDefaultProperties } from '@/components/component-types'
 import type { FC, PropsWithChildren } from 'react'
 import { memo } from 'react'
 import { View } from 'react-native'

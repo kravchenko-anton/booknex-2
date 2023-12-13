@@ -1,6 +1,6 @@
 import Button from '@/components/ui/button/button'
 import Title from '@/components/ui/title/title'
-import { useAction, useTypedSelector } from '@/hooks/'
+import { useAction, useTypedSelector } from '@/hooks'
 import type { FC } from 'react'
 import { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated'
 import { AnimatedPressable, AnimatedView } from 'src/components/animated'
@@ -18,20 +18,23 @@ const Alert: FC = () => {
 				event.stopPropagation()
 				closeAlert()
 			}}
-			className='absolute h-full w-full flex-1 items-center justify-center bg-[#0000004a]'>
+			className='absolute h-full w-full flex-1 items-center justify-center bg-[#0000004a]'
+		>
 			<AnimatedPressable
 				entering={FadeInDown}
 				onTouchStart={event => event.stopPropagation()}
-				className='bg-dust z-50 w-11/12 items-center rounded-xl p-4'>
-				<Title size={28} className='mb-4 mt-2' center weight={'bold'}>
+				className='bg-dust z-50 w-11/12 items-center rounded-xl p-4'
+			>
+				<Title size={28} className='mb-4 mt-2' center weight='bold'>
 					{alert.title}
 				</Title>
 				<Title
 					size={16}
 					className='px-2'
-					weight={'regular'}
+					weight='regular'
 					numberOfLines={2}
-					center>
+					center
+				>
 					{alert.description}
 				</Title>
 
@@ -40,14 +43,14 @@ const Alert: FC = () => {
 					onPress={() => closeAlert() && alert.onAccept()}
 					className='mt-5 w-4/5'
 					variant={alert.type}
-					size={'medium'}
+					size='medium'
 				/>
 				<Button
 					onPress={() => closeAlert()}
 					text='Cancel'
 					className='mt-4 w-2/3'
-					variant={'dust'}
-					size={'medium'}
+					variant='dust'
+					size='medium'
 				/>
 			</AnimatedPressable>
 		</AnimatedView>

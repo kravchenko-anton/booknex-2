@@ -11,6 +11,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllBooksOutput,
+	AllSelectBooksOutput,
 	BookByIdOutput,
 	EbpubOutput,
 	EmotionOutput,
@@ -75,19 +76,25 @@ export class BookController {
 	}
 
 	@Auth('admin')
+	@Get('/all/select')
+	async allSelect(
+		@Query('searchTerm') searchTerm: string
+	): Promise<AllSelectBooksOutput> {
+		return this.bookService.allSelect(searchTerm)
+	}
+
+	@Auth('admin')
 	@Post('/create')
 	async create(@Body() dto: CreateBookDto) {
 		return this.bookService.create(dto)
 	}
 
 	@Auth('admin')
-	@Post('/select')
-	async select(@Body() dto: { id: number }) {
-		return this.bookService.select(dto.id)
+	@Put('/toggle-visible/:id')
+	toggleVisible(@Param('id') id: string) {
+		return this.bookService.toggleVisible(+id)
 	}
 
-	@Auth('admin')
-	@Post('/toggle-visible/:id/:visible')
 	@Auth('admin')
 	@Put('/update/:id')
 	async update(@Param('id') bookId: string, @Body() dto: EditBookDto) {

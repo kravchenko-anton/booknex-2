@@ -44,17 +44,17 @@ const Profile = () => {
 						onPress={() => {
 							navigate('UpdateProfile')
 						}}
-						size={'medium'}
-						variant={'filled'}
+						size='medium'
+						variant='filled'
 						className='absolute right-[-20px] top-[-20px]'
 					/>
 				</View>
 
-				<Title className='mt-2 text-center' size={36} weight={'bold'}>
+				<Title className='mt-2 text-center' size={36} weight='bold'>
 					{profile.name}
 				</Title>
 			</View>
-			<Title className='mt-8' weight={'semiBold'} size={32}>
+			<Title className='mt-8' weight='semiBold' size={32}>
 				Statistics
 			</Title>
 			<FlatList
@@ -64,10 +64,10 @@ const Profile = () => {
 				renderItem={({ item }) => (
 					<PressableContainer className='bg-dust flex-row items-center justify-between rounded-xl p-4'>
 						<View>
-							<Title weight={'bold'} size={24}>
+							<Title weight='bold' size={24}>
 								{item.count}
 							</Title>
-							<Title weight={'light'} size={18} color={Color.gray}>
+							<Title weight='light' size={18} color={Color.gray}>
 								{item.name}
 							</Title>
 						</View>

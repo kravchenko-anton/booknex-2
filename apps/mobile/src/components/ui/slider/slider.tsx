@@ -1,4 +1,4 @@
-import type { ViewDefaultProperties } from '@/types/component-types'
+import type { ViewDefaultProperties } from '@/components/component-types'
 import { Color } from '@/ui/colors'
 import { WINDOW_WIDTH } from '@/utils/dimensions'
 import type { ComponentType } from 'react'
@@ -147,10 +147,12 @@ const Slider = ({
 				height: thumbSize,
 				width: width
 			}}
-			{...properties}>
+			{...properties}
+		>
 			<View
 				style={{ ...StyleSheet.absoluteFillObject }}
-				className='justify-center'>
+				className='justify-center'
+			>
 				<View
 					style={{
 						backgroundColor: minTrackColor,
@@ -161,7 +163,8 @@ const Slider = ({
 			</View>
 			<View
 				style={{ ...StyleSheet.absoluteFillObject }}
-				className='items-start justify-center'>
+				className='items-start justify-center'
+			>
 				<Animated.View
 					style={[
 						{
@@ -175,7 +178,8 @@ const Slider = ({
 			</View>
 			<View
 				style={{ ...StyleSheet.absoluteFillObject }}
-				className='items-start justify-center'>
+				className='items-start justify-center'
+			>
 				<GestureDetector gesture={gesture}>
 					<Animated.View style={thumbAnimStyle}>
 						<ThumbComponent
