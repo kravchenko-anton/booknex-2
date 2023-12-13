@@ -3,7 +3,7 @@ module.exports = function (api) {
 	return {
 		presets: ['@babel/preset-env'],
 		plugins: [
-			['nativewind/babel'],
+			['nativewind/babel', { mode: 'transformOnly' }],
 			[
 				'babel-plugin-root-import',
 				{

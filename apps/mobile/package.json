@@ -65,7 +65,8 @@
     "@tinymce/tinymce-react": "*",
     "tinymce": "*",
     "@nx/next": "*",
-    "expo-splash-screen": "~0.20.5"
+    "expo-splash-screen": "~0.20.5",
+    "@babel/core": "*"
   },
   "jest": {
     "transformIgnorePatterns": [
