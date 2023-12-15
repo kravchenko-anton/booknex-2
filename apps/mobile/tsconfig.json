@@ -1,17 +1,3 @@
 {
-	"extends": "../../tsconfig.base.json",
-	"compilerOptions": {
-		"jsx": "react-jsx",
-		"strict": false,
-		"noImplicitThis": false,
-		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"],
-			"@/ui/*": ["../../libs/ui/*"],
-			"@/icons": ["../../libs/global/icons/react-native/index.ts"],
-			"@/global/*": ["../../libs/global/*"]
-		},
-		"allowJs": true
-	}
+  "extends": "@react-native/typescript-config/tsconfig.json"
 }

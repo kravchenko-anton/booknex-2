@@ -1,55 +1,118 @@
-import Toast from '@/components/toast'
-import Alert from '@/components/ui/alert/alert'
-import BottomSheet from '@/components/ui/bottom-sheet/bottom-sheet'
-import FullScreenLoader from '@/components/ui/loader/big-loader'
-import EventProvider from '@/hooks/outside-press/components/event-provider'
-import Navigation from '@/navigation/navigation'
-import { persistor, store } from '@/redux/store'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
-import { QueryClient } from '@tanstack/react-query'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { StatusBar } from 'expo-status-bar'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
 
-const flexStyle = {
-	flex: 1
-}
-const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			cacheTime: 1000 * 60 * 60 * 24,
-			networkMode: 'offlineFirst',
-			refetchOnWindowFocus: false,
-			refetchOnReconnect: false
-		}
-	}
-})
+import React from 'react';
+import type {PropsWithChildren} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 
-const asyncStoragePersister = createAsyncStoragePersister({
-	storage: AsyncStorage
-})
-export default function App() {
-	return (
-		<Provider store={store}>
-			<PersistGate persistor={persistor} loading={<FullScreenLoader />}>
-				<PersistQueryClientProvider
-					client={queryClient}
-					persistOptions={{ persister: asyncStoragePersister }}
-				>
-					<EventProvider>
-						<GestureHandlerRootView style={flexStyle}>
-							<Navigation />
-							<BottomSheet />
-						</GestureHandlerRootView>
-					</EventProvider>
-					<StatusBar style='dark' />
-					<Toast />
-					<Alert />
-				</PersistQueryClientProvider>
-			</PersistGate>
-		</Provider>
-	)
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+
+type SectionProps = PropsWithChildren<{
+  title: string;
+}>;
+
+function Section({children, title}: SectionProps): React.JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
+  return (
+    <View style={styles.sectionContainer}>
+      <Text
+        style={[
+          styles.sectionTitle,
+          {
+            color: isDarkMode ? Colors.white : Colors.black,
+          },
+        ]}>
+        {title}
+      </Text>
+      <Text
+        style={[
+          styles.sectionDescription,
+          {
+            color: isDarkMode ? Colors.light : Colors.dark,
+          },
+        ]}>
+        {children}
+      </Text>
+    </View>
+  );
 }
+
+function App(): React.JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
+  return (
+    <SafeAreaView style={backgroundStyle}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <Header />
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          }}>
+          <Section title="Step One">
+            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+            screen and then come back to see your edits.
+          </Section>
+          <Section title="See Your Changes">
+            <ReloadInstructions />
+          </Section>
+          <Section title="Debug">
+            <DebugInstructions />
+          </Section>
+          <Section title="Learn More">
+            Read the docs to discover what to do next:
+          </Section>
+          <LearnMoreLinks />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+});
+
+export default App;

@@ -1,26 +1,11 @@
-const { withNxMetro } = require('@nx/expo')
-const { getDefaultConfig } = require('@expo/metro-config')
-const { mergeConfig } = require('metro-config')
-const exclusionList = require('metro-config/src/defaults/exclusionList')
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
-const defaultConfig = getDefaultConfig(__dirname)
-const { assetExts, sourceExts } = defaultConfig.resolver
+/**
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
+ *
+ * @type {import('metro-config').MetroConfig}
+ */
+const config = {};
 
-const customConfig = {
-	transformer: {
-		babelTransformerPath: require.resolve('react-native-svg-transformer')
-	},
-	resolver: {
-		assetExts: assetExts.filter(ext => ext !== 'svg'),
-		sourceExts: [...sourceExts, 'svg'],
-		blockList: exclusionList([/^(?!.*node_modules).*\/dist\/.*/])
-		// unstable_enableSymlinks: true,
-		// unstable_enablePackageExports: true,
-	}
-}
-
-module.exports = withNxMetro(mergeConfig(defaultConfig, customConfig), {
-	debug: false,
-	extensions: [],
-	watchFolders: []
-})
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);

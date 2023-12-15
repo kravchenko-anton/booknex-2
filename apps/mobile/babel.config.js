@@ -1,33 +1,3 @@
-module.exports = function (api) {
-	api.cache(true)
-	return {
-		presets: ['@babel/preset-env'],
-		plugins: [
-			['nativewind/babel', { mode: 'transformOnly' }],
-			[
-				'babel-plugin-root-import',
-				{
-					rootPathSuffix: 'src/',
-					rootPathPrefix: '@/'
-				}
-			],
-			[
-				'module:react-native-dotenv',
-				{
-					envName: 'APP_ENV',
-					moduleName: '@env',
-					path: '.env',
-					safe: false,
-					allowUndefined: true,
-					verbose: false
-				}
-			],
-			[
-				'react-native-reanimated/plugin',
-				{
-					relativeSourceLocation: true
-				}
-			]
-		]
-	}
-}
+module.exports = {
+  presets: ['module:@react-native/babel-preset'],
+};
