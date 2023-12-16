@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-const { Color } = require('../../libs/ui/colors')
 const tailwindcssColors = require('tailwindcss/colors')
+const { Color } = require('../../libs/ui/colors.ts')
 const Colors = (({ transparent, ...o }) => o)(Color)
 module.exports = {
 	content: [

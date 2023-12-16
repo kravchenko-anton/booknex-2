@@ -1,6 +1,6 @@
 module.exports = {
 	parser: '@typescript-eslint/parser',
-
+	
 	plugins: [
 		'@typescript-eslint/eslint-plugin',
 		'sonarjs',
@@ -124,7 +124,11 @@ module.exports = {
 			{
 				selector: 'typeParameter',
 				format: ['PascalCase'],
-				suffix: ['Properties', 'Type', 'Enum']
+				suffix: ['Properties', 'Type', 'Enum'],
+				filter: {
+					regex: '^K$|^T$',
+					match: false
+				}
 			},
 			{
 				selector: 'variable',

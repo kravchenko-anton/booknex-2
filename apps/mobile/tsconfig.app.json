@@ -1,0 +1,43 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../../dist/out-tsc",
+		"moduleResolution": "node",
+		"types": [
+			"node"
+		],
+		"noImplicitThis": false,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"./src/app/*"
+			],
+			"ui/*": [
+				"../../libs/ui/*"
+			],
+			"icons": [
+				"../../libs/global/icons/react-native/index.ts"
+			],
+			"global/*": [
+				"../../libs/global/*"
+			]
+		},
+		"allowJs": true
+	},
+	"files": [
+		"../../node_modules/@nx/react-native/typings/svg.d.ts"
+	],
+	"exclude": [
+		"jest.config.ts",
+		"src/**/*.spec.ts",
+		"src/**/*.spec.tsx",
+		"test-setup.ts"
+	],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/**/*.js",
+		"src/**/*.jsx",
+		"../../libs/*"
+	]
+}

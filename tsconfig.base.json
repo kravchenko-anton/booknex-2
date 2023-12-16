@@ -6,23 +6,42 @@
 		"strict": false,
 		"declaration": false,
 		"moduleResolution": "node",
+		"strictPropertyInitialization": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"importHelpers": true,
 		"target": "es2021",
 		"module": "ES2022",
-		"lib": ["es2021", "dom"],
+		"lib": [
+			"es2021",
+			"dom"
+		],
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@booknex/global": ["libs/global/src/index.ts"],
-			"@booknex/ui": ["libs/ui/src/index.ts"],
-			"@booknex/ui/mobile": ["libs/ui/mobile/src/index.ts"],
-			"@booknex/ui/shared": ["libs/shared-types/src/index.ts"],
-			"@booknex/ui/web": ["libs/ui/web/src/index.ts"],
-			"react": ["./node_modules/@types/react"]
+			"@booknex/global": [
+				"libs/global/src/index.ts"
+			],
+			"@booknex/ui": [
+				"libs/ui/src/index.ts"
+			],
+			"@booknex/ui/mobile": [
+				"libs/ui/mobile/src/index.ts"
+			],
+			"@booknex/ui/shared": [
+				"libs/shared-types/src/index.ts"
+			],
+			"@booknex/ui/web": [
+				"libs/ui/web/src/index.ts"
+			],
+			"react": [
+				"./node_modules/@types/react"
+			]
 		}
 	},
-	"exclude": ["node_modules", "tmp"]
+	"exclude": [
+		"node_modules",
+		"tmp"
+	]
 }

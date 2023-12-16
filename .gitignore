@@ -133,3 +133,6 @@ apps/mobile-e2e/artifacts
 apps/mobile-e2e/artifacts
 apps/mobile-e2e/artifacts
 apps/mobile-e2e/artifacts
+apps/native-e2e/artifacts
+apps/booker-e2e/artifacts
+apps/mobile-e2e/artifacts

@@ -1,16 +1,8 @@
-import type {
-	FavoriteListOutput,
-	ToggleOutput,
-	UserLibraryOutput,
-	UserProfileOutput
-} from '../../../../libs/global/services-types/user-types'
+import { getUsersUrl } from '../../../../libs/global/api-config'
+import type { FavoriteListOutput, ToggleOutput, UserLibraryOutput, UserProfileOutput } from '../../../../libs/global/services-types/user-types'
 import type { FilenameDto } from '../../../backend/src/storage/dto/upload.dto'
-import type {
-	UserUpdateBioDto,
-	UserUpdatePasswordDto
-} from '../../../backend/src/user/dto/user.update.dto'
+import type { UserUpdateBioDto, UserUpdatePasswordDto } from '../../../backend/src/user/dto/user.update.dto'
 import type { UserLibraryCategoryType } from '../../../backend/src/user/user.types'
-import { getUsersUrl } from '../api/api-config'
 import { request } from '../api/request.api'
 
 export const userServices = {
@@ -20,14 +12,14 @@ export const userServices = {
 			method: 'GET'
 		})
 	},
-
+	
 	async library() {
 		return request<UserLibraryOutput>({
 			url: getUsersUrl('/library'),
 			method: 'GET'
 		})
 	},
-
+	
 	async updateBio(dto: UserUpdateBioDto) {
 		return request({
 			url: getUsersUrl('/update-bio'),
@@ -35,7 +27,7 @@ export const userServices = {
 			data: dto
 		})
 	},
-
+	
 	async updatePassword(dto: UserUpdatePasswordDto) {
 		return request({
 			url: getUsersUrl('/update-password'),
@@ -43,7 +35,7 @@ export const userServices = {
 			data: dto
 		})
 	},
-
+	
 	async updatePicture(dto: FilenameDto) {
 		return request({
 			url: getUsersUrl('/update-picture'),
@@ -51,14 +43,14 @@ export const userServices = {
 			data: dto
 		})
 	},
-
+	
 	async favoriteList() {
 		return request<FavoriteListOutput>({
 			url: getUsersUrl('/favorite-list'),
 			method: 'GET'
 		})
 	},
-
+	
 	async toggle(id: string, type: UserLibraryCategoryType) {
 		return request<ToggleOutput>({
 			url: getUsersUrl(`/toggle/${id}`),
@@ -68,7 +60,7 @@ export const userServices = {
 			}
 		})
 	},
-
+	
 	async all(searchTerm: string) {
 		return request({
 			url: getUsersUrl('/all'),
@@ -78,7 +70,7 @@ export const userServices = {
 			}
 		})
 	},
-
+	
 	async delete(id: string) {
 		return request({
 			url: getUsersUrl(`/delete/${id}`),

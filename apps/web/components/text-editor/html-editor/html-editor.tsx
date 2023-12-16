@@ -13,16 +13,17 @@ type RichEditorProperties = {
 	simple?: boolean
 } & Pick<
 	HTMLAttributes<HTMLTextAreaElement>,
-	'defaultValue' | 'className' | 'style' | 'placeholder'
+	'defaultValue' | 'className' | 'style'
 > & {
-		onChange: EventHandler<unknown>
-		onBlur: EEventHandler<'blur'>
-	}
+	onChange: EventHandler<unknown>
+	placeholder: string
+	onBlur: EEventHandler<'blur'>
+}
 const HtmlEditor: FC<RichEditorProperties> = ({
-	className,
-	style,
-	...properties
-}) => {
+	                                              className,
+	                                              style,
+	                                              ...properties
+                                              }) => {
 	return (
 		<div className={className} style={style}>
 			<Editor
@@ -30,7 +31,7 @@ const HtmlEditor: FC<RichEditorProperties> = ({
 				init={{
 					menubar: true,
 					branding: false,
-					ai_request: (request, respondWith) => {
+					ai_request: (request: { prompt: string }, respondWith: { string: (signal: (signal: AbortSignal) => Promise<string>) => string }) => {
 						const openAiOptions = {
 							method: 'POST',
 							headers: {
@@ -44,7 +45,7 @@ const HtmlEditor: FC<RichEditorProperties> = ({
 								messages: [{ role: 'user', content: request.prompt }]
 							})
 						}
-						respondWith.string(signal =>
+						respondWith.string((signal: AbortSignal) =>
 							window
 								.fetch(
 									'https://openai.ai-demo-proxy.tiny.cloud/v1/chat/completions',

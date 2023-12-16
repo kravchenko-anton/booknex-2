@@ -1,7 +1,8 @@
+import type { GroupBase, StylesConfig } from 'react-select'
 import { Color } from '../../../../libs/ui/colors'
 
 export const selectStyle = {
-	control: provided => ({
+	control: (provided: object) => ({
 		...provided,
 		backgroundColor: Color.foreground,
 		borderColor: Color.gray,
@@ -10,37 +11,41 @@ export const selectStyle = {
 		border: 0,
 		cursor: 'pointer'
 	}),
-	option: (_, state) => ({
+	option: (_: never, state: StateType) => ({
 		backgroundColor: state.isFocused ? Color.primary : Color.shade,
 		padding: 6,
 		color: Color.white,
 		cursor: 'pointer'
 	}),
-	menu: provided => ({
+	menu: (provided: object) => ({
 		...provided,
 		backgroundColor: Color.shade
 	}),
-	singleValue: provided => ({
+	singleValue: (provided: object) => ({
 		...provided,
 		color: Color.white
 	}),
-	placeholder: provided => ({
+	placeholder: (provided: object) => ({
 		...provided,
 		color: Color.white
 	}),
-	input: provided => ({
+	input: (provided: object) => ({
 		...provided,
 		color: Color.white
 	}),
-	dropdownIndicator: provided => ({
+	dropdownIndicator: (provided: object) => ({
 		...provided,
 		color: Color.white,
 		'&:hover': {
 			color: Color.white
 		}
 	}),
-	multiValue: provided => ({
+	multiValue: (provided: object) => ({
 		...provided,
 		backgroundColor: Color.gray
 	})
+} as unknown as StylesConfig<unknown, boolean, GroupBase<unknown>>
+
+interface StateType {
+	isFocused: boolean
 }

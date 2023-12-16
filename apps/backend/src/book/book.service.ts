@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { getAverageColor } from 'fast-average-color-node'
-import { getFileUrl } from '../../../web/services/api/api-config'
+import { getFileUrl } from '../../../../libs/global/api-config'
 import { returnAuthorObject } from '../author/return.author.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
@@ -20,7 +20,7 @@ export class BookService {
 		private readonly usersService: UserService,
 		private readonly prisma: PrismaService
 	) {}
-
+	
 	async getBookById(id: number, selectObject: Prisma.BookSelect = {}) {
 		const book = await this.prisma.book.findUnique({
 			where: { id },
@@ -33,7 +33,7 @@ export class BookService {
 			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
 		return book
 	}
-
+	
 	async ebookById(id: number) {
 		const book = await this.prisma.book.findUnique({
 			where: { id },
@@ -49,7 +49,7 @@ export class BookService {
 			file: book.file
 		}
 	}
-
+	
 	async all(searchTerm: string) {
 		return this.prisma.book.findMany({
 			take: 20,
@@ -74,7 +74,7 @@ export class BookService {
 			})
 		})
 	}
-
+	
 	async toggleVisible(id: number) {
 		const book = await this.getBookById(id, {
 			visible: true
@@ -87,7 +87,7 @@ export class BookService {
 			}
 		})
 	}
-
+	
 	async allSelect(searchTerm: string) {
 		return this.prisma.book.findMany({
 			take: 20,
@@ -104,7 +104,7 @@ export class BookService {
 			})
 		})
 	}
-
+	
 	async create(dto: CreateBookDto) {
 		await this.prisma.book.create({
 			data: {
@@ -137,12 +137,12 @@ export class BookService {
 			}
 		})
 	}
-
+	
 	async delete(id: number) {
 		const book = await this.getBookById(id)
 		await this.prisma.book.delete({ where: { id: book.id } })
 	}
-
+	
 	async update(id: number, dto: EditBookDto) {
 		const book = await this.getBookById(id)
 		await this.prisma.book.update({
@@ -171,7 +171,7 @@ export class BookService {
 			}
 		})
 	}
-
+	
 	emotions() {
 		return this.prisma.emotion.findMany({
 			select: {
@@ -181,7 +181,7 @@ export class BookService {
 			}
 		})
 	}
-
+	
 	async review(userId: number, bookId: number, dto: ReviewBookDto) {
 		await this.usersService.getUserById(userId)
 		await this.getBookById(bookId)
@@ -214,7 +214,7 @@ export class BookService {
 			}
 		})
 	}
-
+	
 	async reviewsById(id: number, cursorId: number) {
 		return this.prisma.review.findMany({
 			where: { bookId: id },
@@ -223,7 +223,7 @@ export class BookService {
 			select: returnReviewsObject
 		})
 	}
-
+	
 	async infoById(id: number) {
 		const book = await this.prisma.book.findUnique({
 			where: { id: +id },
@@ -247,7 +247,7 @@ export class BookService {
 				genres: { select: ReturnGenreObject }
 			}
 		})
-
+		
 		return {
 			...book,
 			similarBooks: similarBooks

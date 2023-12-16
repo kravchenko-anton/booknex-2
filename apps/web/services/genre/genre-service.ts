@@ -1,8 +1,5 @@
-import type {
-	AllGenreOutput,
-	GenreByIdOutput
-} from '../../../../libs/global/services-types/genre-types'
-import { getGenresUrl } from '../api/api-config'
+import { getGenresUrl } from '../../../../libs/global/api-config'
+import type { AllGenreOutput, GenreByIdOutput } from '../../../../libs/global/services-types/genre-types'
 import { request } from '../api/request.api'
 
 export const genreService = {
@@ -12,7 +9,7 @@ export const genreService = {
 			method: 'GET'
 		})
 	},
-
+	
 	async byId(id: number) {
 		return request<GenreByIdOutput>({
 			url: getGenresUrl(`/by-id/${id}`),

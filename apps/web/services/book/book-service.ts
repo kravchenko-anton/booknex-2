@@ -1,14 +1,5 @@
-import type {
-	AllBooksOutput,
-	AllSelectBooksOutput,
-	BookByIdOutput,
-	BookPayload,
-	EbpubOutput,
-	EmotionOutput,
-	ReviewBookPayload,
-	ReviewByIdOutput
-} from '../../../../libs/global/services-types/book-types'
-import { getAuthorUrl, getBookUrl } from '../api/api-config'
+import { getAuthorUrl, getBookUrl } from '../../../../libs/global/api-config'
+import type { AllBooksOutput, AllSelectBooksOutput, BookByIdOutput, BookPayload, EbpubOutput, EmotionOutput, ReviewBookPayload, ReviewByIdOutput } from '../../../../libs/global/services-types/book-types'
 import { request } from '../api/request.api'
 
 export const bookService = {
@@ -17,7 +8,7 @@ export const bookService = {
 			url: getBookUrl('/emotions')
 		})
 	},
-
+	
 	async review(bookId: string, dto: ReviewBookPayload) {
 		return request({
 			method: 'POST',
@@ -25,13 +16,13 @@ export const bookService = {
 			data: dto
 		})
 	},
-
+	
 	async infoById(id: number) {
 		return request<BookByIdOutput>({
 			url: getBookUrl(`/by-id/${id}`)
 		})
 	},
-
+	
 	async reviewsById(id: number, cursor?: number) {
 		return request<ReviewByIdOutput>({
 			url: getBookUrl(`/by-id/${id}/reviews`),
@@ -40,13 +31,13 @@ export const bookService = {
 			}
 		})
 	},
-
+	
 	async ebookById(id: number) {
 		return request<EbpubOutput>({
 			url: getBookUrl(`/ebook/${id}`)
 		})
 	},
-
+	
 	async all(searchTerm: string) {
 		return request<AllBooksOutput>({
 			url: getBookUrl('/all'),
@@ -55,7 +46,7 @@ export const bookService = {
 			}
 		})
 	},
-
+	
 	async allSelect(searchTerm?: string) {
 		return request<AllSelectBooksOutput>({
 			url: getAuthorUrl('/all/select'),
@@ -68,7 +59,7 @@ export const bookService = {
 			url: getBookUrl(`/toggle-visible/${id}`)
 		})
 	},
-
+	
 	async create(dto: BookPayload) {
 		return request({
 			method: 'POST',
@@ -76,7 +67,7 @@ export const bookService = {
 			data: dto
 		})
 	},
-
+	
 	async update(id: number, dto: Partial<BookPayload>) {
 		return request({
 			method: 'PUT',
@@ -84,7 +75,7 @@ export const bookService = {
 			data: dto
 		})
 	},
-
+	
 	async delete(id: number) {
 		return request({
 			method: 'DELETE',

@@ -1,13 +1,6 @@
-import type {
-	AllShelfOutput,
-	ShelfByIdOutput,
-	ShelfCatalogOutput
-} from '../../../../libs/global/services-types/shelf-types'
-import type {
-	CreateShelfDto,
-	UpdateShelfDto
-} from '../../../backend/src/shelf/dto/shelf.dto'
-import { getShelfUrl } from '../api/api-config'
+import { getShelfUrl } from '../../../../libs/global/api-config'
+import type { AllShelfOutput, ShelfByIdOutput, ShelfCatalogOutput } from '../../../../libs/global/services-types/shelf-types'
+import type { CreateShelfDto, UpdateShelfDto } from '../../../backend/src/shelf/dto/shelf.dto'
 import { request } from '../api/request.api'
 
 export const shelfService = {
@@ -17,14 +10,14 @@ export const shelfService = {
 			method: 'GET'
 		})
 	},
-
+	
 	async byId(id: number) {
 		return request<ShelfByIdOutput>({
 			url: getShelfUrl(`/by-id/${id}`),
 			method: 'GET'
 		})
 	},
-
+	
 	async all(searchTerm: string) {
 		return request<AllShelfOutput>({
 			url: getShelfUrl('/all'),
@@ -34,7 +27,7 @@ export const shelfService = {
 			}
 		})
 	},
-
+	
 	async create(dto: CreateShelfDto) {
 		return request({
 			url: getShelfUrl('/create'),
@@ -42,14 +35,14 @@ export const shelfService = {
 			data: dto
 		})
 	},
-
+	
 	async delete(id: number) {
 		return request({
 			url: getShelfUrl(`/delete/${id}`),
 			method: 'DELETE'
 		})
 	},
-
+	
 	async update(id: number, dto: UpdateShelfDto) {
 		return request({
 			url: getShelfUrl(`/update/${id}`),

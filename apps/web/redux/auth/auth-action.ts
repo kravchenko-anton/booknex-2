@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { getAuthUrl, SERVER_URL } from '../../services/api/api-config'
+import { getAuthUrl, SERVER_URL } from '../../../../libs/global/api-config'
 import { errorToast, successToast } from '../../utils/toast'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type { AuthFieldsType, AuthResponseType } from './auth-types'
@@ -22,7 +22,7 @@ export const login = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 				accessToken: loginResponse.accessToken,
 				refreshToken: loginResponse.refreshToken
 			})
-
+			
 			successToast('Login successfully')
 			return loginResponse
 		} catch (error) {

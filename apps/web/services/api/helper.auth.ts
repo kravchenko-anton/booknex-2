@@ -1,7 +1,7 @@
 import axios from 'axios'
+import { getAuthUrl, SERVER_URL } from '../../../../libs/global/api-config'
 import { saveTokensStorage } from '../../redux/auth/auth-helper'
 import type { AuthResponseType } from '../../redux/auth/auth-types'
-import { getAuthUrl, SERVER_URL } from './api-config'
 
 export const getNewTokens = async () => {
 	try {
@@ -18,7 +18,7 @@ export const getNewTokens = async () => {
 				refreshToken: response.refreshToken
 			})
 		if (!response.accessToken) throw new Error('No access token')
-
+		
 		return response
 	} catch (error) {
 		console.log(error)
