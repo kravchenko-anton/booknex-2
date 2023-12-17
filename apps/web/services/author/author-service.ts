@@ -1,14 +1,9 @@
 import { getAuthorUrl } from '../../../../libs/global/api-config'
-import type { AllAuthorOutput, AllSelectAuthorOutput, CreateAuthorOutput, InfoByIdOutput } from '../../../../libs/global/services-types/author-types'
+import type { AllAuthorOutput, AllSelectAuthorOutput, CreateAuthorOutput } from '../../../../libs/global/services-types/author-types'
 import type { CreateAuthorDto, EditAuthorDto } from '../../../backend/src/author/dto/manipulation.author.dto'
 import { request } from '../api/request.api'
 
 export const authorService = {
-	async byId(id: number) {
-		return request<InfoByIdOutput>({
-			url: getAuthorUrl(`/by-id/${id}`)
-		})
-	},
 	
 	async all(searchTerm?: string) {
 		return request<AllAuthorOutput>({
@@ -21,6 +16,16 @@ export const authorService = {
 		return request<AllSelectAuthorOutput>({
 			url: getAuthorUrl('/all/select'),
 			params: { searchTerm }
+		})
+	},
+	
+	async exist(name: string) {
+		return request<{
+			id: number,
+			name: string
+		} | null>({
+			url: getAuthorUrl(`/exist/${name}`),
+			method: 'PUT'
 		})
 	},
 	

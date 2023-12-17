@@ -1,11 +1,11 @@
 import { deleteTokensStorage, getAccessToken } from '@/redux/auth/auth-helper'
 import { getNewTokens } from '@/services/api/helper.auth'
 import axios from 'axios'
-import { SERVER_URL } from 'global/api-config'
+import { EMULATOR_SERVER_URL } from 'global/api-config'
 import { errorCatch } from 'global/utils/catch-error'
 
 const instance = axios.create({
-	baseURL: SERVER_URL,
+	baseURL: EMULATOR_SERVER_URL,
 	headers: {
 		'Content-Type': 'application/json'
 	}
@@ -24,7 +24,7 @@ instance.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
-		if (!error.response) throw new Error('Network Error')
+		if (!error.response.status) throw new Error('Network Error')
 		if (
 			(error.response.status === 401 ||
 				errorCatch(error) === 'jwt expired' ||

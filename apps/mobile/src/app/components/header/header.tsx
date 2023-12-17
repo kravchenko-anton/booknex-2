@@ -7,7 +7,7 @@ import { Color } from 'ui/colors'
 
 const Header: FC<HeaderProperties> = ({
 	                                      style,
-	                                      color = Color.black,
+	                                      color = Color.white,
 	                                      left = { back: true },
 	                                      right,
 	                                      ...properties

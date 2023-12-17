@@ -23,7 +23,7 @@ const ShelfCard: FC<ShelfListItemProperties> = properties => (
 			className="h-full w-full flex-1"
 		>
 			<LinearGradient
-				colors={['transparent', Color.black]}
+				colors={['transparent', Color.vibrant]}
 				className="absolute h-full w-full flex-1 rounded-xl"
 			/>
 			<Title

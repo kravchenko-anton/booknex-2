@@ -81,7 +81,7 @@ const Book = () => {
 						onPress={() => {
 							navigate.genre(genre.id)
 						}}
-						variant="ghost"
+						variant="shade"
 						size="small"
 						text={genre.name}
 					/>

@@ -8,9 +8,12 @@ export const createBookValidationSchema = z.object({
 		name: z.string().nonempty(),
 		blob: z.custom<Blob>(v => v instanceof Blob)
 	}),
-	pages: z.number().refine(value => value > 0, {
-		message: 'At least one page is required'
-	}),
+	// string or number
+	pages: z.string().refine(value =>
+			Number(value) > 0
+		, {
+			message: 'At least one page is required'
+		}),
 	description: z.string().refine(value => value && value.length > 0, {
 		message: 'Description is required'
 	}),
@@ -26,8 +29,11 @@ export const createBookValidationSchema = z.object({
 			.object({
 				name: z
 					.string()
-					.refine(value => value.replaceAll(/(\.epub|\.pdf)/g, '') === value, {
-						message: 'File extension is not allowed'
+					// if value include "epub" cancel
+					.refine(value => value && value.length > 0, {
+						message: 'Book name is required'
+					}).refine(value => !value.includes('epub'), {
+						message: 'Book name can not include "epub"'
 					}),
 				content: z.array(
 					z.object({
@@ -39,7 +45,7 @@ export const createBookValidationSchema = z.object({
 			.refine(value => value.name.length > 0, {
 				message: 'File is required'
 			})
-	),
+	).nonempty(),
 	genres: z.array(
 		z.object({
 			label: z.string(),

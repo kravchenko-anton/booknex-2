@@ -14,9 +14,8 @@ interface IBottomMenu {
 
 const BottomMenu: FC<IBottomMenu> = properties => (
 	<View
-		className="border-t-solid w-full flex-row items-center justify-between border-t px-2 pb-2 pt-3"
+		className="rounded-t-xl w-full flex-row items-center justify-between  px-2 pb-2 pt-3"
 		style={{
-			borderTopColor: Color.gray,
 			backgroundColor: Color.foreground
 		}}>
 		{menuItems.map(item => (

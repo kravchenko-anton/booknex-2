@@ -1,7 +1,7 @@
 export const fontSettings = {
-	light: 'Montserrat-Light',
-	regular: 'Montserrat-Regular',
-	medium: 'Montserrat-Medium',
-	semiBold: 'Montserrat-SemiBold',
-	bold: 'Montserrat-Bold'
+	light: 'SpaceGrotesk-Light',
+	regular: 'SpaceGrotesk-Regular',
+	medium: 'SpaceGrotesk-Medium',
+	semiBold: 'SpaceGrotesk-SemiBold',
+	bold: 'SpaceGrotesk-Bold'
 }

@@ -1,6 +1,7 @@
 import type { Style } from '@/types/global'
 import type { Control, FieldPath, FieldValues, RegisterOptions } from 'react-hook-form'
 import type { KeyboardTypeOptions, TextInputProps } from 'react-native'
+import type { Color } from 'ui/colors'
 
 export interface FieldProperties<T extends FieldValues>
 	extends Omit<
@@ -10,6 +11,10 @@ export interface FieldProperties<T extends FieldValues>
 	control: Control<T>
 	keyboardType?: KeyboardTypeOptions
 	wrapperStyle?: Style
+	variant?: keyof Omit<
+		typeof Color,
+		'background' | 'black' | 'white' | 'transparent'
+	>
 	backgroundColor?: string
 	borderColor?: string
 	color?: string

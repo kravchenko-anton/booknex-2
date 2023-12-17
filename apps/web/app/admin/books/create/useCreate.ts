@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import type { BookPayload } from '../../../../../../libs/global/services-types/book-types'
 import { StorageFolderEnum } from '../../../../../backend/src/storage/storage.types'
 import { useAction } from '../../../../hooks/useAction'
@@ -15,7 +16,7 @@ export const useCreate = () => {
 	const { closePopup, showPopup } = useAction()
 	const { upload } = useUploadFile()
 	const { handleSubmit, setValue, errors, control } = useCreateForm()
-
+	const router = useRouter()
 	const { mutateAsync: unfold } = useMutation(
 		['upload ebook'],
 		(formData: FormData) => parserService.unfold(formData),
@@ -28,7 +29,10 @@ export const useCreate = () => {
 		['upload book'],
 		(payload: BookPayload) => bookService.create(payload),
 		{
-			onSuccess: () => successToast('File uploaded'),
+			onSuccess: () => {
+				successToast('Book created')
+				router.push('/admin/books')
+			},
 			onError: () => errorToast('Error while uploading book')
 		}
 	)
@@ -37,7 +41,7 @@ export const useCreate = () => {
 		(authorSearch: string) => authorService.allSelect(authorSearch)
 	)
 	const { data: genres } = useQuery(['genres'], () => genreService.all())
-
+	
 	const submitBook = handleSubmit(
 		async (data: CreateBookValidationSchemaType) => {
 			const { name: uploadPicture } = await upload({
@@ -54,7 +58,7 @@ export const useCreate = () => {
 								book.content
 									.map(
 										content =>
-											`<label id='${book.name + '/' + content.title}' />` +
+											`<label id='${book.name + '/' + content.title}'></label>` +
 											content.content
 									)
 									.join('')

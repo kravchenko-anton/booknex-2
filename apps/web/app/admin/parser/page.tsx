@@ -4,14 +4,17 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { Search } from '../../../../../libs/global/icons/react'
+import { getFileUrl } from '../../../../../libs/global/api-config'
+import { Edit, Search, Trash } from '../../../../../libs/global/icons/react'
 import type { ParserDtoPayload } from '../../../../../libs/global/services-types/parser-types'
 import { nFormatter } from '../../../../../libs/global/utils/number-formater'
 import { useDebounce } from '../../../../../libs/global/utils/useDebounce'
+import { Color } from '../../../../../libs/ui/colors'
 import Button from '../../../components/button/button'
 import Field from '../../../components/field/field'
 import { useAction } from '../../../hooks/useAction'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
+import { authorService } from '../../../services/author/author-service'
 import { parserService } from '../../../services/parser/parser-services'
 import { successToast } from '../../../utils/toast'
 import CreateAuthorPopup from '../authors/popup/create'
@@ -33,6 +36,11 @@ const Parser: FC = () => {
 			}
 		}
 	)
+	
+	const { mutateAsync: checkAuthorExist } = useMutation(
+		['check author exist'],
+		(name: string) => authorService.exist(name)
+	)
 	const { mutateAsync: deleteFromParser } = useMutation(
 		['delete from parser'],
 		(id: number) => parserService.delete(id),
@@ -44,25 +52,26 @@ const Parser: FC = () => {
 		}
 	)
 	const search = useDebounce(watch('search') as string, 500) || ''
-	const { data: goodReadsBooks } = useQuery(['goodRead books' + search], () =>
+	const { data: goodReadsBooks } = useQuery(['good-reads books', search], () =>
 		parserService.all(search)
 	)
 	const router = useRouter()
 	console.log(goodReadsBooks)
 	return (
-		<div className='w-full'>
-			<div className='flex w-full items-center justify-between'>
-				<h1 className='text-3xl font-medium'>Seeder</h1>
-				<div className='flex gap-5'>
+		<div className="w-full">
+			<div className="flex w-full items-center justify-between">
+				<h1 className="text-3xl font-medium">Seeder</h1>
+				<div className="flex gap-5">
 					<Field
 						control={control}
 						icon={Search}
-						className='mb-0 h-full'
-						name='search'
-						placeholder='Search...'
+						type="search"
+						className="mb-0 h-full"
+						name="search"
+						placeholder="Search..."
 					/>
 					<Button
-						size='sm'
+						size="sm"
 						isLoading={parseLoading}
 						onClick={() =>
 							showPopup(
@@ -85,99 +94,114 @@ const Parser: FC = () => {
 								/>
 							)
 						}
-						color='primary'
+						color="primary"
 					>
 						Parsing
 					</Button>
 				</div>
 			</div>
 			{goodReadsBooks ? (
-				<table className='bg-shade mt-4 w-full rounded-xl'>
+				<table className="bg-shade mt-4 w-full rounded-xl">
 					<thead>
-						<tr className='border-foreground border-b-2'>
-							<th className='min-w-[50px]   p-3'>Id</th>
-							<th className='min-w-[120px]  p-3'>Picture</th>
-							<th className='min-w-[100px]  p-3'>Title</th>
-							<th className='min-w-[100px]  p-3'>Description</th>
-							<th className='min-w-[100px]  p-3'>Author description</th>
-							<th className='min-w-[100px]  p-3'>Genres</th>
-							<th className='min-w-[100px] p-3'>Actions</th>
-						</tr>
+					<tr className="border-foreground border-b-2">
+						<th className="min-w-[50px]   p-3">Id</th>
+						<th className="min-w-[120px]  p-3">Picture</th>
+						<th className="min-w-[100px]  p-3">Bio</th>
+						<th className="w-[100px] min-w-[100px]  p-3">Info</th>
+						<th className="min-w-[100px]  p-3">Description</th>
+						<th className="min-w-[100px]  p-3">Author description</th>
+						<th className="min-w-[100px] p-3">Actions</th>
+					</tr>
 					</thead>
-
+					
 					<tbody>
-						{goodReadsBooks.map(book => {
-							return (
-								<tr
-									key={book.title + book.authorName}
-									className='border-foreground items-center  justify-center border-b-2'
-								>
-									<td className='min-w-[60px]  text-center '>{book.id}</td>
-									<td className='h-[110px]'>
-										<img
-											src={book.picture}
-											className='bottom-shade mx-auto w-[80px] rounded-xl'
-											alt={book.title}
-										/>
-									</td>
-									<td className='h-[100px]  min-w-[140px]   text-left'>
-										{book.title} <br />{' '}
-										<p className='text-primary'>{book.authorName}</p>
-										{book.pages} 📖 | {nFormatter(book.popularity)} 👍
-									</td>
-									<td className='min-w-[100px] p-2'>
-										{book.description.slice(0, 300) + '...'}
-									</td>
-									<td className='min-w-[300px] max-w-[220px] p-2'>
-										<img
-											src={book.authorPicture}
-											className='mb-1 h-[50px] w-[50px] rounded-xl'
-											alt={book.title}
-										/>
-										{book.authorDescription.slice(0, 100) + '...'}
-									</td>
-									<td className='flex min-w-[200px] flex-wrap'>
-										{book.genres.map(genre => (
-											<p
-												key={genre.name}
-												className='bg-foreground m-1  rounded-xl p-1.5 text-white'
-											>
-												{genre.name}
-											</p>
-										))}
-									</td>
-
-									<td className='min-w-[120px] p-2'>
-										<div>
-											<Button
-												className='mb-2'
-												fullWidth
-												color='success'
-												onClick={async () => {
-													const blob = await fetch(book.authorPicture).then(
-														result => result.blob()
+					{goodReadsBooks.map(book => {
+						return (
+							<tr
+								key={book.title + book.authorName}
+								className="border-foreground items-center  justify-center border-b-2"
+							>
+								<td className="min-w-[40px]  text-center text-2xl">
+									{book.id}
+								</td>
+								<td className="h-[120px]">
+									<img
+										src={getFileUrl(book.picture)}
+										className="bottom-shade mx-auto w-[100px] rounded-xl"
+										alt={book.title}
+									/>
+								</td>
+								<td className="h-[100px]  min-w-[140px]  text-xl  text-left">
+									{book.title} <br />{' '}
+									<p className="text-primary text-lg">{book.authorName}</p>
+								</td>
+								<td className="w-[100px] items-center justify-center p-2 text-center">
+									<h2>{book.pages} 📖</h2>
+									<h2>{nFormatter(book.popularity)} 👍</h2>
+								
+								</td>
+								<td className="min-w-[100px] p-2">
+									{book.description.slice(0, 500) + '...'}
+								</td>
+								<td className="min-w-[300px] max-w-[220px] p-2">
+									<img
+										src={book.authorPicture}
+										className="mb-1 h-[50px] w-[50px] rounded-xl"
+										alt={book.title}
+									/>
+									{book.authorDescription.slice(0, 200) + '...'}
+								</td>
+								
+								<td className="w-[50px] p-2">
+									<div className="flex  justify-center items-center gap-2">
+										<Edit
+											width={25}
+											className="cursor-pointer"
+											height={25}
+											onClick={async () => {
+												const blob = await fetch(book.authorPicture).then(
+													result => result.blob()
+												)
+												const author = await checkAuthorExist(book.authorName)
+												if (author) {
+													router.push(
+														'/admin/books/create' +
+														'?' +
+														new URLSearchParams({
+															defaultValues: JSON.stringify({
+																author: {
+																	id: author.id,
+																	name: author.name
+																},
+																title: book.title,
+																description: book.description,
+																pages: book.pages,
+																popularity: book.popularity,
+																genres: book.genres
+															} as DeafultCreateBookValuesType)
+														}).toString()
 													)
-													console.log(blob)
+												} else {
 													showPopup(
 														<CreateAuthorPopup
 															onCreate={({ id, name }) => {
 																closePopup()
 																router.push(
 																	'/admin/books/create' +
-																		'?' +
-																		new URLSearchParams({
-																			defaultValues: JSON.stringify({
-																				author: {
-																					id,
-																					name
-																				},
-																				title: book.title,
-																				description: book.description,
-																				pages: book.pages,
-																				popularity: book.popularity,
-																				genres: book.genres
-																			} as DeafultCreateBookValuesType)
-																		}).toString()
+																	'?' +
+																	new URLSearchParams({
+																		defaultValues: JSON.stringify({
+																			author: {
+																				id,
+																				name
+																			},
+																			title: book.title,
+																			description: book.description,
+																			pages: book.pages,
+																			popularity: book.popularity,
+																			genres: book.genres
+																		} as DeafultCreateBookValuesType)
+																	}).toString()
 																)
 															}}
 															defaultValues={{
@@ -190,24 +214,26 @@ const Parser: FC = () => {
 															}}
 														/>
 													)
-												}}
-												size='sm'
-											>
-												Create
-											</Button>
-											<Button
-												color='danger'
-												fullWidth
-												size='sm'
-												onClick={() => deleteFromParser(book.id)}
-											>
-												Delete
-											</Button>
-										</div>
-									</td>
-								</tr>
-							)
-						})}
+												}
+											}}
+											color={Color.success}
+										/>
+										
+										<Trash
+											width={25}
+											className="cursor-pointer"
+											height={25}
+											onClick={() => deleteFromParser(book.id)}
+											
+											color={Color.danger}
+											fullWidth
+											size="sm"
+										/>
+									</div>
+								</td>
+							</tr>
+						)
+					})}
 					</tbody>
 				</table>
 			) : (

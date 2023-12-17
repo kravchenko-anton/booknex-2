@@ -1,7 +1,7 @@
 import { saveTokensStorage } from '@/redux/auth/auth-helper'
 import type { AuthResponseType } from '@/redux/auth/auth-types'
 import axios from 'axios'
-import { getAuthUrl, SERVER_URL } from 'global/api-config'
+import { EMULATOR_SERVER_URL, getAuthUrl } from 'global/api-config'
 import EncryptedStorage from 'react-native-encrypted-storage'
 
 export const getNewTokens = async () => {
@@ -9,7 +9,7 @@ export const getNewTokens = async () => {
 		const refreshToken = await EncryptedStorage.getItem('refreshToken')
 		const response = await axios
 			.post<string, { data: AuthResponseType }>(
-				SERVER_URL + getAuthUrl('/access-token'),
+				EMULATOR_SERVER_URL + getAuthUrl('/access-token'),
 				{ refreshToken }
 			)
 			.then(result => result.data)

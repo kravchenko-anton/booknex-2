@@ -12,7 +12,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 	                                          icon: Icon,
 	                                          variant = 'ghost',
 	                                          size = 'small',
-	                                          color = Color.black,
+	                                          color = Color.white,
 	                                          backgroundColor,
 	                                          fatness = 2,
 	                                          style,

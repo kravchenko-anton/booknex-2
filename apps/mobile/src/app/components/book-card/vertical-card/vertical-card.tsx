@@ -12,7 +12,7 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 		style={{
 			height: heightSettings[card.image.size]
 		}}
-		className="bg-dust mb-1.5 w-full flex-row rounded-lg p-2"
+		className="bg-vibrant mb-1.5 w-full flex-row rounded-lg p-2"
 		{...card}
 	>
 		<Image
@@ -42,7 +42,7 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 						({
 							 label,
 							 backgroundColor = Color.shade,
-							 color = Color.black,
+							 color = Color.white,
 							 ...properties
 						 }) => (
 							<Title

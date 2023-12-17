@@ -32,7 +32,7 @@ const CheckEmail: FC = () => {
 	return (
 		<Layout className="relative justify-center p-4">
 			<View>
-				<Title size={34} color={Color.secondary} weight="bold">
+				<Title size={34} color={Color.white} weight="bold">
 					Log in or Sign up
 				</Title>
 				<Title size={18} color={Color.gray} className="mb-4" weight="light">

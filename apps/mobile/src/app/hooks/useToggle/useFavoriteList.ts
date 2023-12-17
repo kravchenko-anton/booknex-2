@@ -7,7 +7,7 @@ export const useFavoritesList = (type: keyof UserLibraryFieldsType) => {
 	const { user } = useAuth()
 	
 	const { isLoading, data: favoriteList } = useQuery(
-		['Favorite list'],
+		['favorite-list'],
 		() => userServices.favoriteList(),
 		{
 			enabled: !!user

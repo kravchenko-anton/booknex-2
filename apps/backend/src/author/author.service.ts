@@ -1,24 +1,15 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException
-} from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { randomColor, shadeRGBColor } from '../utils/color.functions'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import type {
-	CreateAuthorDto,
-	EditAuthorDto
-} from './dto/manipulation.author.dto'
-import {
-	returnAuthorObject,
-	returnAuthorObjectWithDescription
-} from './return.author.object'
+import type { CreateAuthorDto, EditAuthorDto } from './dto/manipulation.author.dto'
+import { returnAuthorObject, returnAuthorObjectWithDescription } from './return.author.object'
 
 @Injectable()
 export class AuthorService {
 	constructor(private prisma: PrismaService) {}
+	
 	async getAuthorById(id: number, selectObject: Prisma.AuthorSelect = {}) {
 		const author = await this.prisma.author.findUnique({
 			where: { id },
@@ -33,7 +24,18 @@ export class AuthorService {
 			).getResponse()
 		return author
 	}
-
+	
+	async exist(name: string) {
+		const author = await this.prisma.author.findFirst({
+			where: { name }
+		})
+		if (!author) return null
+		return {
+			id: author.id,
+			name: author.name
+		}
+	}
+	
 	async all(searchTerm: string) {
 		return this.prisma.author.findMany({
 			select: {
@@ -56,7 +58,7 @@ export class AuthorService {
 			})
 		})
 	}
-
+	
 	async allSelect(searchTerm: string) {
 		return this.prisma.author.findMany({
 			take: 20,
@@ -73,7 +75,7 @@ export class AuthorService {
 			})
 		})
 	}
-
+	
 	async create(dto: CreateAuthorDto) {
 		await this.prisma.author.create({
 			data: {
@@ -83,7 +85,7 @@ export class AuthorService {
 				description: dto.description
 			}
 		})
-
+		
 		return this.prisma.author.findFirst({
 			where: {
 				name: dto.name
@@ -91,7 +93,7 @@ export class AuthorService {
 			select: returnAuthorObject
 		})
 	}
-
+	
 	async delete(id: number) {
 		const author = await this.getAuthorById(id, {
 			books: {
@@ -106,7 +108,7 @@ export class AuthorService {
 			).getResponse()
 		return this.prisma.author.delete({ where: { id } })
 	}
-
+	
 	async update(id: number, dto: EditAuthorDto) {
 		const author = await this.getAuthorById(id)
 		await this.prisma.author.update({

@@ -19,7 +19,7 @@ const Page: FC = () => {
 	const QueryClient = useQueryClient()
 	const search = useDebounce(watch('search') as string, 500) || ''
 	const { data: authors, isLoading } = useQuery(
-		['authors' + (search || '')],
+		['authors', search],
 		() => authorService.all(search)
 	)
 	const { mutateAsync: deleteAuthor } = useMutation(
@@ -43,6 +43,7 @@ const Page: FC = () => {
 						control={control}
 						icon={Search}
 						className="mb-0 h-full"
+						type="search"
 						name="search"
 						placeholder="Search..."
 					/>

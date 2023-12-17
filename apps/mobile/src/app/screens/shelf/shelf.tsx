@@ -9,7 +9,7 @@ import { View } from 'react-native'
 
 const Shelf = () => {
 	const { params } = useTypedRoute<'Shelf'>()
-	const { data: shelf } = useQuery(['library', 'shelf' + params.id], () =>
+	const { data: shelf } = useQuery(['library', 'shelf', params.id], () =>
 		shelfService.byId(params.id)
 	)
 	const {

@@ -12,9 +12,7 @@ const Search = () => {
 	const {
 		searchTerm,
 		books,
-		topSearches,
-		topSearchesLoading,
-		bookLoading,
+		booksLoading, searchExamples, searchExamplesLoading,
 		control
 	} = useSearch()
 	const { navigate } = useTypedNavigation()
@@ -27,7 +25,7 @@ const Search = () => {
 			/>
 			{searchTerm ? (
 				<View className="flex-1">
-					{bookLoading ? (
+					{booksLoading ? (
 						<BigLoader />
 					) : (
 						<FlatList
@@ -56,18 +54,18 @@ const Search = () => {
 						/>
 					)}
 				</View>
-			) : (topSearchesLoading ? (
+			) : (searchExamplesLoading ? (
 				<BigLoader />
 			) : (
 				<FlatList
 					mt={0}
 					keyExtractor={item => `#${item.id} - ${item.title}`}
-					data={topSearches}
+					data={searchExamples}
 					renderItem={({ item }) => (
 						<Button
 							size="large"
 							className="items-start"
-							variant="dust"
+							variant="primary"
 							onPress={() => {
 								navigate(item.title ? 'Genre' : 'Book', {
 									id: item.id

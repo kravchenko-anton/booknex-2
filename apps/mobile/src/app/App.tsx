@@ -9,13 +9,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { StatusBar, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { Color } from 'ui/colors'
 
 const flexStyle = {
 	flex: 1
 }
+
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -33,7 +36,10 @@ const asyncStoragePersister = createAsyncStoragePersister({
 export default function App() {
 	return (
 		<Provider store={store}>
-			<PersistGate persistor={persistor} loading={<FullScreenLoader />}>
+			<PersistGate persistor={persistor} loading={<View className="w-screen h-screen bg-background">
+				<FullScreenLoader />
+			</View>
+			}>
 				<PersistQueryClientProvider
 					client={queryClient}
 					persistOptions={{ persister: asyncStoragePersister }}
@@ -46,6 +52,7 @@ export default function App() {
 					</EventProvider>
 					<Toast />
 					<Alert />
+					<StatusBar backgroundColor={Color.background} />
 				</PersistQueryClientProvider>
 			</PersistGate>
 		</Provider>

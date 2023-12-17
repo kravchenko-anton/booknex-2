@@ -9,7 +9,6 @@ const Welcome: FC = () => {
 	return (
 		<Layout className="relative justify-center p-4">
 			<View>
-				
 				<View className="w-full items-center rounded-3xl bg-white p-4">
 					<Title
 						size={36}

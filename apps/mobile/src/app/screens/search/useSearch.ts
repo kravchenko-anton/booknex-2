@@ -4,22 +4,22 @@ import { useQuery } from '@tanstack/react-query'
 
 export const useSearch = () => {
 	const { searchTerm, debouncedSearch, control } = useSearchForm()
-	const { data: books, isLoading: bookLoading } = useQuery(
-		['search book', debouncedSearch],
+	const { data: books, isLoading: booksLoading } = useQuery(
+		['search-book', debouncedSearch],
 		() => catalogService.search(debouncedSearch),
 		{
 			enabled: !!debouncedSearch
 		}
 	)
-	const { data: topSearches, isLoading: topSearchesLoading } = useQuery(
-		['top searchers'],
+	const { data: searchExamples, isLoading: searchExamplesLoading } = useQuery(
+		['search-examples'],
 		() => catalogService.searchExamples()
 	)
 	return {
 		books,
-		bookLoading,
-		topSearches,
-		topSearchesLoading,
+		booksLoading,
+		searchExamples,
+		searchExamplesLoading,
 		control,
 		searchTerm
 	}

@@ -33,6 +33,7 @@
     "class-validator": "^0.14.0",
     "epub": "^1.2.1",
     "helmet": "^7.1.0",
+    "jsdom": "^23.0.1",
     "nativewind": "^2.0.11",
     "next": "13.4.1",
     "passport": "^0.6.0",

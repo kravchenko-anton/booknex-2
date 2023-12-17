@@ -19,7 +19,7 @@ const Page: FC = () => {
 	const { control, watch } = useForm()
 	const QueryClient = useQueryClient()
 	const search = useDebounce(watch('search') as string, 500) || ''
-	const { data: books } = useQuery(['app book' + search || ''], () =>
+	const { data: books } = useQuery(['books', search], () =>
 		bookService.all(search)
 	)
 	const { showPopup } = useAction()
@@ -33,7 +33,7 @@ const Page: FC = () => {
 			},
 			async onSuccess() {
 				successToast('Book visibility changed')
-				await QueryClient.invalidateQueries(['app book'])
+				await QueryClient.invalidateQueries(['books'])
 			}
 		}
 	)
@@ -47,18 +47,20 @@ const Page: FC = () => {
 			},
 			async onSuccess() {
 				successToast('Book deleted')
-				await QueryClient.invalidateQueries(['app book'])
+				await QueryClient.invalidateQueries(['books'])
 			}
 		}
 	)
 	return (
 		<div className="w-full">
 			<div className="flex w-full items-center justify-between">
-				<h1 className="text-3xl font-medium">Seeder</h1>
+				<h1 className="text-3xl font-medium">Books</h1>
 				<div className="flex gap-5">
 					<Field
 						control={control}
 						icon={Search}
+						type="search"
+						
 						className="mb-0 h-full"
 						name="search"
 						placeholder="Search..."

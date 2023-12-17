@@ -1,23 +1,33 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import { BackgroundColor, TextColor, TextSize, TextWeight } from '@/components/ui/button/button-settings'
+import { TextSize, TextWeight } from '@/components/ui/button/button-settings'
 import type { ButtonProperties } from '@/components/ui/button/button-types'
 import Title from '@/components/ui/title/title'
 import type { Style } from '@/types/global'
 import { memo } from 'react'
 import { BorderRadiusSetting, PaddingSetting } from 'ui/ui-style'
 
+const colorPallete = {
+	gray: 'bg-gray text-white ',
+	foreground:
+		'bg-foreground text-white ',
+	vibrant:
+		'bg-vibrant  text-white',
+	shade:
+		'bg-shade  text-white',
+	background:
+		'bg-background  text-white'
+}
 const Button = ({
 	                size = 'large',
-	                variant = 'primary',
+	                variant = 'danger',
 	                style,
 	                ...properties
-                }: ButtonProperties) => (
-	<PressableContainer
+                }: ButtonProperties) => {
+	return <PressableContainer
 		className="items-center justify-center"
 		style={[
 			{
 				opacity: properties.disabled ? 0.7 : 1,
-				backgroundColor: BackgroundColor[variant],
 				borderRadius: BorderRadiusSetting,
 				padding: PaddingSetting[size]
 			},
@@ -25,12 +35,11 @@ const Button = ({
 		]}
 		{...properties}>
 		<Title
-			color={TextColor[variant]}
 			weight={TextWeight[size]}
 			size={TextSize[size]}>
 			{properties.text}
 		</Title>
 	</PressableContainer>
-)
+}
 
 export default memo(Button)

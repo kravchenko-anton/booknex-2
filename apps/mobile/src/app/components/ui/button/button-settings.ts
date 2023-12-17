@@ -3,7 +3,7 @@ import { Color } from 'ui/colors'
 export const BackgroundColor = {
 	primary: Color.primary,
 	secondary: Color.secondary,
-	ghost: Color.white,
+	ghost: Color.vibrant,
 	dust: Color.foreground,
 	pale: Color.shade,
 	danger: Color.danger,
@@ -14,9 +14,9 @@ export const BackgroundColor = {
 export const TextColor = {
 	primary: Color.white,
 	secondary: Color.white,
-	ghost: Color.black,
-	dust: Color.black,
-	pale: Color.black,
+	ghost: Color.white,
+	dust: Color.white,
+	pale: Color.white,
 	danger: Color.white,
 	warning: Color.white,
 	success: Color.white

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { getAuthUrl, SERVER_URL } from 'global/api-config'
+import { EMULATOR_SERVER_URL, getAuthUrl } from 'global/api-config'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type { AuthFieldsType, AuthResponseType, RegisterFieldsType } from './auth-types'
 
@@ -9,7 +9,7 @@ export const register = createAsyncThunk<AuthResponseType, RegisterFieldsType>(
 	async (properties, thunkAPI) => {
 		try {
 			const registerResponse = await axios
-				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/register'), {
+				.post<AuthResponseType>(EMULATOR_SERVER_URL + getAuthUrl('/register'), {
 					...properties
 				})
 				.then(response => response.data)
@@ -29,7 +29,7 @@ export const login = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const loginResponse = await axios
-				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/login'), {
+				.post<AuthResponseType>(EMULATOR_SERVER_URL + getAuthUrl('/login'), {
 					email,
 					password
 				})
@@ -50,7 +50,7 @@ export const getNewToken = createAsyncThunk<AuthResponseType, string>(
 	async (refreshToken, thunkAPI) => {
 		try {
 			const tokensResponse = await axios
-				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/access-token'), {
+				.post<AuthResponseType>(EMULATOR_SERVER_URL + getAuthUrl('/access-token'), {
 					refreshToken
 				})
 				.then(response => response.data)

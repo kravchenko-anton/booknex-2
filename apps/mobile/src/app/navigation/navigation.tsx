@@ -28,7 +28,7 @@ const Navigation: FC = () => {
 		<SafeAreaProvider
 			initialMetrics={initialWindowMetrics}
 			style={{
-				backgroundColor: Color.foreground
+				backgroundColor: Color.background
 			}}>
 			<NavigationContainer ref={navReference} fallback={<FullScreenLoader />}>
 				<PrivateNavigator />

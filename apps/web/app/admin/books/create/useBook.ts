@@ -10,97 +10,116 @@ export const useBookCompose = () => {
 			}[]
 		}[]
 	>([])
-
+	
 	const deleteBook = (name: string) => {
-		setBooks(previous => {
-			return previous?.filter(book => book.name !== name)
+		setBooks(books => {
+			return books?.filter(book => book.name !== name)
 		})
 	}
-
-	const updateCharacterTitle = (value: string, name: string) => {
-		setBooks(previous => {
-			if (previous) {
-				return previous.map(previousBook => {
-					if (previousBook.name === name) {
-						return {
-							...previousBook,
-							name: value
-						}
-					}
-					return previousBook
-				})
-			}
-			return previous
-		})
-	}
-
-	const removeToc = (name: string, title: string) => {
-		setBooks(previousState => {
-			if (previousState) {
+	
+	const addNewCharacter = (bookName: string) => {
+		setBooks(books => {
+			if (books) {
 				return books.map(book => {
-					if (book.name === name) {
+					if (book.name === bookName) {
 						return {
 							...book,
-							content: book.content.filter(content => content.title !== title)
+							content: [
+								...book.content,
+								{
+									title: '',
+									content: ''
+								}
+							]
 						}
 					}
 					return book
 				})
 			}
-			return previousState
+			return books
 		})
 	}
-
-	const updateTocTitle = (title: string, name: string, NewValue: string) => {
-		setBooks(previous => {
-			if (previous) {
-				return previous.map(previousBook => {
-					if (previousBook.name === name) {
+	
+	const updateCharacterTitle = (value: string, name: string) => {
+		setBooks(books => {
+			if (books) {
+				return books.map(book => {
+					if (book.name === name) {
 						return {
-							...previousBook,
-							content: previousBook.content.map(previousContent => {
-								if (previousContent.title === title) {
-									return {
-										...previousContent,
-										title: NewValue
-									}
-								}
-								return previousContent
-							})
+							...book,
+							name: value
 						}
 					}
-					return previousBook
+					return book
 				})
 			}
-			return previous
+			return books
 		})
 	}
-
-	const updateTocContent = (name: string, title: string, newValue: string) => {
-		setBooks(previous => {
-			if (previous) {
-				return previous.map(previousBook => {
-					if (previousBook.name === name) {
+	
+	const removeToc = (name: string, removedContent: string) => {
+		setBooks(books => {
+			if (books) {
+				return books.map(book => {
+					if (book.name === name) {
 						return {
-							...previousBook,
-							content: previousBook.content.map(previousContent => {
-								if (previousContent.title === title) {
-									return {
-										...previousContent,
-										content: newValue
-									}
-								}
-								return previousContent
-							})
+							...book,
+							content: book.content.filter(content => content.content !== removedContent)
 						}
 					}
-					return previousBook
+					return book
 				})
 			}
-			return previous
+			return books
 		})
 	}
-
+	
+	const updateTocTitle = (oldContent: string, bookName: string, newContent: string) => {
+		setBooks(books => {
+			if (!books) return books
+			return books.map(book => {
+				if (book.name === bookName) {
+					return {
+						...book,
+						content: book.content.map(content => {
+							if (content.content === oldContent) {
+								return {
+									...content,
+									title: newContent
+								}
+							}
+							return content
+						})
+					}
+				}
+				return book
+			})
+		})
+	}
+	
+	const updateTocContent = (name: string, title: string, newContent: string) => {
+		setBooks(books => {
+			if (!books) return books
+			return books.map(book => {
+				if (book.name === name) {
+					return {
+						...book,
+						content: book.content.map(content => {
+							if (content.title === title) {
+								return {
+									...content,
+									content: newContent
+								}
+							}
+							return content
+						})
+					}
+				}
+				return book
+			})
+		})
+	}
+	
 	const upload = (
 		name: string,
 		content: {
@@ -108,10 +127,10 @@ export const useBookCompose = () => {
 			content: string
 		}[]
 	) => {
-		setBooks(previous => {
-			if (previous) {
+		setBooks(books => {
+			if (books) {
 				return [
-					...previous,
+					...books,
 					{
 						name: name || '',
 						content: content || []
@@ -126,7 +145,7 @@ export const useBookCompose = () => {
 			]
 		})
 	}
-
+	
 	return {
 		books,
 		booksFunctions: {
@@ -135,7 +154,8 @@ export const useBookCompose = () => {
 			updateTocContent,
 			updateTocTitle,
 			updateCharacterTitle,
-			removeToc
+			removeToc,
+			addNewCharacter
 		}
 	}
 }
