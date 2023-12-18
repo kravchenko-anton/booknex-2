@@ -1,9 +1,13 @@
+import type { CSSProperties } from 'react'
 import type { FlatListProps, ImageProps, PressableProps, ScrollViewProps, TextProps, ViewProps } from 'react-native'
+import type { Interpolation } from 'styled-components'
 
 export type ViewDefaultProperties = Pick<
 	ViewProps,
-	'className' | 'style' | 'onLayout' | 'pointerEvents' | 'onMagicTap'
->
+	| 'onLayout' | 'pointerEvents' | 'onMagicTap'
+> & {
+	styles: Interpolation<CSSProperties>
+}
 
 export type FlatlistDefaultProperties<T> = Pick<
 	FlatListProps<T>,
@@ -16,16 +20,16 @@ export type FlatlistDefaultProperties<T> = Pick<
 	| 'onEndReached'
 	| 'ListEmptyComponent'
 	| 'keyExtractor'
-	| 'style'
 	| 'data'
-	| 'className'
 	| 'snapToInterval'
 	| 'snapToAlignment'
 	| 'scrollEnabled'
 	| 'numColumns'
 	| 'contentContainerStyle'
 	| 'renderItem'
->
+> & {
+	styles: Interpolation<CSSProperties>
+}
 export type PressableDefaultProperties = Pick<
 	PressableProps,
 	| 'onLayout'
@@ -35,23 +39,24 @@ export type PressableDefaultProperties = Pick<
 	| 'onBlur'
 	| 'onFocus'
 	| 'onMagicTap'
-	| 'style'
-	| 'className'
 	| 'onLongPress'
->
+> & {
+	styles: Interpolation<CSSProperties>
+}
 
 export type TextDefaultProperties = Pick<
 	TextProps,
 	| 'style'
 	| 'onPress'
-	| 'className'
 	| 'onMagicTap'
 	| 'onTextLayout'
 	| 'onLayout'
 	| 'disabled'
 	| 'onLongPress'
 	| 'numberOfLines'
->
+> & {
+	styles: Interpolation<CSSProperties>
+}
 
 export type ImageDefaultProperties = Pick<
 	ImageProps,
@@ -64,10 +69,10 @@ export type ImageDefaultProperties = Pick<
 	| 'borderRadius'
 	| 'fadeDuration'
 	| 'defaultSource'
-	| 'style'
-	| 'className'
 	| 'onError'
->
+> & {
+	styles: Interpolation<CSSProperties>
+}
 export type ScrollViewDefaultProperties = Pick<
 	ScrollViewProps,
 	| 'scrollEnabled'
@@ -81,9 +86,9 @@ export type ScrollViewDefaultProperties = Pick<
 	| 'keyboardDismissMode'
 	| 'onScroll'
 	| 'contentContainerStyle'
-	| 'style'
 	| 'horizontal'
 	| 'pointerEvents'
-	| 'className'
 	| 'onLayout'
->
+> & {
+	styles: Interpolation<CSSProperties>
+}

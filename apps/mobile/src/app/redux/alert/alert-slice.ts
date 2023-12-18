@@ -1,4 +1,4 @@
-import type { AlertProperties } from '@/components/ui/alert/alert-types'
+import type { AlertProperties } from '@/components/ui/alert/alert-types.ts'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 

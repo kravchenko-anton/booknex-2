@@ -6,7 +6,6 @@ import Welcome from '@/screens/auth/welcome/welcome'
 import Author from '@/screens/author/author'
 import Featured from '@/screens/featured/featured'
 import Genre from '@/screens/genre/genre'
-import ComprehensiveList from '@/screens/library/comprehensive-list/comprehensive-list'
 import Library from '@/screens/library/library'
 import Settings from '@/screens/profile/settings/settings'
 import updateProfile from '@/screens/profile/update-profile/update-profile'
@@ -33,10 +32,6 @@ export const routes: IRoute[] = [
 	{
 		name: 'Author',
 		component: Author
-	},
-	{
-		name: 'ComprehensiveList',
-		component: ComprehensiveList
 	},
 	{
 		name: 'Genre',

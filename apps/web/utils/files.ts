@@ -8,6 +8,7 @@ interface UploadFileProperties {
 	folder: StorageFolderEnum
 	blob: Blob
 }
+
 export const blobFormData = (blob: Blob, fileName: string) => {
 	const formData = new FormData()
 	formData.append('file', blob, fileName)
@@ -24,7 +25,7 @@ export const useUploadFile = () => {
 		{
 			onError: () =>
 				errorToast({
-					text1: 'Upload book photo',
+					text1: 'Upload file',
 					text2: 'An error occurred',
 					type: 'error'
 				})

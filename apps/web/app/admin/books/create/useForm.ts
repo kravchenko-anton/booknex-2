@@ -36,7 +36,7 @@ export const useCreateForm = () => {
 				searchParameters.get('defaultValues') ?? ''
 			) as DeafultCreateBookValuesType
 			setValue('title', defaultValues.title ?? '')
-			setValue('pages', Number(defaultValues.pages ?? 0))
+			setValue('pages', defaultValues.pages.toString() ?? '0')
 			setValue('popularity', Number(defaultValues.popularity ?? 0))
 			setValue('description', defaultValues.description ?? '')
 			setValue('author', {
@@ -54,7 +54,7 @@ export const useCreateForm = () => {
 			)
 		}
 	}, [])
-
+	
 	return {
 		control,
 		handleSubmit,

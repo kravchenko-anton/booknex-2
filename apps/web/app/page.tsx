@@ -1,4 +1,4 @@
-import Layout from '../components/layout/layout'
+import Layout from '../../../libs/ui/react/src/layout/layout'
 
 export default function Index() {
 	return (

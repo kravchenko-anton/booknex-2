@@ -1,51 +1,29 @@
-import BookCard from '@/components/book-card/book-card'
 import Button from '@/components/ui/button/button'
 import Description from '@/components/ui/description/description'
 import FlatList from '@/components/ui/flatlist/flatlist'
-import AnimatedIcon from '@/components/ui/icon/animated-icon'
 import Image from '@/components/ui/image/image'
 import BigLoader from '@/components/ui/loader/big-loader'
-import BookLayout from '@/screens/book/book-layout/book-layout'
-import StatisticCard from '@/screens/book/statistic-card/statistic-card'
 import { useBook } from '@/screens/book/useBook'
-import { Clock, Close, Plus } from 'global/icons/react-native'
 
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
 
 const Book = () => {
 	const {
 		book,
-		isSmashedReadingBooks,
-		toggleReadingBooks,
 		hamburgerMenuElements,
 		navigate
 	} = useBook()
+	console.log(book)
 	if (!book) return <BigLoader />
 	return (
-		<BookLayout
-			title={book.title}
-			backgroundColor={book.color}
-			hamburgerMenuElements={hamburgerMenuElements}
-			author={{
-				...book.author,
-				navigate: navigate.author
-			}}
+		<View
 		>
 			<View className="flex-row justify-between px-4">
 				<View className="flex-1 justify-between">
-					<StatisticCard
-						description="Duration"
-						icon={Clock}
-						count={`${Math.round(book.pages / 1.5 / 60)}h ${Math.round(
-							(book.pages / 1.5) % 60
-						)} min`}
-					/>
-					<StatisticCard description="Pages" icon={Book} count={book.pages} />
 				</View>
 				<Image
 					url={book.picture}
-					className="z-0 mt-[-50px]"
+					className="z-0"
 					height={260}
 					width={170}
 				/>
@@ -59,14 +37,7 @@ const Book = () => {
 					size="medium"
 					className="flex-1"
 				/>
-				<AnimatedIcon
-					icon={isSmashedReadingBooks ? Close : Plus}
-					onPress={() => toggleReadingBooks()}
-					size="medium"
-					className="w-[50px]"
-					variant="outlined"
-					color={Color.primary}
-				/>
+			
 			</View>
 			<FlatList
 				title={{
@@ -91,23 +62,23 @@ const Book = () => {
 				{book.description}
 			</Description>
 			
-			<FlatList
-				data={book.similarBooks}
-				horizontal
-				px={16}
-				title={{
-					text: 'Similar books'
-				}}
-				renderItem={({ item: similarBook }) => (
-					<BookCard
-						onPress={() => {
-							navigate.similar(similarBook.id)
-						}}
-						image={{ uri: similarBook.picture, size: 'medium' }}
-					/>
-				)}
-			/>
-		</BookLayout>
+			{/* <FlatList */}
+			{/* 	data={book.similarBooks} */}
+			{/* 	horizontal */}
+			{/* 	px={16} */}
+			{/* 	title={{ */}
+			{/* 		text: 'Similar books' */}
+			{/* 	}} */}
+			{/* 	renderItem={({ item: similarBook }) => ( */}
+			{/* 		<BookCard */}
+			{/* 			onPress={() => { */}
+			{/* 				navigate.similar(similarBook.id) */}
+			{/* 			}} */}
+			{/* 			image={{ uri: similarBook.picture, size: 'medium' }} */}
+			{/* 		/> */}
+			{/* 	)} */}
+			{/* /> */}
+		</View>
 	)
 }
 

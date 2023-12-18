@@ -1,5 +1,5 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
+import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types.ts'
 import Icon from '@/components/ui/icon/icon'
 import Title from '@/components/ui/title/title'
 import { useAction } from '@/hooks/useAction'

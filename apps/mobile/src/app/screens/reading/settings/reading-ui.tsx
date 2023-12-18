@@ -1,6 +1,6 @@
 import { AnimatedIcon, Title } from '@/components'
 import { AnimatedView } from '@/components/animated'
-import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
+import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types.ts'
 import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
 import { useReadingAnimation } from '@/screens/reading/settings/reading-ui-animation'
 import { ArrowLeft, BookHeart, CaseSenSitive, ListOrdered, MoreHorizontal, Search } from 'global/icons/react-native'
