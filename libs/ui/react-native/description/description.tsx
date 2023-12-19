@@ -1,7 +1,7 @@
-import type { DescriptionProperties } from '@/components/ui/description/description-types.ts'
-import { fontSettings } from '@/components/ui/title/title-settings'
 import { memo, useState } from 'react'
 import { Text, View } from 'react-native'
+import { fontSettings } from '../title/title-settings'
+import type { DescriptionProperties } from './description-types'
 
 export const Description = memo(
 	({

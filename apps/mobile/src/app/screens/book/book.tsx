@@ -1,11 +1,7 @@
-import Button from '@/components/ui/button/button'
-import Description from '@/components/ui/description/description'
-import FlatList from '@/components/ui/flatlist/flatlist'
-import Image from '@/components/ui/image/image'
-import BigLoader from '@/components/ui/loader/big-loader'
 import { useBook } from '@/screens/book/useBook'
 
 import { View } from 'react-native'
+import { BigLoader, Button, Description, Flatlist, Image } from 'ui/components'
 
 const Book = () => {
 	const {
@@ -39,7 +35,7 @@ const Book = () => {
 				/>
 			
 			</View>
-			<FlatList
+			<Flatlist
 				title={{
 					text: 'About book',
 					mb: 8

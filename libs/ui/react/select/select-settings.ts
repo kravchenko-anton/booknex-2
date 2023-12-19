@@ -1,4 +1,3 @@
-import type { GroupBase, StylesConfig } from 'react-select'
 import { Color } from '../../../../libs/ui/colors'
 
 export const selectStyle = {
@@ -44,7 +43,7 @@ export const selectStyle = {
 		...provided,
 		backgroundColor: Color.gray
 	})
-} as unknown as StylesConfig<unknown, boolean, GroupBase<unknown>>
+}
 
 interface StateType {
 	isFocused: boolean

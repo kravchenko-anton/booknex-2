@@ -1,11 +1,10 @@
 import { heightSettings, widthSettings } from '@/components/book-card/vertical-card/vertical-card-settings'
 import type { VerticalBookCardProperties } from '@/components/book-card/vertical-card/vertical-card-types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import Image from '@/components/ui/image/image'
-import Title from '@/components/ui/title/title'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'
+import { Image, Title } from 'ui/components'
 
 const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 	<PressableContainer

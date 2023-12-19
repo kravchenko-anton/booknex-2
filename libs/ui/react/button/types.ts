@@ -1,19 +1,18 @@
-import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
-import type { Color } from '../../colors'
+import type { ButtonHTMLAttributes, DetailedHTMLProps, FC, ReactNode } from 'react'
+import type { TrigerComponentPaletteType } from '../component-palette'
+import type { StyledComponentType } from '../components-props-types'
 
 export interface ButtonProperties
-	extends DetailedHTMLProps<
+	extends Pick<DetailedHTMLProps<
 		ButtonHTMLAttributes<HTMLButtonElement>,
 		HTMLButtonElement
-	> {
+	>, 'onClick' | 'type'>, StyledComponentType {
 	isLoading?: boolean
 	disabled?: boolean
-	icon?: any
+	icon?: FC<{ width: number, height: number, color: string }>
+	iconPosition?: 'left' | 'right'
 	size?: 'sm' | 'md' | 'lg'
-	color?: keyof Omit<
-		typeof Color,
-		'background' | 'black' | 'white' | 'transparent'
-	>
-	children?: string
+	color?: TrigerComponentPaletteType
+	children?: ReactNode
 	fullWidth?: boolean
 }

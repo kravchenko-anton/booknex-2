@@ -1,5 +1,5 @@
 import type { FC, InputHTMLAttributes, SVGProps } from 'react'
-import type { Color } from '../../../colors'
+import type { Color } from '../../colors'
 
 export interface InputProperties extends InputHTMLAttributes<HTMLInputElement> {
 	placeholder?: string
@@ -48,5 +48,6 @@ const Input: FC<InputProperties> =
 			</div>
 		)
 	}
+
 
 export default Input

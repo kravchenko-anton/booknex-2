@@ -1,10 +1,8 @@
+import BottomSheet from '@/components/bottom-sheet/bottom-sheet'
 import Toast from '@/components/toast'
-import Alert from '@/components/ui/alert/alert'
-import BottomSheet from '@/components/ui/bottom-sheet/bottom-sheet'
 import EventProvider from '@/hooks/outside-press/components/event-provider'
 import Navigation from '@/navigation/navigation'
 import { persistor, store } from '@/redux/store'
-import FullScreenLoader from '@booknex/ui/'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
@@ -14,6 +12,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Color } from 'ui/colors'
+import { Alert, BigLoader } from 'ui/components'
 
 const flexStyle = {
 	flex: 1
@@ -37,7 +36,7 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor} loading={<View className="w-screen h-screen bg-background">
-				<FullScreenLoader />
+				<BigLoader />
 			</View>
 			}>
 				<PersistQueryClientProvider

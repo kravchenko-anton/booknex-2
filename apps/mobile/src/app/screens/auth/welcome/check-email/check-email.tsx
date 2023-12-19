@@ -1,4 +1,4 @@
-import { Button, Field, Layout, Title } from '@/components'
+import { Layout } from '@/components'
 import { useTypedNavigation } from '@/hooks'
 import { useDebounce } from '@/hooks/useDebounce'
 import { authService } from '@/services/auth/auth-service'
@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'
+import { Button, Field, Title } from 'ui/components'
 
 const CheckEmail: FC = () => {
 	const { control, watch } = useForm<{ email: string }>({ mode: 'onChange' })

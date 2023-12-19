@@ -1,10 +1,10 @@
 import { AnimatedView } from '@/components/animated'
-import { useBottomSheet } from '@/components/ui/bottom-sheet/useBottomSheet'
-import { SCREEN_HEIGHT } from '@/utils/dimensions'
+import { useBottomSheet } from '@/components/bottom-sheet/useBottomSheet'
 import type { FC } from 'react'
 import { StatusBar, View } from 'react-native'
 import { GestureDetector } from 'react-native-gesture-handler'
 import { FadeIn, FadeOut } from 'react-native-reanimated'
+import { SCREEN_HEIGHT } from 'ui/react-native/utils/dimensions'
 // TODO: улучшить тут код до иделала по производительности и тж
 
 const BottomSheet: FC = () => {

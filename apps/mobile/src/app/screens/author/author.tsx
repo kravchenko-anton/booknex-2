@@ -1,13 +1,11 @@
 import { VerticalCard } from '@/components'
-import Description from '@/components/ui/description/description'
-import FlatList from '@/components/ui/flatlist/flatlist'
-import BigLoader from '@/components/ui/loader/big-loader'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
 import AuthorLayout from '@/screens/author/author-layout/author-layout'
 import { authorService } from '@/services/author/author-service'
 import { useQuery } from '@tanstack/react-query'
 import { View } from 'react-native'
+import { BigLoader, Description, Flatlist } from 'ui/components'
 
 const Author = () => {
 	const { params } = useTypedRoute<'Author'>()
@@ -28,7 +26,7 @@ const Author = () => {
 				</Description>
 			</View>
 			
-			<FlatList
+			<Flatlist
 				data={author.books}
 				scrollEnabled={false}
 				className="mb-2 px-2"

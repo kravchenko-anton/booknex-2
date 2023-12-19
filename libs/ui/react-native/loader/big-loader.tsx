@@ -1,9 +1,9 @@
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/dimensions'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { ActivityIndicator, View } from 'react-native'
-import type { LineColorType } from 'ui/colors'
-import { Color } from 'ui/colors'
+import type { LineColorType } from '../../colors'
+import { Color } from '../../colors'
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../utils/dimensions'
 
 interface BigLoaderProperties {
 	backgroundColor?: LineColorType | string

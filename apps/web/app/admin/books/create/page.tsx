@@ -1,16 +1,12 @@
 'use client'
+import { blobFormData } from '@/utils/files'
+import { Button, Field, TextArea } from '@ui/components'
 import type { FC } from 'react'
 import { Close, Plus } from '../../../../../../libs/global/icons/react'
-import Button from '../../../../../../libs/ui/react/src/button/button'
-import Dropzone from '../../../../../../libs/ui/react/src/dropzone/dropzone'
-import FormDropzone from '../../../../../../libs/ui/react/src/dropzone/form-dropzone'
-import Field from '../../../../../../libs/ui/react/src/field/field'
-import { ErrorMessage } from '../../../../components/error-block/error-block'
-import FormAsyncSelect from '../../../../components/select/async/form-select'
-import FormSelect from '../../../../components/select/form-select'
-import FormTextEditor from '../../../../components/text-editor/form-text-editor'
-import TextArea from '../../../../components/text-editor/text-area'
-import { blobFormData } from '../../../../utils/files'
+import Dropzone from '../../../../../../libs/ui/react/dropzone/dropzone'
+import FormDropzone from '../../../../../../libs/ui/react/dropzone/form-dropzone'
+import { ErrorMessage } from '../../../../../../libs/ui/react/error-block/error-block'
+import FormTextEditor from '../../../../../../libs/ui/react/text-editor/form-text-editor'
 
 import CreateAuthorPopup from '../../authors/popup/create'
 import { useBookCompose } from './useBook'
@@ -113,19 +109,19 @@ const Page: FC = () => {
 							<h1 className="mb-2 mt-4 flex gap-5">
 								Genres <p className="text-gray">First genre be main</p>
 							</h1>
-							<FormSelect
-								control={form.control}
-								name="genres"
-								isMulti
-								options={select.genres?.map(genre => {
-									return {
-										label: genre.name,
-										value: genre.id
-									}
-								})}
-								isSearchable
-								placeholder="Select genres"
-							/>
+							{/* <FormSelect */}
+							{/* 	control={form.control} */}
+							{/* 	name="genres" */}
+							{/* 	isMulti */}
+							{/* 	options={select.genres?.map(genre => { */}
+							{/* 		return { */}
+							{/* 			label: genre.name, */}
+							{/* 			value: genre.id */}
+							{/* 		} */}
+							{/* 	})} */}
+							{/* 	isSearchable */}
+							{/* 	placeholder="Select genres" */}
+							{/* /> */}
 						</div>
 						<div className="w-1/2">
 							<div className="mb-2 mt-4 flex gap-3">
@@ -149,23 +145,23 @@ const Page: FC = () => {
 									Create
 								</Button>
 							</div>
-							<FormAsyncSelect
-								control={form.control}
-								name="author"
-								isLoading={select.author.loading}
-								loadOptions={authorSearch =>
-									select.author.load(authorSearch).then(data =>
-										data.map(author => {
-											return {
-												label: author.name,
-												value: author.id
-											}
-										})
-									)
-								}
-								isSearchable
-								placeholder="Select author"
-							/>
+							{/* <FormAsyncSelect */}
+							{/* 	control={form.control} */}
+							{/* 	name="author" */}
+							{/* 	isLoading={select.author.loading} */}
+							{/* 	loadOptions={authorSearch => */}
+							{/* 		select.author.load(authorSearch).then(data => */}
+							{/* 			data.map(author => { */}
+							{/* 				return { */}
+							{/* 					label: author.name, */}
+							{/* 					value: author.id */}
+							{/* 				} */}
+							{/* 			}) */}
+							{/* 		) */}
+							{/* 	} */}
+							{/* 	isSearchable */}
+							{/* 	placeholder="Select author" */}
+							{/* /> */}
 						</div>
 					</div>
 				</div>

@@ -9,15 +9,10 @@ module.exports = function(api) {
 				'alias': {
 					'@': './src/app',
 					'ui/*': '../../libs/ui/*',
-					'ui/components': [
-						'../../libs/ui/react-native/index.ts'
-					],
-					'icons': [
-						'../../libs/global/icons/react-native/index.ts'
-					],
-					'global/*': [
-						'../../libs/global/*'
-					]
+					'ui/components': '../../libs/ui/react-native/index.ts',
+					'icons': '../../libs/global/icons/react-native/index.ts'
+					,
+					'global/*': '../../libs/global/*'
 				}
 			}],
 			[

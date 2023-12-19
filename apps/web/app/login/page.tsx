@@ -1,9 +1,9 @@
 'use client'
+import { useAction } from '@/hooks/useAction'
+import type { AuthFieldsType } from '@/redux/auth/auth-types'
 import { useForm } from 'react-hook-form'
-import Button from '../../../../libs/ui/react/src/button/button'
-import Field from '../../../../libs/ui/react/src/field/field'
-import { useAction } from '../../hooks/useAction'
-import type { AuthFieldsType } from '../../redux/auth/auth-types'
+import { Button, DropZone } from '../../../../libs/ui/react'
+import Field from '../../../../libs/ui/react/field/field'
 
 export default function Page() {
 	const { login } = useAction()
@@ -14,7 +14,7 @@ export default function Page() {
 	return (
 		<div className="flex h-screen w-screen items-center justify-center">
 			<div className="bg-shade w-[450px] rounded-xl p-8">
-				<h1 className="mb-4 text-center text-3xl">Sign in</h1>
+				<h1 className="mb-4 text-white text-center text-3xl">Sign in</h1>
 				<Field
 					name="email"
 					control={control}
@@ -30,11 +30,19 @@ export default function Page() {
 				/>
 				<Button
 					onClick={handleSubmit(onSubmit)}
-					size="lg"
+					size="md"
 					fullWidth
 					color="primary">
 					Login
 				</Button>
+				<DropZone
+					multiple={true}
+					accept=".epub"
+					onDropFile={
+						(file) => {
+							console.log(file)
+						}
+					} />
 			</div>
 		</div>
 	)

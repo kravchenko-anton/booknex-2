@@ -1,7 +1,7 @@
 'use client'
+import { Button } from '@ui/components'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import Button from '../../../../libs/ui/react/src/button/button'
 
 export const Navbar = () => {
 	const Links = [

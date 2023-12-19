@@ -1,11 +1,10 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import { BackgroundColorSetting, BorderColorSetting, IconColorSetting, SizeSetting } from '@/components/ui/icon/icon-settings'
-import type { IconProperties } from '@/components/ui/icon/icon-types.ts'
-import type { Style } from '@/types.ts/global'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Color } from 'ui/colors'
 import { BorderRadiusSetting, PaddingSetting } from 'ui/ui-style'
+import { BackgroundColorSetting, BorderColorSetting } from './icon-settings'
+import type { IconProperties } from './icon-types'
 
 
 const AnimatedIcon: FC<IconProperties> = ({

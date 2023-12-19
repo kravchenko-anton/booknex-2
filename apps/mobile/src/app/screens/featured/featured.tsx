@@ -1,9 +1,6 @@
 import BookCard from '@/components/book-card/book-card'
 import RainbowBookCard from '@/components/book-card/rainbow-book-card/rainbow-book-card'
 import ScrollLayout from '@/components/layout/scroll-layout'
-import Button from '@/components/ui/button/button'
-import FlatList from '@/components/ui/flatlist/flatlist'
-import FullScreenLoader from '@/components/ui/loader/big-loader'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import RecommendationList from '@/screens/featured/recommendation-list/recommendation-list'
 import ShelfCard from '@/screens/featured/shelf-card/shelf-card'
@@ -11,6 +8,7 @@ import { catalogService } from '@/services/catalog/catalog-service'
 import { shelfService } from '@/services/shelf/shelf-service'
 import { removeEmoji } from '@/utils/remove-emoji'
 import { useQuery } from '@tanstack/react-query'
+import { BigLoader, Button, Flatlist } from 'ui/components'
 
 const Featured = () => {
 	const { data: catalog } = useQuery(['catalog'], () =>
@@ -20,10 +18,10 @@ const Featured = () => {
 		shelfService.catalog()
 	)
 	const { navigate } = useTypedNavigation()
-	if (!catalog) return <FullScreenLoader />
+	if (!catalog) return <BigLoader />
 	return (
 		<ScrollLayout>
-			<FlatList
+			<Flatlist
 				horizontal
 				data={shelves}
 				renderItem={({ item: shelve }) => (
@@ -48,7 +46,7 @@ const Featured = () => {
 					/>
 				)}
 			/>
-			<FlatList
+			<Flatlist
 				horizontal
 				data={catalog.mostRelatedGenres}
 				renderItem={({ item: genre }) => (
@@ -61,7 +59,7 @@ const Featured = () => {
 					/>
 				)}
 			/>
-			<FlatList
+			<Flatlist
 				title={{
 					text: 'Best Sellers'
 				}}
@@ -75,7 +73,7 @@ const Featured = () => {
 					/>
 				)}
 			/>
-			<FlatList
+			<Flatlist
 				horizontal
 				mt={40}
 				data={catalog.popularNow}
@@ -89,7 +87,7 @@ const Featured = () => {
 					/>
 				)}
 			/>
-			<FlatList
+			<Flatlist
 				title={{
 					text: 'New Releases'
 				}}
@@ -103,7 +101,7 @@ const Featured = () => {
 				)}
 			/>
 			{catalog.genres.map(genre => (
-				<FlatList
+				<Flatlist
 					key={genre.name}
 					title={{
 						text: removeEmoji(genre.name)
@@ -123,7 +121,7 @@ const Featured = () => {
 				/>
 			))}
 			
-			<FlatList
+			<Flatlist
 				title={{
 					text: 'In the same breath'
 				}}
