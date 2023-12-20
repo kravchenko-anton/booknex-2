@@ -1,6 +1,6 @@
 'use client'
+import { Button, Field } from '@/ui/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Field } from '@ui/components'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import FormDropzone from '../../../../../../libs/ui/react/dropzone/form-dropzone'
@@ -15,15 +15,15 @@ interface CreateAuthorPopupProperties {
 }
 
 const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
-	                                                            defaultValues = {},
-	                                                            onCreate = () => {}
-                                                            }) => {
+	defaultValues = {},
+	onCreate = () => {}
+}) => {
 	const { control, handleSubmit, setValue } =
 		useForm<CreateAuthorValidationSchemaType>({
 			resolver: zodResolver(createAuthorValidationSchema)
 		})
 	const { createAuthor } = useCreate()
-	
+
 	const onSubmit = () => {
 		if (defaultValues.picture) {
 			setValue('picture', defaultValues.picture)
@@ -35,23 +35,23 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 		})()
 	}
 	return (
-		<div className="p-4">
-			<h1 className="mb-4 text-center text-3xl font-medium">Create author</h1>
+		<div className='p-4'>
+			<h1 className='mb-4 text-center text-3xl font-medium'>Create author</h1>
 			<Field
 				control={control}
 				defaultValue={defaultValues.name}
-				name="name"
-				type="text"
-				color="shade"
-				placeholder="Name"
+				name='name'
+				type='text'
+				color='shade'
+				placeholder='Name'
 			/>
-			<h1 className="mb-2 mt-4 text-xl">Picture</h1>
+			<h1 className='mb-2 mt-4 text-xl'>Picture</h1>
 			<FormDropzone
 				control={control}
-				name="picture"
-				size="lg"
+				name='picture'
+				size='lg'
 				defaultFiles={[defaultValues.picture?.blob]}
-				color="vibrant"
+				color='vibrant'
 				options={{
 					multiple: false,
 					accept: { 'image/*': ['.png', '.jpg', '.jpeg'] }
@@ -65,15 +65,15 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 			/>
 			<FormTextEditor
 				defaultValue={defaultValues.description}
-				color="shade"
-				type="text"
+				color='shade'
+				type='text'
 				control={control}
-				name="description"
-				placeholder="Enter description"
-				className="mt-4 h-[150px]"
+				name='description'
+				placeholder='Enter description'
+				className='mt-4 h-[150px]'
 			/>
-			
-			<Button className="mt-8" onClick={onSubmit} type="submit" color="primary">
+
+			<Button className='mt-8' onClick={onSubmit} type='submit' color='primary'>
 				Create
 			</Button>
 		</div>

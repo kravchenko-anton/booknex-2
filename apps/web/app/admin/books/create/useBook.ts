@@ -10,13 +10,13 @@ export const useBookCompose = () => {
 			}[]
 		}[]
 	>([])
-	
+
 	const deleteBook = (name: string) => {
 		setBooks(books => {
 			return books?.filter(book => book.name !== name)
 		})
 	}
-	
+
 	const addNewCharacter = (bookName: string) => {
 		setBooks(books => {
 			if (books) {
@@ -39,7 +39,7 @@ export const useBookCompose = () => {
 			return books
 		})
 	}
-	
+
 	const updateCharacterTitle = (value: string, name: string) => {
 		setBooks(books => {
 			if (books) {
@@ -56,7 +56,7 @@ export const useBookCompose = () => {
 			return books
 		})
 	}
-	
+
 	const removeToc = (name: string, removedContent: string) => {
 		setBooks(books => {
 			if (books) {
@@ -64,7 +64,9 @@ export const useBookCompose = () => {
 					if (book.name === name) {
 						return {
 							...book,
-							content: book.content.filter(content => content.content !== removedContent)
+							content: book.content.filter(
+								content => content.content !== removedContent
+							)
 						}
 					}
 					return book
@@ -73,8 +75,12 @@ export const useBookCompose = () => {
 			return books
 		})
 	}
-	
-	const updateTocTitle = (oldContent: string, bookName: string, newContent: string) => {
+
+	const updateTocTitle = (
+		oldContent: string,
+		bookName: string,
+		newContent: string
+	) => {
 		setBooks(books => {
 			if (!books) return books
 			return books.map(book => {
@@ -96,8 +102,12 @@ export const useBookCompose = () => {
 			})
 		})
 	}
-	
-	const updateTocContent = (name: string, title: string, newContent: string) => {
+
+	const updateTocContent = (
+		name: string,
+		title: string,
+		newContent: string
+	) => {
 		setBooks(books => {
 			if (!books) return books
 			return books.map(book => {
@@ -119,7 +129,7 @@ export const useBookCompose = () => {
 			})
 		})
 	}
-	
+
 	const upload = (
 		name: string,
 		content: {
@@ -145,7 +155,7 @@ export const useBookCompose = () => {
 			]
 		})
 	}
-	
+
 	return {
 		books,
 		booksFunctions: {

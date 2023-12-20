@@ -41,7 +41,7 @@ export const useCreate = () => {
 		(authorSearch: string) => authorService.allSelect(authorSearch)
 	)
 	const { data: genres } = useQuery(['genres'], () => genreService.all())
-	
+
 	const submitBook = handleSubmit(
 		async (data: CreateBookValidationSchemaType) => {
 			const { name: uploadPicture } = await upload({
@@ -58,8 +58,9 @@ export const useCreate = () => {
 								book.content
 									.map(
 										content =>
-											`<label id='${book.name + '/' + content.title}'></label>` +
-											content.content
+											`<label id='${
+												book.name + '/' + content.title
+											}'></label>` + content.content
 									)
 									.join('')
 							)

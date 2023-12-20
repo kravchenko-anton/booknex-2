@@ -37,7 +37,7 @@ module.exports = {
 		'@typescript-eslint/no-unsafe-call': 'off',
 		'@typescript-eslint/no-unsafe-assignment': 'off',
 		'@typescript-eslint/no-unsafe-return': 'off',
-		'@typescript-eslint/prefer-nullish-coalescing': 'off',
+		'unicorn/explicit-length-check': 'off',
 		'@typescript-eslint/prefer-as-const': 'off',
 		'@typescript-eslint/no-redundant-type-constituents': 'off',
 		'unicorn/no-keyword-prefix': ['off'],

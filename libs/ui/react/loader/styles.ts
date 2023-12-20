@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import type { LoaderProperties } from './loader'
 
-export const LoaderStyledComponent = styled.svg<LoaderProperties>`
+export const StyledLoader = styled.svg<LoaderProperties>`
 	width: ${({ width }) => width}px;
 	height: ${({ height }) => height}px;
 	animation: rotate 2s linear infinite;

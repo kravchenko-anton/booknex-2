@@ -1,12 +1,17 @@
 'use client'
+import { Close, Plus } from '@/global/icons/react'
+import {
+	Button,
+	DropZone,
+	ErrorBlock,
+	ErrorText,
+	Field,
+	FormDropZone,
+	FormTextArea,
+	TextArea
+} from '@/ui/components'
 import { blobFormData } from '@/utils/files'
-import { Button, Field, TextArea } from '@ui/components'
 import type { FC } from 'react'
-import { Close, Plus } from '../../../../../../libs/global/icons/react'
-import Dropzone from '../../../../../../libs/ui/react/dropzone/dropzone'
-import FormDropzone from '../../../../../../libs/ui/react/dropzone/form-dropzone'
-import { ErrorMessage } from '../../../../../../libs/ui/react/error-block/error-block'
-import FormTextEditor from '../../../../../../libs/ui/react/text-editor/form-text-editor'
 
 import CreateAuthorPopup from '../../authors/popup/create'
 import { useBookCompose } from './useBook'
@@ -18,52 +23,48 @@ const Page: FC = () => {
 	console.log(form.errors)
 	return (
 		<div>
-			<h1 className="mb-4 text-center text-3xl font-medium">Create book</h1>
-			<div className=" flex justify-between gap-5">
-				<div className="w-1/2">
-					<div className="mt-2 flex justify-between gap-3">
+			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
+			<div className=' flex justify-between gap-5'>
+				<div className='w-1/2'>
+					<div className='mt-2 flex justify-between gap-3'>
 						<Field
 							control={form.control}
-							className="w-1/2"
-							name="title"
-							placeholder="Title"
+							className='w-1/2'
+							name='title'
+							placeholder='Title'
 						/>
-						
+
 						<Field
-							type="number"
+							type='number'
 							control={form.control}
-							name="pages"
-							placeholder="Pages"
+							name='pages'
+							placeholder='Pages'
 						/>
 						<Field
-							type="number"
+							type='number'
 							control={form.control}
-							className="mb-2"
-							name="popularity"
-							placeholder="Popularity"
+							className='mb-2'
+							name='popularity'
+							placeholder='Popularity'
 						/>
 					</div>
-					<h1 className="mb-2">Description</h1>
-					<FormTextEditor
+					<h1 className='mb-2'>Description</h1>
+					<FormTextArea
 						control={form.control}
-						name="description"
-						placeholder="Enter description"
-						className="h-[145px]"
+						name='description'
+						placeholder='Enter description'
+						className='h-[145px]'
 					/>
 				</div>
-				
-				<div className="h-max w-1/2">
-					<div className="flex justify-between">
+
+				<div className='h-max w-1/2'>
+					<div className='flex justify-between'>
 						<div>
-							<h1 className="mt-2  text-xl">Book file</h1>
-							<Dropzone
-								size="md"
-								options={{
-									multiple: true,
-									accept: {
-										'application/epub+zip': ['.epub']
-									}
-								}}
+							<h1 className='mt-2  text-xl'>Book file</h1>
+							<DropZone
+								size='md'
+								multiple={false}
+								accept='.epub'
 								onFileDelete={file => booksFunctions.delete(file.name)}
 								onDropFile={files => {
 									for (const file of files) {
@@ -75,26 +76,22 @@ const Page: FC = () => {
 									}
 								}}
 							/>
-							<ErrorMessage
-								name="books"
+							<ErrorBlock
+								name='books'
 								errors={form.errors}
 								render={({ message }) => (
-									<p className="text-danger text-md mt-2 italic">{message}</p>
+									<p className='text-danger text-md mt-2 italic'>{message}</p>
 								)}
 							/>
 						</div>
 						<div>
-							<h1 className="mt-2  text-xl">Cover</h1>
-							<FormDropzone
+							<h1 className='mt-2  text-xl'>Cover</h1>
+							<FormDropZone
 								control={form.control}
-								name="picture"
-								size="md"
-								options={{
-									multiple: false,
-									accept: {
-										'image/*': ['.jpg', '.jpeg', '.png']
-									}
-								}}
+								name='picture'
+								size='md'
+								multiple={false}
+								accept='image/*'
 								onDropFile={acceptedFiles => {
 									form.setValue('picture', {
 										name: acceptedFiles[0].name,
@@ -104,10 +101,10 @@ const Page: FC = () => {
 							/>
 						</div>
 					</div>
-					<div className="flex justify-between gap-6">
-						<div className="w-1/2">
-							<h1 className="mb-2 mt-4 flex gap-5">
-								Genres <p className="text-gray">First genre be main</p>
+					<div className='flex justify-between gap-6'>
+						<div className='w-1/2'>
+							<h1 className='mb-2 mt-4 flex gap-5'>
+								Genres <p className='text-gray'>First genre be main</p>
 							</h1>
 							{/* <FormSelect */}
 							{/* 	control={form.control} */}
@@ -123,8 +120,8 @@ const Page: FC = () => {
 							{/* 	placeholder="Select genres" */}
 							{/* /> */}
 						</div>
-						<div className="w-1/2">
-							<div className="mb-2 mt-4 flex gap-3">
+						<div className='w-1/2'>
+							<div className='mb-2 mt-4 flex gap-3'>
 								<h1>Author</h1>
 								<Button
 									onClick={() =>
@@ -140,7 +137,7 @@ const Page: FC = () => {
 											/>
 										)
 									}
-									size="sm"
+									size='sm'
 								>
 									Create
 								</Button>
@@ -166,16 +163,16 @@ const Page: FC = () => {
 					</div>
 				</div>
 			</div>
-			
+
 			{books && (
 				<div>
-					<div className="mt-14  grid grid-cols-2 gap-2">
+					<div className='mt-14  grid grid-cols-2 gap-2'>
 						{books.map((book, index) => (
 							<div
 								key={book.name + index}
-								className="bg-foreground mb-4 mr-1 rounded-xl p-3"
+								className='bg-foreground mb-4 mr-1 rounded-xl p-3'
 							>
-								<div className="flex justify-between gap-5  mb-4 items-center">
+								<div className='mb-4 flex items-center  justify-between gap-5'>
 									<input
 										onBlur={event =>
 											booksFunctions.updateCharacterTitle(
@@ -184,7 +181,7 @@ const Page: FC = () => {
 											)
 										}
 										defaultValue={book.name}
-										className="bg-vibrant h-full hover:border-foreground focus:border-foreground focus:shadow-outline w-full  rounded-md border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0"
+										className='bg-vibrant hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-md border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
 									/>
 									<Plus
 										width={45}
@@ -192,15 +189,15 @@ const Page: FC = () => {
 										onClick={() => {
 											booksFunctions.addNewCharacter(book.name)
 										}}
-										className="bg-vibrant cursor-pointer rounded-xl p-2"
+										className='bg-vibrant cursor-pointer rounded-xl p-2'
 									/>
 								</div>
 								{book.content.map((content, index) => (
 									<div
 										key={content.title + book.name + content.content + index}
-										className="bg-shade m-2 rounded-lg p-2"
+										className='bg-shade m-2 rounded-lg p-2'
 									>
-										<div className="mb-2 flex w-full items-center justify-between gap-2">
+										<div className='mb-2 flex w-full items-center justify-between gap-2'>
 											<input
 												defaultValue={content.title}
 												onBlur={event => {
@@ -210,20 +207,20 @@ const Page: FC = () => {
 														event.target.value
 													)
 												}}
-												className="bg-foreground border-gray w-full rounded-md border-0 px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2"
+												className='bg-foreground border-gray w-full rounded-md border-0 px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2'
 											/>
-											<div className="flex gap-2">
+											<div className='flex gap-2'>
 												<Close
 													width={36}
 													height={36}
 													onClick={() => {
 														booksFunctions.removeToc(book.name, content.content)
 													}}
-													className="bg-vibrant cursor-pointer rounded-xl p-2"
+													className='bg-vibrant cursor-pointer rounded-xl p-2'
 												/>
 											</div>
 										</div>
-										
+
 										<TextArea
 											defaultValue={content.content}
 											onBlur={event => {
@@ -233,26 +230,23 @@ const Page: FC = () => {
 													event.target.value
 												)
 											}}
-											
-											color="background"
-											className="min-h-[340px] w-full rounded-md border-0 px-4 py-2 font-mono text-sm duration-200 ease-linear"
+											color='background'
+											className='min-h-[340px] w-full rounded-md border-0 px-4 py-2 font-mono text-sm duration-200 ease-linear'
 										/>
 									</div>
 								))}
 							</div>
 						))}
 					</div>
-					<ErrorMessage
-						name="books"
+					<ErrorBlock
+						name='books'
 						errors={form.errors}
-						render={({ message }) => (
-							<p className="text-danger text-md mt-2 italic"> {message}</p>
-						)}
+						render={({ message }) => <ErrorText>{message}</ErrorText>}
 					/>
 				</div>
 			)}
 			<Button
-				className="mt-8"
+				className='mt-8'
 				onClick={() => {
 					if (!books) {
 						return
@@ -260,7 +254,7 @@ const Page: FC = () => {
 					form.setValue('books', books)
 					form.submitBook()
 				}}
-				color="primary"
+				color='primary'
 			>
 				Create
 			</Button>

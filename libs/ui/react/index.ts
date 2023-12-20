@@ -12,3 +12,15 @@ export { default as Spiner } from './loader/loader'
 export { default as TextArea } from './text-editor/text-area'
 export { default as FormTextArea } from './text-editor/form-text-editor'
 
+export {
+	ErrorText,
+	H1,
+	H2,
+	H3,
+	H4,
+	H5,
+	H6,
+	headingSize,
+	Text,
+	textSize
+} from './common-styled-component'

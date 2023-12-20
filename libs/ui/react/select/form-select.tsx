@@ -1,6 +1,7 @@
 'use client'
 import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
+import { ErrorText } from '../common-styled-component'
 import Select from './select'
 
 export interface FormSelectProperties<T extends FieldValues>
@@ -10,17 +11,17 @@ export interface FormSelectProperties<T extends FieldValues>
 }
 
 const FormSelect = <T extends Record<string, any>>({
-	                                                   className,
-	                                                   ...properties
-                                                   }: FormSelectProperties<T>) => {
+	className,
+	...properties
+}: FormSelectProperties<T>) => {
 	return (
 		<Controller
 			control={properties.control}
 			name={properties.name}
 			render={({
-				         field: { onChange, onBlur, value },
-				         fieldState: { error }
-			         }) => (
+				field: { onChange, onBlur, value },
+				fieldState: { error }
+			}) => (
 				<div className={className}>
 					<Select
 						onChange={onChange}
@@ -28,11 +29,7 @@ const FormSelect = <T extends Record<string, any>>({
 						value={value}
 						{...properties}
 					/>
-					{!!error && (
-						<p className="text-danger mt-0.5 text-xs italic">
-							{error.message}
-						</p>
-					)}
+					{!!error && <ErrorText>{error.message}</ErrorText>}
 				</div>
 			)}
 		/>

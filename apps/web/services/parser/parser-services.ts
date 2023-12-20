@@ -1,5 +1,8 @@
 import { getParserUrl } from '../../../../libs/global/api-config'
-import type { AllGoodReadBookOutput, ParserDtoPayload } from '../../../../libs/global/services-types/parser-types'
+import type {
+	AllGoodReadBookOutput,
+	ParserDtoPayload
+} from '../../../../libs/global/services-types/parser-types'
 import { request } from '../api/request.api'
 
 export const parserService = {
@@ -11,7 +14,7 @@ export const parserService = {
 			}
 		})
 	},
-	
+
 	async parse(dto: ParserDtoPayload) {
 		return request({
 			url: getParserUrl('/parse'),
@@ -38,7 +41,7 @@ export const parserService = {
 			}
 		})
 	},
-	
+
 	async delete(id: number) {
 		return request({
 			url: getParserUrl(`/delete/${id}`),

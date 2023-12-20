@@ -1,7 +1,7 @@
 import BookCard from '@/components/book-card/book-card'
 import RainbowBookCard from '@/components/book-card/rainbow-book-card/rainbow-book-card'
 import ScrollLayout from '@/components/layout/scroll-layout'
-import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { useTypedNavigation } from '@/hooks'
 import RecommendationList from '@/screens/featured/recommendation-list/recommendation-list'
 import ShelfCard from '@/screens/featured/shelf-card/shelf-card'
 import { catalogService } from '@/services/catalog/catalog-service'
@@ -52,10 +52,10 @@ const Featured = () => {
 				renderItem={({ item: genre }) => (
 					<Button
 						onPress={() => navigate('Genre', { id: genre.id })}
-						size="medium"
-						variant="ghost"
+						size='medium'
+						variant='ghost'
 						text={genre.name}
-						className="px-4"
+						className='px-4'
 					/>
 				)}
 			/>
@@ -120,7 +120,7 @@ const Featured = () => {
 					)}
 				/>
 			))}
-			
+
 			<Flatlist
 				title={{
 					text: 'In the same breath'

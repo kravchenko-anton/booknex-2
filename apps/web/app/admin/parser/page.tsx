@@ -1,22 +1,20 @@
 'use client'
 
+import { getFileUrl } from '@/global/api-config'
+import { Edit, Search, Trash } from '@/global/icons/react'
+import type { ParserDtoPayload } from '@/global/services-types/parser-types'
+import { nFormatter } from '@/global/utils/number-formater'
+import { useDebounce } from '@/global/utils/useDebounce'
+import { useAction, useTypedSelector } from '@/hooks'
+import { authorService } from '@/services/author/author-service'
+import { parserService } from '@/services/parser/parser-services'
+import { Button, Field } from '@/ui/components'
+import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Color } from '@ui/colors'
 import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { getFileUrl } from '../../../../../libs/global/api-config'
-import { Edit, Search, Trash } from '../../../../../libs/global/icons/react'
-import type { ParserDtoPayload } from '../../../../../libs/global/services-types/parser-types'
-import { nFormatter } from '../../../../../libs/global/utils/number-formater'
-import { useDebounce } from '../../../../../libs/global/utils/useDebounce'
-import { Color } from '../../../../../libs/ui/colors'
-import Button from '../../../../../libs/ui/react/src/button/button'
-import Field from '../../../../../libs/ui/react/src/field/field'
-import { useAction } from '../../../hooks/useAction'
-import { useTypedSelector } from '../../../hooks/useTypedSelector'
-import { authorService } from '../../../services/author/author-service'
-import { parserService } from '../../../services/parser/parser-services'
-import { successToast } from '../../../utils/toast'
 import CreateAuthorPopup from '../authors/popup/create'
 import type { DeafultCreateBookValuesType } from '../books/create/useForm'
 import NewParse from './popup/new-parse'
@@ -36,7 +34,7 @@ const Parser: FC = () => {
 			}
 		}
 	)
-	
+
 	const { mutateAsync: checkAuthorExist } = useMutation(
 		['check author exist'],
 		(name: string) => authorService.exist(name)
@@ -58,20 +56,19 @@ const Parser: FC = () => {
 	const router = useRouter()
 	console.log(goodReadsBooks)
 	return (
-		<div className="w-full">
-			<div className="flex w-full items-center justify-between">
-				<h1 className="text-3xl font-medium">Seeder</h1>
-				<div className="flex gap-5">
+		<div className='w-full'>
+			<div className='flex w-full items-center justify-between'>
+				<h1 className='text-3xl font-medium'>Seeder</h1>
+				<div className='flex gap-5'>
 					<Field
 						control={control}
 						icon={Search}
-						type="search"
-						className="mb-0 h-full"
-						name="search"
-						placeholder="Search..."
+						type='search'
+						name='search'
+						placeholder='Search...'
 					/>
 					<Button
-						size="sm"
+						size='sm'
 						isLoading={parseLoading}
 						onClick={() =>
 							showPopup(
@@ -94,146 +91,144 @@ const Parser: FC = () => {
 								/>
 							)
 						}
-						color="primary"
+						color='primary'
 					>
 						Parsing
 					</Button>
 				</div>
 			</div>
 			{goodReadsBooks ? (
-				<table className="bg-shade mt-4 w-full rounded-xl">
+				<table className='bg-shade mt-4 w-full rounded-xl'>
 					<thead>
-					<tr className="border-foreground border-b-2">
-						<th className="min-w-[50px]   p-3">Id</th>
-						<th className="min-w-[120px]  p-3">Picture</th>
-						<th className="min-w-[100px]  p-3">Bio</th>
-						<th className="w-[100px] min-w-[100px]  p-3">Info</th>
-						<th className="min-w-[100px]  p-3">Description</th>
-						<th className="min-w-[100px]  p-3">Author description</th>
-						<th className="min-w-[100px] p-3">Actions</th>
-					</tr>
+						<tr className='border-foreground border-b-2'>
+							<th className='min-w-[50px]   p-3'>Id</th>
+							<th className='min-w-[120px]  p-3'>Picture</th>
+							<th className='min-w-[100px]  p-3'>Bio</th>
+							<th className='w-[100px] min-w-[100px]  p-3'>Info</th>
+							<th className='min-w-[100px]  p-3'>Description</th>
+							<th className='min-w-[100px]  p-3'>Author description</th>
+							<th className='min-w-[100px] p-3'>Actions</th>
+						</tr>
 					</thead>
-					
+
 					<tbody>
-					{goodReadsBooks.map(book => {
-						return (
-							<tr
-								key={book.title + book.authorName}
-								className="border-foreground items-center  justify-center border-b-2"
-							>
-								<td className="min-w-[40px]  text-center text-2xl">
-									{book.id}
-								</td>
-								<td className="h-[120px]">
-									<img
-										src={getFileUrl(book.picture)}
-										className="bottom-shade mx-auto w-[100px] rounded-xl"
-										alt={book.title}
-									/>
-								</td>
-								<td className="h-[100px]  min-w-[140px]  text-xl  text-left">
-									{book.title} <br />{' '}
-									<p className="text-primary text-lg">{book.authorName}</p>
-								</td>
-								<td className="w-[100px] items-center justify-center p-2 text-center">
-									<h2>{book.pages} 📖</h2>
-									<h2>{nFormatter(book.popularity)} 👍</h2>
-								
-								</td>
-								<td className="min-w-[100px] p-2">
-									{book.description.slice(0, 500) + '...'}
-								</td>
-								<td className="min-w-[300px] max-w-[220px] p-2">
-									<img
-										src={book.authorPicture}
-										className="mb-1 h-[50px] w-[50px] rounded-xl"
-										alt={book.title}
-									/>
-									{book.authorDescription.slice(0, 200) + '...'}
-								</td>
-								
-								<td className="w-[50px] p-2">
-									<div className="flex  justify-center items-center gap-2">
-										<Edit
-											width={25}
-											className="cursor-pointer"
-											height={25}
-											onClick={async () => {
-												const blob = await fetch(book.authorPicture).then(
-													result => result.blob()
-												)
-												const author = await checkAuthorExist(book.authorName)
-												if (author) {
-													router.push(
-														'/admin/books/create' +
-														'?' +
-														new URLSearchParams({
-															defaultValues: JSON.stringify({
-																author: {
-																	id: author.id,
-																	name: author.name
-																},
-																title: book.title,
-																description: book.description,
-																pages: book.pages,
-																popularity: book.popularity,
-																genres: book.genres
-															} as DeafultCreateBookValuesType)
-														}).toString()
-													)
-												} else {
-													showPopup(
-														<CreateAuthorPopup
-															onCreate={({ id, name }) => {
-																closePopup()
-																router.push(
-																	'/admin/books/create' +
-																	'?' +
-																	new URLSearchParams({
-																		defaultValues: JSON.stringify({
-																			author: {
-																				id,
-																				name
-																			},
-																			title: book.title,
-																			description: book.description,
-																			pages: book.pages,
-																			popularity: book.popularity,
-																			genres: book.genres
-																		} as DeafultCreateBookValuesType)
-																	}).toString()
-																)
-															}}
-															defaultValues={{
-																name: book.authorName,
-																description: book.authorDescription,
-																picture: {
-																	blob,
-																	name: `${book.authorName}.png`
-																}
-															}}
-														/>
-													)
-												}
-											}}
-											color={Color.success}
+						{goodReadsBooks.map(book => {
+							return (
+								<tr
+									key={book.title + book.authorName}
+									className='border-foreground items-center  justify-center border-b-2'
+								>
+									<td className='min-w-[40px]  text-center text-2xl'>
+										{book.id}
+									</td>
+									<td className='h-[120px]'>
+										<img
+											src={getFileUrl(book.picture)}
+											className='bottom-shade mx-auto w-[100px] rounded-xl'
+											alt={book.title}
 										/>
-										
-										<Trash
-											width={25}
-											className="cursor-pointer"
-											height={25}
-											onClick={() => deleteFromParser(book.id)}
-											
-											color={Color.danger}
-											fullWidth
-											size="sm"
+									</td>
+									<td className='h-[100px]  min-w-[140px]  text-left  text-xl'>
+										{book.title} <br />{' '}
+										<p className='text-primary text-lg'>{book.authorName}</p>
+									</td>
+									<td className='w-[100px] items-center justify-center p-2 text-center'>
+										<h2>{book.pages} 📖</h2>
+										<h2>{nFormatter(book.popularity)} 👍</h2>
+									</td>
+									<td className='min-w-[100px] p-2'>
+										{book.description.slice(0, 500) + '...'}
+									</td>
+									<td className='min-w-[300px] max-w-[220px] p-2'>
+										<img
+											src={book.authorPicture}
+											className='mb-1 h-[50px] w-[50px] rounded-xl'
+											alt={book.title}
 										/>
-									</div>
-								</td>
-							</tr>
-						)
-					})}
+										{book.authorDescription.slice(0, 200) + '...'}
+									</td>
+
+									<td className='w-[50px] p-2'>
+										<div className='flex  items-center justify-center gap-2'>
+											<Edit
+												width={25}
+												className='cursor-pointer'
+												height={25}
+												onClick={async () => {
+													const blob = await fetch(book.authorPicture).then(
+														result => result.blob()
+													)
+													const author = await checkAuthorExist(book.authorName)
+													if (author) {
+														router.push(
+															'/admin/books/create' +
+																'?' +
+																new URLSearchParams({
+																	defaultValues: JSON.stringify({
+																		author: {
+																			id: author.id,
+																			name: author.name
+																		},
+																		title: book.title,
+																		description: book.description,
+																		pages: book.pages,
+																		popularity: book.popularity,
+																		genres: book.genres
+																	} as DeafultCreateBookValuesType)
+																}).toString()
+														)
+													} else {
+														showPopup(
+															<CreateAuthorPopup
+																onCreate={({ id, name }) => {
+																	closePopup()
+																	router.push(
+																		'/admin/books/create' +
+																			'?' +
+																			new URLSearchParams({
+																				defaultValues: JSON.stringify({
+																					author: {
+																						id,
+																						name
+																					},
+																					title: book.title,
+																					description: book.description,
+																					pages: book.pages,
+																					popularity: book.popularity,
+																					genres: book.genres
+																				} as DeafultCreateBookValuesType)
+																			}).toString()
+																	)
+																}}
+																defaultValues={{
+																	name: book.authorName,
+																	description: book.authorDescription,
+																	picture: {
+																		blob,
+																		name: `${book.authorName}.png`
+																	}
+																}}
+															/>
+														)
+													}
+												}}
+												color={Color.success}
+											/>
+
+											<Trash
+												width={25}
+												className='cursor-pointer'
+												height={25}
+												onClick={() => deleteFromParser(book.id)}
+												color={Color.danger}
+												fullWidth
+												size='sm'
+											/>
+										</div>
+									</td>
+								</tr>
+							)
+						})}
 					</tbody>
 				</table>
 			) : (

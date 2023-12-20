@@ -1,6 +1,9 @@
 import { getStorageUrl } from '../../../../libs/global/api-config'
 import type { UploadOutput } from '../../../../libs/global/services-types/storage-types'
-import type { FilenameDto, ReplacementDto } from '../../../backend/src/storage/dto/upload.dto'
+import type {
+	FilenameDto,
+	ReplacementDto
+} from '../../../backend/src/storage/dto/upload.dto'
 import type { StorageFolderEnum } from '../../../backend/src/storage/storage.types'
 import { request } from '../api/request.api'
 

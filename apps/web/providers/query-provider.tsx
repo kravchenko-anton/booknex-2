@@ -1,12 +1,12 @@
 'use client'
-import Modal from '@/components/modal/modal'
-import { persistor, store } from '@/redux/store'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Color } from '@ui/colors'
 import type { PropsWithChildren } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { Color } from '../../../libs/ui/colors'
+import Modal from '../components/modal/modal'
+import { persistor, store } from '../redux/store'
 
 function Providers({ children }: PropsWithChildren) {
 	const queryClient = new QueryClient({

@@ -3,6 +3,7 @@ import type { FC } from 'react'
 interface AuthorDescriptionPopupProperties {
 	text: string
 }
+
 const AuthorDescriptionPopup: FC<AuthorDescriptionPopupProperties> = ({
 	text
 }) => {

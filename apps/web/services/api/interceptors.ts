@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { SERVER_URL } from '../../../../libs/global/api-config'
 import { errorCatch } from '../../../../libs/global/utils/catch-error'
-import { deleteTokensStorage, getAccessToken } from '../../redux/auth/auth-helper'
+import {
+	deleteTokensStorage,
+	getAccessToken
+} from '../../redux/auth/auth-helper'
 import { getNewTokens } from './helper.auth'
 
 const instance = axios.create({

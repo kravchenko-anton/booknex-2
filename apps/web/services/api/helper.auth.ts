@@ -18,7 +18,7 @@ export const getNewTokens = async () => {
 				refreshToken: response.refreshToken
 			})
 		if (!response.accessToken) throw new Error('No access token')
-		
+
 		return response
 	} catch (error) {
 		console.log(error)

@@ -1,15 +1,9 @@
 import type { FC } from 'react'
 import { InteriorColor } from '../../colors'
 import Loader from '../loader/loader'
-import { ButtonStyleComponent } from './styles'
+import { iconSizeProperty, StyledButton } from './styles'
 import type { ButtonProperties } from './types'
 
-
-const iconSizeProperty = {
-	sm: 16,
-	md: 18,
-	lg: 20
-}
 
 const Button: FC<ButtonProperties> =
 	({
@@ -17,16 +11,18 @@ const Button: FC<ButtonProperties> =
 		 size = 'md',
 		 icon: Icon,
 		 disabled = false,
+		 fullWidth = false,
 		 color = 'primary',
 		 isLoading = false,
-		 ...rest
+		 ...properties
 	 }) => {
 		return (
-			<ButtonStyleComponent
+			<StyledButton
+				fullWidth={fullWidth}
 				disabled={disabled || isLoading}
 				color={color}
 				size={size}
-				{...rest}
+				{...properties}
 			>
 				{children}
 				{isLoading && <Loader
@@ -38,7 +34,7 @@ const Button: FC<ButtonProperties> =
 					      color={InteriorColor[color]}
 					      height={iconSizeProperty[size]} />
 				)}
-			</ButtonStyleComponent>
+			</StyledButton>
 		)
 	}
 
