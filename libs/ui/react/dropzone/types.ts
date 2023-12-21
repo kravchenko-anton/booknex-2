@@ -3,7 +3,7 @@ import type { File } from '../../../global/icons/react'
 import type { Color } from '../../colors'
 import type { DefaultInputProperties } from '../components-props-types'
 
-export interface DropzoneProperties {
+export interface DropzoneProperties extends DefaultInputProperties {
 	size?: 'sm' | 'md' | 'lg'
 	accept?: 'image/*' | '.epub' | '*'
 	color?: keyof Pick<
@@ -16,7 +16,6 @@ export interface DropzoneProperties {
 	onDropFile: (files: File[]) => void
 	defaultFiles?: File[]
 }
-
 
 export interface FormDropZoneProperties<T extends FieldValues>
 	extends DefaultInputProperties,

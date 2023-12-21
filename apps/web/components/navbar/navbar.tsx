@@ -24,7 +24,6 @@ export const Navbar = () => {
 				<div className='md:hidden' onClick={() => setOpen(!open)}>
 					{open ? (
 						<svg
-							xmlns='http://www.w3.org/2000/svg'
 							className='h-6 w-6 text-white'
 							fill='none'
 							viewBox='0 0 24 24'
@@ -39,7 +38,6 @@ export const Navbar = () => {
 						</svg>
 					) : (
 						<svg
-							xmlns='http://www.w3.org/2000/svg'
 							className='h-6 w-6 text-white'
 							fill='none'
 							viewBox='0 0 24 24'

@@ -4,13 +4,12 @@ import { useDebounce } from '@/global/utils/useDebounce'
 import { useAction } from '@/hooks/useAction'
 import { Edit, Search, Trash } from '@/icons'
 import { authorService } from '@/services/author/author-service'
-import { Button, Field, H1 } from '@/ui/components'
+import { Button, Field } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Color } from '@ui/colors'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { FlexBox } from '../../../../../libs/ui/react/common-styled-component'
 import CreateAuthorPopup from './popup/create'
 import AuthorDescription from './popup/description-popup'
 
@@ -35,9 +34,9 @@ const Page: FC = () => {
 	const { closePopup, showPopup } = useAction()
 	return (
 		<div>
-			<FlexBox fullWidth beetween>
-				<H1>Authors</H1>
-				<FlexBox gap={16}>
+			<div className='flex w-full items-center justify-between'>
+				<h1 className='text-3xl font-medium'>Authors</h1>
+				<div className='flex gap-5'>
 					<Field
 						control={control}
 						icon={Search}
@@ -61,8 +60,8 @@ const Page: FC = () => {
 					>
 						Create
 					</Button>
-				</FlexBox>
-			</FlexBox>
+				</div>
+			</div>
 			{!authors || isLoading ? (
 				<div>Loading...</div>
 			) : (

@@ -1,7 +1,6 @@
 'use client'
 import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
-import { ErrorText } from '../common-styled-component'
 import Select from './select'
 
 export interface FormSelectProperties<T extends FieldValues>
@@ -29,7 +28,9 @@ const FormSelect = <T extends Record<string, any>>({
 						value={value}
 						{...properties}
 					/>
-					{!!error && <ErrorText>{error.message}</ErrorText>}
+					{!!error && (
+						<p className='text-danger text-md mt-2 italic'>{error.message}</p>
+					)}
 				</div>
 			)}
 		/>

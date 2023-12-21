@@ -1,39 +1,36 @@
 import type { FC } from 'react'
 import { memo } from 'react'
-import styled from 'styled-components/native'
-import { Color } from '../../colors'
+import { Text } from 'react-native'
+import { Color } from 'ui/colors'
 import { fontSettings } from './title-settings'
 import type { TitleProperties } from './title-types'
 
-const StyledTitle = styled.Text<TitleProperties>`
-	color: ${(properties) => properties.color ?? Color.white};
-	font-family: ${(properties) => fontSettings[properties.weight || 'medium']};
-	font-size: ${(properties) => properties.size}px;
-	text-align: ${(properties) => (properties.center ? 'center' : 'left')};
-	${(properties) => properties.styles}
-`
-
-const Title: FC<TitleProperties> =
-	({
-		 children,
-		 numberOfLines = 1,
-		 weight = 'light',
-		 size = 20,
-		 center = false,
-		 styles,
-		 ...properties
-	 }) => {
-		return (
-			<StyledTitle
-				weight={weight}
-				styles={styles}
-				size={size}
-				center={center}
-				numberOfLines={numberOfLines}
-				{...properties}>
-				{children}
-			</StyledTitle>
-		)
-	}
+const Title: FC<TitleProperties> = ({
+	children,
+	numberOfLines = 1,
+	weight = 'light',
+	size = 20,
+	center = false,
+	style,
+	...properties
+}) => {
+	return (
+		<Text
+			style={[
+				{
+					fontFamily: fontSettings[weight],
+					fontSize: size,
+					textAlign: center ? 'center' : 'left',
+					color: properties.color ?? Color.black
+				},
+				style
+			]}
+			numberOfLines={numberOfLines}
+			{...properties}
+		>
+			{children}
+		</Text>
+	)
+}
 
 export default memo(Title)

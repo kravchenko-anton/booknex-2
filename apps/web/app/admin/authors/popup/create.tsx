@@ -52,10 +52,8 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 				size='lg'
 				defaultFiles={[defaultValues.picture?.blob]}
 				color='vibrant'
-				options={{
-					multiple: false,
-					accept: { 'image/*': ['.png', '.jpg', '.jpeg'] }
-				}}
+				multiple={false}
+				accept={'image/*'}
 				onDropFile={acceptedFiles => {
 					setValue('picture', {
 						name: acceptedFiles[0].name,

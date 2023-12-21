@@ -1,24 +1,20 @@
 'use client'
-import { StyledForm, StyledWrapper } from '@/app/login/styles'
 import { useAction } from '@/hooks/useAction'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
-import { Button, Field, H1 } from '@/ui/components'
-import { Color } from '@ui/colors'
 import { useForm } from 'react-hook-form'
+import { Button } from '../../../../libs/ui/react'
+import Field from '../../../../libs/ui/react/field/field'
 
 export default function Page() {
 	const { login } = useAction()
 	const { handleSubmit, control } = useForm<AuthFieldsType>({
 		mode: 'onSubmit'
 	})
-
 	const onSubmit = (data: AuthFieldsType) => login(data)
 	return (
-		<StyledWrapper>
-			<StyledForm onSubmit={handleSubmit(onSubmit)}>
-				<H1 center color={Color.white}>
-					Sign in
-				</H1>
+		<div className='flex h-screen w-screen items-center justify-center'>
+			<div className='bg-shade w-[450px] rounded-xl p-8'>
+				<h1 className='mb-4 text-center text-3xl text-white'>Sign in</h1>
 				<Field
 					name='email'
 					control={control}
@@ -27,14 +23,20 @@ export default function Page() {
 				/>
 				<Field
 					control={control}
+					className='my-1.5'
 					name='password'
 					type='password'
 					placeholder='Enter your password'
 				/>
-				<Button type='submit' color='primary' size='md' fullWidth>
+				<Button
+					onClick={handleSubmit(onSubmit)}
+					size='lg'
+					fullWidth
+					color='primary'
+				>
 					Login
 				</Button>
-			</StyledForm>
-		</StyledWrapper>
+			</div>
+		</div>
 	)
 }

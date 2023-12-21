@@ -38,7 +38,7 @@ export type LineColorType = {
 	[K in keyof typeof Color]: (typeof Color)[K]
 }[keyof typeof Color]
 
-export type PickLineColorsTyle<T> = {
+export type PickLineColorsType<T> = {
 	[K in keyof T]: T[K] extends LineColorType ? T[K] : never
 }
 

@@ -1,14 +1,30 @@
-import type { Path, PathValue } from 'react-hook-form'
+import type {
+	Control,
+	FieldPath,
+	FieldValues,
+	Path,
+	PathValue
+} from 'react-hook-form'
 import { Controller } from 'react-hook-form'
-import { ErrorText } from '../common-styled-component'
+import type { DefaultInputProperties } from '../components-props-types'
+import type { InputProperties } from './input'
 import Input from './input'
-import type { FieldProperties } from './types'
+
+export interface FieldProperties<T extends FieldValues>
+	extends DefaultInputProperties,
+		Pick<InputProperties, 'color' | 'icon'> {
+	control: Control<T>
+	name: FieldPath<T>
+}
 
 const Field = <T extends Record<string, any>>({
 	color = 'foreground',
+	className,
+	style,
 	icon: Icon,
 	...properties
 }: FieldProperties<T>): JSX.Element | null => {
+	console.log(properties)
 	return (
 		<Controller
 			control={properties.control}
@@ -18,7 +34,7 @@ const Field = <T extends Record<string, any>>({
 				field: { value, onChange, onBlur },
 				fieldState: { error }
 			}) => (
-				<div>
+				<div className={className} style={style}>
 					<Input
 						onBlur={onBlur}
 						onChange={onChange}
@@ -28,7 +44,9 @@ const Field = <T extends Record<string, any>>({
 						icon={Icon}
 						{...properties}
 					/>
-					{!!error && <ErrorText>{error.message}</ErrorText>}
+					{!!error && (
+						<p className='text-danger mt-0.5 text-xs italic'>{error.message}</p>
+					)}
 				</div>
 			)}
 		/>

@@ -4,13 +4,13 @@ import {
 	Button,
 	DropZone,
 	ErrorBlock,
-	ErrorText,
 	Field,
 	FormDropZone,
 	FormTextArea,
 	TextArea
 } from '@/ui/components'
 import { blobFormData } from '@/utils/files'
+import { Color } from '@ui/colors'
 import type { FC } from 'react'
 
 import CreateAuthorPopup from '../../authors/popup/create'
@@ -43,7 +43,6 @@ const Page: FC = () => {
 						<Field
 							type='number'
 							control={form.control}
-							className='mb-2'
 							name='popularity'
 							placeholder='Popularity'
 						/>
@@ -241,7 +240,7 @@ const Page: FC = () => {
 					<ErrorBlock
 						name='books'
 						errors={form.errors}
-						render={({ message }) => <ErrorText>{message}</ErrorText>}
+						render={({ message }) => <p color={Color.danger}>{message}</p>}
 					/>
 				</div>
 			)}
