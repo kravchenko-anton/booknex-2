@@ -12,30 +12,16 @@
 		"importHelpers": true,
 		"target": "es2021",
 		"module": "ES2022",
-		"lib": [
-			"es2021",
-			"dom"
-		],
+		"lib": ["es2021", "dom"],
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@booknex/global/*": [
-				"libs/global/*"
-			],
-			"@booknex/ui/react": [
-				"libs/ui/react/index.ts"
-			],
-			"@booknex/ui/react-native": [
-				"libs/ui/react-native/src/index.ts"
-			],
-			"@booknex/ui/*": [
-				"libs/ui/*"
-			]
+			"@booknex/global/*": ["libs/global/*"],
+			"@booknex/ui/*": ["libs/ui/*"],
+			"@booknex/ui/react": ["libs/ui/react/index.ts"],
+			"@booknex/ui/react-native": ["libs/ui/react-native/src/index.ts"]
 		}
 	},
-	"exclude": [
-		"node_modules",
-		"tmp"
-	]
+	"exclude": ["node_modules", "tmp"]
 }

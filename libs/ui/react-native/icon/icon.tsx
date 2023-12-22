@@ -1,36 +1,48 @@
-import { BackgroundColorSetting, BorderColorSetting, IconColorSetting, SizeSetting } from '@/components/ui/icon/icon-settings'
-import type { IconProperties } from '@/components/ui/icon/icon-types.ts'
-import type { Style } from '@/types.ts/global'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Pressable } from 'react-native'
 import { Color } from 'ui/colors'
-import { BorderRadiusSetting, PaddingSetting } from 'ui/ui-style'
+import { Style } from '../../../../apps/mobile/src/app/types/global'
+import { BorderRadiusSettings } from '../../settings'
+import {
+	BackgroundColorSetting,
+	BorderColorSetting,
+	IconColorSetting,
+	SizeSetting
+} from './icon-settings'
+import { IconProperties } from './icon-types'
+
+export const iconPaddingSettings = {
+	small: 4,
+	medium: 6,
+	large: 8
+}
 
 const Icon: FC<IconProperties> = ({
-	                                  icon: Icon,
-	                                  variant = 'ghost',
-	                                  size = 'small',
-	                                  color = Color.white,
-	                                  backgroundColor,
-	                                  fatness = 2,
-	                                  style,
-	                                  noPadding = false,
-	                                  ...properties
-                                  }) => (
+	icon: Icon,
+	variant = 'ghost',
+	size = 'small',
+	color = Color.white,
+	backgroundColor,
+	fatness = 2,
+	style,
+	noPadding = false,
+	...properties
+}) => (
 	<Pressable
-		className="items-center justify-center border-[2px]"
+		className='items-center justify-center border-[2px]'
 		style={[
 			{
 				opacity: properties.disabled ? 0.5 : 1,
-				padding: noPadding ? 0 : PaddingSetting[size],
+				padding: noPadding ? 0 : iconPaddingSettings[size],
 				backgroundColor: backgroundColor ?? BackgroundColorSetting[variant],
-				borderRadius: BorderRadiusSetting,
+				borderRadius: BorderRadiusSettings,
 				borderColor: BorderColorSetting[variant]
 			},
 			style as Style
 		]}
-		{...properties}>
+		{...properties}
+	>
 		<Icon
 			width={SizeSetting[size]}
 			strokeWidth={fatness}

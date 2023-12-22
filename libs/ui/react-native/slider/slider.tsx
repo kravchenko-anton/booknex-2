@@ -6,7 +6,11 @@ import type { ViewProps } from 'react-native'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import type { WithSpringConfig } from 'react-native-reanimated'
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import Animated, {
+	runOnJS,
+	useAnimatedStyle,
+	useSharedValue
+} from 'react-native-reanimated'
 import { Color } from 'ui/colors'
 
 const DEFAULT_THUMB_SIZE = 16
@@ -31,36 +35,36 @@ type SliderStyleProperties = {
 }
 export type SliderProperties = SliderStyleProperties &
 	ViewDefaultProperties & {
-	initialValue?: number
-	maxValue?: number
-	minValue?: number
-	onIndexChange?: (value: number) => void
-	springConfig?: WithSpringConfig
-	step?: number
-	ThumbComponent?: ComponentType<Pick<ViewProps, 'style'>>
-	touchSlop?: number
-	trumbInside?: boolean
-	activeOffsetX?: number | number[]
-}
+		initialValue?: number
+		maxValue?: number
+		minValue?: number
+		onIndexChange?: (value: number) => void
+		springConfig?: WithSpringConfig
+		step?: number
+		ThumbComponent?: ComponentType<Pick<ViewProps, 'style'>>
+		touchSlop?: number
+		trumbInside?: boolean
+		activeOffsetX?: number | number[]
+	}
 const Slider = ({
-	                initialValue,
-	                minValue = 0,
-	                maxValue = 10,
-	                step,
-	                borderRadius,
-	                trumbInside,
-	                onIndexChange,
-	                ThumbComponent = View,
-	                maxTrackColor = Color.primary,
-	                minTrackColor = Color.gray,
-	                thumbSize = DEFAULT_THUMB_SIZE,
-	                thumbColor = Color.white,
-	                touchSlop = 10,
-	                width = DEFAULT_SLIDER_WIDTH,
-	                springConfig,
-	                activeOffsetX = [-10, 10],
-	                ...properties
-                }: SliderProperties) => {
+	initialValue,
+	minValue = 0,
+	maxValue = 10,
+	step,
+	borderRadius,
+	trumbInside,
+	onIndexChange,
+	ThumbComponent = View,
+	maxTrackColor = Color.primary,
+	minTrackColor = Color.gray,
+	thumbSize = DEFAULT_THUMB_SIZE,
+	thumbColor = Color.white,
+	touchSlop = 10,
+	width = DEFAULT_SLIDER_WIDTH,
+	springConfig,
+	activeOffsetX = [-10, 10],
+	...properties
+}: SliderProperties) => {
 	const radius = thumbSize / 2
 	console.log(width)
 	const CalcWidth = trumbInside ? width - DEFAULT_THUMB_SIZE / 2 : width
@@ -86,9 +90,9 @@ const Slider = ({
 		}),
 		[]
 	)
-	
+
 	const start = useSharedValue(translateX.value)
-	
+
 	const gesture = Gesture.Pan()
 		.hitSlop(touchSlop)
 		.maxPointers(1)
@@ -117,13 +121,13 @@ const Slider = ({
 				const estimate = translateX.value + e.velocityX * 0.03
 				const toIndex = clamp(Math.round(estimate / interval), 0, numberSteps)
 				const EndValue = minValue + toIndex * step
-				
+
 				if (onIndexChange) {
 					runOnJS(onIndexChange)(EndValue)
 				}
 			}
 		})
-	
+
 	return (
 		<Pressable
 			// onPress={e => {
@@ -138,7 +142,7 @@ const Slider = ({
 			// 	}
 			// 	isPressed.value = false
 			// }}
-			className="justify-center"
+			className='justify-center'
 			style={{
 				height: thumbSize,
 				width: width
@@ -147,7 +151,7 @@ const Slider = ({
 		>
 			<View
 				style={{ ...StyleSheet.absoluteFillObject }}
-				className="justify-center"
+				className='justify-center'
 			>
 				<View
 					style={{
@@ -159,7 +163,7 @@ const Slider = ({
 			</View>
 			<View
 				style={{ ...StyleSheet.absoluteFillObject }}
-				className="items-start justify-center"
+				className='items-start justify-center'
 			>
 				<Animated.View
 					style={[
@@ -174,7 +178,7 @@ const Slider = ({
 			</View>
 			<View
 				style={{ ...StyleSheet.absoluteFillObject }}
-				className="items-start justify-center"
+				className='items-start justify-center'
 			>
 				<GestureDetector gesture={gesture}>
 					<Animated.View style={thumbAnimStyle}>

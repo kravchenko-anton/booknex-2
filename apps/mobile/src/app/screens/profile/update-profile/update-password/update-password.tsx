@@ -1,39 +1,39 @@
-import { Button, Field, Title } from '@/components'
 import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-password/update-password-types'
 import { useUpdatePassword } from '@/screens/profile/update-profile/update-password/useUpdatePassword'
 import { passwordRules } from 'global/utils/input-validation'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
+import { Button, Field, Title } from 'ui/components'
 
 const UpdatePassword = () => {
 	const { control, handleSubmit } = useForm<EditPasswordTypes>()
 	const { onSubmit } = useUpdatePassword()
 	return (
-		<View className="bg-dust mb-4 mt-8 rounded-2xl p-4">
-			<Title weight="bold" className="mb-2" size={24}>
+		<View className='bg-dust mb-4 mt-8 rounded-2xl p-4'>
+			<Title weight='bold' className='mb-2' size={24}>
 				Password
 			</Title>
 			<Field
 				control={control}
-				name="oldPassword"
+				name='oldPassword'
 				secureTextEntry={true}
 				rules={passwordRules}
-				placeholder="Old password"
+				placeholder='Old password'
 			/>
 			<Field
 				control={control}
-				name="password"
+				name='password'
 				secureTextEntry={true}
 				rules={passwordRules}
-				placeholder="New password"
+				placeholder='New password'
 			/>
-			
+
 			<Button
-				className="mt-2"
+				className='mt-2'
 				onPress={handleSubmit(onSubmit)}
-				text="Save"
-				variant="primary"
-				size="medium"
+				text='Save'
+				variant='primary'
+				size='medium'
 			/>
 		</View>
 	)

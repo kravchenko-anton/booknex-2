@@ -1,37 +1,36 @@
 import VerticalCard from '@/components/book-card/vertical-card/vertical-card'
 import Layout from '@/components/layout/layout'
-import Button from '@/components/ui/button/button'
-import Field from '@/components/ui/field/field'
-import FlatList from '@/components/ui/flatlist/flatlist'
-import BigLoader from '@/components/ui/loader/big-loader'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useSearch } from '@/screens/search/useSearch'
 import { View } from 'react-native'
+import { BigLoader, Button, Field, Flatlist } from 'ui/components'
 
 const Search = () => {
 	const {
 		searchTerm,
 		books,
-		booksLoading, searchExamples, searchExamplesLoading,
+		booksLoading,
+		searchExamples,
+		searchExamplesLoading,
 		control
 	} = useSearch()
 	const { navigate } = useTypedNavigation()
 	return (
-		<Layout className="h-full">
+		<Layout className='h-full'>
 			<Field
 				control={control}
-				name="searchTerm"
-				placeholder="Type something..."
+				name='searchTerm'
+				placeholder='Type something...'
 			/>
 			{searchTerm ? (
-				<View className="flex-1">
+				<View className='flex-1'>
 					{booksLoading ? (
 						<BigLoader />
 					) : (
-						<FlatList
+						<Flatlist
 							mt={0}
 							keyExtractor={item => `$${item.id}`}
-							className="w-full flex-grow"
+							className='w-full flex-grow'
 							data={books}
 							renderItem={({ item: book }) => (
 								<VerticalCard
@@ -54,18 +53,18 @@ const Search = () => {
 						/>
 					)}
 				</View>
-			) : (searchExamplesLoading ? (
+			) : searchExamplesLoading ? (
 				<BigLoader />
 			) : (
-				<FlatList
+				<Flatlist
 					mt={0}
 					keyExtractor={item => `#${item.id} - ${item.title}`}
 					data={searchExamples}
 					renderItem={({ item }) => (
 						<Button
-							size="large"
-							className="items-start"
-							variant="primary"
+							size='large'
+							className='items-start'
+							variant='primary'
 							onPress={() => {
 								navigate(item.title ? 'Genre' : 'Book', {
 									id: item.id
@@ -75,7 +74,7 @@ const Search = () => {
 						/>
 					)}
 				/>
-			))}
+			)}
 		</Layout>
 	)
 }

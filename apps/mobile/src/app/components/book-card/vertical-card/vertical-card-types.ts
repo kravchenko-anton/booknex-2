@@ -8,7 +8,7 @@ export interface VerticalBookCardProperties extends PressableDefaultProperties {
 		backgroundColor?: LineColorType
 		color?: LineColorType
 	}[]
-	
+
 	description?: string
 	descriptionLines?: number
 	image: {

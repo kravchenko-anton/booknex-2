@@ -1,16 +1,13 @@
 import type { ViewDefaultProperties } from '@/components/component-types.ts'
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import Icon from '@/components/ui/icon/icon'
-import ScrollView from '@/components/ui/scroll-view/scroll-view'
-import Title from '@/components/ui/title/title'
 import OutsidePressHandler from '@/hooks/outside-press/components/outside-press-handler'
 import { ChevronDown } from 'icons'
 import type { FC } from 'react'
 import { useState } from 'react'
 import { Pressable } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
-import type { LineColorType } from 'ui/colors'
-import { Color } from 'ui/colors'
+import { Color, LineColorType } from '../../colors'
+import { Icon, ScrollView, Title } from '../index'
 
 interface SelectProperties extends ViewDefaultProperties {
 	onSelect: (value: { value: string; label: string }) => void
@@ -29,35 +26,35 @@ interface SelectProperties extends ViewDefaultProperties {
 
 const Select: FC<SelectProperties> = ({ ...properties }) => {
 	const [active, setActive] = useState(false)
-	
+
 	const popupAnimation = useAnimatedStyle(() => {
 		return {
 			opacity: withTiming(active ? 1 : 0),
 			display: active ? 'flex' : 'none'
 		}
 	})
-	
+
 	return (
 		<>
 			<PressableContainer
 				onPress={() => setActive(true)}
-				className="relative h-full flex-row items-center rounded-xl p-2 px-3"
+				className='relative h-full flex-row items-center rounded-xl p-2 px-3'
 				style={{
 					backgroundColor: properties.backgroundColor || 'transparent'
 				}}
 			>
 				<Title
-					weight="bold"
+					weight='bold'
 					color={(properties.color || Color.white) as LineColorType}
 				>
 					{properties.active.label}
 				</Title>
 				<Icon
-					pointerEvents="none"
+					pointerEvents='none'
 					noPadding
-					className="ml-2 h-6 w-6"
+					className='ml-2 h-6 w-6'
 					icon={ChevronDown}
-					size="medium"
+					size='medium'
 					color={(properties.color || Color.white) as LineColorType}
 				/>
 			</PressableContainer>
@@ -72,7 +69,7 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 						backgroundColor: properties.backgroundColor || 'transparent'
 					}
 				]}
-				className="absolute bottom-0 left-0 z-50 max-h-[200px] rounded-lg"
+				className='absolute bottom-0 left-0 z-50 max-h-[200px] rounded-lg'
 			>
 				<ScrollView>
 					{properties.elements.map(element => {
@@ -83,10 +80,10 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 									setActive(false)
 								}}
 								key={`${element.value}-${element.label}`}
-								className="w-full flex-row items-center  justify-between p-2 "
+								className='w-full flex-row items-center  justify-between p-2 '
 							>
 								<Title
-									weight="bold"
+									weight='bold'
 									color={(properties.color || Color.white) as LineColorType}
 								>
 									{element.label}

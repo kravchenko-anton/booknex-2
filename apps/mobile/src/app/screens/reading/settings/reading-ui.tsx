@@ -1,14 +1,21 @@
-import { AnimatedIcon, Title } from '@/components'
 import { AnimatedView } from '@/components/animated'
-import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types.ts'
+import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
 import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
 import { useReadingAnimation } from '@/screens/reading/settings/reading-ui-animation'
-import { ArrowLeft, BookHeart, CaseSenSitive, ListOrdered, MoreHorizontal, Search } from 'global/icons/react-native'
 import { shadeRGBColor } from 'global/utils/shade-color'
+import {
+	ArrowLeft,
+	BookHeart,
+	CaseSenSitive,
+	ListOrdered,
+	MoreHorizontal,
+	Search
+} from 'icons'
 import type { FC } from 'react'
 import { StatusBar, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import type { LineColorType } from 'ui/colors'
+import { LineColorType } from 'ui/colors'
+import { AnimatedIcon, Title } from 'ui/components'
 
 export const shadeBackground = -15
 const ReadingUi: FC = () => {
@@ -20,7 +27,7 @@ const ReadingUi: FC = () => {
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	const { headerAnimation, footerAnimation } = useReadingAnimation(visible)
 	return (
-		<View className="absolute h-screen w-full">
+		<View className='absolute h-screen w-full'>
 			<AnimatedView
 				style={[
 					{
@@ -28,7 +35,7 @@ const ReadingUi: FC = () => {
 					},
 					headerAnimation
 				]}
-				className="absolute z-50 h-[65px] w-full flex-row items-center justify-between px-2"
+				className='absolute z-50 h-[65px] w-full flex-row items-center justify-between px-2'
 			>
 				<AnimatedIcon
 					icon={ArrowLeft}
@@ -38,8 +45,8 @@ const ReadingUi: FC = () => {
 							shadeBackground
 						) as LineColorType
 					}
-					size="medium"
-					className="w-[50px]"
+					size='medium'
+					className='w-[50px]'
 					onPress={() => goBack()}
 					color={colorScheme.colorPalette.text}
 				/>
@@ -49,12 +56,12 @@ const ReadingUi: FC = () => {
 						colorScheme.colorPalette.background,
 						shadeBackground
 					)}
-					className="w-[50px]"
-					size="medium"
+					className='w-[50px]'
+					size='medium'
 					color={colorScheme.colorPalette.text as LineColorType}
 				/>
 			</AnimatedView>
-			
+
 			<AnimatedView
 				style={[
 					footerAnimation,
@@ -65,26 +72,26 @@ const ReadingUi: FC = () => {
 						)
 					}
 				]}
-				className="h-18 absolute bottom-0 z-50 mt-0 w-full flex-1 pt-0"
+				className='h-18 absolute bottom-0 z-50 mt-0 w-full flex-1 pt-0'
 			>
-				<View className="mt-0 flex-row items-center justify-between  px-4">
+				<View className='mt-0 flex-row items-center justify-between  px-4'>
 					<AnimatedIcon
 						icon={ListOrdered}
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerChapters)}
-						size="large"
+						size='large'
 						color={colorScheme.colorPalette.text}
-						className="pl-0"
+						className='pl-0'
 					/>
 					<AnimatedIcon
 						icon={Search}
-						size="large"
+						size='large'
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSearch)}
 						color={colorScheme.colorPalette.text}
 					/>
 					<Title
 						size={24}
 						center
-						weight="bold"
+						weight='bold'
 						color={colorScheme.colorPalette.primary}
 					>
 						{(readerProgress || 0) + '%'}
@@ -92,14 +99,14 @@ const ReadingUi: FC = () => {
 					<AnimatedIcon
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSettings)}
 						icon={CaseSenSitive}
-						size="large"
+						size='large'
 						color={colorScheme.colorPalette.text}
 					/>
 					<AnimatedIcon
 						icon={BookHeart}
-						size="large"
+						size='large'
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerNoteBook)}
-						className="pr-0"
+						className='pr-0'
 						color={colorScheme.colorPalette.text}
 					/>
 				</View>

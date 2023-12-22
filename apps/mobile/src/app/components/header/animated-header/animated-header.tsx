@@ -8,9 +8,7 @@ import type { FC } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Color } from 'ui/colors'
-import AnimatedIcon from 'ui/react-native/icon/animated-icon'
-import Title from 'ui/react-native/title/title'
-
+import { AnimatedIcon, Title } from 'ui/components'
 
 const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 	const { goBack } = useTypedNavigation()
@@ -21,31 +19,31 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 	const { top } = useSafeAreaInsets()
 	return (
 		<AnimatedView
-			className="bg-canvas absolute left-0 right-0 z-50"
+			className='bg-canvas absolute left-0 right-0 z-50'
 			style={[{ top }, headerStyle]}
 		>
-			<View className="mt-auto flex-row items-center justify-between px-4 py-0.5">
-				<View className="flex-row items-center">
+			<View className='mt-auto flex-row items-center justify-between px-4 py-0.5'>
+				<View className='flex-row items-center'>
 					<AnimatedIcon
 						icon={ChevronLeft}
 						onPress={() => {
 							goBack()
 						}}
-						size="medium"
-						className="pl-0"
+						size='medium'
+						className='pl-0'
 						color={Color.black}
 					/>
-					<Title size={18} className="w-3/4" weight="bold">
+					<Title size={18} className='w-3/4' weight='bold'>
 						{properties.title}
 					</Title>
 				</View>
 				{properties.right
 					? HeaderElementComponent(
-						Object.keys(properties.right)[0],
-						properties.right,
-						Color.black,
-						'right'
-					)
+							Object.keys(properties.right)[0],
+							properties.right,
+							Color.black,
+							'right'
+						)
 					: null}
 			</View>
 		</AnimatedView>

@@ -14,10 +14,11 @@ interface IBottomMenu {
 
 const BottomMenu: FC<IBottomMenu> = properties => (
 	<View
-		className="rounded-t-xl w-full flex-row items-center justify-between  px-2 pb-2 pt-3"
+		className='w-full flex-row items-center justify-between rounded-t-xl  px-2 pb-2 pt-3'
 		style={{
 			backgroundColor: Color.foreground
-		}}>
+		}}
+	>
 		{menuItems.map(item => (
 			<MenuItem key={item.path} item={item} {...properties} />
 		))}

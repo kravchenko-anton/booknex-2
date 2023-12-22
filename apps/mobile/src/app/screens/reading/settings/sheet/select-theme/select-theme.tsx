@@ -1,11 +1,11 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import Title from '@/components/ui/title/title'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
+import { Title } from 'ui/components'
 
 const SelectTheme: FC = () => {
 	const { changeTheme } = useAction()

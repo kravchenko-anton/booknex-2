@@ -3,14 +3,37 @@
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
 		"jsx": "react-native",
-		"lib": ["dom", "esnext"],
+		"lib": [
+			"dom",
+			"esnext"
+		],
 		"moduleResolution": "node",
 		"skipLibCheck": true,
 		"resolveJsonModule": true,
-		"declaration": true
+		"baseUrl": ".",
+		"declaration": true,
+		"paths": {
+			"@/*": [
+				"./src/app/*"
+			],
+			"ui/components": [
+				"../../libs/ui/react-native/index.ts"
+			],
+			"ui/colors": [
+				"../../libs/ui/colors.ts"
+			],
+			"icons": [
+				"../../libs/global/icons/react-native/index.ts"
+			],
+			"global/*": [
+				"../../libs/global/*"
+			]
+		}
 	},
 	"files": [],
-	"include": [],
+	"include": [
+		"../../libs/**/*"
+	],
 	"references": [
 		{
 			"path": "./tsconfig.app.json"

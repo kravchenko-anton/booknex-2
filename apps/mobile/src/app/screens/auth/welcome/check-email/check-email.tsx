@@ -21,7 +21,7 @@ const CheckEmail: FC = () => {
 		emailField.includes('@') &&
 		emailField.includes('.')
 	)
-	
+
 	const { data: isEmailExists, mutate: checkEmailFunction } = useMutation(
 		['check-email'],
 		() => authService.checkEmail(emailField)
@@ -31,34 +31,34 @@ const CheckEmail: FC = () => {
 		checkEmailFunction()
 	}, [emailField])
 	return (
-		<Layout className="relative justify-center p-4">
+		<Layout className='relative justify-center p-4'>
 			<View>
-				<Title size={34} color={Color.white} weight="bold">
+				<Title size={34} color={Color.white} weight='bold'>
 					Log in or Sign up
 				</Title>
-				<Title size={18} color={Color.gray} className="mb-4" weight="light">
+				<Title size={18} color={Color.gray} className='mb-4' weight='light'>
 					Enter your email to continue
 				</Title>
 				<Field
 					control={control}
-					name="email"
-					keyboardType="email-address"
-					placeholder="Enter you Email"
+					name='email'
+					keyboardType='email-address'
+					placeholder='Enter you Email'
 				/>
 				<Button
-					size="medium"
+					size='medium'
 					disabled={!noValidEmail}
 					variant={isEmailExists?.isExist ? 'secondary' : 'primary'}
-					className="mt-2"
-					width="100%"
+					className='mt-2'
+					width='100%'
 					onPress={() => {
 						navigate(isEmailExists?.isExist ? 'Login' : 'SelectGenres')
 					}}
 					text={
 						noValidEmail
-							? (isEmailExists?.isExist
+							? isEmailExists?.isExist
 								? 'Sign in'
-								: 'Sign up')
+								: 'Sign up'
 							: 'continue'
 					}
 				/>

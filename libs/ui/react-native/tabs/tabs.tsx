@@ -1,10 +1,10 @@
-import Button from '@/components/ui/button/button'
-import type { Route, TabsProperties } from '@/components/ui/tabs/tabs-types.ts'
 import { WINDOW_WIDTH } from '@/utils/dimensions'
 import type { FC } from 'react'
 import { memo, useRef, useState } from 'react'
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
+import { Button } from '../index'
+import { Route, TabsProperties } from './tabs-types'
 
 const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 	const [activeTab, setActiveTab] = useState(routes[0].key)
@@ -20,12 +20,12 @@ const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 					showsVerticalScrollIndicator={false}
 					showsHorizontalScrollIndicator={false}
 					bounces={false}
-					ItemSeparatorComponent={() => <View className="w-[10px]" />}
+					ItemSeparatorComponent={() => <View className='w-[10px]' />}
 					data={routes}
 					// If you add ref, the types.ts.ts break
 					renderItem={({ item: tab }: { item: Route }) => (
 						<Button
-							size="medium"
+							size='medium'
 							onPress={() => {
 								const index: number = routes.findIndex(
 									route => route.key === tab.key
@@ -33,7 +33,7 @@ const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 								tabListReference.current?.scrollToIndex({ index })
 								flatListReference.current?.scrollToIndex({ index })
 							}}
-							variant={activeTab === tab.key ? 'primary' : 'dust'}
+							variant={activeTab === tab.key ? 'primary' : 'foreground'}
 							text={tab.title}
 						/>
 					)}

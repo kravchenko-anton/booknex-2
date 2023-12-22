@@ -2,7 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { EMULATOR_SERVER_URL, getAuthUrl } from 'global/api-config'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
-import type { AuthFieldsType, AuthResponseType, RegisterFieldsType } from './auth-types'
+import type {
+	AuthFieldsType,
+	AuthResponseType,
+	RegisterFieldsType
+} from './auth-types'
 
 export const register = createAsyncThunk<AuthResponseType, RegisterFieldsType>(
 	'auth/register',
@@ -50,9 +54,12 @@ export const getNewToken = createAsyncThunk<AuthResponseType, string>(
 	async (refreshToken, thunkAPI) => {
 		try {
 			const tokensResponse = await axios
-				.post<AuthResponseType>(EMULATOR_SERVER_URL + getAuthUrl('/access-token'), {
-					refreshToken
-				})
+				.post<AuthResponseType>(
+					EMULATOR_SERVER_URL + getAuthUrl('/access-token'),
+					{
+						refreshToken
+					}
+				)
 				.then(response => response.data)
 			await saveTokensStorage({
 				accessToken: tokensResponse.accessToken,

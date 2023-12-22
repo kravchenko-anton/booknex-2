@@ -1,7 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require('tailwindcss/colors')
 module.exports = {
-	content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
+	content: [
+		'./App.{js,jsx,ts,tsx}',
+		'./src/**/*.{js,jsx,ts,tsx}',
+		'../../libs/ui/react/**/*.{js,ts,jsx,tsx,mdx}'
+	],
 	theme: {
 		extend: {
 			colors: {

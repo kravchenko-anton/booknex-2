@@ -1,5 +1,8 @@
 import { getShelfUrl } from 'global/api-config'
-import type { ShelfByIdOutput, ShelfCatalogOutput } from 'global/services-types/shelf-types'
+import {
+	ShelfByIdOutput,
+	ShelfCatalogOutput
+} from 'global/services-types/shelf-types'
 import { request } from '../api/request.api'
 
 export const shelfService = {
@@ -9,7 +12,7 @@ export const shelfService = {
 			method: 'GET'
 		})
 	},
-	
+
 	byId(id: number) {
 		return request<ShelfByIdOutput>({
 			url: getShelfUrl(`/by-id/${id}`),

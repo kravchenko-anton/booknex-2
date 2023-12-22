@@ -1,7 +1,8 @@
 import type { FC } from 'react'
 import type { SvgProps } from 'react-native-svg'
-import type { PressableDefaultProperties } from '../../../../../apps/mobile/src/app/components/component-types.ts'
+import type { PressableDefaultProperties } from '../../../../apps/mobile/src/app/components/component-types'
 
+import type { ColorProperties, LineColorType } from '../../colors'
 
 export interface IconProperties
 	extends PressableDefaultProperties,

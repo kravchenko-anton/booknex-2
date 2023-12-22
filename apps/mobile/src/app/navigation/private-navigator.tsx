@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator<TypeRootStackParameterList>()
 
 const PrivateNavigator: FC = () => {
 	const { user } = useAuth()
-	
+
 	return (
 		<Stack.Navigator
 			initialRouteName={user ? 'Featured' : 'Welcome'}
@@ -20,7 +20,8 @@ const PrivateNavigator: FC = () => {
 				contentStyle: {
 					backgroundColor: Color.background
 				}
-			}}>
+			}}
+		>
 			{user
 				? routes.map(route => <Stack.Screen key={route.name} {...route} />)
 				: authRoutes.map(route => <Stack.Screen key={route.name} {...route} />)}

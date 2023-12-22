@@ -22,7 +22,7 @@ export const useBook = () => {
 			},
 			['library']
 		)
-	
+
 	const hamburgerMenuElements: HamburgerMenuElementType[] = [
 		// TODO: доделать список
 		{
@@ -56,7 +56,7 @@ export const useBook = () => {
 			}
 		}
 	]
-	
+
 	const navigate = {
 		reading: () => {
 			navigateFunction('Reading', { id: params.id, epub: book?.file || '' })
@@ -71,7 +71,7 @@ export const useBook = () => {
 			navigateFunction('Author', { id })
 		}
 	}
-	
+
 	return useMemo(
 		() => ({
 			book,

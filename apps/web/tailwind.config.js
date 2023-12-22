@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const tailwindcssColors = require('tailwindcss/colors')
 const { Color } = require('../../libs/ui/colors.ts')
+const { BorderRadiusSettings } = require('../../libs/ui/settings')
 const Colors = (({ transparent, ...o }) => o)(Color)
 module.exports = {
 	content: [

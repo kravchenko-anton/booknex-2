@@ -1,5 +1,9 @@
 import { getCatalogUrl } from 'global/api-config'
-import type { CatalogOutput, SearchExamplesOutput, SearchOutput } from 'global/services-types/catalog.types'
+import {
+	CatalogOutput,
+	SearchExamplesOutput,
+	SearchOutput
+} from 'global/services-types/catalog.types'
 import { request } from '../api/request.api'
 
 export const catalogService = {
@@ -9,14 +13,14 @@ export const catalogService = {
 			url: getCatalogUrl(`/search/${searchTerm}`)
 		})
 	},
-	
+
 	async searchExamples() {
 		return request<SearchExamplesOutput>({
 			method: 'GET',
 			url: getCatalogUrl('/search-examples')
 		})
 	},
-	
+
 	catalog() {
 		return request<CatalogOutput>({
 			method: 'GET',

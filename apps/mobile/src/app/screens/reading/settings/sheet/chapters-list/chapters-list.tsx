@@ -9,7 +9,7 @@ const ChaptersList: FC = () => {
 		<Flatlist
 			mt={0}
 			data={[]}
-			className="mt-2 h-full px-4"
+			className='mt-2 h-full px-4'
 			renderItem={({ item: toc }) => {
 				console.log(toc)
 				return (
@@ -17,13 +17,13 @@ const ChaptersList: FC = () => {
 						style={{
 							backgroundColor: colorScheme.colorPalette.background
 						}}
-						className="mb-4 rounded-xl p-4"
+						className='mb-4 rounded-xl p-4'
 					>
 						<Title
 							style={{
 								color: colorScheme.colorPalette.text
 							}}
-							weight="bold"
+							weight='bold'
 							size={22}
 						>
 							toc

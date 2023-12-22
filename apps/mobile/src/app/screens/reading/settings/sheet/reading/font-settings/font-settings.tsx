@@ -1,13 +1,13 @@
-import Icon from '@/components/ui/icon/icon'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { fontSizeSettings } from '@/redux/reading-settings/reading-settings-slice'
 import LineHeightIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/line-height'
 import PageMarginIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/page-margin'
-import { Minus, Plus } from 'global/icons/react-native'
+import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Icon } from 'ui/components'
 
 const FontSettings: FC = () => {
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
@@ -17,8 +17,8 @@ const FontSettings: FC = () => {
 		useAction()
 	console.log(fontSize)
 	return (
-		<View className="px-4">
-			<View className="mt-4 w-full flex-row  items-center justify-between">
+		<View className='px-4'>
+			<View className='mt-4 w-full flex-row  items-center justify-between'>
 				{/* <Select */}
 				{/* 	onSelect={value => { */}
 				{/* 		changeFontFamily({ */}
@@ -39,22 +39,22 @@ const FontSettings: FC = () => {
 				{/* 		label: font.title */}
 				{/* 	}} */}
 				{/* /> */}
-				
-				<View className="flex-row items-center">
+
+				<View className='flex-row items-center'>
 					<TouchableOpacity>
 						<Icon
-							className="w-[60px] rounded-r-none border-r-0 p-1"
+							className='w-[60px] rounded-r-none border-r-0 p-1'
 							style={{
 								borderColor:
 									colorScheme.colorPalette[
 										fontSize === fontSizeSettings.min ? 'primary' : 'text'
-										]
+									]
 							}}
 							onPress={() => {
 								changeFontSize(fontSize - 2)
 							}}
 							icon={Minus}
-							size="medium"
+							size='medium'
 							color={colorScheme.colorPalette.text}
 						/>
 					</TouchableOpacity>
@@ -65,21 +65,21 @@ const FontSettings: FC = () => {
 								borderColor:
 									colorScheme.colorPalette[
 										fontSize === fontSizeSettings.max ? 'primary' : 'text'
-										]
+									]
 							}}
 							onPress={() => {
 								changeFontSize(fontSize + 2)
 							}}
-							className="w-[60px] rounded-l-none p-1"
+							className='w-[60px] rounded-l-none p-1'
 							color={colorScheme.colorPalette.text}
-							size="medium"
+							size='medium'
 						/>
 					</TouchableOpacity>
 				</View>
 			</View>
-			
-			<View className="mt-6 flex-row items-center justify-center">
-				<View className="mr-4 flex-row items-center">
+
+			<View className='mt-6 flex-row items-center justify-center'>
+				<View className='mr-4 flex-row items-center'>
 					<LineHeightIcon
 						lineCount={3}
 						onPress={() => changeLineHeight(1.8)}
@@ -89,7 +89,7 @@ const FontSettings: FC = () => {
 					/>
 					<LineHeightIcon
 						lineCount={4}
-						className="mx-3"
+						className='mx-3'
 						onPress={() => changeLineHeight(1.5)}
 						backgroundColor={
 							colorScheme.colorPalette[lineHeight === 1.5 ? 'primary' : 'text']
@@ -103,24 +103,24 @@ const FontSettings: FC = () => {
 						}
 					/>
 				</View>
-				
-				<View className="ml-4 flex-row items-center">
+
+				<View className='ml-4 flex-row items-center'>
 					<PageMarginIcon
-						className="p-1  pb-0.5"
+						className='p-1  pb-0.5'
 						onPress={() => changePadding(8)}
 						backgroundColor={
 							colorScheme.colorPalette[padding === 8 ? 'primary' : 'text']
 						}
 					/>
 					<PageMarginIcon
-						className="mx-3 p-1.5  pb-0.5"
+						className='mx-3 p-1.5  pb-0.5'
 						onPress={() => changePadding(14)}
 						backgroundColor={
 							colorScheme.colorPalette[padding === 14 ? 'primary' : 'text']
 						}
 					/>
 					<PageMarginIcon
-						className="p-2 pb-0.5"
+						className='p-2 pb-0.5'
 						onPress={() => changePadding(20)}
 						backgroundColor={
 							colorScheme.colorPalette[padding === 20 ? 'primary' : 'text']

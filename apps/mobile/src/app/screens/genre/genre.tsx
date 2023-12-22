@@ -1,7 +1,8 @@
-import { BigLoader, BookCard, FlatList, Image, PressableContainer, RainbowBookCard, Title } from '@/components'
+import { BookCard, PressableContainer, RainbowBookCard } from '@/components'
 import GenreLayout from '@/screens/genre/genre-layout'
 import { useGenre } from '@/screens/genre/useGenre'
 import { removeEmoji } from '@/utils/remove-emoji'
+import { BigLoader, Flatlist, Image, Title } from 'ui/components'
 
 const Genre = () => {
 	const { navigate, genre } = useGenre()
@@ -9,7 +10,7 @@ const Genre = () => {
 	// TODO: возможно вынести всё flatlist в отдельный компонент
 	return (
 		<GenreLayout title={genre.name} transientValue={50}>
-			<FlatList
+			<Flatlist
 				horizontal
 				title={{
 					text: 'Best Sellers'
@@ -27,7 +28,7 @@ const Genre = () => {
 				)}
 			/>
 
-			<FlatList
+			<Flatlist
 				horizontal
 				title={{
 					text: 'Newest Books'
@@ -45,7 +46,7 @@ const Genre = () => {
 					/>
 				)}
 			/>
-			<FlatList
+			<Flatlist
 				horizontal
 				title={{
 					text: 'Best Authors'
@@ -64,7 +65,7 @@ const Genre = () => {
 				)}
 			/>
 			{genre.bestSellersFromSimilar.map(simular => (
-				<FlatList
+				<Flatlist
 					key={simular.name}
 					title={{
 						text: removeEmoji(simular.name)

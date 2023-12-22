@@ -7,54 +7,53 @@ import { View } from 'react-native'
 import { Color } from 'ui/colors'
 import { Image, Title } from 'ui/components'
 
-const AuthorLayout: FC<PropsWithChildren<AuthorLayoutProperties>> =
-	({
-		 children,
-		 ...properties
-	 }) => (
-		<LargeHeaderScrollLayout
-			animatedHeader={{
-				title: properties.name,
-				transientValue: 90,
-				right: {
-					sharing: `${properties.name} is a great author! Check him on Booknex!`
-				}
-			}}
-			headerChildren={
-				<View
-					style={{
-						backgroundColor: properties.backgroundColor
-					}}
-					className="h-[250px]"
-				>
-					<View className="flex-1 bg-[#0000009a]  p-4 pt-0">
-						<Header
-							color={Color.white}
-							right={{
-								sharing: `${properties.name} is a great author! Check him on Booknex!`
-							}}
-						/>
-						<Image
-							url={properties.picture}
-							className="mb-4 mt-2 self-center"
-							height={100}
-							width={100}
-						/>
-						<Title
-							size={26}
-							color={Color.white}
-							center={true}
-							weight="bold"
-							numberOfLines={2}
-						>
-							{properties.name}
-						</Title>
-					</View>
-				</View>
+const AuthorLayout: FC<PropsWithChildren<AuthorLayoutProperties>> = ({
+	children,
+	...properties
+}) => (
+	<LargeHeaderScrollLayout
+		animatedHeader={{
+			title: properties.name,
+			transientValue: 90,
+			right: {
+				sharing: `${properties.name} is a great author! Check him on Booknex!`
 			}
-		>
-			{children}
-		</LargeHeaderScrollLayout>
-	)
+		}}
+		headerChildren={
+			<View
+				style={{
+					backgroundColor: properties.backgroundColor
+				}}
+				className='h-[250px]'
+			>
+				<View className='flex-1 bg-[#0000009a]  p-4 pt-0'>
+					<Header
+						color={Color.white}
+						right={{
+							sharing: `${properties.name} is a great author! Check him on Booknex!`
+						}}
+					/>
+					<Image
+						url={properties.picture}
+						className='mb-4 mt-2 self-center'
+						height={100}
+						width={100}
+					/>
+					<Title
+						size={26}
+						color={Color.white}
+						center={true}
+						weight='bold'
+						numberOfLines={2}
+					>
+						{properties.name}
+					</Title>
+				</View>
+			</View>
+		}
+	>
+		{children}
+	</LargeHeaderScrollLayout>
+)
 
 export default AuthorLayout

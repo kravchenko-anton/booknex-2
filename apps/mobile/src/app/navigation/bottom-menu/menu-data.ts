@@ -1,4 +1,4 @@
-import { Bookmarked, Home, Search, User } from 'global/icons/react-native'
+import { Bookmarked, Home, Search, User } from 'icons'
 import type { IMenuItem } from './menu.interface'
 
 export const menuItems: IMenuItem[] = [
@@ -6,7 +6,7 @@ export const menuItems: IMenuItem[] = [
 		icon: Home,
 		path: 'Featured'
 	},
-	
+
 	{
 		icon: Bookmarked,
 		path: 'Library'
@@ -15,7 +15,7 @@ export const menuItems: IMenuItem[] = [
 		icon: Search,
 		path: 'Search'
 	},
-	
+
 	{
 		icon: User,
 		path: 'Profile'

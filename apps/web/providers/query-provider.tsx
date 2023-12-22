@@ -1,6 +1,6 @@
 'use client'
+import { Color } from '@/ui/colors'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Color } from '@ui/colors'
 import type { PropsWithChildren } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Provider } from 'react-redux'

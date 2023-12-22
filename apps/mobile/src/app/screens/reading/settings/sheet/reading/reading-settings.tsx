@@ -1,22 +1,21 @@
+import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
-import { BottomSheetListEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types.ts'
-import Icon from '@/components/ui/icon/icon'
-import Title from '@/components/ui/title/title'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import FontSettings from '@/screens/reading/settings/sheet/reading/font-settings/font-settings'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
-import { ChevronRight } from 'global/icons/react-native'
 import { shadeRGBColor } from 'global/utils/shade-color'
+import { ChevronRight } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
+import { Icon, Title } from 'ui/components'
 
 const ReadingSettings: FC = () => {
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	const { changeTheme, openBottomSheet } = useAction()
 	return (
-		<View className="px-6">
-			<View className="mt-4 flex-row items-center justify-between">
+		<View className='px-6'>
+			<View className='mt-4 flex-row items-center justify-between'>
 				{[
 					...themePack.slice(0, 3).map(theme => {
 						return (
@@ -30,10 +29,10 @@ const ReadingSettings: FC = () => {
 											: theme.colorPalette.background
 								}}
 								onPress={() => changeTheme(theme.slug)}
-								className="rounded-xl border-2 p-2 px-4"
+								className='rounded-xl border-2 p-2 px-4'
 							>
 								<Title
-									weight="semiBold"
+									weight='semiBold'
 									size={18}
 									style={{ color: theme.colorPalette.text }}
 								>
@@ -43,7 +42,7 @@ const ReadingSettings: FC = () => {
 						)
 					}),
 					<PressableContainer
-						key="other theme"
+						key='other theme'
 						style={{
 							backgroundColor: shadeRGBColor(
 								colorScheme.colorPalette.background,
@@ -53,11 +52,11 @@ const ReadingSettings: FC = () => {
 						onPress={() =>
 							openBottomSheet(BottomSheetListEnum.readerSelectTheme)
 						}
-						className="flex-row items-center rounded-xl p-2 px-4"
+						className='flex-row items-center rounded-xl p-2 px-4'
 					>
 						<Title
 							color={colorScheme.colorPalette.text}
-							weight="semiBold"
+							weight='semiBold'
 							size={18}
 						>
 							Other
@@ -65,8 +64,8 @@ const ReadingSettings: FC = () => {
 						<Icon
 							noPadding
 							icon={ChevronRight}
-							size="medium"
-							className="ml-2 h-6 w-3.5"
+							size='medium'
+							className='ml-2 h-6 w-3.5'
 							color={colorScheme.colorPalette.text}
 						/>
 					</PressableContainer>
@@ -77,7 +76,7 @@ const ReadingSettings: FC = () => {
 			{/*	<Title weight={'bold'} color={colorScheme.colorPalette.text}>*/}
 			{/*		Scrolling*/}
 			{/*	</Title>*/}
-			
+
 			{/*	<Switch*/}
 			{/*		className='m-0 ml-3 mt-1.5 p-0'*/}
 			{/*		trackColor={{*/}

@@ -1,3 +1,3 @@
-import type { FlatListProperties } from '@/components/ui/flatlist/flatlist-types.ts'
+import { FlatlistDefaultProperties } from '@/components/component-types'
 
-export type RecommendationProperties = FlatListProperties<any>
+export type RecommendationProperties = FlatlistDefaultProperties<any>

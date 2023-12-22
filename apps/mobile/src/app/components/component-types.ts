@@ -1,8 +1,15 @@
-import type { FlatListProps, ImageProps, PressableProps, ScrollViewProps, TextProps, ViewProps } from 'react-native'
+import type {
+	FlatListProps,
+	ImageProps,
+	PressableProps,
+	ScrollViewProps,
+	TextProps,
+	ViewProps
+} from 'react-native'
 
 export type ViewDefaultProperties = Pick<
 	ViewProps,
-	| 'onLayout' | 'pointerEvents' | 'onMagicTap'
+	'onLayout' | 'pointerEvents' | 'onMagicTap' | 'style' | 'className'
 >
 
 export type FlatlistDefaultProperties<T> = Pick<
@@ -15,6 +22,9 @@ export type FlatlistDefaultProperties<T> = Pick<
 	| 'onEndReachedThreshold'
 	| 'onEndReached'
 	| 'ListEmptyComponent'
+	| 'ListFooterComponent'
+	| 'style'
+	| 'className'
 	| 'keyExtractor'
 	| 'data'
 	| 'snapToInterval'
@@ -29,6 +39,8 @@ export type PressableDefaultProperties = Pick<
 	| 'onLayout'
 	| 'pointerEvents'
 	| 'onPress'
+	| 'style'
+	| 'className'
 	| 'disabled'
 	| 'onBlur'
 	| 'onFocus'
@@ -41,6 +53,7 @@ export type TextDefaultProperties = Pick<
 	| 'style'
 	| 'onPress'
 	| 'onMagicTap'
+	| 'className'
 	| 'onTextLayout'
 	| 'onLayout'
 	| 'disabled'
@@ -56,6 +69,8 @@ export type ImageDefaultProperties = Pick<
 	| 'resizeMethod'
 	| 'progressiveRenderingEnabled'
 	| 'onProgress'
+	| 'style'
+	| 'className'
 	| 'borderRadius'
 	| 'fadeDuration'
 	| 'defaultSource'
@@ -67,6 +82,8 @@ export type ScrollViewDefaultProperties = Pick<
 	// onScroll end
 	| 'onResponderEnd'
 	| 'onTouchEnd'
+	| 'style'
+	| 'className'
 	| 'children'
 	| 'keyboardShouldPersistTaps'
 	| 'automaticallyAdjustKeyboardInsets'

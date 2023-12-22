@@ -25,7 +25,7 @@ export default function Sidebar(): JSX.Element {
 	return (
 		<div className=' z-0 flex justify-center p-2 pb-4 pl-0  duration-100 ease-linear md:fixed md:h-[calc(100vh-70px)] md:flex-col'>
 			<div>
-				<ul className='bg-foreground ml-1 flex justify-between rounded-xl p-2 py-4 text-sm md:block'>
+				<ul className='bg-foreground ml-0 flex justify-between rounded-r-xl p-2 py-4 text-sm md:block'>
 					{iconsList.map(icon => {
 						return (
 							<li className='w-full' key={icon.link}>

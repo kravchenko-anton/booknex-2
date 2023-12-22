@@ -6,12 +6,12 @@ import { View } from 'react-native'
 import { Color } from 'ui/colors'
 
 const Header: FC<HeaderProperties> = ({
-	                                      style,
-	                                      color = Color.white,
-	                                      left = { back: true },
-	                                      right,
-	                                      ...properties
-                                      }) => {
+	style,
+	color = Color.white,
+	left = { back: true },
+	right,
+	...properties
+}) => {
 	const { rightComponent, leftComponent } = useHeader({
 		left,
 		right,
@@ -19,9 +19,10 @@ const Header: FC<HeaderProperties> = ({
 	})
 	return (
 		<View
-			className="flex-row items-center justify-between"
+			className='flex-row items-center justify-between'
 			style={style}
-			{...properties}>
+			{...properties}
+		>
 			{leftComponent}
 			{rightComponent}
 		</View>

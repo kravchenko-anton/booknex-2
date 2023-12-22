@@ -22,7 +22,7 @@ export const useCheckAuth = (routeName?: string) => {
 		}
 		checkToken()
 	}, [user])
-	
+
 	useEffect(() => {
 		const checkRefreshToken = async () => {
 			const refreshToken = await EncryptedStorage.getItem('refreshToken')
@@ -30,7 +30,7 @@ export const useCheckAuth = (routeName?: string) => {
 				logout()
 			}
 		}
-		
+
 		checkRefreshToken()
 	}, [routeName])
 }

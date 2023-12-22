@@ -1,5 +1,5 @@
 import { getAuthUrl } from 'global/api-config'
-import type { CheckEmailOutput } from 'global/services-types/auth-types'
+import { CheckEmailOutput } from 'global/services-types/auth-types'
 import { request } from '../api/request.api'
 
 export const authService = {

@@ -1,4 +1,3 @@
-import BottomSheet from '@/components/bottom-sheet/bottom-sheet'
 import Toast from '@/components/toast'
 import EventProvider from '@/hooks/outside-press/components/event-provider'
 import Navigation from '@/navigation/navigation'
@@ -35,10 +34,14 @@ const asyncStoragePersister = createAsyncStoragePersister({
 export default function App() {
 	return (
 		<Provider store={store}>
-			<PersistGate persistor={persistor} loading={<View className="w-screen h-screen bg-background">
-				<BigLoader />
-			</View>
-			}>
+			<PersistGate
+				persistor={persistor}
+				loading={
+					<View className='bg-background h-screen w-screen'>
+						<BigLoader />
+					</View>
+				}
+			>
 				<PersistQueryClientProvider
 					client={queryClient}
 					persistOptions={{ persister: asyncStoragePersister }}
@@ -46,7 +49,6 @@ export default function App() {
 					<EventProvider>
 						<GestureHandlerRootView style={flexStyle}>
 							<Navigation />
-							<BottomSheet />
 						</GestureHandlerRootView>
 					</EventProvider>
 					<Toast />

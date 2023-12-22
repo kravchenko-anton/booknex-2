@@ -1,5 +1,6 @@
 'use client'
 import { Close, Plus } from '@/global/icons/react'
+import { Color } from '@/ui/colors'
 import {
 	Button,
 	DropZone,
@@ -10,7 +11,6 @@ import {
 	TextArea
 } from '@/ui/components'
 import { blobFormData } from '@/utils/files'
-import { Color } from '@ui/colors'
 import type { FC } from 'react'
 
 import CreateAuthorPopup from '../../authors/popup/create'

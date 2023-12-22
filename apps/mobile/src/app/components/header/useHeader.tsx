@@ -1,11 +1,12 @@
-import type { HeaderProperties, LeftHeaderElementType } from '@/components/header/header-types'
-import HamburgerMenu from '@/components/ui/hamburger-menu/hamburger-menu'
-import AnimatedIcon from '@/components/ui/icon/animated-icon'
-import Title from '@/components/ui/title/title'
+import type {
+	HeaderProperties,
+	LeftHeaderElementType
+} from '@/components/header/header-types'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { ArrowLeft, Share as ShareIcon } from 'icons'
 import { Share } from 'react-native'
-import type { ColorProperties, LineColorType } from 'ui/colors'
+import { ColorProperties, LineColorType } from 'ui/colors'
+import { AnimatedIcon, HamburgerMenu, Title } from 'ui/components'
 
 export const HeaderElementComponent = (
 	type: string,
@@ -24,7 +25,7 @@ export const HeaderElementComponent = (
 					<AnimatedIcon
 						color={color}
 						className={padding}
-						size="medium"
+						size='medium'
 						{...properties.icon}
 					/>
 				)
@@ -33,7 +34,7 @@ export const HeaderElementComponent = (
 		case 'title': {
 			return (
 				properties.title && (
-					<Title size={24} color={color} weight="bold">
+					<Title size={24} color={color} weight='bold'>
 						{properties.title}
 					</Title>
 				)
@@ -57,7 +58,7 @@ export const HeaderElementComponent = (
 						color={color}
 						icon={ShareIcon}
 						className={padding}
-						size="medium"
+						size='medium'
 						onPress={() =>
 							Share.share({
 								message:
@@ -79,16 +80,16 @@ export const useHeader = (
 		Required<ColorProperties>
 ) => {
 	const { goBack } = useTypedNavigation()
-	
+
 	return {
 		leftComponent: properties.left.back ? (
 			<AnimatedIcon
 				icon={ArrowLeft}
-				size="medium"
+				size='medium'
 				onPress={() => {
 					goBack()
 				}}
-				className="pl-0"
+				className='pl-0'
 				color={properties.color}
 			/>
 		) : (
@@ -101,11 +102,11 @@ export const useHeader = (
 		),
 		rightComponent: properties.right
 			? HeaderElementComponent(
-				Object.keys(properties.right)[0] || 'back',
-				properties.right,
-				properties.color as LineColorType,
-				'right'
-			)
+					Object.keys(properties.right)[0] || 'back',
+					properties.right,
+					properties.color as LineColorType,
+					'right'
+				)
 			: null
 	}
 }

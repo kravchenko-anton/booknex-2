@@ -1,14 +1,14 @@
-import { Header, LargeHeaderScrollLayout, Title } from '@/components'
-import type { BookLayoutProperties } from '@/screens/book/book-layout/book-layout-types'
-
+import { Header, LargeHeaderScrollLayout } from '@/components'
+import { BookLayoutProperties } from '@/screens/book/book-layout/book-layout-types'
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'
+import { Title } from 'ui/components'
 
 const BookLayout: FC<PropsWithChildren<BookLayoutProperties>> = ({
-	                                                                 children,
-	                                                                 ...properties
-                                                                 }) => (
+	children,
+	...properties
+}) => (
 	<LargeHeaderScrollLayout
 		animatedHeader={{
 			title: properties.title,
@@ -24,7 +24,7 @@ const BookLayout: FC<PropsWithChildren<BookLayoutProperties>> = ({
 				style={{
 					backgroundColor: properties.backgroundColor
 				}}
-				className="h-[230px] p-4 pt-0"
+				className='h-[230px] p-4 pt-0'
 			>
 				<Header
 					color={Color.white}
@@ -32,13 +32,13 @@ const BookLayout: FC<PropsWithChildren<BookLayoutProperties>> = ({
 						sharing: `Wow! I see ${properties.title} book on Booknex and I think you will like it too!`
 					}}
 				/>
-				<Title size={26} color={Color.white} weight="bold" numberOfLines={2}>
+				<Title size={26} color={Color.white} weight='bold' numberOfLines={2}>
 					{properties.title}
 				</Title>
 				<Title
 					size={18}
-					className="mt-2 w-1/2"
-					weight="bold"
+					className='mt-2 w-1/2'
+					weight='bold'
 					onPress={() => {
 						properties.author.navigate(properties.author.id)
 					}}

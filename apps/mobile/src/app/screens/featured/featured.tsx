@@ -53,7 +53,7 @@ const Featured = () => {
 					<Button
 						onPress={() => navigate('Genre', { id: genre.id })}
 						size='medium'
-						variant='ghost'
+						variant='foreground'
 						text={genre.name}
 						className='px-4'
 					/>

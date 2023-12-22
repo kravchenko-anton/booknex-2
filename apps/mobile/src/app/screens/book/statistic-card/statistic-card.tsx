@@ -1,7 +1,7 @@
-import { Icon, Title } from '@/components'
 import type { StatisticCardProperties } from '@/screens/book/statistic-card/statistic-card-types'
 import type { FC } from 'react'
 import { View } from 'react-native'
+import { Icon, Title } from 'ui/components'
 
 const StatisticCard: FC<StatisticCardProperties> = ({
 	icon,

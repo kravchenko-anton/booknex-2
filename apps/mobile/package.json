@@ -7,6 +7,8 @@
 		"react": "*",
 		"react-native": "*",
 		"react-native-svg": "*",
+		"@testing-library/jest-native": "*",
+		"@testing-library/react-native": "*",
 		"metro-config": "*",
 		"react-native-svg-transformer": "*",
 		"nativewind": "*",
@@ -22,17 +24,17 @@
 		"@react-navigation/native": "*",
 		"@react-navigation/native-stack": "*",
 		"react-native-image-picker": "*",
-		"tailwindcss": "*",
 		"react-redux": "*",
 		"react-hook-form": "*",
+		"babel-plugin-module-resolver": "*",
 		"@reduxjs/toolkit": "*",
+		"metro-react-native-babel-preset": "*",
 		"@tanstack/query-async-storage-persister": "*",
 		"@tanstack/react-query": "*",
-		"@tanstack/react-query-persist-client": "*"
-		
+		"@tanstack/react-query-persist-client": "*",
+		"tailwindcss": "*"
 	},
 	"devDependencies": {
-		"tailwindcss": "*",
 		"@testing-library/jest-native": "*",
 		"@testing-library/react-native": "*"
 	}

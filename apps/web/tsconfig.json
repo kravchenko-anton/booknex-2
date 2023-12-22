@@ -25,7 +25,7 @@
 			"@/ui/components": [
 				"../../libs/ui/react/index.ts"
 			],
-			"@ui/colors": [
+			"@/ui/colors": [
 				"../../libs/ui/colors.ts"
 			],
 			"@/icons": [

@@ -1,7 +1,7 @@
 import type { ViewDefaultProperties } from '@/components/component-types'
-import type { HamburgerMenuProperties } from '@/components/ui/hamburger-menu/hamburger-menu-types.ts'
-import type { IconProperties } from '@/components/ui/icon/icon-types.ts'
-import type { ColorProperties } from 'ui/colors'
+import { HamburgerMenuProperties } from '@/components/hamburger-menu/hamburger-menu-types'
+import { IconProperties } from '@/types/global'
+import { ColorProperties } from 'ui/colors'
 
 export type HeaderElementType = {
 	icon?: Omit<IconProperties, 'color' | 'size'>

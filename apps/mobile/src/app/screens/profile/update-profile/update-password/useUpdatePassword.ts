@@ -25,10 +25,10 @@ export const useUpdatePassword = () => {
 			}
 		}
 	)
-	
+
 	const onSubmit = async (data: EditPasswordTypes) => {
 		await mutateAsync(data)
 	}
-	
+
 	return { onSubmit }
 }

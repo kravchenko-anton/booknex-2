@@ -3,17 +3,17 @@ import { Color } from 'ui/colors'
 import Title from '../title/title'
 import type { FlatListProperties } from './flatlist-types'
 
-const FlatList = <T, >({
-	                       title,
-	                       data = [],
-	                       Ref,
-	                       elementSpacing = 12,
-	                       contentContainerStyle,
-	                       mt = 24,
-	                       px = 8,
-	                       style,
-	                       ...properties
-                       }: FlatListProperties<T>) => {
+const FlatList = <T,>({
+	title,
+	data = [],
+	Ref,
+	elementSpacing = 12,
+	contentContainerStyle,
+	mt = 24,
+	px = 8,
+	style,
+	...properties
+}: FlatListProperties<T>) => {
 	if (data.length === 0 && !properties.ListEmptyComponent) return
 	return (
 		<>
@@ -28,7 +28,8 @@ const FlatList = <T, >({
 				]}
 				color={title?.color ?? Color.black}
 				size={22}
-				weight="semiBold">
+				weight='semiBold'
+			>
 				{title?.text}
 			</Title>
 			<DefaultFlatlist
@@ -56,7 +57,7 @@ const FlatList = <T, >({
 				initialNumToRender={10}
 				showsHorizontalScrollIndicator={false}
 				showsVerticalScrollIndicator={false}
-				decelerationRate="normal"
+				decelerationRate='normal'
 				{...properties}
 			/>
 		</>

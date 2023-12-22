@@ -11,12 +11,12 @@ interface LineHeightIconProperties extends PressableDefaultProperties {
 
 const lineStyle = 'w-8 h-[2px]'
 const LineHeightIcon: FC<LineHeightIconProperties> = ({
-	                                                      backgroundColor = Color.black,
-	                                                      lineCount,
-	                                                      ...properties
-                                                      }) => (
+	backgroundColor = Color.black,
+	lineCount,
+	...properties
+}) => (
 	<PressableContainer
-		className="m-0 h-[30px] justify-between p-0"
+		className='m-0 h-[30px] justify-between p-0'
 		{...properties}
 	>
 		{Array.from({ length: lineCount }).map((_, index) => {

@@ -1,9 +1,13 @@
 import type { ImageDefaultProperties } from '@/components/component-types.ts'
-import type { Dimensions } from '@/types.ts/global'
+
+export interface DimensionsType {
+	width?: number
+	height?: number
+}
 
 export interface ImageTypes
 	extends Omit<ImageDefaultProperties, 'source'>,
-		Dimensions {
+		DimensionsType {
 	fullSize?: boolean
 	url: string
 }

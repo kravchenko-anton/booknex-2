@@ -4,8 +4,7 @@
 		"outDir": "../../dist/out-tsc",
 		"declaration": true,
 		"types": [
-			"node",
-			"@types/styled-components-react-native"
+			"node"
 		]
 	},
 	"include": [

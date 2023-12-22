@@ -1,10 +1,10 @@
 export const Color = {
-	foreground: '#1F1F1F' as '#1f1f1f',
-	vibrant: '#2F2F2F' as '#282828',
-	shade: '#282828' as '#1F1F1F',
-	background: '#0f0f0f' as '#0f0f0f',
-	primary: '#ca2828' as '#ca2828',
-	secondary: '#780000' as '#780000',
+	foreground: '#26262C' as '#26262C',
+	vibrant: '#4d5058' as '#4d5058',
+	shade: '#1b1b1f' as '#1b1b1f',
+	background: '#151517' as '#151517',
+	primary: '#685369' as '#685369',
+	secondary: '#605770' as '#605770',
 
 	black: '#000000' as '#000000',
 	gray: '#959caf' as '#959caf',
@@ -14,24 +14,6 @@ export const Color = {
 	success: '#4CAF50' as '#4CAF50',
 	warning: '#FFBE0B' as '#FFBE0B',
 	transparent: 'transparent' as 'transparent'
-}
-
-export const InteriorColor = {
-	foreground: Color.white,
-	vibrant: Color.white,
-	shade: Color.white,
-	background: Color.white,
-	primary: Color.white,
-	secondary: Color.white,
-
-	black: Color.white,
-	gray: Color.black,
-	white: Color.black,
-
-	danger: Color.white,
-	success: Color.white,
-	warning: Color.white,
-	transparent: Color.white
 }
 
 export type LineColorType = {

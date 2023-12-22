@@ -4,36 +4,23 @@ import { View } from 'react-native'
 import { BigLoader, Button, Description, Flatlist, Image } from 'ui/components'
 
 const Book = () => {
-	const {
-		book,
-		hamburgerMenuElements,
-		navigate
-	} = useBook()
-	console.log(book)
+	const { book, hamburgerMenuElements, navigate } = useBook()
 	if (!book) return <BigLoader />
 	return (
-		<View
-		>
-			<View className="flex-row justify-between px-4">
-				<View className="flex-1 justify-between">
-				</View>
-				<Image
-					url={book.picture}
-					className="z-0"
-					height={260}
-					width={170}
-				/>
+		<View>
+			<View className='flex-row justify-between px-4'>
+				<View className='flex-1 justify-between'></View>
+				<Image url={book.picture} className='z-0' height={260} width={170} />
 			</View>
-			<View className="flex-row justify-between gap-2 px-4 pt-6">
+			<View className='flex-row justify-between gap-2 px-4 pt-6'>
 				<Button
 					onPress={() => {
 						navigate.reading()
 					}}
-					text="Read"
-					size="medium"
-					className="flex-1"
+					text='Read'
+					size='medium'
+					className='flex-1'
 				/>
-			
 			</View>
 			<Flatlist
 				title={{
@@ -48,16 +35,16 @@ const Book = () => {
 						onPress={() => {
 							navigate.genre(genre.id)
 						}}
-						variant="shade"
-						size="small"
+						variant='shade'
+						size='small'
 						text={genre.name}
 					/>
 				)}
 			/>
-			<Description size={18} className="mt-2 px-4" weight="light">
+			<Description size={18} className='mt-2 px-4' weight='light'>
 				{book.description}
 			</Description>
-			
+
 			{/* <FlatList */}
 			{/* 	data={book.similarBooks} */}
 			{/* 	horizontal */}

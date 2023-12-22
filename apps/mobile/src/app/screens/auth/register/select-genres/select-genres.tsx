@@ -1,4 +1,4 @@
-import { BigLoader, Button, Header, Title } from '@/components'
+import { Header } from '@/components'
 import { useTypedNavigation } from '@/hooks'
 import { genreService } from '@/services/genre/genre-service'
 import { useQuery } from '@tanstack/react-query'
@@ -6,6 +6,7 @@ import type { FC } from 'react'
 import { useState } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'
+import { BigLoader, Button, Title } from 'ui/components'
 
 const SelectGenres: FC = () => {
 	const [selectGenres, setSelectGenres] = useState<string[]>([])
@@ -13,17 +14,17 @@ const SelectGenres: FC = () => {
 	const { navigate } = useTypedNavigation()
 	if (!genres) return <BigLoader />
 	return (
-		<View className="h-full">
+		<View className='h-full'>
 			<Header />
 			<View>
-				<Title size={34} weight="bold" className="mb-2" numberOfLines={2}>
+				<Title size={34} weight='bold' className='mb-2' numberOfLines={2}>
 					Choose your favorite genres
 				</Title>
-				<Title size={18} weight="light" color={Color.gray} className="mb-4">
+				<Title size={18} weight='light' color={Color.gray} className='mb-4'>
 					Select at least 3 genres
 				</Title>
 			</View>
-			<View className="flex w-full flex-row flex-wrap ">
+			<View className='flex w-full flex-row flex-wrap '>
 				{genres.map(genre => (
 					<Button
 						onPress={() => {
@@ -32,19 +33,21 @@ const SelectGenres: FC = () => {
 								: setSelectGenres([...selectGenres, genre.name])
 						}}
 						key={genre.id}
-						size="medium"
+						size='medium'
 						text={genre.name}
-						variant={selectGenres.includes(genre.name) ? 'primary' : 'dust'}
-						className="mr-3"
+						variant={
+							selectGenres.includes(genre.name) ? 'primary' : 'foreground'
+						}
+						className='mr-3'
 					/>
 				))}
 			</View>
 			<Button
-				className="mt-auto"
+				className='mt-auto'
 				disabled={selectGenres.length < 3}
-				variant="secondary"
-				size="large"
-				text="Next step"
+				variant='secondary'
+				size='large'
+				text='Next step'
 				onPress={() => {
 					navigate('Registration', {
 						selectGenres: selectGenres

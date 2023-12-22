@@ -1,14 +1,15 @@
-import { fontSettings } from '@/components/ui/title/title-settings'
 import type { FC } from 'react'
 import { Text } from 'react-native'
 import RnToast, { BaseToast } from 'react-native-toast-message'
 import { Color } from 'ui/colors'
+import { fontSettings } from '../../../../../libs/ui/react-native/title/title-settings'
+import { BorderRadiusSettings } from '../../../../../libs/ui/settings'
 
 const options = (color: string) => ({
 	style: {
 		backgroundColor: Color.shade,
 		alignItems: 'center' as const,
-		borderRadius: 8,
+		borderRadius: BorderRadiusSettings,
 		borderLeftColor: color,
 		borderColor: color,
 		borderWidth: 3,
@@ -32,12 +33,12 @@ const Toast: FC = () => (
 	<RnToast
 		autoHide={true}
 		visibilityTime={3000}
-		position="top"
+		position='top'
 		config={{
 			success: properties => (
 				<BaseToast
 					renderTrailingIcon={() => (
-						<Text className="items-center justify-center  pr-3 text-3xl">
+						<Text className='items-center justify-center  pr-3 text-3xl'>
 							🎉
 						</Text>
 					)}
@@ -48,7 +49,7 @@ const Toast: FC = () => (
 			info: properties => (
 				<BaseToast
 					renderTrailingIcon={() => (
-						<Text className="items-center justify-center  pr-3 text-3xl">
+						<Text className='items-center justify-center  pr-3 text-3xl'>
 							⚠️
 						</Text>
 					)}
@@ -59,7 +60,7 @@ const Toast: FC = () => (
 			error: properties => (
 				<BaseToast
 					renderTrailingIcon={() => (
-						<Text className="items-center justify-center  pr-3 text-3xl">
+						<Text className='items-center justify-center  pr-3 text-3xl'>
 							🚨
 						</Text>
 					)}

@@ -1,20 +1,21 @@
-import { Button, Layout, Title } from '@/components'
+import { Layout } from '@/components'
 import { useTypedNavigation } from '@/hooks'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'
+import { Button, Title } from 'ui/components'
 
 const Welcome: FC = () => {
 	const { navigate } = useTypedNavigation()
 	return (
-		<Layout className="relative justify-center p-4">
+		<Layout className='relative justify-center p-4'>
 			<View>
-				<View className="w-full items-center rounded-3xl bg-white p-4">
+				<View className='w-full items-center rounded-3xl bg-white p-4'>
 					<Title
 						size={36}
 						color={Color.secondary}
-						className="mb-2"
-						weight="bold"
+						className='mb-2'
+						weight='bold'
 					>
 						Booknex
 					</Title>
@@ -22,8 +23,8 @@ const Welcome: FC = () => {
 						size={16}
 						color={Color.gray}
 						numberOfLines={10}
-						className="w-full  text-center"
-						weight="light"
+						className='w-full  text-center'
+						weight='light'
 					>
 						Booknex is your go-to app for reading and discovering books. With a
 						user-friendly interface, it offers an extensive library and
@@ -32,15 +33,15 @@ const Welcome: FC = () => {
 						book discovery process and lets you dive right into your favorite
 						stories.
 					</Title>
-					
+
 					<Button
 						onPress={() => {
 							navigate('CheckEmail')
 						}}
-						size="large"
-						text="Get Started"
-						className=" mt-6"
-						width="100%"
+						size='large'
+						text='Get Started'
+						className='mt-6'
+						width='100%'
 					/>
 				</View>
 			</View>

@@ -1,6 +1,6 @@
 module.exports = {
 	parser: '@typescript-eslint/parser',
-	
+
 	plugins: [
 		'@typescript-eslint/eslint-plugin',
 		'sonarjs',
@@ -34,6 +34,7 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'spaced-comment': ['off'],
 		'@typescript-eslint/no-unsafe-call': 'off',
 		'@typescript-eslint/no-unsafe-assignment': 'off',
 		'@typescript-eslint/no-unsafe-return': 'off',

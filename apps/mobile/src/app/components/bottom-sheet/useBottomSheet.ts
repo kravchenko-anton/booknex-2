@@ -1,5 +1,5 @@
-import { BottomSheetListPagesEnum } from '@/components/ui/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types.ts'
-import { CalculateSnapPoints } from '@/components/ui/bottom-sheet/calculate-snap-point'
+import { BottomSheetListPagesEnum } from '@/components/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
+import { CalculateSnapPoints } from '@/components/bottom-sheet/calculate-snap-point'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { shadeBackground } from '@/screens/reading/settings/reading-ui'
@@ -8,7 +8,16 @@ import { shadeRGBColor } from 'global/utils/shade-color'
 import { useEffect } from 'react'
 import type { GestureResponderEvent } from 'react-native'
 import { Gesture } from 'react-native-gesture-handler'
-import { Easing, Extrapolation, interpolate, runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
+import {
+	Easing,
+	Extrapolation,
+	interpolate,
+	runOnJS,
+	useAnimatedStyle,
+	useSharedValue,
+	withSpring,
+	withTiming
+} from 'react-native-reanimated'
 import { Color } from 'ui/colors'
 // TODO: сделать в bottomSheet всё максимально оптимизировано
 export const useBottomSheet = () => {
@@ -41,7 +50,7 @@ export const useBottomSheet = () => {
 				? -SCREEN_HEIGHT
 				: -Number(CalculatedSnapPoints[index - 1])
 		}) || [SCREEN_HEIGHT, -SCREEN_HEIGHT]
-		
+
 		const outputRange = CalculatedSnapPoints.map((_, index) => {
 			return index === 0
 				? SCREEN_HEIGHT
@@ -54,21 +63,21 @@ export const useBottomSheet = () => {
 			height:
 				CalculatedSnapPoints[0] && CalculatedSnapPoints[1]
 					? interpolate(
-						translationY.value,
-						inputRange,
-						outputRange,
-						Extrapolation.CLAMP
-					)
+							translationY.value,
+							inputRange,
+							outputRange,
+							Extrapolation.CLAMP
+						)
 					: SCREEN_HEIGHT
 		}
 	})
-	
+
 	const colorPallet = {
 		backgroundColor: bottomSheet?.name.includes(BottomSheetListPagesEnum.reader)
 			? shadeRGBColor(colorScheme.colorPalette.background, shadeBackground)
 			: Color.shade
 	}
-	
+
 	const touch = {
 		wrapper: () => {
 			translationY.value = withTiming(
@@ -81,7 +90,7 @@ export const useBottomSheet = () => {
 			event.stopPropagation()
 		}
 	}
-	
+
 	const gesture = Gesture.Pan()
 		.onStart(() => (oldTranslationY.value = translationY.value))
 		.activeOffsetX([-20, 20])
@@ -92,7 +101,7 @@ export const useBottomSheet = () => {
 				-Number(CalculatedSnapPoints.at(-1))
 			)
 		})
-		
+
 		.onEnd(() => {
 			if (!CalculatedSnapPoints[0]) return
 			if (translationY.value > -CalculatedSnapPoints[0]) {

@@ -1,6 +1,7 @@
-import { BigLoader, ScrollLayout, Title } from '@/components'
+import { ScrollLayout } from '@/components'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
+import { BigLoader, Title } from 'ui/components'
 
 const Library = () => {
 	const { data: library } = useQuery(['user-library'], () =>
@@ -9,8 +10,8 @@ const Library = () => {
 	// Сделать тут карусели по типу headWay
 	if (!library) return <BigLoader />
 	return (
-		<ScrollLayout className="p-2">
-			<Title size={26} weight="bold">
+		<ScrollLayout className='p-2'>
+			<Title size={26} weight='bold'>
 				My books
 			</Title>
 			{/* <FlatList*/}

@@ -20,16 +20,16 @@ const Author = () => {
 			backgroundColor={author.color}
 			picture={author.picture}
 		>
-			<View className="bg-pale mx-2 mt-4  rounded-xl p-4">
-				<Description size={22} className="w-full" weight="regular">
+			<View className='bg-pale mx-2 mt-4  rounded-xl p-4'>
+				<Description size={22} className='w-full' weight='regular'>
 					{author.description}
 				</Description>
 			</View>
-			
+
 			<Flatlist
 				data={author.books}
 				scrollEnabled={false}
-				className="mb-2 px-2"
+				className='mb-2 px-2'
 				renderItem={({ item: book }) => (
 					<VerticalCard
 						image={{

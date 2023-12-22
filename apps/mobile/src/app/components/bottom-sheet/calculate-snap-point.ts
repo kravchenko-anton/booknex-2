@@ -1,4 +1,4 @@
-import { SCREEN_HEIGHT } from 'ui/react-native/utils/dimensions'
+import { SCREEN_HEIGHT } from '@/utils/dimensions'
 
 export const CalculateSnapPoints = (snapPoints: (string | number)[]) => {
 	return snapPoints.map(point => {

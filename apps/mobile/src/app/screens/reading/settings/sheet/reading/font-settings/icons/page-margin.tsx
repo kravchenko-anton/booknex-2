@@ -10,11 +10,11 @@ interface PageMarginIconProperties extends PressableDefaultProperties {
 
 const LineStyle = 'w-6 h-[2px]'
 const PageMarginIcon: FC<PageMarginIconProperties> = ({
-	                                                      backgroundColor = Color.black,
-	                                                      ...properties
-                                                      }) => (
+	backgroundColor = Color.black,
+	...properties
+}) => (
 	<PressableContainer
-		className="border-gray m-0 h-[32px] justify-between border-2 border-b-0"
+		className='border-gray m-0 h-[32px] justify-between border-2 border-b-0'
 		{...properties}
 	>
 		{Array.from({ length: 4 })

@@ -18,12 +18,12 @@ export interface ThemeTemplateProperties {
 }
 
 export const themeTemplate = ({
-	                              backgroundColor,
-	                              textColor,
-	                              primaryColor,
-	                              secondaryColor,
-	                              highlight
-                              }: ThemeTemplateProperties) => ({
+	backgroundColor,
+	textColor,
+	primaryColor,
+	secondaryColor,
+	highlight
+}: ThemeTemplateProperties) => ({
 	body: {
 		background: backgroundColor,
 		color: textColor

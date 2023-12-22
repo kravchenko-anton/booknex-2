@@ -1,28 +1,27 @@
 import { AnimatedPressable, AnimatedView } from '@/components/animated'
-import { useHamburgerAnimation } from '@/components/ui/hamburger-menu/hamburger-animation'
-import type { HamburgerMenuProperties } from '@/components/ui/hamburger-menu/hamburger-menu-types.ts'
-import Icon from '@/components/ui/icon/icon'
-import Title from '@/components/ui/title/title'
+import { useHamburgerAnimation } from '@/components/hamburger-menu/hamburger-animation'
+import { HamburgerMenuProperties } from '@/components/hamburger-menu/hamburger-menu-types'
 import { WINDOW_HEIGHT } from '@/utils/dimensions'
 import type { FC } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import { Color } from 'ui/colors'
+import { Icon, Title } from 'ui/components'
 
 const HamburgerLineStyle = 'w-6 h-0.5'
 
 const HamburgerMenu: FC<HamburgerMenuProperties> = ({
-	                                                    color = Color.black,
-	                                                    position = 'left',
-	                                                    elements
-                                                    }) => {
+	color = Color.black,
+	position = 'left',
+	elements
+}) => {
 	const isOpen = useSharedValue(false)
 	const animation = useHamburgerAnimation(isOpen, position)
 	return (
 		<>
 			<AnimatedPressable
 				onTouchStart={() => (isOpen.value = false)}
-				className="z-20 "
+				className='z-20 '
 				style={[
 					{
 						...StyleSheet.absoluteFillObject,
@@ -31,9 +30,9 @@ const HamburgerMenu: FC<HamburgerMenuProperties> = ({
 					animation.backdropStyle
 				]}
 			/>
-			<View className="relative z-50">
+			<View className='relative z-50'>
 				<AnimatedPressable
-					className="z-50 p-4"
+					className='z-50 p-4'
 					onPress={() => (isOpen.value = !isOpen.value)}
 					style={[
 						{
@@ -73,16 +72,16 @@ const HamburgerMenu: FC<HamburgerMenuProperties> = ({
 						},
 						animation.popupStyle
 					]}
-					className="absolute top-14 z-50 min-w-[180px] rounded-md bg-white p-3"
+					className='absolute top-14 z-50 min-w-[180px] rounded-md bg-white p-3'
 				>
 					{elements.map(element => (
-						<View key={element.title} className="flex-row items-center">
-							<Icon icon={element.icon} size="small" />
+						<View key={element.title} className='flex-row items-center'>
+							<Icon icon={element.icon} size='small' />
 							<Title
-								className="py-3"
+								className='py-3'
 								size={18}
 								numberOfLines={2}
-								weight="regular"
+								weight='regular'
 								onPress={element.onPress}
 							>
 								{element.title}

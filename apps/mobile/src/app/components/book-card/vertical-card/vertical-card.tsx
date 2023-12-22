@@ -1,4 +1,7 @@
-import { heightSettings, widthSettings } from '@/components/book-card/vertical-card/vertical-card-settings'
+import {
+	heightSettings,
+	widthSettings
+} from '@/components/book-card/vertical-card/vertical-card-settings'
 import type { VerticalBookCardProperties } from '@/components/book-card/vertical-card/vertical-card-types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { FC } from 'react'
@@ -11,7 +14,7 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 		style={{
 			height: heightSettings[card.image.size]
 		}}
-		className="bg-vibrant mb-1.5 w-full flex-row rounded-lg p-2"
+		className='bg-vibrant mb-1.5 w-full flex-row rounded-lg p-2'
 		{...card}
 	>
 		<Image
@@ -20,35 +23,35 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 			fullSize={true}
 			width={widthSettings[card.image.size]}
 		/>
-		<View className="flex-1 pb-0 pl-3">
+		<View className='flex-1 pb-0 pl-3'>
 			<View>
-				<Title size={22} weight="bold" numberOfLines={2}>
+				<Title size={22} weight='bold' numberOfLines={2}>
 					{card.title}
 				</Title>
 				<Title
 					size={16}
-					weight="light"
+					weight='light'
 					numberOfLines={card.descriptionLines}
-					className="mb-2 mt-1"
+					className='mb-2 mt-1'
 					color={Color.gray}
 				>
 					{card.description}
 				</Title>
 			</View>
 			{card.buttons && (
-				<View className="flex-row flex-wrap items-center gap-2">
+				<View className='flex-row flex-wrap items-center gap-2'>
 					{card.buttons.map(
 						({
-							 label,
-							 backgroundColor = Color.shade,
-							 color = Color.white,
-							 ...properties
-						 }) => (
+							label,
+							backgroundColor = Color.shade,
+							color = Color.white,
+							...properties
+						}) => (
 							<Title
 								key={label}
 								size={16}
-								className="rounded-xl p-2"
-								weight="medium"
+								className='rounded-xl p-2'
+								weight='medium'
 								style={{
 									backgroundColor: backgroundColor,
 									color: color

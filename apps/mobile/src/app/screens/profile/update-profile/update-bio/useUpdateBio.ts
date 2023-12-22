@@ -27,10 +27,10 @@ export const useUpdateBio = () => {
 			}
 		}
 	)
-	
+
 	const onSubmit = async (data: UserUpdateBioTypes) => {
 		await mutateAsync(data)
 	}
-	
+
 	return { onSubmit }
 }

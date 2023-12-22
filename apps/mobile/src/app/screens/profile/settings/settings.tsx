@@ -1,7 +1,8 @@
-import { HeaderScrollLayout, Title } from '@/components'
+import { HeaderScrollLayout } from '@/components'
 import { useSettingsList } from '@/screens/profile/settings/useSettingsList'
 import { Pressable, View } from 'react-native'
 import { Color } from 'ui/colors'
+import { Title } from 'ui/components'
 // TODO: сделать страницу настройки когда уже многое будет готово
 const Settings = () => {
 	const settingsList = useSettingsList()
@@ -11,24 +12,24 @@ const Settings = () => {
 				transientValue: 80,
 				title: 'Settings'
 			}}
-			className="px-2"
+			className='px-2'
 		>
-			<Title size={32} weight="bold">
+			<Title size={32} weight='bold'>
 				Settings
 			</Title>
-			
+
 			{settingsList.map(item => (
-				<View key={item.title} className="bg-dust mt-4 w-full rounded-xl p-4">
-					<Title size={26} weight="bold" className="mb-2">
+				<View key={item.title} className='bg-dust mt-4 w-full rounded-xl p-4'>
+					<Title size={26} weight='bold' className='mb-2'>
 						{item.title}
 					</Title>
 					{item.list.map(listItem => (
 						<Pressable
 							key={listItem.title}
 							onPress={() => listItem.onPress()}
-							className="flex-row items-center justify-between"
+							className='flex-row items-center justify-between'
 						>
-							<View className="flex-row items-center">
+							<View className='flex-row items-center'>
 								{/* TODO: пофиксить иконку */}
 								{/* <Icon*/}
 								{/*	size={'small'}*/}
@@ -37,7 +38,7 @@ const Settings = () => {
 								{/*	className='mr-2'*/}
 								{/*	color={Color.secondary}*/}
 								{/* />*/}
-								<Title size={18} weight="bold" color={Color.secondary}>
+								<Title size={18} weight='bold' color={Color.secondary}>
 									{listItem.title}
 								</Title>
 							</View>
@@ -50,7 +51,7 @@ const Settings = () => {
 					))}
 				</View>
 			))}
-			
+
 			{/* <View className='mb-2 mt-4 w-full rounded-xl bg-dust p-4'>*/}
 			{/*	<Title size={26} weight={'bold'} className='mb-2'>*/}
 			{/*		About the application*/}

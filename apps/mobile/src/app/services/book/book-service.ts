@@ -1,5 +1,11 @@
 import { getBookUrl } from 'global/api-config'
-import type { BookByIdOutput, EbpubOutput, EmotionOutput, ReviewBookPayload, ReviewByIdOutput } from 'global/services-types/book-types'
+import {
+	BookByIdOutput,
+	EbpubOutput,
+	EmotionOutput,
+	ReviewBookPayload,
+	ReviewByIdOutput
+} from 'global/services-types/book-types'
 import { request } from '../api/request.api'
 
 export const bookService = {
@@ -8,7 +14,7 @@ export const bookService = {
 			url: getBookUrl('/emotions')
 		})
 	},
-	
+
 	async review(bookId: string, dto: ReviewBookPayload) {
 		return request({
 			method: 'POST',
@@ -16,13 +22,13 @@ export const bookService = {
 			data: dto
 		})
 	},
-	
+
 	async infoById(id: number) {
 		return request<BookByIdOutput>({
 			url: getBookUrl(`/by-id/${id}`)
 		})
 	},
-	
+
 	async reviewsById(id: number, cursor?: number) {
 		return request<ReviewByIdOutput>({
 			url: getBookUrl(`/by-id/${id}/reviews`),
@@ -31,11 +37,10 @@ export const bookService = {
 			}
 		})
 	},
-	
+
 	async ebookById(id: number) {
 		return request<EbpubOutput>({
 			url: getBookUrl(`/ebook/${id}`)
 		})
 	}
-	
 }
