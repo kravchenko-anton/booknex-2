@@ -1,15 +1,10 @@
 'use client'
+import { Links } from '@/components/navbar/settings'
 import { Button } from '@/ui/components'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export const Navbar = () => {
-	const Links = [
-		{ name: 'Home', link: '/' },
-		{ name: 'Legal', link: '/legal' },
-		{ name: 'About', link: '/about' },
-		{ name: 'Contact', link: '/contact' }
-	]
 	const [open, setOpen] = useState(false)
 	const router = useRouter()
 	return (

@@ -1,28 +1,10 @@
 'use client'
 import { useCallback, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { File } from '../../../global/icons/react'
 import { Color } from '../../colors'
+import { settings } from './settings'
 import type { DropzoneProperties } from './types'
-
-const colorPallete = {
-	gray: 'border-gray',
-	foreground: 'border-foreground',
-	vibrant: 'border-vibrant',
-	shade: 'border-shade',
-	background: 'border-background'
-}
-
-const sizeSettings = {
-	sm: 'p-4',
-	md: 'p-8',
-	lg: 'p-12'
-}
-
-const maxWidhtSettings = {
-	sm: 'max-w-sm',
-	md: 'max-w-md',
-	lg: 'max-w-lg'
-}
 
 const Dropzone = ({
 	onDropFile = () => {},
@@ -32,7 +14,7 @@ const Dropzone = ({
 	className = '',
 	style,
 	accept = 'image/*',
-	color = 'foreground',
+	variant = 'foreground',
 	onFileDelete = () => {},
 	size = 'sm',
 	...properties
@@ -48,7 +30,7 @@ const Dropzone = ({
 	)
 
 	return (
-		<div className={`${maxWidhtSettings[size]} ${className}`} style={style}>
+		<div className={twMerge(settings.maxWidth[size], className)} style={style}>
 			<div
 				className={`flex gap-2 overflow-scroll ${
 					files.length === 0 && 'hidden'
@@ -56,29 +38,42 @@ const Dropzone = ({
 			>
 				{files.map(file => (
 					<div key={file.name + file.type}>
-						<div
-							color={color}
-							className={`mb-2 items-center justify-center border-2 text-center ${colorPallete[color]}`}
+						<button
+							color={variant}
+							className={twMerge(
+								'mb-2 max-w-[200px] items-center justify-center rounded-lg border-2 p-2 text-center',
+								settings.colors[variant]
+							)}
 							onClick={() => {
 								setFiles(files.filter(f => f.name !== file.name))
 								onFileDelete(file)
 							}}
 						>
-							<File color={Color.white} width={45} height={45} />
-							<span>{file.name}</span>
-						</div>
+							<File
+								color={Color.white}
+								width={45}
+								height={45}
+								className='mx-auto mb-2'
+							/>
+							<span>
+								{file.name} / {file.size}
+							</span>
+						</button>
 					</div>
 				))}
 			</div>
 			<div
-				className={`mt-2 flex cursor-pointer items-center  justify-center  rounded-md border-2 ${sizeSettings[size]} ${colorPallete[color]}`}
-				{...properties}
+				className={twMerge(
+					'mt-2 flex cursor-pointer items-center justify-center rounded-md  border-2  duration-200',
+					settings.padding[size],
+					settings.colors[variant]
+				)}
 				{...properties}
 			>
 				<input
 					multiple={multiple}
 					type='file'
-					className='h-full w-full cursor-pointer opacity-0'
+					className='h-full w-full cursor-pointer'
 					disabled={disabled}
 					accept={accept}
 					onChange={event => {

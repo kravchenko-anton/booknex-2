@@ -1,5 +1,5 @@
 import type { ViewDefaultProperties } from '@/components/component-types'
-import { HamburgerMenuProperties } from '@/components/hamburger-menu/hamburger-menu-types'
+import { HamburgerMenuProperties } from '@/components/hamburger-menu/types'
 import { IconProperties } from '@/types/global'
 import { ColorProperties } from 'ui/colors'
 

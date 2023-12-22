@@ -2,8 +2,8 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { Text } from 'react-native'
 import { Color } from 'ui/colors'
-import { fontSettings } from './title-settings'
-import type { TitleProperties } from './title-types'
+import { fontSettings } from './settings'
+import type { TitleProperties } from './types'
 
 const Title: FC<TitleProperties> = ({
 	children,

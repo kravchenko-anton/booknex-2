@@ -16,13 +16,44 @@ export const Color = {
 	transparent: 'transparent' as 'transparent'
 }
 
+export const InnerColor = {
+	foreground: Color.white,
+	vibrant: Color.white,
+	shade: Color.white,
+	background: Color.white,
+	primary: Color.white,
+	secondary: Color.white,
+
+	black: Color.white,
+	gray: Color.white,
+	white: Color.black,
+
+	danger: Color.white,
+	success: Color.white,
+	warning: Color.black,
+	transparent: Color.white
+}
+
 export type LineColorType = {
 	[K in keyof typeof Color]: (typeof Color)[K]
 }[keyof typeof Color]
 
-export type PickLineColorsType<T> = {
-	[K in keyof T]: T[K] extends LineColorType ? T[K] : never
-}
+export type ClampPaletteType =
+	| 'foreground'
+	| 'background'
+	| 'vibrant'
+	| 'gray'
+	| 'shade'
+
+export type VividPaletteType =
+	| 'primary'
+	| 'secondary'
+	| 'danger'
+	| 'success'
+	| 'warning'
+	| ClampPaletteType
+
+export type PickColorsType<T extends keyof typeof Color> = T
 
 export interface ColorProperties {
 	color?: LineColorType | string

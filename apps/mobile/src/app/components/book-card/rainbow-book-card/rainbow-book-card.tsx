@@ -1,4 +1,4 @@
-import type { RainbowBookCardProperties } from '@/components/book-card/rainbow-book-card/rainbow-book-card-types'
+import type { RainbowBookCardProperties } from '@/components/book-card/rainbow-book-card/types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { Style } from '@/types/global'
 import type { FC } from 'react'

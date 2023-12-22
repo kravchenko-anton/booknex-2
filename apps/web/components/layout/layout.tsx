@@ -1,8 +1,6 @@
-import type { FC, HTMLAttributes, PropsWithChildren } from 'react'
+import type { LayoutProperties } from '@/components/layout/types'
+import type { FC } from 'react'
 
-interface LayoutProperties
-	extends PropsWithChildren,
-		HTMLAttributes<HTMLDivElement> {}
 const Layout: FC<LayoutProperties> = ({ children, ...rest }) => {
 	return (
 		<div className='mt-[70px]' {...rest}>

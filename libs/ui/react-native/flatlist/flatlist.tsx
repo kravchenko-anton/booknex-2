@@ -1,7 +1,7 @@
 import { FlatList as DefaultFlatlist, View } from 'react-native'
 import { Color } from 'ui/colors'
 import Title from '../title/title'
-import type { FlatListProperties } from './flatlist-types'
+import type { FlatListProperties } from './types'
 
 const FlatList = <T,>({
 	title,

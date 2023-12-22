@@ -1,9 +1,10 @@
 import { memo } from 'react'
 import { PressableContainer } from '../../../../apps/mobile/src/app/components'
+import { Color } from '../../colors'
 import { BorderRadiusSettings } from '../../settings'
 import Title from '../title/title'
-import { TextSize, TextWeight } from './button-settings'
-import type { ButtonProperties } from './button-types'
+import { TextSize } from './settings'
+import type { ButtonProperties } from './types'
 
 const PaddingSetting = {
 	small: 6,
@@ -13,7 +14,7 @@ const PaddingSetting = {
 
 const Button = ({
 	size = 'large',
-	variant = 'danger',
+	variant = 'background',
 	style,
 	...properties
 }: ButtonProperties) => {
@@ -27,7 +28,7 @@ const Button = ({
 			}}
 			{...properties}
 		>
-			<Title weight={TextWeight[size]} size={TextSize[size]}>
+			<Title weight='bold' color={Color.secondary} size={TextSize[size]}>
 				{properties.text}
 			</Title>
 		</PressableContainer>

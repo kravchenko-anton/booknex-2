@@ -11,9 +11,9 @@ const ReaderSearch: FC = () => {
 	return (
 		<View className='px-4'>
 			<Field
-				backgroundColor={colorScheme.theme.body.background}
+				backgroundColor={colorScheme.colorPalette.background.darker}
 				color={Color.white}
-				borderColor={colorScheme.theme.p.color}
+				borderColor={colorScheme.colorPalette.background.darker}
 				control={control}
 				name='searchTerm'
 				placeholder='Type something...'

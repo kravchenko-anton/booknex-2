@@ -5,7 +5,7 @@ import type {
 	RegisterOptions
 } from 'react-hook-form'
 import type { KeyboardTypeOptions, TextInputProps } from 'react-native'
-import type { Color } from 'ui/colors'
+import type { ClampPaletteType } from '../../colors'
 
 export interface FieldProperties<T extends FieldValues>
 	extends Omit<
@@ -14,10 +14,7 @@ export interface FieldProperties<T extends FieldValues>
 	> {
 	control: Control<T>
 	keyboardType?: KeyboardTypeOptions
-	variant?: keyof Omit<
-		typeof Color,
-		'background' | 'black' | 'white' | 'transparent'
-	>
+	variant?: ClampPaletteType
 	backgroundColor?: string
 	borderColor?: string
 	color?: string

@@ -1,5 +1,5 @@
 import { Header, LargeHeaderScrollLayout } from '@/components'
-import type { ShelfLayoutProperties } from '@/screens/shelf/shelf-layout/shelf-layout-types'
+import type { ShelfLayoutProperties } from '@/screens/shelf/shelf-layout/types'
 import { getFileUrl } from 'global/api-config'
 import type { FC, PropsWithChildren } from 'react'
 import { ImageBackground, View } from 'react-native'

@@ -1,4 +1,4 @@
-import type { UserLibraryFieldsType } from '@/navigation/navigation-types'
+import type { UserLibraryFieldsType } from '@/navigation/types'
 
 export interface UseToggleProperties {
 	id: number

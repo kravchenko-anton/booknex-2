@@ -4,7 +4,7 @@ import { memo, useRef, useState } from 'react'
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { Button } from '../index'
-import { Route, TabsProperties } from './tabs-types'
+import type { Route, TabsProperties } from './types'
 
 const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 	const [activeTab, setActiveTab] = useState(routes[0].key)

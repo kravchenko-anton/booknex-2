@@ -14,7 +14,7 @@ import Shelf from '@/screens/shelf/shelf'
 import Book from '../screens/book/book'
 import Profile from '../screens/profile/profile'
 import Search from '../screens/search/search'
-import type { IRoute } from './navigation-types'
+import type { IRoute } from './types'
 
 export const routes: IRoute[] = [
 	{

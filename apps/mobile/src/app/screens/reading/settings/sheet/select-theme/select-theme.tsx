@@ -23,8 +23,8 @@ const SelectTheme: FC = () => {
 							borderColor:
 								colorScheme.slug === theme.slug
 									? colorScheme.colorPalette.text
-									: theme.colorPalette.background,
-							backgroundColor: theme.colorPalette.background
+									: theme.colorPalette.background.normal,
+							backgroundColor: theme.colorPalette.background.normal
 						}}
 						className='mb-8 flex-row items-center justify-between rounded-xl border-2 p-4'
 					>
@@ -38,12 +38,13 @@ const SelectTheme: FC = () => {
 							{theme.title}
 						</Title>
 						<View className='flex-row items-center'>
-							{Object.values(theme.colorPalette).map(color => {
+							{Object.values(theme.colorPalette).map(background => {
+								if (typeof background === 'string') return null
 								return (
 									<View
-										key={color}
+										key={background.normal}
 										style={{
-											backgroundColor: color
+											backgroundColor: background.normal
 										}}
 										className='ml-[-8px] h-8 w-8 rounded-full'
 									/>

@@ -1,5 +1,5 @@
 import { PressableContainer } from '@/components'
-import type { LibraryListElementType } from '@/screens/library/library-card/library-card-types'
+import type { LibraryListElementType } from '@/screens/library/library-card/types'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'

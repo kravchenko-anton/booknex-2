@@ -1,7 +1,7 @@
 import type { FlatlistDefaultProperties } from '@/components/component-types.ts'
 import type { RefObject } from 'react'
 import type { FlatList, ListRenderItem } from 'react-native'
-import { TitleProperties } from '../title/title-types'
+import type { TitleProperties } from '../title/types'
 
 interface FlatlistTitleType extends Omit<TitleProperties, 'children'> {
 	mb?: number

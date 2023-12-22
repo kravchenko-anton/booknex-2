@@ -3,9 +3,9 @@ import { memo } from 'react'
 import { Image as DefaultImage } from 'react-native'
 import { getFileUrl } from '../../../global/api-config'
 import { Color } from '../../colors'
-import { ImageTypes } from './image-types'
+import type { Types } from './types'
 
-const Image: FC<ImageTypes> = ({
+const Image: FC<Types> = ({
 	height = 100,
 	width = 100,
 	borderRadius = 12,

@@ -2,10 +2,10 @@ import ChaptersList from '@/screens/reading/settings/sheet/chapters-list/chapter
 import ReadingSettings from '@/screens/reading/settings/sheet/reading/reading-settings'
 import ReaderSearch from '@/screens/reading/settings/sheet/search/reader-search'
 import SelectTheme from '@/screens/reading/settings/sheet/select-theme/select-theme'
-import type { SheetType } from './bottom-sheet-list-types'
-import { BottomSheetListEnum } from './bottom-sheet-list-types'
+import type { SheetType } from './types'
+import { BottomSheetListEnum } from './types'
 
-export const BottomSheetList: SheetType[] = [
+export const List: SheetType[] = [
 	{
 		name: BottomSheetListEnum.readerSettings,
 		snapPoints: [300],

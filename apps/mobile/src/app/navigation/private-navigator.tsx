@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import type { FC } from 'react'
 import { Color } from 'ui/colors'
 
-import type { TypeRootStackParameterList } from './navigation-types'
+import type { TypeRootStackParameterList } from './types'
 import { authRoutes, routes } from './user-routes'
 
 const Stack = createNativeStackNavigator<TypeRootStackParameterList>()

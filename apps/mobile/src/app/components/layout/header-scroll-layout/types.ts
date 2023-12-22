@@ -1,6 +1,6 @@
 import type { ViewDefaultProperties } from '@/components/component-types'
-import type { AnimatedHeaderProperties } from '@/components/header/animated-header/animated-header-types'
-import type { HeaderProperties } from '@/components/header/header-types'
+import type { AnimatedHeaderProperties } from '@/components/header/animated-header/types'
+import type { HeaderProperties } from '@/components/header/types'
 import type { ReactNode } from 'react'
 
 export interface LargeHeaderScrollLayoutProperties

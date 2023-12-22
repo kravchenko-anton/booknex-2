@@ -1,10 +1,8 @@
-import { BottomSheetListPagesEnum } from '@/components/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
-import { CalculateSnapPoints } from '@/components/bottom-sheet/calculate-snap-point'
+import { BottomSheetListPagesEnum } from '@/components/bottom-sheet/bottom-sheet-list/types'
+import { CalculateSnapPoints } from '@/components/bottom-sheet/calculate-snap-points'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { shadeBackground } from '@/screens/reading/settings/reading-ui'
 import { SCREEN_HEIGHT } from '@/utils/dimensions'
-import { shadeRGBColor } from 'global/utils/shade-color'
 import { useEffect } from 'react'
 import type { GestureResponderEvent } from 'react-native'
 import { Gesture } from 'react-native-gesture-handler'
@@ -74,7 +72,7 @@ export const useBottomSheet = () => {
 
 	const colorPallet = {
 		backgroundColor: bottomSheet?.name.includes(BottomSheetListPagesEnum.reader)
-			? shadeRGBColor(colorScheme.colorPalette.background, shadeBackground)
+			? colorScheme.colorPalette.background.lighter
 			: Color.shade
 	}
 

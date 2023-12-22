@@ -1,10 +1,9 @@
-import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
+import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import FontSettings from '@/screens/reading/settings/sheet/reading/font-settings/font-settings'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
-import { shadeRGBColor } from 'global/utils/shade-color'
 import { ChevronRight } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -22,11 +21,11 @@ const ReadingSettings: FC = () => {
 							<PressableContainer
 								key={`${theme.slug}-${theme.title}`}
 								style={{
-									backgroundColor: theme.colorPalette.background,
+									backgroundColor: theme.colorPalette.background.normal,
 									borderColor:
 										colorScheme.slug === theme.slug
 											? colorScheme.colorPalette.text
-											: theme.colorPalette.background
+											: theme.colorPalette.background.lighter
 								}}
 								onPress={() => changeTheme(theme.slug)}
 								className='rounded-xl border-2 p-2 px-4'
@@ -44,10 +43,7 @@ const ReadingSettings: FC = () => {
 					<PressableContainer
 						key='other theme'
 						style={{
-							backgroundColor: shadeRGBColor(
-								colorScheme.colorPalette.background,
-								-15
-							)
+							backgroundColor: colorScheme.colorPalette.background.darker
 						}}
 						onPress={() =>
 							openBottomSheet(BottomSheetListEnum.readerSelectTheme)

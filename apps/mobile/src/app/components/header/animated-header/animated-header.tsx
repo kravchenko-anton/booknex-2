@@ -1,6 +1,6 @@
 import { AnimatedView } from '@/components/animated'
-import type { AnimatedHeaderProperties } from '@/components/header/animated-header/animated-header-types'
-import { useHeaderAnimation } from '@/components/header/animated-header/header-animation'
+import type { AnimatedHeaderProperties } from '@/components/header/animated-header/types'
+import { useHeaderAnimation } from '@/components/header/animated-header/animation'
 import { HeaderElementComponent } from '@/components/header/useHeader'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { ChevronLeft } from 'icons'

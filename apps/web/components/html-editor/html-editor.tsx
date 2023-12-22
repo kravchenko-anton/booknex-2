@@ -1,29 +1,12 @@
+import type { RichEditorProperties } from '@/components/html-editor/types'
 import { Editor } from '@tinymce/tinymce-react'
-import type { EventHandler } from '@tinymce/tinymce-react/lib/cjs/main/ts/Events'
-import type { FC, HTMLAttributes } from 'react'
-import type { Events } from 'tinymce'
+import type { FC } from 'react'
 
-type EEventHandler<K extends keyof Events.EditorEventMap> = EventHandler<
-	Events.EditorEventMap[K]
->
-
-type RichEditorProperties = {
-	value: string
-	withAi?: boolean
-	simple?: boolean
-} & Pick<
-	HTMLAttributes<HTMLTextAreaElement>,
-	'defaultValue' | 'className' | 'style'
-> & {
-	onChange: EventHandler<unknown>
-	placeholder: string
-	onBlur: EEventHandler<'blur'>
-}
 const HtmlEditor: FC<RichEditorProperties> = ({
-	                                              className,
-	                                              style,
-	                                              ...properties
-                                              }) => {
+	className,
+	style,
+	...properties
+}) => {
 	return (
 		<div className={className} style={style}>
 			<Editor
@@ -31,7 +14,14 @@ const HtmlEditor: FC<RichEditorProperties> = ({
 				init={{
 					menubar: true,
 					branding: false,
-					ai_request: (request: { prompt: string }, respondWith: { string: (signal: (signal: AbortSignal) => Promise<string>) => string }) => {
+					ai_request: (
+						request: { prompt: string },
+						respondWith: {
+							string: (
+								signal: (signal: AbortSignal) => Promise<string>
+							) => string
+						}
+					) => {
 						const openAiOptions = {
 							method: 'POST',
 							headers: {

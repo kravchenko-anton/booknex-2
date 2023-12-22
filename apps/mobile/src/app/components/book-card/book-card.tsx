@@ -1,8 +1,8 @@
 import {
 	heightSettings,
 	widthSettings
-} from '@/components/book-card/book-card-settings'
-import type { BookCardProperties } from '@/components/book-card/book-card-types'
+} from '@/components/book-card/settings'
+import type { BookCardProperties } from '@/components/book-card/types'
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { Style } from '@/types/global'
 

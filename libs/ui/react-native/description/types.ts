@@ -1,6 +1,6 @@
 import type { TextDefaultProperties } from '@/components/component-types.ts'
 import type { ColorProperties } from 'ui/colors'
-import type { fontSettings } from '../title/title-settings'
+import type { fontSettings } from '../title/settings'
 
 export type DescriptionProperties = Omit<
 	TextDefaultProperties,

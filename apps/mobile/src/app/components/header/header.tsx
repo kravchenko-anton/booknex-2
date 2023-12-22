@@ -1,4 +1,4 @@
-import type { HeaderProperties } from '@/components/header/header-types'
+import type { HeaderProperties } from '@/components/header/types'
 import { useHeader } from '@/components/header/useHeader'
 
 import type { FC } from 'react'

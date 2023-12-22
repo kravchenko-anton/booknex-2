@@ -3,9 +3,8 @@ import MenuItem from '@/navigation/bottom-menu/menu-item'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'
+import type { TypeNavigate } from './menu-data'
 import { menuItems } from './menu-data'
-
-import type { TypeNavigate } from './menu.interface'
 
 interface IBottomMenu {
 	currentRoute?: string

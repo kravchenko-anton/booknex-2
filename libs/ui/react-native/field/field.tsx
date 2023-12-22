@@ -3,8 +3,8 @@ import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
 import { Color } from '../../colors'
 import { Title } from '../index'
-import { fontSettings } from '../title/title-settings'
-import type { FieldProperties } from './filed-types'
+import { fontSettings } from '../title/settings'
+import type { FieldProperties } from './types'
 
 const Field = <T extends Record<string, any>>({
 	backgroundColor = Color.vibrant,
@@ -20,13 +20,11 @@ const Field = <T extends Record<string, any>>({
 		render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
 			<>
 				<View
-					style={[
-						{
-							borderColor: error ? Color.danger : borderColor,
-							backgroundColor
-						}
-					]}
-					className={`my-1.5 w-full rounded-xl border-[1px] px-4 py-0.5  `}
+					style={{
+						borderColor: error ? Color.danger : borderColor,
+						backgroundColor
+					}}
+					className='my-1.5 w-full rounded-xl border-[1px] px-4 py-0.5'
 				>
 					<TextInput
 						autoCapitalize='none'

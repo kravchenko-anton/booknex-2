@@ -3,7 +3,7 @@ import { AnimatedPressable } from '@/components/animated'
 import type {
 	IMenuItem,
 	TypeNavigate
-} from '@/navigation/bottom-menu/menu.interface'
+} from '@/navigation/bottom-menu/menu-data'
 import type { FC } from 'react'
 import { Pressable } from 'react-native'
 import { Color } from 'ui/colors'

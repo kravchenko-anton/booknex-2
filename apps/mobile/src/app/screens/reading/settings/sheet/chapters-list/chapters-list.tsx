@@ -15,7 +15,7 @@ const ChaptersList: FC = () => {
 				return (
 					<PressableContainer
 						style={{
-							backgroundColor: colorScheme.colorPalette.background
+							backgroundColor: colorScheme.colorPalette.background.darker
 						}}
 						className='mb-4 rounded-xl p-4'
 					>

@@ -1,24 +1,10 @@
-import type {
-	Control,
-	FieldPath,
-	FieldValues,
-	Path,
-	PathValue
-} from 'react-hook-form'
+import type { Path, PathValue } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
-import type { DefaultInputProperties } from '../components-props-types'
-import type { InputProperties } from './input'
 import Input from './input'
-
-export interface FieldProperties<T extends FieldValues>
-	extends DefaultInputProperties,
-		Pick<InputProperties, 'color' | 'icon'> {
-	control: Control<T>
-	name: FieldPath<T>
-}
+import type { FieldProperties } from './types'
 
 const Field = <T extends Record<string, any>>({
-	color = 'foreground',
+	variant = 'foreground',
 	className,
 	style,
 	icon: Icon,
@@ -38,7 +24,7 @@ const Field = <T extends Record<string, any>>({
 					<Input
 						onBlur={onBlur}
 						onChange={onChange}
-						color={color}
+						variant={variant}
 						isError={!!error}
 						value={value}
 						icon={Icon}

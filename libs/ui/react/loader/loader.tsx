@@ -1,11 +1,5 @@
 import type { FC } from 'react'
-import type { Color, PickLineColorsType } from '../../colors'
-
-export interface SpinerProperties {
-	color?: PickLineColorsType<typeof Color.white | typeof Color.black>
-	width?: number
-	height?: number
-}
+import type { SpinerProperties } from './types'
 
 const Loader: FC<SpinerProperties> = ({
 	width = 16,

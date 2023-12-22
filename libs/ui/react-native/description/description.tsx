@@ -1,18 +1,18 @@
 import { memo, useState } from 'react'
 import { Text, View } from 'react-native'
-import { fontSettings } from '../title/title-settings'
-import type { DescriptionProperties } from './description-types'
+import { fontSettings } from '../title/settings'
+import type { DescriptionProperties } from './types'
 
 export const Description = memo(
 	({
-		 children,
-		 weight = 'light',
-		 size = 20,
-		 defaultSentences = 3,
-		 center = false,
-		 style,
-		 ...properties
-	 }: DescriptionProperties) => {
+		children,
+		weight = 'light',
+		size = 20,
+		defaultSentences = 3,
+		center = false,
+		style,
+		...properties
+	}: DescriptionProperties) => {
 		const [expanded, setExpanded] = useState(false)
 		if (!children && children !== 0) return null
 		const textStyle = {
@@ -20,7 +20,7 @@ export const Description = memo(
 			fontSize: size,
 			textAlign: center ? 'center' : ('left' as 'center' | 'left')
 		}
-		
+
 		const originalText = children.toString()
 		const sentences = originalText.split(/(?<=[!.?])\s+/)
 		const text = expanded
@@ -37,7 +37,8 @@ export const Description = memo(
 						onPress={() => {
 							setExpanded(!expanded)
 						}}
-						className="text-primary underline">
+						className='text-primary underline'
+					>
 						more
 					</Text>
 				)}

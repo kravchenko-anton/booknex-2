@@ -1,23 +1,7 @@
-import {
-	Book,
-	Graph,
-	Library,
-	Logout,
-	PenNib,
-	Settings,
-	User
-} from '@/global/icons/react'
+import { iconsList } from '@/components/sidebar/settings'
+import { Logout } from '@/global/icons/react'
+import { useAction } from '@/hooks'
 import { usePathname } from 'next/navigation'
-import { useAction } from '../../hooks/useAction'
-
-const iconsList = [
-	{ icon: Graph, link: '/admin/dashboard' },
-	{ icon: User, link: '/admin/users' },
-	{ icon: Book, link: '/admin/books' },
-	{ icon: PenNib, link: '/admin/authors' },
-	{ icon: Settings, link: '/admin/parser' },
-	{ icon: Library, link: '/admin/shelfs' }
-]
 
 export default function Sidebar(): JSX.Element {
 	const { logout } = useAction()

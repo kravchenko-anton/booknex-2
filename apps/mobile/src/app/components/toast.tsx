@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { Text } from 'react-native'
 import RnToast, { BaseToast } from 'react-native-toast-message'
 import { Color } from 'ui/colors'
-import { fontSettings } from '../../../../../libs/ui/react-native/title/title-settings'
+import { fontSettings } from '../../../../../libs/ui/react-native/title/settings'
 import { BorderRadiusSettings } from '../../../../../libs/ui/settings'
 
 const options = (color: string) => ({

@@ -1,6 +1,6 @@
 import { AnimatedPressable, AnimatedView } from '@/components/animated'
-import { useHamburgerAnimation } from '@/components/hamburger-menu/hamburger-animation'
-import { HamburgerMenuProperties } from '@/components/hamburger-menu/hamburger-menu-types'
+import { useHamburgerAnimation } from '@/components/hamburger-menu/animation'
+import { HamburgerMenuProperties } from '@/components/hamburger-menu/types'
 import { WINDOW_HEIGHT } from '@/utils/dimensions'
 import type { FC } from 'react'
 import { StyleSheet, View } from 'react-native'

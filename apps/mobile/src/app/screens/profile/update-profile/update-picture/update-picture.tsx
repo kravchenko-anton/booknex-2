@@ -1,4 +1,4 @@
-import type { UpdatePictureProperties } from '@/screens/profile/update-profile/update-picture/update-picture-types'
+import type { UpdatePictureProperties } from '@/screens/profile/update-profile/update-picture/types'
 import { useUploadUserPicture } from '@/screens/profile/update-profile/update-picture/useUploadPicture'
 import type { FC } from 'react'
 import { View } from 'react-native'

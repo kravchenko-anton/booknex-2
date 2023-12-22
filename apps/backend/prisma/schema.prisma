@@ -114,7 +114,6 @@ model Author {
   updatedAt   DateTime @updatedAt
   name        String   @unique
   picture     String
-  color       String   @default("#252422")
   description String
   books       Book[]
 }

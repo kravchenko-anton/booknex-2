@@ -35,6 +35,8 @@ module.exports = {
 	},
 	rules: {
 		'spaced-comment': ['off'],
+		'@typescript-eslint/no-unsafe-argument': 'off',
+		'@typescript-eslint/prefer-nullish-coalescing': 'off',
 		'@typescript-eslint/no-unsafe-call': 'off',
 		'@typescript-eslint/no-unsafe-assignment': 'off',
 		'@typescript-eslint/no-unsafe-return': 'off',
@@ -85,11 +87,6 @@ module.exports = {
 		],
 		'no-underscore-dangle': ['error', { allow: ['_isRetry', '_count'] }],
 		'no-void': ['error', { allowAsStatement: true }],
-		'spaced-comment': [
-			'error',
-			'always',
-			{ line: { markers: ['*package', '!', ',', ' '] } }
-		],
 		'@typescript-eslint/lines-between-class-members': [
 			'error',
 			'always',
@@ -160,7 +157,6 @@ module.exports = {
 		'@typescript-eslint/no-unsafe-member-access': 'off',
 		'@typescript-eslint/no-unnecessary-condition': 'off',
 		'@typescript-eslint/consistent-type-definitions': 'off',
-		'@typescript-eslint/prefer-nullish-coalescing': 'warn',
 		'@typescript-eslint/no-throw-literal': 'off',
 		'no-shadow': 'off',
 		'no-mixed-spaces-and-tabs': 'off',

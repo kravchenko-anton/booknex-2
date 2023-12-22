@@ -1,7 +1,8 @@
 import type {
 	ButtonHTMLAttributes,
 	DetailedHTMLProps,
-	InputHTMLAttributes
+	InputHTMLAttributes,
+	TextareaHTMLAttributes
 } from 'react'
 
 export type DefaultButtonProperties = Pick<
@@ -22,4 +23,21 @@ export type DefaultInputProperties = Pick<
 	| 'onChange'
 	| 'defaultValue'
 	| 'type'
+>
+
+export type DefaultTextAreaProperties = Pick<
+	DetailedHTMLProps<
+		TextareaHTMLAttributes<HTMLTextAreaElement>,
+		HTMLTextAreaElement
+	>,
+	| 'onClick'
+	| 'onBlur'
+	| 'onFocus'
+	| 'style'
+	| 'placeholder'
+	| 'disabled'
+	| 'className'
+	| 'value'
+	| 'onChange'
+	| 'defaultValue'
 >

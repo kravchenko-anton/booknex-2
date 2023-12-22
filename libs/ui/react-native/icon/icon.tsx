@@ -2,15 +2,15 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import { Pressable } from 'react-native'
 import { Color } from 'ui/colors'
-import { Style } from '../../../../apps/mobile/src/app/types/global'
+import type { Style } from '../../../../apps/mobile/src/app/types/global'
 import { BorderRadiusSettings } from '../../settings'
 import {
 	BackgroundColorSetting,
 	BorderColorSetting,
 	IconColorSetting,
 	SizeSetting
-} from './icon-settings'
-import { IconProperties } from './icon-types'
+} from './settings'
+import type { IconProperties } from './types'
 
 export const iconPaddingSettings = {
 	small: 4,

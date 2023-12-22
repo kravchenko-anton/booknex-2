@@ -1,5 +1,9 @@
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { beforeLoad, insertStyle, scrollProgressDetect } from '@/screens/reading/reader/additional-function'
+import {
+	beforeLoad,
+	insertStyle,
+	scrollProgressDetect
+} from '@/screens/reading/reader/additional-function'
 import { useReader } from '@/screens/reading/reader/useReader'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/utils/dimensions'
 import type { ReactNode } from 'react'
@@ -85,7 +89,7 @@ export function Reader({ id }: ReaderProperties): ReactNode {
 						allowFileAccess
 						style={{
 							width: WINDOW_WIDTH,
-							backgroundColor: colorScheme.colorPalette.background,
+							backgroundColor: colorScheme.colorPalette.background.normal,
 							height: WINDOW_HEIGHT,
 							zIndex: 1,
 							padding: 0,

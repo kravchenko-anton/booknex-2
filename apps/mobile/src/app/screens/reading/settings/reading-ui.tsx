@@ -1,8 +1,7 @@
 import { AnimatedView } from '@/components/animated'
-import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/bottom-sheet-list-types'
+import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/types'
 import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
 import { useReadingAnimation } from '@/screens/reading/settings/reading-ui-animation'
-import { shadeRGBColor } from 'global/utils/shade-color'
 import {
 	ArrowLeft,
 	BookHeart,
@@ -14,7 +13,7 @@ import {
 import type { FC } from 'react'
 import { StatusBar, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { LineColorType } from 'ui/colors'
+import type { LineColorType } from 'ui/colors'
 import { AnimatedIcon, Title } from 'ui/components'
 
 export const shadeBackground = -15
@@ -39,12 +38,7 @@ const ReadingUi: FC = () => {
 			>
 				<AnimatedIcon
 					icon={ArrowLeft}
-					backgroundColor={
-						shadeRGBColor(
-							colorScheme.colorPalette.background,
-							shadeBackground
-						) as LineColorType
-					}
+					backgroundColor={colorScheme.colorPalette.background.lighter}
 					size='medium'
 					className='w-[50px]'
 					onPress={() => goBack()}
@@ -52,10 +46,7 @@ const ReadingUi: FC = () => {
 				/>
 				<AnimatedIcon
 					icon={MoreHorizontal}
-					backgroundColor={shadeRGBColor(
-						colorScheme.colorPalette.background,
-						shadeBackground
-					)}
+					backgroundColor={colorScheme.colorPalette.background.lighter}
 					className='w-[50px]'
 					size='medium'
 					color={colorScheme.colorPalette.text as LineColorType}
@@ -66,10 +57,7 @@ const ReadingUi: FC = () => {
 				style={[
 					footerAnimation,
 					{
-						backgroundColor: shadeRGBColor(
-							colorScheme.colorPalette.background,
-							shadeBackground
-						)
+						backgroundColor: colorScheme.colorPalette.background.normal
 					}
 				]}
 				className='h-18 absolute bottom-0 z-50 mt-0 w-full flex-1 pt-0'
@@ -113,7 +101,7 @@ const ReadingUi: FC = () => {
 			</AnimatedView>
 			<StatusBar
 				barStyle={colorScheme.statusBar}
-				backgroundColor={colorScheme.colorPalette.background}
+				backgroundColor={colorScheme.colorPalette.background.normal}
 			/>
 		</View>
 	)

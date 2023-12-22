@@ -1,7 +1,7 @@
 import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { FC } from 'react'
 import { memo } from 'react'
-import { Style } from '../../../../apps/mobile/src/app/types/global'
+import type { Style } from '../../../../apps/mobile/src/app/types/global'
 import { Color } from '../../colors'
 import { BorderRadiusSettings } from '../../settings'
 import { iconPaddingSettings } from './icon'
@@ -10,8 +10,8 @@ import {
 	BorderColorSetting,
 	IconColorSetting,
 	SizeSetting
-} from './icon-settings'
-import type { IconProperties } from './icon-types'
+} from './settings'
+import type { IconProperties } from './types'
 
 const AnimatedIcon: FC<IconProperties> = ({
 	icon: Icon,

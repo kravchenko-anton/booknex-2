@@ -1,7 +1,7 @@
 import type {
 	HeaderProperties,
 	LeftHeaderElementType
-} from '@/components/header/header-types'
+} from '@/components/header/types'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { ArrowLeft, Share as ShareIcon } from 'icons'
 import { Share } from 'react-native'

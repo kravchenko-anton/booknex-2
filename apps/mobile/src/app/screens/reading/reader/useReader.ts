@@ -10,7 +10,7 @@ export const useReader = (id: number) => {
 	)
 	const { toggleReadingUi, updateReadingProgress, setProgress } = useAction()
 	const styleTag = `body {
-		background: ${colorScheme.theme.body.background} !important;
+		background: ${colorScheme.colorPalette.background.normal} !important;
 		font-family: ${font.fontFamily} !important;
 		font-size: ${fontSize}px;
 		line-height: ${lineHeight};

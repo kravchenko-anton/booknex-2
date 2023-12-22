@@ -28,11 +28,12 @@ export default function Page() {
 					type='password'
 					placeholder='Enter your password'
 				/>
+
 				<Button
 					onClick={handleSubmit(onSubmit)}
 					size='lg'
 					fullWidth
-					color='primary'
+					variant='primary'
 				>
 					Login
 				</Button>

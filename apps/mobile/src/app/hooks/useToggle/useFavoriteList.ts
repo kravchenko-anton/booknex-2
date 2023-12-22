@@ -1,5 +1,5 @@
 import { useAuth } from '@/hooks/useAuth'
-import type { UserLibraryFieldsType } from '@/navigation/navigation-types'
+import type { UserLibraryFieldsType } from '@/navigation/types'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
 

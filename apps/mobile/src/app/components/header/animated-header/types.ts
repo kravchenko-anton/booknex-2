@@ -1,4 +1,4 @@
-import type { HeaderProperties } from '@/components/header/header-types'
+import type { HeaderProperties } from '@/components/header/types'
 
 export interface AnimatedHeaderProperties
 	extends Pick<HeaderProperties, 'right'> {

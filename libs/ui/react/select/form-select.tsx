@@ -1,13 +1,7 @@
 'use client'
-import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 import Select from './select'
-
-export interface FormSelectProperties<T extends FieldValues>
-	extends Omit<Props, 'styles'> {
-	control: Control<T>
-	name: FieldPath<T>
-}
+import type { FormSelectProperties } from './types'
 
 const FormSelect = <T extends Record<string, any>>({
 	className,
