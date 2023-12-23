@@ -14,13 +14,17 @@ const RecommendationList: FC<RecommendationProperties> = ({
 		<View className='relative mt-4 items-center px-2'>
 			<Icon
 				icon={ThumbsUp}
-				size='medium'
+				size='md'
 				className='bg-canvas mb-1 mt-4 h-[45px] w-[45px] p-2'
 			/>
-			<Title className='mb-4' weight='bold' color={Color.white}>
+			<Title weight='bold' className='mb-4' color={Color.white}>
 				Recommended for you
 			</Title>
-			<FlatList horizontal className='mb-4' {...properties} />
+			<FlatList
+				horizontal
+				className='bg-shade rounded-md p-4'
+				{...properties}
+			/>
 		</View>
 	)
 }

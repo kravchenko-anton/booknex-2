@@ -21,7 +21,7 @@ const Title: FC<TitleProperties> = ({
 					fontFamily: fontSettings[weight],
 					fontSize: size,
 					textAlign: center ? 'center' : 'left',
-					color: properties.color ?? Color.black
+					color: properties.color ?? Color.white
 				},
 				style
 			]}

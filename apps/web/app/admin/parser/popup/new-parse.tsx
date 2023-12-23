@@ -22,13 +22,13 @@ const NewParse: FC<NewParserPopupProperties> = ({
 		<div className='w-[250px] p-4'>
 			<Field
 				control={control}
-				color='vibrant'
+				variant='vibrant'
 				defaultValue={defaultValues.link}
 				name='link'
 				placeholder='Link'
 			/>
 			<Field
-				color='vibrant'
+				variant='vibrant'
 				control={control}
 				defaultValue={defaultValues.page}
 				className='my-2'
@@ -37,7 +37,7 @@ const NewParse: FC<NewParserPopupProperties> = ({
 				type='number'
 			/>
 			<Button
-				color='primary'
+				variant='primary'
 				className='mx-auto'
 				onClick={handleSubmit(onSubmit)}
 			>

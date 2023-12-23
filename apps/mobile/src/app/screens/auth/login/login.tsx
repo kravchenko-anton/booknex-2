@@ -1,7 +1,9 @@
 import { Header, Layout } from '@/components'
 import { useAction } from '@/hooks'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
-import { emailRules, passwordRules } from 'global/utils/input-validation'
+import type { LoginSchemaType } from '@/screens/auth/login/validation';
+import { loginSchema } from '@/screens/auth/login/validation'
+import { zodResolver } from '@hookform/resolvers/zod'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
@@ -10,8 +12,9 @@ import { Button, Field, Title } from 'ui/components'
 
 const Login = () => {
 	const { login } = useAction()
-	const { control, handleSubmit } = useForm<AuthFieldsType>({
-		mode: 'onSubmit'
+	const { control, handleSubmit } = useForm<LoginSchemaType>({
+		mode: 'onSubmit',
+		resolver: zodResolver(loginSchema)
 	})
 	const onSubmit: SubmitHandler<AuthFieldsType> = ({ password, email }) =>
 		login({ password, email })
@@ -19,7 +22,7 @@ const Login = () => {
 		<Layout>
 			<Header />
 			<View className='mt-[20%]'>
-				<Title size={34} weight='bold' className='mb-2'>
+				<Title size={34} weight='bold'>
 					Welcome back
 				</Title>
 				<Title size={18} weight='light' color={Color.gray} className='mb-4'>
@@ -30,20 +33,19 @@ const Login = () => {
 					name='email'
 					keyboardType='email-address'
 					placeholder='Email'
-					rules={emailRules}
 				/>
 				<Field
 					control={control}
 					name='password'
 					placeholder='Password'
 					secureTextEntry={true}
-					rules={passwordRules}
 				/>
 				<Button
 					onPress={handleSubmit(onSubmit)}
-					size='medium'
+					size='md'
+					variant='primary'
 					text='Sign in'
-					className='mt-4'
+					className='mt-2'
 				/>
 			</View>
 		</Layout>

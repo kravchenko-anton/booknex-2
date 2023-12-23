@@ -2,12 +2,12 @@
 import { getFileUrl } from '@/global/api-config'
 import { useDebounce } from '@/global/utils/useDebounce'
 import { useAction } from '@/hooks/useAction'
+import { Edit, Search, Trash } from '@/icons'
 import { authorService } from '@/services/author/author-service'
 import { Color } from '@/ui/colors'
 import { Button, Field } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Edit, Search, Trash } from 'icons'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import CreateAuthorPopup from './popup/create'
@@ -46,7 +46,7 @@ const Page: FC = () => {
 					/>
 					<Button
 						size='sm'
-						color='primary'
+						variant='primary'
 						onClick={() => {
 							showPopup(
 								<CreateAuthorPopup
@@ -65,7 +65,7 @@ const Page: FC = () => {
 			{!authors || isLoading ? (
 				<div>Loading...</div>
 			) : (
-				<table className='bg-shade mt-4 w-full rounded-xl'>
+				<table className='bg-shade mt-4 w-full rounded-md'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
 							<th className='min-w-[40px]   p-3'>Id</th>
@@ -90,7 +90,7 @@ const Page: FC = () => {
 									<td className='w-[100px] max-w-[100px]'>
 										<img
 											src={getFileUrl(author.picture)}
-											className='bottom-shade mx-auto w-[80px] rounded-xl'
+											className='bottom-shade mx-auto w-[80px] rounded-md'
 											alt={author.name}
 										/>
 									</td>
@@ -102,7 +102,7 @@ const Page: FC = () => {
 											{author.description.slice(0, 200) + '...'}
 										</p>
 										<Button
-											color='primary'
+											variant='primary'
 											onClick={() => {
 												showPopup(
 													<AuthorDescription text={author.description} />
@@ -116,8 +116,9 @@ const Page: FC = () => {
 									<td className=' flex min-w-[200px] max-w-full overflow-y-scroll  p-2'>
 										{author.books.map(book => (
 											<img
+												key={book.picture}
 												src={getFileUrl(book.picture)}
-												className='w-[100px] rounded-xl'
+												className='w-[100px] rounded-md'
 												alt={author.name}
 											/>
 										))}

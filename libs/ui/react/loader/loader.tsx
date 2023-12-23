@@ -1,7 +1,7 @@
 import type { FC } from 'react'
-import type { SpinerProperties } from './types'
+import type { LoaderProperties } from './types'
 
-const Loader: FC<SpinerProperties> = ({
+const Loader: FC<LoaderProperties> = ({
 	width = 16,
 	height = 16,
 	color = 'primary'

@@ -1,4 +1,4 @@
-import type { UserUpdateBioTypes } from '@/screens/profile/update-profile/update-bio/update-bio-types'
+import type { UserUpdateBioTypes } from '@/screens/profile/update-profile/update-bio/types'
 import { userServices } from '@/services/user/user-service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { errorCatch } from 'global/utils/catch-error'

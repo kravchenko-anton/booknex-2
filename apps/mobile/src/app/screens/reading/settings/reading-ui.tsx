@@ -13,7 +13,6 @@ import {
 import type { FC } from 'react'
 import { StatusBar, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import type { LineColorType } from 'ui/colors'
 import { AnimatedIcon, Title } from 'ui/components'
 
 export const shadeBackground = -15
@@ -38,19 +37,11 @@ const ReadingUi: FC = () => {
 			>
 				<AnimatedIcon
 					icon={ArrowLeft}
-					backgroundColor={colorScheme.colorPalette.background.lighter}
-					size='medium'
+					size='md'
 					className='w-[50px]'
 					onPress={() => goBack()}
-					color={colorScheme.colorPalette.text}
 				/>
-				<AnimatedIcon
-					icon={MoreHorizontal}
-					backgroundColor={colorScheme.colorPalette.background.lighter}
-					className='w-[50px]'
-					size='medium'
-					color={colorScheme.colorPalette.text as LineColorType}
-				/>
+				<AnimatedIcon icon={MoreHorizontal} className='w-[50px]' size='md' />
 			</AnimatedView>
 
 			<AnimatedView
@@ -66,15 +57,13 @@ const ReadingUi: FC = () => {
 					<AnimatedIcon
 						icon={ListOrdered}
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerChapters)}
-						size='large'
-						color={colorScheme.colorPalette.text}
+						size='lg'
 						className='pl-0'
 					/>
 					<AnimatedIcon
 						icon={Search}
-						size='large'
+						size='lg'
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSearch)}
-						color={colorScheme.colorPalette.text}
 					/>
 					<Title
 						size={24}
@@ -87,15 +76,13 @@ const ReadingUi: FC = () => {
 					<AnimatedIcon
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSettings)}
 						icon={CaseSenSitive}
-						size='large'
-						color={colorScheme.colorPalette.text}
+						size='lg'
 					/>
 					<AnimatedIcon
 						icon={BookHeart}
-						size='large'
+						size='lg'
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerNoteBook)}
 						className='pr-0'
-						color={colorScheme.colorPalette.text}
 					/>
 				</View>
 			</AnimatedView>

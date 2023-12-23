@@ -21,7 +21,7 @@ const Genre = () => {
 						title={book.title}
 						image={{
 							uri: book.picture,
-							size: 'medium'
+							size: 'md'
 						}}
 						onPress={() => navigate.Book(book.id)}
 					/>
@@ -78,7 +78,7 @@ const Genre = () => {
 							onPress={() => navigate.Book(book.id)}
 							image={{
 								uri: book.picture,
-								size: 'medium'
+								size: 'md'
 							}}
 						/>
 					)}

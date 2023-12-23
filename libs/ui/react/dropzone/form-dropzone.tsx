@@ -4,7 +4,7 @@ import Dropzone from './dropzone'
 import type { FormDropZoneProperties } from './types'
 
 const FormDropzone = <T extends Record<string, any>>({
-	color = 'foreground',
+	variant = 'foreground',
 	size = 'sm',
 	...properties
 }: FormDropZoneProperties<T>) => {
@@ -19,7 +19,7 @@ const FormDropzone = <T extends Record<string, any>>({
 						size={size}
 						onBlur={onBlur}
 						onChange={onChange}
-						color={color}
+						variant={variant}
 						{...properties}
 					/>
 					{!!error && (

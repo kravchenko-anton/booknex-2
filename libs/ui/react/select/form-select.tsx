@@ -23,7 +23,7 @@ const FormSelect = <T extends Record<string, any>>({
 						{...properties}
 					/>
 					{!!error && (
-						<p className='text-danger text-md mt-2 italic'>{error.message}</p>
+						<p className='text-danger mt-0.5 text-xs italic'>{error.message}</p>
 					)}
 				</div>
 			)}

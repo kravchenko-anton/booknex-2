@@ -1,6 +1,6 @@
 import { AnimatedPressable, AnimatedView } from '@/components/animated'
 import { useHamburgerAnimation } from '@/components/hamburger-menu/animation'
-import { HamburgerMenuProperties } from '@/components/hamburger-menu/types'
+import type { HamburgerMenuProperties } from '@/components/hamburger-menu/types'
 import { WINDOW_HEIGHT } from '@/utils/dimensions'
 import type { FC } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -11,7 +11,7 @@ import { Icon, Title } from 'ui/components'
 const HamburgerLineStyle = 'w-6 h-0.5'
 
 const HamburgerMenu: FC<HamburgerMenuProperties> = ({
-	color = Color.black,
+	color = Color.white,
 	position = 'left',
 	elements
 }) => {
@@ -76,7 +76,7 @@ const HamburgerMenu: FC<HamburgerMenuProperties> = ({
 				>
 					{elements.map(element => (
 						<View key={element.title} className='flex-row items-center'>
-							<Icon icon={element.icon} size='small' />
+							<Icon icon={element.icon} size='sm' />
 							<Title
 								className='py-3'
 								size={18}

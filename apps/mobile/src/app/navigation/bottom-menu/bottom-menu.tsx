@@ -13,7 +13,7 @@ interface IBottomMenu {
 
 const BottomMenu: FC<IBottomMenu> = properties => (
 	<View
-		className='w-full flex-row items-center justify-between rounded-t-xl  px-2 pb-2 pt-3'
+		className='w-full flex-row items-center justify-between rounded-t-md  px-2 pb-2 pt-3'
 		style={{
 			backgroundColor: Color.foreground
 		}}

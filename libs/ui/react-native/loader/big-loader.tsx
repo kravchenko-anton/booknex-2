@@ -8,6 +8,7 @@ import {
 import type { LineColorType } from '../../colors'
 import { Color } from '../../colors'
 
+//TODO: сделать один лоадер
 interface BigLoaderProperties {
 	backgroundColor?: LineColorType | string
 	size?: 'screen' | 'full'

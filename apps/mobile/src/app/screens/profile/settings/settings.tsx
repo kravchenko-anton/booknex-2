@@ -19,7 +19,7 @@ const Settings = () => {
 			</Title>
 
 			{settingsList.map(item => (
-				<View key={item.title} className='bg-dust mt-4 w-full rounded-xl p-4'>
+				<View key={item.title} className='bg-dust mt-4 w-full rounded-md p-4'>
 					<Title size={26} weight='bold' className='mb-2'>
 						{item.title}
 					</Title>
@@ -52,7 +52,7 @@ const Settings = () => {
 				</View>
 			))}
 
-			{/* <View className='mb-2 mt-4 w-full rounded-xl bg-dust p-4'>*/}
+			{/* <View className='mb-2 mt-4 w-full rounded-md bg-dust p-4'>*/}
 			{/*	<Title size={26} weight={'bold'} className='mb-2'>*/}
 			{/*		About the application*/}
 			{/*	</Title>*/}

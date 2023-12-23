@@ -1,8 +1,14 @@
 import { Header, Layout } from '@/components'
 import { AnimatedView } from '@/components/animated'
-import { useAction, useTypedNavigation, useTypedRoute } from '@/hooks'
+import { useAction, useTypedRoute } from '@/hooks'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
-import { emailRules, passwordRules } from 'global/utils/input-validation'
+import type {
+	RegisterSchemaType
+} from '@/screens/auth/register/validation';
+import {
+	registerSchema
+} from '@/screens/auth/register/validation'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Close } from 'icons'
 import { useForm } from 'react-hook-form'
 import { Color } from 'ui/colors'
@@ -13,8 +19,9 @@ const Register = () => {
 		params: { selectGenres }
 	} = useTypedRoute<'Registration'>()
 	const { register } = useAction()
-	const { control, handleSubmit } = useForm<RegisterFieldsType>()
-	const { navigate } = useTypedNavigation()
+	const { control, handleSubmit } = useForm<RegisterSchemaType>({
+		resolver: zodResolver(registerSchema)
+	})
 	const onSubmit = (data: RegisterFieldsType) => {
 		if (selectGenres.length === 0 || selectGenres.length < 3) return
 		register({ ...data, genres: selectGenres })
@@ -26,10 +33,10 @@ const Register = () => {
 					color={Color.black}
 					left={{
 						icon: {
-							icon: Close,
-							onPress: () => {
-								navigate('SelectGenres')
-							}
+							icon: Close
+							// onPress: () => {
+							// 	navigate('SelectGenres')
+							// }
 						}
 					}}
 				/>
@@ -44,17 +51,15 @@ const Register = () => {
 					control={control}
 					name='email'
 					keyboardType='email-address'
-					rules={emailRules}
 					placeholder='Email'
 				/>
 				<Field
 					control={control}
 					name='password'
-					rules={passwordRules}
 					placeholder='Password'
 					secureTextEntry
 				/>
-				<Button size='large' text='Sign up' onPress={handleSubmit(onSubmit)} />
+				<Button size='lg' text='Sign up' onPress={handleSubmit(onSubmit)} />
 			</AnimatedView>
 		</Layout>
 	)

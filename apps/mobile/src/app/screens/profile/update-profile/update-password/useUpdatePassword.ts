@@ -1,4 +1,4 @@
-import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-password/update-password-types'
+import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-password/types'
 import { userServices } from '@/services/user/user-service'
 import { useMutation } from '@tanstack/react-query'
 import { errorCatch } from 'global/utils/catch-error'

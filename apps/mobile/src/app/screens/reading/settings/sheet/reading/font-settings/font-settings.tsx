@@ -44,18 +44,11 @@ const FontSettings: FC = () => {
 					<TouchableOpacity>
 						<Icon
 							className='w-[60px] rounded-r-none border-r-0 p-1'
-							style={{
-								borderColor:
-									colorScheme.colorPalette[
-										fontSize === fontSizeSettings.min ? 'primary' : 'text'
-									]
-							}}
 							onPress={() => {
 								changeFontSize(fontSize - 2)
 							}}
 							icon={Minus}
-							size='medium'
-							color={colorScheme.colorPalette.text}
+							size='md'
 						/>
 					</TouchableOpacity>
 					<TouchableOpacity>
@@ -71,8 +64,7 @@ const FontSettings: FC = () => {
 								changeFontSize(fontSize + 2)
 							}}
 							className='w-[60px] rounded-l-none p-1'
-							color={colorScheme.colorPalette.text}
-							size='medium'
+							size='md'
 						/>
 					</TouchableOpacity>
 				</View>

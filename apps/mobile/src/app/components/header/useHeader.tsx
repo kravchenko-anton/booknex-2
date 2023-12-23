@@ -5,7 +5,7 @@ import type {
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { ArrowLeft, Share as ShareIcon } from 'icons'
 import { Share } from 'react-native'
-import { ColorProperties, LineColorType } from 'ui/colors'
+import type { ColorProperties, LineColorType } from 'ui/colors'
 import { AnimatedIcon, HamburgerMenu, Title } from 'ui/components'
 
 export const HeaderElementComponent = (
@@ -22,12 +22,7 @@ export const HeaderElementComponent = (
 		case 'icon': {
 			return (
 				properties.icon && (
-					<AnimatedIcon
-						color={color}
-						className={padding}
-						size='medium'
-						{...properties.icon}
-					/>
+					<AnimatedIcon className={padding} size='md' {...properties.icon} />
 				)
 			)
 		}
@@ -55,10 +50,9 @@ export const HeaderElementComponent = (
 			return (
 				properties.sharing && (
 					<AnimatedIcon
-						color={color}
 						icon={ShareIcon}
 						className={padding}
-						size='medium'
+						size='md'
 						onPress={() =>
 							Share.share({
 								message:
@@ -85,12 +79,10 @@ export const useHeader = (
 		leftComponent: properties.left.back ? (
 			<AnimatedIcon
 				icon={ArrowLeft}
-				size='medium'
+				size='md'
 				onPress={() => {
 					goBack()
 				}}
-				className='pl-0'
-				color={properties.color}
 			/>
 		) : (
 			HeaderElementComponent(

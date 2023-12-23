@@ -44,12 +44,12 @@ const Shelf = () => {
 	if (!shelf) return <BigLoader />
 	return (
 		<ShelfLayout title={shelf.title} backgroundImage={shelf.picture}>
-			<View className='bg-dust mx-auto mt-[-40px] w-4/5 flex-row justify-between rounded-xl p-2 px-4 pb-1 pt-2'>
+			<View className='bg-dust mx-auto mt-[-40px] w-4/5 flex-row justify-between rounded-md p-2 px-4 pb-1 pt-2'>
 				<Button
 					variant={isSmashedWatchedShelves ? 'secondary' : 'primary'}
 					onPress={() => handleToggleWatchedShelves()}
 					className='mr-1.5 flex-1'
-					size='medium'
+					size='md'
 					disabled={isSmashedUnwatchedShelves}
 					text={isSmashedWatchedShelves ? 'Cancel watching' : 'Start watching'}
 				/>
@@ -58,12 +58,11 @@ const Shelf = () => {
 					disabled={isSmashedWatchedShelves}
 					icon={isSmashedUnwatchedShelves ? EyeOff : Eye}
 					className='mb-2 w-[50px]'
-					size='medium'
-					variant='outlined'
+					size='md'
 				/>
 			</View>
 			<View className='flex-row items-center justify-center gap-5 pt-4'></View>
-			<View className='bg-pale mx-2 mt-4  rounded-xl p-4'>
+			<View className='bg-pale mx-2 mt-4  rounded-md p-4'>
 				<Description defaultSentences={2} size={22} weight='regular'>
 					{shelf.description}
 				</Description>
@@ -77,7 +76,7 @@ const Shelf = () => {
 					<VerticalCard
 						image={{
 							uri: book.picture,
-							size: 'medium'
+							size: 'md'
 						}}
 						title={book.title}
 						description={book.author.name}

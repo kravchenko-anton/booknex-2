@@ -26,7 +26,7 @@ const FlatList = <T,>({
 					},
 					title?.style ?? {}
 				]}
-				color={title?.color ?? Color.black}
+				color={title?.color ?? Color.white}
 				size={22}
 				weight='semiBold'
 			>

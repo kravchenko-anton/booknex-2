@@ -25,7 +25,7 @@ const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 					// If you add ref, the types.ts.ts break
 					renderItem={({ item: tab }: { item: Route }) => (
 						<Button
-							size='medium'
+							size='md'
 							onPress={() => {
 								const index: number = routes.findIndex(
 									route => route.key === tab.key

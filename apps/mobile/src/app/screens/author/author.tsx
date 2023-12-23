@@ -20,7 +20,7 @@ const Author = () => {
 			backgroundColor={author.color}
 			picture={author.picture}
 		>
-			<View className='bg-pale mx-2 mt-4  rounded-xl p-4'>
+			<View className='bg-pale mx-2 mt-4  rounded-md p-4'>
 				<Description size={22} className='w-full' weight='regular'>
 					{author.description}
 				</Description>
@@ -34,7 +34,7 @@ const Author = () => {
 					<VerticalCard
 						image={{
 							uri: book.picture,
-							size: 'medium'
+							size: 'md'
 						}}
 						title={book.title}
 						onPress={() => {

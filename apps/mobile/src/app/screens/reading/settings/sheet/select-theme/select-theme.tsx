@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/pressable-container/pressable-container'
+import PressableContainer from '@/components/animated-press/animated-press'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
@@ -26,7 +26,7 @@ const SelectTheme: FC = () => {
 									: theme.colorPalette.background.normal,
 							backgroundColor: theme.colorPalette.background.normal
 						}}
-						className='mb-8 flex-row items-center justify-between rounded-xl border-2 p-4'
+						className='mb-8 flex-row items-center justify-between rounded-md border-2 p-4'
 					>
 						<Title
 							style={{

@@ -13,12 +13,12 @@ const LibraryCard: FC<LibraryListElementType> = ({
 	...properties
 }) => (
 	<PressableContainer
-		className='bg-dust w-full flex-row items-center justify-between rounded-xl p-4'
+		className='bg-dust w-full flex-row items-center justify-between rounded-md p-4'
 		style={style}
 		{...properties}
 	>
 		<View className='flex-row items-center justify-between'>
-			<Icon icon={icon} size='medium' className='w-[40px] pb-0 pl-0 pt-0' />
+			<Icon icon={icon} size='md' className='w-[40px] pb-0 pl-0 pt-0' />
 			<Title size={20} weight='bold'>
 				{name}
 			</Title>

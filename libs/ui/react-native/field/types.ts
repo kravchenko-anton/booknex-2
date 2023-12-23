@@ -1,10 +1,7 @@
-import type {
-	Control,
-	FieldPath,
-	FieldValues,
-	RegisterOptions
-} from 'react-hook-form'
+import type { FC } from 'react'
+import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import type { KeyboardTypeOptions, TextInputProps } from 'react-native'
+import type { SvgProps } from 'react-native-svg'
 import type { ClampPaletteType } from '../../colors'
 
 export interface FieldProperties<T extends FieldValues>
@@ -13,14 +10,8 @@ export interface FieldProperties<T extends FieldValues>
 		'onChange' | 'onChangeText' | 'value' | 'testID'
 	> {
 	control: Control<T>
+	icon?: FC<SvgProps>
 	keyboardType?: KeyboardTypeOptions
 	variant?: ClampPaletteType
-	backgroundColor?: string
-	borderColor?: string
-	color?: string
 	name: FieldPath<T>
-	rules?: Omit<
-		RegisterOptions<T, FieldPath<T>>,
-		'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
-	>
 }

@@ -1,6 +1,6 @@
-import { LineColorType } from '../../colors'
+import type { LineColorType } from '../../colors'
 
-export interface SpinerProperties {
+export interface LoaderProperties {
 	color?: LineColorType
 	width?: number
 	height?: number

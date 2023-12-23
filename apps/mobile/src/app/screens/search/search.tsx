@@ -36,7 +36,7 @@ const Search = () => {
 								<VerticalCard
 									image={{
 										uri: book.picture,
-										size: 'medium'
+										size: 'md'
 									}}
 									title={book.title}
 									description={book.author.name}
@@ -53,7 +53,7 @@ const Search = () => {
 						/>
 					)}
 				</View>
-			) : searchExamplesLoading ? (
+			) : (searchExamplesLoading ? (
 				<BigLoader />
 			) : (
 				<Flatlist
@@ -62,7 +62,7 @@ const Search = () => {
 					data={searchExamples}
 					renderItem={({ item }) => (
 						<Button
-							size='large'
+							size='lg'
 							className='items-start'
 							variant='primary'
 							onPress={() => {
@@ -74,7 +74,7 @@ const Search = () => {
 						/>
 					)}
 				/>
-			)}
+			))}
 		</Layout>
 	)
 }

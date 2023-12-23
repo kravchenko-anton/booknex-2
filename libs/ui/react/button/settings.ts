@@ -1,4 +1,4 @@
-import type { VividPaletteType } from '../../colorPalette'
+import type { VividPaletteType } from '../../colors'
 
 export const settings: {
 	colors: Record<VividPaletteType, string>

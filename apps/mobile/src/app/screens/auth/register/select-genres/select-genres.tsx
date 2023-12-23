@@ -33,7 +33,7 @@ const SelectGenres: FC = () => {
 								: setSelectGenres([...selectGenres, genre.name])
 						}}
 						key={genre.id}
-						size='medium'
+						size='md'
 						text={genre.name}
 						variant={
 							selectGenres.includes(genre.name) ? 'primary' : 'foreground'
@@ -46,7 +46,7 @@ const SelectGenres: FC = () => {
 				className='mt-auto'
 				disabled={selectGenres.length < 3}
 				variant='secondary'
-				size='large'
+				size='lg'
 				text='Next step'
 				onPress={() => {
 					navigate('Registration', {

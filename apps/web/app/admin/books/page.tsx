@@ -62,20 +62,20 @@ const Page: FC = () => {
 						name='search'
 						placeholder='Search...'
 					/>
-					<Button size='sm' color='primary'>
+					<Button size='sm' variant='primary'>
 						Parsing
 					</Button>
 				</div>
 			</div>
 			{books ? (
-				<table className='bg-shade mt-4 w-full rounded-xl'>
+				<table className='bg-shade mt-4 w-full rounded-md'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
 							<th className='min-w-[50px]   p-3'>Id</th>
 							<th className='min-w-[120px]  p-3'>Picture</th>
 							<th className='min-w-[100px]  p-3'>Bio</th>
 							<th className='w-[100px] min-w-[100px]  p-3'>Info</th>
-							<th className='min-w-[100px]  p-3'>Statisctic</th>
+							<th className='min-w-[100px]  p-3'>Statistic</th>
 							<th className='min-w-[100px]  p-3'>Genres</th>
 							<th className='min-w-[100px] p-3'>Actions</th>
 						</tr>
@@ -94,7 +94,7 @@ const Page: FC = () => {
 									<td className='h-[120px]'>
 										<img
 											src={getFileUrl(book.picture)}
-											className='bottom-shade mx-auto w-[100px] rounded-xl'
+											className='bottom-shade mx-auto w-[100px] rounded-md'
 											alt={book.title}
 										/>
 									</td>
@@ -102,7 +102,7 @@ const Page: FC = () => {
 										{book.title} <br />{' '}
 										<p className='text-primary'>{book.author.name}</p>
 										<Button
-											color='primary'
+											variant='primary'
 											onClick={() => {
 												showPopup(<AuthorDescription text={book.description} />)
 											}}
@@ -125,7 +125,7 @@ const Page: FC = () => {
 											{book.genres.map(genre => (
 												<p
 													key={genre.name}
-													className='bg-foreground m-1 rounded-xl  p-1.5 text-sm text-white'
+													className='bg-foreground m-1 rounded-md p-1.5 text-sm text-white'
 												>
 													{genre.name}
 												</p>

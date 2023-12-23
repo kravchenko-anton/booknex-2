@@ -4,17 +4,17 @@ module.exports = {
 	content: [
 		'./App.{js,jsx,ts,tsx}',
 		'./src/**/*.{js,jsx,ts,tsx}',
-		'../../libs/ui/react/**/*.{js,ts,jsx,tsx,mdx}'
+		'../../libs/ui/react-native/**/*.{js,ts,jsx,tsx,mdx}'
 	],
 	theme: {
 		extend: {
 			colors: {
-				foreground: '#23272f',
-				vibrant: '#374151',
-				shade: '#16181d',
-				background: '#191c22',
-				primary: '#0d6d8c',
-				secondary: '#087ea4',
+				foreground: '#26262C',
+				vibrant: '#4d5058',
+				shade: '#1b1b1f',
+				background: '#151517',
+				primary: '#685369',
+				secondary: '#605770',
 				black: '#000000',
 				gray: '#959caf',
 				white: '#ffffff',

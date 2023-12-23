@@ -9,7 +9,7 @@ const StatisticCard: FC<StatisticCardProperties> = ({
 	description
 }) => (
 	<View className='flex-row items-center'>
-		<Icon icon={icon} size='large' className='pl-0' />
+		<Icon icon={icon} size='lg' className='pl-0' />
 		<View>
 			<Title size={22} weight='bold'>
 				{count}

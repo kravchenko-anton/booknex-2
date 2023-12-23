@@ -1,9 +1,6 @@
-import {
-	heightSettings,
-	widthSettings
-} from '@/components/book-card/settings'
+import PressableContainer from '@/components/animated-press/animated-press'
+import { settings } from '@/components/book-card/settings'
 import type { BookCardProperties } from '@/components/book-card/types'
-import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { Style } from '@/types/global'
 
 import type { FC } from 'react'
@@ -13,7 +10,6 @@ import { Image, Title } from 'ui/components'
 
 const BookCard: FC<BookCardProperties> = ({
 	image,
-	likedPercentage,
 	pages,
 	style,
 	...properties
@@ -21,7 +17,7 @@ const BookCard: FC<BookCardProperties> = ({
 	<PressableContainer
 		style={[
 			{
-				width: widthSettings[image.size]
+				width: settings.width[image.size]
 			},
 			style as Style
 		]}
@@ -29,24 +25,21 @@ const BookCard: FC<BookCardProperties> = ({
 	>
 		<Image
 			url={image.uri}
-			height={heightSettings[image.size]}
-			width={widthSettings[image.size]}
+			height={settings.height[image.size]}
+			width={settings.width[image.size]}
 		/>
-		{(likedPercentage && !pages) ||
-			(!likedPercentage && pages && (
-				<Title
-					numberOfLines={1}
-					weight='semiBold'
-					size={15}
-					color={Color.gray}
-					className=' mt-2'
-				>
-					{likedPercentage
-						? `👍 ${likedPercentage}% liked`
-						: ` 📖 ${pages} pages`}
-				</Title>
-			))}
-		<Title numberOfLines={2} weight='bold' size={20} color={Color.black}>
+		{pages && (
+			<Title
+				numberOfLines={1}
+				weight='semiBold'
+				size={15}
+				color={Color.gray}
+				className=' mt-2'
+			>
+				{` 📖 ${pages} pages`}
+			</Title>
+		)}
+		<Title numberOfLines={2} weight='bold' size={20}>
 			{properties.title}
 		</Title>
 		<Title

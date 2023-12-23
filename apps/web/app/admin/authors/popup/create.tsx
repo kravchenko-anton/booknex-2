@@ -42,7 +42,7 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 				defaultValue={defaultValues.name}
 				name='name'
 				type='text'
-				color='shade'
+				variant='shade'
 				placeholder='Name'
 			/>
 			<h1 className='mb-2 mt-4 text-xl'>Picture</h1>
@@ -51,7 +51,7 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 				name='picture'
 				size='lg'
 				defaultFiles={[defaultValues.picture?.blob]}
-				color='vibrant'
+				variant='vibrant'
 				multiple={false}
 				accept={'image/*'}
 				onDropFile={acceptedFiles => {
@@ -63,15 +63,19 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 			/>
 			<FormTextEditor
 				defaultValue={defaultValues.description}
-				color='shade'
-				type='text'
+				variant='shade'
 				control={control}
 				name='description'
 				placeholder='Enter description'
 				className='mt-4 h-[150px]'
 			/>
 
-			<Button className='mt-8' onClick={onSubmit} type='submit' color='primary'>
+			<Button
+				className='mt-8'
+				onClick={onSubmit}
+				type='submit'
+				variant='primary'
+			>
 				Create
 			</Button>
 		</div>

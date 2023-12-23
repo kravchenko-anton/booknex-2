@@ -18,7 +18,7 @@ const Book = () => {
 						navigate.reading()
 					}}
 					text='Read'
-					size='medium'
+					size='md'
 					className='flex-1'
 				/>
 			</View>
@@ -36,7 +36,7 @@ const Book = () => {
 							navigate.genre(genre.id)
 						}}
 						variant='shade'
-						size='small'
+						size='sm'
 						text={genre.name}
 					/>
 				)}

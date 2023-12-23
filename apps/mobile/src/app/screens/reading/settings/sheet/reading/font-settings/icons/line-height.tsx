@@ -1,5 +1,5 @@
+import PressableContainer from '@/components/animated-press/animated-press'
 import type { PressableDefaultProperties } from '@/components/component-types'
-import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'

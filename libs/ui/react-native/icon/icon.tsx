@@ -1,53 +1,35 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Pressable } from 'react-native'
-import { Color } from 'ui/colors'
-import type { Style } from '../../../../apps/mobile/src/app/types/global'
-import { BorderRadiusSettings } from '../../settings'
-import {
-	BackgroundColorSetting,
-	BorderColorSetting,
-	IconColorSetting,
-	SizeSetting
-} from './settings'
+import { twMerge } from 'tailwind-merge'
+import { InnerColor } from '../../colors'
+import { settings } from './settings'
 import type { IconProperties } from './types'
-
-export const iconPaddingSettings = {
-	small: 4,
-	medium: 6,
-	large: 8
-}
 
 const Icon: FC<IconProperties> = ({
 	icon: Icon,
-	variant = 'ghost',
-	size = 'small',
-	color = Color.white,
-	backgroundColor,
+	variant = 'vibrant',
+	size = 'sm',
 	fatness = 2,
-	style,
+	className = '',
 	noPadding = false,
 	...properties
 }) => (
 	<Pressable
-		className='items-center justify-center border-[2px]'
-		style={[
-			{
-				opacity: properties.disabled ? 0.5 : 1,
-				padding: noPadding ? 0 : iconPaddingSettings[size],
-				backgroundColor: backgroundColor ?? BackgroundColorSetting[variant],
-				borderRadius: BorderRadiusSettings,
-				borderColor: BorderColorSetting[variant]
-			},
-			style as Style
-		]}
+		className={twMerge(
+			'items-center justify-center rounded-xl',
+			properties.disabled && 'opacity-50',
+			noPadding ? 'p-0' : settings.padding[size],
+			settings.colors[variant],
+			className
+		)}
 		{...properties}
 	>
 		<Icon
-			width={SizeSetting[size]}
+			width={settings.size[size]}
+			height={settings.size[size]}
 			strokeWidth={fatness}
-			stroke={color ?? IconColorSetting[variant]}
-			height={SizeSetting[size]}
+			stroke={InnerColor[variant]}
 		/>
 	</Pressable>
 )

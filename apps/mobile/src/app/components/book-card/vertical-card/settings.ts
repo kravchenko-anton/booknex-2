@@ -1,12 +1,14 @@
-export const heightSettings = {
-	small: 170,
-	medium: 185,
-	large: 200,
-	cube: 100
-}
-export const widthSettings = {
-	small: 105,
-	medium: 115,
-	large: 125,
-	cube: 85
+export const settings = {
+	width: {
+		sm: 170,
+		md: 185,
+		lg: 200,
+		cube: 100
+	},
+	height: {
+		sm: 105,
+		md: 115,
+		lg: 125,
+		cube: 85
+	}
 }

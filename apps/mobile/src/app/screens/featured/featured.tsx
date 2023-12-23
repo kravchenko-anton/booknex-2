@@ -39,8 +39,9 @@ const Featured = () => {
 						onPress={() => navigate('Book', { id: book.id })}
 						image={{
 							uri: book.picture,
-							size: 'medium'
+							size: 'md'
 						}}
+						className='mr-4'
 						title={book.title}
 						author={book.author.name}
 					/>
@@ -52,7 +53,7 @@ const Featured = () => {
 				renderItem={({ item: genre }) => (
 					<Button
 						onPress={() => navigate('Genre', { id: genre.id })}
-						size='medium'
+						size='md'
 						variant='foreground'
 						text={genre.name}
 						className='px-4'
@@ -68,7 +69,7 @@ const Featured = () => {
 				renderItem={({ item: book }) => (
 					<BookCard
 						onPress={() => navigate('Book', { id: book.id })}
-						image={{ uri: book.picture, size: 'large' }}
+						image={{ uri: book.picture, size: 'lg' }}
 						title={book.title}
 					/>
 				)}
@@ -96,7 +97,7 @@ const Featured = () => {
 				renderItem={({ item: book }) => (
 					<BookCard
 						onPress={() => navigate('Book', { id: book.id })}
-						image={{ uri: book.picture, size: 'medium' }}
+						image={{ uri: book.picture, size: 'lg' }}
 					/>
 				)}
 			/>
@@ -114,7 +115,7 @@ const Featured = () => {
 							onPress={() => navigate('Book', { id: book.id })}
 							image={{
 								uri: book.picture,
-								size: 'small'
+								size: 'sm'
 							}}
 						/>
 					)}
@@ -133,7 +134,7 @@ const Featured = () => {
 						pages={book.pages}
 						image={{
 							uri: book.picture,
-							size: 'medium'
+							size: 'md'
 						}}
 						title={book.title}
 						author={book.author.name}

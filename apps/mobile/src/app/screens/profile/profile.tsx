@@ -4,7 +4,6 @@ import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
 import { Pen, Settings } from 'icons'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
 import { AnimatedIcon, BigLoader, Image, Title } from 'ui/components'
 
 const Profile = () => {
@@ -19,9 +18,9 @@ const Profile = () => {
 			<Header
 				right={{
 					icon: {
-						onPress: () => {
-							navigate('Settings')
-						},
+						// onPress: () => {
+						// 	navigate('Settings')
+						// },
 						icon: Settings
 					}
 				}}
@@ -31,13 +30,11 @@ const Profile = () => {
 					<Image height={140} width={140} url={profile.picture} />
 					<AnimatedIcon
 						icon={Pen}
-						color={Color.white}
-						backgroundColor={Color.primary}
 						onPress={() => {
 							navigate('UpdateProfile')
 						}}
-						size='medium'
-						variant='filled'
+						size='md'
+						variant='vibrant'
 						className='absolute right-[-20px] top-[-20px]'
 					/>
 				</View>

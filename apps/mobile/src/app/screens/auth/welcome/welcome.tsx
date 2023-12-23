@@ -10,7 +10,7 @@ const Welcome: FC = () => {
 	return (
 		<Layout className='relative justify-center p-4'>
 			<View>
-				<View className='w-full items-center rounded-3xl bg-white p-4'>
+				<View className='w-full items-center rounded-md bg-white p-4'>
 					<Title
 						size={36}
 						color={Color.secondary}
@@ -38,8 +38,9 @@ const Welcome: FC = () => {
 						onPress={() => {
 							navigate('CheckEmail')
 						}}
-						size='large'
+						size='lg'
 						text='Get Started'
+						variant='primary'
 						className='mt-6'
 						width='100%'
 					/>

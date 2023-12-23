@@ -1,3 +1,4 @@
+export { default as PressableContainer } from '@/components/animated-press/animated-press'
 export { default as BookCard } from './book-card/book-card'
 export { default as RainbowBookCard } from './book-card/rainbow-book-card/rainbow-book-card'
 export { default as VerticalCard } from './book-card/vertical-card/vertical-card'
@@ -7,4 +8,3 @@ export { default as HeaderScrollLayout } from './layout/header-scroll-layout/hea
 export { default as LargeHeaderScrollLayout } from './layout/header-scroll-layout/large-header-scroll-layout'
 export { default as Layout } from './layout/layout'
 export { default as ScrollLayout } from './layout/scroll-layout'
-export { default as PressableContainer } from './pressable-container/pressable-container'

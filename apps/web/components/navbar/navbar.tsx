@@ -3,6 +3,7 @@ import { Links } from '@/components/navbar/settings'
 import { Button } from '@/ui/components'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const Navbar = () => {
 	const [open, setOpen] = useState(false)
@@ -48,9 +49,10 @@ export const Navbar = () => {
 					)}
 				</div>
 				<ul
-					className={`bg-shade absolute left-0 z-[-1] w-full pb-8 pl-9  transition-all  duration-500 ease-in md:static md:z-auto md:flex md:w-auto md:items-center md:pb-0 md:pl-0 ${
+					className={twMerge(
+						'bg-shade absolute left-0 z-[-1] w-full pb-8 pl-9  transition-all  duration-500 ease-in md:static md:z-auto md:flex md:w-auto md:items-center md:bg-transparent md:pb-0 md:pl-0',
 						open ? 'top-[50px]' : 'top-[-400px]'
-					} md:bg-transparent`}
+					)}
 				>
 					{Links.map(link => (
 						<li className='my-7 font-semibold md:my-0 md:ml-8 ' key={link.link}>
@@ -62,7 +64,7 @@ export const Navbar = () => {
 							</a>
 						</li>
 					))}
-					<Button size='md' color='secondary' className='md:static md:ml-8'>
+					<Button size='md' variant='secondary' className='md:static md:ml-8'>
 						7 day free
 					</Button>
 				</ul>

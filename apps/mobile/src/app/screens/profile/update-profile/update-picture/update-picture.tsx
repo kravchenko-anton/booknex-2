@@ -15,7 +15,7 @@ const UpdatePicture: FC<UpdatePictureProperties> = ({ picture }) => {
 					className='mt-4 w-full'
 					variant='primary'
 					onPress={() => updatePicture()}
-					size='medium'
+					size='md'
 					text='Change photo'
 				/>
 			</View>

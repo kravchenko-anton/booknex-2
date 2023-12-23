@@ -6,7 +6,9 @@ import {
 	DropZone,
 	ErrorBlock,
 	Field,
+	FormAsyncSelect,
 	FormDropZone,
+	FormSelect,
 	FormTextArea,
 	TextArea
 } from '@/ui/components'
@@ -105,19 +107,19 @@ const Page: FC = () => {
 							<h1 className='mb-2 mt-4 flex gap-5'>
 								Genres <p className='text-gray'>First genre be main</p>
 							</h1>
-							{/* <FormSelect */}
-							{/* 	control={form.control} */}
-							{/* 	name="genres" */}
-							{/* 	isMulti */}
-							{/* 	options={select.genres?.map(genre => { */}
-							{/* 		return { */}
-							{/* 			label: genre.name, */}
-							{/* 			value: genre.id */}
-							{/* 		} */}
-							{/* 	})} */}
-							{/* 	isSearchable */}
-							{/* 	placeholder="Select genres" */}
-							{/* /> */}
+							<FormSelect
+								control={form.control}
+								name='genres'
+								isMulti
+								options={select.genres?.map(genre => {
+									return {
+										label: genre.name,
+										value: genre.id
+									}
+								})}
+								isSearchable
+								placeholder='Select genres'
+							/>
 						</div>
 						<div className='w-1/2'>
 							<div className='mb-2 mt-4 flex gap-3'>
@@ -141,23 +143,23 @@ const Page: FC = () => {
 									Create
 								</Button>
 							</div>
-							{/* <FormAsyncSelect */}
-							{/* 	control={form.control} */}
-							{/* 	name="author" */}
-							{/* 	isLoading={select.author.loading} */}
-							{/* 	loadOptions={authorSearch => */}
-							{/* 		select.author.load(authorSearch).then(data => */}
-							{/* 			data.map(author => { */}
-							{/* 				return { */}
-							{/* 					label: author.name, */}
-							{/* 					value: author.id */}
-							{/* 				} */}
-							{/* 			}) */}
-							{/* 		) */}
-							{/* 	} */}
-							{/* 	isSearchable */}
-							{/* 	placeholder="Select author" */}
-							{/* /> */}
+							<FormAsyncSelect
+								control={form.control}
+								name='author'
+								isLoading={select.author.loading}
+								loadOptions={authorSearch =>
+									select.author.load(authorSearch).then(data =>
+										data.map(author => {
+											return {
+												label: author.name,
+												value: author.id
+											}
+										})
+									)
+								}
+								isSearchable
+								placeholder='Select author'
+							/>
 						</div>
 					</div>
 				</div>
@@ -169,7 +171,7 @@ const Page: FC = () => {
 						{books.map((book, index) => (
 							<div
 								key={book.name + index}
-								className='bg-foreground mb-4 mr-1 rounded-xl p-3'
+								className='bg-foreground mb-4 mr-1 rounded-md p-3'
 							>
 								<div className='mb-4 flex items-center  justify-between gap-5'>
 									<input
@@ -188,13 +190,13 @@ const Page: FC = () => {
 										onClick={() => {
 											booksFunctions.addNewCharacter(book.name)
 										}}
-										className='bg-vibrant cursor-pointer rounded-xl p-2'
+										className='bg-vibrant cursor-pointer rounded-md p-2'
 									/>
 								</div>
 								{book.content.map((content, index) => (
 									<div
 										key={content.title + book.name + content.content + index}
-										className='bg-shade m-2 rounded-lg p-2'
+										className='bg-shade m-2 rounded-md p-2'
 									>
 										<div className='mb-2 flex w-full items-center justify-between gap-2'>
 											<input
@@ -215,7 +217,7 @@ const Page: FC = () => {
 													onClick={() => {
 														booksFunctions.removeToc(book.name, content.content)
 													}}
-													className='bg-vibrant cursor-pointer rounded-xl p-2'
+													className='bg-vibrant cursor-pointer rounded-md p-2'
 												/>
 											</div>
 										</div>
@@ -229,7 +231,7 @@ const Page: FC = () => {
 													event.target.value
 												)
 											}}
-											color='background'
+											variant='background'
 											className='min-h-[340px] w-full rounded-md border-0 px-4 py-2 font-mono text-sm duration-200 ease-linear'
 										/>
 									</div>
@@ -253,7 +255,7 @@ const Page: FC = () => {
 					form.setValue('books', books)
 					form.submitBook()
 				}}
-				color='primary'
+				variant='primary'
 			>
 				Create
 			</Button>

@@ -1,11 +1,12 @@
-export const widthSettings = {
-	small: 120,
-	medium: 140,
-	large: 160
-}
-
-export const heightSettings = {
-	small: 190,
-	medium: 220,
-	large: 250
+export const settings = {
+	width: {
+		sm: 160,
+		md: 180,
+		lg: 200
+	},
+	height: {
+		sm: 160,
+		md: 180,
+		lg: 200
+	}
 }

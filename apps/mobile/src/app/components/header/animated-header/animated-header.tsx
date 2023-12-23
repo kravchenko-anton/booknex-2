@@ -1,6 +1,6 @@
 import { AnimatedView } from '@/components/animated'
-import type { AnimatedHeaderProperties } from '@/components/header/animated-header/types'
 import { useHeaderAnimation } from '@/components/header/animated-header/animation'
+import type { AnimatedHeaderProperties } from '@/components/header/animated-header/types'
 import { HeaderElementComponent } from '@/components/header/useHeader'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { ChevronLeft } from 'icons'
@@ -29,9 +29,8 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 						onPress={() => {
 							goBack()
 						}}
-						size='medium'
+						size='md'
 						className='pl-0'
-						color={Color.black}
 					/>
 					<Title size={18} className='w-3/4' weight='bold'>
 						{properties.title}

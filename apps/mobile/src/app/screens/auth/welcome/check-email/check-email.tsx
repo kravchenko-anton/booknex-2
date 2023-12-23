@@ -46,20 +46,19 @@ const CheckEmail: FC = () => {
 					placeholder='Enter you Email'
 				/>
 				<Button
-					size='medium'
+					size='md'
 					disabled={!noValidEmail}
 					variant={isEmailExists?.isExist ? 'secondary' : 'primary'}
-					className='mt-2'
 					width='100%'
 					onPress={() => {
 						navigate(isEmailExists?.isExist ? 'Login' : 'SelectGenres')
 					}}
 					text={
 						noValidEmail
-							? isEmailExists?.isExist
+							? (isEmailExists?.isExist
 								? 'Sign in'
-								: 'Sign up'
-							: 'continue'
+								: 'Sign up')
+							: 'Continue'
 					}
 				/>
 			</View>

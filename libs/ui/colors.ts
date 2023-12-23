@@ -53,8 +53,6 @@ export type VividPaletteType =
 	| 'warning'
 	| ClampPaletteType
 
-export type PickColorsType<T extends keyof typeof Color> = T
-
 export interface ColorProperties {
 	color?: LineColorType | string
 }

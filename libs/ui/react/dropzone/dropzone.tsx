@@ -32,16 +32,17 @@ const Dropzone = ({
 	return (
 		<div className={twMerge(settings.maxWidth[size], className)} style={style}>
 			<div
-				className={`flex gap-2 overflow-scroll ${
+				className={twMerge(
+					'flex gap-2 overflow-scroll',
 					files.length === 0 && 'hidden'
-				}`}
+				)}
 			>
 				{files.map(file => (
 					<div key={file.name + file.type}>
 						<button
 							color={variant}
 							className={twMerge(
-								'mb-2 max-w-[200px] items-center justify-center rounded-lg border-2 p-2 text-center',
+								'mb-2 max-w-[200px] items-center justify-center rounded-md border-2 p-2 text-center',
 								settings.colors[variant]
 							)}
 							onClick={() => {

@@ -1,25 +1,25 @@
-import { Color } from 'ui/colors'
+import type { ClampPaletteType } from '../../colors'
 
-export const SizeSetting = {
-	small: 18,
-	medium: 26,
-	large: 30
-}
-
-export const BackgroundColorSetting = {
-	filled: Color.primary,
-	outlined: Color.transparent,
-	ghost: Color.transparent
-}
-
-export const BorderColorSetting = {
-	filled: Color.transparent,
-	outlined: Color.primary,
-	ghost: Color.transparent
-}
-
-export const IconColorSetting = {
-	filled: Color.white,
-	outlined: Color.primary,
-	ghost: Color.black
+export const settings: {
+	colors: Record<ClampPaletteType, string>
+	padding: Record<'sm' | 'md' | 'lg', string>
+	size: Record<'sm' | 'md' | 'lg', number>
+} = {
+	colors: {
+		gray: 'bg-gray border-vibrant',
+		foreground: 'bg-foreground',
+		vibrant: 'bg-vibrant',
+		shade: 'bg-shade',
+		background: 'bg-background'
+	},
+	padding: {
+		sm: 'p-2',
+		md: 'p-3',
+		lg: 'p-4'
+	},
+	size: {
+		sm: 18,
+		md: 26,
+		lg: 30
+	}
 }

@@ -12,7 +12,7 @@ export interface VerticalBookCardProperties extends PressableDefaultProperties {
 	description?: string
 	descriptionLines?: number
 	image: {
-		size: 'small' | 'medium' | 'large' | 'cube'
+		size: 'sm' | 'md' | 'lg' | 'cube'
 		uri: string
 	}
 	title: string

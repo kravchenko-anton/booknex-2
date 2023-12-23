@@ -1,9 +1,6 @@
-import {
-	heightSettings,
-	widthSettings
-} from '@/components/book-card/vertical-card/settings'
+import PressableContainer from '@/components/animated-press/animated-press'
+import { settings } from '@/components/book-card/vertical-card/settings'
 import type { VerticalBookCardProperties } from '@/components/book-card/vertical-card/types'
-import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'
@@ -12,16 +9,16 @@ import { Image, Title } from 'ui/components'
 const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 	<PressableContainer
 		style={{
-			height: heightSettings[card.image.size]
+			height: settings.height[card.image.size]
 		}}
-		className='bg-vibrant mb-1.5 w-full flex-row rounded-lg p-2'
+		className='bg-vibrant mb-1.5 w-full flex-row rounded-md p-2'
 		{...card}
 	>
 		<Image
 			url={card.image.uri}
-			height={heightSettings[card.image.size]}
+			height={settings.height[card.image.size]}
 			fullSize={true}
-			width={widthSettings[card.image.size]}
+			width={settings.width[card.image.size]}
 		/>
 		<View className='flex-1 pb-0 pl-3'>
 			<View>
@@ -50,7 +47,7 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 							<Title
 								key={label}
 								size={16}
-								className='rounded-xl p-2'
+								className='rounded-md p-2'
 								weight='medium'
 								style={{
 									backgroundColor: backgroundColor,

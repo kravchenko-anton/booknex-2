@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/pressable-container/pressable-container'
+import PressableContainer from '@/components/animated-press/animated-press'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import type { FC } from 'react'
 import { Flatlist, Title } from 'ui/components'
@@ -17,7 +17,7 @@ const ChaptersList: FC = () => {
 						style={{
 							backgroundColor: colorScheme.colorPalette.background.darker
 						}}
-						className='mb-4 rounded-xl p-4'
+						className='mb-4 rounded-md p-4'
 					>
 						<Title
 							style={{

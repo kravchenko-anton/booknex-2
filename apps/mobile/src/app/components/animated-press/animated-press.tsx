@@ -4,15 +4,17 @@ import type { PressableDefaultProperties } from '@/components/component-types'
 import type { FC, PropsWithChildren } from 'react'
 import { memo } from 'react'
 
-const PressableContainer: FC<PropsWithChildren<PressableDefaultProperties>> = ({
-	                                                                               children,
-	                                                                               style,
-	                                                                               ...properties
-                                                                               }) => {
+const AnimatedPress: FC<PropsWithChildren<PressableDefaultProperties>> = ({
+	children,
+	style,
+	className = '',
+	...properties
+}) => {
 	const { pressFunctions, animatedStyle } = usePressAnimation()
 	return (
 		<AnimatedPressable
 			{...pressFunctions}
+			className={className}
 			style={[style, animatedStyle]}
 			{...properties}
 		>
@@ -21,4 +23,4 @@ const PressableContainer: FC<PropsWithChildren<PressableDefaultProperties>> = ({
 	)
 }
 
-export default memo(PressableContainer)
+export default memo(AnimatedPress)

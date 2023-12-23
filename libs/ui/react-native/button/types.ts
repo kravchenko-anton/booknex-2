@@ -2,7 +2,7 @@ import type { PressableDefaultProperties } from '@/components/component-types.ts
 import type { VividPaletteType } from '../../colors'
 
 export type ButtonProperties = PressableDefaultProperties & {
-	size: 'small' | 'medium' | 'large'
+	size: 'sm' | 'md' | 'lg'
 	text: string
 	textSize?: number
 	uppercase?: boolean

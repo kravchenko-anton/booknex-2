@@ -13,7 +13,7 @@ interface ShelfListItemProperties extends PressableDefaultProperties {
 
 const ShelfCard: FC<ShelfListItemProperties> = properties => (
 	<PressableContainer
-		className='h-[130px] w-[120px] rounded-xl'
+		className='h-[130px] w-[120px] rounded-md'
 		{...properties}
 	>
 		<ImageBackground
@@ -25,7 +25,7 @@ const ShelfCard: FC<ShelfListItemProperties> = properties => (
 		>
 			<LinearGradient
 				colors={['transparent', Color.vibrant]}
-				className='absolute h-full w-full flex-1 rounded-xl'
+				className='absolute h-full w-full flex-1 rounded-md'
 			/>
 			<Title
 				numberOfLines={2}

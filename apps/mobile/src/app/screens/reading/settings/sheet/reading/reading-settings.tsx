@@ -1,5 +1,5 @@
+import PressableContainer from '@/components/animated-press/animated-press'
 import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/types'
-import PressableContainer from '@/components/pressable-container/pressable-container'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import FontSettings from '@/screens/reading/settings/sheet/reading/font-settings/font-settings'
@@ -28,7 +28,7 @@ const ReadingSettings: FC = () => {
 											: theme.colorPalette.background.lighter
 								}}
 								onPress={() => changeTheme(theme.slug)}
-								className='rounded-xl border-2 p-2 px-4'
+								className='rounded-md border-2 p-2 px-4'
 							>
 								<Title
 									weight='semiBold'
@@ -48,7 +48,7 @@ const ReadingSettings: FC = () => {
 						onPress={() =>
 							openBottomSheet(BottomSheetListEnum.readerSelectTheme)
 						}
-						className='flex-row items-center rounded-xl p-2 px-4'
+						className='flex-row items-center rounded-md p-2 px-4'
 					>
 						<Title
 							color={colorScheme.colorPalette.text}
@@ -60,9 +60,8 @@ const ReadingSettings: FC = () => {
 						<Icon
 							noPadding
 							icon={ChevronRight}
-							size='medium'
+							size='md'
 							className='ml-2 h-6 w-3.5'
-							color={colorScheme.colorPalette.text}
 						/>
 					</PressableContainer>
 				]}

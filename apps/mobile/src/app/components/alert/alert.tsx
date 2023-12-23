@@ -22,7 +22,7 @@ const Alert: FC = () => {
 			<AnimatedPressable
 				entering={FadeInDown}
 				onTouchStart={event => event.stopPropagation()}
-				className='bg-foreground z-50 w-11/12 items-center rounded-xl p-4'
+				className='bg-foreground z-50 w-11/12 items-center rounded-md p-4'
 			>
 				<Title size={28} className='mb-4 mt-2' center weight='bold'>
 					{alert.title}
@@ -42,14 +42,14 @@ const Alert: FC = () => {
 					onPress={() => closeAlert() && alert.onAccept()}
 					className='mt-5 w-4/5'
 					variant={alert.type}
-					size='medium'
+					size='md'
 				/>
 				<Button
 					onPress={() => closeAlert()}
 					text='Cancel'
 					className='mt-4 w-2/3'
 					variant='foreground'
-					size='medium'
+					size='md'
 				/>
 			</AnimatedPressable>
 		</AnimatedView>

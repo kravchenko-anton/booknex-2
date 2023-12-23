@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import type { VividPaletteType } from '../../colorPalette'
+import type { VividPaletteType } from '../../colors'
 import type { DefaultButtonProperties } from '../components-props-types'
 
 export interface ButtonProperties extends DefaultButtonProperties {

@@ -1,5 +1,5 @@
+import PressableContainer from '@/components/animated-press/animated-press'
 import type { RainbowBookCardProperties } from '@/components/book-card/rainbow-book-card/types'
-import PressableContainer from '@/components/pressable-container/pressable-container'
 import type { Style } from '@/types/global'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -12,7 +12,7 @@ const RainbowBookCard: FC<RainbowBookCardProperties> = ({
 	...properties
 }) => (
 	<PressableContainer
-		className='h-[300px] w-[300px] justify-between rounded-xl p-4'
+		className='h-[300px] w-[300px] justify-between rounded-md p-4'
 		style={[
 			{
 				backgroundColor: properties.backgroundColor

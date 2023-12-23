@@ -1,15 +1,18 @@
-import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-password/update-password-types'
 import { useUpdatePassword } from '@/screens/profile/update-profile/update-password/useUpdatePassword'
-import { passwordRules } from 'global/utils/input-validation'
+import type { UpdatePasswordSchemaType } from '@/screens/profile/update-profile/update-password/validation'
+import { UpdatePasswordSchema } from '@/screens/profile/update-profile/update-password/validation'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
 import { Button, Field, Title } from 'ui/components'
 
 const UpdatePassword = () => {
-	const { control, handleSubmit } = useForm<EditPasswordTypes>()
+	const { control, handleSubmit } = useForm<UpdatePasswordSchemaType>({
+		resolver: zodResolver(UpdatePasswordSchema)
+	})
 	const { onSubmit } = useUpdatePassword()
 	return (
-		<View className='bg-dust mb-4 mt-8 rounded-2xl p-4'>
+		<View className='bg-dust mb-4 mt-8 rounded-md p-4'>
 			<Title weight='bold' className='mb-2' size={24}>
 				Password
 			</Title>
@@ -17,14 +20,12 @@ const UpdatePassword = () => {
 				control={control}
 				name='oldPassword'
 				secureTextEntry={true}
-				rules={passwordRules}
 				placeholder='Old password'
 			/>
 			<Field
 				control={control}
 				name='password'
 				secureTextEntry={true}
-				rules={passwordRules}
 				placeholder='New password'
 			/>
 
@@ -33,7 +34,7 @@ const UpdatePassword = () => {
 				onPress={handleSubmit(onSubmit)}
 				text='Save'
 				variant='primary'
-				size='medium'
+				size='md'
 			/>
 		</View>
 	)
