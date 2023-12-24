@@ -5,6 +5,7 @@ import type {
 	BookPayload,
 	EmotionOutput
 } from '../../../../libs/global/services-types/book-types'
+import type { BookByIdOutput } from '../../../../libs/global/services-types/book-types'
 import { request } from '../api/request.api'
 
 export const bookService = {
@@ -20,6 +21,12 @@ export const bookService = {
 			params: {
 				searchTerm
 			}
+		})
+	},
+
+	async infoById(id: number) {
+		return request<BookByIdOutput>({
+			url: getBookUrl(`/by-id/${id}`)
 		})
 	},
 

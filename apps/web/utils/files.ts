@@ -14,7 +14,7 @@ export const blobFormData = (blob: Blob, fileName: string) => {
 	formData.append('file', blob, fileName)
 	return formData
 }
-
+// TODO: переписать абсолютно везде на этот хук
 export const useUploadFile = () => {
 	const { mutateAsync: upload } = useMutation(
 		['upload file'],

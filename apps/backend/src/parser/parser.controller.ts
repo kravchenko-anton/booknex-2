@@ -1,3 +1,7 @@
+import type {
+	AllGoodReadBookOutput,
+	UnfoldOutput
+} from '@booknex/global/services-types/parser-types'
 import {
 	Body,
 	Controller,
@@ -12,7 +16,6 @@ import {
 	UseInterceptors
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import type { AllGoodReadBookOutput } from '../../../../libs/global/services-types/parser-types'
 import { Auth } from '../decorator/auth.decorator'
 import { ParserDto } from './dto/parser.dto'
 import { ParserService } from './parser.service'
@@ -47,7 +50,7 @@ export class ParserController {
 			})
 		)
 		file: Express.Multer.File
-	) {
+	): Promise<UnfoldOutput> {
 		return this.parserService.unfold(file)
 	}
 

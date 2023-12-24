@@ -4,14 +4,14 @@ import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
 import { Pen, Settings } from 'icons'
 import { View } from 'react-native'
-import { AnimatedIcon, BigLoader, Image, Title } from 'ui/components'
+import { AnimatedIcon, Image, Loader, Title } from 'ui/components'
 
 const Profile = () => {
 	const { data: profile } = useQuery(['user-profile'], () =>
 		userServices.profile()
 	)
 	const { navigate } = useTypedNavigation()
-	if (!profile) return <BigLoader />
+	if (!profile) return <Loader />
 	// TODO: делать тут обычный layout и повыноить обновление профиля в настройки
 	return (
 		<ScrollLayout className='px-4'>

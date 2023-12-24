@@ -1,52 +1,35 @@
 import { z } from 'zod'
 
 export const createBookValidationSchema = z.object({
-	title: z
-		.string()
-		.refine(value => value && value.length > 0, 'Title is required'),
+	title: z.string(),
 	picture: z.object({
-		name: z.string().nonempty(),
-		blob: z.custom<Blob>(v => v instanceof Blob)
+		name: z.string(),
+		blob: z.instanceof(Blob)
 	}),
-	// string or number
-	pages: z.string().refine(value => Number(value) > 0, {
-		message: 'At least one page is required'
-	}),
-	description: z.string().refine(value => value && value.length > 0, {
-		message: 'Description is required'
-	}),
-	popularity: z.number().refine(value => value > 0, {
-		message: 'At least one view is required'
-	}),
+	pages: z.number().positive(),
+	description: z.string(),
+	popularity: z.number().positive(),
 	author: z.object({
 		label: z.string(),
 		value: z.number()
 	}),
-	books: z
-		.array(
-			z
-				.object({
-					name: z
-						.string()
-						// if value include "epub" cancel
-						.refine(value => value && value.length > 0, {
-							message: 'Book name is required'
-						})
-						.refine(value => !value.includes('epub'), {
-							message: 'Book name can not include "epub"'
-						}),
-					content: z.array(
-						z.object({
-							title: z.string(),
-							content: z.string()
-						})
-					)
-				})
-				.refine(value => value.name.length > 0, {
-					message: 'File is required'
-				})
-		)
-		.nonempty(),
+	books: z.array(
+		z
+			.object({
+				name: z.string().refine(value => !value.includes('epub'), {
+					message: 'Book name can not include "epub"'
+				}),
+				content: z.array(
+					z.object({
+						title: z.string(),
+						content: z.string()
+					})
+				)
+			})
+			.refine(value => value.name.length > 0, {
+				message: 'File is required'
+			})
+	),
 	genres: z.array(
 		z.object({
 			label: z.string(),

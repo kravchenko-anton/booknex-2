@@ -1,7 +1,8 @@
 import { getParserUrl } from '../../../../libs/global/api-config'
 import type {
 	AllGoodReadBookOutput,
-	ParserDtoPayload
+	ParserDtoPayload,
+	UnfoldOutput
 } from '../../../../libs/global/services-types/parser-types'
 import { request } from '../api/request.api'
 
@@ -25,13 +26,8 @@ export const parserService = {
 			timeout: 0
 		})
 	},
-	unfold(file: FormData) {
-		return request<
-			{
-				title: string
-				content: string
-			}[]
-		>({
+	unfold(file: FormData): Promise<UnfoldOutput> {
+		return request({
 			url: getParserUrl('/unfold'),
 			method: 'POST',
 			data: file,

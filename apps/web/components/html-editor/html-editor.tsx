@@ -10,12 +10,19 @@ const HtmlEditor: FC<RichEditorProperties> = ({
 	return (
 		<div className={className} style={style}>
 			<Editor
+				ref={properties.reference}
 				apiKey={process.env.TINYMCE}
 				init={{
+					placeholder: 'Type something...',
 					menubar: true,
 					branding: false,
+					skin: 'oxide-dark',
+					height: 'calc(100vh)',
+					content_css: 'dark',
 					ai_request: (
-						request: { prompt: string },
+						request: {
+							prompt: string
+						},
 						respondWith: {
 							string: (
 								signal: (signal: AbortSignal) => Promise<string>

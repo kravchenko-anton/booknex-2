@@ -8,7 +8,7 @@ import { catalogService } from '@/services/catalog/catalog-service'
 import { shelfService } from '@/services/shelf/shelf-service'
 import { removeEmoji } from '@/utils/remove-emoji'
 import { useQuery } from '@tanstack/react-query'
-import { BigLoader, Button, Flatlist } from 'ui/components'
+import { Button, Flatlist, Loader } from 'ui/components'
 
 const Featured = () => {
 	const { data: catalog } = useQuery(['catalog'], () =>
@@ -18,7 +18,7 @@ const Featured = () => {
 		shelfService.catalog()
 	)
 	const { navigate } = useTypedNavigation()
-	if (!catalog) return <BigLoader />
+	if (!catalog) return <Loader />
 	return (
 		<ScrollLayout>
 			<Flatlist

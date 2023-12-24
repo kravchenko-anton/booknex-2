@@ -2,11 +2,11 @@ import { BookCard, PressableContainer, RainbowBookCard } from '@/components'
 import GenreLayout from '@/screens/genre/genre-layout'
 import { useGenre } from '@/screens/genre/useGenre'
 import { removeEmoji } from '@/utils/remove-emoji'
-import { BigLoader, Flatlist, Image, Title } from 'ui/components'
+import { Flatlist, Image, Loader, Title } from 'ui/components'
 
 const Genre = () => {
 	const { navigate, genre } = useGenre()
-	if (!genre) return <BigLoader />
+	if (!genre) return <Loader />
 	// TODO: возможно вынести всё flatlist в отдельный компонент
 	return (
 		<GenreLayout title={genre.name} transientValue={50}>

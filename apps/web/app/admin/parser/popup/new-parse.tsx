@@ -33,7 +33,7 @@ const NewParse: FC<NewParserPopupProperties> = ({
 				defaultValue={defaultValues.page}
 				className='my-2'
 				name='page'
-				placeholder='Page'
+				placeholder='Id'
 				type='number'
 			/>
 			<Button

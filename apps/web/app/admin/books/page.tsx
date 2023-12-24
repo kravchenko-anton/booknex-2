@@ -10,6 +10,7 @@ import { Color } from '@/ui/colors'
 import { Button, Field } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import AuthorDescription from '../authors/popup/description-popup'
@@ -21,6 +22,7 @@ const Page: FC = () => {
 	const { data: books } = useQuery(['books', search], () =>
 		bookService.all(search)
 	)
+	const router = useRouter()
 	const { showPopup } = useAction()
 
 	const { mutateAsync: toggleVisible } = useMutation(
@@ -62,8 +64,14 @@ const Page: FC = () => {
 						name='search'
 						placeholder='Search...'
 					/>
-					<Button size='sm' variant='primary'>
-						Parsing
+					<Button
+						size='sm'
+						onClick={() => {
+							router.push('/admin/books/create')
+						}}
+						variant='primary'
+					>
+						Create
 					</Button>
 				</div>
 			</div>
@@ -162,6 +170,9 @@ const Page: FC = () => {
 												width={25}
 												className='cursor-pointer'
 												height={25}
+												onClick={() => {
+													router.push(`/admin/books/update/${book.id}`)
+												}}
 												color={Color.warning}
 											/>
 

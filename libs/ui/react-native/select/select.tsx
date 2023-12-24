@@ -1,11 +1,11 @@
 import PressableContainer from '@/components/animated-press/animated-press'
 import type { ViewDefaultProperties } from '@/components/component-types.ts'
-import OutsidePressHandler from '@/hooks/outside-press/components/outside-press-handler'
 import { ChevronDown } from 'icons'
 import type { FC } from 'react'
 import { useState } from 'react'
-import { Pressable } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { useClickOutside } from '../../../../apps/mobile/src/app/hooks/outside-press/useClickOutside'
 import { Color } from '../../colors'
 import { Icon, ScrollView, Title } from '../index'
 
@@ -26,6 +26,7 @@ interface SelectProperties extends ViewDefaultProperties {
 
 const Select: FC<SelectProperties> = ({ ...properties }) => {
 	const [active, setActive] = useState(false)
+	const reference = useClickOutside(() => active && setActive(false))
 
 	const popupAnimation = useAnimatedStyle(() => {
 		return {
@@ -54,11 +55,8 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 					size='md'
 				/>
 			</PressableContainer>
-			<OutsidePressHandler
-				onOutsidePress={() => {
-					setActive(false)
-				}}
-				disabled={!active}
+			<View
+				ref={reference}
 				style={[
 					popupAnimation,
 					{
@@ -85,7 +83,7 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 						)
 					})}
 				</ScrollView>
-			</OutsidePressHandler>
+			</View>
 		</>
 	)
 }

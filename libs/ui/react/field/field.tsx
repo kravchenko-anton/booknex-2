@@ -10,7 +10,6 @@ const Field = <T extends Record<string, any>>({
 	icon: Icon,
 	...properties
 }: FieldProperties<T>): JSX.Element | null => {
-	console.log(properties)
 	return (
 		<Controller
 			control={properties.control}

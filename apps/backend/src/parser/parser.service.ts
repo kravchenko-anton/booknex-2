@@ -1,3 +1,4 @@
+import type { UnfoldOutput } from '@booknex/global/services-types/parser-types'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import type { TocElement } from 'epub'
 import EPub from 'epub'
@@ -17,7 +18,7 @@ interface Chapter {
 @Injectable()
 export class ParserService {
 	constructor(private readonly prisma: PrismaService) {}
-	
+
 	async all(searchTerm: string) {
 		return this.prisma.goodReadBook.findMany({
 			select: {
@@ -64,7 +65,7 @@ export class ParserService {
 			})
 		})
 	}
-	
+
 	async delete(id: number) {
 		return this.prisma.goodReadBook.delete({
 			where: {
@@ -72,9 +73,8 @@ export class ParserService {
 			}
 		})
 	}
-	
+
 	async unfold(file: Express.Multer.File) {
-		
 		if (!file.buffer && file.mimetype !== 'application/epub+zip')
 			throw new BadRequestException(ErrorsEnum.INVALID_FILE)
 		return new Promise(resolve => {
@@ -82,18 +82,22 @@ export class ParserService {
 			epub.on('end', function () {
 				const flow: Promise<Chapter | null>[] = epub.flow.map(
 					(chapter: TocElement) => {
-						return new Promise<Chapter | null>((resolve) => {
+						return new Promise<Chapter | null>(resolve => {
 							try {
 								epub.getChapter(chapter.id, (error, text) => {
 									if (error) {
 										return null
 									}
-									
+
 									const updatedContent = () => {
 										const dom = new JSDOM(text.toString())
 										const elements = dom.window.document.querySelectorAll('*')
 										for (const element of elements) {
-											if (element.textContent === '' || element.textContent === ' ' || element.textContent === '\n') {
+											if (
+												element.textContent === '' ||
+												element.textContent === ' ' ||
+												element.textContent === '\n'
+											) {
 												element.remove()
 											}
 											const attributes = element.getAttributeNames()
@@ -109,21 +113,30 @@ export class ParserService {
 											if (element.tagName === 'img') {
 												element.remove()
 											}
+											if (element.tagName === 'svg') {
+												element.remove()
+											}
+											if (element.tagName === 'a') {
+												const span = dom.window.document.createElement('span')
+												span.textContent = element.textContent
+												element.replaceWith(span)
+											}
 										}
-										
+
 										return dom.serialize()
 									}
-									
+
 									const finalContent = updatedContent()
-									
-									
+
 									resolve({
 										id: chapter.id,
 										title: chapter.title,
-										content: finalContent.replaceAll(
-											/<(\/)?(body|div|html|img|image|svg|head).*?>/g,
-											''
-										).trim()
+										content: finalContent
+											.replaceAll(
+												/<(\/)?(body|div|html|img|image|svg|head).*?>/g,
+												''
+											)
+											.trim()
 											.replaceAll(/\n{2,}/g, '\n')
 									})
 								})
@@ -137,30 +150,30 @@ export class ParserService {
 				Promise.all(flow)
 					.then((chapters: (Chapter | null)[]) => {
 						const validChapters = chapters.filter(
-							(chapter) => chapter && chapter.content !== null
+							chapter => chapter?.content !== null
 						)
 						resolve(
-							validChapters.map(chapter => {
+							validChapters.map((chapter, index) => {
 								return {
+									id: chapter.id || index.toString(),
 									title: chapter.title || '',
 									content: chapter.content || ''
 								}
 							})
 						)
 					})
-					.catch((error) => {
+					.catch(error => {
 						throw new BadRequestException(error)
 					})
 			})
 			epub.parse()
-		}).catch((error) => {
+		}).catch(error => {
 			throw new BadRequestException(error)
-		})
+		}) as Promise<UnfoldOutput>
 	}
-	
+
 	async parse(dto: ParserDto) {
 		try {
-			
 			const goodReadBook = await this.prisma.goodReadBook.findMany({
 				select: {
 					title: true
@@ -212,13 +225,15 @@ export class ParserService {
 						link: `https://www.goodreads.com${link}`,
 						ratingAvg: ratingAvg.textContent
 							? Number.parseFloat(
-								ratingAvg.textContent.split('—')[0].replaceAll('avg rating', '')
-							)
+									ratingAvg.textContent
+										.split('—')[0]
+										.replaceAll('avg rating', '')
+								)
 							: 2.5
 					}
 				})
 			})
-			
+
 			for (let BooksIndex = 0; BooksIndex < books.length; BooksIndex++) {
 				try {
 					const book = books[BooksIndex]
@@ -238,18 +253,18 @@ export class ParserService {
 					await page.waitForSelector(
 						'div.BookPageMetadataSection > div.BookPageMetadataSection__description > div > div.TruncatedContent__text.TruncatedContent__text--large > div > div > span'
 					)
-					
+
 					await page.waitForSelector('[data-testid="ratingsCount"]')
 					await page.waitForSelector('[data-testid="pagesFormat"]')
-					
+
 					await page.waitForSelector(
 						'div.BookPage__bookCover > div > div > div > div > div > div > img'
 					)
-					
+
 					await page.waitForSelector(
 						'div.BookPageMetadataSection > div.BookPageMetadataSection__genres > ul > span:nth-child(1) > span > a > .Button__labelItem'
 					)
-					
+
 					const title = await page.evaluate(() => {
 						const title = document.querySelector(
 							'div.BookPageTitleSection > div > h1'
@@ -271,22 +286,22 @@ export class ParserService {
 							picture: authorPicture.getAttribute('src') ?? 'No author picture',
 							description: authorDescription.textContent
 								? authorDescription.textContent.replaceAll(
-									/(Librarian's note|Contributor note|See also).*?\./g,
-									''
-								)
+										/(Librarian's note|Contributor note|See also).*?\./g,
+										''
+									)
 								: 'No author description'
 						}
 					})
-					
+
 					const description = await page.evaluate(() => {
 						const description = document.querySelector(
 							'div.BookPageMetadataSection > div.BookPageMetadataSection__description > div > div.TruncatedContent__text.TruncatedContent__text--large > div > div > span'
 						)
 						return description.textContent
 							? description.textContent.replaceAll(
-								/(Librarian's note|Contributor note|See also).*?\./g,
-								''
-							)
+									/(Librarian's note|Contributor note|See also).*?\./g,
+									''
+								)
 							: 'No description'
 					})
 					const rating = await page.evaluate(() => {
@@ -294,11 +309,11 @@ export class ParserService {
 						const ratingCount = document.querySelector(selector)
 						return ratingCount.textContent
 							? Number.parseInt(
-								ratingCount.textContent
-									.replaceAll('ratings', '')
-									.replaceAll(',', '')
-									.trim()
-							)
+									ratingCount.textContent
+										.replaceAll('ratings', '')
+										.replaceAll(',', '')
+										.trim()
+								)
 							: 0
 					})
 					const pages = await page.evaluate(() => {
@@ -306,8 +321,8 @@ export class ParserService {
 						const pages = document.querySelector(selector)
 						return pages.textContent
 							? Number.parseInt(
-								pages.textContent.replaceAll(/[^\d\s,]/g, '').trim()
-							)
+									pages.textContent.replaceAll(/[^\d\s,]/g, '').trim()
+								)
 							: 0
 					})
 					const picture = await page.evaluate(() => {
@@ -316,7 +331,7 @@ export class ParserService {
 						)
 						return picture.getAttribute('src') ?? 'No picture'
 					})
-					
+
 					const genres = await page.evaluate(() => {
 						const genres: any = document.querySelectorAll(
 							'div.BookPageMetadataSection > div.BookPageMetadataSection__genres > ul > span:nth-child(1) > span > a > .Button__labelItem'

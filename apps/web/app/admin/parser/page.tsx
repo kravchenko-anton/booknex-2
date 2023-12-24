@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import CreateAuthorPopup from '../authors/popup/create'
-import type { DeafultCreateBookValuesType } from '../books/create/useForm'
+import type { DefaultCreateBookValuesType } from '../books/create/types'
 import NewParse from './popup/new-parse'
 
 const Parser: FC = () => {
@@ -174,7 +174,7 @@ const Parser: FC = () => {
 																		pages: book.pages,
 																		popularity: book.popularity,
 																		genres: book.genres
-																	} as DeafultCreateBookValuesType)
+																	} as DefaultCreateBookValuesType)
 																}).toString()
 														)
 													} else {
@@ -196,7 +196,7 @@ const Parser: FC = () => {
 																					pages: book.pages,
 																					popularity: book.popularity,
 																					genres: book.genres
-																				} as DeafultCreateBookValuesType)
+																				} as DefaultCreateBookValuesType)
 																			}).toString()
 																	)
 																}}

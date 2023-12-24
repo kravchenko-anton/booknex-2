@@ -6,13 +6,13 @@ import type { FC } from 'react'
 import { useState } from 'react'
 import { View } from 'react-native'
 import { Color } from 'ui/colors'
-import { BigLoader, Button, Title } from 'ui/components'
+import { Button, Loader, Title } from 'ui/components'
 
 const SelectGenres: FC = () => {
 	const [selectGenres, setSelectGenres] = useState<string[]>([])
 	const { data: genres } = useQuery(['genres'], () => genreService.all())
 	const { navigate } = useTypedNavigation()
-	if (!genres) return <BigLoader />
+	if (!genres) return <Loader />
 	return (
 		<View className='h-full'>
 			<Header />

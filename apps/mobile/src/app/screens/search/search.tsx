@@ -3,7 +3,7 @@ import Layout from '@/components/layout/layout'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useSearch } from '@/screens/search/useSearch'
 import { View } from 'react-native'
-import { BigLoader, Button, Field, Flatlist } from 'ui/components'
+import { Button, Field, Flatlist, Loader } from 'ui/components'
 
 const Search = () => {
 	const {
@@ -25,7 +25,7 @@ const Search = () => {
 			{searchTerm ? (
 				<View className='flex-1'>
 					{booksLoading ? (
-						<BigLoader />
+						<Loader />
 					) : (
 						<Flatlist
 							mt={0}
@@ -54,7 +54,7 @@ const Search = () => {
 					)}
 				</View>
 			) : (searchExamplesLoading ? (
-				<BigLoader />
+				<Loader />
 			) : (
 				<Flatlist
 					mt={0}

@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form'
 import CreateAuthorPopup from './popup/create'
 import AuthorDescription from './popup/description-popup'
 
-const Page: FC = () => {
+const PageDetails: FC = () => {
 	const { control, watch } = useForm()
 	const QueryClient = useQueryClient()
 	const search = useDebounce(watch('search') as string, 500) || ''
@@ -141,7 +141,6 @@ const Page: FC = () => {
 													deleteAuthor(author.id)
 												}}
 												color={Color.danger}
-												fullWidth
 												size='sm'
 											/>
 										</div>
@@ -156,4 +155,4 @@ const Page: FC = () => {
 	)
 }
 
-export default Page
+export default PageDetails

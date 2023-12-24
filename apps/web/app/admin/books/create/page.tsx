@@ -1,5 +1,5 @@
 'use client'
-import { Close, Plus } from '@/global/icons/react'
+import { ChevronDown, Close, Plus } from '@/global/icons/react'
 import { Color } from '@/ui/colors'
 import {
 	Button,
@@ -16,13 +16,10 @@ import { blobFormData } from '@/utils/files'
 import type { FC } from 'react'
 
 import CreateAuthorPopup from '../../authors/popup/create'
-import { useBookCompose } from './useBook'
 import { useCreate } from './useCreate'
 
 const Page: FC = () => {
-	const { books, booksFunctions } = useBookCompose()
 	const { unfold, select, popup, form } = useCreate()
-	console.log(form.errors)
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -49,24 +46,26 @@ const Page: FC = () => {
 							placeholder='Popularity'
 						/>
 					</div>
-					<h1 className='mb-2'>Description</h1>
+					<h1 className='mb-2 mt-4'>Description</h1>
 					<FormTextArea
 						control={form.control}
 						name='description'
 						placeholder='Enter description'
-						className='h-[145px]'
+						className='h-[250px]'
 					/>
 				</div>
 
 				<div className='h-max w-1/2'>
-					<div className='flex justify-between'>
+					<div className='flex justify-between gap-6'>
 						<div>
 							<h1 className='mt-2  text-xl'>Book file</h1>
 							<DropZone
 								size='md'
-								multiple={false}
+								multiple={true}
 								accept='.epub'
-								onFileDelete={file => booksFunctions.delete(file.name)}
+								onFileDelete={file => {
+									form.setValue('books', booksFunctions.remove(file.name))
+								}}
 								onDropFile={files => {
 									for (const file of files) {
 										unfold(blobFormData(new Blob([file]), file.name)).then(
@@ -195,7 +194,7 @@ const Page: FC = () => {
 								</div>
 								{book.content.map((content, index) => (
 									<div
-										key={content.title + book.name + content.content + index}
+										key={content.}
 										className='bg-shade m-2 rounded-md p-2'
 									>
 										<div className='mb-2 flex w-full items-center justify-between gap-2'>
@@ -211,6 +210,14 @@ const Page: FC = () => {
 												className='bg-foreground border-gray w-full rounded-md border-0 px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2'
 											/>
 											<div className='flex gap-2'>
+												<ChevronDown
+													width={36}
+													height={36}
+													onClick={() => {
+														// create a new character
+													}}
+													className='bg-vibrant cursor-pointer rounded-md p-2'
+												/>
 												<Close
 													width={36}
 													height={36}
@@ -249,9 +256,7 @@ const Page: FC = () => {
 			<Button
 				className='mt-8'
 				onClick={() => {
-					if (!books) {
-						return
-					}
+					if (!books) return
 					form.setValue('books', books)
 					form.submitBook()
 				}}

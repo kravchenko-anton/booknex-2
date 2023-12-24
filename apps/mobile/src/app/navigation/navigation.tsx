@@ -12,7 +12,7 @@ import {
 	SafeAreaProvider
 } from 'react-native-safe-area-context'
 import { Color } from 'ui/colors'
-import { BigLoader } from 'ui/components'
+import { Loader } from 'ui/components'
 
 import PrivateNavigator from './private-navigator'
 
@@ -39,7 +39,7 @@ const Navigation: FC = () => {
 		>
 			<NavigationContainer
 				ref={navReference}
-				fallback={<BigLoader size='screen' />}
+				fallback={<Loader size='screen' />}
 			>
 				<PrivateNavigator />
 			</NavigationContainer>

@@ -5,13 +5,13 @@ import UpdatePassword from '@/screens/profile/update-profile/update-password/upd
 import UpdatePicture from '@/screens/profile/update-profile/update-picture/update-picture'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
-import { BigLoader } from 'ui/components'
+import { Loader } from 'ui/components'
 
 const UpdateProfile = () => {
 	const { data: profile } = useQuery(['user-profile'], () =>
 		userServices.profile()
 	)
-	if (!profile) return <BigLoader />
+	if (!profile) return <Loader />
 	return (
 		<ScrollLayout className='p-2'>
 			<Header

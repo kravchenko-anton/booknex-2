@@ -5,7 +5,7 @@ import AuthorLayout from '@/screens/author/author-layout/author-layout'
 import { authorService } from '@/services/author/author-service'
 import { useQuery } from '@tanstack/react-query'
 import { View } from 'react-native'
-import { BigLoader, Description, Flatlist } from 'ui/components'
+import { Description, Flatlist, Loader } from 'ui/components'
 
 const Author = () => {
 	const { params } = useTypedRoute<'Author'>()
@@ -13,7 +13,7 @@ const Author = () => {
 		authorService.byId(params.id)
 	)
 	const { navigate } = useTypedNavigation()
-	if (!author) return <BigLoader />
+	if (!author) return <Loader />
 	return (
 		<AuthorLayout
 			name={author.name}

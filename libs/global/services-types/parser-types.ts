@@ -19,3 +19,9 @@ export interface ParserDtoPayload {
 	url: string
 	page: number
 }
+
+export interface UnfoldOutput {
+	id: string
+	title: string
+	content: string
+}

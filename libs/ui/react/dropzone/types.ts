@@ -1,5 +1,4 @@
 import type { Control, FieldPath, FieldValues } from 'react-hook-form'
-import type { File } from '../../../global/icons/react'
 import type { ClampPaletteType } from '../../colors'
 import type { DefaultInputProperties } from '../components-props-types'
 

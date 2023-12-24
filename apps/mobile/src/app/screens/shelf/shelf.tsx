@@ -8,10 +8,10 @@ import { Eye, EyeOff } from 'icons'
 import { View } from 'react-native'
 import {
 	AnimatedIcon,
-	BigLoader,
 	Button,
 	Description,
-	Flatlist
+	Flatlist,
+	Loader
 } from 'ui/components'
 
 const Shelf = () => {
@@ -41,7 +41,7 @@ const Shelf = () => {
 	)
 
 	const { navigate } = useTypedNavigation()
-	if (!shelf) return <BigLoader />
+	if (!shelf) return <Loader />
 	return (
 		<ShelfLayout title={shelf.title} backgroundImage={shelf.picture}>
 			<View className='bg-dust mx-auto mt-[-40px] w-4/5 flex-row justify-between rounded-md p-2 px-4 pb-1 pt-2'>

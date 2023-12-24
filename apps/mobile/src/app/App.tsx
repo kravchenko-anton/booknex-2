@@ -1,5 +1,5 @@
 import Toast from '@/components/toast'
-import EventProvider from '@/hooks/outside-press/components/event-provider'
+import { ClickOutsideProvider } from '@/hooks/outside-press/Provider'
 import Navigation from '@/navigation/navigation'
 import { persistor, store } from '@/redux/store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -11,7 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Color } from 'ui/colors'
-import { Alert, BigLoader } from 'ui/components'
+import { Alert, Loader } from 'ui/components'
 
 const flexStyle = {
 	flex: 1
@@ -38,7 +38,7 @@ export default function App() {
 				persistor={persistor}
 				loading={
 					<View className='bg-background h-screen w-screen'>
-						<BigLoader />
+						<Loader />
 					</View>
 				}
 			>
@@ -46,11 +46,11 @@ export default function App() {
 					client={queryClient}
 					persistOptions={{ persister: asyncStoragePersister }}
 				>
-					<EventProvider>
+					<ClickOutsideProvider>
 						<GestureHandlerRootView style={flexStyle}>
 							<Navigation />
 						</GestureHandlerRootView>
-					</EventProvider>
+					</ClickOutsideProvider>
 					<Toast />
 					<Alert />
 					<StatusBar backgroundColor={Color.background} />

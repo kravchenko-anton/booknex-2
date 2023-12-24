@@ -1,11 +1,11 @@
 import { useBook } from '@/screens/book/useBook'
 
 import { View } from 'react-native'
-import { BigLoader, Button, Description, Flatlist, Image } from 'ui/components'
+import { Button, Description, Flatlist, Image, Loader } from 'ui/components'
 
 const Book = () => {
 	const { book, hamburgerMenuElements, navigate } = useBook()
-	if (!book) return <BigLoader />
+	if (!book) return <Loader />
 	return (
 		<View>
 			<View className='flex-row justify-between px-4'>
