@@ -62,7 +62,7 @@ model Book {
   description String
   picture     String
 
-  charapters Json[]
+  chapters Json[]
   file       String
 
   color       String       @default("#264653")

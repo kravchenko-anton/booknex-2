@@ -15,6 +15,7 @@ const Dropzone = ({
 	style,
 	accept = 'image/*',
 	variant = 'foreground',
+	onChange = () => {},
 	onFileDelete = () => {},
 	size = 'sm',
 	...properties
@@ -22,11 +23,14 @@ const Dropzone = ({
 	const [files, setFiles] = useState<File[]>(defaultFiles)
 	const onDrop = useCallback(
 		(acceptedFiles: File[]) => {
-			if (!multiple) return setFiles(acceptedFiles)
+			if (!multiple) {
+				setFiles(acceptedFiles)
+				onDropFile(acceptedFiles)
+			}
 			setFiles([...files, ...acceptedFiles])
 			onDropFile(acceptedFiles)
 		},
-		[files, onDropFile]
+		[files, multiple, onDropFile]
 	)
 
 	return (
@@ -69,7 +73,6 @@ const Dropzone = ({
 					settings.padding[size],
 					settings.colors[variant]
 				)}
-				{...properties}
 			>
 				<input
 					multiple={multiple}
@@ -78,9 +81,12 @@ const Dropzone = ({
 					disabled={disabled}
 					accept={accept}
 					onChange={event => {
-						if (event.target.files)
+						if (event.target.files) {
 							onDrop([...(event.target.files as unknown as File[])])
+							onChange(event)
+						}
 					}}
+					{...properties}
 				/>
 			</div>
 		</div>

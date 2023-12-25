@@ -54,6 +54,7 @@ export type AllBooksOutput = Prisma.BookGetPayload<{
 export type ReviewByIdOutput = Prisma.ReviewGetPayload<{
 	select: typeof returnReviewsObject
 }>[]
+
 export interface BookPayload {
 	title: string
 	author: {
@@ -62,15 +63,15 @@ export interface BookPayload {
 	description: string
 	picture: string
 	file: string
-	charapters: { name: string; children: { name: string; link: string }[] }[]
+	chapters: { name: string; children: { name: string; link: string }[] }[]
 	pages: number
 	popularity: number
 	genres: number[]
 }
 
-export type EbpubOutput = Prisma.BookGetPayload<{
+export type EpubOutput = Prisma.BookGetPayload<{
 	select: {
-		charapters: true
+		chapters: true
 		file: true
 	}
 }>

@@ -1,5 +1,5 @@
+import type { BookPayload } from '@booknex/global/services-types/book-types'
 import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator'
-import type { BookPayload } from '../../../../../libs/global/services-types/book-types'
 
 export class CreateBookDto implements BookPayload {
 	@IsString() title: string
@@ -11,7 +11,7 @@ export class CreateBookDto implements BookPayload {
 	@IsString() description: string
 	@IsString() picture: string
 	@IsString() @IsOptional() file: string
-	@IsObject({ each: true }) @IsOptional() charapters: {
+	@IsObject({ each: true }) @IsOptional() chapters: {
 		name: string
 		children: { name: string; link: string }[]
 	}[]
@@ -20,6 +20,7 @@ export class CreateBookDto implements BookPayload {
 	@IsNumber() popularity: number
 	@IsNumber({}, { each: true }) genres: number[]
 }
+
 export class EditBookDto implements Partial<BookPayload> {
 	@IsString() title: string
 	@IsObject()
@@ -31,7 +32,7 @@ export class EditBookDto implements Partial<BookPayload> {
 	@IsString() @IsOptional() picture: string
 	@IsString() @IsOptional() file: string
 	@IsNumber() @IsOptional() pages: number
-	@IsObject({ each: true }) @IsOptional() charapters: {
+	@IsObject({ each: true }) @IsOptional() chapters: {
 		name: string
 		children: { name: string; link: string }[]
 	}[]

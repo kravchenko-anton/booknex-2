@@ -15,7 +15,7 @@ import type { CreateBookValidationSchemaType } from './validation'
 export const useCreate = () => {
 	const { closePopup, showPopup } = useAction()
 	const { upload } = useUploadFile()
-	const { handleSubmit, setValue, errors, control } = useCreateForm()
+	const { handleSubmit, setValue, watch, errors, control } = useCreateForm()
 	const router = useRouter()
 	const { mutateAsync: unfold } = useMutation(
 		['upload ebook'],
@@ -74,17 +74,7 @@ export const useCreate = () => {
 				title: data.title,
 				description: data.description,
 				picture: uploadPicture,
-				charapters: data.books.map(book => {
-					return {
-						name: book.name,
-						children: book.content.map(content => {
-							return {
-								name: content.title,
-								link: book.name + '/' + content.title
-							}
-						})
-					}
-				}),
+				chapters: data.chapters,
 				author: {
 					id: Number(data.author.value)
 				},
@@ -115,6 +105,7 @@ export const useCreate = () => {
 		},
 		unfold,
 		form: {
+			watch,
 			control,
 			errors,
 			setValue,

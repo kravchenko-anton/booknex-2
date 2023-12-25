@@ -2,8 +2,8 @@ import type {
 	AllBooksOutput,
 	AllSelectBooksOutput,
 	BookByIdOutput,
-	EbpubOutput,
 	EmotionOutput,
+	EpubOutput,
 	ReviewByIdOutput
 } from '@booknex/global/services-types/book-types'
 import {
@@ -63,7 +63,7 @@ export class BookController {
 
 	@Auth()
 	@Get('/ebook/:id')
-	async ebookById(@Param('id') bookId: string): Promise<EbpubOutput> {
+	async ebookById(@Param('id') bookId: string): Promise<EpubOutput> {
 		return this.bookService.ebookById(+bookId)
 	}
 

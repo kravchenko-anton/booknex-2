@@ -11,6 +11,7 @@ export const useCreateForm = () => {
 		JSON.parse(searchParameters.get('defaultValues') ?? '')
 	const {
 		control,
+		watch,
 		handleSubmit,
 		setValue,
 		formState: { errors }
@@ -34,9 +35,10 @@ export const useCreateForm = () => {
 				}) ?? []
 		}
 	})
-
+	console.log(errors)
 	return {
 		control,
+		watch,
 		handleSubmit,
 		errors,
 		setValue

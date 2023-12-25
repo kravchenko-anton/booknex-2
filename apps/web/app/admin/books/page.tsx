@@ -184,7 +184,6 @@ const Page: FC = () => {
 													detele(book.id)
 												}}
 												color={Color.danger}
-												fullWidth
 												size='sm'
 											/>
 										</div>

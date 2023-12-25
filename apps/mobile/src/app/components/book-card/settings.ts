@@ -1,12 +1,12 @@
 export const settings = {
 	width: {
-		sm: 160,
-		md: 180,
-		lg: 200
+		sm: 130,
+		md: 140,
+		lg: 160
 	},
 	height: {
-		sm: 160,
-		md: 180,
-		lg: 200
+		sm: 190,
+		md: 220,
+		lg: 250
 	}
 }

@@ -20,8 +20,8 @@ export interface ParserDtoPayload {
 	page: number
 }
 
-export interface UnfoldOutput {
+export type UnfoldOutput = {
 	id: string
 	title: string
 	content: string
-}
+}[]

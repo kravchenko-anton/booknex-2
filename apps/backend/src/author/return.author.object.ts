@@ -14,7 +14,6 @@ export const returnFullAuthorObject: Omit<Prisma.AuthorSelect, '_count'> = {
 	...returnAuthorObject,
 	picture: true,
 	description: true,
-	color: true,
 	books: {
 		select: returnBookObject
 	}

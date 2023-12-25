@@ -38,14 +38,14 @@ export class BookService {
 		const book = await this.prisma.book.findUnique({
 			where: { id },
 			select: {
-				charapters: true,
+				chapters: true,
 				file: true
 			}
 		})
 		if (!book)
 			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
 		return {
-			charapters: book.charapters,
+			chapters: book.chapters,
 			file: book.file
 		}
 	}
@@ -119,7 +119,7 @@ export class BookService {
 				description: dto.description,
 				picture: dto.picture,
 				file: dto.file,
-				charapters: dto.charapters,
+				chapters: dto.chapters,
 				author: {
 					connect: {
 						id: dto.author.id
@@ -154,7 +154,7 @@ export class BookService {
 				description: dto.description || book.description,
 				picture: dto.picture || book.picture,
 				file: dto.file || book.file,
-				charapters: dto.charapters || book.charapters,
+				chapters: dto.chapters || book.chapters,
 				author: {
 					connect: {
 						id: dto.author.id

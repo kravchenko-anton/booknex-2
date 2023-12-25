@@ -10,12 +10,12 @@ export const selectStyle = {
 		border: 0,
 		cursor: 'pointer'
 	}),
-	option: (_: never, state: StateType) => ({
-		backgroundColor: state.isFocused ? Color.primary : Color.shade,
-		padding: 6,
-		color: Color.white,
-		cursor: 'pointer'
-	}),
+	// option: (_: never, state: any) => ({
+	// 	backgroundColor: state.isFocused ? Color.primary : Color.shade,
+	// 	padding: 6,
+	// 	color: Color.white,
+	// 	cursor: 'pointer'
+	// }),
 	menu: (provided: object) => ({
 		...provided,
 		backgroundColor: Color.shade
@@ -43,8 +43,4 @@ export const selectStyle = {
 		...provided,
 		backgroundColor: Color.gray
 	})
-}
-
-interface StateType {
-	isFocused: boolean
 }

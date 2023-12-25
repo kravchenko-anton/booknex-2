@@ -1,8 +1,8 @@
 import { getBookUrl } from 'global/api-config'
-import {
+import type {
 	BookByIdOutput,
-	EbpubOutput,
 	EmotionOutput,
+	EpubOutput,
 	ReviewBookPayload,
 	ReviewByIdOutput
 } from 'global/services-types/book-types'
@@ -39,7 +39,7 @@ export const bookService = {
 	},
 
 	async ebookById(id: number) {
-		return request<EbpubOutput>({
+		return request<EpubOutput>({
 			url: getBookUrl(`/ebook/${id}`)
 		})
 	}

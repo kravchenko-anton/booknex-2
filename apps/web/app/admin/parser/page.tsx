@@ -221,7 +221,6 @@ const Parser: FC = () => {
 												height={25}
 												onClick={() => deleteFromParser(book.id)}
 												color={Color.danger}
-												fullWidth
 												size='sm'
 											/>
 										</div>

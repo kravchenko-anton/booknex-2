@@ -1,5 +1,10 @@
 'use client'
-import { ChevronDown, Close, Plus } from '@/global/icons/react'
+import {
+	CaseSensitive,
+	ChevronDown,
+	ChevronUp,
+	Close
+} from '@/global/icons/react'
 import { Color } from '@/ui/colors'
 import {
 	Button,
@@ -7,7 +12,6 @@ import {
 	ErrorBlock,
 	Field,
 	FormAsyncSelect,
-	FormDropZone,
 	FormSelect,
 	FormTextArea,
 	TextArea
@@ -16,9 +20,11 @@ import { blobFormData } from '@/utils/files'
 import type { FC } from 'react'
 
 import CreateAuthorPopup from '../../authors/popup/create'
+import { useBookCompose } from './useBook'
 import { useCreate } from './useCreate'
 
 const Page: FC = () => {
+	const { books, chapters } = useBookCompose()
 	const { unfold, select, popup, form } = useCreate()
 	return (
 		<div>
@@ -63,14 +69,19 @@ const Page: FC = () => {
 								size='md'
 								multiple={true}
 								accept='.epub'
-								onFileDelete={file => {
-									form.setValue('books', booksFunctions.remove(file.name))
-								}}
+								onFileDelete={file =>
+									books.delete({
+										name: file.name
+									})
+								}
 								onDropFile={files => {
 									for (const file of files) {
 										unfold(blobFormData(new Blob([file]), file.name)).then(
 											data => {
-												booksFunctions.upload(file.name, data)
+												books.upload({
+													name: file.name,
+													content: data
+												})
 											}
 										)
 									}
@@ -86,18 +97,27 @@ const Page: FC = () => {
 						</div>
 						<div>
 							<h1 className='mt-2  text-xl'>Cover</h1>
-							<FormDropZone
-								control={form.control}
-								name='picture'
+							<DropZone
 								size='md'
 								multiple={false}
 								accept='image/*'
 								onDropFile={acceptedFiles => {
+									console.log({
+										name: acceptedFiles[0].name,
+										blob: new Blob([acceptedFiles[0]])
+									})
 									form.setValue('picture', {
 										name: acceptedFiles[0].name,
 										blob: new Blob([acceptedFiles[0]])
 									})
 								}}
+							/>
+							<ErrorBlock
+								name='picture'
+								errors={form.errors}
+								render={({ message }) => (
+									<p className='text-danger text-md mt-2 italic'>{message}</p>
+								)}
 							/>
 						</div>
 					</div>
@@ -164,45 +184,40 @@ const Page: FC = () => {
 				</div>
 			</div>
 
-			{books && (
+			{books.state && (
 				<div>
 					<div className='mt-14  grid grid-cols-2 gap-2'>
-						{books.map((book, index) => (
+						{books.state.map((book, index) => (
 							<div
 								key={book.name + index}
 								className='bg-foreground mb-4 mr-1 rounded-md p-3'
 							>
-								<div className='mb-4 flex items-center  justify-between gap-5'>
+								<div className='mb-4 flex items-center  justify-between gap-2'>
 									<input
-										onBlur={event =>
-											booksFunctions.updateCharacterTitle(
-												event.target.value,
-												book.name
-											)
+										onChange={event =>
+											books.updateChapterTitle(event.target.value, book.name)
 										}
-										defaultValue={book.name}
+										value={book.name}
 										className='bg-vibrant hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-md border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
 									/>
-									<Plus
+									<CaseSensitive
 										width={45}
 										height={45}
 										onClick={() => {
-											booksFunctions.addNewCharacter(book.name)
+											books.generateChaptersNames(book.name)
+											console.log('generate chapters names')
 										}}
 										className='bg-vibrant cursor-pointer rounded-md p-2'
 									/>
 								</div>
 								{book.content.map((content, index) => (
-									<div
-										key={content.}
-										className='bg-shade m-2 rounded-md p-2'
-									>
+									<div key={content.id} className='bg-shade m-2 rounded-md p-2'>
 										<div className='mb-2 flex w-full items-center justify-between gap-2'>
 											<input
-												defaultValue={content.title}
-												onBlur={event => {
-													booksFunctions.updateTocTitle(
-														content.content,
+												value={content.title}
+												onChange={event => {
+													books.updateTocTitle(
+														content.id,
 														book.name,
 														event.target.value
 													)
@@ -210,11 +225,28 @@ const Page: FC = () => {
 												className='bg-foreground border-gray w-full rounded-md border-0 px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2'
 											/>
 											<div className='flex gap-2'>
+												<ChevronUp
+													width={36}
+													height={36}
+													onClick={() => {
+														books.mergeContentWithTopCharacter({
+															bookName: book.name,
+															insertedContent: content.content,
+															topChapterId: book.content[index - 1].id
+														})
+														console.log('merge with top character')
+													}}
+													className='bg-vibrant cursor-pointer rounded-md p-2'
+												/>
 												<ChevronDown
 													width={36}
 													height={36}
 													onClick={() => {
-														// create a new character
+														books.addNewCharacterAfterContent({
+															bookName: book.name,
+															afterContent: content.content
+														})
+														console.log('add new character')
 													}}
 													className='bg-vibrant cursor-pointer rounded-md p-2'
 												/>
@@ -222,7 +254,8 @@ const Page: FC = () => {
 													width={36}
 													height={36}
 													onClick={() => {
-														booksFunctions.removeToc(book.name, content.content)
+														books.removeToc(book.name, content.id)
+														console.log('remove toc')
 													}}
 													className='bg-vibrant cursor-pointer rounded-md p-2'
 												/>
@@ -230,11 +263,11 @@ const Page: FC = () => {
 										</div>
 
 										<TextArea
-											defaultValue={content.content}
-											onBlur={event => {
-												booksFunctions.updateTocContent(
-													content.title,
+											value={content.content}
+											onChange={event => {
+												books.updateTocContent(
 													book.name,
+													content.id,
 													event.target.value
 												)
 											}}
@@ -256,8 +289,9 @@ const Page: FC = () => {
 			<Button
 				className='mt-8'
 				onClick={() => {
-					if (!books) return
-					form.setValue('books', books)
+					if (!books.state) return
+					form.setValue('books', books.state)
+					form.setValue('chapters', chapters)
 					form.submitBook()
 				}}
 				variant='primary'
