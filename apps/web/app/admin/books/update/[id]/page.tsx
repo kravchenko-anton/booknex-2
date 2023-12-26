@@ -114,7 +114,7 @@ const Page: FC<{
 
 	useEffect(() => {
 		if (book) {
-			chapters.setChapters(book.chapters)
+			chapters.setChapters(book.chapters as never)
 			const asyncFunction = async () =>
 				fetch(getFileUrl(book.file)).then(response => {
 					return response.text()
@@ -285,7 +285,6 @@ const Page: FC<{
 								{children.map(child => {
 									return (
 										<button
-											key={child.id}
 											onDoubleClick={() => {
 												navigateInEditor(child.link)
 											}}

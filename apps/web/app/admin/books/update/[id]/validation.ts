@@ -18,7 +18,7 @@ export const updateBookValidationSchema = z.object({
 		})
 		.optional(),
 	file: z.string().optional(),
-	charapters: z
+	chapters: z
 		.array(
 			z.object({
 				name: z.string().refine(value => !value.includes('epub'), {

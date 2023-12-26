@@ -60,8 +60,10 @@ const Dropzone = ({
 								height={45}
 								className='mx-auto mb-2'
 							/>
-							<span>
-								{file.name} / {file.size}
+							<span className='w-full'>
+								{file.name && file.name.length > 20
+									? file.name.slice(0, 20) + '...'
+									: file.name}
 							</span>
 						</button>
 					</div>

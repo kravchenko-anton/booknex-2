@@ -22,7 +22,7 @@ const RainbowBookCard: FC<RainbowBookCardProperties> = ({
 		{...properties}
 	>
 		<View className='items-center'>
-			<Image url={image.uri} height={140} width={100} />
+			<Image url={image.uri} height={135} width={135} />
 			<Title
 				numberOfLines={1}
 				className='mt-2'

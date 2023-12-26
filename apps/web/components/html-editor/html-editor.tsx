@@ -43,6 +43,7 @@ const HtmlEditor: FC<RichEditorProperties> = ({
 							})
 						}
 						respondWith.string((signal: AbortSignal) =>
+							// TODO: перенести на perplixity api
 							window
 								.fetch(
 									'https://openai.ai-demo-proxy.tiny.cloud/v1/chat/completions',

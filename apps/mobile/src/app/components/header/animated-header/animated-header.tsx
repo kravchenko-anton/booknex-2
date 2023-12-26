@@ -40,7 +40,7 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 					? HeaderElementComponent(
 							Object.keys(properties.right)[0],
 							properties.right,
-							Color.black,
+							Color.white,
 							'right'
 						)
 					: null}

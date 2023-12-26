@@ -102,10 +102,6 @@ const Page: FC = () => {
 								multiple={false}
 								accept='image/*'
 								onDropFile={acceptedFiles => {
-									console.log({
-										name: acceptedFiles[0].name,
-										blob: new Blob([acceptedFiles[0]])
-									})
 									form.setValue('picture', {
 										name: acceptedFiles[0].name,
 										blob: new Blob([acceptedFiles[0]])

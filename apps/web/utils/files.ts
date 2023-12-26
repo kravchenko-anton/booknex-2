@@ -1,6 +1,6 @@
+import { storageService } from '@/services/storage/storage-service'
 import { useMutation } from '@tanstack/react-query'
 import type { StorageFolderEnum } from '../../backend/src/storage/storage.types'
-import { storageService } from '../services/storage/storage-service'
 import { errorToast } from './toast'
 
 interface UploadFileProperties {

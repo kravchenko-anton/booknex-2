@@ -8,9 +8,9 @@ interface PageMarginIconProperties extends PressableDefaultProperties {
 	backgroundColor: string
 }
 
-const LineStyle = 'w-6 h-[2px]'
+const lineStyle = 'w-6 h-[2px]'
 const PageMarginIcon: FC<PageMarginIconProperties> = ({
-	backgroundColor = Color.black,
+	backgroundColor = Color.white,
 	...properties
 }) => (
 	<PressableContainer
@@ -23,7 +23,7 @@ const PageMarginIcon: FC<PageMarginIconProperties> = ({
 				return (
 					<View
 						key={`${index} margin`}
-						className={LineStyle}
+						className={lineStyle}
 						style={{
 							backgroundColor: backgroundColor
 						}}

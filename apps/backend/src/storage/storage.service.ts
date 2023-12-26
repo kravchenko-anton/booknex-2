@@ -59,6 +59,7 @@ export class StorageService {
 		folder: StorageFolderType
 		isAdmin: boolean
 	}) {
+		console.log('upload', file, filename, folder, isAdmin)
 		const folderArray = isAdmin ? StorageFolderArray : UserStorageFolderArray
 		if (!folderArray.includes(folder)) {
 			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()

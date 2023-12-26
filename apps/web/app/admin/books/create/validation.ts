@@ -17,17 +17,15 @@ export const createBookValidationSchema = z.object({
 		.array(
 			z.object({
 				name: z.string(),
-				children: z
-					.array(
-						z.object({
-							name: z.string(),
-							link: z.string()
-						})
-					)
-					.nonempty()
+				children: z.array(
+					z.object({
+						name: z.string(),
+						link: z.string()
+					})
+				)
 			})
 		)
-		.nonempty(),
+		.min(1),
 	books: z
 		.array(
 			z
@@ -42,13 +40,13 @@ export const createBookValidationSchema = z.object({
 								content: z.string()
 							})
 						)
-						.nonempty()
+						.min(1)
 				})
 				.refine(value => value.name.length > 0, {
 					message: 'File is required'
 				})
 		)
-		.nonempty(),
+		.min(1),
 	genres: z
 		.array(
 			z.object({
@@ -56,7 +54,7 @@ export const createBookValidationSchema = z.object({
 				value: z.number()
 			})
 		)
-		.nonempty()
+		.min(1)
 })
 
 export type CreateBookValidationSchemaType = z.infer<
