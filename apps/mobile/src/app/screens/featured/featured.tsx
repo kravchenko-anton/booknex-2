@@ -37,13 +37,11 @@ const Featured = () => {
 				renderItem={({ item: book }) => (
 					<BookCard
 						onPress={() => navigate('Book', { id: book.id })}
+						size='md'
 						image={{
-							uri: book.picture,
-							size: 'md'
+							uri: book.picture
 						}}
 						className='mr-4'
-						title={book.title}
-						author={book.author.name}
 					/>
 				)}
 			/>
@@ -69,14 +67,18 @@ const Featured = () => {
 				renderItem={({ item: book }) => (
 					<BookCard
 						onPress={() => navigate('Book', { id: book.id })}
-						image={{ uri: book.picture, size: 'lg' }}
+						size='lg'
+						image={{ uri: book.picture }}
 						title={book.title}
 					/>
 				)}
 			/>
 			<Flatlist
 				horizontal
-				mt={40}
+				mt={20}
+				title={{
+					text: 'Popular Now'
+				}}
 				data={catalog.popularNow}
 				renderItem={({ item: book }) => (
 					<RainbowBookCard
@@ -96,8 +98,9 @@ const Featured = () => {
 				data={catalog.newReleases}
 				renderItem={({ item: book }) => (
 					<BookCard
+						size='md'
 						onPress={() => navigate('Book', { id: book.id })}
-						image={{ uri: book.picture, size: 'lg' }}
+						image={{ uri: book.picture }}
 					/>
 				)}
 			/>
@@ -113,34 +116,14 @@ const Featured = () => {
 					renderItem={({ item: book }) => (
 						<BookCard
 							onPress={() => navigate('Book', { id: book.id })}
+							size='sm'
 							image={{
-								uri: book.picture,
-								size: 'sm'
+								uri: book.picture
 							}}
 						/>
 					)}
 				/>
 			))}
-
-			<Flatlist
-				title={{
-					text: 'In the same breath'
-				}}
-				horizontal
-				data={catalog.sameBreath}
-				renderItem={({ item: book }) => (
-					<BookCard
-						onPress={() => navigate('Book', { id: book.id })}
-						pages={book.pages}
-						image={{
-							uri: book.picture,
-							size: 'md'
-						}}
-						title={book.title}
-						author={book.author.name}
-					/>
-				)}
-			/>
 		</ScrollLayout>
 	)
 }

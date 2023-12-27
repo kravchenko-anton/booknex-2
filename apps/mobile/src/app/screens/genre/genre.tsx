@@ -2,6 +2,8 @@ import { BookCard, PressableContainer, RainbowBookCard } from '@/components'
 import GenreLayout from '@/screens/genre/genre-layout'
 import { useGenre } from '@/screens/genre/useGenre'
 import { removeEmoji } from '@/utils/remove-emoji'
+import { StatusBar } from 'react-native'
+import { Color } from 'ui/colors'
 import { Flatlist, Image, Loader, Title } from 'ui/components'
 
 const Genre = () => {
@@ -10,6 +12,7 @@ const Genre = () => {
 	// TODO: возможно вынести всё flatlist в отдельный компонент
 	return (
 		<GenreLayout title={genre.name} transientValue={50}>
+			<StatusBar barStyle='light-content' backgroundColor={Color.background} />
 			<Flatlist
 				horizontal
 				title={{
@@ -19,9 +22,9 @@ const Genre = () => {
 				renderItem={({ item: book }) => (
 					<BookCard
 						title={book.title}
+						size='md'
 						image={{
-							uri: book.picture,
-							size: 'md'
+							uri: book.picture
 						}}
 						onPress={() => navigate.Book(book.id)}
 					/>
@@ -76,9 +79,9 @@ const Genre = () => {
 					renderItem={({ item: book }) => (
 						<BookCard
 							onPress={() => navigate.Book(book.id)}
+							size='md'
 							image={{
-								uri: book.picture,
-								size: 'md'
+								uri: book.picture
 							}}
 						/>
 					)}

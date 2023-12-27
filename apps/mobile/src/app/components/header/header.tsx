@@ -19,7 +19,7 @@ const Header: FC<HeaderProperties> = ({
 	})
 	return (
 		<View
-			className='flex-row items-center justify-between'
+			className='mt-2 flex-row items-center justify-between'
 			style={style}
 			{...properties}
 		>

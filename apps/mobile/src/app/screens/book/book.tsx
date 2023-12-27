@@ -1,25 +1,66 @@
+import { BookCard } from '@/components'
 import { useBook } from '@/screens/book/useBook'
-
-import { View } from 'react-native'
-import { Button, Description, Flatlist, Image, Loader } from 'ui/components'
+import { ChevronLeft, MoreHorizontal, Text } from 'icons'
+import { StatusBar, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { Color } from 'ui/colors'
+import {
+	AnimatedIcon,
+	Button,
+	Description,
+	Flatlist,
+	Image,
+	Loader,
+	Title
+} from 'ui/components'
 
 const Book = () => {
 	const { book, hamburgerMenuElements, navigate } = useBook()
 	if (!book) return <Loader />
 	return (
-		<View>
-			<View className='flex-row justify-between px-4'>
-				<View className='flex-1 justify-between'></View>
-				<Image url={book.picture} className='z-0' height={260} width={170} />
+		<ScrollView overScrollMode='never' showsVerticalScrollIndicator={false}>
+			<StatusBar barStyle='light-content' backgroundColor={Color.shade} />
+			<View className='bg-shade items-center justify-between rounded-b-3xl px-4 pb-6 pt-2'>
+				<View className='mb-2 w-full flex-row items-center justify-between'>
+					<AnimatedIcon
+						onPress={navigate.back}
+						icon={ChevronLeft}
+						variant='foreground'
+						size='md'
+					/>
+					<AnimatedIcon
+						icon={MoreHorizontal}
+						variant='white-outlined'
+						size='md'
+					/>
+				</View>
+				<Image url={book.picture} height={260} width={170} />
 			</View>
-			<View className='flex-row justify-between gap-2 px-4 pt-6'>
+			<View className='flex-1 flex-row items-center justify-between px-4 pt-6'>
+				<View className='mr-4 flex-1'>
+					<Title numberOfLines={2} weight='semiBold' size={25} className='mt-2'>
+						{book.title}
+					</Title>
+					<Title
+						numberOfLines={1}
+						color={Color.gray}
+						weight='regular'
+						size={14}
+						onPress={() => navigate.author(book.author.id)}
+						className='mt-1'
+					>
+						{book.author.name}
+					</Title>
+				</View>
 				<Button
+					icon={Text}
+					className='rounded-xl'
 					onPress={() => {
 						navigate.reading()
 					}}
 					text='Read'
-					size='md'
-					className='flex-1'
+					variant='primary'
+					size='sm'
 				/>
 			</View>
 			<Flatlist
@@ -45,23 +86,24 @@ const Book = () => {
 				{book.description}
 			</Description>
 
-			{/* <FlatList */}
-			{/* 	data={book.similarBooks} */}
-			{/* 	horizontal */}
-			{/* 	px={16} */}
-			{/* 	title={{ */}
-			{/* 		text: 'Similar books' */}
-			{/* 	}} */}
-			{/* 	renderItem={({ item: similarBook }) => ( */}
-			{/* 		<BookCard */}
-			{/* 			onPress={() => { */}
-			{/* 				navigate.similar(similarBook.id) */}
-			{/* 			}} */}
-			{/* 			image={{ uri: similarBook.picture, size: 'medium' }} */}
-			{/* 		/> */}
-			{/* 	)} */}
-			{/* /> */}
-		</View>
+			<Flatlist
+				data={book.similarBooks}
+				horizontal
+				px={16}
+				title={{
+					text: 'Similar books'
+				}}
+				renderItem={({ item: similarBook }) => (
+					<BookCard
+						size='md'
+						onPress={() => {
+							navigate.similar(similarBook.id)
+						}}
+						image={{ uri: similarBook.picture }}
+					/>
+				)}
+			/>
+		</ScrollView>
 	)
 }
 

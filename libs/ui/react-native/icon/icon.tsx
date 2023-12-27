@@ -8,19 +8,21 @@ import type { IconProperties } from './types'
 
 const Icon: FC<IconProperties> = ({
 	icon: Icon,
-	variant = 'vibrant',
+	variant = 'foreground',
 	size = 'sm',
 	fatness = 2,
 	className = '',
+	fullRounded = false,
 	noPadding = false,
 	...properties
 }) => (
 	<Pressable
 		className={twMerge(
-			'items-center justify-center rounded-xl',
+			'items-center justify-center rounded-2xl',
 			properties.disabled && 'opacity-50',
 			noPadding ? 'p-0' : settings.padding[size],
 			settings.colors[variant],
+			fullRounded && 'rounded-full',
 			className
 		)}
 		{...properties}

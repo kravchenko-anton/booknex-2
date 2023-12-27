@@ -4,6 +4,7 @@ export const settings: {
 	colors: Record<VividPaletteType, string>
 	titleSize: Record<'sm' | 'md' | 'lg', number>
 	padding: Record<'sm' | 'md' | 'lg', string>
+	iconSize: Record<'sm' | 'md' | 'lg', number>
 } = {
 	colors: {
 		gray: 'bg-gray',
@@ -16,6 +17,11 @@ export const settings: {
 		background: 'bg-background',
 		success: 'bg-success',
 		warning: 'bg-warning'
+	},
+	iconSize: {
+		sm: 16,
+		md: 18,
+		lg: 20
 	},
 	titleSize: {
 		sm: 16,

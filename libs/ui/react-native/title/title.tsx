@@ -14,6 +14,7 @@ const Title: FC<TitleProperties> = ({
 	style,
 	...properties
 }) => {
+	if (!children) return null
 	return (
 		<Text
 			style={[

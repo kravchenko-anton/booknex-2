@@ -49,6 +49,7 @@ const FlatList = <T,>({
 					paddingHorizontal: properties.horizontal ? px : 0,
 					paddingBottom: 8
 				}}
+				overScrollMode="never"
 				bounces={false}
 				renderToHardwareTextureAndroid={true}
 				alwaysBounceHorizontal={false}

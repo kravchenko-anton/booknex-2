@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/animated-press/animated-press'
+import AnimatedPress from '@/components/animated-press/animated-press'
 import { settings } from '@/components/book-card/settings'
 import type { BookCardProperties } from '@/components/book-card/types'
 import type { Style } from '@/types/global'
@@ -10,14 +10,14 @@ import { Image, Title } from 'ui/components'
 
 const BookCard: FC<BookCardProperties> = ({
 	image,
-	pages,
+	size = 'md',
 	style,
 	...properties
 }) => (
-	<PressableContainer
+	<AnimatedPress
 		style={[
 			{
-				width: settings.width[image.size]
+				width: settings.width[size]
 			},
 			style as Style
 		]}
@@ -25,32 +25,25 @@ const BookCard: FC<BookCardProperties> = ({
 	>
 		<Image
 			url={image.uri}
-			borderRadius={30}
-			height={settings.height[image.size]}
-			width={settings.width[image.size]}
+			borderRadius={14}
+			className='mb-2'
+			height={settings.height[size]}
+			width={settings.width[size]}
 		/>
-		{pages && (
-			<Title
-				numberOfLines={1}
-				weight='semiBold'
-				size={14}
-				color={Color.gray}
-				className=' mt-2'
-			>
-				{` 📖 ${pages} pages`}
-			</Title>
-		)}
 		<Title
-			numberOfLines={2}
+			numberOfLines={1}
+			weight='semiBold'
+			size={14}
 			color={Color.gray}
-			center
-			weight='medium'
-			size={16}
+			className=' mt-2'
 		>
+			{properties.pages && `📖 ${properties.pages} pages`}
+		</Title>
+		<Title numberOfLines={2} color={Color.gray} weight='medium' size={16}>
 			{properties.title}
 		</Title>
+
 		<Title
-			center
 			numberOfLines={1}
 			weight='regular'
 			size={13}
@@ -59,7 +52,7 @@ const BookCard: FC<BookCardProperties> = ({
 		>
 			{properties.author && `by ${properties.author}`}
 		</Title>
-	</PressableContainer>
+	</AnimatedPress>
 )
 
 export default memo(BookCard)

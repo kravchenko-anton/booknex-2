@@ -17,7 +17,7 @@ const Author = () => {
 	return (
 		<AuthorLayout
 			name={author.name}
-			backgroundColor={author.color}
+			backgroundColor="#fff"
 			picture={author.picture}
 		>
 			<View className='bg-pale mx-2 mt-4  rounded-md p-4'>

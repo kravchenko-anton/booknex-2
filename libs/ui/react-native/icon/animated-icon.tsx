@@ -9,7 +9,7 @@ import type { IconProperties } from './types'
 
 const AnimatedIcon: FC<IconProperties> = ({
 	icon: Icon,
-	variant = 'vibrant',
+	variant = 'foreground',
 	size = 'sm',
 	fatness = 2,
 	className = '',

@@ -1,10 +1,12 @@
 import { memo, useState } from 'react'
 import { Text, View } from 'react-native'
+import { Color } from '../../colors'
 import { fontSettings } from '../title/settings'
 import type { DescriptionProperties } from './types'
 
 export const Description = ({
 	children,
+	color = Color.white,
 	weight = 'light',
 	size = 20,
 	defaultSentences = 3,
@@ -17,6 +19,7 @@ export const Description = ({
 	const textStyle = {
 		fontFamily: fontSettings[weight],
 		fontSize: size,
+		color,
 		textAlign: center ? 'center' : ('left' as 'center' | 'left')
 	}
 

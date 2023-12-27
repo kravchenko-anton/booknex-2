@@ -19,7 +19,7 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 	const { top } = useSafeAreaInsets()
 	return (
 		<AnimatedView
-			className='bg-canvas absolute left-0 right-0 z-50'
+			className='bg-background  absolute left-0 right-0 z-50 pb-2'
 			style={[{ top }, headerStyle]}
 		>
 			<View className='mt-auto flex-row items-center justify-between px-4 py-0.5'>
@@ -30,7 +30,7 @@ const AnimatedHeader: FC<AnimatedHeaderProperties> = properties => {
 							goBack()
 						}}
 						size='md'
-						className='pl-0'
+						className='mr-2'
 					/>
 					<Title size={18} className='w-3/4' weight='bold'>
 						{properties.title}

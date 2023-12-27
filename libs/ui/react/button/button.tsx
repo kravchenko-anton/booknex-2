@@ -14,7 +14,7 @@ const Button: FC<ButtonProperties> = ({
 	disabled = false,
 	isLoading = false,
 	className,
-	...rest
+	...properties
 }) => {
 	return (
 		<button
@@ -27,7 +27,7 @@ const Button: FC<ButtonProperties> = ({
 				fullWidth ? 'w-full' : '',
 				className
 			)}
-			{...rest}
+			{...properties}
 		>
 			{children}
 
@@ -40,6 +40,7 @@ const Button: FC<ButtonProperties> = ({
 			)}
 			{!!Icon && !isLoading && (
 				<Icon
+					color={InnerColor[variant]}
 					width={settings.iconSize[size]}
 					height={settings.iconSize[size]}
 				/>

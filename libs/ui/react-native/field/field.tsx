@@ -9,7 +9,7 @@ import { settings } from './settings'
 import type { FieldProperties } from './types'
 
 const Field = <T extends Record<string, any>>({
-	variant = 'vibrant',
+	variant = 'foreground',
 	icon: Icon,
 	className = '',
 	...properties

@@ -14,17 +14,12 @@ export const HeaderElementComponent = (
 	color: LineColorType,
 	position: 'left' | 'right'
 ) => {
-	const padding = position === 'left' ? 'pl-0' : 'pr-0'
 	switch (type) {
 		default: {
 			return null
 		}
 		case 'icon': {
-			return (
-				properties.icon && (
-					<AnimatedIcon className={padding} size='md' {...properties.icon} />
-				)
-			)
+			return properties.icon && <AnimatedIcon size='md' {...properties.icon} />
 		}
 		case 'title': {
 			return (
@@ -51,7 +46,6 @@ export const HeaderElementComponent = (
 				properties.sharing && (
 					<AnimatedIcon
 						icon={ShareIcon}
-						className={padding}
 						size='md'
 						onPress={() =>
 							Share.share({

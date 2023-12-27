@@ -7,7 +7,8 @@ import type { ClampPaletteType } from '../../colors'
 export interface IconProperties extends PressableDefaultProperties {
 	icon: FC<SvgProps>
 	fatness?: number
+	fullRounded?: boolean
 	noPadding?: boolean
 	size: 'sm' | 'md' | 'lg'
-	variant?: ClampPaletteType
+	variant?: ClampPaletteType | 'white-outlined'
 }

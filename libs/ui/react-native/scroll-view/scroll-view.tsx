@@ -5,6 +5,7 @@ import { ScrollView as DefaultScrollView } from 'react-native'
 const ScrollView: FC<ScrollViewDefaultProperties> = ({ ...properties }) => (
 	<DefaultScrollView
 		automaticallyAdjustContentInsets={false}
+		overScrollMode="never"
 		showsHorizontalScrollIndicator={false}
 		showsVerticalScrollIndicator={false}
 		renderToHardwareTextureAndroid={true}
@@ -12,7 +13,7 @@ const ScrollView: FC<ScrollViewDefaultProperties> = ({ ...properties }) => (
 		alwaysBounceVertical={false}
 		bounces={false}
 		bouncesZoom={false}
-		decelerationRate="normal"
+		decelerationRate='normal'
 		{...properties}
 	>
 		{properties.children}

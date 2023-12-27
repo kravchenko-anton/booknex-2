@@ -17,7 +17,6 @@ interface IMenuItemProperties {
 
 const MenuItem: FC<IMenuItemProperties> = ({ currentRoute, item, nav }) => {
 	const isActive = currentRoute === item.path
-
 	const { pressFunctions, animatedStyle } = usePressAnimation()
 
 	return (
@@ -30,14 +29,14 @@ const MenuItem: FC<IMenuItemProperties> = ({ currentRoute, item, nav }) => {
 		>
 			<AnimatedPressable style={animatedStyle} pointerEvents='none'>
 				<item.icon
-					width={30}
+					width={25}
 					strokeWidth={2}
 					stroke={isActive ? Color.white : Color.gray}
-					height={30}
+					height={25}
 				/>
 			</AnimatedPressable>
 			<Title
-				size={14}
+				size={12}
 				weight={isActive ? 'bold' : 'regular'}
 				color={isActive ? Color.white : Color.gray}
 			>

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import {
 	returnBookObjectWithAuthor,
-	returnBookObjectWithPages,
 	returnColorBookObjectWithAuthor
 } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
@@ -11,6 +10,7 @@ import { defaultReturnObject } from '../utils/return.default.object'
 @Injectable()
 export class CatalogService {
 	constructor(private readonly prisma: PrismaService) {}
+
 	async catalog(userId: number) {
 		return {
 			mostRelatedGenres: await this.MostRelatedGenres(userId),
@@ -18,7 +18,6 @@ export class CatalogService {
 			popularNow: await this.PopularBooks(),
 			bestSellers: await this.BestSellingBooks(),
 			newReleases: await this.NewReleases(),
-			sameBreath: await this.SameBreathBooks(),
 			genres: await this.Genres()
 		}
 	}
@@ -178,21 +177,6 @@ export class CatalogService {
 				updatedAt: 'desc'
 			},
 			select: returnBookObjectWithAuthor
-		})
-	}
-
-	private SameBreathBooks() {
-		return this.prisma.book.findMany({
-			take: 10,
-			orderBy: {
-				popularity: 'desc'
-			},
-			select: returnBookObjectWithPages,
-			where: {
-				pages: {
-					lte: 160
-				}
-			}
 		})
 	}
 

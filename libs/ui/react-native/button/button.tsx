@@ -2,27 +2,47 @@ import { memo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { PressableContainer } from '../../../../apps/mobile/src/app/components'
 import { InnerColor } from '../../colors'
+import Loader from '../../react/loader/loader'
 import Title from '../title/title'
 import { settings } from './settings'
 import type { ButtonProperties } from './types'
 
 const Button = ({
 	size = 'lg',
-	variant = 'vibrant',
+	variant = 'foreground',
+	disabled = false,
+	isLoading = false,
+	icon: Icon,
 	className = '',
 	...properties
 }: ButtonProperties) => {
 	return (
 		<PressableContainer
+			disabled={disabled || isLoading}
 			className={twMerge(
-				'items-center justify-center rounded-md',
+				'flex-row items-center  justify-center rounded-xl',
 				settings.colors[variant],
-				properties.disabled && 'opacity-70',
+				(disabled || isLoading) && 'opacity-70',
 				settings.padding[size],
 				className
 			)}
 			{...properties}
 		>
+			{isLoading && (
+				<Loader
+					width={settings.iconSize[size]}
+					height={settings.iconSize[size]}
+					color={InnerColor[variant]}
+				/>
+			)}
+			{!!Icon && !isLoading && (
+				<Icon
+					className='mr-2 mt-0.5'
+					color={InnerColor[variant]}
+					width={settings.iconSize[size]}
+					height={settings.iconSize[size]}
+				/>
+			)}
 			<Title
 				weight='bold'
 				color={InnerColor[variant]}

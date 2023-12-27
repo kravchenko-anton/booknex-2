@@ -31,7 +31,10 @@ export const InnerColor = {
 	danger: Color.white,
 	success: Color.white,
 	warning: Color.black,
-	transparent: Color.white
+	transparent: Color.white,
+
+	// icons
+	'white-outlined': Color.white
 }
 
 export type LineColorType = {

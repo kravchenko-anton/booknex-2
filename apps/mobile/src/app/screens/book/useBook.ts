@@ -9,7 +9,7 @@ import { useMemo } from 'react'
 import { Share } from 'react-native'
 
 export const useBook = () => {
-	const { navigate: navigateFunction } = useTypedNavigation()
+	const { navigate: navigateFunction, goBack } = useTypedNavigation()
 	const { params } = useTypedRoute<'Book'>()
 	const { data: book } = useQuery(['book ', params.id], () =>
 		bookService.infoById(+params.id)
@@ -69,6 +69,9 @@ export const useBook = () => {
 		},
 		author: (id: number) => {
 			navigateFunction('Author', { id })
+		},
+		back: () => {
+			goBack()
 		}
 	}
 
