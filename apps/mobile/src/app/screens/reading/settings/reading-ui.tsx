@@ -18,7 +18,7 @@ import { AnimatedIcon, Title } from 'ui/components'
 export const shadeBackground = -15
 const ReadingUi: FC = () => {
 	const { goBack } = useTypedNavigation()
-	const { top } = useSafeAreaInsets()
+	const { top, bottom } = useSafeAreaInsets()
 	const { openBottomSheet } = useAction()
 	const { progress: readerProgress } = useTypedSelector(state => state.reader)
 	const { visible } = useTypedSelector(state => state.readingUi)
@@ -35,34 +35,29 @@ const ReadingUi: FC = () => {
 				]}
 				className='absolute z-50 h-[65px] w-full flex-row items-center justify-between px-2'
 			>
-				<AnimatedIcon
-					icon={ArrowLeft}
-					size='md'
-					className='w-[50px]'
-					onPress={() => goBack()}
-				/>
-				<AnimatedIcon icon={MoreHorizontal} className='w-[50px]' size='md' />
+				<AnimatedIcon icon={ArrowLeft} size='md' onPress={() => goBack()} />
+				<AnimatedIcon icon={MoreHorizontal} size='md' />
 			</AnimatedView>
 
 			<AnimatedView
 				style={[
 					footerAnimation,
 					{
-						backgroundColor: colorScheme.colorPalette.background.normal
+						bottom: bottom,
+						backgroundColor: colorScheme.colorPalette.background.darker
 					}
 				]}
-				className='h-18 absolute bottom-0 z-50 mt-0 w-full flex-1 pt-0'
+				className='absolute z-50 mt-0 h-14 w-full flex-1 justify-center pt-0'
 			>
 				<View className='mt-0 flex-row items-center justify-between  px-4'>
 					<AnimatedIcon
 						icon={ListOrdered}
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerChapters)}
-						size='lg'
-						className='pl-0'
+						size='md'
 					/>
 					<AnimatedIcon
 						icon={Search}
-						size='lg'
+						size='md'
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSearch)}
 					/>
 					<Title
@@ -76,13 +71,12 @@ const ReadingUi: FC = () => {
 					<AnimatedIcon
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSettings)}
 						icon={CaseSenSitive}
-						size='lg'
+						size='md'
 					/>
 					<AnimatedIcon
 						icon={BookHeart}
-						size='lg'
+						size='md'
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerNoteBook)}
-						className='pr-0'
 					/>
 				</View>
 			</AnimatedView>

@@ -1,3 +1,4 @@
+import { Clock } from 'icons'
 import type { FC } from 'react'
 import { Text } from 'react-native'
 import RnToast, { BaseToast } from 'react-native-toast-message'
@@ -8,11 +9,11 @@ const options = (color: string) => ({
 	style: {
 		backgroundColor: Color.shade,
 		alignItems: 'center' as 'center',
-		borderRadius: 4,
+		borderRadius: 12,
 		borderLeftColor: color,
-		borderColor: color,
-		borderWidth: 3,
-		borderLeftWidth: 3
+		borderColor: Color.shade,
+		borderWidth: 0,
+		borderLeftWidth: 0
 	},
 	text1Style: {
 		color: color,
@@ -37,9 +38,7 @@ const Toast: FC = () => (
 			success: properties => (
 				<BaseToast
 					renderTrailingIcon={() => (
-						<Text className='items-center justify-center  pr-3 text-3xl'>
-							🎉
-						</Text>
+						<Clock className='items-center justify-center  pr-3 text-3xl' />
 					)}
 					{...properties}
 					{...options('#3F612D')}
@@ -48,9 +47,12 @@ const Toast: FC = () => (
 			info: properties => (
 				<BaseToast
 					renderTrailingIcon={() => (
-						<Text className='items-center justify-center  pr-3 text-3xl'>
-							⚠️
-						</Text>
+						<Clock
+							color={Color.white}
+							width={30}
+							height={30}
+							className='mr-3'
+						/>
 					)}
 					{...properties}
 					{...options('#F9C74F')}

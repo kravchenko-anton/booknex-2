@@ -1,13 +1,13 @@
 import type { UnfoldOutput } from '@booknex/global/services-types/parser-types'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import type { TocElement } from 'epub'
-import EPub from 'epub'
 import { JSDOM } from 'jsdom'
 import puppeteer from 'puppeteer'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 import type { ParserDto } from './dto/parser.dto'
+import EPub from './epub-parser/epub'
 
 interface Chapter {
 	id: string

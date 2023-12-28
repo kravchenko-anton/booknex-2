@@ -7,7 +7,7 @@ import type { LoaderProperties } from './types'
 
 const Loader: FC<LoaderProperties> = ({
 	backgroundColor = Color.background,
-	size
+	size = 'full'
 }) => (
 	<View
 		style={{

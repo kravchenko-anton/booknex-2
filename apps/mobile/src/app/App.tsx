@@ -1,3 +1,4 @@
+import Alert from '@/components/alert/alert'
 import Toast from '@/components/toast'
 import { ClickOutsideProvider } from '@/hooks/outside-press/Provider'
 import Navigation from '@/navigation/navigation'
@@ -11,7 +12,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Color } from 'ui/colors'
-import { Alert, Loader } from 'ui/components'
+import { Loader } from 'ui/components'
 
 const flexStyle = {
 	flex: 1

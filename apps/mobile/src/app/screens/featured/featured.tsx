@@ -9,7 +9,7 @@ import { shelfService } from '@/services/shelf/shelf-service'
 import { removeEmoji } from '@/utils/remove-emoji'
 import { useQuery } from '@tanstack/react-query'
 import { Button, Flatlist, Loader } from 'ui/components'
-
+//TODO: добавить тут shelves
 const Featured = () => {
 	const { data: catalog } = useQuery(['catalog'], () =>
 		catalogService.catalog()
@@ -50,7 +50,9 @@ const Featured = () => {
 				data={catalog.mostRelatedGenres}
 				renderItem={({ item: genre }) => (
 					<Button
-						onPress={() => navigate('Genre', { id: genre.id })}
+						onPress={() => {
+							navigate('Genre', { id: genre.id })
+						}}
 						size='md'
 						variant='foreground'
 						text={genre.name}

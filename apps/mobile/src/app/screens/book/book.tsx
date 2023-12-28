@@ -1,8 +1,8 @@
 import { BookCard } from '@/components'
 import { useBook } from '@/screens/book/useBook'
-import { ChevronLeft, MoreHorizontal, Text } from 'icons'
-import { StatusBar, View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { Alert, ChevronLeft, Pen, Plus, Share as ShareIcon, Text } from 'icons'
+import { Share, StatusBar, View } from 'react-native'
+import Animated from 'react-native-reanimated'
 import { Color } from 'ui/colors'
 import {
 	AnimatedIcon,
@@ -13,27 +13,61 @@ import {
 	Loader,
 	Title
 } from 'ui/components'
+import * as DropDown from '../../components/dropdown/dropdown'
 
 const Book = () => {
-	const { book, hamburgerMenuElements, navigate } = useBook()
+	const { book, navigate } = useBook()
 	if (!book) return <Loader />
 	return (
-		<ScrollView overScrollMode='never' showsVerticalScrollIndicator={false}>
+		<Animated.ScrollView
+			overScrollMode='never'
+			showsVerticalScrollIndicator={false}
+		>
 			<StatusBar barStyle='light-content' backgroundColor={Color.shade} />
-			<View className='bg-shade items-center justify-between rounded-b-3xl px-4 pb-6 pt-2'>
-				<View className='mb-2 w-full flex-row items-center justify-between'>
+			<View className='bg-shade z-50 items-center justify-between overflow-hidden rounded-b-3xl px-4 pb-6 pt-2'>
+				<Animated.View className='mb-2 w-full flex-row items-center justify-between'>
 					<AnimatedIcon
 						onPress={navigate.back}
 						icon={ChevronLeft}
 						variant='foreground'
 						size='md'
 					/>
-					<AnimatedIcon
-						icon={MoreHorizontal}
-						variant='white-outlined'
-						size='md'
-					/>
-				</View>
+
+					<DropDown.Menu size='md' position='right'>
+						<DropDown.Element
+							title='Add'
+							icon={Plus}
+							onPress={() => {
+								navigate.reading()
+							}}
+						/>
+						<DropDown.Element
+							title='Share'
+							icon={ShareIcon}
+							onPress={() => {
+								Share.share({
+									message: `Wow! I see ${
+										book?.title || 'amazing'
+									} book on Booknex and I think you will like it too!`
+								})
+							}}
+						/>
+						<DropDown.Element
+							title='Report problem'
+							icon={Alert}
+							onPress={() => {
+								console.log('Report problem')
+							}}
+						/>
+						<DropDown.Element
+							title='Write review'
+							icon={Pen}
+							onPress={() => {
+								console.log('Write review')
+							}}
+						/>
+					</DropDown.Menu>
+				</Animated.View>
 				<Image url={book.picture} height={260} width={170} />
 			</View>
 			<View className='flex-1 flex-row items-center justify-between px-4 pt-6'>
@@ -103,7 +137,7 @@ const Book = () => {
 					/>
 				)}
 			/>
-		</ScrollView>
+		</Animated.ScrollView>
 	)
 }
 

@@ -18,7 +18,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 }) => (
 	<PressableContainer
 		className={twMerge(
-			'items-center justify-center rounded-xl',
+			'items-center justify-center rounded-2xl',
 			properties.disabled && 'opacity-50',
 			noPadding ? 'p-0' : settings.padding[size],
 			settings.colors[variant],

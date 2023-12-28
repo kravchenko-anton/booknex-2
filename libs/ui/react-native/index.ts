@@ -1,5 +1,3 @@
-export { default as Alert } from '../../../apps/mobile/src/app/components/alert/alert'
-export { default as HamburgerMenu } from '../../../apps/mobile/src/app/components/hamburger-menu/hamburger-menu'
 export { default as Button } from './button/button'
 export { default as Description } from './description/description'
 export { default as Field } from './field/field'

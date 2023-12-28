@@ -8,7 +8,11 @@ import { useReader } from '@/screens/reading/reader/useReader'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/utils/dimensions'
 import type { ReactNode } from 'react'
 import React, { useEffect, useRef } from 'react'
-import { TouchableWithoutFeedback, View as RNView } from 'react-native'
+import {
+	StatusBar,
+	TouchableWithoutFeedback,
+	View as RNView
+} from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { WebView } from 'react-native-webview'
 import type { ReaderProperties } from './types'
@@ -17,16 +21,16 @@ export function Reader({ id }: ReaderProperties): ReactNode {
 	const WebViewReference = useRef<WebView>(null)
 	const { books } = useTypedSelector(state => state.readingSettings)
 	const { styleTag, colorScheme, doubleTap, onMessage } = useReader(id)
-	console.log(
-		Math.round(books?.find(book => book.id === id)?.lastProgress.location || 0)
-	)
+	console.log(colorScheme.statusBar)
+
 	useEffect(() => {
 		if (!WebViewReference.current) return
 		WebViewReference.current.injectJavaScript(insertStyle(styleTag))
 	}, [WebViewReference, styleTag])
 	return (
 		<GestureHandlerRootView className='m-0 h-screen w-screen p-0 pb-6'>
-			<RNView className='m-0 h-full w-full items-center justify-center p-0'>
+			<StatusBar hidden={true} />
+			<RNView className='m-0 h-screen w-full items-center justify-center p-0'>
 				<TouchableWithoutFeedback onPress={doubleTap}>
 					<WebView
 						menuItems={[]}
@@ -35,6 +39,9 @@ export function Reader({ id }: ReaderProperties): ReactNode {
 						ref={WebViewReference}
 						source={{
 							html: `
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+</head>
 <body>
 <p><a id="p6"></a></p><h2>Being struck speechless was a new experience for Kira, but then the man sitting across from her had a disturbing way of surprising her. </h2>
 <p>Kira thought she saw momentary surprise flash across his face before he composed his expression. </p>
@@ -93,6 +100,10 @@ export function Reader({ id }: ReaderProperties): ReactNode {
 							height: WINDOW_HEIGHT,
 							zIndex: 1,
 							padding: 0,
+							top: 0,
+							left: 0,
+							bottom: 0,
+							right: 0,
 							margin: 0
 						}}
 					/>

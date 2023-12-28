@@ -10,5 +10,5 @@ export interface IconProperties extends PressableDefaultProperties {
 	fullRounded?: boolean
 	noPadding?: boolean
 	size: 'sm' | 'md' | 'lg'
-	variant?: ClampPaletteType | 'white-outlined'
+	variant?: ClampPaletteType | 'white-outlined' | 'transparent'
 }

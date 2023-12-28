@@ -1,9 +1,9 @@
-import type { IconProperties } from './types'
+import type { HamburgerMenuProperties } from '@/components/dropdown/types'
 
 export const settings: {
-	colors: Record<IconProperties['variant'], string>
-	padding: Record<IconProperties['size'], string>
-	size: Record<IconProperties['size'], number>
+	colors: Record<HamburgerMenuProperties['variant'], string>
+	padding: Record<HamburgerMenuProperties['size'], string>
+	size: Record<HamburgerMenuProperties['size'], number>
 } = {
 	colors: {
 		gray: 'bg-gray border-vibrant',
@@ -11,8 +11,7 @@ export const settings: {
 		vibrant: 'bg-vibrant',
 		'white-outlined': 'bg-transparent border-white border-[1px]',
 		shade: 'bg-shade',
-		background: 'bg-background',
-		transparent: 'bg-transparent'
+		background: 'bg-background'
 	},
 	padding: {
 		sm: 'p-2',

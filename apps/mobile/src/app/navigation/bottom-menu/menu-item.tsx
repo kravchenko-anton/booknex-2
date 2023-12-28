@@ -29,10 +29,10 @@ const MenuItem: FC<IMenuItemProperties> = ({ currentRoute, item, nav }) => {
 		>
 			<AnimatedPressable style={animatedStyle} pointerEvents='none'>
 				<item.icon
-					width={25}
+					width={26}
 					strokeWidth={2}
 					stroke={isActive ? Color.white : Color.gray}
-					height={25}
+					height={26}
 				/>
 			</AnimatedPressable>
 			<Title

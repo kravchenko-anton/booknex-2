@@ -6,7 +6,7 @@ import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { ArrowLeft, Share as ShareIcon } from 'icons'
 import { Share } from 'react-native'
 import type { ColorProperties, LineColorType } from 'ui/colors'
-import { AnimatedIcon, HamburgerMenu, Title } from 'ui/components'
+import { AnimatedIcon, Title } from 'ui/components'
 
 export const HeaderElementComponent = (
 	type: string,

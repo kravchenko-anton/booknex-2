@@ -30,14 +30,14 @@ export const defaultTheme = {
 		},
 		text: Color.black
 	},
-	statusBar: 'dark'
+	statusBar: 'light-content'
 }
 
 export const themePack: ThemePackType[] = [
 	{
 		title: 'Light',
 		slug: 'light',
-		statusBar: 'dark-content',
+		statusBar: 'light-content',
 		colorPalette: {
 			primary: Color.primary,
 			secondary: Color.secondary,

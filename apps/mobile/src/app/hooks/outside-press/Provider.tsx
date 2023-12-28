@@ -1,7 +1,7 @@
 import { isInRange } from '@/hooks/outside-press/utils/helpers'
 import type { FC } from 'react'
 import React from 'react'
-import { View } from 'react-native'
+import { Pressable } from 'react-native'
 import { onTouch, setIsTouch } from './utils/collection'
 
 type ClickOutsideProviderProperties = {
@@ -14,12 +14,12 @@ let touchX: number | undefined
 let touchY: number | undefined
 export const ClickOutsideProvider: FC<ClickOutsideProviderProperties> = ({
 	children,
-	activateOnSwipe,
+	activateOnSwipe = true,
 	swipeThreshold = 8
 }) => (
-	<View
+	<Pressable
 		className='flex-1'
-		onTouchEnd={e => {
+		onResponderStart={e => {
 			if (!touchX) touchX = e.nativeEvent.changedTouches[0]?.pageX
 			if (!touchY) touchY = e.nativeEvent.changedTouches[0]?.pageY
 			if (!e.nativeEvent.changedTouches[0] || !touchX || !touchY) return
@@ -49,5 +49,5 @@ export const ClickOutsideProvider: FC<ClickOutsideProviderProperties> = ({
 		}}
 	>
 		{children}
-	</View>
+	</Pressable>
 )
