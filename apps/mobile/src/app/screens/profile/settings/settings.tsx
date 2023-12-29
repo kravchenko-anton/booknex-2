@@ -1,65 +1,62 @@
 import { HeaderScrollLayout } from '@/components'
-import { useSettingsList } from '@/screens/profile/settings/useSettingsList'
-import { Pressable, View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Title } from 'ui/components'
-// TODO: сделать страницу настройки когда уже многое будет готово
+import * as Header from '@/components/header/header'
+import { useAction, useTypedNavigation } from '@/hooks'
+import { Bug, MessageCircleQuestion } from 'icons'
+import Toast from 'react-native-toast-message'
+import * as List from './settings-list'
+//TODO: после обновления проложения добавить тут больше разнообразия и пофиксить консоль логи
 const Settings = () => {
-	const settingsList = useSettingsList()
+	const { navigate } = useTypedNavigation()
+	const { showAlert } = useAction()
+	const { logout } = useAction()
 	return (
-		<HeaderScrollLayout
-			animatedHeader={{
-				transientValue: 80,
-				title: 'Settings'
-			}}
-			className='px-2'
-		>
-			<Title size={32} weight='bold'>
-				Settings
-			</Title>
+		<HeaderScrollLayout title='Settings' transientValue={80} className='px-2'>
+			<Header.Head>
+				<Header.Text text='Settings' />
+			</Header.Head>
 
-			{settingsList.map(item => (
-				<View key={item.title} className='bg-dust mt-4 w-full rounded-md p-4'>
-					<Title size={26} weight='bold' className='mb-2'>
-						{item.title}
-					</Title>
-					{item.list.map(listItem => (
-						<Pressable
-							key={listItem.title}
-							onPress={() => listItem.onPress()}
-							className='flex-row items-center justify-between'
-						>
-							<View className='flex-row items-center'>
-								{/* TODO: пофиксить иконку */}
-								{/* <Icon*/}
-								{/*	size={'small'}*/}
-								{/*	name={listItem.icon as IconType}*/}
-								{/*	noPadding*/}
-								{/*	className='mr-2'*/}
-								{/*	color={Color.secondary}*/}
-								{/* />*/}
-								<Title size={18} weight='bold' color={Color.secondary}>
-									{listItem.title}
-								</Title>
-							</View>
-							{/* <Icon*/}
-							{/*	size={'small'}*/}
-							{/*	color={Color.secondary}*/}
-							{/*	name='chevron-right'*/}
-							{/* />*/}
-						</Pressable>
-					))}
-				</View>
-			))}
-
-			{/* <View className='mb-2 mt-4 w-full rounded-md bg-dust p-4'>*/}
-			{/*	<Title size={26} weight={'bold'} className='mb-2'>*/}
-			{/*		About the application*/}
-			{/*	</Title>*/}
-			{/*	<Title size={18} weight={'bold'} color={Color.secondary}>*/}
-			{/*		Version: */}
-			{/*	</Title>*/}
-			{/* </View>*/}
+			<List.Category title='Support' className='mt-4'>
+				<List.Item
+					title='Give feedback'
+					icon={MessageCircleQuestion}
+					onPress={() =>
+						Toast.show({
+							type: 'success',
+							text1: 'Now it not working, check late'
+						})
+					}
+				/>
+				<List.Item
+					title='Report a bug'
+					icon={Bug}
+					onPress={() =>
+						Toast.show({
+							type: 'success',
+							text1: 'Now it not working, check late'
+						})
+					}
+				/>
+			</List.Category>
+			<List.Category title='Account'>
+				<List.Item
+					title='Update Account'
+					icon={MessageCircleQuestion}
+					onPress={() => navigate('UpdateProfile')}
+				/>
+				<List.Item
+					title='Sign out'
+					icon={Bug}
+					onPress={() =>
+						showAlert({
+							title: 'Are you sure?',
+							description: 'You want to logout from your account?',
+							acceptText: 'Logout',
+							type: 'warning',
+							onAccept: () => logout()
+						})
+					}
+				/>
+			</List.Category>
 		</HeaderScrollLayout>
 	)
 }

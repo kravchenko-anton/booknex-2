@@ -1,11 +1,10 @@
 import { BookCard } from '@/components'
 import { useBook } from '@/screens/book/useBook'
-import { Alert, ChevronLeft, Pen, Plus, Share as ShareIcon, Text } from 'icons'
+import { Alert, Pen, Plus, Share as ShareIcon, Text } from 'icons'
 import { Share, StatusBar, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { Color } from 'ui/colors'
 import {
-	AnimatedIcon,
 	Button,
 	Description,
 	Flatlist,
@@ -14,6 +13,7 @@ import {
 	Title
 } from 'ui/components'
 import * as DropDown from '../../components/dropdown/dropdown'
+import * as Header from '../../components/header/header'
 
 const Book = () => {
 	const { book, navigate } = useBook()
@@ -25,15 +25,8 @@ const Book = () => {
 		>
 			<StatusBar barStyle='light-content' backgroundColor={Color.shade} />
 			<View className='bg-shade z-50 items-center justify-between overflow-hidden rounded-b-3xl px-4 pb-6 pt-2'>
-				<Animated.View className='mb-2 w-full flex-row items-center justify-between'>
-					<AnimatedIcon
-						onPress={navigate.back}
-						icon={ChevronLeft}
-						variant='foreground'
-						size='md'
-					/>
-
-					<DropDown.Menu size='md' position='right'>
+				<Header.Head>
+					<Header.DropDown>
 						<DropDown.Element
 							title='Add'
 							icon={Plus}
@@ -66,9 +59,9 @@ const Book = () => {
 								console.log('Write review')
 							}}
 						/>
-					</DropDown.Menu>
-				</Animated.View>
-				<Image url={book.picture} height={260} width={170} />
+					</Header.DropDown>
+				</Header.Head>
+				<Image className='-z-10' url={book.picture} height={260} width={170} />
 			</View>
 			<View className='flex-1 flex-row items-center justify-between px-4 pt-6'>
 				<View className='mr-4 flex-1'>

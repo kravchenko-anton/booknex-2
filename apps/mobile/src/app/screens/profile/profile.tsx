@@ -1,4 +1,5 @@
-import { Header, ScrollLayout } from '@/components'
+import { ScrollLayout } from '@/components'
+import * as Header from '@/components/header/header'
 import { useTypedNavigation } from '@/hooks'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
@@ -15,16 +16,14 @@ const Profile = () => {
 	// TODO: делать тут обычный layout и повыноить обновление профиля в настройки
 	return (
 		<ScrollLayout className='px-4'>
-			<Header
-				right={{
-					icon: {
-						// onPress: () => {
-						// 	navigate('Settings')
-						// },
-						icon: Settings
-					}
-				}}
-			/>
+			<Header.Head>
+				<Header.Icon
+					icon={Settings}
+					onPress={() => {
+						navigate('Settings')
+					}}
+				/>
+			</Header.Head>
 			<View className='items-center self-center'>
 				<View className='relative'>
 					<Image height={140} width={140} url={profile.picture} />

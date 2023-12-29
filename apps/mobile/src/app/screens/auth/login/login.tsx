@@ -1,7 +1,8 @@
-import { Header, Layout } from '@/components'
+import { Layout } from '@/components'
+import * as Header from '@/components/header/header'
 import { useAction } from '@/hooks'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
-import type { LoginSchemaType } from '@/screens/auth/login/validation';
+import type { LoginSchemaType } from '@/screens/auth/login/validation'
 import { loginSchema } from '@/screens/auth/login/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { SubmitHandler } from 'react-hook-form'
@@ -20,7 +21,7 @@ const Login = () => {
 		login({ password, email })
 	return (
 		<Layout>
-			<Header />
+			<Header.Head />
 			<View className='mt-[20%]'>
 				<Title size={34} weight='bold'>
 					Welcome back

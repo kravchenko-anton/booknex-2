@@ -27,7 +27,7 @@ export const Menu: FC<PropsWithChildren<HamburgerMenuProperties>> = ({
 	const { animatedStyle, pressFunctions } = usePressAnimation()
 	const animation = useDropDownAnimation(isOpen, position)
 	return (
-		<View className='relative z-50'>
+		<View className='relative'>
 			<AnimatedPressable
 				ref={reference}
 				className={twMerge(
@@ -69,7 +69,7 @@ export const Element: FC<{
 	icon: FC
 }> = ({ title, onPress, icon }) => {
 	return (
-		<View className='flex-row items-center'>
+		<View className=' flex-row items-center'>
 			<Icon icon={icon} size='sm' />
 			<Title
 				className='py-3'

@@ -1,4 +1,5 @@
-import { Header } from '@/components'
+import * as Header from '@/components/header/header'
+
 import { useTypedNavigation } from '@/hooks'
 import { genreService } from '@/services/genre/genre-service'
 import { useQuery } from '@tanstack/react-query'
@@ -15,7 +16,7 @@ const SelectGenres: FC = () => {
 	if (!genres) return <Loader />
 	return (
 		<View className='h-full'>
-			<Header />
+			<Header.Head />
 			<View>
 				<Title size={34} weight='bold' className='mb-2' numberOfLines={2}>
 					Choose your favorite genres

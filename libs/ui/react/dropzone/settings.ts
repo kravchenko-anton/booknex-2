@@ -1,9 +1,9 @@
-import type { ClampPaletteType } from '../../colors'
+import type { DropzoneProperties } from './types'
 
 export const settings: {
-	colors: Record<ClampPaletteType, string>
-	padding: Record<'sm' | 'md' | 'lg', string>
-	maxWidth: Record<'sm' | 'md' | 'lg', string>
+	colors: Record<DropzoneProperties['variant'], string>
+	padding: Record<DropzoneProperties['size'], string>
+	maxWidth: Record<DropzoneProperties['size'], string>
 } = {
 	colors: {
 		gray: 'border-gray  hover:border-vibrant',

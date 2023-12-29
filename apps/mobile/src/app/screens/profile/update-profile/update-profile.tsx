@@ -1,4 +1,4 @@
-import Header from '@/components/header/header'
+import * as Header from '@/components/header/header'
 import ScrollLayout from '@/components/layout/scroll-layout'
 import UpdateBio from '@/screens/profile/update-profile/update-bio/update-bio'
 import UpdatePassword from '@/screens/profile/update-profile/update-password/update-password'
@@ -14,11 +14,9 @@ const UpdateProfile = () => {
 	if (!profile) return <Loader />
 	return (
 		<ScrollLayout className='p-2'>
-			<Header
-				right={{
-					title: 'Update Profile'
-				}}
-			/>
+			<Header.Head>
+				<Header.Text text='Update profile' />
+			</Header.Head>
 			<UpdatePicture picture={profile.picture} />
 			<UpdateBio defaultName={profile.name} defaultEmail={profile.email} />
 			<UpdatePassword />

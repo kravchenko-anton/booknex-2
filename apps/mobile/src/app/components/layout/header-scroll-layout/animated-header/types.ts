@@ -1,7 +1,8 @@
 import type { ViewDefaultProperties } from '@/components/component-types'
-import type { ReactNode } from 'react'
 
-export interface HeaderProperties
+export interface AnimatedHeaderProperties
 	extends Pick<ViewDefaultProperties, 'style' | 'className'> {
-	children?: ReactNode
+	scrollPosition: { value: number }
+	title: string
+	transientValue: number
 }

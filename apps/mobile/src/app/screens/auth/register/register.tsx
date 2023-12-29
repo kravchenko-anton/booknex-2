@@ -1,15 +1,11 @@
-import { Header, Layout } from '@/components'
+import { Layout } from '@/components'
 import { AnimatedView } from '@/components/animated'
+import * as Header from '@/components/header/header'
 import { useAction, useTypedRoute } from '@/hooks'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
-import type {
-	RegisterSchemaType
-} from '@/screens/auth/register/validation';
-import {
-	registerSchema
-} from '@/screens/auth/register/validation'
+import type { RegisterSchemaType } from '@/screens/auth/register/validation'
+import { registerSchema } from '@/screens/auth/register/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Close } from 'icons'
 import { useForm } from 'react-hook-form'
 import { Color } from 'ui/colors'
 import { Button, Field, Title } from 'ui/components'
@@ -29,17 +25,7 @@ const Register = () => {
 	return (
 		<Layout className='h-full'>
 			<AnimatedView>
-				<Header
-					color={Color.black}
-					left={{
-						icon: {
-							icon: Close
-							// onPress: () => {
-							// 	navigate('SelectGenres')
-							// }
-						}
-					}}
-				/>
+				<Header.Head />
 				<Title size={34} weight='bold' className='mb-2 mt-[20%]'>
 					Tell us about yourself
 				</Title>

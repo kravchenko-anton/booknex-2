@@ -1,9 +1,9 @@
-import type { VividPaletteType } from '../../colors'
+import type { ButtonProperties } from './types'
 
 export const settings: {
-	colors: Record<VividPaletteType, string>
-	size: Record<'sm' | 'md' | 'lg', string>
-	iconSize: Record<'sm' | 'md' | 'lg', number>
+	colors: Record<ButtonProperties['variant'], string>
+	size: Record<ButtonProperties['size'], string>
+	iconSize: Record<ButtonProperties['size'], number>
 } = {
 	colors: {
 		gray: 'bg-gray text-white hover:bg-vibrant',

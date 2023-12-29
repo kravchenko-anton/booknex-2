@@ -1,10 +1,10 @@
-import type { VividPaletteType } from '../../colors'
+import type { ButtonProperties } from './types'
 
 export const settings: {
-	colors: Record<VividPaletteType, string>
-	titleSize: Record<'sm' | 'md' | 'lg', number>
-	padding: Record<'sm' | 'md' | 'lg', string>
-	iconSize: Record<'sm' | 'md' | 'lg', number>
+	colors: Record<ButtonProperties['variant'], string>
+	titleSize: Record<ButtonProperties['size'], number>
+	padding: Record<ButtonProperties['size'], string>
+	iconSize: Record<ButtonProperties['size'], number>
 } = {
 	colors: {
 		gray: 'bg-gray',

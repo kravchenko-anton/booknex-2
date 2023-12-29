@@ -1,7 +1,7 @@
-import type { ClampPaletteType } from '../../colors'
+import type { FieldProperties } from './types'
 
 export const settings: {
-	colors: Record<ClampPaletteType, string>
+	colors: Record<FieldProperties<never>['variant'], string>
 } = {
 	colors: {
 		gray: 'bg-gray',

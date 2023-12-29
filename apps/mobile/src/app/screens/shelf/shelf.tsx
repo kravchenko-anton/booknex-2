@@ -1,7 +1,6 @@
 import { VerticalCard } from '@/components'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { useToggle } from '@/hooks/useToggle/useToggle'
-import ShelfLayout from '@/screens/shelf/shelf-layout/shelf-layout'
 import { shelfService } from '@/services/shelf/shelf-service'
 import { useQuery } from '@tanstack/react-query'
 import { Eye, EyeOff } from 'icons'
@@ -43,7 +42,7 @@ const Shelf = () => {
 	const { navigate } = useTypedNavigation()
 	if (!shelf) return <Loader />
 	return (
-		<ShelfLayout title={shelf.title} backgroundImage={shelf.picture}>
+		<View>
 			<View className='bg-dust mx-auto mt-[-40px] w-4/5 flex-row justify-between rounded-md p-2 px-4 pb-1 pt-2'>
 				<Button
 					variant={isSmashedWatchedShelves ? 'secondary' : 'primary'}
@@ -91,7 +90,7 @@ const Shelf = () => {
 					/>
 				)}
 			/>
-		</ShelfLayout>
+		</View>
 	)
 }
 

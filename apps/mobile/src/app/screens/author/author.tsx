@@ -1,4 +1,4 @@
-import { BookCard, Header } from '@/components'
+import { BookCard } from '@/components'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
 import { authorService } from '@/services/author/author-service'
@@ -13,6 +13,7 @@ import {
 	ScrollView,
 	Title
 } from 'ui/components'
+import * as Header from '../../components/header/header'
 
 const Author = () => {
 	const { params } = useTypedRoute<'Author'>()
@@ -34,12 +35,11 @@ const Author = () => {
 			>
 				<View className='flex-1 p-4 pt-0'>
 					иконку
-					<Header
-						color={Color.white}
-						right={{
-							sharing: `${author.name} is a great author! Check him on Booknex!`
-						}}
-					/>
+					<Header.Head>
+						<Header.Sharing
+							message={`${author.name} is a great author! Check him on Booknex!`}
+						/>
+					</Header.Head>
 					<Image
 						url={author.picture}
 						className='mb-4 mt-2 self-center'

@@ -1,17 +1,25 @@
-import { BookCard, PressableContainer, RainbowBookCard } from '@/components'
-import GenreLayout from '@/screens/genre/genre-layout'
+import {
+	BookCard,
+	HeaderScrollLayout,
+	PressableContainer,
+	RainbowBookCard
+} from '@/components'
 import { useGenre } from '@/screens/genre/useGenre'
 import { removeEmoji } from '@/utils/remove-emoji'
 import { StatusBar } from 'react-native'
 import { Color } from 'ui/colors'
 import { Flatlist, Image, Loader, Title } from 'ui/components'
+import * as Header from '../../components/header/header'
 
 const Genre = () => {
 	const { navigate, genre } = useGenre()
 	if (!genre) return <Loader />
 	// TODO: возможно вынести всё flatlist в отдельный компонент
 	return (
-		<GenreLayout title={genre.name} transientValue={50}>
+		<HeaderScrollLayout transientValue={80} title={genre.name}>
+			<Header.Head>
+				<Header.Text text={genre.name} />
+			</Header.Head>
 			<StatusBar barStyle='light-content' backgroundColor={Color.background} />
 			<Flatlist
 				horizontal
@@ -87,7 +95,7 @@ const Genre = () => {
 					)}
 				/>
 			))}
-		</GenreLayout>
+		</HeaderScrollLayout>
 	)
 }
 

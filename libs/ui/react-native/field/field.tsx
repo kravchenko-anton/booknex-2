@@ -22,7 +22,7 @@ const Field = <T extends Record<string, any>>({
 			<>
 				<View
 					className={twMerge(
-						'relative my-1 flex w-full  justify-center rounded-md border-[1px] px-4 py-0.5',
+						'relative my-1 flex w-full  justify-center rounded-md border-[1px] border-transparent px-4 py-0.5',
 						error && 'border-danger',
 						Icon && 'pl-9',
 						settings.colors[variant],

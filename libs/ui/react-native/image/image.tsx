@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Image as DefaultImage } from 'react-native'
+import { twMerge } from 'tailwind-merge'
 import { getFileUrl } from '../../../global/api-config'
-import { Color } from '../../colors'
 import type { Types } from './types'
 
 const Image: FC<Types> = ({
@@ -10,8 +10,9 @@ const Image: FC<Types> = ({
 	width = 100,
 	borderRadius = 12,
 	url,
+	className,
 	style,
-	fullSize,
+	fullSize = false,
 	...properties
 }) => (
 	<DefaultImage
@@ -23,12 +24,11 @@ const Image: FC<Types> = ({
 		style={[
 			{
 				width,
-				height: fullSize ? '100%' : height,
-				backgroundColor: Color.shade,
 				borderRadius
 			},
 			style
 		]}
+		className={twMerge('bg-shade', fullSize ? 'h-full' : 'h-auto', className)}
 		{...properties}
 	/>
 )
