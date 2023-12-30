@@ -4,61 +4,25 @@ import {
 	returnColorBookObjectWithAuthor
 } from '../book/return.book.object'
 import { PrismaService } from '../utils/prisma.service'
-import { defaultReturnObject } from '../utils/return.default.object'
 
 @Injectable()
 export class CatalogService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async catalog(userId: number) {
+	async featured(userId: number) {
 		return {
-			mostRelatedGenres: await this.MostRelatedGenres(userId),
-			recommendations: await this.Recommendations(userId),
-			popularNow: await this.PopularBooks(),
-			bestSellers: await this.BestSellingBooks(),
-			newReleases: await this.NewReleases()
+			relatedGenres: await this.relatedGenres(userId),
+			recommendations: await this.recommendations(userId)
+			//TODO: сделать тут исходя из реков списки
 		}
 	}
 
-	async searchExamples() {
-		const topGenres = await this.prisma.genre.findMany({
-			take: 5,
-			select: {
-				id: true,
-				name: true
-			},
-			orderBy: {
-				books: {
-					_count: 'desc'
-				}
-			}
-		})
-		const topBooks = await this.prisma.book.findMany({
-			take: 6,
-			select: {
-				id: true,
-				title: true
-			},
-			orderBy: {
-				popularity: 'desc'
-			}
-		})
-		return [
-			...topGenres.slice(0, 2).map(genre => ({
-				id: genre.id,
-				title: genre.name
-			})),
-			...topBooks.slice(0, 3),
-			...topGenres.slice(2, 3).map(genre => ({
-				id: genre.id,
-				title: genre.name
-			})),
-			...topBooks.slice(3, 5),
-			...topGenres.slice(3, 5).map(genre => ({
-				id: genre.id,
-				title: genre.name
-			}))
-		]
+	async explore() {
+		return {
+			popularNow: await this.popularBooks(),
+			bestSellers: await this.bestSellingBooks(),
+			newReleases: await this.newReleases()
+		}
 	}
 
 	// TODO: сделать тут поиск и сделать в поиске посмотреть больше
@@ -89,38 +53,7 @@ export class CatalogService {
 		})
 	}
 
-	private async MostRelatedGenres(userId: number) {
-		const genres = await this.prisma.genre.findMany({
-			select: {
-				...defaultReturnObject,
-				name: true
-			},
-			where: {
-				OR: [
-					{
-						books: {
-							some: {
-								readingBy: {
-									some: {
-										id: userId
-									}
-								}
-							}
-						}
-					},
-					{
-						name: {
-							in: await this.UserInitialGenres(userId)
-						}
-					}
-				]
-			}
-		})
-
-		return this.sortAndSliceGenres(genres)
-	}
-
-	private async UserInitialGenres(userId: number) {
+	private async relatedGenres(userId: number) {
 		return this.prisma.user
 			.findUnique({
 				where: {
@@ -129,26 +62,16 @@ export class CatalogService {
 				select: {
 					selectedGenre: {
 						select: {
+							id: true,
 							name: true
 						}
 					}
 				}
 			})
 			.selectedGenre()
-			.then(genres => genres.map(genre => genre.name))
 	}
 
-	private sortAndSliceGenres(genres: { id: number; name: string }[]) {
-		return genres
-			.sort(
-				(a, b) =>
-					genres.filter(genre => genre.name === a.name).length -
-					genres.filter(genre => genre.name === b.name).length
-			)
-			.slice(0, 5)
-	}
-
-	private PopularBooks() {
+	private popularBooks() {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: {
@@ -158,7 +81,7 @@ export class CatalogService {
 		})
 	}
 
-	private BestSellingBooks() {
+	private bestSellingBooks() {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: {
@@ -168,7 +91,7 @@ export class CatalogService {
 		})
 	}
 
-	private NewReleases() {
+	private newReleases() {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: {
@@ -179,7 +102,7 @@ export class CatalogService {
 	}
 
 	//TODO: пофиксить этот пиздец
-	private async Recommendations(userId: number) {
+	private async recommendations(userId: number) {
 		const likedGenres = await this.prisma.genre.findMany({
 			select: {
 				name: true

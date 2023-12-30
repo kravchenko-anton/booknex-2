@@ -1,6 +1,6 @@
-import type { UserLibraryFieldsType } from '@/navigation/types'
+import type { UserLibraryCategoryType } from '../../../../../backend/src/user/user.types'
 
 export interface UseToggleProperties {
 	id: number
-	type: UserLibraryFieldsType
+	type: UserLibraryCategoryType
 }

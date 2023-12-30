@@ -15,7 +15,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../decorator/auth.decorator'
 import { CollectionService } from './collection.service'
-import { CreateShelfDto, UpdateShelfDto } from './dto/collection.dto'
+import { CreateCollectionDto, UpdateCollectionDto } from './dto/collection.dto'
 
 @ApiTags('collection')
 @ApiBearerAuth()
@@ -32,13 +32,13 @@ export class CollectionController {
 	// admin
 	@Get('/all')
 	@Auth('admin')
-	async all(@Query('searchTerm') searchTerm: string): Promise<AllShelfOutput> {
+	all(@Query('searchTerm') searchTerm: string): Promise<AllShelfOutput> {
 		return this.shelvesService.all(searchTerm)
 	}
 
 	@Post('/create')
 	@Auth('admin')
-	async create(@Body() dto: CreateShelfDto) {
+	async create(@Body() dto: CreateCollectionDto) {
 		return this.shelvesService.create(dto)
 	}
 
@@ -50,7 +50,7 @@ export class CollectionController {
 
 	@Put('/update/:id')
 	@Auth('admin')
-	async update(@Param('id') id: string, @Body() dto: UpdateShelfDto) {
+	async update(@Param('id') id: string, @Body() dto: UpdateCollectionDto) {
 		return this.shelvesService.update(+id, dto)
 	}
 }

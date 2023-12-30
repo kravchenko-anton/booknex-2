@@ -1,6 +1,6 @@
 import type {
-	CatalogOutput,
-	SearchExamplesOutput,
+	ExploreOutput,
+	FeaturedOutput,
 	SearchOutput
 } from '@booknex/global/services-types/catalog.types'
 import { Controller, Get, Param } from '@nestjs/common'
@@ -17,18 +17,18 @@ import { CatalogService } from './catalog.service'
 export class CatalogController {
 	constructor(private readonly catalogService: CatalogService) {}
 
-	@Get('/search/:query')
+	@Get('/explore/:query')
 	async search(@Param('query') query: string): Promise<SearchOutput> {
 		return this.catalogService.search(query)
 	}
 
-	@Get('/search-examples')
-	async searchExamples(): Promise<SearchExamplesOutput> {
-		return this.catalogService.searchExamples()
+	@Get('/featured')
+	async featured(@CurrentUser('id') userId: number): Promise<FeaturedOutput> {
+		return this.catalogService.featured(+userId)
 	}
 
-	@Get('/')
-	async catalog(@CurrentUser('id') userId: number): Promise<CatalogOutput> {
-		return this.catalogService.catalog(+userId)
+	@Get('/explore')
+	async explore(): Promise<ExploreOutput> {
+		return this.catalogService.explore()
 	}
 }

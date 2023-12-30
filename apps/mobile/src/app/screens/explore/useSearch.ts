@@ -1,18 +1,18 @@
-import { useSearchForm } from '@/screens/search/useSearchForm'
+import { useSearchForm } from '@/screens/explore/useSearchForm'
 import { catalogService } from '@/services/catalog/catalog-service'
 import { useQuery } from '@tanstack/react-query'
 
 export const useSearch = () => {
 	const { searchTerm, debouncedSearch, control } = useSearchForm()
 	const { data: books, isLoading: booksLoading } = useQuery(
-		['search-book', debouncedSearch],
+		['explore-book', debouncedSearch],
 		() => catalogService.search(debouncedSearch),
 		{
 			enabled: !!debouncedSearch
 		}
 	)
 	const { data: searchExamples, isLoading: searchExamplesLoading } = useQuery(
-		['search-examples'],
+		['explore-examples'],
 		() => catalogService.searchExamples()
 	)
 	return {

@@ -1,9 +1,10 @@
 import { useAuth } from '@/hooks/useAuth'
-import type { UserLibraryFieldsType } from '@/navigation/types'
+
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
+import type { UserLibraryCategoryType } from '../../../../../backend/src/user/user.types'
 
-export const useFavoritesList = (type: UserLibraryFieldsType) => {
+export const useFavoritesList = (type: UserLibraryCategoryType) => {
 	const { user } = useAuth()
 
 	const { isLoading, data: favoriteList } = useQuery(

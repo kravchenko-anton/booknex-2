@@ -10,14 +10,16 @@ type BookWithAuthor = Prisma.BookGetPayload<{
 	select: typeof returnBookObjectWithAuthor
 }>[]
 
-export interface CatalogOutput {
-	recommendations: BookWithAuthor
+export interface ExploreOutput {
 	popularNow: Prisma.BookGetPayload<{
 		select: typeof returnColorBookObjectWithAuthor
 	}>[]
 	bestSellers: BookWithAuthor
 	newReleases: BookWithAuthor
-	mostRelatedGenres: Prisma.GenreGetPayload<{
+}
+export interface FeaturedOutput {
+	recommendations: BookWithAuthor
+	relatedGenres: Prisma.GenreGetPayload<{
 		select: typeof ReturnGenreObject
 	}>[]
 }

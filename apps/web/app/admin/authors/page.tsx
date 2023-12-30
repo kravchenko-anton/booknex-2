@@ -42,7 +42,7 @@ const PageDetails: FC = () => {
 						icon={Search}
 						type='search'
 						name='search'
-						placeholder='Search...'
+						placeholder='Explore...'
 					/>
 					<Button
 						size='sm'

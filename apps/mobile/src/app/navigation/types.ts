@@ -1,15 +1,15 @@
 import type { ComponentType } from 'react'
+import type { UserLibraryCategoryType } from '../../../../backend/src/user/user.types'
 
-export type  UserLibraryFieldsType = 'books' | 'shelves'
 export type TypeRootStackParameterList = {
 	Author: { id: number }
-	
+
 	Book: { id: number }
 	ComprehensiveList: {
-		type: keyof UserLibraryFieldsType
+		type: keyof UserLibraryCategoryType
 	}
 	Featured: undefined
-	
+
 	Genre: { id: number }
 	Library: undefined
 	Login: undefined
@@ -21,10 +21,10 @@ export type TypeRootStackParameterList = {
 	SelectGenres: undefined
 	Profile: undefined
 	Reading: { id: number; epub: string }
-	Search: undefined
+	Explore: undefined
 	Settings: undefined
-	
-	Shelf: { id: number }
+
+	Collection: { id: number }
 	UpdateProfile: undefined
 	Welcome: undefined
 }

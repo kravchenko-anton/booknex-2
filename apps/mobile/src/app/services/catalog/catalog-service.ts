@@ -1,6 +1,7 @@
 import { getCatalogUrl } from 'global/api-config'
-import {
-	CatalogOutput,
+import type {
+	ExploreOutput,
+	FeaturedOutput,
 	SearchExamplesOutput,
 	SearchOutput
 } from 'global/services-types/catalog.types'
@@ -17,14 +18,21 @@ export const catalogService = {
 	async searchExamples() {
 		return request<SearchExamplesOutput>({
 			method: 'GET',
-			url: getCatalogUrl('/search-examples')
+			url: getCatalogUrl('/explore-examples')
 		})
 	},
 
-	catalog() {
-		return request<CatalogOutput>({
+	featured() {
+		return request<FeaturedOutput>({
 			method: 'GET',
-			url: getCatalogUrl('/')
+			url: getCatalogUrl('/featured')
+		})
+	},
+
+	explore() {
+		return request<ExploreOutput>({
+			method: 'GET',
+			url: getCatalogUrl('/explore')
 		})
 	}
 }

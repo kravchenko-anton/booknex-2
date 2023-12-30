@@ -12,6 +12,7 @@ model Genre {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   name           String         @unique
+  description    String         @default("")
   color          String         @default("#22333b")
   users          User[]
   books          Book[]         @relation("BookGenre")

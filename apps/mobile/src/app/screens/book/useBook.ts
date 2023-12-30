@@ -14,7 +14,7 @@ export const useBook = () => {
 	const { handleToggle: toggleReadingBooks, isSmashed: isSmashedReadingBooks } =
 		useToggle(
 			{
-				type: 'books',
+				type: 'readingBooks',
 				id: params.id
 			},
 			['library']

@@ -3,7 +3,10 @@ import type { Prisma } from '@prisma/client'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import type { CreateShelfDto, UpdateShelfDto } from './dto/collection.dto'
+import type {
+	CreateCollectionDto,
+	UpdateCollectionDto
+} from './dto/collection.dto'
 import { returnCollectionObject } from './return.collection.object'
 
 @Injectable()
@@ -71,7 +74,7 @@ export class CollectionService {
 		})
 	}
 
-	async create(dto: CreateShelfDto) {
+	async create(dto: CreateCollectionDto) {
 		const collectionExists = await this.prisma.collection.findUnique({
 			where: {
 				title: dto.title
@@ -101,7 +104,7 @@ export class CollectionService {
 		})
 	}
 
-	async update(id: number, dto: UpdateShelfDto) {
+	async update(id: number, dto: UpdateCollectionDto) {
 		await this.byId(+id)
 		const booksExists = await this.prisma.book.findMany({
 			where: {

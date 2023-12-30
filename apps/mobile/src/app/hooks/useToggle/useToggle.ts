@@ -12,7 +12,7 @@ export const useToggle = (data: UseToggleProperties, invalidate?: [string]) => {
 	useLayoutEffect(() => {
 		if (!favoriteList) return
 
-		const isSome = favoriteList.some(f => f.id === data.id)
+		const isSome = favoriteList.includes(data.id)
 
 		if (isSmashed !== isSome) setIsSmashed(isSome)
 	}, [favoriteList, isSmashed, data.id, data.type])

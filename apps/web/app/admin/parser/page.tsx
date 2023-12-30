@@ -65,7 +65,7 @@ const Parser: FC = () => {
 						icon={Search}
 						type='search'
 						name='search'
-						placeholder='Search...'
+						placeholder='Explore...'
 					/>
 					<Button
 						size='sm'

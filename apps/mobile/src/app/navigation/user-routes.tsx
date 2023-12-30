@@ -4,16 +4,16 @@ import SelectGenres from '@/screens/auth/register/select-genres/select-genres'
 import CheckEmail from '@/screens/auth/welcome/check-email/check-email'
 import Welcome from '@/screens/auth/welcome/welcome'
 import Author from '@/screens/author/author'
+import Collection from '@/screens/collection/collection'
+import Explore from '@/screens/explore/explore'
 import Featured from '@/screens/featured/featured'
 import Genre from '@/screens/genre/genre'
 import Library from '@/screens/library/library'
 import Settings from '@/screens/profile/settings/settings'
 import updateProfile from '@/screens/profile/update-profile/update-profile'
 import Reading from '@/screens/reading/reading'
-import Shelf from '@/screens/shelf/shelf'
 import Book from '../screens/book/book'
 import Profile from '../screens/profile/profile'
-import Search from '../screens/search/search'
 import type { IRoute } from './types'
 
 export const routes: IRoute[] = [
@@ -26,8 +26,8 @@ export const routes: IRoute[] = [
 		component: Library
 	},
 	{
-		name: 'Shelf',
-		component: Shelf
+		name: 'Collection',
+		component: Collection
 	},
 	{
 		name: 'Author',
@@ -57,10 +57,10 @@ export const routes: IRoute[] = [
 		name: 'Book',
 		component: Book
 	},
-	
+
 	{
-		name: 'Search',
-		component: Search
+		name: 'Explore',
+		component: Explore
 	}
 ]
 

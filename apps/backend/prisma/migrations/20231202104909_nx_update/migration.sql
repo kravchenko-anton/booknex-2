@@ -113,7 +113,7 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Shelf" (
+CREATE TABLE "Collection" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -191,7 +191,7 @@ CREATE UNIQUE INDEX "Author_name_key" ON "Author"("name");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Shelf_title_key" ON "Shelf"("title");
+CREATE UNIQUE INDEX "Shelf_title_key" ON "Collection"("title");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_GenreToUser_AB_unique" ON "_GenreToUser"("A", "B");
@@ -284,7 +284,7 @@ ALTER TABLE "_BookGenre" ADD CONSTRAINT "_BookGenre_B_fkey" FOREIGN KEY ("B") RE
 ALTER TABLE "_BookToShelf" ADD CONSTRAINT "_BookToShelf_A_fkey" FOREIGN KEY ("A") REFERENCES "Book"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_BookToShelf" ADD CONSTRAINT "_BookToShelf_B_fkey" FOREIGN KEY ("B") REFERENCES "Shelf"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_BookToShelf" ADD CONSTRAINT "_BookToShelf_B_fkey" FOREIGN KEY ("B") REFERENCES "Collection"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_FinishedBooks" ADD CONSTRAINT "_FinishedBooks_A_fkey" FOREIGN KEY ("A") REFERENCES "Book"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -299,13 +299,13 @@ ALTER TABLE "_ReadingBooks" ADD CONSTRAINT "_ReadingBooks_A_fkey" FOREIGN KEY ("
 ALTER TABLE "_ReadingBooks" ADD CONSTRAINT "_ReadingBooks_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_WatchedShelves" ADD CONSTRAINT "_WatchedShelves_A_fkey" FOREIGN KEY ("A") REFERENCES "Shelf"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_WatchedShelves" ADD CONSTRAINT "_WatchedShelves_A_fkey" FOREIGN KEY ("A") REFERENCES "Collection"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_WatchedShelves" ADD CONSTRAINT "_WatchedShelves_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_HhiddenShelves" ADD CONSTRAINT "_HhiddenShelves_A_fkey" FOREIGN KEY ("A") REFERENCES "Shelf"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_HhiddenShelves" ADD CONSTRAINT "_HhiddenShelves_A_fkey" FOREIGN KEY ("A") REFERENCES "Collection"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_HhiddenShelves" ADD CONSTRAINT "_HhiddenShelves_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
