@@ -26,15 +26,14 @@ const Author = () => {
 	if (!author) return <Loader />
 	return (
 		<ScrollView>
-			<StatusBar backgroundColor={Color.foreground} />
+			<StatusBar backgroundColor={Color.shade} />
 			<View
 				style={{
-					backgroundColor: Color.foreground
+					backgroundColor: Color.shade
 				}}
 				className='h-[250px] rounded-b-3xl'
 			>
 				<View className='flex-1 p-4 pt-0'>
-					иконку
 					<Header.Head>
 						<Header.Sharing
 							message={`${author.name} is a great author! Check him on Booknex!`}

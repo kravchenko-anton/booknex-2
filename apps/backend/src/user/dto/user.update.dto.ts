@@ -1,16 +1,5 @@
-import { IsEmail, IsOptional, MinLength } from 'class-validator'
-import type {
-	UserUpdatePasswordPayload,
-	UserUpdatePayload
-} from '../../../../../libs/global/services-types/user-types'
-
-export class UserUpdateBioDto implements UserUpdatePayload {
-	@IsEmail()
-	email: string
-
-	@IsOptional()
-	name: string
-}
+import type { UserUpdatePasswordPayload } from '@booknex/global/services-types/user-types'
+import { MinLength } from 'class-validator'
 
 export class UserUpdatePasswordDto implements UserUpdatePasswordPayload {
 	@MinLength(8, {

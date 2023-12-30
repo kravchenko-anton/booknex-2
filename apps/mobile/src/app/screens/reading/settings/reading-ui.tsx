@@ -15,7 +15,6 @@ import { StatusBar, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AnimatedIcon, Title } from 'ui/components'
 
-export const shadeBackground = -15
 const ReadingUi: FC = () => {
 	const { goBack } = useTypedNavigation()
 	const { top, bottom } = useSafeAreaInsets()
@@ -50,33 +49,37 @@ const ReadingUi: FC = () => {
 				className='absolute z-50 mt-0 h-14 w-full flex-1 justify-center pt-0'
 			>
 				<View className='mt-0 flex-row items-center justify-between  px-4'>
-					<AnimatedIcon
-						icon={ListOrdered}
+					<ListOrdered
+						width={35}
+						height={35}
+						color={colorScheme.colorPalette.text}
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerChapters)}
-						size='md'
 					/>
-					<AnimatedIcon
-						icon={Search}
-						size='md'
+					<Search
+						width={30}
+						height={30}
+						color={colorScheme.colorPalette.text}
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSearch)}
 					/>
 					<Title
-						size={24}
+						size={26}
 						center
 						weight='bold'
 						color={colorScheme.colorPalette.primary}
 					>
 						{(readerProgress || 0) + '%'}
 					</Title>
-					<AnimatedIcon
+					<CaseSenSitive
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSettings)}
-						icon={CaseSenSitive}
-						size='md'
+						width={35}
+						height={35}
+						color={colorScheme.colorPalette.text}
 					/>
-					<AnimatedIcon
-						icon={BookHeart}
-						size='md'
+					<BookHeart
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerNoteBook)}
+						width={30}
+						height={30}
+						color={colorScheme.colorPalette.text}
 					/>
 				</View>
 			</AnimatedView>

@@ -1,4 +1,5 @@
 import type { PressableDefaultProperties } from '@/components/component-types'
+import type { SizeType } from '@/types/global'
 import type { LineColorType } from 'ui/colors'
 
 export interface VerticalBookCardProperties extends PressableDefaultProperties {
@@ -8,11 +9,10 @@ export interface VerticalBookCardProperties extends PressableDefaultProperties {
 		backgroundColor?: LineColorType
 		color?: LineColorType
 	}[]
-
+	size: SizeType
 	description?: string
 	descriptionLines?: number
 	image: {
-		size: 'sm' | 'md' | 'lg' | 'cube'
 		uri: string
 	}
 	title: string

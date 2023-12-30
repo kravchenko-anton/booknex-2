@@ -1,9 +1,9 @@
+import type { AllShelfOutput } from '@/global/services-types/collection-types'
 import { getShelfUrl } from '../../../../libs/global/api-config'
-import type { AllShelfOutput } from '../../../../libs/global/services-types/shelf-types'
 import type {
 	CreateShelfDto,
 	UpdateShelfDto
-} from '../../../backend/src/shelf/dto/shelf.dto'
+} from '../../../backend/src/collection/dto/collection.dto'
 import { request } from '../api/request.api'
 
 export const shelfService = {

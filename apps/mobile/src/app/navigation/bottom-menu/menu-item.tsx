@@ -36,8 +36,9 @@ const MenuItem: FC<IMenuItemProperties> = ({ currentRoute, item, nav }) => {
 				/>
 			</AnimatedPressable>
 			<Title
-				size={12}
-				weight={isActive ? 'bold' : 'regular'}
+				size={13}
+				className='mt-0.5'
+				weight='bold'
 				color={isActive ? Color.white : Color.gray}
 			>
 				{item.path}

@@ -4,10 +4,7 @@ import type {
 	returnBookObjectWithStatistics,
 	returnColorBookObjectWithAuthor
 } from '../../../apps/backend/src/book/return.book.object'
-import type {
-	ReturnGenreObject,
-	ReturnGenreWithBooks
-} from '../../../apps/backend/src/genre/return.genre.object'
+import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 
 type BookWithAuthor = Prisma.BookGetPayload<{
 	select: typeof returnBookObjectWithAuthor
@@ -20,7 +17,6 @@ export interface CatalogOutput {
 	}>[]
 	bestSellers: BookWithAuthor
 	newReleases: BookWithAuthor
-	genres: ReturnGenreWithBooks
 	mostRelatedGenres: Prisma.GenreGetPayload<{
 		select: typeof ReturnGenreObject
 	}>[]

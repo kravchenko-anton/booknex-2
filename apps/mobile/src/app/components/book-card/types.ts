@@ -1,8 +1,10 @@
 import type { PressableDefaultProperties } from '@/components/component-types'
+import type { SizeProperties } from '@/types/global'
 
-export interface BookCardProperties extends PressableDefaultProperties {
+export interface BookCardProperties
+	extends PressableDefaultProperties,
+		SizeProperties {
 	author?: string
-	size: 'sm' | 'md' | 'lg'
 	image: {
 		uri: string
 	}

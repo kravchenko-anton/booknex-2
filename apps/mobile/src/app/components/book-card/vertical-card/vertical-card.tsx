@@ -8,17 +8,14 @@ import { Image, Title } from 'ui/components'
 
 const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 	<PressableContainer
-		style={{
-			height: settings.height[card.image.size]
-		}}
-		className='bg-vibrant mb-1.5 w-full flex-row rounded-md p-2'
+		className='bg-shade mb-1.5 w-full flex-row rounded-md p-2'
 		{...card}
 	>
 		<Image
 			url={card.image.uri}
-			height={settings.height[card.image.size]}
+			height={settings.height[card.size]}
 			fullSize={true}
-			width={settings.width[card.image.size]}
+			width={settings.width[card.size]}
 		/>
 		<View className='flex-1 pb-0 pl-3'>
 			<View>
@@ -40,7 +37,7 @@ const VerticalCard: FC<VerticalBookCardProperties> = ({ ...card }) => (
 					{card.buttons.map(
 						({
 							label,
-							backgroundColor = Color.shade,
+							backgroundColor = Color.foreground,
 							color = Color.white,
 							...properties
 						}) => (

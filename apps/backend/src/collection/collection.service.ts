@@ -3,39 +3,38 @@ import type { Prisma } from '@prisma/client'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import type { CreateShelfDto, UpdateShelfDto } from './dto/shelf.dto'
-import { returnShelfObject } from './return.shelf.object'
+import type { CreateShelfDto, UpdateShelfDto } from './dto/collection.dto'
+import { returnCollectionObject } from './return.collection.object'
 
 @Injectable()
-export class ShelfService {
+export class CollectionService {
 	constructor(private readonly prisma: PrismaService) {}
-	async byId(shelfId: number, selectObject: Prisma.ShelfSelect = {}) {
-		const shelf = await this.prisma.shelf.findUnique({
+	async byId(id: number, selectObject: Prisma.CollectionSelect = {}) {
+		const collection = await this.prisma.collection.findUnique({
 			where: {
-				id: +shelfId
+				id: +id
 			},
 			select: {
-				...returnShelfObject,
+				...returnCollectionObject,
 				...selectObject
 			}
 		})
-		if (!shelf)
+		if (!collection)
 			throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
-		return shelf
+		return collection
 	}
 
-	async infoById(shelfId: number) {
-		const shelf = await this.prisma.shelf.findUnique({
+	async infoById(id: number) {
+		const collection = await this.prisma.collection.findUnique({
 			where: {
-				id: +shelfId
+				id: +id
 			},
 			select: {
-				...returnShelfObject,
+				...returnCollectionObject,
 				description: true,
 				_count: {
 					select: {
-						books: true,
-						watched: true
+						books: true
 					}
 				},
 				books: {
@@ -47,58 +46,21 @@ export class ShelfService {
 			}
 		})
 
-		if (!shelf)
+		if (!collection)
 			throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
-		const { _count, ...rest } = shelf
+		const { _count, ...rest } = collection
 		return {
 			...rest,
 			statistics: {
-				Books: _count.books,
-				Watched: _count.watched
+				Books: _count.books
 			}
 		}
 	}
 
-	async catalog(userId: number) {
-		const likedShelves = await this.prisma.shelf.findMany({
-			select: returnShelfObject,
-			where: {
-				watched: {
-					some: {
-						id: userId
-					}
-				}
-			}
-		})
-		const otherShelves = await this.prisma.shelf.findMany({
-			take: 10,
-			select: returnShelfObject,
-			orderBy: {
-				watched: {
-					_count: 'desc'
-				}
-			},
-			where: {
-				watched: {
-					none: {
-						id: userId
-					}
-				},
-				hidden: {
-					none: {
-						id: userId
-					}
-				}
-			}
-		})
-
-		return [...likedShelves, ...otherShelves]
-	}
-
-	async all(searchTerm: string) {
-		return this.prisma.shelf.findMany({
+	all(searchTerm: string) {
+		return this.prisma.collection.findMany({
 			take: 20,
-			select: returnShelfObject,
+			select: returnCollectionObject,
 			...(searchTerm && {
 				where: {
 					title: {
@@ -110,16 +72,16 @@ export class ShelfService {
 	}
 
 	async create(dto: CreateShelfDto) {
-		const shelfExists = await this.prisma.shelf.findUnique({
+		const collectionExists = await this.prisma.collection.findUnique({
 			where: {
 				title: dto.title
 			}
 		})
-		if (shelfExists)
+		if (collectionExists)
 			throw new NotFoundException(
 				`Shelf ${ErrorsEnum.Already_Exist}`
 			).getResponse()
-		return this.prisma.shelf.create({
+		return this.prisma.collection.create({
 			data: {
 				title: dto.title,
 				picture: dto.picture,
@@ -132,7 +94,7 @@ export class ShelfService {
 
 	async delete(id: number) {
 		await this.byId(+id)
-		return this.prisma.shelf.delete({
+		return this.prisma.collection.delete({
 			where: {
 				id: +id
 			}
@@ -153,7 +115,7 @@ export class ShelfService {
 				`Some books ${ErrorsEnum.Not_Found}`
 			).getResponse()
 
-		return this.prisma.shelf.update({
+		return this.prisma.collection.update({
 			where: {
 				id: +id
 			},

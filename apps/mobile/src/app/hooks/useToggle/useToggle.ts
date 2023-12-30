@@ -20,7 +20,7 @@ export const useToggle = (data: UseToggleProperties, invalidate?: [string]) => {
 	const { mutateAsync: toggle } = useMutation(
 		['toggle' + data.type, data.id],
 		(properties: UseToggleProperties) =>
-			userServices.toggle(properties.type, properties.id),
+			userServices.toggle(properties.id, properties.type),
 		{
 			onSuccess: async ({ message }) => {
 				console.log(invalidate)

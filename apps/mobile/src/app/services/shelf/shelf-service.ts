@@ -1,8 +1,8 @@
 import { getShelfUrl } from 'global/api-config'
-import {
+import type {
 	ShelfByIdOutput,
 	ShelfCatalogOutput
-} from 'global/services-types/shelf-types'
+} from 'global/services-types/collection-types'
 import { request } from '../api/request.api'
 
 export const shelfService = {

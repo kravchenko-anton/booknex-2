@@ -3,17 +3,12 @@ import Layout from '@/components/layout/layout'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useSearch } from '@/screens/search/useSearch'
 import { View } from 'react-native'
-import { Button, Field, Flatlist, Loader } from 'ui/components'
+import { Field, Flatlist, Loader } from 'ui/components'
+//TODO: переделать поиск под headway
 
 const Search = () => {
-	const {
-		searchTerm,
-		books,
-		booksLoading,
-		searchExamples,
-		searchExamplesLoading,
-		control
-	} = useSearch()
+	const { searchTerm, books, booksLoading, searchExamplesLoading, control } =
+		useSearch()
 	const { navigate } = useTypedNavigation()
 	return (
 		<Layout className='h-full'>
@@ -30,13 +25,13 @@ const Search = () => {
 						<Flatlist
 							mt={0}
 							keyExtractor={item => `$${item.id}`}
-							className='w-full flex-grow'
+							className='mt-4 w-full flex-grow'
 							data={books}
 							renderItem={({ item: book }) => (
 								<VerticalCard
+									size='md'
 									image={{
-										uri: book.picture,
-										size: 'md'
+										uri: book.picture
 									}}
 									title={book.title}
 									description={book.author.name}
@@ -53,28 +48,9 @@ const Search = () => {
 						/>
 					)}
 				</View>
-			) : (searchExamplesLoading ? (
-				<Loader />
 			) : (
-				<Flatlist
-					mt={0}
-					keyExtractor={item => `#${item.id} - ${item.title}`}
-					data={searchExamples}
-					renderItem={({ item }) => (
-						<Button
-							size='lg'
-							className='items-start'
-							variant='primary'
-							onPress={() => {
-								navigate(item.title ? 'Genre' : 'Book', {
-									id: item.id
-								})
-							}}
-							text={(item.title ?? item.title) || 'Unknown'}
-						/>
-					)}
-				/>
-			))}
+				searchExamplesLoading && <Loader />
+			)}
 		</Layout>
 	)
 }

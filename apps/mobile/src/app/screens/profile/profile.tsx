@@ -3,9 +3,8 @@ import * as Header from '@/components/header/header'
 import { useTypedNavigation } from '@/hooks'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
-import { Pen, Settings } from 'icons'
-import { View } from 'react-native'
-import { AnimatedIcon, Image, Loader, Title } from 'ui/components'
+import { Settings } from 'icons'
+import { Loader, Title } from 'ui/components'
 
 const Profile = () => {
 	const { data: profile } = useQuery(['user-profile'], () =>
@@ -24,24 +23,16 @@ const Profile = () => {
 					}}
 				/>
 			</Header.Head>
-			<View className='items-center self-center'>
-				<View className='relative'>
-					<Image height={140} width={140} url={profile.picture} />
-					<AnimatedIcon
-						icon={Pen}
-						onPress={() => {
-							navigate('UpdateProfile')
-						}}
-						size='md'
-						variant='vibrant'
-						className='absolute right-[-20px] top-[-20px]'
-					/>
-				</View>
-
-				<Title className='mt-2 text-center' size={36} weight='bold'>
-					{profile.name}
-				</Title>
-			</View>
+			<Title
+				className='mt-40 items-center justify-center'
+				weight='bold'
+				center
+				size={25}
+				numberOfLines={6}
+			>
+				This section is not finished, later here will be your achievements and
+				statistic 😔
+			</Title>
 		</ScrollLayout>
 	)
 }

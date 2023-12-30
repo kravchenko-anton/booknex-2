@@ -4,7 +4,7 @@ import { UpdatePasswordSchema } from '@/screens/profile/update-profile/update-pa
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
-import { Button, Field, Title } from 'ui/components'
+import { Button, Field } from 'ui/components'
 
 const UpdatePassword = () => {
 	const { control, handleSubmit } = useForm<UpdatePasswordSchemaType>({
@@ -12,10 +12,7 @@ const UpdatePassword = () => {
 	})
 	const { onSubmit } = useUpdatePassword()
 	return (
-		<View className='bg-dust mb-4 mt-8 rounded-md p-4'>
-			<Title weight='bold' className='mb-2' size={24}>
-				Password
-			</Title>
+		<View className='bg-dust mb-4 mt-4 rounded-md'>
 			<Field
 				control={control}
 				name='oldPassword'

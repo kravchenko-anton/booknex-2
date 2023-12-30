@@ -15,7 +15,7 @@ import {
 
 const Shelf = () => {
 	const { params } = useTypedRoute<'Shelf'>()
-	const { data: shelf } = useQuery(['library', 'shelf', params.id], () =>
+	const { data: shelf } = useQuery(['library', 'collection', params.id], () =>
 		shelfService.byId(params.id)
 	)
 	const {
@@ -73,9 +73,9 @@ const Shelf = () => {
 				className='mb-2 px-2'
 				renderItem={({ item: book }) => (
 					<VerticalCard
+						size='md'
 						image={{
-							uri: book.picture,
-							size: 'md'
+							uri: book.picture
 						}}
 						title={book.title}
 						description={book.author.name}

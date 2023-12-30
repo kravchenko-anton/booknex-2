@@ -1,3 +1,7 @@
+import type {
+	AllShelfOutput,
+	ShelfByIdOutput
+} from '@booknex/global/services-types/collection-types'
 import {
 	Body,
 	Controller,
@@ -9,28 +13,15 @@ import {
 	Query
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type {
-	AllShelfOutput,
-	ShelfByIdOutput,
-	ShelfCatalogOutput
-} from '../../../../libs/global/services-types/shelf-types'
 import { Auth } from '../decorator/auth.decorator'
-import { CurrentUser } from '../decorator/user.decorator'
-import { CreateShelfDto, UpdateShelfDto } from './dto/shelf.dto'
-import { ShelfService } from './shelf.service'
+import { CollectionService } from './collection.service'
+import { CreateShelfDto, UpdateShelfDto } from './dto/collection.dto'
 
-@ApiTags('shelf')
+@ApiTags('collection')
 @ApiBearerAuth()
-@Controller('shelf')
-export class ShelfController {
-	constructor(private readonly shelvesService: ShelfService) {}
-	@Get('/catalog')
-	@Auth()
-	async catalog(
-		@CurrentUser('id') userId: number
-	): Promise<ShelfCatalogOutput> {
-		return this.shelvesService.catalog(userId)
-	}
+@Controller('collection')
+export class CollectionController {
+	constructor(private readonly shelvesService: CollectionService) {}
 
 	@Get('/by-id/:id')
 	@Auth()

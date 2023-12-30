@@ -17,14 +17,14 @@ export const menuItems: IMenuItem[] = [
 	},
 
 	{
-		icon: Bookmarked,
-		path: 'Library'
-	},
-	{
 		icon: Search,
 		path: 'Search'
 	},
 
+	{
+		icon: Bookmarked,
+		path: 'Library'
+	},
 	{
 		icon: User,
 		path: 'Profile'

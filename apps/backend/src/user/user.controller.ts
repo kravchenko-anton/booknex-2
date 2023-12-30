@@ -1,3 +1,10 @@
+import type {
+	AllUsersOutput,
+	FavoriteListOutput,
+	ToggleOutput,
+	UserLibraryOutput,
+	UserProfileOutput
+} from '@booknex/global/services-types/user-types'
 import {
 	Body,
 	Controller,
@@ -9,18 +16,10 @@ import {
 	Query
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type {
-	AllUsersOutput,
-	FavoriteListOutput,
-	ToggleOutput,
-	UserLibraryOutput,
-	UserProfileOutput
-} from '../../../../libs/global/services-types/user-types'
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
-import { FilenameDto } from '../storage/dto/upload.dto'
-import { UserUpdateBioDto, UserUpdatePasswordDto } from './dto/user.update.dto'
+import { UserUpdatePasswordDto } from './dto/user.update.dto'
 import { UserService } from './user.service'
 import { UserLibraryCategoryType } from './user.types'
 
@@ -42,27 +41,12 @@ export class UserController {
 	}
 
 	@Auth()
-	@Post('/update-bio')
-	async updateBio(
-		@CurrentUser('id') id: number,
-		@Body() dto: UserUpdateBioDto
-	) {
-		return this.usersService.updateBio(+id, dto)
-	}
-
-	@Auth()
 	@Post('/update-password')
 	async updatePassword(
 		@CurrentUser('id') id: number,
 		@Body() dto: UserUpdatePasswordDto
 	) {
 		return this.usersService.updatePassword(+id, dto)
-	}
-
-	@Auth()
-	@Post('/update-picture')
-	async updatePicture(@CurrentUser('id') id: number, @Body() dto: FilenameDto) {
-		return this.usersService.updatePicture(+id, dto.filename)
 	}
 
 	@Auth()

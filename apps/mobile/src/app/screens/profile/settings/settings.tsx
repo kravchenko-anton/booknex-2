@@ -1,7 +1,7 @@
 import { HeaderScrollLayout } from '@/components'
 import * as Header from '@/components/header/header'
 import { useAction, useTypedNavigation } from '@/hooks'
-import { Bug, MessageCircleQuestion } from 'icons'
+import { Bug, EyeOff, Logout, MessageCircleQuestion } from 'icons'
 import Toast from 'react-native-toast-message'
 import * as List from './settings-list'
 //TODO: после обновления проложения добавить тут больше разнообразия и пофиксить консоль логи
@@ -39,13 +39,13 @@ const Settings = () => {
 			</List.Category>
 			<List.Category title='Account'>
 				<List.Item
-					title='Update Account'
-					icon={MessageCircleQuestion}
+					title='Update Password'
+					icon={EyeOff}
 					onPress={() => navigate('UpdateProfile')}
 				/>
 				<List.Item
 					title='Sign out'
-					icon={Bug}
+					icon={Logout}
 					onPress={() =>
 						showAlert({
 							title: 'Are you sure?',

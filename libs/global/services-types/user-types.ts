@@ -1,17 +1,16 @@
 import type { Prisma } from '@prisma/client'
 import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
-import type { returnShelfObject } from '../../../apps/backend/src/shelf/return.shelf.object'
 import type { returnUserObject } from '../../../apps/backend/src/user/return.user.object'
 import type { UserLibraryFieldsEnum } from '../../../apps/backend/src/user/user.types'
 
-export type UserProfileOutput = Prisma.UserGetPayload<{
-	select: typeof returnUserObject & {
-		picture: true
+export type UserProfileOutput = Prisma.UserGetPayload<
+	{
+		select: typeof returnUserObject
+	} & {
+		bookCount: number
+		totalPageCount: number
 	}
-}> & {
-	bookCount: number
-	totalPageCount: number
-}
+>
 
 export interface UserLibraryOutput {
 	[UserLibraryFieldsEnum.readingBooks]: Prisma.UserGetPayload<{
@@ -28,20 +27,6 @@ export interface UserLibraryOutput {
 			}
 		}
 	}>['finishedBooks']
-	[UserLibraryFieldsEnum.watchedShelves]: Prisma.UserGetPayload<{
-		select: {
-			watchedShelves: {
-				select: typeof returnShelfObject
-			}
-		}
-	}>['watchedShelves']
-	[UserLibraryFieldsEnum.hiddenShelves]: Prisma.UserGetPayload<{
-		select: {
-			hiddenShelves: {
-				select: typeof returnShelfObject
-			}
-		}
-	}>['hiddenShelves']
 }
 
 export interface UserUpdatePayload {
@@ -57,8 +42,7 @@ export interface UserUpdatePasswordPayload {
 export interface FavoriteListOutput {
 	readingBooks: number[]
 	finishedBooks: number[]
-	watchedShelves: number[]
-	hiddenShelves: number[]
+	savedBooks: number[]
 }
 
 export interface ToggleOutput {
@@ -72,8 +56,6 @@ export type AllUsersOutput = Prisma.UserGetPayload<{
 			select: {
 				finishedBooks: true
 				readingBooks: true
-				watchedShelves: true
-				hiddenShelves: true
 			}
 		}
 	}

@@ -1,8 +1,6 @@
 import * as Header from '@/components/header/header'
 import ScrollLayout from '@/components/layout/scroll-layout'
-import UpdateBio from '@/screens/profile/update-profile/update-bio/update-bio'
 import UpdatePassword from '@/screens/profile/update-profile/update-password/update-password'
-import UpdatePicture from '@/screens/profile/update-profile/update-picture/update-picture'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
 import { Loader } from 'ui/components'
@@ -15,10 +13,8 @@ const UpdateProfile = () => {
 	return (
 		<ScrollLayout className='p-2'>
 			<Header.Head>
-				<Header.Text text='Update profile' />
+				<Header.Text text='Update Password' />
 			</Header.Head>
-			<UpdatePicture picture={profile.picture} />
-			<UpdateBio defaultName={profile.name} defaultEmail={profile.email} />
 			<UpdatePassword />
 		</ScrollLayout>
 	)

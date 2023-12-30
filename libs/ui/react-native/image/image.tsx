@@ -24,6 +24,7 @@ const Image: FC<Types> = ({
 		style={[
 			{
 				width,
+				height,
 				borderRadius
 			},
 			style

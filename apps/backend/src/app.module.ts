@@ -9,9 +9,9 @@ import { AuthModule } from './auth/auth.module'
 import { AuthorModule } from './author/author.module'
 import { BookModule } from './book/book.module'
 import { CatalogModule } from './catalog/catalog.module'
+import { CollectionModule } from './collection/collection.module'
 import { GenreModule } from './genre/genre.module'
 import { ParserModule } from './parser/parser.module'
-import { ShelfModule } from './shelf/shelf.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
 
@@ -35,7 +35,7 @@ import { UserModule } from './user/user.module'
 			max: 1000
 		}),
 		AdminModule,
-		ShelfModule,
+		CollectionModule,
 		AuthorModule,
 		ParserModule
 	],

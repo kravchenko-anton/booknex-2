@@ -8,8 +8,8 @@ import {
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import {
-	initialWindowMetrics,
-	SafeAreaProvider
+	SafeAreaProvider,
+	initialWindowMetrics
 } from 'react-native-safe-area-context'
 import { Color } from 'ui/colors'
 import { Loader } from 'ui/components'
@@ -43,7 +43,7 @@ const Navigation: FC = () => {
 			>
 				<PrivateNavigator />
 			</NavigationContainer>
-			{user && !!currentRoute && !(currentRoute === 'Reading') && (
+			{user && !(currentRoute === 'Reading') && (
 				<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
 			)}
 		</SafeAreaProvider>

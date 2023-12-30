@@ -2,40 +2,27 @@ import type { Prisma } from '@prisma/client'
 
 export type UserLibraryCategoryType = keyof Pick<
 	Prisma.UserSelect,
-	'finishedBooks' | 'readingBooks' | 'watchedShelves' | 'hiddenShelves'
+	'finishedBooks' | 'readingBooks' | 'savedBooks'
 >
 export const DesignationType = {
 	finishedBooks: 'book',
-	readingBooks: 'book',
-	watchedShelves: 'shelf',
-	hiddenShelves: 'shelf'
+	readingBooks: 'book'
 }
 export enum UserLibraryFieldsEnum {
 	finishedBooks = 'finishedBooks',
 	readingBooks = 'readingBooks',
-	watchedShelves = 'watchedShelves',
-	hiddenShelves = 'hiddenShelves'
-}
-
-export const UserOppositeToggle = {
-	finishedBooks: UserLibraryFieldsEnum.readingBooks,
-	readingBooks: UserLibraryFieldsEnum.finishedBooks,
-	watchedShelves: UserLibraryFieldsEnum.hiddenShelves,
-	hiddenShelves: UserLibraryFieldsEnum.watchedShelves
+	savedBooks = 'savedBooks'
 }
 
 export const CatalogTitleType = {
 	finishedBooks: 'Finished',
 	readingBooks: 'Reading',
-	watchedShelves: 'Watched',
-	hiddenShelves: 'Hidden'
+	savedBooks: 'Saved'
 }
 
 export const userLibraryFields: UserLibraryCategoryType[] = [
 	UserLibraryFieldsEnum.finishedBooks,
-	UserLibraryFieldsEnum.readingBooks,
-	UserLibraryFieldsEnum.watchedShelves,
-	UserLibraryFieldsEnum.hiddenShelves
+	UserLibraryFieldsEnum.readingBooks
 ]
 
 export const idSelect = {

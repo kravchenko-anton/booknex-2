@@ -3,10 +3,8 @@ import RainbowBookCard from '@/components/book-card/rainbow-book-card/rainbow-bo
 import ScrollLayout from '@/components/layout/scroll-layout'
 import { useTypedNavigation } from '@/hooks'
 import RecommendationList from '@/screens/featured/recommendation-list/recommendation-list'
-import ShelfCard from '@/screens/featured/shelf-card/shelf-card'
 import { catalogService } from '@/services/catalog/catalog-service'
 import { shelfService } from '@/services/shelf/shelf-service'
-import { removeEmoji } from '@/utils/remove-emoji'
 import { useQuery } from '@tanstack/react-query'
 import { Button, Flatlist, Loader } from 'ui/components'
 //TODO: добавить тут shelves
@@ -21,17 +19,6 @@ const Featured = () => {
 	if (!catalog) return <Loader />
 	return (
 		<ScrollLayout>
-			<Flatlist
-				horizontal
-				data={shelves}
-				renderItem={({ item: shelve }) => (
-					<ShelfCard
-						onPress={() => navigate('Shelf', { id: shelve.id })}
-						picture={shelve.picture}
-						name={shelve.title}
-					/>
-				)}
-			/>
 			<RecommendationList
 				data={catalog.recommendations}
 				renderItem={({ item: book }) => (
@@ -106,26 +93,9 @@ const Featured = () => {
 					/>
 				)}
 			/>
-			{catalog.genres.map(genre => (
-				<Flatlist
-					key={genre.name}
-					title={{
-						text: removeEmoji(genre.name)
-					}}
-					horizontal
-					mt={30}
-					data={genre.books}
-					renderItem={({ item: book }) => (
-						<BookCard
-							onPress={() => navigate('Book', { id: book.id })}
-							size='sm'
-							image={{
-								uri: book.picture
-							}}
-						/>
-					)}
-				/>
-			))}
+			{
+				// TODO: сделать колекцию
+			}
 		</ScrollLayout>
 	)
 }

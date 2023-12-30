@@ -3,7 +3,6 @@ import {
 	returnBookObjectWithAuthor,
 	returnColorBookObjectWithAuthor
 } from '../book/return.book.object'
-import { ReturnGenreObject } from '../genre/return.genre.object'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 
@@ -17,8 +16,7 @@ export class CatalogService {
 			recommendations: await this.Recommendations(userId),
 			popularNow: await this.PopularBooks(),
 			bestSellers: await this.BestSellingBooks(),
-			newReleases: await this.NewReleases(),
-			genres: await this.Genres()
+			newReleases: await this.NewReleases()
 		}
 	}
 
@@ -180,22 +178,7 @@ export class CatalogService {
 		})
 	}
 
-	private Genres() {
-		return this.prisma.genre.findMany({
-			take: 5,
-			select: {
-				...ReturnGenreObject,
-				books: {
-					orderBy: {
-						updatedAt: 'desc'
-					},
-					take: 10,
-					select: returnBookObjectWithAuthor
-				}
-			}
-		})
-	}
-
+	//TODO: пофиксить этот пиздец
 	private async Recommendations(userId: number) {
 		const likedGenres = await this.prisma.genre.findMany({
 			select: {
