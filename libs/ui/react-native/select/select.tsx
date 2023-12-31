@@ -3,11 +3,12 @@ import type { ViewDefaultProperties } from '@/components/component-types.ts'
 import { ChevronDown } from 'icons'
 import type { FC } from 'react'
 import { useState } from 'react'
-import { Pressable, View } from 'react-native'
+import { Pressable } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { AnimatedPressable } from '../../../../apps/mobile/src/app/components/animated'
 import { useClickOutside } from '../../../../apps/mobile/src/app/hooks/outside-press/useClickOutside'
 import { Color } from '../../colors'
-import { Icon, ScrollView, Title } from '../index'
+import { ScrollView, Title } from '../index'
 
 interface SelectProperties extends ViewDefaultProperties {
 	onSelect: (value: { value: string; label: string }) => void
@@ -26,7 +27,7 @@ interface SelectProperties extends ViewDefaultProperties {
 
 const Select: FC<SelectProperties> = ({ ...properties }) => {
 	const [active, setActive] = useState(false)
-	const reference = useClickOutside(() => active && setActive(false))
+	const reference = useClickOutside(() => setActive(false))
 
 	const popupAnimation = useAnimatedStyle(() => {
 		return {
@@ -38,8 +39,8 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 	return (
 		<>
 			<PressableContainer
-				onPress={() => setActive(true)}
-				className='relative h-full flex-row items-center rounded-md p-2 px-3'
+				onPress={() => setActive(!active)}
+				className='relative flex-row items-center rounded-md p-2 px-3'
 				style={{
 					backgroundColor: properties.backgroundColor || 'transparent'
 				}}
@@ -47,23 +48,27 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 				<Title weight='bold' color={properties.color || Color.white}>
 					{properties.active.label}
 				</Title>
-				<Icon
+				<ChevronDown
 					pointerEvents='none'
-					noPadding
-					className='ml-2 h-6 w-6'
-					icon={ChevronDown}
-					size='md'
+					color={properties.color || Color.white}
+					width={25}
+					height={25}
+					className='ml-2 mt-1 h-6 w-6'
 				/>
 			</PressableContainer>
-			<View
+			<AnimatedPressable
 				ref={reference}
 				style={[
 					popupAnimation,
 					{
+						position: 'absolute',
+						top: 50,
+						left: 0,
+						zIndex: 10_000,
 						backgroundColor: properties.backgroundColor || 'transparent'
 					}
 				]}
-				className='absolute bottom-0 left-0 z-50 max-h-[200px] rounded-md'
+				className='z-50 max-h-[200px] rounded-md'
 			>
 				<ScrollView>
 					{properties.elements.map(element => {
@@ -83,7 +88,7 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 						)
 					})}
 				</ScrollView>
-			</View>
+			</AnimatedPressable>
 		</>
 	)
 }

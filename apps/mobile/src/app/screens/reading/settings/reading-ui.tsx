@@ -1,84 +1,81 @@
 import { AnimatedView } from '@/components/animated'
 import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/types'
 import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
-import { useReadingAnimation } from '@/screens/reading/settings/reading-ui-animation'
-import {
-	ArrowLeft,
-	BookHeart,
-	CaseSenSitive,
-	ListOrdered,
-	MoreHorizontal,
-	Search
-} from 'icons'
+import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
 import { StatusBar, View } from 'react-native'
+import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { AnimatedIcon, Title } from 'ui/components'
+import { Title } from 'ui/components'
 
-const ReadingUi: FC = () => {
+const ReadingUi: FC<{ title: string }> = ({ title }) => {
 	const { goBack } = useTypedNavigation()
-	const { top, bottom } = useSafeAreaInsets()
+	const { bottom } = useSafeAreaInsets()
+	const { progress } = useTypedSelector(state => state.reader)
 	const { openBottomSheet } = useAction()
-	const { progress: readerProgress } = useTypedSelector(state => state.reader)
 	const { visible } = useTypedSelector(state => state.readingUi)
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
-	const { headerAnimation, footerAnimation } = useReadingAnimation(visible)
+	const showAnimation = useAnimatedStyle(() => {
+		return {
+			opacity: withTiming(visible ? 1 : 0),
+			bottom: bottom
+		}
+	})
 	return (
 		<View className='absolute h-screen w-full'>
 			<AnimatedView
 				style={[
+					showAnimation,
 					{
-						top
-					},
-					headerAnimation
-				]}
-				className='absolute z-50 h-[65px] w-full flex-row items-center justify-between px-2'
-			>
-				<AnimatedIcon icon={ArrowLeft} size='md' onPress={() => goBack()} />
-				<AnimatedIcon icon={MoreHorizontal} size='md' />
-			</AnimatedView>
-
-			<AnimatedView
-				style={[
-					footerAnimation,
-					{
-						bottom: bottom,
-						backgroundColor: colorScheme.colorPalette.background.darker
+						backgroundColor: colorScheme.colorPalette.background.normal
 					}
 				]}
-				className='absolute z-50 mt-0 h-14 w-full flex-1 justify-center pt-0'
+				className=' absolute z-50 mb-0 mt-0 w-full flex-1 justify-center  pt-0'
 			>
-				<View className='mt-0 flex-row items-center justify-between  px-4'>
+				<View
+					className='relative h-1.5 w-full'
+					style={{
+						backgroundColor: colorScheme.colorPalette.background.lighter
+					}}
+				>
+					<View
+						className=' absolute left-0 h-1.5'
+						style={{
+							backgroundColor: colorScheme.colorPalette.primary,
+							width: `${progress === 0 ? 1 : progress}%`,
+							borderBottomRightRadius: 100,
+							borderTopRightRadius: 100
+						}}
+					></View>
+				</View>
+				<View className='mt-0 w-full flex-row items-center justify-between px-4 pb-2.5 pt-1.5'>
+					<View className='w-2/3 flex-row items-center'>
+						<ArrowLeft
+							width={28}
+							height={28}
+							color={colorScheme.colorPalette.text}
+							onPress={() => goBack()}
+						/>
+						<Title
+							size={20}
+							center
+							className='ml-2'
+							weight='bold'
+							color={colorScheme.colorPalette.text}
+						>
+							{title}
+						</Title>
+					</View>
 					<ListOrdered
-						width={35}
-						height={35}
+						width={28}
+						height={28}
 						color={colorScheme.colorPalette.text}
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerChapters)}
 					/>
-					<Search
-						width={30}
-						height={30}
-						color={colorScheme.colorPalette.text}
-						onPress={() => openBottomSheet(BottomSheetListEnum.readerSearch)}
-					/>
-					<Title
-						size={26}
-						center
-						weight='bold'
-						color={colorScheme.colorPalette.primary}
-					>
-						{(readerProgress || 0) + '%'}
-					</Title>
 					<CaseSenSitive
 						onPress={() => openBottomSheet(BottomSheetListEnum.readerSettings)}
-						width={35}
-						height={35}
-						color={colorScheme.colorPalette.text}
-					/>
-					<BookHeart
-						onPress={() => openBottomSheet(BottomSheetListEnum.readerNoteBook)}
-						width={30}
-						height={30}
+						width={28}
+						height={28}
 						color={colorScheme.colorPalette.text}
 					/>
 				</View>

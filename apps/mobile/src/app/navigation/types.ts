@@ -20,7 +20,7 @@ export type TypeRootStackParameterList = {
 	}
 	SelectGenres: undefined
 	Profile: undefined
-	Reading: { id: number; epub: string }
+	Reader: { id: number }
 	Explore: undefined
 	Settings: undefined
 

@@ -99,10 +99,7 @@ export type Theme = {
 		color: string
 	}
 }
-export interface Toc {
-	href: string
-	label: string
-}
+
 export type WebviewMessage =
 	| {
 			type: 'ScrollToText'
@@ -129,9 +126,4 @@ export type WebviewMessage =
 export type SearchResult = {
 	cfi: EPubCfi
 	excerpt: string
-}
-
-export interface ReaderProperties {
-	src: string
-	id: number
 }

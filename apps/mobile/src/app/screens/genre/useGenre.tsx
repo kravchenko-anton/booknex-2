@@ -10,14 +10,14 @@ export const useGenre = () => {
 	)
 	const { navigate: navigateFunction } = useTypedNavigation()
 	const navigate = {
-		Book: (id: number) => {
+		book: (id: number) => {
 			navigateFunction('Book', { id })
 		},
-		Author: (id: number) => {
+		author: (id: number) => {
 			navigateFunction('Author', { id })
 		}
 	}
-	
+
 	return {
 		genre,
 		navigate

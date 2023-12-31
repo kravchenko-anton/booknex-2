@@ -4,7 +4,7 @@ import ScrollLayout from '@/components/layout/scroll-layout'
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
-
+//TODO: сделать нормальный layout для всех страниц
 const HeaderScrollLayout: FC<
 	PropsWithChildren<HeaderScrollLayoutProperties>
 > = ({ title, transientValue, children, ...properties }) => {

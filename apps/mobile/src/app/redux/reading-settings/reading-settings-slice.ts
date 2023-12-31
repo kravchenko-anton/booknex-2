@@ -1,5 +1,5 @@
 import type { ThemePackType } from '@/screens/reading/settings/sheet/reading/theme-pack'
-import { defaultTheme, themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
+import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -10,8 +10,8 @@ export enum ReaderFontsEnum {
 }
 
 export const fontSizeSettings = {
-	min: 24,
-	max: 38
+	min: 18,
+	max: 26
 }
 export const ReaderFont = [
 	{
@@ -29,18 +29,18 @@ export const ReaderFont = [
 ]
 
 const initialState = {
-	colorScheme: defaultTheme as ThemePackType,
+	colorScheme: themePack[1],
 	font: {
 		title: 'Courier New',
 		fontFamily: ReaderFontsEnum.Courier
-	} as (typeof ReaderFont)[0],
+	},
 	fontSize: fontSizeSettings.min,
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
 	padding: 14 as 14 | 8 | 20,
-	books: null as
+	books: [] as
 		| null
 		| {
-				id: number
+				title: string
 				lastProgress: {
 					location: number
 					progress: number
@@ -87,9 +87,9 @@ const ReadingSettingsSlice = createSlice({
 			state,
 			{
 				payload
-			}: PayloadAction<{ id: number; progress: number; location: number }>
+			}: PayloadAction<{ title: string; progress: number; location: number }>
 		) => {
-			const book = state.books?.find(value => value.id === payload.id)
+			const book = state.books?.find(value => value.title === payload.title)
 			if (book) {
 				book.lastProgress = {
 					progress: payload.progress,
@@ -99,7 +99,7 @@ const ReadingSettingsSlice = createSlice({
 				state.books = [
 					...(state.books ?? []),
 					{
-						id: payload.id,
+						title: payload.title,
 						lastProgress: {
 							progress: payload.progress,
 							location: payload.location

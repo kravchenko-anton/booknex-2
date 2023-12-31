@@ -1,5 +1,6 @@
 import { BookCard, RainbowBookCard, ScrollLayout } from '@/components'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import SearchField from '@/screens/explore/search-field'
 import { catalogService } from '@/services/catalog/catalog-service'
 import { useQuery } from '@tanstack/react-query'
 import { Flatlist, Loader } from 'ui/components'
@@ -12,7 +13,8 @@ const Explore = () => {
 	const { navigate } = useTypedNavigation()
 	if (!explore) return <Loader />
 	return (
-		<ScrollLayout className='h-full'>
+		<ScrollLayout className='h-full pt-8'>
+			<SearchField />
 			<Flatlist
 				title={{
 					text: 'Best Sellers'

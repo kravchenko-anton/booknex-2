@@ -17,22 +17,6 @@ export interface ThemePackType {
 	}
 }
 
-export const defaultTheme = {
-	title: 'Light',
-	slug: 'light',
-	colorPalette: {
-		primary: Color.primary,
-		secondary: Color.secondary,
-		background: {
-			normal: Color.white,
-			lighter: '#f9f9f9',
-			darker: '#f2f2f2'
-		},
-		text: Color.black
-	},
-	statusBar: 'light-content'
-}
-
 export const themePack: ThemePackType[] = [
 	{
 		title: 'Light',

@@ -72,6 +72,7 @@ export interface BookPayload {
 export type EpubOutput = Prisma.BookGetPayload<{
 	select: {
 		chapters: true
+		title: true
 		file: true
 	}
 }>

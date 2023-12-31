@@ -5,13 +5,13 @@ export const settings: {
 	height: Record<BookCardProperties['size'], number>
 } = {
 	width: {
-		sm: 160,
-		md: 180,
+		sm: 120,
+		md: 160,
 		lg: 190
 	},
 	height: {
-		sm: 220,
-		md: 250,
+		sm: 160,
+		md: 230,
 		lg: 260
 	}
 }

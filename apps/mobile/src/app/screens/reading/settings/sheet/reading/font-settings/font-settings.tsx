@@ -1,13 +1,17 @@
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { fontSizeSettings } from '@/redux/reading-settings/reading-settings-slice'
+import type { ReaderFontsEnum } from '@/redux/reading-settings/reading-settings-slice'
+import {
+	fontSizeSettings,
+	ReaderFont
+} from '@/redux/reading-settings/reading-settings-slice'
 import LineHeightIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/line-height'
 import PageMarginIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/page-margin'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Icon } from 'ui/components'
+import { Icon, Select } from 'ui/components'
 
 const FontSettings: FC = () => {
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
@@ -19,26 +23,26 @@ const FontSettings: FC = () => {
 	return (
 		<View className='px-4'>
 			<View className='mt-4 w-full flex-row  items-center justify-between'>
-				{/* <Select */}
-				{/* 	onSelect={value => { */}
-				{/* 		changeFontFamily({ */}
-				{/* 			fontFamily: value.value as ReaderFontsEnum, */}
-				{/* 			title: value.label */}
-				{/* 		}) */}
-				{/* 	}} */}
-				{/* 	color={colorScheme.colorPalette.text} */}
-				{/* 	backgroundColor={colorScheme.colorPalette.background} */}
-				{/* 	elements={ReaderFont.map(font => { */}
-				{/* 		return { */}
-				{/* 			value: font.fontFamily, */}
-				{/* 			label: font.title */}
-				{/* 		} */}
-				{/* 	})} */}
-				{/* 	active={{ */}
-				{/* 		value: font.fontFamily, */}
-				{/* 		label: font.title */}
-				{/* 	}} */}
-				{/* /> */}
+				<Select
+					onSelect={value => {
+						changeFontFamily({
+							fontFamily: value.value as ReaderFontsEnum,
+							title: value.label
+						})
+					}}
+					color={colorScheme.colorPalette.text}
+					backgroundColor={colorScheme.colorPalette.background.darker}
+					elements={ReaderFont.map(font => {
+						return {
+							value: font.fontFamily,
+							label: font.title
+						}
+					})}
+					active={{
+						value: font.fontFamily,
+						label: font.title
+					}}
+				/>
 
 				<View className='flex-row items-center'>
 					<TouchableOpacity>

@@ -14,27 +14,6 @@ export const handleDoublePress = (handleAction: () => void) => {
 	}
 }
 
-export const scrollToText = (text: string) => `
-function scrollToText() {
-    const elements = document.getElementsByTagName('*');
-    for (let i = 0; i < elements.length; i++) {
-        const element = elements[i];
-        if (element.innerText.includes('${text}')) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-                type: "ScrollToText",
-                payload: {
-                    text: "${text}"
-                }
-            }));
-            break;
-        }
-    }
-}
-
-scrollToText();
-`
-
 export const scrollToProgress = (progress: number) => `
 var scrollHeight = document.body.scrollHeight;
 var scrollPosition = scrollHeight * ${progress} / 100;

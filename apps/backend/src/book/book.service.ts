@@ -38,15 +38,17 @@ export class BookService {
 		const book = await this.prisma.book.findUnique({
 			where: { id },
 			select: {
+				title: true,
 				chapters: true,
 				file: true
 			}
 		})
 		if (!book)
 			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+		const bookFile = await fetch(getFileUrl(book.file))
 		return {
-			chapters: book.chapters,
-			file: book.file
+			...book,
+			file: await bookFile.text()
 		}
 	}
 

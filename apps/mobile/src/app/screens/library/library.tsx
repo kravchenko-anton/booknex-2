@@ -8,26 +8,39 @@ const Library = () => {
 	const { data: library } = useQuery(['user-library'], () =>
 		userServices.library()
 	)
-	//TODO: Сделать тут карусели по типу headWay
 	if (!library) return <Loader />
 	return (
 		<ScrollLayout className='p-2'>
 			<Title size={26} weight='bold'>
 				Library
 			</Title>
+
 			<Flatlist
-				mt={25}
+				mt={5}
 				horizontal
-				className='mb-5'
 				title={{
 					text: 'Reading now'
 				}}
 				data={library.readingBooks}
 				renderItem={({ item }) => (
 					<BookCard
+						size='md'
+						image={{ uri: item.picture }}
+						author={item.author.name}
+					/>
+				)}
+			/>
+			<Flatlist
+				horizontal
+				title={{
+					text: 'Want to read'
+				}}
+				data={library.savedBooks}
+				renderItem={({ item }) => (
+					<BookCard
 						size='sm'
 						image={{ uri: item.picture }}
-						title={item.title}
+						author={item.author.name}
 					/>
 				)}
 			/>
@@ -42,7 +55,7 @@ const Library = () => {
 					<BookCard
 						size='sm'
 						image={{ uri: item.picture }}
-						title={item.title}
+						author={item.author.name}
 					/>
 				)}
 			/>

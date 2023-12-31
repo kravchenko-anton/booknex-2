@@ -27,11 +27,13 @@ export interface UserLibraryOutput {
 			}
 		}
 	}>['finishedBooks']
-}
-
-export interface UserUpdatePayload {
-	email: string
-	name: string
+	[UserLibraryFieldsEnum.savedBooks]: Prisma.UserGetPayload<{
+		select: {
+			savedBooks: {
+				select: typeof returnBookObjectWithAuthor
+			}
+		}
+	}>['savedBooks']
 }
 
 export interface UserUpdatePasswordPayload {

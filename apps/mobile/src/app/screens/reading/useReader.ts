@@ -1,13 +1,14 @@
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { handleDoublePress } from '@/screens/reading/reader/additional-function'
-import type { WebviewMessage } from '@/screens/reading/reader/types'
+import { handleDoublePress } from '@/screens/reading/additional-function'
+import type { WebviewMessage } from '@/screens/reading/types'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
-export const useReader = (id: number) => {
+export const useReader = (title: string) => {
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
 		state => state.readingSettings
 	)
+	const { progress } = useTypedSelector(state => state.reader)
 	const { toggleReadingUi, updateReadingProgress, setProgress } = useAction()
 	const styleTag = `body {
 		background: ${colorScheme.colorPalette.background.normal} !important;
@@ -65,7 +66,7 @@ export const useReader = (id: number) => {
 		color: ${colorScheme.colorPalette.primary} !important;
 	}
 	'::selection' {
-		background: ${colorScheme.colorPalette.primary} !important;
+		background: ${colorScheme.colorPalette.background.darker} !important;
 		color: ${colorScheme.colorPalette.text} !important;
 	}
 	ul {
@@ -91,9 +92,10 @@ export const useReader = (id: number) => {
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessage
 		const { type, payload } = parsedEvent
 		if (type === 'scroll') {
+			if (progress === payload.progress) return
 			setProgress(payload.progress)
 			updateReadingProgress({
-				id,
+				title,
 				progress: payload.progress,
 				location: payload.scrollTop
 			})

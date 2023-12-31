@@ -22,7 +22,7 @@ export const useBook = () => {
 
 	const navigate = {
 		reading: () => {
-			navigateFunction('Reading', { id: params.id, epub: book?.file || '' })
+			navigateFunction('Reader', { id: params.id })
 		},
 		genre: (id: number) => {
 			navigateFunction('Genre', { id })

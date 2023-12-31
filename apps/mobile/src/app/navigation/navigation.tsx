@@ -43,7 +43,7 @@ const Navigation: FC = () => {
 			>
 				<PrivateNavigator />
 			</NavigationContainer>
-			{user && !(currentRoute === 'Reading') && (
+			{user && !(currentRoute === 'Reader') && (
 				<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
 			)}
 		</SafeAreaProvider>

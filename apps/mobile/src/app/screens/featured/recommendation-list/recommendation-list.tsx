@@ -19,6 +19,7 @@ const RecommendationList: FC<RecommendationProperties> = ({
 			<Flatlist
 				data={data as never}
 				horizontal
+				mt={0}
 				className='mb-0 px-4'
 				{...properties}
 			/>

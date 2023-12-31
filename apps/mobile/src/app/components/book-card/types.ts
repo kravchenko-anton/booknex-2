@@ -4,10 +4,9 @@ import type { SizeProperties } from '@/types/global'
 export interface BookCardProperties
 	extends PressableDefaultProperties,
 		SizeProperties {
+	title?: string
 	author?: string
 	image: {
 		uri: string
 	}
-	pages?: number
-	title?: string
 }

@@ -24,12 +24,14 @@ const Featured = () => {
 						image={{
 							uri: book.picture
 						}}
-						className='mr-4'
 					/>
 				)}
 			/>
 			<Flatlist
 				horizontal
+				title={{
+					text: 'Your favorite genres'
+				}}
 				data={featured.relatedGenres}
 				renderItem={({ item: genre }) => (
 					<Button
@@ -45,7 +47,7 @@ const Featured = () => {
 			/>
 
 			{
-				// TODO: сделать колекцию
+				// TODO: сделать колекцию, обновление своих рекомендаций, жанры относительно фаворитных жанров
 			}
 		</ScrollLayout>
 	)

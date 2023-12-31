@@ -34,7 +34,7 @@ const Genre = () => {
 						image={{
 							uri: book.picture
 						}}
-						onPress={() => navigate.Book(book.id)}
+						onPress={() => navigate.book(book.id)}
 					/>
 				)}
 			/>
@@ -52,7 +52,7 @@ const Genre = () => {
 							uri: book.picture
 						}}
 						description={book.description}
-						onPress={() => navigate.Book(book.id)}
+						onPress={() => navigate.book(book.id)}
 						backgroundColor={book.color}
 					/>
 				)}
@@ -66,7 +66,7 @@ const Genre = () => {
 				renderItem={({ item: author }) => (
 					<PressableContainer
 						className='w-[120px]'
-						onPress={() => navigate.Author(author.id)}
+						onPress={() => navigate.author(author.id)}
 					>
 						<Image url={author.picture} width={120} height={120} />
 						<Title size={16} center weight='bold'>
@@ -86,7 +86,7 @@ const Genre = () => {
 					data={simular.majorBooks}
 					renderItem={({ item: book }) => (
 						<BookCard
-							onPress={() => navigate.Book(book.id)}
+							onPress={() => navigate.book(book.id)}
 							size='md'
 							image={{
 								uri: book.picture

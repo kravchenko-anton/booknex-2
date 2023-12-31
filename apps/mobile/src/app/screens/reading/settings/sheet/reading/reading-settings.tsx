@@ -7,7 +7,7 @@ import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
 import { ChevronRight } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { Icon, Title } from 'ui/components'
+import { Title } from 'ui/components'
 
 const ReadingSettings: FC = () => {
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
@@ -16,7 +16,7 @@ const ReadingSettings: FC = () => {
 		<View className='px-6'>
 			<View className='mt-4 flex-row items-center justify-between'>
 				{[
-					...themePack.slice(0, 3).map(theme => {
+					...themePack.slice(1, 3).map(theme => {
 						return (
 							<PressableContainer
 								key={`${theme.slug}-${theme.title}`}
@@ -28,7 +28,7 @@ const ReadingSettings: FC = () => {
 											: theme.colorPalette.background.lighter
 								}}
 								onPress={() => changeTheme(theme.slug)}
-								className='rounded-md border-2 p-2 px-4'
+								className='xler-2 mx-1 rounded-xl p-2 px-6'
 							>
 								<Title
 									weight='semiBold'
@@ -48,7 +48,7 @@ const ReadingSettings: FC = () => {
 						onPress={() =>
 							openBottomSheet(BottomSheetListEnum.readerSelectTheme)
 						}
-						className='flex-row items-center rounded-md p-2 px-4'
+						className='flex-row items-center justify-center rounded-xl p-2 px-4'
 					>
 						<Title
 							color={colorScheme.colorPalette.text}
@@ -57,39 +57,16 @@ const ReadingSettings: FC = () => {
 						>
 							Other
 						</Title>
-						<Icon
-							noPadding
-							icon={ChevronRight}
-							size='md'
-							className='ml-2 h-6 w-3.5'
+						<ChevronRight
+							width={25}
+							height={25}
+							color={colorScheme.colorPalette.text}
+							className='ml-2 mt-1'
 						/>
 					</PressableContainer>
 				]}
 			</View>
 			<FontSettings />
-			{/* <View className='mt-4 flex-row items-center justify-center'>*/}
-			{/*	<Title weight={'bold'} color={colorScheme.colorPalette.text}>*/}
-			{/*		Scrolling*/}
-			{/*	</Title>*/}
-
-			{/*	<Switch*/}
-			{/*		className='m-0 ml-3 mt-1.5 p-0'*/}
-			{/*		trackColor={{*/}
-			{/*			false: colorScheme.colorPalette.text,*/}
-			{/*			true: shadeRGBColor(colorScheme.colorPalette.primary, -10)*/}
-			{/*		}}*/}
-			{/*		thumbColor={*/}
-			{/*			flow === 'paginated'*/}
-			{/*				? colorScheme.colorPalette.text*/}
-			{/*				: colorScheme.colorPalette.primary*/}
-			{/*		}*/}
-			{/*		onValueChange={() => {*/}
-			{/*			console.log(flow)*/}
-			{/*			changeFlow(flow === 'paginated' ? 'scrolled' : 'paginated')*/}
-			{/*		}}*/}
-			{/*		value={flow !== 'paginated'}*/}
-			{/*	/>*/}
-			{/* </View>*/}
 		</View>
 	)
 }

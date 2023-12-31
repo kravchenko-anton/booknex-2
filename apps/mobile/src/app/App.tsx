@@ -1,4 +1,5 @@
 import Alert from '@/components/alert/alert'
+import BottomSheet from '@/components/bottom-sheet/bottom-sheet'
 import Toast from '@/components/toast'
 import { ClickOutsideProvider } from '@/hooks/outside-press/Provider'
 import Navigation from '@/navigation/navigation'
@@ -50,6 +51,7 @@ export default function App() {
 					<ClickOutsideProvider>
 						<GestureHandlerRootView style={flexStyle}>
 							<Navigation />
+							<BottomSheet />
 						</GestureHandlerRootView>
 					</ClickOutsideProvider>
 					<Toast />
