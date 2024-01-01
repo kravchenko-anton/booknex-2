@@ -17,7 +17,7 @@ import { CatalogService } from './catalog.service'
 export class CatalogController {
 	constructor(private readonly catalogService: CatalogService) {}
 
-	@Get('/explore/:query')
+	@Get('/search/:query')
 	async search(@Param('query') query: string): Promise<SearchOutput> {
 		return this.catalogService.search(query)
 	}

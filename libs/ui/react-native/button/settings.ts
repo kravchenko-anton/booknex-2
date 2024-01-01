@@ -29,7 +29,7 @@ export const settings: {
 		lg: 24
 	},
 	padding: {
-		sm: 'py-2 px-4',
+		sm: 'py-1.5 px-3',
 		md: 'py-3 px-5',
 		lg: 'py-4 px-6'
 	}

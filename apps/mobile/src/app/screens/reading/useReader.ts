@@ -4,7 +4,7 @@ import { handleDoublePress } from '@/screens/reading/additional-function'
 import type { WebviewMessage } from '@/screens/reading/types'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
-export const useReader = (title: string) => {
+export const useReader = () => {
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
 		state => state.readingSettings
 	)
@@ -31,64 +31,61 @@ export const useReader = (title: string) => {
 	}
 	a {
 		color: ${colorScheme.colorPalette.secondary} !important;
-		'font-weight': "bold !important";
-		textDecoration: "none !important";
-		'font-style': "italic !important";
 	}
 	h1 {
 		font-size: ${fontSize * 1.6}px !important;
-		'font-weight': "bold !important";
+		font-weight: bold !important;
 		color: ${colorScheme.colorPalette.primary} !important;
 	}
 	h2 {
-		'font-weight': "bold !important";
+		font-weight: bold !important;
 		color: ${colorScheme.colorPalette.primary} !important;
 		font-size: ${fontSize * 1.5}px !important;
 	}
 	h3 {
-		'font-weight': "bold !important";
+		font-weight: bold !important;
 		color: ${colorScheme.colorPalette.primary} !important;
 		font-size: ${fontSize * 1.4}px !important;
 	}
 	h4 {
-		'font-weight': "bold !important";
+		font-weight: bold !important;
 		color: ${colorScheme.colorPalette.primary} !important;
 		font-size: ${fontSize * 1.3}px !important;
 	}
 	h5 {
-		'font-weight': "bold !important";
+		font-weight: bold !important;
 		font-size: ${fontSize * 1.2}px !important;
 		color: ${colorScheme.colorPalette.primary} !important;
 	}
 	h6 {
 		font-size: ${fontSize * 1.1}px !important;
-		'font-weight': "bold !important";
+		font-weight: bold !important;
 		color: ${colorScheme.colorPalette.primary} !important;
 	}
-	'::selection' {
+	::selection {
 		background: ${colorScheme.colorPalette.background.darker} !important;
 		color: ${colorScheme.colorPalette.text} !important;
 	}
 	ul {
 		color: ${colorScheme.colorPalette.text} !important;
-		'list-style-type': "none";
+		list-style-type: none;
 	}
 	ol {
 		color: ${colorScheme.colorPalette.text} !important;
-		'list-style-type': "none";
+		list-style-type: none;
 	}
 	strong {
-		'font-weight': "bold !important" !important;
+		font-weight: bold !important !important;
 	}
 	em {
-		'font-style': "italic !important";
+		font-style: italic !important;
 	}
 	b {
-		'font-weight': "bold !important";
+		font-weight: bold !important;
 		color: ${colorScheme.colorPalette.primary} !important;
 	}`
 	const doubleTap = () => handleDoublePress(() => toggleReadingUi())
-	const onMessage = (event: WebViewMessageEvent) => {
+	const onMessage = (event: WebViewMessageEvent, title: string) => {
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessage
 		const { type, payload } = parsedEvent
 		if (type === 'scroll') {

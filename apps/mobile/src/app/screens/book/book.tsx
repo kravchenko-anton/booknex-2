@@ -1,8 +1,8 @@
-import { BookCard } from '@/components'
+import { BookCard, ScrollLayout } from '@/components'
+import { useTypedNavigation } from '@/hooks'
 import { useBook } from '@/screens/book/useBook'
-import { Alert, Pen, Plus, Share as ShareIcon, Text } from 'icons'
+import { Alert, Pen, Share as ShareIcon, Text } from 'icons'
 import { Share, StatusBar, View } from 'react-native'
-import Animated from 'react-native-reanimated'
 import { Color } from 'ui/colors'
 import {
 	Button,
@@ -16,24 +16,15 @@ import * as DropDown from '../../components/dropdown/dropdown'
 import * as Header from '../../components/header/header'
 
 const Book = () => {
-	const { book, navigate } = useBook()
+	const { book } = useBook()
+	const { navigate } = useTypedNavigation()
 	if (!book) return <Loader />
 	return (
-		<Animated.ScrollView
-			overScrollMode='never'
-			showsVerticalScrollIndicator={false}
-		>
+		<ScrollLayout statusBarBackgroundColor={Color.shade}>
 			<StatusBar barStyle='light-content' backgroundColor={Color.shade} />
 			<View className='bg-shade z-50 items-center justify-between overflow-hidden rounded-b-3xl px-4 pb-6 pt-2'>
 				<Header.Head>
 					<Header.DropDown>
-						<DropDown.Element
-							title='Add'
-							icon={Plus}
-							onPress={() => {
-								navigate.reading()
-							}}
-						/>
 						<DropDown.Element
 							title='Share'
 							icon={ShareIcon}
@@ -72,8 +63,8 @@ const Book = () => {
 						numberOfLines={1}
 						color={Color.gray}
 						weight='regular'
-						size={14}
-						onPress={() => navigate.author(book.author.id)}
+						size={16}
+						onPress={() => navigate('Author', { id: book.author.id })}
 						className='mt-1'
 					>
 						{book.author.name}
@@ -83,7 +74,7 @@ const Book = () => {
 					icon={Text}
 					className='rounded-xl'
 					onPress={() => {
-						navigate.reading()
+						navigate('Reader', { id: book.id })
 					}}
 					text='Read'
 					variant='primary'
@@ -101,7 +92,7 @@ const Book = () => {
 				renderItem={({ item: genre }) => (
 					<Button
 						onPress={() => {
-							navigate.genre(genre.id)
+							navigate('Genre', { id: genre.id })
 						}}
 						variant='shade'
 						size='sm'
@@ -124,13 +115,13 @@ const Book = () => {
 					<BookCard
 						size='md'
 						onPress={() => {
-							navigate.similar(similarBook.id)
+							navigate('Book', { id: similarBook.id })
 						}}
 						image={{ uri: similarBook.picture }}
 					/>
 				)}
 			/>
-		</Animated.ScrollView>
+		</ScrollLayout>
 	)
 }
 

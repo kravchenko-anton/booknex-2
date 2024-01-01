@@ -28,14 +28,12 @@ interface SelectProperties extends ViewDefaultProperties {
 const Select: FC<SelectProperties> = ({ ...properties }) => {
 	const [active, setActive] = useState(false)
 	const reference = useClickOutside(() => setActive(false))
-
 	const popupAnimation = useAnimatedStyle(() => {
 		return {
 			opacity: withTiming(active ? 1 : 0),
 			display: active ? 'flex' : 'none'
 		}
 	})
-
 	return (
 		<>
 			<PressableContainer
@@ -56,14 +54,13 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 					className='ml-2 mt-1 h-6 w-6'
 				/>
 			</PressableContainer>
+			{/* //TODO: сделать чтобы тут авторматом настраивалась высота и чтобы елемент не выходит вниз за предел екрана */}
 			<AnimatedPressable
 				ref={reference}
 				style={[
 					popupAnimation,
 					{
 						position: 'absolute',
-						top: 50,
-						left: 0,
 						zIndex: 10_000,
 						backgroundColor: properties.backgroundColor || 'transparent'
 					}

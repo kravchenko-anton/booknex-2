@@ -6,15 +6,22 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Color } from 'ui/colors'
 import { ScrollView } from 'ui/components'
 
-const ScrollLayout: FC<PropsWithChildren<ScrollViewDefaultProperties>> = ({
+const ScrollLayout: FC<
+	PropsWithChildren<
+		ScrollViewDefaultProperties & {
+			statusBarBackgroundColor?: string
+		}
+	>
+> = ({
 	children,
+	statusBarBackgroundColor = Color.background,
 	...properties
 }) => (
 	<SafeAreaView edges={['right', 'top', 'left']} className='flex-1'>
 		<ScrollView className='flex-1' {...properties}>
 			{children}
 		</ScrollView>
-		<StatusBar backgroundColor={Color.background} />
+		<StatusBar backgroundColor={statusBarBackgroundColor} />
 	</SafeAreaView>
 )
 

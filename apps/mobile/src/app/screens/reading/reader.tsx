@@ -28,11 +28,11 @@ export function Reader() {
 		bookService.ebookById(params.id)
 	)
 	const { books } = useTypedSelector(state => state.readingSettings)
-	const { styleTag, colorScheme, doubleTap, onMessage } = useReader(ebook.title)
+	const { styleTag, colorScheme, doubleTap, onMessage } = useReader()
 	useEffect(() => {
-		if (!WebViewReference.current) return
+		if (!WebViewReference.current || !styleTag) return
 		WebViewReference.current.injectJavaScript(insertStyle(styleTag))
-	}, [styleTag])
+	}, [styleTag, ebook, WebViewReference])
 	if (!ebook || !styleTag) return <Loader />
 	return (
 		<SafeAreaView className='flex-1'>
@@ -66,7 +66,7 @@ export function Reader() {
 										.location || 0
 								)
 							)}
-							onMessage={onMessage}
+							onMessage={event => onMessage(event, ebook.title)}
 							allowUniversalAccessFromFileURLs
 							allowFileAccessFromFileURLs
 							allowFileAccess

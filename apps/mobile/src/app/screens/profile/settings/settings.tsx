@@ -1,4 +1,4 @@
-import { HeaderScrollLayout } from '@/components'
+import { ScrollLayout } from '@/components'
 import * as Header from '@/components/header/header'
 import { useAction, useTypedNavigation } from '@/hooks'
 import { Bug, EyeOff, Logout, MessageCircleQuestion } from 'icons'
@@ -10,7 +10,7 @@ const Settings = () => {
 	const { showAlert } = useAction()
 	const { logout } = useAction()
 	return (
-		<HeaderScrollLayout title='Settings' transientValue={80} className='px-2'>
+		<ScrollLayout className='px-2'>
 			<Header.Head>
 				<Header.Text text='Settings' />
 			</Header.Head>
@@ -57,7 +57,7 @@ const Settings = () => {
 					}
 				/>
 			</List.Category>
-		</HeaderScrollLayout>
+		</ScrollLayout>
 	)
 }
 export default Settings

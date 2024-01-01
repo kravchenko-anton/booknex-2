@@ -1,33 +1,14 @@
-import { AnimatedHeader } from '@/components/layout/header-scroll-layout/animated-header/animated-header'
-import type { HeaderScrollLayoutProperties } from '@/components/layout/header-scroll-layout/types'
 import ScrollLayout from '@/components/layout/scroll-layout'
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'
-import { useSharedValue } from 'react-native-reanimated'
-//TODO: сделать нормальный layout для всех страниц
-const HeaderScrollLayout: FC<
-	PropsWithChildren<HeaderScrollLayoutProperties>
-> = ({ title, transientValue, children, ...properties }) => {
-	const scrollPosition = useSharedValue(0)
-	return (
-		<>
-			<AnimatedHeader
-				title={title}
-				transientValue={transientValue}
-				scrollPosition={scrollPosition}
-			/>
-			<ScrollLayout
-				onLayout={() => {
-					scrollPosition.value = 0
-				}}
-				onScroll={event => {
-					scrollPosition.value = event.nativeEvent.contentOffset.y
-				}}
-			>
-				<View {...properties}>{children}</View>
-			</ScrollLayout>
-		</>
-	)
-}
+import { Title } from 'ui/components'
+//TODO: сделать нормальный переиспользуемый layout для всех страниц вместе с хедером
 
-export default HeaderScrollLayout
+export const HeaderScrollLayout: FC<PropsWithChildren> = ({ children }) => (
+	<>
+		<View className='absolute top-0 w-full px-6'>
+			<Title size={32}>Header</Title>
+		</View>
+		<ScrollLayout className='mt-14 h-[10000px]'>{children}</ScrollLayout>
+	</>
+)

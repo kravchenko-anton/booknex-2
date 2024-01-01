@@ -12,6 +12,7 @@ import Library from '@/screens/library/library'
 import Settings from '@/screens/profile/settings/settings'
 import updateProfile from '@/screens/profile/update-profile/update-profile'
 import { Reader } from '@/screens/reading/reader'
+import SearchCatalog from '@/screens/search/search-catalog'
 import Book from '../screens/book/book'
 import Profile from '../screens/profile/profile'
 import type { IRoute } from './types'
@@ -20,6 +21,10 @@ export const routes: IRoute[] = [
 	{
 		name: 'Featured',
 		component: Featured
+	},
+	{
+		name: 'Search',
+		component: SearchCatalog
 	},
 	{
 		name: 'Library',

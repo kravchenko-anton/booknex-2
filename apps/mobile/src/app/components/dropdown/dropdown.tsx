@@ -26,6 +26,7 @@ export const Menu: FC<PropsWithChildren<HamburgerMenuProperties>> = ({
 	const reference = useClickOutside(() => (isOpen.value = false))
 	const { animatedStyle, pressFunctions } = usePressAnimation()
 	const animation = useDropDownAnimation(isOpen, position)
+
 	return (
 		<View className='relative'>
 			<AnimatedPressable

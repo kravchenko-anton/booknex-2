@@ -1,8 +1,8 @@
 import {
 	BookCard,
-	HeaderScrollLayout,
 	PressableContainer,
-	RainbowBookCard
+	RainbowBookCard,
+	ScrollLayout
 } from '@/components'
 import { useGenre } from '@/screens/genre/useGenre'
 import { removeEmoji } from '@/utils/remove-emoji'
@@ -16,7 +16,7 @@ const Genre = () => {
 	if (!genre) return <Loader />
 	// TODO: возможно вынести всё flatlist в отдельный компонент
 	return (
-		<HeaderScrollLayout transientValue={80} title={genre.name}>
+		<ScrollLayout>
 			<Header.Head>
 				<Header.Text text={genre.name} />
 			</Header.Head>
@@ -95,7 +95,7 @@ const Genre = () => {
 					)}
 				/>
 			))}
-		</HeaderScrollLayout>
+		</ScrollLayout>
 	)
 }
 
