@@ -17,6 +17,7 @@ export type FlatlistDefaultProperties<T> = Pick<
 	| 'horizontal'
 	| 'onScroll'
 	| 'onLayout'
+	| 'columnWrapperStyle'
 	| 'onScrollBeginDrag'
 	| 'onScrollEndDrag'
 	| 'onEndReachedThreshold'

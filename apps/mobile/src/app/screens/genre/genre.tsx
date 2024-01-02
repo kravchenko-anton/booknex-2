@@ -18,7 +18,7 @@ const Genre = () => {
 	return (
 		<ScrollLayout>
 			<Header.Head>
-				<Header.Text text={genre.name} />
+				<Header.Title text={genre.name} />
 			</Header.Head>
 			<StatusBar barStyle='light-content' backgroundColor={Color.background} />
 			<Flatlist

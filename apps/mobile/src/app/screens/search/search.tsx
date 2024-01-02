@@ -6,10 +6,9 @@ import { useSearch } from '@/screens/search/useSearch'
 import { Close } from 'icons'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
 import { twMerge } from 'tailwind-merge'
 import { Color } from 'ui/colors'
-import { Button, Image, Loader, Title } from 'ui/components'
+import { Button, Flatlist, Image, Loader, Title } from 'ui/components'
 import { fontSettings } from '../../../../../../libs/ui/react-native/title/settings'
 
 const Search = () => {
@@ -64,8 +63,9 @@ const Search = () => {
 					{booksLoading ? (
 						<Loader />
 					) : (
-						<FlatList
-							className='w-full px-2 pb-4 pt-2'
+						<Flatlist
+							mt={10}
+							className='w-full px-2'
 							numColumns={2}
 							columnWrapperStyle={{
 								justifyContent: 'space-between'
@@ -83,7 +83,10 @@ const Search = () => {
 										height={settings.height.md}
 										url={book.picture}
 									/>
-									<Title color={Color.gray} weight='semiBold'>
+									<Title color={Color.gray} weight='medium'>
+										{book.title}
+									</Title>
+									<Title color={Color.vibrant} size={16} weight='semiBold'>
 										{book.author.name}
 									</Title>
 								</PressableContainer>

@@ -15,7 +15,7 @@ const SelectGenres: FC = () => {
 	const { navigate } = useTypedNavigation()
 	if (!genres) return <Loader />
 	return (
-		<View className='h-full'>
+		<View className='h-full p-2'>
 			<Header.Head />
 			<View>
 				<Title size={34} weight='bold' className='mb-2' numberOfLines={2}>
@@ -39,7 +39,7 @@ const SelectGenres: FC = () => {
 						variant={
 							selectGenres.includes(genre.name) ? 'primary' : 'foreground'
 						}
-						className='mr-3'
+						className='mb-2 mr-3'
 					/>
 				))}
 			</View>

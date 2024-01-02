@@ -6,45 +6,36 @@ import { Color } from 'ui/colors'
 import { Button, Title } from 'ui/components'
 
 const Welcome: FC = () => {
+	//TODO: сделать нормальный welcome скрин а не такую простую залупу
 	const { navigate } = useTypedNavigation()
 	return (
-		<Layout className='relative justify-center p-4'>
+		<Layout className=' justify-between p-4'>
 			<View>
-				<View className='w-full items-center rounded-md bg-white p-4'>
-					<Title
-						size={36}
-						color={Color.secondary}
-						className='mb-2'
-						weight='bold'
-					>
-						Booknex
-					</Title>
-					<Title
-						size={16}
-						color={Color.gray}
-						numberOfLines={10}
-						className='w-full  text-center'
-						weight='light'
-					>
-						Booknex is your go-to app for reading and discovering books. With a
-						user-friendly interface, it offers an extensive library and
-						personalized book recommendations. Whether you're a seasoned reader
-						or just looking for your next great read, Booknex simplifies the
-						book discovery process and lets you dive right into your favorite
-						stories.
-					</Title>
+				<Title size={40} className='mb-2' weight='bold'>
+					Booker
+				</Title>
+				<Title size={24} color={Color.gray} weight='regular'>
+					Find your favorite books
+				</Title>
+			</View>
 
-					<Button
-						onPress={() => {
-							navigate('CheckEmail')
-						}}
-						size='lg'
-						text='Get Started'
-						variant='primary'
-						className='mt-6'
-						width='100%'
-					/>
-				</View>
+			<View className='w-full items-center'>
+				<Button
+					size='md'
+					text='Sign up'
+					variant='secondary'
+					width='100%'
+					onPress={() => navigate('SelectGenres')}
+				/>
+
+				<Button
+					onPress={() => navigate('Login')}
+					size='md'
+					className='mt-2'
+					text='Sign in'
+					variant='foreground'
+					width='100%'
+				/>
 			</View>
 		</Layout>
 	)

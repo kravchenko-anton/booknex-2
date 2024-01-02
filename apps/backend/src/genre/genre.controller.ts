@@ -7,7 +7,6 @@ import type {
 import { Auth } from '../decorator/auth.decorator'
 import { GenreService } from './genre.service'
 
-@Auth()
 @ApiTags('genre')
 @ApiBearerAuth()
 @Controller('genre')
@@ -19,6 +18,7 @@ export class GenreController {
 		return this.genreService.all()
 	}
 
+	@Auth()
 	@Get('/by-id/:id')
 	async byId(@Param('id') genreId: string): Promise<GenreByIdOutput> {
 		return this.genreService.byId(+genreId)

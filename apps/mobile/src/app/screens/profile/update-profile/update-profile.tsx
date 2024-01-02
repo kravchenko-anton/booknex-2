@@ -13,7 +13,7 @@ const UpdateProfile = () => {
 	return (
 		<ScrollLayout className='p-2'>
 			<Header.Head>
-				<Header.Text text='Update Password' />
+				<Header.Title text='Update Password' />
 			</Header.Head>
 			<UpdatePassword />
 		</ScrollLayout>

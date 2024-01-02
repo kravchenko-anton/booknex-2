@@ -32,7 +32,7 @@ const Book = () => {
 								Share.share({
 									message: `Wow! I see ${
 										book?.title || 'amazing'
-									} book on Booknex and I think you will like it too!`
+									} book on booker and I think you will like it too!`
 								})
 							}}
 						/>

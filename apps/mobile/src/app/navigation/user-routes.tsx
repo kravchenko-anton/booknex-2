@@ -1,7 +1,6 @@
 import Login from '@/screens/auth/login/login'
 import Register from '@/screens/auth/register/register'
 import SelectGenres from '@/screens/auth/register/select-genres/select-genres'
-import CheckEmail from '@/screens/auth/welcome/check-email/check-email'
 import Welcome from '@/screens/auth/welcome/welcome'
 import Author from '@/screens/author/author'
 import Collection from '@/screens/collection/collection'
@@ -12,7 +11,7 @@ import Library from '@/screens/library/library'
 import Settings from '@/screens/profile/settings/settings'
 import updateProfile from '@/screens/profile/update-profile/update-profile'
 import { Reader } from '@/screens/reading/reader'
-import SearchCatalog from '@/screens/search/search-catalog'
+import SearchCatalog from '@/screens/search/search'
 import Book from '../screens/book/book'
 import Profile from '../screens/profile/profile'
 import type { IRoute } from './types'
@@ -81,10 +80,6 @@ export const authRoutes: IRoute[] = [
 	{
 		name: 'Registration',
 		component: Register
-	},
-	{
-		name: 'CheckEmail',
-		component: CheckEmail
 	},
 	{
 		name: 'SelectGenres',

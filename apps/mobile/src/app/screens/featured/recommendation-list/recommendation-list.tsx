@@ -20,7 +20,7 @@ const RecommendationList: FC<RecommendationProperties> = ({
 				data={data as never}
 				horizontal
 				mt={0}
-				className='mb-0 px-4'
+				className='mb-0'
 				{...properties}
 			/>
 		</View>

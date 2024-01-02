@@ -26,7 +26,7 @@ const Explore = () => {
 						onPress={() => navigate('Book', { id: book.id })}
 						size='lg'
 						image={{ uri: book.picture }}
-						title={book.title}
+						author={book.author.name}
 					/>
 				)}
 			/>

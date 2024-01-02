@@ -12,7 +12,7 @@ const Settings = () => {
 	return (
 		<ScrollLayout className='px-2'>
 			<Header.Head>
-				<Header.Text text='Settings' />
+				<Header.Title text='Settings' />
 			</Header.Head>
 
 			<List.Category title='Support' className='mt-4'>

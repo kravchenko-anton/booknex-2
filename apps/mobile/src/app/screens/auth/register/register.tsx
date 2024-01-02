@@ -27,12 +27,11 @@ const Register = () => {
 			<AnimatedView>
 				<Header.Head />
 				<Title size={34} weight='bold' className='mb-2 mt-[20%]'>
-					Tell us about yourself
+					Sign up
 				</Title>
 				<Title size={18} weight='light' color={Color.gray} className='mb-4'>
 					Enter your credentials to continue
 				</Title>
-				<Field control={control} name='name' placeholder='Name' />
 				<Field
 					control={control}
 					name='email'
@@ -45,7 +44,13 @@ const Register = () => {
 					placeholder='Password'
 					secureTextEntry
 				/>
-				<Button size='lg' text='Sign up' onPress={handleSubmit(onSubmit)} />
+				<Button
+					size='md'
+					className='mt-1'
+					variant='primary'
+					text='Sign up'
+					onPress={handleSubmit(onSubmit)}
+				/>
 			</AnimatedView>
 		</Layout>
 	)

@@ -33,7 +33,7 @@ const RainbowBookCard: FC<RainbowBookCardProperties> = ({
 				{properties.title}
 			</Title>
 		</View>
-		<Title size={16} numberOfLines={3} color={Color.white} weight='regular'>
+		<Title size={16} numberOfLines={3} color={Color.gray} weight='regular'>
 			{properties.description}
 		</Title>
 	</PressableContainer>

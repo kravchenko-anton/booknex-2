@@ -53,9 +53,9 @@ export default function App() {
 							<Navigation />
 							<BottomSheet />
 						</GestureHandlerRootView>
+						<Toast />
+						<Alert />
 					</ClickOutsideProvider>
-					<Toast />
-					<Alert />
 					<StatusBar backgroundColor={Color.background} />
 				</PersistQueryClientProvider>
 			</PersistGate>

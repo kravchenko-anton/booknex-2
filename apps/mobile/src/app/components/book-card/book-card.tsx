@@ -35,7 +35,7 @@ const BookCard: FC<BookCardProperties> = ({
 			{properties.title}
 		</Title>
 
-		<Title numberOfLines={1} weight='regular' size={14} color={Color.gray}>
+		<Title numberOfLines={1} weight='regular' size={15} color={Color.gray}>
 			{properties.author}
 		</Title>
 	</AnimatedPress>

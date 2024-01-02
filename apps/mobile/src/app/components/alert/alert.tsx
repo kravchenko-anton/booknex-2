@@ -1,26 +1,23 @@
+import { AnimatedPressable } from '@/components/animated'
 import { useAction, useTypedSelector } from '@/hooks'
+import { useClickOutside } from '@/hooks/outside-press/useClickOutside'
 import type { FC } from 'react'
-import { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated'
+import { View } from 'react-native'
+import { FadeInDown, FadeOutDown } from 'react-native-reanimated'
 import { Button, Title } from 'ui/components'
-import { AnimatedPressable, AnimatedView } from '../animated'
 // TODO: возможно пофиксить анимацию (может быть баганая)
 
 const Alert: FC = () => {
 	const { alert } = useTypedSelector(state => state.alert)
 	const { closeAlert } = useAction()
+	const reference = useClickOutside(() => closeAlert())
 	if (!alert) return null
 	return (
-		<AnimatedView
-			entering={FadeIn}
-			exiting={FadeOut}
-			onTouchStart={event => {
-				event.stopPropagation()
-				closeAlert()
-			}}
-			className='absolute h-full w-full flex-1 items-center justify-center bg-[#0000004a]'
-		>
+		<View className='absolute h-full w-full flex-1 items-center justify-center'>
 			<AnimatedPressable
+				ref={reference}
 				entering={FadeInDown}
+				exiting={FadeOutDown}
 				onTouchStart={event => event.stopPropagation()}
 				className='bg-foreground z-50 w-11/12 items-center rounded-md p-4'
 			>
@@ -52,7 +49,7 @@ const Alert: FC = () => {
 					size='md'
 				/>
 			</AnimatedPressable>
-		</AnimatedView>
+		</View>
 	)
 }
 

@@ -17,18 +17,11 @@ export const Head: FC<HeaderProperties> = ({
 	const { goBack } = useTypedNavigation()
 	return (
 		<View
-			className='mt-1 w-full  flex-row items-center justify-between'
+			className='mt-1 w-full flex-row items-center justify-between'
 			style={style}
 			{...properties}
 		>
-			<AnimatedIcon
-				icon={ArrowLeft}
-				variant='foreground'
-				size='md'
-				onPress={() => {
-					goBack()
-				}}
-			/>
+			<AnimatedIcon icon={ArrowLeft} size='md' onPress={() => goBack()} />
 			{children}
 		</View>
 	)
@@ -38,12 +31,7 @@ export const Sharing: FC<{
 	message: string
 }> = ({ message }) => {
 	return (
-		<AnimatedIcon
-			icon={ShareIcon}
-			size='md'
-			variant='foreground'
-			onPress={() => share(message)}
-		/>
+		<AnimatedIcon icon={ShareIcon} size='md' onPress={() => share(message)} />
 	)
 }
 
@@ -56,7 +44,7 @@ export const Icon: FC<
 	return <AnimatedIcon size='md' {...properties} />
 }
 
-export const Text: FC<{ text: string }> = ({ text }) => {
+export const Title: FC<{ text: string }> = ({ text }) => {
 	return (
 		<TitleComponent size={24} color={Color.white} weight='bold'>
 			{text}
@@ -66,7 +54,7 @@ export const Text: FC<{ text: string }> = ({ text }) => {
 
 export const DropDown: FC<PropsWithChildren> = ({ children }) => {
 	return (
-		<Menu position='right' variant='foreground' size='md'>
+		<Menu position='right' size='md'>
 			{children}
 		</Menu>
 	)
