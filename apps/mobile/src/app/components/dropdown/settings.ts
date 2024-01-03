@@ -6,7 +6,6 @@ export const settings: {
 	size: Record<HamburgerMenuProperties['size'], number>
 } = {
 	colors: {
-		gray: 'bg-gray',
 		foreground: 'bg-foreground',
 		vibrant: 'bg-vibrant',
 		'white-outlined': 'bg-transparent border-white border-[1px]',

@@ -4,10 +4,9 @@ export const settings: {
 	colors: Record<FieldProperties<never>['variant'], string>
 } = {
 	colors: {
-		gray: 'bg-gray',
-		foreground: 'bg-foreground',
-		vibrant: 'bg-vibrant',
-		shade: 'bg-shade',
-		background: 'bg-background'
+		foreground: 'bg-foreground border-[1px] border-vibrant',
+		vibrant: 'bg-vibrant border-[1px] border-foreground',
+		shade: 'bg-shade border-[1px] border-foreground',
+		background: 'bg-background border-[1px] border-foreground'
 	}
 }

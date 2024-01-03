@@ -1,13 +1,12 @@
 import type { UnfoldOutput } from '@booknex/global/services-types/parser-types'
 import { BadRequestException, Injectable } from '@nestjs/common'
-import type { TocElement } from 'epub'
+import EPub from 'epub2'
 import { JSDOM } from 'jsdom'
 import puppeteer from 'puppeteer'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 import type { ParserDto } from './dto/parser.dto'
-import EPub from './epub-parser/epub'
 
 interface Chapter {
 	id: string
@@ -80,73 +79,71 @@ export class ParserService {
 		return new Promise(resolve => {
 			const epub = new EPub(file.buffer as unknown as string)
 			epub.on('end', function () {
-				const flow: Promise<Chapter | null>[] = epub.flow.map(
-					(chapter: TocElement) => {
-						return new Promise<Chapter | null>(resolve => {
-							try {
-								epub.getChapter(chapter.id, (error, text) => {
-									if (error) {
-										return null
-									}
+				const flow: Promise<Chapter | null>[] = epub.flow.map(chapter => {
+					return new Promise<Chapter | null>(resolve => {
+						try {
+							epub.getChapter(chapter.id, (error, text) => {
+								if (error) {
+									return null
+								}
 
-									const updatedContent = () => {
-										const dom = new JSDOM(text.toString())
-										const elements = dom.window.document.querySelectorAll('*')
-										for (const element of elements) {
-											if (
-												element.textContent === '' ||
-												element.textContent === ' ' ||
-												element.textContent === '\n'
-											) {
-												element.remove()
-											}
-											const attributes = element.getAttributeNames()
-											for (const attribute of attributes) {
-												element.removeAttribute(attribute)
-											}
-											if (element.tagName === 'table') {
-												element.remove()
-											}
-											if (element.tagName === 'image') {
-												element.remove()
-											}
-											if (element.tagName === 'img') {
-												element.remove()
-											}
-											if (element.tagName === 'svg') {
-												element.remove()
-											}
-											if (element.tagName === 'a') {
-												const span = dom.window.document.createElement('span')
-												span.textContent = element.textContent
-												element.replaceWith(span)
-											}
+								const updatedContent = () => {
+									const dom = new JSDOM(text.toString())
+									const elements = dom.window.document.querySelectorAll('*')
+									for (const element of elements) {
+										if (
+											element.textContent === '' ||
+											element.textContent === ' ' ||
+											element.textContent === '\n'
+										) {
+											element.remove()
 										}
-
-										return dom.serialize()
+										const attributes = element.getAttributeNames()
+										for (const attribute of attributes) {
+											element.removeAttribute(attribute)
+										}
+										if (element.tagName === 'table') {
+											element.remove()
+										}
+										if (element.tagName === 'image') {
+											element.remove()
+										}
+										if (element.tagName === 'img') {
+											element.remove()
+										}
+										if (element.tagName === 'svg') {
+											element.remove()
+										}
+										if (element.tagName === 'a') {
+											const span = dom.window.document.createElement('span')
+											span.textContent = element.textContent
+											element.replaceWith(span)
+										}
 									}
 
-									const finalContent = updatedContent()
+									return dom.serialize()
+								}
 
-									resolve({
-										id: chapter.id,
-										title: chapter.title,
-										content: finalContent
-											.replaceAll(
-												/<(\/)?(body|div|html|img|image|svg|head).*?>/g,
-												''
-											)
-											.trim()
-											.replaceAll(/\n{2,}/g, '\n')
-									})
+								const finalContent = updatedContent()
+
+								resolve({
+									id: chapter.id,
+									title: chapter.title,
+									content: finalContent
+										.replaceAll(
+											/<(\/)?(body|div|html|img|image|svg|head).*?>/g,
+											''
+										)
+										.trim()
+										.replaceAll(/\n{2,}/g, '\n')
 								})
-							} catch (error) {
-								console.log(error)
-								new BadRequestException(ErrorsEnum.INVALID_FILE + ' chapter')
-							}
-						})
-					}
-				)
+							})
+						} catch (error) {
+							console.log(error)
+							new BadRequestException(ErrorsEnum.INVALID_FILE + ' chapter')
+						}
+					})
+				})
 				Promise.all(flow)
 					.then((chapters: (Chapter | null)[]) => {
 						const validChapters = chapters.filter(

@@ -32,5 +32,5 @@ export const useCheckAuth = (routeName?: string) => {
 		}
 
 		checkRefreshToken()
-	}, [routeName])
+	}, [routeName, user])
 }

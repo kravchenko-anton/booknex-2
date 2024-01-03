@@ -6,7 +6,6 @@ export const settings: {
 	iconSize: Record<ButtonProperties['size'], number>
 } = {
 	colors: {
-		gray: 'bg-gray text-white hover:bg-vibrant',
 		foreground: 'bg-foreground text-white hover:bg-vibrant',
 		vibrant: 'bg-vibrant text-white hover:bg-foreground',
 		shade: 'bg-shade text-white hover:bg-foreground',

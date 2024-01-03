@@ -1,25 +1,27 @@
 import { Layout } from '@/components'
 import { useTypedNavigation } from '@/hooks'
+import { Welcome as WelcomeIllustration } from 'global/illustrations'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
 import { Button, Title } from 'ui/components'
 
 const Welcome: FC = () => {
 	//TODO: сделать нормальный welcome скрин а не такую простую залупу
 	const { navigate } = useTypedNavigation()
 	return (
-		<Layout className=' justify-between p-4'>
+		<Layout className=' justify-center p-4'>
 			<View>
-				<Title size={40} className='mb-2' weight='bold'>
-					Booker
-				</Title>
-				<Title size={24} color={Color.gray} weight='regular'>
-					Find your favorite books
+				<WelcomeIllustration
+					width={250}
+					height={250}
+					className='mx-auto w-full'
+				/>
+				<Title numberOfLines={2} center size={32} weight='bold'>
+					Welcome to Booker
 				</Title>
 			</View>
 
-			<View className='w-full items-center'>
+			<View className=' w-full items-center'>
 				<Button
 					size='md'
 					text='Sign up'

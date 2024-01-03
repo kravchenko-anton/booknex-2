@@ -3,6 +3,7 @@ import { settings } from '@/components/book-card/settings'
 import Layout from '@/components/layout/layout'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useSearch } from '@/screens/search/useSearch'
+import { NothingFound } from 'global/illustrations'
 import { Close } from 'icons'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
@@ -62,7 +63,7 @@ const Search = () => {
 				<View className='flex-1'>
 					{booksLoading ? (
 						<Loader />
-					) : (
+					) : books.length > 0 ? (
 						<Flatlist
 							mt={10}
 							className='w-full px-2'
@@ -92,6 +93,21 @@ const Search = () => {
 								</PressableContainer>
 							)}
 						/>
+					) : (
+						<View className='flex-1 items-center justify-start'>
+							<NothingFound width={250} height={220} />
+							<Title
+								center
+								weight='medium'
+								numberOfLines={2}
+								color={Color.gray}
+								size={16}
+							>
+								Nothing found, try looking
+								{'\n'}
+								for something else
+							</Title>
+						</View>
 					)}
 				</View>
 			) : null}

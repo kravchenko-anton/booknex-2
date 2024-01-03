@@ -4,7 +4,6 @@ export const settings: {
 	colors: Record<ClampPaletteType, string>
 } = {
 	colors: {
-		gray: 'bg-gray placeholder-white text-white border-2 border-transparent hover:border-vibrant focus:border-vibrant',
 		foreground:
 			'bg-foreground placeholder-white text-white border-2 border-transparent hover:border-vibrant focus:border-vibrant',
 		vibrant:

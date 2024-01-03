@@ -13,7 +13,7 @@ const Explore = () => {
 	const { navigate } = useTypedNavigation()
 	if (!explore) return <Loader />
 	return (
-		<ScrollLayout className='h-full pt-8'>
+		<ScrollLayout className='h-full'>
 			<SearchField />
 			<Flatlist
 				title={{

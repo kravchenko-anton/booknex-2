@@ -6,6 +6,7 @@
 		"react": "*",
 		"react-native": "*",
 		"react-native-svg": "*",
+		"react-native-bootsplash": "*",
 		"nativewind": "*",
 		"tailwind-merge": "*",
 		"react-native-reanimated": "*",

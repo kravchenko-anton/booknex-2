@@ -41,12 +41,7 @@ export type LineColorType = {
 	[K in keyof typeof Color]: (typeof Color)[K]
 }[keyof typeof Color]
 
-export type ClampPaletteType =
-	| 'foreground'
-	| 'background'
-	| 'vibrant'
-	| 'gray'
-	| 'shade'
+export type ClampPaletteType = 'foreground' | 'background' | 'vibrant' | 'shade'
 
 export type VividPaletteType =
 	| 'primary'

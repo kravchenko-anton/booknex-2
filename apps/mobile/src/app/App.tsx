@@ -8,12 +8,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { useState } from 'react'
 import { StatusBar, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Color } from 'ui/colors'
 import { Loader } from 'ui/components'
+import { AnimatedBootSplash } from '../AnimatedBootSplash'
 
 const flexStyle = {
 	flex: 1
@@ -33,32 +35,43 @@ const queryClient = new QueryClient({
 const asyncStoragePersister = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
+
 export default function App() {
+	const [visible, setVisible] = useState(true)
 	return (
-		<Provider store={store}>
-			<PersistGate
-				persistor={persistor}
-				loading={
-					<View className='bg-background h-screen w-screen'>
-						<Loader />
-					</View>
-				}
-			>
-				<PersistQueryClientProvider
-					client={queryClient}
-					persistOptions={{ persister: asyncStoragePersister }}
+		<>
+			<Provider store={store}>
+				<PersistGate
+					persistor={persistor}
+					loading={
+						<View className='bg-background h-screen w-screen'>
+							<Loader />
+						</View>
+					}
 				>
-					<ClickOutsideProvider>
-						<GestureHandlerRootView style={flexStyle}>
-							<Navigation />
-							<BottomSheet />
-						</GestureHandlerRootView>
-						<Toast />
-						<Alert />
-					</ClickOutsideProvider>
-					<StatusBar backgroundColor={Color.background} />
-				</PersistQueryClientProvider>
-			</PersistGate>
-		</Provider>
+					<PersistQueryClientProvider
+						client={queryClient}
+						persistOptions={{ persister: asyncStoragePersister }}
+					>
+						<ClickOutsideProvider>
+							<GestureHandlerRootView style={flexStyle}>
+								<Navigation />
+								<BottomSheet />
+							</GestureHandlerRootView>
+							<Toast />
+							<Alert />
+						</ClickOutsideProvider>
+						<StatusBar backgroundColor={Color.background} />
+					</PersistQueryClientProvider>
+				</PersistGate>
+			</Provider>
+			{visible && (
+				<AnimatedBootSplash
+					onAnimationEnd={() => {
+						setVisible(false)
+					}}
+				/>
+			)}
+		</>
 	)
 }
