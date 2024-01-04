@@ -5,7 +5,16 @@ export const errorToast = (error: unknown) => {
 	Toast.show({
 		type: 'error',
 		text1: errorCatch(error),
-		position: 'top',
-		autoHide: true
+		position: 'bottom',
+		bottomOffset: 80
+	})
+}
+
+export const successToast = (message: string) => {
+	Toast.show({
+		type: 'success',
+		text1: message,
+		position: 'bottom',
+		bottomOffset: 80
 	})
 }

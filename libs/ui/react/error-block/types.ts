@@ -1,43 +1,47 @@
-import type React from 'react'
+import type { ComponentType, ReactElement, ReactNode } from 'react'
 import type {
 	FieldErrors,
 	FieldName,
 	Message,
 	MultipleFieldErrors
 } from 'react-hook-form'
+import { JSX } from 'react/jsx-runtime'
+import IntrinsicElements = JSX.IntrinsicElements
 
-type Assign<T extends object, U extends object> = T & Omit<U, keyof T>
+type Assign<T extends object, UType extends object> = T & Omit<UType, keyof T>
 
-export type FieldValuesFromFieldErrors<TFieldErrors> =
-	TFieldErrors extends FieldErrors<infer TFieldValues> ? TFieldValues : never
+export type FieldValuesFromFieldErrors<TFieldErrorsType> =
+	TFieldErrorsType extends FieldErrors<infer TFieldValues>
+		? TFieldValues
+		: never
 
-type AsProperties<TAs> = TAs extends undefined
+type AsProperties<TAsType> = TAsType extends undefined
 	? NonNullable<unknown>
-	: TAs extends React.ReactElement
-	  ? Record<string, never>
-	  : TAs extends React.ComponentType<infer P>
-	    ? Omit<P, 'children'>
-	    : TAs extends keyof JSX.IntrinsicElements
-	      ? JSX.IntrinsicElements[TAs]
-	      : never
+	: TAsType extends ReactElement
+		? Record<string, never>
+		: TAsType extends ComponentType<infer P>
+			? Omit<P, 'children'>
+			: TAsType extends keyof JSX.IntrinsicElements
+				? IntrinsicElements[TAsType]
+				: never
 
 export type Properties<
-	TFieldErrors extends FieldErrors,
-	TAs extends
+	TFieldErrorsType extends FieldErrors,
+	TAsType extends
 		| undefined
-		| React.ReactElement
-		| React.ComponentType<never>
+		| ReactElement
+		| ComponentType<never>
 		| keyof JSX.IntrinsicElements
 > = Assign<
 	{
-		as?: TAs
-		errors?: TFieldErrors
-		name: FieldName<FieldValuesFromFieldErrors<TFieldErrors>>
+		as?: TAsType
+		errors?: TFieldErrorsType
+		name: FieldName<FieldValuesFromFieldErrors<TFieldErrorsType>>
 		message?: Message
 		render?: (data: {
 			message: Message
 			messages?: MultipleFieldErrors
-		}) => React.ReactNode
+		}) => ReactNode
 	},
-	AsProperties<TAs>
+	AsProperties<TAsType>
 >

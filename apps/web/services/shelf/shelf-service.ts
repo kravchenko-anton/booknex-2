@@ -1,8 +1,8 @@
+import { getShelfUrl } from '@/global/api-config'
 import type { AllShelfOutput } from '@/global/services-types/collection-types'
-import { getShelfUrl } from '../../../../libs/global/api-config'
 import type {
-	CreateShelfDto,
-	UpdateShelfDto
+	CreateCollectionDto,
+	UpdateCollectionDto
 } from '../../../backend/src/collection/dto/collection.dto'
 import { request } from '../api/request.api'
 
@@ -17,7 +17,7 @@ export const shelfService = {
 		})
 	},
 
-	async create(dto: CreateShelfDto) {
+	async create(dto: CreateCollectionDto) {
 		return request({
 			url: getShelfUrl('/create'),
 			method: 'POST',
@@ -32,7 +32,7 @@ export const shelfService = {
 		})
 	},
 
-	async update(id: number, dto: UpdateShelfDto) {
+	async update(id: number, dto: UpdateCollectionDto) {
 		return request({
 			url: getShelfUrl(`/update/${id}`),
 			method: 'PUT',

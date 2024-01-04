@@ -2,14 +2,16 @@ import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { handleDoublePress } from '@/screens/reading/additional-function'
 import type { WebviewMessage } from '@/screens/reading/types'
+import { useState } from 'react'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
 export const useReader = () => {
+	const [readerUiVisible, setReaderUiVisible] = useState(false)
+	const [progress, setProgress] = useState(0)
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
 		state => state.readingSettings
 	)
-	const { progress } = useTypedSelector(state => state.reader)
-	const { toggleReadingUi, updateReadingProgress, setProgress } = useAction()
+	const { updateReadingProgress } = useAction()
 	const styleTag = `body {
 		background: ${colorScheme.colorPalette.background.normal} !important;
 		font-family: ${font.fontFamily} !important;
@@ -84,12 +86,14 @@ export const useReader = () => {
 		font-weight: bold !important;
 		color: ${colorScheme.colorPalette.primary} !important;
 	}`
-	const doubleTap = () => handleDoublePress(() => toggleReadingUi())
+	const doubleTap = () =>
+		handleDoublePress(() => setReaderUiVisible(!readerUiVisible))
 	const onMessage = (event: WebViewMessageEvent, title: string) => {
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessage
 		const { type, payload } = parsedEvent
 		if (type === 'scroll') {
 			if (progress === payload.progress) return
+			console.log(payload.progress)
 			setProgress(payload.progress)
 			updateReadingProgress({
 				title,
@@ -102,6 +106,8 @@ export const useReader = () => {
 	return {
 		doubleTap,
 		onMessage,
+		readerUiVisible,
+		progress,
 		styleTag,
 		colorScheme
 	}

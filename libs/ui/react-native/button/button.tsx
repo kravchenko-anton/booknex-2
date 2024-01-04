@@ -20,7 +20,7 @@ const Button = ({
 		<PressableContainer
 			disabled={disabled || isLoading}
 			className={twMerge(
-				'flex-row items-center  justify-center rounded-xl',
+				'flex-row items-center justify-center rounded-xl',
 				settings.colors[variant],
 				(disabled || isLoading) && 'opacity-70',
 				settings.padding[size],

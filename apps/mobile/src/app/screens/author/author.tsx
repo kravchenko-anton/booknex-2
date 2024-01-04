@@ -62,9 +62,7 @@ const Author = () => {
 				</Description>
 
 				<Flatlist
-					title={{
-						text: 'Books'
-					}}
+					title='Books'
 					data={author.books}
 					scrollEnabled={false}
 					className='mb-2'

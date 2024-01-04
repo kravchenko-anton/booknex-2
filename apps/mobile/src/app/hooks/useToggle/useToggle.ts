@@ -1,9 +1,9 @@
 import type { UseToggleProperties } from '@/hooks/useToggle/types'
 import { useFavoritesList } from '@/hooks/useToggle/useFavoriteList'
 import { userServices } from '@/services/user/user-service'
+import { successToast } from '@/utils/toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useLayoutEffect, useState } from 'react'
-import Toast from 'react-native-toast-message'
 
 export const useToggle = (data: UseToggleProperties, invalidate?: [string]) => {
 	const QueryClient = useQueryClient()
@@ -30,11 +30,7 @@ export const useToggle = (data: UseToggleProperties, invalidate?: [string]) => {
 						queryKey: invalidate
 					})
 				}
-				Toast.show({
-					type: 'success',
-					text1: 'Success',
-					text2: message
-				})
+				successToast(message)
 			}
 		}
 	)

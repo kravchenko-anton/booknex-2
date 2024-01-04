@@ -1,8 +1,8 @@
 import type { EditPasswordTypes } from '@/screens/profile/update-profile/update-password/types'
 import { userServices } from '@/services/user/user-service'
+import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { errorCatch } from 'global/utils/catch-error'
-import Toast from 'react-native-toast-message'
 
 export const useUpdatePassword = () => {
 	const { mutateAsync } = useMutation(
@@ -10,18 +10,10 @@ export const useUpdatePassword = () => {
 		(data: EditPasswordTypes) => userServices.updatePassword(data),
 		{
 			onError(error: string) {
-				Toast.show({
-					text1: 'Update profile',
-					text2: errorCatch(error),
-					type: 'error'
-				})
+				errorToast(errorCatch(error))
 			},
 			onSuccess() {
-				Toast.show({
-					text1: 'Password update',
-					text2: 'successful',
-					type: 'success'
-				})
+				successToast('Password updated')
 			}
 		}
 	)

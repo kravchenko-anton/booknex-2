@@ -37,17 +37,15 @@ const initialState = {
 	fontSize: fontSizeSettings.min,
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
 	padding: 14 as 14 | 8 | 20,
+	//TODO: переделать на более оптимальный вариант
 	books: [] as
 		| null
 		| {
-				title: string
+				id: number
 				lastProgress: {
 					location: number
 					progress: number
 				}
-				highlights: {
-					text: string
-				}[]
 		  }[]
 }
 
@@ -59,7 +57,6 @@ const ReadingSettingsSlice = createSlice({
 			const theme = themePack.find(value => value.slug === payload)
 			if (payload === state.colorScheme.slug || !theme) return
 			state.colorScheme = theme
-			console.log('changeTheme', payload)
 		},
 		changeLineHeight: (state, { payload }: PayloadAction<1.3 | 1.5 | 1.8>) => {
 			state.lineHeight = payload
@@ -72,7 +69,6 @@ const ReadingSettingsSlice = createSlice({
 			{ payload }: PayloadAction<(typeof ReaderFont)[number]>
 		) => {
 			state.font = payload
-			console.log('changeFontFamily', payload)
 		},
 
 		changeFontSize: (state, { payload }: PayloadAction<number>) => {
@@ -80,16 +76,15 @@ const ReadingSettingsSlice = createSlice({
 			if (payload < fontSizeSettings.min || payload > fontSizeSettings.max)
 				return
 			state.fontSize = payload
-			console.log('changeFontSize', payload)
 		},
 
 		updateReadingProgress: (
 			state,
 			{
 				payload
-			}: PayloadAction<{ title: string; progress: number; location: number }>
+			}: PayloadAction<{ id: number; progress: number; location: number }>
 		) => {
-			const book = state.books?.find(value => value.title === payload.title)
+			const book = state.books.find(value => value.id === payload.id)
 			if (book) {
 				book.lastProgress = {
 					progress: payload.progress,
@@ -99,12 +94,11 @@ const ReadingSettingsSlice = createSlice({
 				state.books = [
 					...(state.books ?? []),
 					{
-						title: payload.title,
+						id: payload.id,
 						lastProgress: {
 							progress: payload.progress,
 							location: payload.location
-						},
-						highlights: []
+						}
 					}
 				]
 			}

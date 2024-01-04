@@ -1,30 +1,24 @@
-import { Clock } from 'icons'
+import { OkHandEmoji, ThumbDownEmoji } from 'icons'
 import type { FC } from 'react'
-import { Text } from 'react-native'
 import RnToast, { BaseToast } from 'react-native-toast-message'
 import { Color } from 'ui/colors'
 import { fontSettings } from '../../../../../libs/ui/react-native/title/settings'
 
-const options = (color: string) => ({
+const options = () => ({
 	style: {
-		backgroundColor: Color.shade,
+		backgroundColor: Color.foreground,
 		alignItems: 'center' as 'center',
 		borderRadius: 12,
-		borderLeftColor: color,
-		borderColor: Color.shade,
-		borderWidth: 0,
-		borderLeftWidth: 0
+		height: 45,
+		borderColor: Color.vibrant,
+		borderWidth: 1.5,
+		borderLeftWidth: 1.5,
+		shadowColor: Color.transparent
 	},
 	text1Style: {
-		color: color,
-		fontSize: 18,
-		marginLeft: -12,
-		fontFamily: fontSettings.bold
-	},
-	text2Style: {
-		fontSize: 12,
-		marginLeft: -12,
-		color: Color.gray,
+		color: Color.white,
+		fontSize: 17,
+		marginLeft: -18,
 		fontFamily: fontSettings.light
 	}
 })
@@ -37,36 +31,20 @@ const Toast: FC = () => (
 		config={{
 			success: properties => (
 				<BaseToast
-					renderTrailingIcon={() => (
-						<Clock className='items-center justify-center  pr-3 text-3xl' />
+					renderLeadingIcon={() => (
+						<OkHandEmoji className='ml-2' width={30} height={30} />
 					)}
 					{...properties}
-					{...options('#3F612D')}
-				/>
-			),
-			info: properties => (
-				<BaseToast
-					renderTrailingIcon={() => (
-						<Clock
-							color={Color.white}
-							width={30}
-							height={30}
-							className='mr-3'
-						/>
-					)}
-					{...properties}
-					{...options('#F9C74F')}
+					{...options()}
 				/>
 			),
 			error: properties => (
 				<BaseToast
-					renderTrailingIcon={() => (
-						<Text className='items-center justify-center  pr-3 text-3xl'>
-							🚨
-						</Text>
+					renderLeadingIcon={() => (
+						<ThumbDownEmoji className='ml-2' width={30} height={30} />
 					)}
 					{...properties}
-					{...options('#D7263D')}
+					{...options()}
 				/>
 			)
 		}}

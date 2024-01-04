@@ -1,55 +1,72 @@
-import { AnimatedPressable } from '@/components/animated'
-import { useAction, useTypedSelector } from '@/hooks'
-import { useClickOutside } from '@/hooks/outside-press/useClickOutside'
+import type { AlertProperties } from '@/providers/alert-provider'
 import type { FC } from 'react'
-import { View } from 'react-native'
-import { FadeInDown, FadeOutDown } from 'react-native-reanimated'
+import { Modal, View } from 'react-native'
+import { Color } from 'ui/colors'
 import { Button, Title } from 'ui/components'
-// TODO: возможно пофиксить анимацию (может быть баганая)
 
-const Alert: FC = () => {
-	const { alert } = useTypedSelector(state => state.alert)
-	const { closeAlert } = useAction()
-	const reference = useClickOutside(() => closeAlert())
+const Alert: FC<{
+	closeAlert: () => void
+	alert: AlertProperties | null
+}> = ({ closeAlert = () => null, alert = null }) => {
+	console.log('Render Alert')
 	if (!alert) return null
 	return (
-		<View className='absolute h-full w-full flex-1 items-center justify-center'>
-			<AnimatedPressable
-				ref={reference}
-				entering={FadeInDown}
-				exiting={FadeOutDown}
-				onTouchStart={event => event.stopPropagation()}
-				className='bg-foreground z-50 w-11/12 items-center rounded-md p-4'
+		<Modal
+			animationType='fade'
+			presentationStyle='overFullScreen'
+			transparent={true}
+			statusBarTranslucent={true}
+			visible={!!alert}
+			onRequestClose={closeAlert}
+		>
+			<View
+				onTouchStart={closeAlert}
+				style={{
+					backgroundColor: 'rgba(18, 18, 18, 0.65)'
+				}}
+				className='flex-1 items-center  justify-center '
 			>
-				<Title size={28} className='mb-4 mt-2' center weight='bold'>
-					{alert.title}
-				</Title>
-				<Title
-					size={16}
-					className='px-2'
-					weight='regular'
-					numberOfLines={2}
-					center
+				<View
+					onTouchStart={e => e.stopPropagation()}
+					className='bg-foreground z-50 w-10/12 items-center rounded-2xl p-4'
 				>
-					{alert.description}
-				</Title>
+					<alert.icon
+						className='mt-2'
+						width={40}
+						height={40}
+						color={Color.gray}
+					/>
+					<Title
+						size={18}
+						color={Color.gray}
+						className='mb-1 mt-2 px-2'
+						weight='semiBold'
+						numberOfLines={2}
+						center
+					>
+						{alert.description}
+					</Title>
 
-				<Button
-					text={alert.acceptText}
-					onPress={() => closeAlert() && alert.onAccept()}
-					className='mt-5 w-4/5'
-					variant={alert.type}
-					size='md'
-				/>
-				<Button
-					onPress={() => closeAlert()}
-					text='Cancel'
-					className='mt-4 w-2/3'
-					variant='foreground'
-					size='md'
-				/>
-			</AnimatedPressable>
-		</View>
+					<Button
+						text={alert.acceptText}
+						onPress={() => {
+							alert.onAccept()
+							closeAlert()
+						}}
+						className='mt-4 w-full'
+						variant={alert.type}
+						size='md'
+					/>
+					<Button
+						onPress={closeAlert}
+						text='Cancel'
+						className='mt-2 w-full'
+						variant='foreground'
+						size='md'
+					/>
+				</View>
+			</View>
+		</Modal>
 	)
 }
 

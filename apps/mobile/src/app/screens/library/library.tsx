@@ -19,9 +19,7 @@ const Library = () => {
 			<Flatlist
 				mt={5}
 				horizontal
-				title={{
-					text: 'Reading now'
-				}}
+				title='Reading now'
 				data={library.readingBooks}
 				renderItem={({ item }) => (
 					<BookCard
@@ -34,9 +32,7 @@ const Library = () => {
 			/>
 			<Flatlist
 				horizontal
-				title={{
-					text: 'Want to read'
-				}}
+				title='Want to read'
 				data={library.savedBooks}
 				renderItem={({ item }) => (
 					<BookCard
@@ -50,9 +46,7 @@ const Library = () => {
 			<Flatlist
 				mt={5}
 				horizontal
-				title={{
-					text: 'Finished'
-				}}
+				title='Finished'
 				data={library.finishedBooks}
 				renderItem={({ item }) => (
 					<BookCard

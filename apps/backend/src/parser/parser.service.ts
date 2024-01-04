@@ -152,7 +152,7 @@ export class ParserService {
 						resolve(
 							validChapters.map((chapter, index) => {
 								return {
-									id: chapter.id || index.toString(),
+									id: (index + 1).toString(),
 									title: chapter.title || '',
 									content: chapter.content || ''
 								}

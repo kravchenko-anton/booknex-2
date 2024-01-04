@@ -41,4 +41,4 @@ export const authSlice = createSlice({
 			})
 	}
 })
-export const { reducer: authReducer, actions: authAction } = authSlice
+export const { reducer: authReducer } = authSlice

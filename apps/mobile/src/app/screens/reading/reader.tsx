@@ -2,7 +2,6 @@ import { useTypedRoute } from '@/hooks'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import {
 	beforeLoad,
-	insertStyle,
 	scrollProgressDetect
 } from '@/screens/reading/additional-function'
 import ReadingUi from '@/screens/reading/settings/reading-ui'
@@ -10,7 +9,7 @@ import { useReader } from '@/screens/reading/useReader'
 import { bookService } from '@/services/book/book-service'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import {
 	View as RNView,
 	StatusBar,
@@ -28,11 +27,15 @@ export function Reader() {
 		bookService.ebookById(params.id)
 	)
 	const { books } = useTypedSelector(state => state.readingSettings)
-	const { styleTag, colorScheme, doubleTap, onMessage } = useReader()
-	useEffect(() => {
-		if (!WebViewReference.current || !styleTag) return
-		WebViewReference.current.injectJavaScript(insertStyle(styleTag))
-	}, [styleTag, ebook, WebViewReference])
+	const {
+		styleTag,
+		colorScheme,
+		doubleTap,
+		onMessage,
+		readerUiVisible,
+		progress
+	} = useReader()
+	console.log(progress)
 	if (!ebook || !styleTag) return <Loader />
 	return (
 		<SafeAreaView className='flex-1'>
@@ -48,6 +51,9 @@ export function Reader() {
 							source={{
 								html: `
 								<head>
+								<style>
+								${styleTag}
+								</style>
 								<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 								<title>
 								${ebook.title}
@@ -60,9 +66,8 @@ export function Reader() {
 							scrollEnabled={true}
 							injectedJavaScript={scrollProgressDetect()}
 							injectedJavaScriptBeforeContentLoaded={beforeLoad(
-								styleTag,
 								Math.round(
-									books?.find(book => book.title === ebook.title)?.lastProgress
+									books?.find(book => book.id === params.id)?.lastProgress
 										.location || 0
 								)
 							)}
@@ -85,7 +90,11 @@ export function Reader() {
 						/>
 					</TouchableWithoutFeedback>
 				</RNView>
-				<ReadingUi title={ebook.title} />
+				<ReadingUi
+					visible={readerUiVisible}
+					progress={progress}
+					title={ebook.title}
+				/>
 			</GestureHandlerRootView>
 		</SafeAreaView>
 	)

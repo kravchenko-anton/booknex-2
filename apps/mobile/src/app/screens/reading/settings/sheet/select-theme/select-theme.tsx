@@ -2,19 +2,21 @@ import PressableContainer from '@/components/animated-press/animated-press'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
 import { Title } from 'ui/components'
 
 const SelectTheme: FC = () => {
 	const { changeTheme } = useAction()
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	return (
-		<FlatList
+		<BottomSheetFlatList
 			showsVerticalScrollIndicator={false}
 			data={themePack}
-			className='mt-2 h-full px-4'
+			style={{
+				paddingHorizontal: 14
+			}}
 			renderItem={({ item: theme }) => {
 				return (
 					<PressableContainer

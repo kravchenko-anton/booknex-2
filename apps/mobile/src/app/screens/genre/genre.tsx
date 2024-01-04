@@ -5,7 +5,6 @@ import {
 	ScrollLayout
 } from '@/components'
 import { useGenre } from '@/screens/genre/useGenre'
-import { removeEmoji } from '@/utils/remove-emoji'
 import { StatusBar } from 'react-native'
 import { Color } from 'ui/colors'
 import { Flatlist, Image, Loader, Title } from 'ui/components'
@@ -23,9 +22,7 @@ const Genre = () => {
 			<StatusBar barStyle='light-content' backgroundColor={Color.background} />
 			<Flatlist
 				horizontal
-				title={{
-					text: 'Best Sellers'
-				}}
+				title='Best Sellers'
 				data={genre.bestSellers}
 				renderItem={({ item: book }) => (
 					<BookCard
@@ -41,9 +38,7 @@ const Genre = () => {
 
 			<Flatlist
 				horizontal
-				title={{
-					text: 'Newest Books'
-				}}
+				title='Newest Books'
 				data={genre.newestBooks}
 				renderItem={({ item: book }) => (
 					<RainbowBookCard
@@ -59,9 +54,7 @@ const Genre = () => {
 			/>
 			<Flatlist
 				horizontal
-				title={{
-					text: 'Best Authors'
-				}}
+				title='Best Authors'
 				data={genre.bestAuthors}
 				renderItem={({ item: author }) => (
 					<PressableContainer
@@ -78,9 +71,7 @@ const Genre = () => {
 			{genre.bestSellersFromSimilar.map(simular => (
 				<Flatlist
 					key={simular.name}
-					title={{
-						text: removeEmoji(simular.name)
-					}}
+					title={simular.name}
 					horizontal
 					mt={30}
 					data={simular.majorBooks}

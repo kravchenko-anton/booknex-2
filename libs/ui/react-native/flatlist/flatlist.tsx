@@ -10,6 +10,7 @@ const FlatList = <T,>({
 	elementSpacing = 12,
 	contentContainerStyle,
 	mt = 24,
+	className,
 	px = 8,
 	style,
 	...properties
@@ -18,24 +19,21 @@ const FlatList = <T,>({
 	return (
 		<>
 			<Title
-				style={[
-					{
-						marginTop: mt,
-						paddingHorizontal: properties.horizontal ? px : 0,
-						marginBottom: title?.mb ?? 12
-					},
-					title?.style ?? {}
-				]}
-				color={title?.color ?? Color.white}
-				size={22}
+				className='mb-4'
+				style={{
+					marginTop: mt,
+					paddingHorizontal: properties.horizontal ? px : 0
+				}}
+				color={Color.white}
+				size={20}
 				weight='semiBold'
 			>
-				{title?.text}
+				{title}
 			</Title>
 			<DefaultFlatlist
 				data={data}
 				ref={Ref}
-				style={title?.text ? style : [{ marginTop: mt }, style]}
+				style={title ? style : [{ marginTop: mt }, style]}
 				ItemSeparatorComponent={() => (
 					<View
 						style={
@@ -49,7 +47,7 @@ const FlatList = <T,>({
 					paddingHorizontal: properties.horizontal ? px : 0,
 					paddingBottom: 8
 				}}
-				overScrollMode="never"
+				overScrollMode='never'
 				bounces={false}
 				renderToHardwareTextureAndroid={true}
 				alwaysBounceHorizontal={false}

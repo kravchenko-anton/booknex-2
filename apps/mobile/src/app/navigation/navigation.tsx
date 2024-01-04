@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/native'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
+import BootSplash from 'react-native-bootsplash'
 import {
 	SafeAreaProvider,
 	initialWindowMetrics
@@ -29,6 +30,7 @@ const Navigation: FC = () => {
 			navReference.removeListener('state', listener)
 		}
 	}, [])
+
 	useCheckAuth()
 	return (
 		<SafeAreaProvider
@@ -38,6 +40,9 @@ const Navigation: FC = () => {
 			}}
 		>
 			<NavigationContainer
+				onReady={() => {
+					BootSplash.hide({ fade: true })
+				}}
 				ref={navReference}
 				fallback={<Loader size='screen' />}
 			>

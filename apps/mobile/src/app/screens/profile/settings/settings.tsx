@@ -1,13 +1,15 @@
 import { ScrollLayout } from '@/components'
 import * as Header from '@/components/header/header'
 import { useAction, useTypedNavigation } from '@/hooks'
+import { AlertContext } from '@/providers/alert-provider'
+import { errorToast } from '@/utils/toast'
 import { Bug, EyeOff, Logout, MessageCircleQuestion } from 'icons'
-import Toast from 'react-native-toast-message'
+import { useContext } from 'react'
 import * as List from './settings-list'
 //TODO: после обновления проложения добавить тут больше разнообразия и пофиксить консоль логи
 const Settings = () => {
 	const { navigate } = useTypedNavigation()
-	const { showAlert } = useAction()
+	const { showAlert } = useContext(AlertContext)
 	const { logout } = useAction()
 	return (
 		<ScrollLayout className='px-2'>
@@ -19,22 +21,12 @@ const Settings = () => {
 				<List.Item
 					title='Give feedback'
 					icon={MessageCircleQuestion}
-					onPress={() =>
-						Toast.show({
-							type: 'success',
-							text1: 'Now it not working, check late'
-						})
-					}
+					onPress={() => errorToast('Now it not working, check late')}
 				/>
 				<List.Item
 					title='Report a bug'
 					icon={Bug}
-					onPress={() =>
-						Toast.show({
-							type: 'success',
-							text1: 'Now it not working, check late'
-						})
-					}
+					onPress={() => errorToast('Now it not working, check late')}
 				/>
 			</List.Category>
 			<List.Category title='Account'>
@@ -48,10 +40,10 @@ const Settings = () => {
 					icon={Logout}
 					onPress={() =>
 						showAlert({
-							title: 'Are you sure?',
+							icon: Logout,
+							type: 'danger',
 							description: 'You want to logout from your account?',
 							acceptText: 'Logout',
-							type: 'warning',
 							onAccept: () => logout()
 						})
 					}

@@ -50,7 +50,7 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 				control={control}
 				name='picture'
 				size='lg'
-				defaultFiles={[defaultValues.picture?.blob]}
+				defaultFiles={[defaultValues.picture?.blob as File]}
 				variant='vibrant'
 				multiple={false}
 				accept={'image/*'}
@@ -71,6 +71,7 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 			/>
 
 			<Button
+				size='md'
 				className='mt-8'
 				onClick={onSubmit}
 				type='submit'

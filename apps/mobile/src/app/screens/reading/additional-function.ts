@@ -14,35 +14,8 @@ export const handleDoublePress = (handleAction: () => void) => {
 	}
 }
 
-export const scrollToProgress = (progress: number) => `
-var scrollHeight = document.body.scrollHeight;
-var scrollPosition = scrollHeight * ${progress} / 100;
-window.scrollTo({
-	top: scrollPosition,
-	behavior: 'smooth'
-});
-  window.ReactNativeWebView.postMessage(JSON.stringify({
-    type: "ScrollToProgress",
-    payload: {
-      scrollTop: scrollPosition,
-      scrollHeight: scrollHeight,
-      progress: ${progress}
-    }
-  }));`
-export const beforeLoad = (style: string, lastPosition: number) => `
-	var styleTag = document.createElement('style');
-  styleTag.type = 'text/css';
-  styleTag.innerHTML = \`${style}\`;
-  document.getElementsByTagName('head')[0].appendChild(styleTag);
-	window.scrollTo({
-			top: ${lastPosition}		});
-`
-
-export const insertStyle = (style: string) => `
-var styleTag = document.createElement('style');
-  styleTag.type = 'text/css';
-  styleTag.innerHTML = \`${style}\`;
-  document.getElementsByTagName('head')[0].appendChild(styleTag);
+export const beforeLoad = (lastPosition: number) => `
+	window.scrollTo({ top: ${lastPosition} });
 `
 
 export const scrollProgressDetect = () => `
@@ -58,7 +31,7 @@ window.addEventListener('scroll', function() {
      payload: {
        scrollTop: currentScrollPosition,
        scrollBottom: Math.round(document.body.scrollHeight - currentScrollPosition - document.body.clientHeight) -1,
-       progress: Math.round((currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight)) * 100)
+       progress: Math.round((currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight)) * 1000)
      }
    }));
 

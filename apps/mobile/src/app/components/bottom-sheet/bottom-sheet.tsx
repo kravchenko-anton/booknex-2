@@ -1,46 +1,40 @@
-import { AnimatedView } from '@/components/animated'
-import { useBottomSheet } from '@/components/bottom-sheet/useBottomSheet'
-import { SCREEN_HEIGHT } from '@/utils/dimensions'
-import type { FC } from 'react'
-import { StatusBar, View } from 'react-native'
-import { GestureDetector } from 'react-native-gesture-handler'
-import { FadeIn, FadeOut } from 'react-native-reanimated'
-// TODO: улучшить тут код до иделала по производительности и тж
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
+import type { FC, PropsWithChildren, ReactNode } from 'react'
+import { Color } from 'ui/colors'
 
-const BottomSheet: FC = () => {
-	const { bottomSheetStyle, colorPallet, bottomSheet, gesture, touch } =
-		useBottomSheet()
-	if (!bottomSheet) return null
+interface BottomSheetProperties {
+	snapPoints: (string | number)[]
+	backgroundColor?: string
+	indicatorColor?: string
+	children: ReactNode
+	onClose: () => void
+}
+const Sheet: FC<PropsWithChildren<BottomSheetProperties>> = ({
+	snapPoints = ['40%', '60%'],
+	backgroundColor = Color.foreground,
+	indicatorColor = Color.white,
+	children = null,
+	onClose = () => {}
+}) => {
+	if (!children) return null
 	return (
-		<>
-			<AnimatedView
-				entering={FadeIn}
-				exiting={FadeOut}
-				onTouchStart={touch.wrapper}
-				className='absolute z-0 h-full w-full flex-1  bg-[#0000006a]'
-			/>
-			<StatusBar hidden={true} />
-			<GestureDetector gesture={gesture}>
-				<AnimatedView
-					style={[
-						{
-							top: SCREEN_HEIGHT,
-							paddingBottom: 40,
-							backgroundColor: colorPallet.backgroundColor
-						},
-						bottomSheetStyle
-					]}
-					className='absolute w-full flex-1 pt-3.5'
-				>
-					<View
-						pointerEvents='none'
-						className='bg-gray mb-3 mt-1 h-[6px] w-[50px] items-center justify-center self-center rounded-full'
-					/>
-					<bottomSheet.component />
-				</AnimatedView>
-			</GestureDetector>
-		</>
+		<BottomSheet
+			enablePanDownToClose={true}
+			backgroundStyle={{ backgroundColor: backgroundColor }}
+			handleIndicatorStyle={{ backgroundColor: indicatorColor }}
+			enableOverDrag={false}
+			backdropComponent={backdropProperties => (
+				<BottomSheetBackdrop
+					{...backdropProperties}
+					enableTouchThrough={true}
+				/>
+			)}
+			snapPoints={snapPoints}
+			onClose={onClose}
+		>
+			{children}
+		</BottomSheet>
 	)
 }
 
-export default BottomSheet
+export default Sheet

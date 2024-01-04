@@ -37,6 +37,7 @@ const NewParse: FC<NewParserPopupProperties> = ({
 				type='number'
 			/>
 			<Button
+				size='sm'
 				variant='primary'
 				className='mx-auto'
 				onClick={handleSubmit(onSubmit)}

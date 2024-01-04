@@ -32,3 +32,5 @@ export { default as Close } from '../x.svg'
 
 export { default as Bug } from '../bug.svg'
 export { default as MessageCircleQuestion } from '../message-circle-question.svg'
+export { default as OkHandEmoji } from '../ok-hand-emoji.svg'
+export { default as ThumbDownEmoji } from '../thumbs-down-emoji.svg'

@@ -16,9 +16,7 @@ const Explore = () => {
 		<ScrollLayout className='h-full'>
 			<SearchField />
 			<Flatlist
-				title={{
-					text: 'Best Sellers'
-				}}
+				title='Best Sellers'
 				horizontal
 				data={explore.bestSellers}
 				renderItem={({ item: book }) => (
@@ -33,9 +31,7 @@ const Explore = () => {
 			<Flatlist
 				horizontal
 				mt={20}
-				title={{
-					text: 'Popular Now'
-				}}
+				title='Popular Now'
 				data={explore.popularNow}
 				renderItem={({ item: book }) => (
 					<RainbowBookCard
@@ -48,9 +44,7 @@ const Explore = () => {
 				)}
 			/>
 			<Flatlist
-				title={{
-					text: 'New Releases'
-				}}
+				title='New Releases'
 				horizontal
 				data={explore.newReleases}
 				renderItem={({ item: book }) => (

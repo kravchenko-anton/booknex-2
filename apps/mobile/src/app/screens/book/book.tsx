@@ -82,10 +82,7 @@ const Book = () => {
 				/>
 			</View>
 			<Flatlist
-				title={{
-					text: 'About book',
-					mb: 8
-				}}
+				title='About book'
 				horizontal
 				px={16}
 				data={book.genres}
@@ -108,9 +105,7 @@ const Book = () => {
 				data={book.similarBooks}
 				horizontal
 				px={16}
-				title={{
-					text: 'Similar books'
-				}}
+				title='Similar books'
 				renderItem={({ item: similarBook }) => (
 					<BookCard
 						size='md'

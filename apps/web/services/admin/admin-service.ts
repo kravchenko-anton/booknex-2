@@ -1,5 +1,5 @@
-import { getAdminUrl } from '../../../../libs/global/api-config'
-import type { StatisticsOutput } from '../../../../libs/global/services-types/admin-types'
+import { getAdminUrl } from '@/global/api-config'
+import type { StatisticsOutput } from '@/global/services-types/admin-types'
 import { request } from '../api/request.api'
 
 export const adminService = {

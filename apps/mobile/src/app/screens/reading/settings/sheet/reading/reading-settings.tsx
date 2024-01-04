@@ -1,17 +1,22 @@
 import PressableContainer from '@/components/animated-press/animated-press'
-import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/types'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { BottomSheetContext } from '@/providers/bottom-sheet-provider'
 import FontSettings from '@/screens/reading/settings/sheet/reading/font-settings/font-settings'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
+import SelectTheme from '@/screens/reading/settings/sheet/select-theme/select-theme'
+import { WINDOW_HEIGHT } from '@/utils/dimensions'
 import { ChevronRight } from 'icons'
 import type { FC } from 'react'
+import { useContext } from 'react'
 import { View } from 'react-native'
+import { Color } from 'ui/colors'
 import { Title } from 'ui/components'
 
 const ReadingSettings: FC = () => {
+	const { showBottomSheet } = useContext(BottomSheetContext)
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
-	const { changeTheme, openBottomSheet } = useAction()
+	const { changeTheme } = useAction()
 	return (
 		<View className='px-6'>
 			<View className='mt-4 flex-row items-center justify-between'>
@@ -24,7 +29,7 @@ const ReadingSettings: FC = () => {
 									backgroundColor: theme.colorPalette.background.normal,
 									borderColor:
 										colorScheme.slug === theme.slug
-											? colorScheme.colorPalette.text
+											? Color.white
 											: theme.colorPalette.background.lighter
 								}}
 								onPress={() => changeTheme(theme.slug)}
@@ -43,24 +48,23 @@ const ReadingSettings: FC = () => {
 					<PressableContainer
 						key='other theme'
 						style={{
-							backgroundColor: colorScheme.colorPalette.background.darker
+							backgroundColor: Color.shade
 						}}
 						onPress={() =>
-							openBottomSheet(BottomSheetListEnum.readerSelectTheme)
+							showBottomSheet({
+								component: <SelectTheme />,
+								snapPoints: [WINDOW_HEIGHT / 2, WINDOW_HEIGHT]
+							})
 						}
 						className='flex-row items-center justify-center rounded-xl p-2 px-4'
 					>
-						<Title
-							color={colorScheme.colorPalette.text}
-							weight='semiBold'
-							size={18}
-						>
+						<Title color={Color.white} weight='semiBold' size={18}>
 							Other
 						</Title>
 						<ChevronRight
 							width={25}
 							height={25}
-							color={colorScheme.colorPalette.text}
+							color={Color.white}
 							className='ml-2 mt-1'
 						/>
 					</PressableContainer>

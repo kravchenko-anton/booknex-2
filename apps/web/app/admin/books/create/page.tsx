@@ -283,6 +283,7 @@ const Page: FC = () => {
 				</div>
 			)}
 			<Button
+				size='md'
 				className='mt-8'
 				onClick={() => {
 					if (!books.state) return

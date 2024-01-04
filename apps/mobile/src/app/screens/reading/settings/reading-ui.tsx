@@ -1,19 +1,25 @@
 import { AnimatedView } from '@/components/animated'
-import { BottomSheetListEnum } from '@/components/bottom-sheet/bottom-sheet-list/types'
-import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
+import { useTypedNavigation, useTypedSelector } from '@/hooks'
+import { BottomSheetContext } from '@/providers/bottom-sheet-provider'
+import ChaptersList from '@/screens/reading/settings/sheet/chapters-list/chapters-list'
+import ReadingSettings from '@/screens/reading/settings/sheet/reading/reading-settings'
+import { WINDOW_HEIGHT } from '@/utils/dimensions'
 import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
+import { useContext } from 'react'
 import { StatusBar, View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Title } from 'ui/components'
 
-const ReadingUi: FC<{ title: string }> = ({ title }) => {
+const ReadingUi: FC<{ title: string; visible: boolean; progress: number }> = ({
+	visible = false,
+	title = '',
+	progress = 0
+}) => {
 	const { goBack } = useTypedNavigation()
+	const { showBottomSheet } = useContext(BottomSheetContext)
 	const { bottom } = useSafeAreaInsets()
-	const { progress } = useTypedSelector(state => state.reader)
-	const { openBottomSheet } = useAction()
-	const { visible } = useTypedSelector(state => state.readingUi)
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	const showAnimation = useAnimatedStyle(() => {
 		return {
@@ -70,10 +76,20 @@ const ReadingUi: FC<{ title: string }> = ({ title }) => {
 						width={28}
 						height={28}
 						color={colorScheme.colorPalette.text}
-						onPress={() => openBottomSheet(BottomSheetListEnum.readerChapters)}
+						onPress={() =>
+							showBottomSheet({
+								component: <ChaptersList />,
+								snapPoints: [WINDOW_HEIGHT / 2, WINDOW_HEIGHT]
+							})
+						}
 					/>
 					<CaseSenSitive
-						onPress={() => openBottomSheet(BottomSheetListEnum.readerSettings)}
+						onPress={() =>
+							showBottomSheet({
+								component: <ReadingSettings />,
+								snapPoints: [230, 230]
+							})
+						}
 						width={28}
 						height={28}
 						color={colorScheme.colorPalette.text}

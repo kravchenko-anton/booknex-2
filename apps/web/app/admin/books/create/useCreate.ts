@@ -91,7 +91,14 @@ export const useCreate = () => {
 				title: data.title,
 				description: data.description,
 				picture: uploadPicture,
-				chapters: data.chapters,
+				chapters: data.chapters.map(chapter => ({
+					name: chapter.name,
+					children: chapter.children.map((child, index) => ({
+						id: index,
+						name: child.name,
+						link: child.link
+					}))
+				})),
 				author: {
 					id: data.author.value
 				},

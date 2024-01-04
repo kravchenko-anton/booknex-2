@@ -337,7 +337,7 @@ const Page: FC<{
 				/>
 			</div>
 
-			<Button className='mt-8' onClick={onSubmit} variant='primary'>
+			<Button size='md' className='mt-8' onClick={onSubmit} variant='primary'>
 				Update
 			</Button>
 		</div>
