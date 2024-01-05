@@ -56,7 +56,7 @@ export const Menu: FC<PropsWithChildren<HamburgerMenuProperties>> = ({
 					},
 					animation.popupStyle
 				]}
-				className='bg-foreground absolute top-14 z-50 min-w-[180px] rounded-md p-2'
+				className='bg-foreground absolute top-14 z-50 min-w-[180px] rounded-xl p-2'
 			>
 				{children}
 			</AnimatedView>

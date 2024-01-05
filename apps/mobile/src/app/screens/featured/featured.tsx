@@ -1,18 +1,15 @@
 import BookCard from '@/components/book-card/book-card'
 import ScrollLayout from '@/components/layout/scroll-layout'
 import { useTypedNavigation } from '@/hooks'
-import { AlertContext } from '@/providers/alert-provider'
 import RecommendationList from '@/screens/featured/recommendation-list/recommendation-list'
 import { catalogService } from '@/services/catalog/catalog-service'
 import { useQuery } from '@tanstack/react-query'
-import { useContext } from 'react'
 import { Button, Flatlist, Loader } from 'ui/components'
 //TODO: добавить тут shelves
 const Featured = () => {
 	const { data: featured } = useQuery(['featured'], () =>
 		catalogService.featured()
 	)
-	const { showAlert } = useContext(AlertContext)
 	const { navigate } = useTypedNavigation()
 	if (!featured) return <Loader />
 	return (
@@ -40,9 +37,10 @@ const Featured = () => {
 						}}
 						size='md'
 						variant='foreground'
-						text={genre.name}
 						className='px-4'
-					/>
+					>
+						{genre.name}
+					</Button>
 				)}
 			/>
 

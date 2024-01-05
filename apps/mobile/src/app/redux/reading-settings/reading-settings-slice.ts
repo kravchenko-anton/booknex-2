@@ -84,24 +84,23 @@ const ReadingSettingsSlice = createSlice({
 				payload
 			}: PayloadAction<{ id: number; progress: number; location: number }>
 		) => {
+			console.log('updateReadingProgress', payload)
 			const book = state.books.find(value => value.id === payload.id)
-			if (book) {
+			if (book)
 				book.lastProgress = {
 					progress: payload.progress,
 					location: payload.location
 				}
-			} else {
-				state.books = [
-					...(state.books ?? []),
-					{
-						id: payload.id,
-						lastProgress: {
-							progress: payload.progress,
-							location: payload.location
-						}
+			state.books = [
+				...state.books,
+				{
+					id: payload.id,
+					lastProgress: {
+						progress: payload.progress,
+						location: payload.location
 					}
-				]
-			}
+				}
+			]
 		}
 	}
 })

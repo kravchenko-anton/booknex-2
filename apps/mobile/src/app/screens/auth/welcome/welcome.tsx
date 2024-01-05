@@ -24,20 +24,22 @@ const Welcome: FC = () => {
 			<View className=' w-full items-center'>
 				<Button
 					size='md'
-					text='Sign up'
 					variant='secondary'
 					width='100%'
 					onPress={() => navigate('SelectGenres')}
-				/>
+				>
+					Sign up
+				</Button>
 
 				<Button
 					onPress={() => navigate('Login')}
 					size='md'
 					className='mt-2'
-					text='Sign in'
 					variant='foreground'
 					width='100%'
-				/>
+				>
+					Sign in
+				</Button>
 			</View>
 		</Layout>
 	)

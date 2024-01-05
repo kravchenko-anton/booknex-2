@@ -1,6 +1,6 @@
 import Alert from '@/components/alert/alert'
 import type { FC, PropsWithChildren } from 'react'
-import { createContext, useState } from 'react'
+import { createContext, useMemo, useState } from 'react'
 import type { SvgProps } from 'react-native-svg'
 
 export interface AlertProperties {
@@ -10,10 +10,10 @@ export interface AlertProperties {
 	description: string
 	onAccept: () => void
 }
-interface AlertContextProperties {
+export interface AlertContextProperties {
 	alert: AlertProperties | null
 	showAlert: (object: AlertProperties) => void
-	hideAlert: () => void
+	closeAlert: () => void
 }
 
 export const AlertContext = createContext<AlertContextProperties | undefined>(
@@ -27,22 +27,23 @@ export const AlertProvider: FC<PropsWithChildren> = ({ children }) => {
 		setAlert(alert)
 	}
 
-	const hideAlert = () => {
+	const closeAlert = () => {
 		setAlert(null)
 	}
 
-	const alertContextValue: AlertContextProperties = {
-		alert,
-		showAlert,
-		hideAlert
-	}
-
-	console.log('Render')
+	const alertContextValue: AlertContextProperties = useMemo(
+		() => ({
+			alert,
+			showAlert,
+			closeAlert
+		}),
+		[alert]
+	)
 
 	return (
 		<AlertContext.Provider value={alertContextValue}>
 			{children}
-			<Alert closeAlert={hideAlert} alert={alert} />
+			<Alert closeAlert={closeAlert} alert={alert} />
 		</AlertContext.Provider>
 	)
 }

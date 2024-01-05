@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { memo } from 'react'
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, StatusBar, View } from 'react-native'
 import { Color } from '../../colors'
 import { settings } from './settings'
 import type { LoaderProperties } from './types'
@@ -21,6 +21,7 @@ const Loader: FC<LoaderProperties> = ({
 			color={Color.secondary}
 			className='h-[30px] w-[30px]'
 		/>
+		<StatusBar backgroundColor={backgroundColor} />
 	</View>
 )
 

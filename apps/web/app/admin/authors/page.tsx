@@ -65,7 +65,7 @@ const PageDetails: FC = () => {
 			{!authors || isLoading ? (
 				<div>Loading...</div>
 			) : (
-				<table className='bg-shade mt-4 w-full rounded-md'>
+				<table className='bg-shade mt-4 w-full rounded-xl'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
 							<th className='min-w-[40px]   p-3'>Id</th>
@@ -90,7 +90,7 @@ const PageDetails: FC = () => {
 									<td className='w-[100px] max-w-[100px]'>
 										<img
 											src={getFileUrl(author.picture)}
-											className='bottom-shade mx-auto w-[80px] rounded-md'
+											className='bottom-shade mx-auto w-[80px] rounded-xl'
 											alt={author.name}
 										/>
 									</td>
@@ -118,7 +118,7 @@ const PageDetails: FC = () => {
 											<img
 												key={book.picture}
 												src={getFileUrl(book.picture)}
-												className='w-[100px] rounded-md'
+												className='w-[100px] rounded-xl'
 												alt={author.name}
 											/>
 										))}

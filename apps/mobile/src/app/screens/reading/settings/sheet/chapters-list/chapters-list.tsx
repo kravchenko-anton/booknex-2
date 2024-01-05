@@ -1,36 +1,51 @@
-import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { BottomSheetSectionList } from '@gorhom/bottom-sheet'
 import type { FC } from 'react'
 import { useMemo } from 'react'
-import { Button, Title } from 'ui/components'
+import { Pressable } from 'react-native'
+import { Color } from 'ui/colors'
+import { Title } from 'ui/components'
 
-const ChaptersList: FC = () => {
-	const sections = useMemo(
-		() =>
-			Array.from({ length: 10 })
-				.fill(0)
-				.map((_, index) => ({
-					title: `Section ${index}`,
-					data: Array.from({ length: 10 })
-						.fill(0)
-						.map((_, index) => `Item ${index}`)
-				})),
-		[]
-	)
+const ChaptersList: FC<{
+	chapters: {
+		name: string
+		children: {
+			name: string
+			link: string
+		}[]
+	}[]
+}> = ({ chapters }) => {
+	//TODO: сделать тут ссылку, щас не работает
 
-	const { colorScheme } = useTypedSelector(state => state.readingSettings)
+	const sections = useMemo(() => {
+		return chapters.map(chapter => {
+			return {
+				title: chapter.name,
+				data: chapter.children.map(child => {
+					return {
+						title: child.name,
+						link: child.link
+					}
+				})
+			}
+		})
+	}, [chapters])
+
 	return (
 		<BottomSheetSectionList
 			stickySectionHeadersEnabled
+			scrollToOverflowEnabled={true}
 			sections={sections}
+			showsVerticalScrollIndicator={false}
 			className='mt-2 h-full px-4'
 			renderSectionHeader={({ section }) => {
 				return (
 					<Title
 						weight='bold'
-						className='bg-foreground p-4'
-						size={18}
-						style={{ color: colorScheme.colorPalette.text }}
+						className='bg-foreground border-vibrant mt-[-1px] border-b-[1px] p-4'
+						size={22}
+						style={{
+							backgroundColor: Color.foreground
+						}}
 					>
 						{section.title}
 					</Title>
@@ -38,7 +53,11 @@ const ChaptersList: FC = () => {
 			}}
 			renderItem={({ item }) => {
 				return (
-					<Button size='md' className='mb-4 rounded-xl' text={item}></Button>
+					<Pressable className='bg-shade border-vibrant w-full border-b-[1px] p-4'>
+						<Title size={18} weight='semiBold'>
+							{item.title}
+						</Title>
+					</Pressable>
 				)
 			}}
 		/>

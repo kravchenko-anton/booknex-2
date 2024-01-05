@@ -45,9 +45,10 @@ const Login = () => {
 					onPress={handleSubmit(onSubmit)}
 					size='md'
 					variant='primary'
-					text='Sign in'
 					className='mt-2'
-				/>
+				>
+					Sign in
+				</Button>
 			</View>
 		</Layout>
 	)

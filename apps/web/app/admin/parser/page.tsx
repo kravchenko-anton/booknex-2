@@ -98,7 +98,7 @@ const Parser: FC = () => {
 				</div>
 			</div>
 			{goodReadsBooks ? (
-				<table className='bg-shade mt-4 w-full rounded-md'>
+				<table className='bg-shade mt-4 w-full rounded-xl'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
 							<th className='min-w-[50px]   p-3'>Id</th>
@@ -124,7 +124,7 @@ const Parser: FC = () => {
 									<td className='h-[120px]'>
 										<img
 											src={getFileUrl(book.picture)}
-											className='bottom-shade mx-auto w-[100px] rounded-md'
+											className='bottom-shade mx-auto w-[100px] rounded-xl'
 											alt={book.title}
 										/>
 									</td>
@@ -142,7 +142,7 @@ const Parser: FC = () => {
 									<td className='min-w-[300px] max-w-[220px] p-2'>
 										<img
 											src={book.authorPicture}
-											className='mb-1 h-[50px] w-[50px] rounded-md'
+											className='mb-1 h-[50px] w-[50px] rounded-xl'
 											alt={book.title}
 										/>
 										{book.authorDescription.slice(0, 200) + '...'}

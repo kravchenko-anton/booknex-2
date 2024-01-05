@@ -12,7 +12,7 @@ const RainbowBookCard: FC<RainbowBookCardProperties> = ({
 	...properties
 }) => (
 	<PressableContainer
-		className='h-[300px] w-[300px] justify-between rounded-md p-4'
+		className='h-[300px] w-[300px] justify-between rounded-xl p-4'
 		style={[
 			{
 				backgroundColor: properties.backgroundColor

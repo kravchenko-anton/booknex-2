@@ -100,29 +100,13 @@ export type Theme = {
 	}
 }
 
-export type WebviewMessage =
-	| {
-			type: 'ScrollToText'
-			payload: {
-				text: string
-			}
-	  }
-	| {
-			type: 'ScrollToProgress'
-			payload: {
-				scrollTop: number
-				scrollHeight: number
-				progress: number
-			}
-	  }
-	| {
-			type: 'scroll'
-			payload: {
-				scrollTop: number
-				scrollHeight: number
-				progress: number
-			}
-	  }
+export type WebviewMessage = {
+	type: 'scroll'
+	payload: {
+		scrollTop: number
+		progress: number
+	}
+}
 export type SearchResult = {
 	cfi: EPubCfi
 	excerpt: string

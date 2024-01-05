@@ -46,7 +46,7 @@ const Dropzone = ({
 						<button
 							color={variant}
 							className={twMerge(
-								'mb-2 max-w-[200px] items-center justify-center rounded-md border-2 p-2 text-center',
+								'mb-2 max-w-[200px] items-center justify-center rounded-xl border-2 p-2 text-center',
 								settings.colors[variant]
 							)}
 							onClick={() => {
@@ -71,7 +71,7 @@ const Dropzone = ({
 			</div>
 			<div
 				className={twMerge(
-					'mt-2 flex cursor-pointer items-center justify-center rounded-md  border-2  duration-200',
+					'mt-2 flex cursor-pointer items-center justify-center rounded-xl  border-2  duration-200',
 					settings.padding[size],
 					settings.colors[variant]
 				)}

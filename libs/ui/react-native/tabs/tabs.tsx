@@ -34,8 +34,9 @@ const Tabs: FC<TabsProperties> = ({ routes = [], ...properties }) => {
 								flatListReference.current?.scrollToIndex({ index })
 							}}
 							variant={activeTab === tab.key ? 'primary' : 'foreground'}
-							text={tab.title}
-						/>
+						>
+							{tab.title}
+						</Button>
 					)}
 				/>
 			</View>

@@ -50,10 +50,11 @@ const Search = () => {
 							<Button
 								onPress={() => clearSearch()}
 								className={twMerge(!searchTerm && 'hidden')}
-								text='Clear'
 								variant='foreground'
 								size='sm'
-							/>
+							>
+								Clear
+							</Button>
 						</View>
 					</View>
 				)}

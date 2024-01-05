@@ -14,6 +14,7 @@ const Button = ({
 	isLoading = false,
 	icon: Icon,
 	className = '',
+	children = '',
 	...properties
 }: ButtonProperties) => {
 	return (
@@ -48,7 +49,7 @@ const Button = ({
 				color={InnerColor[variant]}
 				size={settings.titleSize[size]}
 			>
-				{properties.text}
+				{children}
 			</Title>
 		</PressableContainer>
 	)

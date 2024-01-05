@@ -1,14 +1,16 @@
 import Sheet from '@/components/bottom-sheet/bottom-sheet'
 import type { FC, PropsWithChildren, ReactNode } from 'react'
-import { createContext, useState } from 'react'
+import { createContext, useMemo, useState } from 'react'
 
 interface BottomSheetContextProperties {
-	bottomSheet: {
-		component: ReactNode
-		snapPoints: (string | number)[]
-		backgroundColor?: string
-		indicatorColor?: string
-	} | null
+	bottomSheet:
+		| {
+				component: ReactNode
+				snapPoints: (string | number)[]
+				backgroundColor?: string
+				indicatorColor?: string
+		  }
+		| {}
 	showBottomSheet: (bottomSheet: {
 		component: ReactNode
 		snapPoints: number[]
@@ -27,7 +29,7 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
 		snapPoints: (string | number)[]
 		backgroundColor?: string
 		indicatorColor?: string
-	}>(null)
+	}>({} as null)
 
 	const showBottomSheet = (bottomSheet: {
 		component: ReactNode
@@ -41,24 +43,22 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
 	}
 
 	const closeBottomSheet = () => {
-		setBottomSheet(null)
+		setBottomSheet({} as null)
 	}
 
-	const bottomSheetContextValue: BottomSheetContextProperties = {
-		bottomSheet,
-		showBottomSheet,
-		closeBottomSheet
-	}
+	const bottomSheetContextValue: BottomSheetContextProperties = useMemo(
+		() => ({
+			bottomSheet,
+			showBottomSheet,
+			closeBottomSheet
+		}),
+		[bottomSheet]
+	)
 	return (
 		<BottomSheetContext.Provider value={bottomSheetContextValue}>
 			{children}
-			<Sheet
-				onClose={() => closeBottomSheet()}
-				snapPoints={bottomSheet?.snapPoints}
-				backgroundColor={bottomSheet?.backgroundColor}
-				indicatorColor={bottomSheet?.indicatorColor}
-			>
-				{bottomSheet?.component}
+			<Sheet onClose={() => closeBottomSheet()} {...bottomSheet}>
+				{bottomSheet.component}
 			</Sheet>
 		</BottomSheetContext.Provider>
 	)

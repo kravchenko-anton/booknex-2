@@ -14,7 +14,7 @@ export default function Page() {
 	const onSubmit = (data: AuthFieldsType) => login(data)
 	return (
 		<div className='flex h-screen w-screen items-center justify-center'>
-			<div className='bg-shade w-[450px] rounded-md p-8'>
+			<div className='bg-shade w-[450px] rounded-xl p-8'>
 				<h1 className='mb-4 text-center text-3xl text-white'>Sign in</h1>
 				<Field
 					name='email'

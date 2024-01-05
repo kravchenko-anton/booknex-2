@@ -9,7 +9,7 @@ import { WINDOW_HEIGHT } from '@/utils/dimensions'
 import { ChevronRight } from 'icons'
 import type { FC } from 'react'
 import { useContext } from 'react'
-import { View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { Color } from 'ui/colors'
 import { Title } from 'ui/components'
 
@@ -18,7 +18,7 @@ const ReadingSettings: FC = () => {
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	const { changeTheme } = useAction()
 	return (
-		<View className='px-6'>
+		<Pressable className='h-full w-full flex-1 px-6'>
 			<View className='mt-4 flex-row items-center justify-between'>
 				{[
 					...themePack.slice(1, 3).map(theme => {
@@ -53,7 +53,7 @@ const ReadingSettings: FC = () => {
 						onPress={() =>
 							showBottomSheet({
 								component: <SelectTheme />,
-								snapPoints: [WINDOW_HEIGHT / 2, WINDOW_HEIGHT]
+								snapPoints: [WINDOW_HEIGHT / 2, WINDOW_HEIGHT / 1.4]
 							})
 						}
 						className='flex-row items-center justify-center rounded-xl p-2 px-4'
@@ -71,7 +71,7 @@ const ReadingSettings: FC = () => {
 				]}
 			</View>
 			<FontSettings />
-		</View>
+		</Pressable>
 	)
 }
 

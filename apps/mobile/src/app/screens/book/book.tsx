@@ -76,10 +76,11 @@ const Book = () => {
 					onPress={() => {
 						navigate('Reader', { id: book.id })
 					}}
-					text='Read'
 					variant='primary'
 					size='sm'
-				/>
+				>
+					Read
+				</Button>
 			</View>
 			<Flatlist
 				title='About book'
@@ -93,8 +94,9 @@ const Book = () => {
 						}}
 						variant='shade'
 						size='sm'
-						text={genre.name}
-					/>
+					>
+						{genre.name}
+					</Button>
 				)}
 			/>
 			<Description size={18} className='mt-2 px-4' weight='light'>

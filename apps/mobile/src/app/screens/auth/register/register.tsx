@@ -48,9 +48,10 @@ const Register = () => {
 					size='md'
 					className='mt-1'
 					variant='primary'
-					text='Sign up'
 					onPress={handleSubmit(onSubmit)}
-				/>
+				>
+					Sign up
+				</Button>
 			</AnimatedView>
 		</Layout>
 	)

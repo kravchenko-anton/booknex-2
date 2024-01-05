@@ -1,14 +1,14 @@
-let lastTap: number | null = null
+let lastTap: number | undefined
 let timer: NodeJS.Timeout
 export const handleDoublePress = (handleAction: () => void) => {
 	if (lastTap) {
 		handleAction()
 		clearTimeout(timer)
-		lastTap = null
+		lastTap = undefined
 	} else {
 		lastTap = Date.now()
 		timer = setTimeout(() => {
-			lastTap = null
+			lastTap = undefined
 			clearTimeout(timer)
 		}, 300)
 	}
@@ -18,23 +18,28 @@ export const beforeLoad = (lastPosition: number) => `
 	window.scrollTo({ top: ${lastPosition} });
 `
 
-export const scrollProgressDetect = () => `
-let lastScrollPosition = 0;
+export const scrollProgressDetect = `
+let timerId;
 
 window.addEventListener('scroll', function() {
- let currentScrollPosition = document.body.scrollTop;
- let difference = currentScrollPosition - lastScrollPosition;
+ clearTimeout(timerId);
 
- if (Math.abs(difference) >= 100) {
+ timerId = setTimeout(() => {
+   let currentScrollPosition = document.body.scrollTop;
    window.ReactNativeWebView.postMessage(JSON.stringify({
      type: "scroll",
      payload: {
        scrollTop: currentScrollPosition,
-       scrollBottom: Math.round(document.body.scrollHeight - currentScrollPosition - document.body.clientHeight) -1,
-       progress: Math.round((currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight)) * 1000)
+       progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight))
      }
    }));
+ }, 500);
+});
+`
 
-   lastScrollPosition = currentScrollPosition;
- }
-});`
+export const injectStyle = (style: string) => `
+	var style = document.createElement('style');
+	style.type = 'text/css';
+	style.innerHTML = \`${style}\`;
+ document.head.appendChild(style);
+		`

@@ -165,7 +165,6 @@ module.exports = {
 		'newline-per-chained-call': 'off',
 		'no-await-in-loop': 'off',
 		'no-continue': 'off',
-		'unicorn/no-null': 'off',
 		'react-native/no-raw-text': 'off',
 		'react/jsx-filename-extension': 'off',
 		'import/no-extraneous-dependencies': 'off',

@@ -35,12 +35,13 @@ const SelectGenres: FC = () => {
 						}}
 						key={genre.id}
 						size='md'
-						text={genre.name}
 						variant={
 							selectGenres.includes(genre.name) ? 'primary' : 'foreground'
 						}
 						className='mb-2 mr-3'
-					/>
+					>
+						{genre.name}
+					</Button>
 				))}
 			</View>
 			<Button
@@ -48,13 +49,14 @@ const SelectGenres: FC = () => {
 				disabled={selectGenres.length < 3}
 				variant='secondary'
 				size='lg'
-				text='Next step'
 				onPress={() => {
 					navigate('Registration', {
 						selectGenres: selectGenres
 					})
 				}}
-			/>
+			>
+				Next step
+			</Button>
 		</View>
 	)
 }

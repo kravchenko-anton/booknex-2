@@ -1,33 +1,45 @@
+import { useTypedNavigation } from '@/hooks'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { handleDoublePress } from '@/screens/reading/additional-function'
+import {
+	beforeLoad,
+	handleDoublePress,
+	scrollProgressDetect
+} from '@/screens/reading/additional-function'
 import type { WebviewMessage } from '@/screens/reading/types'
-import { useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { AppState } from 'react-native'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
-export const useReader = () => {
-	const [readerUiVisible, setReaderUiVisible] = useState(false)
-	const [progress, setProgress] = useState(0)
-	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
-		state => state.readingSettings
-	)
+export const useReader = (id: number) => {
+	const { colorScheme, padding, lineHeight, font, fontSize, books } =
+		useTypedSelector(state => state.readingSettings)
+	const [readerUiVisible, setReaderUiVisible] = useState(true)
+	const [readerState, setReaderState] = useState({
+		progress: books.find(book => book.id === id)?.lastProgress.progress || 0,
+		scrollTop: books.find(book => book.id === id)?.lastProgress.location || 0
+	} as {
+		progress: number
+		scrollTop: number
+	})
+	const { addListener } = useTypedNavigation()
 	const { updateReadingProgress } = useAction()
-	const styleTag = `body {
+	const styleTag = `
+	span {
+		color: ${colorScheme.colorPalette.text} !important;
+	}
+		p {
+		color: ${colorScheme.colorPalette.text} !important;
+	}
+	body {
 		background: ${colorScheme.colorPalette.background.normal} !important;
 		font-family: ${font.fontFamily} !important;
 		font-size: ${fontSize}px;
 		line-height: ${lineHeight};
 		padding: ${padding}px;
+		color: ${colorScheme.colorPalette.text};
 	}
-	i {
-		color: ${colorScheme.colorPalette.primary} !important;
-	}
-	span {
-		color: ${colorScheme.colorPalette.text} !important;
-	}
-	p {
-		color: ${colorScheme.colorPalette.text} !important;
-	}
+
 	li {
 		color: ${colorScheme.colorPalette.text} !important;
 	}
@@ -65,7 +77,7 @@ export const useReader = () => {
 		color: ${colorScheme.colorPalette.primary} !important;
 	}
 	::selection {
-		background: ${colorScheme.colorPalette.background.darker} !important;
+		background: ${colorScheme.colorPalette.background.lighter} !important;
 		color: ${colorScheme.colorPalette.text} !important;
 	}
 	ul {
@@ -73,11 +85,8 @@ export const useReader = () => {
 		list-style-type: none;
 	}
 	ol {
-		color: ${colorScheme.colorPalette.text} !important;
-		list-style-type: none;
-	}
-	strong {
-		font-weight: bold !important !important;
+	color: ${colorScheme.colorPalette.text} !important;
+	list-style-type: none;
 	}
 	em {
 		font-style: italic !important;
@@ -85,30 +94,77 @@ export const useReader = () => {
 	b {
 		font-weight: bold !important;
 		color: ${colorScheme.colorPalette.primary} !important;
-	}`
+	}
+	strong {
+		font-weight: bold !important;
+		color: ${colorScheme.colorPalette.primary} !important;
+	}
+	i {
+		font-style: italic !important;
+		color: ${colorScheme.colorPalette.primary} !important;
+	}
+	`
 	const doubleTap = () =>
 		handleDoublePress(() => setReaderUiVisible(!readerUiVisible))
-	const onMessage = (event: WebViewMessageEvent, title: string) => {
-		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessage
-		const { type, payload } = parsedEvent
-		if (type === 'scroll') {
-			if (progress === payload.progress) return
-			console.log(payload.progress)
-			setProgress(payload.progress)
-			updateReadingProgress({
-				title,
-				progress: payload.progress,
-				location: payload.scrollTop
-			})
-		}
-	}
 
-	return {
-		doubleTap,
-		onMessage,
-		readerUiVisible,
-		progress,
-		styleTag,
-		colorScheme
-	}
+	const onMessage = useCallback(
+		(event: WebViewMessageEvent) => {
+			const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessage
+			const { type, payload } = parsedEvent
+			if (type === 'scroll') {
+				if (readerState.progress === payload.progress) return
+				setReaderState({
+					progress: payload.progress,
+					scrollTop: payload.scrollTop
+				})
+			}
+		},
+		[readerState.progress]
+	)
+	console.log(readerState.progress)
+	const injectedJavaScriptBeforeLoad = `
+		${beforeLoad(readerState.scrollTop)}
+		${scrollProgressDetect}
+		`
+	useEffect(() => {
+		const unsubscribe = addListener('beforeRemove', e => {
+			updateReadingProgress({
+				id,
+				progress: readerState.progress,
+				location: readerState.scrollTop
+			})
+		})
+		const subscription = AppState.addEventListener('change', nextAppState => {
+			if (/inactive|background/.test(nextAppState)) {
+				updateReadingProgress({
+					id,
+					progress: readerState.progress,
+					location: readerState.scrollTop
+				})
+			}
+		})
+		return () => {
+			unsubscribe()
+			subscription.remove()
+		}
+	}, [readerState])
+
+	return useMemo(
+		() => ({
+			doubleTap,
+			styleTag,
+			onMessage,
+			readerUiVisible,
+			progress: Math.round(readerState.progress),
+			injectedJavaScriptBeforeLoad
+		}),
+		[
+			doubleTap,
+			styleTag,
+			onMessage,
+			readerUiVisible,
+			Math.round(readerState.progress),
+			injectedJavaScriptBeforeLoad
+		]
+	)
 }

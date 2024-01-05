@@ -267,7 +267,7 @@ const Page: FC<{
 				</div>
 			</div>
 			<div className='mt-4 flex w-full gap-5'>
-				<div className='bg-shade flex h-[1000px] w-1/3 flex-wrap justify-between gap-10  overflow-scroll rounded-md p-4'>
+				<div className='bg-shade flex h-[1000px] w-1/3 flex-wrap justify-between gap-10  overflow-scroll rounded-xl p-4'>
 					{chapters?.state?.map(({ children, name }) => {
 						if (!name) return null
 						return (
@@ -290,7 +290,7 @@ const Page: FC<{
 											}}
 											className='mb-2  w-1/2 px-1'
 										>
-											<div className='bg-foreground rounded-md  p-2'>
+											<div className='bg-foreground rounded-xl  p-2'>
 												<div className='mb-2 flex items-center justify-between gap-1'>
 													<Input
 														variant='vibrant'
@@ -312,7 +312,7 @@ const Page: FC<{
 																link: child.link
 															})
 														}}
-														className='bg-shade rounded-md p-1'
+														className='bg-shade rounded-xl p-1'
 													/>
 												</div>
 												<h6 className='text-gray text-sm italic'>

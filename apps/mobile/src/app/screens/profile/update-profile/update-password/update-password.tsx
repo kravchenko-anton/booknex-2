@@ -12,7 +12,7 @@ const UpdatePassword = () => {
 	})
 	const { onSubmit } = useUpdatePassword()
 	return (
-		<View className='bg-dust mb-4 mt-4 rounded-md'>
+		<View className='bg-dust mb-4 mt-4 rounded-xl'>
 			<Field
 				control={control}
 				name='oldPassword'
@@ -29,10 +29,11 @@ const UpdatePassword = () => {
 			<Button
 				className='mt-2'
 				onPress={handleSubmit(onSubmit)}
-				text='Save'
 				variant='primary'
 				size='md'
-			/>
+			>
+				Save
+			</Button>
 		</View>
 	)
 }

@@ -1,14 +1,13 @@
-import type { AlertProperties } from '@/providers/alert-provider'
+import type { AlertContextProperties } from '@/providers/alert-provider'
 import type { FC } from 'react'
 import { Modal, View } from 'react-native'
 import { Color } from 'ui/colors'
 import { Button, Title } from 'ui/components'
 
-const Alert: FC<{
-	closeAlert: () => void
-	alert: AlertProperties | null
-}> = ({ closeAlert = () => null, alert = null }) => {
-	console.log('Render Alert')
+const Alert: FC<Pick<AlertContextProperties, 'alert' | 'closeAlert'>> = ({
+	closeAlert = () => {},
+	alert = null
+}) => {
 	if (!alert) return null
 	return (
 		<Modal
@@ -27,7 +26,7 @@ const Alert: FC<{
 				className='flex-1 items-center  justify-center '
 			>
 				<View
-					onTouchStart={e => e.stopPropagation()}
+					onTouchStart={event => event.stopPropagation()}
 					className='bg-foreground z-50 w-10/12 items-center rounded-2xl p-4'
 				>
 					<alert.icon
@@ -48,7 +47,6 @@ const Alert: FC<{
 					</Title>
 
 					<Button
-						text={alert.acceptText}
 						onPress={() => {
 							alert.onAccept()
 							closeAlert()
@@ -56,14 +54,17 @@ const Alert: FC<{
 						className='mt-4 w-full'
 						variant={alert.type}
 						size='md'
-					/>
+					>
+						{alert.acceptText}
+					</Button>
 					<Button
 						onPress={closeAlert}
-						text='Cancel'
 						className='mt-2 w-full'
 						variant='foreground'
 						size='md'
-					/>
+					>
+						Cancel
+					</Button>
 				</View>
 			</View>
 		</Modal>

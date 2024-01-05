@@ -6,10 +6,10 @@ import type { VividPaletteType } from '../../colors'
 
 export type ButtonProperties = PressableDefaultProperties &
 	SizeProperties & {
-		text: string
 		textSize?: number
 		icon?: FC<SvgProps>
 		isLoading?: boolean
+		children?: string
 		isDisabled?: boolean
 		uppercase?: boolean
 		variant?: VividPaletteType

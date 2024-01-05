@@ -17,7 +17,7 @@ const Input: FC<InputProperties> = ({
 			<input
 				value={value}
 				className={twMerge(
-					'placeholder-gray focus:shadow-outline w-full rounded-md border-0 px-4 py-3 text-sm text-white duration-200 ease-linear focus:outline-0',
+					'placeholder-gray focus:shadow-outline w-full rounded-xl border-0 px-4 py-3 text-sm text-white duration-200 ease-linear focus:outline-0',
 					Icon && 'pl-9',
 					isError && 'border-danger border-2',
 					settings.colors[variant],

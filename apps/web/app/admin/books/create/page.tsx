@@ -186,7 +186,7 @@ const Page: FC = () => {
 						{books.state.map((book, index) => (
 							<div
 								key={book.name + index}
-								className='bg-foreground mb-4 mr-1 rounded-md p-3'
+								className='bg-foreground mb-4 mr-1 rounded-xl p-3'
 							>
 								<div className='mb-4 flex items-center  justify-between gap-2'>
 									<input
@@ -194,7 +194,7 @@ const Page: FC = () => {
 											books.updateChapterTitle(event.target.value, book.name)
 										}
 										value={book.name}
-										className='bg-vibrant hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-md border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
+										className='bg-vibrant hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-xl border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
 									/>
 									<CaseSensitive
 										width={45}
@@ -203,11 +203,11 @@ const Page: FC = () => {
 											books.generateChaptersNames(book.name)
 											console.log('generate chapters names')
 										}}
-										className='bg-vibrant cursor-pointer rounded-md p-2'
+										className='bg-vibrant cursor-pointer rounded-xl p-2'
 									/>
 								</div>
 								{book.content.map((content, index) => (
-									<div key={content.id} className='bg-shade m-2 rounded-md p-2'>
+									<div key={content.id} className='bg-shade m-2 rounded-xl p-2'>
 										<div className='mb-2 flex w-full items-center justify-between gap-2'>
 											<input
 												value={content.title}
@@ -218,7 +218,7 @@ const Page: FC = () => {
 														event.target.value
 													)
 												}}
-												className='bg-foreground border-gray w-full rounded-md border-0 px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2'
+												className='bg-foreground border-gray w-full rounded-xl border-0 px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2'
 											/>
 											<div className='flex gap-2'>
 												<ChevronUp
@@ -232,7 +232,7 @@ const Page: FC = () => {
 														})
 														console.log('merge with top character')
 													}}
-													className='bg-vibrant cursor-pointer rounded-md p-2'
+													className='bg-vibrant cursor-pointer rounded-xl p-2'
 												/>
 												<ChevronDown
 													width={36}
@@ -244,7 +244,7 @@ const Page: FC = () => {
 														})
 														console.log('add new character')
 													}}
-													className='bg-vibrant cursor-pointer rounded-md p-2'
+													className='bg-vibrant cursor-pointer rounded-xl p-2'
 												/>
 												<Close
 													width={36}
@@ -253,7 +253,7 @@ const Page: FC = () => {
 														books.removeToc(book.name, content.id)
 														console.log('remove toc')
 													}}
-													className='bg-vibrant cursor-pointer rounded-md p-2'
+													className='bg-vibrant cursor-pointer rounded-xl p-2'
 												/>
 											</div>
 										</div>
@@ -268,7 +268,7 @@ const Page: FC = () => {
 												)
 											}}
 											variant='background'
-											className='min-h-[340px] w-full rounded-md border-0 px-4 py-2 font-mono text-sm duration-200 ease-linear'
+											className='min-h-[340px] w-full rounded-xl border-0 px-4 py-2 font-mono text-sm duration-200 ease-linear'
 										/>
 									</div>
 								))}

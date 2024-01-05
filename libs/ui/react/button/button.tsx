@@ -20,7 +20,7 @@ const Button: FC<ButtonProperties> = ({
 		<button
 			disabled={disabled || isLoading}
 			className={twMerge(
-				'flex cursor-pointer items-center justify-center gap-2 rounded-md p-2 px-3 font-bold duration-200 ease-linear',
+				'flex cursor-pointer items-center justify-center gap-2 rounded-xl p-2 px-3 font-bold duration-200 ease-linear',
 				settings.size[size],
 				settings.colors[variant],
 				(disabled || isLoading) && 'cursor-not-allowed opacity-50',

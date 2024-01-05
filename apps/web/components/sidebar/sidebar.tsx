@@ -17,7 +17,7 @@ export default function Sidebar(): JSX.Element {
 								<a
 									href={icon.link}
 									className={twMerge(
-										'flex items-center justify-center  rounded-md p-2 duration-100 ease-linear hover:text-white',
+										'flex items-center justify-center  rounded-xl p-2 duration-100 ease-linear hover:text-white',
 										activePath === icon.link ? 'bg-secondary text-white' : ''
 									)}
 								>
@@ -28,7 +28,7 @@ export default function Sidebar(): JSX.Element {
 					})}
 					<div
 						onClick={() => logout()}
-						className='text-danger flex cursor-pointer   items-center justify-center rounded-md p-2 duration-100 ease-linear'
+						className='text-danger flex cursor-pointer   items-center justify-center rounded-xl p-2 duration-100 ease-linear'
 					>
 						<Logout width={30} height={30} />
 					</div>

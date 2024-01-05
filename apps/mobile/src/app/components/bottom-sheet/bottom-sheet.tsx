@@ -19,10 +19,14 @@ const Sheet: FC<PropsWithChildren<BottomSheetProperties>> = ({
 	if (!children) return null
 	return (
 		<BottomSheet
+			// enable gesture for empy space
+
+			enableContentPanningGesture={true}
+			enableHandlePanningGesture={true}
 			enablePanDownToClose={true}
+			enableOverDrag={true}
 			backgroundStyle={{ backgroundColor: backgroundColor }}
 			handleIndicatorStyle={{ backgroundColor: indicatorColor }}
-			enableOverDrag={false}
 			backdropComponent={backdropProperties => (
 				<BottomSheetBackdrop
 					{...backdropProperties}

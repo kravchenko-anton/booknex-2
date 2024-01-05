@@ -12,11 +12,18 @@ import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Title } from 'ui/components'
 
-const ReadingUi: FC<{ title: string; visible: boolean; progress: number }> = ({
-	visible = false,
-	title = '',
-	progress = 0
-}) => {
+const ReadingUi: FC<{
+	title: string
+	visible: boolean
+	progress: number
+	chapters: {
+		name: string
+		children: {
+			name: string
+			link: string
+		}[]
+	}[]
+}> = ({ visible = false, title = '', progress = 0, chapters = [] }) => {
 	const { goBack } = useTypedNavigation()
 	const { showBottomSheet } = useContext(BottomSheetContext)
 	const { bottom } = useSafeAreaInsets()
@@ -48,7 +55,7 @@ const ReadingUi: FC<{ title: string; visible: boolean; progress: number }> = ({
 						className=' absolute left-0 h-1.5'
 						style={{
 							backgroundColor: colorScheme.colorPalette.primary,
-							width: `${progress === 0 ? 1 : progress}%`,
+							width: `${progress}%`,
 							borderBottomRightRadius: 100,
 							borderTopRightRadius: 100
 						}}
@@ -78,8 +85,8 @@ const ReadingUi: FC<{ title: string; visible: boolean; progress: number }> = ({
 						color={colorScheme.colorPalette.text}
 						onPress={() =>
 							showBottomSheet({
-								component: <ChaptersList />,
-								snapPoints: [WINDOW_HEIGHT / 2, WINDOW_HEIGHT]
+								component: <ChaptersList chapters={chapters} />,
+								snapPoints: [WINDOW_HEIGHT / 2, WINDOW_HEIGHT / 1.4]
 							})
 						}
 					/>

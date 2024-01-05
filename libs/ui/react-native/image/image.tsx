@@ -29,7 +29,7 @@ const Image: FC<Types> = ({
 			},
 			style
 		]}
-		className={twMerge('bg-shade', fullSize ? 'h-full' : 'h-auto', className)}
+		className={twMerge('bg-vibrant', fullSize ? 'h-full' : 'h-auto', className)}
 		{...properties}
 	/>
 )

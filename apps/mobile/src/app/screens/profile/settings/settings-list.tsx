@@ -17,7 +17,7 @@ export const Category = ({
 	return (
 		<View
 			key={title}
-			className={twMerge('bg-dust mb-2 w-full rounded-md', className)}
+			className={twMerge('bg-dust mb-2 w-full rounded-xl', className)}
 			{...properties}
 		>
 			<Title size={26} weight='bold' className='mb-2'>

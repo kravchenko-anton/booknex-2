@@ -1,5 +1,5 @@
-import type { UserUpdatePasswordPayload } from '@booknex/global/services-types/user-types'
 import { MinLength } from 'class-validator'
+import type { UserUpdatePasswordPayload } from '../../../../../libs/global/services-types/user-types'
 
 export class UserUpdatePasswordDto implements UserUpdatePasswordPayload {
 	@MinLength(8, {

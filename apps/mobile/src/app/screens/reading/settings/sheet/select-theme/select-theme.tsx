@@ -28,7 +28,7 @@ const SelectTheme: FC = () => {
 									: theme.colorPalette.background.normal,
 							backgroundColor: theme.colorPalette.background.normal
 						}}
-						className='mb-8 flex-row items-center justify-between rounded-md border-2 p-4'
+						className='mb-8 flex-row items-center justify-between rounded-xl border-2 p-4'
 					>
 						<Title
 							style={{
@@ -41,16 +41,16 @@ const SelectTheme: FC = () => {
 						</Title>
 						<View className='flex-row items-center'>
 							{Object.values(theme.colorPalette).map(background => {
-								if (typeof background === 'string') return null
-								return (
-									<View
-										key={background.normal}
-										style={{
-											backgroundColor: background.normal
-										}}
-										className='ml-[-8px] h-8 w-8 rounded-full'
-									/>
-								)
+								if (typeof background !== 'string')
+									return (
+										<View
+											key={background.normal}
+											style={{
+												backgroundColor: background.normal
+											}}
+											className='ml-[-8px] h-8 w-8 rounded-full'
+										/>
+									)
 							})}
 						</View>
 					</PressableContainer>

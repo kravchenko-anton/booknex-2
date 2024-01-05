@@ -3,30 +3,38 @@
 	"version": "0.0.1",
 	"private": true,
 	"dependencies": {
+		"@react-native-async-storage/async-storage": "*",
+		
+		
 		"react": "*",
 		"react-native": "*",
 		"react-native-svg": "*",
-		"react-native-bootsplash": "*",
 		"nativewind": "*",
 		"tailwind-merge": "*",
+		"@gorhom/bottom-sheet": "*",
+		"react-native-bootsplash": "*",
 		"react-native-reanimated": "*",
-		"react-native-safe-area-context": "*",
 		"react-native-gesture-handler": "*",
-		"@react-native-async-storage/async-storage": "*",
+		"react-native-safe-area-context": "*",
 		"react-native-webview": "*",
 		"react-native-toast-message": "*",
 		"react-native-encrypted-storage": "*",
 		"react-native-linear-gradient": "*",
+		"react-native-image-picker": "*",
+		
+		
 		"react-native-screens": "*",
 		"@react-navigation/native": "*",
 		"@react-navigation/native-stack": "*",
-		"react-native-image-picker": "*",
+		
 		"react-hook-form": "*",
-		"react-redux": "*",
-		"@reduxjs/toolkit": "*",
 		"@hookform/resolvers": "*",
 		"zod": "*",
+		
 		"redux-persist": "*",
+		"react-redux": "*",
+		"@reduxjs/toolkit": "*",
+		
 		"@tanstack/react-query": "*",
 		"@tanstack/query-async-storage-persister": "*",
 		"@tanstack/react-query-persist-client": "*"

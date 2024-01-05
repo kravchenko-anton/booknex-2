@@ -38,7 +38,7 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 		<>
 			<PressableContainer
 				onPress={() => setActive(!active)}
-				className='relative flex-row items-center rounded-md p-2 px-3'
+				className='relative flex-row items-center rounded-xl p-2 px-3'
 				style={{
 					backgroundColor: properties.backgroundColor || 'transparent'
 				}}
@@ -65,7 +65,7 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 						backgroundColor: properties.backgroundColor || 'transparent'
 					}
 				]}
-				className='z-50 max-h-[200px] rounded-md'
+				className='z-50 max-h-[200px] rounded-xl'
 			>
 				<ScrollView>
 					{properties.elements.map(element => {
