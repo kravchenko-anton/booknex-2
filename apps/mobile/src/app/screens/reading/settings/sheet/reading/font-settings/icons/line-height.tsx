@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/animated-press/animated-press'
+import AnimatedPress from '@/components/animated-press/animated-press'
 import type { PressableDefaultProperties } from '@/components/component-types'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -15,10 +15,7 @@ const LineHeightIcon: FC<LineHeightIconProperties> = ({
 	lineCount,
 	...properties
 }) => (
-	<PressableContainer
-		className='m-0 h-[30px] justify-between p-0'
-		{...properties}
-	>
+	<AnimatedPress className='m-0 h-[30px] justify-between p-0' {...properties}>
 		{Array.from({ length: lineCount }).map((_, index) => {
 			return (
 				<View
@@ -30,7 +27,7 @@ const LineHeightIcon: FC<LineHeightIconProperties> = ({
 				/>
 			)
 		})}
-	</PressableContainer>
+	</AnimatedPress>
 )
 
 export default LineHeightIcon

@@ -7,7 +7,7 @@ export const Color = {
 	secondary: '#685369' as '#685369',
 
 	black: '#000000' as '#000000',
-	gray: '#959caf' as '#959caf',
+	gray: '#9F9F9F' as '#9F9F9F',
 	white: '#ffffff' as '#ffffff',
 
 	danger: '#DC3F41' as '#DC3F41',

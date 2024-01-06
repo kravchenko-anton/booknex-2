@@ -25,7 +25,6 @@ export type TypeRootStackParameterList = {
 	Search: undefined
 	Settings: undefined
 	Collection: { id: number }
-	UpdateProfile: undefined
 	Welcome: undefined
 }
 

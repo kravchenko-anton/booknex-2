@@ -9,5 +9,5 @@ export interface Types
 	extends Omit<ImageDefaultProperties, 'source'>,
 		DimensionsType {
 	fullSize?: boolean
-	url: string
+	url?: string
 }

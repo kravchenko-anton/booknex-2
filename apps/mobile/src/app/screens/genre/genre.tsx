@@ -1,27 +1,23 @@
-import {
-	BookCard,
-	PressableContainer,
-	RainbowBookCard,
-	ScrollLayout
-} from '@/components'
+import { AnimatedPress, BookCard, RainbowBookCard } from '@/components'
+import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 import { useGenre } from '@/screens/genre/useGenre'
-import { StatusBar } from 'react-native'
-import { Color } from 'ui/colors'
 import { Flatlist, Image, Loader, Title } from 'ui/components'
-import * as Header from '../../components/header/header'
 
 const Genre = () => {
 	const { navigate, genre } = useGenre()
 	if (!genre) return <Loader />
 	// TODO: возможно вынести всё flatlist в отдельный компонент
 	return (
-		<ScrollLayout>
-			<Header.Head>
-				<Header.Title text={genre.name} />
-			</Header.Head>
-			<StatusBar barStyle='light-content' backgroundColor={Color.background} />
+		<Layout.Wrapper
+			header={
+				<Layout.Header>
+					<Layout.BackWithTitle title={genre.name} />
+				</Layout.Header>
+			}
+		>
 			<Flatlist
 				horizontal
+				mt={0}
 				title='Best Sellers'
 				data={genre.bestSellers}
 				renderItem={({ item: book }) => (
@@ -57,24 +53,24 @@ const Genre = () => {
 				title='Best Authors'
 				data={genre.bestAuthors}
 				renderItem={({ item: author }) => (
-					<PressableContainer
-						className='w-[120px]'
+					<AnimatedPress
+						className='w-[100px]'
 						onPress={() => navigate.author(author.id)}
 					>
-						<Image url={author.picture} width={120} height={120} />
+						<Image url={author.picture} width={100} height={100} />
 						<Title size={16} center weight='bold'>
 							{author.name}
 						</Title>
-					</PressableContainer>
+					</AnimatedPress>
 				)}
 			/>
-			{genre.bestSellersFromSimilar.map(simular => (
+			{genre.bestSellersFromSimilar.map(similar => (
 				<Flatlist
-					key={simular.name}
-					title={simular.name}
+					key={similar.name}
+					title={similar.name}
 					horizontal
 					mt={30}
-					data={simular.majorBooks}
+					data={similar.majorBooks}
 					renderItem={({ item: book }) => (
 						<BookCard
 							onPress={() => navigate.book(book.id)}
@@ -86,7 +82,7 @@ const Genre = () => {
 					)}
 				/>
 			))}
-		</ScrollLayout>
+		</Layout.Wrapper>
 	)
 }
 

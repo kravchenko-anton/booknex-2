@@ -9,7 +9,7 @@ const RecommendationList: FC<RecommendationProperties> = ({
 	data = [],
 	...properties
 }) => {
-	if (data?.length === 0) return null
+	if (data.length === 0) return null
 	return (
 		<View className='bg-shade m-2 mb-0 mt-4 items-center rounded-xl p-2 px-0'>
 			<Icon icon={ThumbsUp} size='md' className=' h-[45px] w-[45px] p-2' />

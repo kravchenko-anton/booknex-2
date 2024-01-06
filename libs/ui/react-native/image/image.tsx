@@ -9,7 +9,7 @@ const Image: FC<Types> = ({
 	height = 100,
 	width = 100,
 	borderRadius = 12,
-	url,
+	url = '',
 	className,
 	style,
 	fullSize = false,

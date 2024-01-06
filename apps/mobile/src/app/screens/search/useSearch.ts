@@ -8,7 +8,7 @@ export const useSearch = () => {
 		['search', debouncedSearch],
 		() => catalogService.search(debouncedSearch),
 		{
-			enabled: !!debouncedSearch && debouncedSearch.length > 3
+			enabled: !!debouncedSearch && debouncedSearch.length >= 3
 		}
 	)
 	return { books, clearSearch, booksLoading, control, searchTerm }

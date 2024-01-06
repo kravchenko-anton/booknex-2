@@ -1,9 +1,10 @@
 import BookCard from '@/components/book-card/book-card'
-import ScrollLayout from '@/components/layout/scroll-layout'
+import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 import { useTypedNavigation } from '@/hooks'
 import RecommendationList from '@/screens/featured/recommendation-list/recommendation-list'
 import { catalogService } from '@/services/catalog/catalog-service'
 import { useQuery } from '@tanstack/react-query'
+import { Search } from 'icons'
 import { Button, Flatlist, Loader } from 'ui/components'
 //TODO: добавить тут shelves
 const Featured = () => {
@@ -13,7 +14,18 @@ const Featured = () => {
 	const { navigate } = useTypedNavigation()
 	if (!featured) return <Loader />
 	return (
-		<ScrollLayout>
+		<Layout.Wrapper
+			header={
+				<Layout.Header>
+					<Layout.Logo className='pl-2' />
+					<Layout.Icon
+						icon={Search}
+						className='px-2'
+						onPress={() => navigate('Search')}
+					/>
+				</Layout.Header>
+			}
+		>
 			<RecommendationList
 				data={featured.recommendations}
 				renderItem={({ item: book }) => (
@@ -37,7 +49,6 @@ const Featured = () => {
 						}}
 						size='md'
 						variant='foreground'
-						className='px-4'
 					>
 						{genre.name}
 					</Button>
@@ -47,7 +58,7 @@ const Featured = () => {
 			{
 				// TODO: сделать колекцию, обновление своих рекомендаций, жанры относительно фаворитных жанров
 			}
-		</ScrollLayout>
+		</Layout.Wrapper>
 	)
 }
 

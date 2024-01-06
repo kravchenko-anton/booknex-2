@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/animated-press/animated-press'
+import AnimatedPress from '@/components/animated-press/animated-press'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { BottomSheetContext } from '@/providers/bottom-sheet-provider'
@@ -23,7 +23,7 @@ const ReadingSettings: FC = () => {
 				{[
 					...themePack.slice(1, 3).map(theme => {
 						return (
-							<PressableContainer
+							<AnimatedPress
 								key={`${theme.slug}-${theme.title}`}
 								style={{
 									backgroundColor: theme.colorPalette.background.normal,
@@ -42,10 +42,10 @@ const ReadingSettings: FC = () => {
 								>
 									{theme.title}
 								</Title>
-							</PressableContainer>
+							</AnimatedPress>
 						)
 					}),
-					<PressableContainer
+					<AnimatedPress
 						key='other theme'
 						style={{
 							backgroundColor: Color.shade
@@ -67,7 +67,7 @@ const ReadingSettings: FC = () => {
 							color={Color.white}
 							className='ml-2 mt-1'
 						/>
-					</PressableContainer>
+					</AnimatedPress>
 				]}
 			</View>
 			<FontSettings />

@@ -3,14 +3,12 @@ import type { FC, PropsWithChildren, ReactNode } from 'react'
 import { createContext, useMemo, useState } from 'react'
 
 interface BottomSheetContextProperties {
-	bottomSheet:
-		| {
-				component: ReactNode
-				snapPoints: (string | number)[]
-				backgroundColor?: string
-				indicatorColor?: string
-		  }
-		| {}
+	bottomSheet: {
+		component: ReactNode
+		snapPoints: (string | number)[]
+		backgroundColor?: string
+		indicatorColor?: string
+	} | null
 	showBottomSheet: (bottomSheet: {
 		component: ReactNode
 		snapPoints: number[]

@@ -20,7 +20,7 @@ export const settings: {
 	},
 	size: {
 		sm: 18,
-		md: 26,
-		lg: 30
+		md: 24,
+		lg: 28
 	}
 }

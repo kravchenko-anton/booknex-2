@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/animated-press/animated-press'
+import AnimatedPress from '@/components/animated-press/animated-press'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
@@ -19,7 +19,7 @@ const SelectTheme: FC = () => {
 			}}
 			renderItem={({ item: theme }) => {
 				return (
-					<PressableContainer
+					<AnimatedPress
 						onPress={() => changeTheme(theme.slug)}
 						style={{
 							borderColor:
@@ -53,7 +53,7 @@ const SelectTheme: FC = () => {
 									)
 							})}
 						</View>
-					</PressableContainer>
+					</AnimatedPress>
 				)
 			}}
 		/>

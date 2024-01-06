@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/animated-press/animated-press'
+import AnimatedPress from '@/components/animated-press/animated-press'
 import type { ViewDefaultProperties } from '@/components/component-types.ts'
 import { ChevronDown } from 'icons'
 import type { FC } from 'react'
@@ -36,7 +36,7 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 	})
 	return (
 		<>
-			<PressableContainer
+			<AnimatedPress
 				onPress={() => setActive(!active)}
 				className='relative flex-row items-center rounded-xl p-2 px-3'
 				style={{
@@ -53,7 +53,7 @@ const Select: FC<SelectProperties> = ({ ...properties }) => {
 					height={25}
 					className='ml-2 mt-1 h-6 w-6'
 				/>
-			</PressableContainer>
+			</AnimatedPress>
 			{/* //TODO: сделать чтобы тут авторматом настраивалась высота и чтобы елемент не выходит вниз за предел екрана */}
 			<AnimatedPressable
 				ref={reference}

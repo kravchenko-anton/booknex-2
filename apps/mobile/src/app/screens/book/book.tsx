@@ -2,7 +2,7 @@ import { BookCard, ScrollLayout } from '@/components'
 import { useTypedNavigation } from '@/hooks'
 import { useBook } from '@/screens/book/useBook'
 import { Alert, Pen, Share as ShareIcon, Text } from 'icons'
-import { Share, StatusBar, View } from 'react-native'
+import { Share, View } from 'react-native'
 import { Color } from 'ui/colors'
 import {
 	Button,
@@ -21,7 +21,6 @@ const Book = () => {
 	if (!book) return <Loader />
 	return (
 		<ScrollLayout statusBarBackgroundColor={Color.shade}>
-			<StatusBar barStyle='light-content' backgroundColor={Color.shade} />
 			<View className='bg-shade z-50 items-center justify-between overflow-hidden rounded-b-3xl px-4 pb-6 pt-2'>
 				<Header.Head>
 					<Header.DropDown>

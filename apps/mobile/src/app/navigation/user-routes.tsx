@@ -9,7 +9,6 @@ import Featured from '@/screens/featured/featured'
 import Genre from '@/screens/genre/genre'
 import Library from '@/screens/library/library'
 import Settings from '@/screens/profile/settings/settings'
-import updateProfile from '@/screens/profile/update-profile/update-profile'
 import { Reader } from '@/screens/reading/reader'
 import SearchCatalog from '@/screens/search/search'
 import Book from '../screens/book/book'
@@ -48,10 +47,6 @@ export const routes: IRoute[] = [
 	{
 		name: 'Profile',
 		component: Profile
-	},
-	{
-		name: 'UpdateProfile',
-		component: updateProfile
 	},
 	{
 		name: 'Reader',

@@ -1,4 +1,5 @@
-import { BookCard, RainbowBookCard, ScrollLayout } from '@/components'
+import { BookCard, RainbowBookCard } from '@/components'
+import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import SearchField from '@/screens/explore/search-field'
 import { catalogService } from '@/services/catalog/catalog-service'
@@ -13,7 +14,13 @@ const Explore = () => {
 	const { navigate } = useTypedNavigation()
 	if (!explore) return <Loader />
 	return (
-		<ScrollLayout className='h-full'>
+		<Layout.Wrapper
+			header={
+				<Layout.Header>
+					<Layout.BackWithTitle title='Explore' />
+				</Layout.Header>
+			}
+		>
 			<SearchField />
 			<Flatlist
 				title='Best Sellers'
@@ -55,7 +62,7 @@ const Explore = () => {
 					/>
 				)}
 			/>
-		</ScrollLayout>
+		</Layout.Wrapper>
 	)
 }
 

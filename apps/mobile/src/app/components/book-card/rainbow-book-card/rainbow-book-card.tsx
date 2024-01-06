@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/animated-press/animated-press'
+import AnimatedPress from '@/components/animated-press/animated-press'
 import type { RainbowBookCardProperties } from '@/components/book-card/rainbow-book-card/types'
 import type { Style } from '@/types/global'
 import type { FC } from 'react'
@@ -11,7 +11,7 @@ const RainbowBookCard: FC<RainbowBookCardProperties> = ({
 	style,
 	...properties
 }) => (
-	<PressableContainer
+	<AnimatedPress
 		className='h-[300px] w-[300px] justify-between rounded-xl p-4'
 		style={[
 			{
@@ -36,7 +36,7 @@ const RainbowBookCard: FC<RainbowBookCardProperties> = ({
 		<Title size={16} numberOfLines={3} color={Color.white} weight='light'>
 			{properties.description}
 		</Title>
-	</PressableContainer>
+	</AnimatedPress>
 )
 
 export default RainbowBookCard

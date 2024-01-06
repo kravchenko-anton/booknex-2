@@ -1,9 +1,9 @@
-import { ScrollLayout } from '@/components'
 import BookCard from '@/components/book-card/book-card'
+import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 import { useTypedNavigation } from '@/hooks'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
-import { Flatlist, Loader, Title } from 'ui/components'
+import { Flatlist, Loader } from 'ui/components'
 
 const Library = () => {
 	const { data: library } = useQuery(['user-library'], () =>
@@ -12,10 +12,13 @@ const Library = () => {
 	const { navigate } = useTypedNavigation()
 	if (!library) return <Loader />
 	return (
-		<ScrollLayout className='p-2'>
-			<Title size={26} weight='bold'>
-				Library
-			</Title>
+		<Layout.Wrapper
+			header={
+				<Layout.Header>
+					<Layout.BackWithTitle title='Library' />
+				</Layout.Header>
+			}
+		>
 			<Flatlist
 				mt={5}
 				horizontal
@@ -57,7 +60,7 @@ const Library = () => {
 					/>
 				)}
 			/>
-		</ScrollLayout>
+		</Layout.Wrapper>
 	)
 }
 

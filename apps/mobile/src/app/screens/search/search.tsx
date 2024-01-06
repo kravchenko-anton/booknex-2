@@ -1,4 +1,4 @@
-import { PressableContainer } from '@/components'
+import { AnimatedPress } from '@/components'
 import { settings } from '@/components/book-card/settings'
 import Layout from '@/components/layout/layout'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
@@ -74,7 +74,7 @@ const Search = () => {
 							}}
 							data={books}
 							renderItem={({ item: book }) => (
-								<PressableContainer
+								<AnimatedPress
 									onPress={() => {
 										navigate('Book', { id: book.id })
 									}}
@@ -91,7 +91,7 @@ const Search = () => {
 									<Title color={Color.vibrant} size={16} weight='semiBold'>
 										{book.author.name}
 									</Title>
-								</PressableContainer>
+								</AnimatedPress>
 							)}
 						/>
 					) : (

@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/animated-press/animated-press'
+import AnimatedPress from '@/components/animated-press/animated-press'
 import type { PressableDefaultProperties } from '@/components/component-types'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -13,7 +13,7 @@ const PageMarginIcon: FC<PageMarginIconProperties> = ({
 	backgroundColor = Color.white,
 	...properties
 }) => (
-	<PressableContainer
+	<AnimatedPress
 		className='border-gray m-0 h-[32px] justify-between border-2 border-b-0'
 		{...properties}
 	>
@@ -30,7 +30,7 @@ const PageMarginIcon: FC<PageMarginIconProperties> = ({
 					/>
 				)
 			})}
-	</PressableContainer>
+	</AnimatedPress>
 )
 
 export default PageMarginIcon

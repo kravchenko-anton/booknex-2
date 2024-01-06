@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { PressableContainer } from '../../../../apps/mobile/src/app/components'
+import { AnimatedPress } from '../../../../apps/mobile/src/app/components'
 import { InnerColor } from '../../colors'
 import Loader from '../../react/loader/loader'
 import Title from '../title/title'
@@ -18,13 +18,13 @@ const Button = ({
 	...properties
 }: ButtonProperties) => {
 	return (
-		<PressableContainer
+		<AnimatedPress
 			disabled={disabled || isLoading}
 			className={twMerge(
 				'flex-row items-center justify-center rounded-xl',
+				settings.padding[size],
 				settings.colors[variant],
 				(disabled || isLoading) && 'opacity-70',
-				settings.padding[size],
 				className
 			)}
 			{...properties}
@@ -51,7 +51,7 @@ const Button = ({
 			>
 				{children}
 			</Title>
-		</PressableContainer>
+		</AnimatedPress>
 	)
 }
 

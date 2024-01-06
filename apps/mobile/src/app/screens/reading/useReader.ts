@@ -127,7 +127,7 @@ export const useReader = (id: number) => {
 		${scrollProgressDetect}
 		`
 	useEffect(() => {
-		const unsubscribe = addListener('beforeRemove', e => {
+		const unsubscribe = addListener('beforeRemove', () => {
 			updateReadingProgress({
 				id,
 				progress: readerState.progress,

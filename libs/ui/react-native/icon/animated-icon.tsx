@@ -1,4 +1,4 @@
-import PressableContainer from '@/components/animated-press/animated-press'
+import AnimatedPress from '@/components/animated-press/animated-press'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -16,7 +16,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 	noPadding = false,
 	...properties
 }) => (
-	<PressableContainer
+	<AnimatedPress
 		className={twMerge(
 			'items-center justify-center rounded-2xl',
 			properties.disabled && 'opacity-50',
@@ -32,7 +32,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 			strokeWidth={fatness}
 			stroke={InnerColor[variant]}
 		/>
-	</PressableContainer>
+	</AnimatedPress>
 )
 
 export default memo(AnimatedIcon)

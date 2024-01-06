@@ -38,19 +38,19 @@ const initialState = {
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
 	padding: 14 as 14 | 8 | 20,
 	//TODO: переделать на более оптимальный вариант
-	books: [] as
-		| null
-		| {
-				id: number
-				lastProgress: {
-					location: number
-					progress: number
-				}
-		  }[]
+	books: [] as NonNullable<
+		{
+			id: number
+			lastProgress: {
+				location: number
+				progress: number
+			}
+		}[]
+	>
 }
 
 const ReadingSettingsSlice = createSlice({
-	name: 'readingSettings',
+	name: 'reading-settings',
 	initialState,
 	reducers: {
 		changeTheme: (state, { payload }: PayloadAction<ThemePackType['slug']>) => {

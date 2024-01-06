@@ -25,9 +25,6 @@ const options = () => ({
 
 const Toast: FC = () => (
 	<RnToast
-		autoHide={true}
-		visibilityTime={3000}
-		position='top'
 		config={{
 			success: properties => (
 				<BaseToast
