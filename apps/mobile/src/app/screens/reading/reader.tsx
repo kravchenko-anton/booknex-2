@@ -35,12 +35,20 @@ export function Reader() {
 		if (!reference.current) return
 		reference.current.injectJavaScript(injectStyle(styleTag))
 	}, [styleTag])
+
+	const goToChapter = (chapterId: string) => {
+		if (!reference.current) return
+		reference.current.injectJavaScript(`window.location.hash = '${chapterId}'`)
+	}
 	const [defaultTheme] = useState(styleTag)
 	if (!ebook || !injectedJavaScriptBeforeLoad || !styleTag) return <Loader />
 	return (
 		<SafeAreaView className='flex-1'>
 			<RNView className='m-0 h-screen w-full items-center justify-center p-0'>
 				<TouchableWithoutFeedback onPress={doubleTap}>
+					{
+						//TODO: вынести в отдельный компонент и всю эту логику вместе с парами и тд
+					}
 					<WebView
 						ref={reference}
 						menuItems={[]}
@@ -68,6 +76,7 @@ export function Reader() {
 				</TouchableWithoutFeedback>
 			</RNView>
 			<ReadingUi
+				goToChapter={goToChapter}
 				chapters={ebook.chapters as unknown as any}
 				visible={readerUiVisible}
 				progress={progress}

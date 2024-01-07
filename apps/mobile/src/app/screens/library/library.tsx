@@ -48,6 +48,7 @@ const Library = () => {
 			/>
 			<Flatlist
 				mt={5}
+				className='mb-4'
 				horizontal
 				title='Finished'
 				data={library.finishedBooks}

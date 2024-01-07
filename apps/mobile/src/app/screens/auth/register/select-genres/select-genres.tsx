@@ -57,6 +57,7 @@ const SelectGenres: FC = () => {
 				</View>
 			</View>
 			<Button
+				className='mb-2'
 				disabled={selectGenres.length < 3}
 				variant='secondary'
 				size='lg'

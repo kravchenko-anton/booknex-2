@@ -16,6 +16,7 @@ const ReadingUi: FC<{
 	title: string
 	visible: boolean
 	progress: number
+	goToChapter: (chapterId: string) => void
 	chapters: {
 		name: string
 		children: {
@@ -23,10 +24,17 @@ const ReadingUi: FC<{
 			link: string
 		}[]
 	}[]
-}> = ({ visible = false, title = '', progress = 0, chapters = [] }) => {
+}> = ({
+	visible = false,
+	title = '',
+	goToChapter,
+	progress = 0,
+	chapters = []
+}) => {
 	const { goBack } = useTypedNavigation()
-	const { showBottomSheet } = useContext(BottomSheetContext)
 	const { bottom } = useSafeAreaInsets()
+	//TODO: вынести в рут компонентготовые функции для иконок с логикой без лишних пропсов, так-же и с цветовой схемой
+	const { showBottomSheet } = useContext(BottomSheetContext)
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	const showAnimation = useAnimatedStyle(() => {
 		return {
@@ -85,7 +93,9 @@ const ReadingUi: FC<{
 						color={colorScheme.colorPalette.text}
 						onPress={() =>
 							showBottomSheet({
-								component: <ChaptersList chapters={chapters} />,
+								component: (
+									<ChaptersList chapters={chapters} goToChapter={goToChapter} />
+								),
 								snapPoints: [WINDOW_HEIGHT / 2, WINDOW_HEIGHT / 1.4]
 							})
 						}

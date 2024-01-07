@@ -15,6 +15,9 @@ const Explore = () => {
 	if (!explore) return <Loader />
 	return (
 		<Layout.Wrapper
+			contentContainerStyle={{
+				marginTop: 10
+			}}
 			header={
 				<Layout.Header>
 					<Layout.BackWithTitle title='Explore' />
