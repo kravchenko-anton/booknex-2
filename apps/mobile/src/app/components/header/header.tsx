@@ -9,11 +9,7 @@ import { Color } from 'ui/colors'
 import { AnimatedIcon, Title as TitleComponent } from 'ui/components'
 import type { IconProperties } from '../../../../../../libs/ui/react-native/icon/types'
 
-export const Head: FC<HeaderProperties> = ({
-	style,
-	children,
-	...properties
-}) => {
+const Head: FC<HeaderProperties> = ({ style, children, ...properties }) => {
 	const { goBack } = useTypedNavigation()
 	return (
 		<View
@@ -27,7 +23,7 @@ export const Head: FC<HeaderProperties> = ({
 	)
 }
 
-export const Sharing: FC<{
+const Sharing: FC<{
 	message: string
 }> = ({ message }) => {
 	return (
@@ -35,7 +31,7 @@ export const Sharing: FC<{
 	)
 }
 
-export const Icon: FC<
+const Icon: FC<
 	Omit<
 		IconProperties,
 		'fullRounded' | 'fatness' | 'noPadding' | 'variant' | 'size'
@@ -44,7 +40,7 @@ export const Icon: FC<
 	return <AnimatedIcon size='md' {...properties} />
 }
 
-export const Title: FC<{ text: string }> = ({ text }) => {
+const Title: FC<{ text: string }> = ({ text }) => {
 	return (
 		<TitleComponent size={24} color={Color.white} weight='bold'>
 			{text}
@@ -52,10 +48,12 @@ export const Title: FC<{ text: string }> = ({ text }) => {
 	)
 }
 
-export const DropDown: FC<PropsWithChildren> = ({ children }) => {
+const DropDown: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<Menu position='right' size='md'>
 			{children}
 		</Menu>
 	)
 }
+
+export { DropDown, Head, Icon, Sharing, Title }

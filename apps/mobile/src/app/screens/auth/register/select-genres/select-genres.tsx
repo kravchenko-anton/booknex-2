@@ -1,4 +1,4 @@
-import * as Header from '@/components/header/header'
+import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 
 import { useTypedNavigation } from '@/hooks'
 import { genreService } from '@/services/genre/genre-service'
@@ -15,37 +15,48 @@ const SelectGenres: FC = () => {
 	const { navigate } = useTypedNavigation()
 	if (!genres) return <Loader />
 	return (
-		<View className='h-full p-2'>
-			<Header.Head />
+		<Layout.Wrapper
+			className='h-full p-2 py-4'
+			contentContainerStyle={{
+				justifyContent: 'space-between',
+				height: '100%'
+			}}
+			header={
+				<Layout.Header>
+					<Layout.BackWithTitle title='Sign up' />
+				</Layout.Header>
+			}
+		>
 			<View>
-				<Title size={34} weight='bold' className='mb-2' numberOfLines={2}>
-					Choose your favorite genres
-				</Title>
-				<Title size={18} weight='light' color={Color.gray} className='mb-4'>
-					Select at least 3 genres
-				</Title>
-			</View>
-			<View className='flex w-full flex-row flex-wrap '>
-				{genres.map(genre => (
-					<Button
-						onPress={() => {
-							selectGenres.includes(genre.name)
-								? setSelectGenres(selectGenres.filter(g => g !== genre.name))
-								: setSelectGenres([...selectGenres, genre.name])
-						}}
-						key={genre.id}
-						size='md'
-						variant={
-							selectGenres.includes(genre.name) ? 'primary' : 'foreground'
-						}
-						className='mb-2 mr-3'
-					>
-						{genre.name}
-					</Button>
-				))}
+				<View>
+					<Title size={34} weight='bold' className='mb-2' numberOfLines={2}>
+						Choose your favorite genres
+					</Title>
+					<Title size={18} weight='light' color={Color.gray} className='mb-4'>
+						Select at least 3 genres
+					</Title>
+				</View>
+				<View className='flex w-full flex-row flex-wrap '>
+					{genres.map(genre => (
+						<Button
+							onPress={() => {
+								selectGenres.includes(genre.name)
+									? setSelectGenres(selectGenres.filter(g => g !== genre.name))
+									: setSelectGenres([...selectGenres, genre.name])
+							}}
+							key={genre.id}
+							size='md'
+							variant={
+								selectGenres.includes(genre.name) ? 'primary' : 'foreground'
+							}
+							className='mb-2 mr-3'
+						>
+							{genre.name}
+						</Button>
+					))}
+				</View>
 			</View>
 			<Button
-				className='mt-auto'
 				disabled={selectGenres.length < 3}
 				variant='secondary'
 				size='lg'
@@ -57,7 +68,7 @@ const SelectGenres: FC = () => {
 			>
 				Next step
 			</Button>
-		</View>
+		</Layout.Wrapper>
 	)
 }
 

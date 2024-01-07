@@ -3,14 +3,16 @@ import type { FC, PropsWithChildren } from 'react'
 import { memo } from 'react'
 import { StatusBar, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { twMerge } from 'tailwind-merge'
 import { Color } from 'ui/colors'
 
 const Layout: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 	children,
+	className,
 	...properties
 }) => (
 	<SafeAreaView edges={['right', 'top', 'left']} className='flex-1'>
-		<View className='flex-1 p-2' {...properties}>
+		<View className={twMerge('flex-1 p-2', className)} {...properties}>
 			{children}
 		</View>
 		<StatusBar backgroundColor={Color.background} />

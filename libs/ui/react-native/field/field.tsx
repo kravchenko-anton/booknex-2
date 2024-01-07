@@ -30,10 +30,11 @@ const Field = <T extends Record<string, any>>({
 					)}
 				>
 					<TextInput
+						className='text-lg'
 						autoCapitalize='none'
 						onBlur={onBlur}
 						onChangeText={onChange}
-						placeholderTextColor={InnerColor[variant]}
+						placeholderTextColor={Color.gray}
 						defaultValue={properties.defaultValue}
 						value={value}
 						keyboardAppearance='dark'
@@ -47,9 +48,9 @@ const Field = <T extends Record<string, any>>({
 					{Icon && (
 						<Icon
 							width={20}
-							color={InnerColor[variant]}
+							color={Color.gray}
 							height={20}
-							className=' absolute left-2.5'
+							className='absolute left-2.5'
 						/>
 					)}
 				</View>

@@ -1,12 +1,13 @@
-import { Layout } from '@/components'
-import { AnimatedView } from '@/components/animated'
-import * as Header from '@/components/header/header'
+import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 import { useAction, useTypedRoute } from '@/hooks'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
 import type { RegisterSchemaType } from '@/screens/auth/register/validation'
 import { registerSchema } from '@/screens/auth/register/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Register as RegisterIllustration } from 'global/illustrations'
+import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
+import { View } from 'react-native'
 import { Color } from 'ui/colors'
 import { Button, Field, Title } from 'ui/components'
 
@@ -23,37 +24,57 @@ const Register = () => {
 		register({ ...data, genres: selectGenres })
 	}
 	return (
-		<Layout className='h-full'>
-			<AnimatedView>
-				<Header.Head />
-				<Title size={34} weight='bold' className='mb-2 mt-[20%]'>
-					Sign up
-				</Title>
-				<Title size={18} weight='light' color={Color.gray} className='mb-4'>
-					Enter your credentials to continue
-				</Title>
-				<Field
-					control={control}
-					name='email'
-					keyboardType='email-address'
-					placeholder='Email'
+		<Layout.Wrapper
+			className=' px-2'
+			contentContainerStyle={{
+				justifyContent: 'center'
+			}}
+			header={
+				<Layout.Header>
+					<Layout.BackWithTitle title='Sign up' />
+				</Layout.Header>
+			}
+		>
+			<View className='mt-4'>
+				<RegisterIllustration
+					width={200}
+					height={200}
+					className='mx-auto mt-8 w-full'
 				/>
-				<Field
-					control={control}
-					name='password'
-					placeholder='Password'
-					secureTextEntry
-				/>
-				<Button
-					size='md'
-					className='mt-1'
-					variant='primary'
-					onPress={handleSubmit(onSubmit)}
-				>
-					Sign up
-				</Button>
-			</AnimatedView>
-		</Layout>
+				<View className='mt-2 items-center'>
+					<Title size={32} center weight='bold'>
+						Welcome to the club
+					</Title>
+					<Title size={18} center weight='light' color={Color.gray}>
+						Enter your credentials to continue
+					</Title>
+					<View className='mt-6 w-full'>
+						<Field
+							icon={Mail}
+							control={control}
+							name='email'
+							keyboardType='email-address'
+							placeholder='Email'
+						/>
+						<Field
+							icon={Password}
+							control={control}
+							name='password'
+							placeholder='Password'
+							secureTextEntry
+						/>
+						<Button
+							size='md'
+							className='mb-4 mt-1'
+							variant='primary'
+							onPress={handleSubmit(onSubmit)}
+						>
+							Sign up
+						</Button>
+					</View>
+				</View>
+			</View>
+		</Layout.Wrapper>
 	)
 }
 

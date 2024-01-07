@@ -9,16 +9,17 @@ const Welcome: FC = () => {
 	//TODO: сделать нормальный welcome скрин а не такую простую залупу
 	const { navigate } = useTypedNavigation()
 	return (
-		<Layout className='flex h-full justify-end'>
-			<View className='h-1/2 justify-between'>
+		<Layout className='justify-end'>
+			<View className='h-4/5 justify-between'>
 				<View>
 					<WelcomeIllustration
-						width={250}
-						height={250}
-						className='mx-auto w-full'
+						width={300}
+						height={300}
+						className='mx-auto w-full p-0'
 					/>
-					<Title numberOfLines={2} center size={32} weight='bold'>
-						Welcome to Booker
+					<Title numberOfLines={2} center size={26} weight='bold'>
+						Welcome to Booker, {'\n'}
+						best place to read books
 					</Title>
 				</View>
 
@@ -35,7 +36,7 @@ const Welcome: FC = () => {
 					<Button
 						onPress={() => navigate('Login')}
 						size='md'
-						className='mt-2'
+						className='mb-2 mt-2.5'
 						variant='foreground'
 						width='100%'
 					>

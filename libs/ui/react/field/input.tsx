@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { InnerColor } from '../../colors'
+import { Color } from '../../colors'
 import { settings } from './settings'
 import type { InputProperties } from './types'
 
@@ -30,7 +30,7 @@ const Input: FC<InputProperties> = ({
 				<Icon
 					width={20}
 					height={20}
-					color={InnerColor[variant]}
+					color={Color.gray}
 					className='absolute left-2.5'
 				/>
 			)}
