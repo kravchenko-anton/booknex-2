@@ -8,6 +8,7 @@ import { Color } from '@/ui/colors'
 import { Button, Field } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import Image from 'next/image'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import CreateAuthorPopup from './popup/create'
@@ -65,30 +66,21 @@ const PageDetails: FC = () => {
 			{!authors || isLoading ? (
 				<div>Loading...</div>
 			) : (
-				<table className='bg-shade mt-4 w-full rounded-xl'>
-					<thead>
-						<tr className='border-foreground border-b-2'>
-							<th className='min-w-[40px]   p-3'>Id</th>
-							<th className='min-w-[100px]  p-3'>Picture</th>
-							<th className='min-w-[140px]  p-3'>Name</th>
-							<th className='min-w-[200px]  p-3'>Description</th>
-							<th className='min-w-[150px]  p-3'>Books</th>
-							<th className='min-w-[100px] p-3'>Actions</th>
-						</tr>
-					</thead>
-
+				<table className='mt-4 w-full rounded-xl'>
 					<tbody>
 						{authors.map(author => {
 							return (
 								<tr
 									key={author.description + author.name}
-									className='border-foreground h-[90px]  items-center justify-center border-b-2'
+									className='border-b-foreground h-[90px] items-center justify-center  rounded-xl border-b-2 '
 								>
-									<td className='w-[40px] max-w-[40px] text-center '>
+									<td className='w-[40px]  text-center text-2xl'>
 										{author.id}
 									</td>
 									<td className='w-[100px] max-w-[100px]'>
-										<img
+										<Image
+											width={80}
+											height={80}
 											src={getFileUrl(author.picture)}
 											className='bottom-shade mx-auto w-[80px] rounded-xl'
 											alt={author.name}
@@ -115,10 +107,12 @@ const PageDetails: FC = () => {
 									</td>
 									<td className=' flex min-w-[200px] max-w-full overflow-y-scroll  p-2'>
 										{author.books.map(book => (
-											<img
+											<Image
+												width={100}
+												height={100}
 												key={book.picture}
 												src={getFileUrl(book.picture)}
-												className='w-[100px] rounded-xl'
+												className='mr-2 rounded-xl'
 												alt={author.name}
 											/>
 										))}

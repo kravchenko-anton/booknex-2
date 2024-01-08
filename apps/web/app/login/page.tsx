@@ -1,5 +1,6 @@
 'use client'
 import { useAction } from '@/hooks/useAction'
+import { Mail, Password } from '@/icons'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
 import { Field } from '@/ui/components'
 import { useForm } from 'react-hook-form'
@@ -17,12 +18,14 @@ export default function Page() {
 			<div className='bg-shade w-[450px] rounded-xl p-8'>
 				<h1 className='mb-4 text-center text-3xl text-white'>Sign in</h1>
 				<Field
+					icon={Mail}
 					name='email'
 					control={control}
 					type='email'
 					placeholder='Enter your email'
 				/>
 				<Field
+					icon={Password}
 					control={control}
 					className='my-1.5'
 					name='password'

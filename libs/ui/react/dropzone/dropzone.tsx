@@ -41,33 +41,32 @@ const Dropzone = ({
 					files.length === 0 && 'hidden'
 				)}
 			>
-				{files.map(file => (
-					<div key={file.name + file.type}>
-						<button
-							color={variant}
-							className={twMerge(
-								'mb-2 max-w-[200px] items-center justify-center rounded-xl border-[1px] p-2 text-center',
-								settings.colors[variant]
-							)}
-							onClick={() => {
-								setFiles(files.filter(f => f.name !== file.name))
-								onFileDelete(file)
-							}}
-						>
-							<File
-								color={Color.white}
-								width={45}
-								height={45}
-								className='mx-auto mb-2'
-							/>
-							<span className='w-full'>
-								{file.name && file.name.length > 20
-									? file.name.slice(0, 20) + '...'
-									: file.name}
-							</span>
-						</button>
-					</div>
-				))}
+				{files.map(
+					file =>
+						file && (
+							<div key={file.name + file.type}>
+								<button
+									color={variant}
+									className={twMerge(
+										'mb-2 max-w-[200px] items-center justify-center rounded-xl border-[1px] p-2 text-center',
+										settings.colors[variant]
+									)}
+									onClick={() => {
+										setFiles(files.filter(f => f.name !== file.name))
+										onFileDelete(file)
+									}}
+								>
+									<File
+										color={Color.white}
+										width={45}
+										height={45}
+										className='mx-auto mb-2'
+									/>
+									<span className='w-full'>{file.name}</span>
+								</button>
+							</div>
+						)
+				)}
 			</div>
 			<div
 				className={twMerge(

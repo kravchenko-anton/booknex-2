@@ -1,6 +1,6 @@
 import Sheet from '@/components/bottom-sheet/bottom-sheet'
 import type { FC, PropsWithChildren, ReactNode } from 'react'
-import { createContext, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 
 interface BottomSheetContextProperties {
 	bottomSheet: {
@@ -61,3 +61,5 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
 		</BottomSheetContext.Provider>
 	)
 }
+
+export const useBottomSheetContext = () => useContext(BottomSheetContext)

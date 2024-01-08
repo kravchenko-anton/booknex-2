@@ -1,21 +1,17 @@
 import AnimatedPress from '@/components/animated-press/animated-press'
 import { useAction } from '@/hooks/useAction'
-import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { BottomSheetContext } from '@/providers/bottom-sheet-provider'
 import FontSettings from '@/screens/reading/settings/sheet/reading/font-settings/font-settings'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
-import SelectTheme from '@/screens/reading/settings/sheet/select-theme/select-theme'
-import { WINDOW_HEIGHT } from '@/utils/dimensions'
 import { ChevronRight } from 'icons'
 import type { FC } from 'react'
-import { useContext } from 'react'
 import { Pressable, View } from 'react-native'
 import { Color } from 'ui/colors'
 import { Title } from 'ui/components'
 
-const ReadingSettings: FC = () => {
-	const { showBottomSheet } = useContext(BottomSheetContext)
-	const { colorScheme } = useTypedSelector(state => state.readingSettings)
+const ReadingSettings: FC<{
+	openSelectTheme: () => void
+	activeThemeSlug: string
+}> = ({ openSelectTheme, activeThemeSlug }) => {
 	const { changeTheme } = useAction()
 	return (
 		<Pressable className='h-full w-full flex-1 px-6'>
@@ -26,9 +22,10 @@ const ReadingSettings: FC = () => {
 							<AnimatedPress
 								key={`${theme.slug}-${theme.title}`}
 								style={{
+									//TODO: пофиксить отображение
 									backgroundColor: theme.colorPalette.background.normal,
 									borderColor:
-										colorScheme.slug === theme.slug
+										activeThemeSlug === theme.slug
 											? Color.white
 											: theme.colorPalette.background.lighter
 								}}
@@ -48,14 +45,15 @@ const ReadingSettings: FC = () => {
 					<AnimatedPress
 						key='other theme'
 						style={{
-							backgroundColor: Color.shade
+							backgroundColor: Color.shade,
+							borderColor: themePack
+								.slice(1, 3)
+								.map(theme => theme.slug)
+								.includes(activeThemeSlug)
+								? Color.white
+								: Color.shade
 						}}
-						onPress={() =>
-							showBottomSheet({
-								component: <SelectTheme />,
-								snapPoints: [WINDOW_HEIGHT / 2, WINDOW_HEIGHT / 1.4]
-							})
-						}
+						onPress={openSelectTheme}
 						className='flex-row items-center justify-center rounded-xl p-2 px-4'
 					>
 						<Title color={Color.white} weight='semiBold' size={18}>

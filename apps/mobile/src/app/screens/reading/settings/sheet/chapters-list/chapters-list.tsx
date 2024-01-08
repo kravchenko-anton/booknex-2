@@ -6,7 +6,7 @@ import { Color } from 'ui/colors'
 import { Title } from 'ui/components'
 
 const ChaptersList: FC<{
-	goToChapter: (chapterId: string) => void
+	openChapter: (chapterId: string) => void
 	chapters: {
 		name: string
 		children: {
@@ -14,9 +14,7 @@ const ChaptersList: FC<{
 			link: string
 		}[]
 	}[]
-}> = ({ chapters, goToChapter }) => {
-	//TODO: сделать тут ссылку, щас не работает
-
+}> = ({ chapters, openChapter }) => {
 	const sections = useMemo(() => {
 		return chapters.map(chapter => {
 			return {
@@ -56,7 +54,7 @@ const ChaptersList: FC<{
 				return (
 					<Pressable
 						onPress={() => {
-							goToChapter(item.link)
+							openChapter(item.link)
 						}}
 						className='bg-shade border-vibrant w-full border-b-[1px] p-4'
 					>

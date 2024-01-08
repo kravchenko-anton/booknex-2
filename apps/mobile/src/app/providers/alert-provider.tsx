@@ -1,6 +1,6 @@
 import Alert from '@/components/alert/alert'
 import type { FC, PropsWithChildren } from 'react'
-import { createContext, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import type { SvgProps } from 'react-native-svg'
 
 export interface AlertProperties {
@@ -47,3 +47,5 @@ export const AlertProvider: FC<PropsWithChildren> = ({ children }) => {
 		</AlertContext.Provider>
 	)
 }
+
+export const useAlertContext = () => useContext(AlertContext)

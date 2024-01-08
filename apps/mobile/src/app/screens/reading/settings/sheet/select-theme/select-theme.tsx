@@ -1,15 +1,14 @@
 import AnimatedPress from '@/components/animated-press/animated-press'
 import { useAction } from '@/hooks/useAction'
-import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import type { FC } from 'react'
 import { View } from 'react-native'
+import { Color } from 'ui/colors'
 import { Title } from 'ui/components'
 
-const SelectTheme: FC = () => {
+const SelectTheme: FC<{ activeThemeSlug: string }> = ({ activeThemeSlug }) => {
 	const { changeTheme } = useAction()
-	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	return (
 		<BottomSheetFlatList
 			showsVerticalScrollIndicator={false}
@@ -23,8 +22,8 @@ const SelectTheme: FC = () => {
 						onPress={() => changeTheme(theme.slug)}
 						style={{
 							borderColor:
-								colorScheme.slug === theme.slug
-									? colorScheme.colorPalette.text
+								activeThemeSlug === theme.slug
+									? Color.white
 									: theme.colorPalette.background.normal,
 							backgroundColor: theme.colorPalette.background.normal
 						}}

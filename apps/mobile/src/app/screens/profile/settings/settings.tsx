@@ -1,13 +1,12 @@
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 import { useAction } from '@/hooks'
-import { AlertContext } from '@/providers/alert-provider'
+import { useAlertContext } from '@/providers/alert-provider'
 import { errorToast } from '@/utils/toast'
 import { Bug, Logout, MessageCircleQuestion } from 'icons'
-import { useContext } from 'react'
 import * as List from './settings-list'
 //TODO: после обновления проложения добавить тут больше разнообразия и пофиксить консоль логи
 const Settings = () => {
-	const { showAlert } = useContext(AlertContext)
+	const { showAlert } = useAlertContext()
 	const { logout } = useAction()
 	return (
 		<Layout.Wrapper

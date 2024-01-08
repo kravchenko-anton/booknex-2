@@ -1,7 +1,11 @@
 import { useTypedRoute } from '@/hooks'
-import { injectStyle } from '@/screens/reading/additional-function'
+import {
+	handleDoublePress,
+	injectStyle
+} from '@/screens/reading/additional-function'
 import ReadingUi from '@/screens/reading/settings/reading-ui'
 import { useReader } from '@/screens/reading/useReader'
+import { useReadingSheets } from '@/screens/reading/useReadingSheets'
 import { bookService } from '@/services/book/book-service'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'
@@ -22,33 +26,34 @@ export function Reader() {
 	const { data: ebook } = useQuery(['e-book', params.id], () =>
 		bookService.ebookById(params.id)
 	)
+	const [readerUiVisible, setReaderUiVisible] = useState(true)
 	const reference = useRef<WebView>(null)
 	const {
-		doubleTap,
+		colorScheme,
 		injectedJavaScriptBeforeLoad,
 		onMessage,
 		styleTag,
-		readerUiVisible,
 		progress
 	} = useReader(params.id)
+
+	const { openChapterList, openReadingSettings } = useReadingSheets({
+		activeThemeSlug: colorScheme.slug
+	})
 	useEffect(() => {
 		if (!reference.current) return
 		reference.current.injectJavaScript(injectStyle(styleTag))
 	}, [styleTag])
 
-	const goToChapter = (chapterId: string) => {
-		if (!reference.current) return
-		reference.current.injectJavaScript(`window.location.hash = '${chapterId}'`)
-	}
 	const [defaultTheme] = useState(styleTag)
 	if (!ebook || !injectedJavaScriptBeforeLoad || !styleTag) return <Loader />
 	return (
 		<SafeAreaView className='flex-1'>
 			<RNView className='m-0 h-screen w-full items-center justify-center p-0'>
-				<TouchableWithoutFeedback onPress={doubleTap}>
-					{
-						//TODO: вынести в отдельный компонент и всю эту логику вместе с парами и тд
+				<TouchableWithoutFeedback
+					onPress={() =>
+						handleDoublePress(() => setReaderUiVisible(!readerUiVisible))
 					}
+				>
 					<WebView
 						ref={reference}
 						menuItems={[]}
@@ -63,6 +68,8 @@ export function Reader() {
 						originWhitelist={['*']}
 						scrollEnabled
 						javaScriptEnabled
+						renderLoading={() => <Loader />}
+						startInLoadingState
 						showsVerticalScrollIndicator={false}
 						injectedJavaScriptBeforeContentLoaded={injectedJavaScriptBeforeLoad}
 						onMessage={onMessage}
@@ -70,18 +77,28 @@ export function Reader() {
 						style={{
 							width: WINDOW_WIDTH,
 							height: WINDOW_HEIGHT,
-							backgroundColor: Color.foreground
+							backgroundColor: Color.background
 						}}
 					/>
 				</TouchableWithoutFeedback>
 			</RNView>
 			<ReadingUi
-				goToChapter={goToChapter}
-				chapters={ebook.chapters as unknown as any}
+				openChapterList={() =>
+					openChapterList({
+						chapters: ebook.chapters,
+						openChapter: (chapterId: string) =>
+							reference.current?.injectJavaScript(
+								`window.location.hash = '#${chapterId}'`
+							)
+					})
+				}
+				openReadingSettings={openReadingSettings}
+				colorPalette={colorScheme.colorPalette}
 				visible={readerUiVisible}
 				progress={progress}
 				title={ebook.title}
 			/>
+
 			<StatusBar hidden={true} />
 		</SafeAreaView>
 	)
