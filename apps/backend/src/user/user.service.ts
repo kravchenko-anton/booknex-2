@@ -146,11 +146,11 @@ export class UserService {
 	async toggle(userId: number, id: number, type: UserLibraryCategoryType) {
 		if (!userLibraryFields.includes(type))
 			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
-		const existBookOrShelf = await this.prisma.book.findFirst({
+		const existBookOrCollection = await this.prisma.book.findFirst({
 			where: { id },
 			select: { id: true }
 		})
-		if (!existBookOrShelf)
+		if (!existBookOrCollection)
 			throw new NotFoundException(`book ${ErrorsEnum.Not_Found}`).getResponse()
 
 		const user = await this.getUserById(+userId, {

@@ -102,9 +102,6 @@ export class ParserService {
 										for (const attribute of attributes) {
 											element.removeAttribute(attribute)
 										}
-										if (element.tagName === 'table') {
-											element.remove()
-										}
 										if (element.tagName === 'image') {
 											element.remove()
 										}
@@ -130,10 +127,7 @@ export class ParserService {
 									id: chapter.id,
 									title: chapter.title,
 									content: finalContent
-										.replaceAll(
-											/<(\/)?(body|div|html|img|image|svg|head).*?>/g,
-											''
-										)
+										.replaceAll(/<(\/)?(body|html|head).*?>/g, '')
 										.trim()
 										.replaceAll(/\n{2,}/g, '\n')
 								})

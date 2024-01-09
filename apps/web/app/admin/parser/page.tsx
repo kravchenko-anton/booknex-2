@@ -9,7 +9,7 @@ import { useAction, useTypedSelector } from '@/hooks'
 import { authorService } from '@/services/author/author-service'
 import { parserService } from '@/services/parser/parser-services'
 import { Color } from '@/ui/colors'
-import { Button, Field } from '@/ui/components'
+import { Button, Field, Spiner } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -50,14 +50,15 @@ const Parser: FC = () => {
 		}
 	)
 	const search = useDebounce(watch('search') as string, 500) || ''
-	const { data: goodReadsBooks } = useQuery(['good-reads books', search], () =>
-		parserService.all(search)
+	const { data: goodReadsBooks, isLoading: goodReadsBooksLoading } = useQuery(
+		['good-reads books', search],
+		() => parserService.all(search)
 	)
 	const router = useRouter()
 	console.log(goodReadsBooks)
 	return (
 		<div className='w-full'>
-			<div className='flex w-full items-center justify-between'>
+			<div className='bg-shade flex w-full items-center justify-between rounded-xl p-3'>
 				<h1 className='text-3xl font-medium'>Seeder</h1>
 				<div className='flex gap-5'>
 					<Field
@@ -97,7 +98,11 @@ const Parser: FC = () => {
 					</Button>
 				</div>
 			</div>
-			{goodReadsBooks ? (
+			{!goodReadsBooks || goodReadsBooksLoading ? (
+				<div className='bg-shade mt-4 flex items-center justify-center rounded-xl p-3'>
+					<Spiner height={40} width={40} />
+				</div>
+			) : (
 				<table className='bg-shade mt-4 w-full rounded-xl'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
@@ -230,8 +235,6 @@ const Parser: FC = () => {
 						})}
 					</tbody>
 				</table>
-			) : (
-				<div>Loading...</div>
 			)}
 		</div>
 	)

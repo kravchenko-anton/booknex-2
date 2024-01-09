@@ -1,11 +1,11 @@
 'use client'
 import { getFileUrl } from '@/global/api-config'
 import { useDebounce } from '@/global/utils/useDebounce'
-import { useAction } from '@/hooks/useAction'
 import { Edit, Search, Trash } from '@/icons'
+import { usePopupContext } from '@/providers/popup-provider'
 import { authorService } from '@/services/author/author-service'
 import { Color } from '@/ui/colors'
-import { Button, Field } from '@/ui/components'
+import { Button, Field, Spiner } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
@@ -32,10 +32,10 @@ const PageDetails: FC = () => {
 		}
 	)
 	const queryClient = useQueryClient()
-	const { closePopup, showPopup } = useAction()
+	const { closePopup, showPopup } = usePopupContext()
 	return (
 		<div>
-			<div className='flex w-full items-center justify-between'>
+			<div className='bg-shade flex w-full items-center justify-between rounded-xl p-3'>
 				<h1 className='text-3xl font-medium'>Authors</h1>
 				<div className='flex gap-5'>
 					<Field
@@ -64,15 +64,27 @@ const PageDetails: FC = () => {
 				</div>
 			</div>
 			{!authors || isLoading ? (
-				<div>Loading...</div>
+				<div className='bg-shade mt-4 flex items-center justify-center rounded-xl p-3'>
+					<Spiner height={40} width={40} />
+				</div>
 			) : (
-				<table className='mt-4 w-full rounded-xl'>
+				<table className='bg-shade mt-4 w-full rounded-xl p-2'>
+					<thead>
+						<tr className='border-foreground border-b-2'>
+							<th className='min-w-[40px] p-4'>Id</th>
+							<th className='min-w-[100px]  p-4'>Picture</th>
+							<th className='min-w-[140px]  p-4'>Name</th>
+							<th className='min-w-[200px]  p-4'>Description</th>
+							<th className='min-w-[150px]  p-4'>Books</th>
+							<th className='min-w-[100px] p-4'>Actions</th>
+						</tr>
+					</thead>
 					<tbody>
 						{authors.map(author => {
 							return (
 								<tr
 									key={author.description + author.name}
-									className='border-b-foreground h-[90px] items-center justify-center  rounded-xl border-b-2 '
+									className='border-foreground h-[90px] items-center  justify-center rounded-xl  border-b-2'
 								>
 									<td className='w-[40px]  text-center text-2xl'>
 										{author.id}

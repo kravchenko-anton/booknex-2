@@ -1,4 +1,3 @@
-import { Navbar } from '@/components/navbar/navbar'
 import { AuthProvider } from '@/providers/auth-provider'
 import { Space_Grotesk } from 'next/font/google'
 import type { ReactNode } from 'react'
@@ -17,10 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 		<html lang='en'>
 			<body style={{ ...font.style }} id='body'>
 				<Providers>
-					<AuthProvider>
-						<Navbar />
-						{children}
-					</AuthProvider>
+					<AuthProvider>{children}</AuthProvider>
 				</Providers>
 			</body>
 		</html>

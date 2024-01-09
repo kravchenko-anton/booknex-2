@@ -10,8 +10,7 @@ export const getStorageUrl = (string: string) => `/storage${string}`
 
 export const getBookUrl = (string: string) => `/book${string}`
 export const getAuthorUrl = (string: string) => `/author${string}`
-export const getShelfUrl = (string: string) => `/shelf${string}`
-
+export const getCollectionUrl = (string: string) => `/collection${string}`
 
 export const getHistoryUrl = (string: string) => `/history${string}`
 export const getFileUrl = (path: string) => {

@@ -1,5 +1,5 @@
 import type { BookPayload } from '@/global/services-types/book-types'
-import { useAction } from '@/hooks'
+import { usePopupContext } from '@/providers/popup-provider'
 import { authorService } from '@/services/author/author-service'
 import { bookService } from '@/services/book/book-service'
 import { genreService } from '@/services/genre/genre-service'
@@ -13,7 +13,7 @@ import { useCreateForm } from './useForm'
 import type { CreateBookValidationSchemaType } from './validation'
 
 export const useCreate = () => {
-	const { closePopup, showPopup } = useAction()
+	const { closePopup, showPopup } = usePopupContext()
 	const { upload } = useUploadFile()
 	const { handleSubmit, setValue, watch, errors, control } = useCreateForm()
 	const router = useRouter()

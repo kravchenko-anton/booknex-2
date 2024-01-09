@@ -7,7 +7,7 @@ import { useDebounce } from '@/global/utils/useDebounce'
 import { useAction } from '@/hooks/useAction'
 import { bookService } from '@/services/book/book-service'
 import { Color } from '@/ui/colors'
-import { Button, Field } from '@/ui/components'
+import { Button, Field, Spiner } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -19,8 +19,9 @@ const Page: FC = () => {
 	const { control, watch } = useForm()
 	const QueryClient = useQueryClient()
 	const search = useDebounce(watch('search') as string, 500) || ''
-	const { data: books } = useQuery(['books', search], () =>
-		bookService.all(search)
+	const { data: books, isLoading: booksLoading } = useQuery(
+		['books', search],
+		() => bookService.all(search)
 	)
 	const router = useRouter()
 	const { showPopup } = useAction()
@@ -54,7 +55,7 @@ const Page: FC = () => {
 	)
 	return (
 		<div className='w-full'>
-			<div className='flex w-full items-center justify-between'>
+			<div className='bg-shade flex w-full items-center justify-between rounded-xl p-3'>
 				<h1 className='text-3xl font-medium'>Books</h1>
 				<div className='flex gap-5'>
 					<Field
@@ -75,7 +76,11 @@ const Page: FC = () => {
 					</Button>
 				</div>
 			</div>
-			{books ? (
+			{!books || booksLoading ? (
+				<div className='bg-shade mt-4 flex items-center justify-center rounded-xl p-3'>
+					<Spiner height={40} width={40} />
+				</div>
+			) : (
 				<table className='bg-shade mt-4 w-full rounded-xl'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
@@ -193,8 +198,6 @@ const Page: FC = () => {
 						})}
 					</tbody>
 				</table>
-			) : (
-				<div>Loading...</div>
 			)}
 		</div>
 	)

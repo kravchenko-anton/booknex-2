@@ -1,14 +1,12 @@
 import { Close } from '@/global/icons/react'
-import { useAction } from '@/hooks/useAction'
 import { useClickAway } from '@/hooks/useOutsideClick'
-import { useTypedSelector } from '@/hooks/useTypedSelector'
-import type { FC, PropsWithChildren } from 'react'
+import type { FC } from 'react'
 
-const Modal: FC<PropsWithChildren> = () => {
-	const { popup } = useTypedSelector(state => state.popup)
-	const { closePopup } = useAction()
+const Modal: FC<{
+	closePopup: () => void
+	popup: JSX.Element | null
+}> = ({ closePopup, popup }) => {
 	const reference = useClickAway(() => closePopup())
-	console.log(popup)
 	return (
 		<div
 			style={{

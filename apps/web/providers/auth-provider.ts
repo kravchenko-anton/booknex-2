@@ -1,10 +1,9 @@
 'use client'
+import { useAction, useAuth } from '@/hooks'
+import { errorToast } from '@/utils/toast'
 import { redirect, usePathname } from 'next/navigation'
 import type { FC, PropsWithChildren } from 'react'
 import { useEffect, useLayoutEffect } from 'react'
-import { useAuth } from '../../../apps/web/hooks/useAuth'
-import { useAction } from '../hooks/useAction'
-import { errorToast } from '../utils/toast'
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { user } = useAuth()

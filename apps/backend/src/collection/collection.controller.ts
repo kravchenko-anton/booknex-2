@@ -1,6 +1,6 @@
 import type {
-	AllShelfOutput,
-	ShelfByIdOutput
+	AllCollectionOutput,
+	CollectionByIdOutput
 } from '@booknex/global/services-types/collection-types'
 import {
 	Body,
@@ -25,14 +25,14 @@ export class CollectionController {
 
 	@Get('/by-id/:id')
 	@Auth()
-	async byId(@Param('id') shelfId: number): Promise<ShelfByIdOutput> {
-		return this.shelvesService.infoById(+shelfId)
+	async byId(@Param('id') id: number): Promise<CollectionByIdOutput> {
+		return this.shelvesService.infoById(+id)
 	}
 
 	// admin
 	@Get('/all')
 	@Auth('admin')
-	all(@Query('searchTerm') searchTerm: string): Promise<AllShelfOutput> {
+	all(@Query('searchTerm') searchTerm: string): Promise<AllCollectionOutput> {
 		return this.shelvesService.all(searchTerm)
 	}
 

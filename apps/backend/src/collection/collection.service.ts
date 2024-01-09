@@ -23,7 +23,9 @@ export class CollectionService {
 			}
 		})
 		if (!collection)
-			throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
+			throw new NotFoundException(
+				`Collection ${ErrorsEnum.Not_Found}`
+			).getResponse()
 		return collection
 	}
 
@@ -50,7 +52,9 @@ export class CollectionService {
 		})
 
 		if (!collection)
-			throw new NotFoundException(`Shelf ${ErrorsEnum.Not_Found}`).getResponse()
+			throw new NotFoundException(
+				`Collection ${ErrorsEnum.Not_Found}`
+			).getResponse()
 		const { _count, ...rest } = collection
 		return {
 			...rest,
@@ -82,7 +86,7 @@ export class CollectionService {
 		})
 		if (collectionExists)
 			throw new NotFoundException(
-				`Shelf ${ErrorsEnum.Already_Exist}`
+				`Collection ${ErrorsEnum.Already_Exist}`
 			).getResponse()
 		return this.prisma.collection.create({
 			data: {

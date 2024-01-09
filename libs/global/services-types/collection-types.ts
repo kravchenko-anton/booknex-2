@@ -2,7 +2,7 @@ import type { Prisma } from '@prisma/client'
 import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
 import type { returnCollectionObject } from '../../../apps/backend/src/collection/return.collection.object'
 
-export type ShelfByIdOutput = Prisma.CollectionGetPayload<{
+export type CollectionByIdOutput = Prisma.CollectionGetPayload<{
 	select: typeof returnCollectionObject & {
 		description: true
 		books: {
@@ -17,10 +17,10 @@ export type ShelfByIdOutput = Prisma.CollectionGetPayload<{
 	}
 }
 
-export type ShelfCatalogOutput = Prisma.CollectionGetPayload<{
+export type CollectionCatalogOutput = Prisma.CollectionGetPayload<{
 	select: typeof returnCollectionObject
 }>[]
 
-export type AllShelfOutput = Prisma.CollectionGetPayload<{
+export type AllCollectionOutput = Prisma.CollectionGetPayload<{
 	select: typeof returnCollectionObject
 }>[]

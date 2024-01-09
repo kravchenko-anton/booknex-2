@@ -6,9 +6,12 @@ export const settings: {
 	iconSize: Record<ButtonProperties['size'], number>
 } = {
 	colors: {
-		foreground: 'bg-foreground text-white hover:bg-vibrant',
-		vibrant: 'bg-vibrant text-white hover:bg-foreground',
-		shade: 'bg-shade text-white hover:bg-foreground',
+		foreground:
+			'bg-foreground border-[1px] border-vibrant text-white hover:bg-vibrant',
+		vibrant:
+			'bg-vibrant border-[1px] border-foreground text-white hover:bg-foreground',
+		shade:
+			'bg-shade text-white border-[1px] border-foreground hover:bg-foreground',
 		primary: 'bg-primary text-white hover:bg-secondary',
 		secondary: 'bg-secondary text-white hover:bg-primary',
 		danger: 'bg-danger text-white hover:bg-danger',
@@ -17,9 +20,9 @@ export const settings: {
 		warning: 'bg-warning text-white hover:bg-warning'
 	},
 	size: {
-		sm: 'px-2 py-0.5 text-sm',
-		md: 'px-3 py-2 text-md',
-		lg: 'px-4 py-3 text-lg'
+		sm: 'px-3 py-1.5 text-sm',
+		md: 'px-4 py-2 text-md',
+		lg: 'px-5 py-3 text-lg'
 	},
 	iconSize: {
 		sm: 16,
