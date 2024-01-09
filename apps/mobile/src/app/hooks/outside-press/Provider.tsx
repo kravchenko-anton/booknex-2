@@ -10,8 +10,8 @@ type ClickOutsideProviderProperties = {
 	children: React.ReactNode
 }
 
-let touchX: number | undefined
-let touchY: number | undefined
+let touchX: number | null
+let touchY: number | null
 export const ClickOutsideProvider: FC<ClickOutsideProviderProperties> = ({
 	children,
 	activateOnSwipe = true,
@@ -39,8 +39,8 @@ export const ClickOutsideProvider: FC<ClickOutsideProviderProperties> = ({
 			else if (activateOnSwipe) setIsTouch(true)
 			else setIsTouch(false)
 			onTouch(e)
-			touchX = undefined
-			touchY = undefined
+			touchX = null
+			touchY = null
 		}}
 		onTouchStart={e => {
 			touchX = e.nativeEvent.changedTouches[0]?.pageX

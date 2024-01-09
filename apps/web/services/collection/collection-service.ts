@@ -1,5 +1,5 @@
-import { getCollectionUrl } from '@/global/api-config'
-import type { AllCollectionOutput } from '@/global/services-types/collection-types'
+import { getCollectionUrl } from 'global/api-config'
+import type { AllCollectionOutput } from 'global/services-types/collection-types'
 import type {
 	CreateCollectionDto,
 	UpdateCollectionDto

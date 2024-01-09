@@ -6,8 +6,8 @@ import { updateBookValidationSchema } from '@/app/admin/books/update/[id]/valida
 import HtmlEditor from '@/components/html-editor/html-editor'
 import { getFileUrl } from '@/global/api-config'
 import type { BookPayload } from '@/global/services-types/book-types'
-import { useAction } from '@/hooks'
 import { Trash } from '@/icons'
+import { usePopupContext } from '@/providers/popup-provider'
 import { authorService } from '@/services/author/author-service'
 import { bookService } from '@/services/book/book-service'
 import { genreService } from '@/services/genre/genre-service'
@@ -42,7 +42,7 @@ const Page: FC<{
 		bookService.infoById(params.id)
 	)
 	const router = useRouter()
-	const { showPopup, closePopup } = useAction()
+	const { showPopup, closePopup } = usePopupContext()
 	const { data: genres } = useQuery(['genres'], () => genreService.all())
 	const { mutateAsync: authors, isLoading: authorsLoading } = useMutation(
 		['authors'],

@@ -16,7 +16,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 			redirect('/login')
 		}
 
-		const checkToken = async () => {
+		const checkToken = () => {
 			const accessToken = window.sessionStorage.getItem('accessToken')
 			const refreshToken = window.sessionStorage.getItem('refreshToken')
 			if (!accessToken && refreshToken) {
@@ -32,7 +32,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	}, [user])
 
 	useEffect(() => {
-		const checkRefreshToken = async () => {
+		const checkRefreshToken = () => {
 			const refreshToken = window.sessionStorage.getItem('refreshToken')
 			if (!refreshToken && user) {
 				logout()

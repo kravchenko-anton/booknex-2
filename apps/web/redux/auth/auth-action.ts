@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import toast from 'react-hot-toast'
 import { getAuthUrl, SERVER_URL } from '../../../../libs/global/api-config'
 import { errorToast, successToast } from '../../utils/toast'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
@@ -18,11 +17,11 @@ export const login = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 				.then(response => response.data)
 			if (!loginResponse.user.isAdmin)
 				return thunkAPI.rejectWithValue('You are not admin')
-			await saveTokensStorage({
+			saveTokensStorage({
 				accessToken: loginResponse.accessToken,
 				refreshToken: loginResponse.refreshToken
 			})
-			
+
 			successToast('Login successfully')
 			return loginResponse
 		} catch (error) {
@@ -41,7 +40,7 @@ export const getNewToken = createAsyncThunk<AuthResponseType, string>(
 					refreshToken
 				})
 				.then(response => response.data)
-			await saveTokensStorage({
+			saveTokensStorage({
 				accessToken: tokensResponse.accessToken,
 				refreshToken: tokensResponse.refreshToken
 			})
@@ -52,10 +51,10 @@ export const getNewToken = createAsyncThunk<AuthResponseType, string>(
 	}
 )
 
-export const logout = createAsyncThunk('auth/logout', async () => {
+export const logout = createAsyncThunk('auth/logout', () => {
 	try {
-		toast.success('Logout successfully')
-		await deleteTokensStorage()
+		successToast('Logout successfully')
+		deleteTokensStorage()
 	} catch (error) {
 		errorToast(error)
 	}

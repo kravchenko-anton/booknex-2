@@ -4,16 +4,11 @@ import { useMemo } from 'react'
 import { Pressable } from 'react-native'
 import { Color } from 'ui/colors'
 import { Title } from 'ui/components'
+import type { ChapterType } from '../../../../../../../../backend/types'
 
 const ChaptersList: FC<{
 	openChapter: (chapterId: string) => void
-	chapters: {
-		name: string
-		children: {
-			name: string
-			link: string
-		}[]
-	}[]
+	chapters: ChapterType[]
 }> = ({ chapters, openChapter }) => {
 	const sections = useMemo(() => {
 		return chapters.map(chapter => {

@@ -1,20 +1,21 @@
 'use client'
 
-import { getFileUrl } from '@/global/api-config'
-import { Edit, Search, Trash } from '@/global/icons/react'
-import type { ParserDtoPayload } from '@/global/services-types/parser-types'
-import { nFormatter } from '@/global/utils/number-formater'
-import { useDebounce } from '@/global/utils/useDebounce'
-import { useAction, useTypedSelector } from '@/hooks'
-import { authorService } from '@/services/author/author-service'
-import { parserService } from '@/services/parser/parser-services'
-import { Color } from '@/ui/colors'
-import { Button, Field, Spiner } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { getFileUrl } from 'global/api-config'
+import { Edit, Search, Trash } from 'global/icons/react'
+import type { ParserDtoPayload } from 'global/services-types/parser-types'
+import { nFormatter } from 'global/utils/number-formater'
+import { useDebounce } from 'global/utils/useDebounce'
+import { useAction, useTypedSelector } from 'hooks'
 import { useRouter } from 'next/navigation'
+import { usePopupContext } from 'providers/popup-provider'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import { authorService } from 'services/author/author-service'
+import { parserService } from 'services/parser/parser-services'
+import { Color } from 'ui/colors'
+import { Button, Field, Spiner } from 'ui/components'
 import CreateAuthorPopup from '../authors/popup/create'
 import type { DefaultCreateBookValuesType } from '../books/create/types'
 import NewParse from './popup/new-parse'
@@ -22,7 +23,8 @@ import NewParse from './popup/new-parse'
 const Parser: FC = () => {
 	const { control, watch } = useForm()
 	const QueryClient = useQueryClient()
-	const { showPopup, closePopup, updateLastParsedData } = useAction()
+	const { updateLastParsedData } = useAction()
+	const { showPopup, closePopup } = usePopupContext()
 	const { lastParsedData } = useTypedSelector(state => state.parser)
 	const { mutateAsync: parse, isLoading: parseLoading } = useMutation(
 		['parse good-reads books'],
@@ -64,12 +66,11 @@ const Parser: FC = () => {
 					<Field
 						control={control}
 						icon={Search}
-						type='search'
 						name='search'
 						placeholder='Explore...'
+						type='search'
 					/>
 					<Button
-						size='sm'
 						isLoading={parseLoading}
 						onClick={() =>
 							showPopup(
@@ -92,6 +93,7 @@ const Parser: FC = () => {
 								/>
 							)
 						}
+						size='sm'
 						variant='primary'
 					>
 						Parsing
@@ -120,17 +122,17 @@ const Parser: FC = () => {
 						{goodReadsBooks.map(book => {
 							return (
 								<tr
-									key={book.title + book.authorName}
 									className='border-foreground items-center  justify-center border-b-2'
+									key={book.title + book.authorName}
 								>
 									<td className='min-w-[40px]  text-center text-2xl'>
 										{book.id}
 									</td>
 									<td className='h-[120px]'>
 										<img
-											src={getFileUrl(book.picture)}
-											className='bottom-shade mx-auto w-[100px] rounded-xl'
 											alt={book.title}
+											className='bottom-shade mx-auto w-[100px] rounded-xl'
+											src={getFileUrl(book.picture)}
 										/>
 									</td>
 									<td className='h-[100px]  min-w-[140px]  text-left  text-xl'>
@@ -146,9 +148,9 @@ const Parser: FC = () => {
 									</td>
 									<td className='min-w-[300px] max-w-[220px] p-2'>
 										<img
-											src={book.authorPicture}
-											className='mb-1 h-[50px] w-[50px] rounded-xl'
 											alt={book.title}
+											className='mb-1 h-[50px] w-[50px] rounded-xl'
+											src={book.authorPicture}
 										/>
 										{book.authorDescription.slice(0, 200) + '...'}
 									</td>
@@ -156,8 +158,8 @@ const Parser: FC = () => {
 									<td className='w-[50px] p-2'>
 										<div className='flex  items-center justify-center gap-2'>
 											<Edit
-												width={25}
 												className='cursor-pointer'
+												color={Color.success}
 												height={25}
 												onClick={async () => {
 													const blob = await fetch(book.authorPicture).then(
@@ -185,6 +187,14 @@ const Parser: FC = () => {
 													} else {
 														showPopup(
 															<CreateAuthorPopup
+																defaultValues={{
+																	name: book.authorName,
+																	description: book.authorDescription,
+																	picture: {
+																		blob,
+																		name: `${book.authorName}.png`
+																	}
+																}}
 																onCreate={({ id, name }) => {
 																	closePopup()
 																	router.push(
@@ -205,28 +215,20 @@ const Parser: FC = () => {
 																			}).toString()
 																	)
 																}}
-																defaultValues={{
-																	name: book.authorName,
-																	description: book.authorDescription,
-																	picture: {
-																		blob,
-																		name: `${book.authorName}.png`
-																	}
-																}}
 															/>
 														)
 													}
 												}}
-												color={Color.success}
+												width={25}
 											/>
 
 											<Trash
-												width={25}
 												className='cursor-pointer'
+												color={Color.danger}
 												height={25}
 												onClick={() => deleteFromParser(book.id)}
-												color={Color.danger}
 												size='sm'
+												width={25}
 											/>
 										</div>
 									</td>

@@ -4,6 +4,7 @@ import ReadingSettings from '@/screens/reading/settings/sheet/reading/reading-se
 import SelectTheme from '@/screens/reading/settings/sheet/select-theme/select-theme'
 import { WINDOW_HEIGHT } from '@/utils/dimensions'
 import React from 'react'
+import type { ChapterType } from '../../../../../backend/types'
 
 export const useReadingSheets = ({
 	activeThemeSlug
@@ -31,7 +32,7 @@ export const useReadingSheets = ({
 		chapters,
 		openChapter
 	}: {
-		chapters: any
+		chapters: ChapterType[]
 		openChapter: (chapterId: string) => void
 	}) =>
 		showBottomSheet({

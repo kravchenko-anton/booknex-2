@@ -1,5 +1,5 @@
 import { getGenresUrl } from 'global/api-config'
-import {
+import type {
 	AllGenreOutput,
 	GenreByIdOutput
 } from 'global/services-types/genre-types'

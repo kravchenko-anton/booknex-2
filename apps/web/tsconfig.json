@@ -22,16 +22,16 @@
 			"@/*": [
 				"./*"
 			],
-			"@/ui/components": [
+			"ui/components": [
 				"../../libs/ui/react/index.ts"
 			],
-			"@/ui/colors": [
+			"ui/colors": [
 				"../../libs/ui/colors.ts"
 			],
-			"@/icons": [
+			"icons": [
 				"../../libs/global/icons/react/index.ts"
 			],
-			"@/global/*": [
+			"global/*": [
 				"../../libs/global/*"
 			]
 		},

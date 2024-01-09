@@ -29,7 +29,14 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 			setValue('picture', defaultValues.picture)
 		}
 		handleSubmit(data => {
-			createAuthor(data).then(({ id, name }) => {
+			createAuthor({
+				description: data.description,
+				name: data.name,
+				picture: {
+					blob: data.picture?.blob,
+					name: data.picture?.name
+				}
+			}).then(({ id, name }) => {
 				onCreate({ id, name })
 			})
 		})()

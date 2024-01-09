@@ -15,7 +15,7 @@ export type FieldValuesFromFieldErrors<TFieldErrorsType> =
 		? TFieldValues
 		: never
 
-type AsProperties<TAsType> = TAsType extends undefined
+type AsProperties<TAsType> = TAsType extends null
 	? NonNullable<unknown>
 	: TAsType extends ReactElement
 		? Record<string, never>
@@ -28,7 +28,7 @@ type AsProperties<TAsType> = TAsType extends undefined
 export type Properties<
 	TFieldErrorsType extends FieldErrors,
 	TAsType extends
-		| undefined
+		| null
 		| ReactElement
 		| ComponentType<never>
 		| keyof JSX.IntrinsicElements

@@ -1,5 +1,5 @@
-import { Close } from '@/global/icons/react'
 import { useClickAway } from '@/hooks/useOutsideClick'
+import { Close } from 'global/icons/react'
 import type { FC } from 'react'
 
 const Modal: FC<{
@@ -9,17 +9,17 @@ const Modal: FC<{
 	const reference = useClickAway(() => closePopup())
 	return (
 		<div
+			className='bg-shade fixed left-0  top-0 z-50 flex h-screen w-screen items-center justify-center bg-opacity-90'
 			style={{
 				display: popup ? 'flex' : 'none'
 			}}
-			className='bg-shade fixed left-0  top-0 z-50 flex h-screen w-screen items-center justify-center bg-opacity-90'
 		>
-			<div ref={reference} className='bg-foreground relative m-4 rounded-xl'>
+			<div className='bg-foreground relative m-4 rounded-xl' ref={reference}>
 				<Close
-					onClick={() => closePopup()}
 					className='absolute right-5 top-[-30px] z-50 cursor-pointer'
-					width={20}
 					height={20}
+					onClick={() => closePopup()}
+					width={20}
 				/>
 				{popup}
 			</div>

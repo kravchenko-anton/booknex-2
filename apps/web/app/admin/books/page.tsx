@@ -1,18 +1,18 @@
 'use client'
-import { getFileUrl } from '@/global/api-config'
-import { Edit, Eye, EyeOff, Search, Trash } from '@/global/icons/react'
-import { errorCatch } from '@/global/utils/catch-error'
-import { nFormatter } from '@/global/utils/number-formater'
-import { useDebounce } from '@/global/utils/useDebounce'
-import { useAction } from '@/hooks/useAction'
-import { bookService } from '@/services/book/book-service'
-import { Color } from '@/ui/colors'
-import { Button, Field, Spiner } from '@/ui/components'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { getFileUrl } from 'global/api-config'
+import { Edit, Eye, EyeOff, Search, Trash } from 'global/icons/react'
+import { errorCatch } from 'global/utils/catch-error'
+import { nFormatter } from 'global/utils/number-formater'
+import { useDebounce } from 'global/utils/useDebounce'
 import { useRouter } from 'next/navigation'
+import { usePopupContext } from 'providers/popup-provider'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import { bookService } from 'services/book/book-service'
+import { Color } from 'ui/colors'
+import { Button, Field, Spiner } from 'ui/components'
 import AuthorDescription from '../authors/popup/description-popup'
 
 const Page: FC = () => {
@@ -24,7 +24,7 @@ const Page: FC = () => {
 		() => bookService.all(search)
 	)
 	const router = useRouter()
-	const { showPopup } = useAction()
+	const { showPopup } = usePopupContext()
 
 	const { mutateAsync: toggleVisible } = useMutation(
 		['update visible'],
@@ -61,15 +61,15 @@ const Page: FC = () => {
 					<Field
 						control={control}
 						icon={Search}
-						type='search'
 						name='search'
 						placeholder='Explore...'
+						type='search'
 					/>
 					<Button
-						size='sm'
 						onClick={() => {
 							router.push('/admin/books/create')
 						}}
+						size='sm'
 						variant='primary'
 					>
 						Create
@@ -98,28 +98,28 @@ const Page: FC = () => {
 						{books.map(book => {
 							return (
 								<tr
-									key={book.title + book.author.name}
 									className='border-foreground h-[120px] items-center  justify-center border-b-2'
+									key={book.title + book.author.name}
 								>
 									<td className='min-w-[40px]  text-center text-2xl'>
 										{book.id}
 									</td>
 									<td className='h-[120px]'>
 										<img
-											src={getFileUrl(book.picture)}
-											className='bottom-shade mx-auto w-[100px] rounded-xl'
 											alt={book.title}
+											className='bottom-shade mx-auto w-[100px] rounded-xl'
+											src={getFileUrl(book.picture)}
 										/>
 									</td>
 									<td className='h-[100px] min-w-[140px] text-left   text-sm'>
 										{book.title} <br />{' '}
 										<p className='text-primary'>{book.author.name}</p>
 										<Button
-											variant='primary'
 											onClick={() => {
 												showPopup(<AuthorDescription text={book.description} />)
 											}}
 											size='sm'
+											variant='primary'
 										>
 											💬 Description
 										</Button>
@@ -137,8 +137,8 @@ const Page: FC = () => {
 										<div className='my-auto  flex flex-wrap items-center justify-end'>
 											{book.genres.map(genre => (
 												<p
-													key={genre.name}
 													className='bg-foreground m-1 rounded-xl p-1.5 text-sm text-white'
+													key={genre.name}
 												>
 													{genre.name}
 												</p>
@@ -148,48 +148,48 @@ const Page: FC = () => {
 
 									<td className='min-w-[120px] p-2'>
 										<div className='flex gap-2'>
-											<div
-												color={book.visible ? 'primary' : 'secondary'}
+											<button
 												className='cursor-pointer'
+												color={book.visible ? 'primary' : 'secondary'}
 												onClick={() => {
 													toggleVisible(book.id)
 												}}
 											>
 												{book.visible ? (
 													<Eye
-														width={25}
 														className='cursor-pointer'
 														color={Color.success}
 														height={25}
+														width={25}
 													/>
 												) : (
 													<EyeOff
 														className='cursor-pointer'
 														color={Color.danger}
-														width={25}
 														height={25}
+														width={25}
 													/>
 												)}
-											</div>
+											</button>
 											<Edit
-												width={25}
 												className='cursor-pointer'
+												color={Color.warning}
 												height={25}
 												onClick={() => {
 													router.push(`/admin/books/update/${book.id}`)
 												}}
-												color={Color.warning}
+												width={25}
 											/>
 
 											<Trash
-												width={25}
 												className='cursor-pointer'
+												color={Color.danger}
 												height={25}
 												onClick={() => {
 													detele(book.id)
 												}}
-												color={Color.danger}
 												size='sm'
+												width={25}
 											/>
 										</div>
 									</td>

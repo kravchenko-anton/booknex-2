@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaClient } from '@prisma/client'
 
 declare global {
-	var prisma: PrismaService | undefined
+	var prisma: PrismaService | null
 }
 
 @Injectable()

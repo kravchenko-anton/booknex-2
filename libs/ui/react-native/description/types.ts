@@ -8,7 +8,7 @@ export type DescriptionProperties = Omit<
 > &
 	ColorProperties & {
 		center?: boolean
-		children: string | number | undefined
+		children: string | number | null
 		defaultSentences?: number
 		size?: number
 		weight?: keyof typeof fontSettings

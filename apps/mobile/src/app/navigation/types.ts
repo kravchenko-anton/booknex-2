@@ -8,24 +8,24 @@ export type TypeRootStackParameterList = {
 	ComprehensiveList: {
 		type: keyof UserLibraryCategoryType
 	}
-	Featured: undefined
+	Featured: null
 
 	Genre: { id: number }
-	Library: undefined
-	Login: undefined
+	Library: null
+	Login: null
 	Registration: { selectGenres: string[] }
-	CheckEmail: undefined
+	CheckEmail: null
 	EnterField: {
 		selectGenres: string[]
 	}
-	SelectGenres: undefined
-	Profile: undefined
+	SelectGenres: null
+	Profile: null
 	Reader: { id: number }
-	Explore: undefined
-	Search: undefined
-	Settings: undefined
+	Explore: null
+	Search: null
+	Settings: null
 	Collection: { id: number }
-	Welcome: undefined
+	Welcome: null
 }
 
 export interface IRoute {

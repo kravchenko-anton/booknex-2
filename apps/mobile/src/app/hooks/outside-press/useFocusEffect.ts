@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import type { AppStateStatus } from 'react-native';
+import type { AppStateStatus } from 'react-native'
 import { AppState } from 'react-native'
 
 export const useFocusEffect = (

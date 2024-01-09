@@ -1,5 +1,5 @@
 import { getStorageUrl } from 'global/api-config'
-import {
+import type {
 	FileUploadPayload,
 	ReplacementPayload,
 	UploadOutput

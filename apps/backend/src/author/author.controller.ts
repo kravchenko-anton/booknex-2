@@ -1,6 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+	Query
+} from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { AllAuthorOutput, AllSelectAuthorOutput, CreateAuthorOutput, InfoByIdOutput } from '../../../../libs/global/services-types/author-types'
+import type {
+	AllAuthorOutput,
+	AllSelectAuthorOutput,
+	CreateAuthorOutput,
+	InfoByIdOutput
+} from '../../../../libs/global/services-types/author-types'
 import { Auth } from '../decorator/auth.decorator'
 import { AuthorService } from './author.service'
 import { CreateAuthorDto, EditAuthorDto } from './dto/manipulation.author.dto'

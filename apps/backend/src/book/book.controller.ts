@@ -58,7 +58,7 @@ export class BookController {
 		@Param('id') bookId: string,
 		@Query('cursor') cursorId: number
 	): Promise<ReviewByIdOutput> {
-		return this.bookService.reviewsById(+bookId, +cursorId || undefined)
+		return this.bookService.reviewsById(+bookId, +cursorId || null)
 	}
 
 	@Auth()

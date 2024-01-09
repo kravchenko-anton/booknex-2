@@ -1,3 +1,4 @@
+import { errorToast } from '@/utils/toast'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -103,7 +104,7 @@ export const useBookCompose = () => {
 						content => content.id === topChapterId
 					)
 					if (!element) {
-						toast.error('Error merging content')
+						errorToast('Error merging content')
 						return book
 					}
 					return {

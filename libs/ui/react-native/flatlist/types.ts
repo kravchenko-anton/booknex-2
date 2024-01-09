@@ -3,7 +3,7 @@ import type { RefObject } from 'react'
 import type { FlatList, ListRenderItem } from 'react-native'
 
 export interface FlatListProperties<T> extends FlatlistDefaultProperties<T> {
-	data: T[] | undefined
+	data: T[] | null
 	Ref?: RefObject<FlatList<T>>
 	elementSpacing?: number
 	title?: string

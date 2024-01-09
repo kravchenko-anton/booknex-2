@@ -15,7 +15,7 @@ export const storageService = {
 			data: dto
 		})
 	},
-	
+
 	async replacement(file: FormData, dto: ReplacementDto) {
 		return request({
 			url: getStorageUrl('/replacement'),
@@ -26,7 +26,7 @@ export const storageService = {
 			}
 		})
 	},
-	
+
 	async upload(file: FormData, folder: StorageFolderEnum) {
 		return request<UploadOutput>({
 			url: getStorageUrl(`/${folder}`),

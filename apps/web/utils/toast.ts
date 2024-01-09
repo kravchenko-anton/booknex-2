@@ -1,4 +1,4 @@
-import { errorCatch } from '@/global/utils/catch-error'
+import { errorCatch } from 'global/utils/catch-error'
 import toast from 'react-hot-toast'
 
 export const errorToast = (error: unknown) => {

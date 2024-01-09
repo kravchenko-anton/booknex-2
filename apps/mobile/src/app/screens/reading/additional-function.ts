@@ -1,14 +1,14 @@
-let lastTap: number | undefined
+let lastTap: number | null
 let timer: NodeJS.Timeout
 export const handleDoublePress = (handleAction: () => void) => {
 	if (lastTap) {
 		handleAction()
 		clearTimeout(timer)
-		lastTap = undefined
+		lastTap = null
 	} else {
 		lastTap = Date.now()
 		timer = setTimeout(() => {
-			lastTap = undefined
+			lastTap = null
 			clearTimeout(timer)
 		}, 300)
 	}

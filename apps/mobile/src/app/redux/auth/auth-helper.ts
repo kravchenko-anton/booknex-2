@@ -3,7 +3,7 @@ import type { TokensType } from './auth-types'
 
 export const getAccessToken = async () => {
 	const accessToken = await EncryptedStorage.getItem('accessToken')
-	return accessToken || undefined
+	return accessToken || null
 }
 
 export const saveTokensStorage = async (data: TokensType) => {

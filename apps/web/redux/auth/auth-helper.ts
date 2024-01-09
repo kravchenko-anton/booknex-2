@@ -1,16 +1,16 @@
 import type { TokensType } from './auth-types'
 
-export const getAccessToken = async () => {
+export const getAccessToken = () => {
 	const accessToken = window.sessionStorage.getItem('accessToken')
-	return accessToken || undefined
+	return accessToken || null
 }
 
-export const saveTokensStorage = async (data: TokensType) => {
+export const saveTokensStorage = (data: TokensType) => {
 	window.sessionStorage.setItem('accessToken', data.accessToken)
 	window.sessionStorage.setItem('refreshToken', data.refreshToken)
 }
 
-export const deleteTokensStorage = async () => {
+export const deleteTokensStorage = () => {
 	window.sessionStorage.removeItem('accessToken')
 	window.sessionStorage.removeItem('refreshToken')
 }

@@ -2,10 +2,10 @@ import { getAuthorUrl, getBookUrl } from '../../../../libs/global/api-config'
 import type {
 	AllBooksOutput,
 	AllSelectBooksOutput,
+	BookByIdOutput,
 	BookPayload,
 	EmotionOutput
 } from '../../../../libs/global/services-types/book-types'
-import type { BookByIdOutput } from '../../../../libs/global/services-types/book-types'
 import { request } from '../api/request.api'
 
 export const bookService = {

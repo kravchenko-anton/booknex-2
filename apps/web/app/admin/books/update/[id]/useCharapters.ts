@@ -1,19 +1,11 @@
 import { useState } from 'react'
+import type { ChapterType } from '../../../../../../backend/types'
 
 export const useChapters = () => {
-	const [chapters, setChapters] = useState<
-		{
-			name: string
-			children: {
-				name: string
-				link: string
-			}[]
-		}[]
-	>()
-	console.log(chapters)
+	const [chapters, setChapters] = useState<ChapterType[]>([])
 	const updateBookName = ({ name, value }: { name: string; value: string }) => {
 		setChapters(
-			chapters?.map(chapter => {
+			chapters.map(chapter => {
 				if (chapter.name === name) {
 					chapter.name = value
 				}
@@ -32,7 +24,7 @@ export const useChapters = () => {
 		value: string
 	}) => {
 		setChapters(
-			chapters?.map(chapter => {
+			chapters.map(chapter => {
 				if (chapter.name === name) {
 					chapter.children = chapter.children?.map(childMap => {
 						if (childMap.link === link) {
@@ -48,7 +40,7 @@ export const useChapters = () => {
 
 	const removeChapter = ({ name, link }: { name: string; link: string }) => {
 		setChapters(
-			chapters?.map(chapterMap => {
+			chapters.map(chapterMap => {
 				if (chapterMap.name === name) {
 					chapterMap.children = chapterMap.children?.filter(
 						childMap => childMap.link !== link

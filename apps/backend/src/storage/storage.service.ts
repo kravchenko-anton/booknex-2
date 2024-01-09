@@ -7,6 +7,7 @@ import {
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import process from 'node:process'
+import sharp from 'sharp'
 import { ErrorsEnum } from '../utils/errors'
 import { optimizeFilename } from '../utils/string.functions'
 import type { StorageFolderType } from './storage.types'
@@ -64,11 +65,15 @@ export class StorageService {
 		if (!folderArray.includes(folder)) {
 			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
 		}
+		const resizedImage = await sharp(file)
+			.resize(800, 1200)
+			.toFormat('jpeg', { progressive: true, quality: 50 })
+			.toBuffer()
 		await this.S3.send(
 			new PutObjectCommand({
 				Bucket: this.configService.get('AWS_BUCKET'),
 				Key: `${folder}/${optimizeFilename(filename)}`,
-				Body: file,
+				Body: resizedImage,
 				ACL: 'public-read',
 				ContentDisposition: 'inline'
 			})

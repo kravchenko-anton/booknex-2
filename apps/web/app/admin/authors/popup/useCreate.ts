@@ -1,8 +1,8 @@
+import { authorService } from '@/services/author/author-service'
+import { useUploadFile } from '@/utils/files'
+import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { StorageFolderEnum } from '../../../../../backend/src/storage/storage.types'
-import { authorService } from '../../../../services/author/author-service'
-import { useUploadFile } from '../../../../utils/files'
-import { errorToast, successToast } from '../../../../utils/toast'
 
 export const useCreate = () => {
 	const { upload } = useUploadFile()

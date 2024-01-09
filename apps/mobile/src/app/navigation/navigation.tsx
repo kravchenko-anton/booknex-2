@@ -19,7 +19,7 @@ import PrivateNavigator from './private-navigator'
 
 const Navigation: FC = () => {
 	const { user } = useAuth()
-	const [currentRoute, setCurrentRoute] = useState<string | undefined>()
+	const [currentRoute, setCurrentRoute] = useState<string | null>()
 
 	const navReference = useNavigationContainerRef()
 	useEffect(() => {

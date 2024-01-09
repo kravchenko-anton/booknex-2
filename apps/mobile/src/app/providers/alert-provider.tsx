@@ -16,9 +16,7 @@ export interface AlertContextProperties {
 	closeAlert: () => void
 }
 
-export const AlertContext = createContext<AlertContextProperties | undefined>(
-	undefined
-)
+export const AlertContext = createContext<AlertContextProperties | null>(null)
 
 export const AlertProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [alert, setAlert] = useState<AlertProperties | null>(null)

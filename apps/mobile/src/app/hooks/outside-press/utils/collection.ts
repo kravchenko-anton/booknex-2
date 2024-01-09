@@ -5,7 +5,7 @@ export type ComponentReference = Ref<any>
 
 let collection: { ref: ComponentReference; cb: () => void }[] = []
 
-export let isTouch: boolean | undefined
+export let isTouch: boolean | null
 export const setIsTouch = (value: boolean) => (isTouch = value)
 
 export const onTouch = (event: GestureResponderEvent) => {
@@ -20,7 +20,7 @@ export const onTouch = (event: GestureResponderEvent) => {
 			}
 		)
 	}
-	isTouch = undefined
+	isTouch = null
 }
 
 export const register: (

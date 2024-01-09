@@ -1,5 +1,5 @@
 import { getAuthorUrl } from 'global/api-config'
-import {
+import type {
 	AllAuthorOutput,
 	InfoByIdOutput
 } from 'global/services-types/author-types'

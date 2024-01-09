@@ -1,5 +1,5 @@
 import type { ComponentType, ReactElement } from 'react'
-import { cloneElement, createElement, Fragment, isValidElement } from 'react'
+import { Fragment, cloneElement, createElement, isValidElement } from 'react'
 import type { FieldErrors } from 'react-hook-form'
 import { get, useFormContext } from 'react-hook-form'
 import type { Properties } from './types'
@@ -7,10 +7,10 @@ import type { Properties } from './types'
 const ErrorMessage = <
 	TFieldErrors extends FieldErrors,
 	TAs extends
-		| undefined
+		| null
 		| ReactElement
 		| ComponentType<never>
-		| keyof JSX.IntrinsicElements = undefined
+		| keyof JSX.IntrinsicElements = null
 >({
 	as,
 	errors,
@@ -34,12 +34,12 @@ const ErrorMessage = <
 	// eslint-disable-next-line no-nested-ternary
 	return isValidElement(as)
 		? cloneElement(as, properties)
-		: (render
+		: render
 			? (render({
 					message: messageFromRegister || message,
 					messages: types
 				}) as ReactElement)
-			: createElement((as as string) || Fragment, properties))
+			: createElement((as as string) || Fragment, properties)
 }
 
 export { ErrorMessage }

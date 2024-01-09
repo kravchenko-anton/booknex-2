@@ -34,16 +34,6 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
-		'spaced-comment': ['off'],
-		'@typescript-eslint/no-unsafe-argument': 'off',
-		'@typescript-eslint/prefer-nullish-coalescing': 'off',
-		'@typescript-eslint/no-unsafe-call': 'off',
-		'@typescript-eslint/no-unsafe-assignment': 'off',
-		'@typescript-eslint/no-unsafe-return': 'off',
-		'unicorn/explicit-length-check': 'off',
-		'@typescript-eslint/prefer-as-const': 'off',
-		'@typescript-eslint/no-redundant-type-constituents': 'off',
-		'unicorn/no-keyword-prefix': ['off'],
 		'react/jsx-curly-brace-presence': [
 			'error',
 			{ props: `never`, children: 'never' }
@@ -65,7 +55,6 @@ module.exports = {
 		'@typescript-eslint/no-extra-non-null-assertion': 'error',
 		'max-params': ['error', 4],
 		complexity: ['error', 10],
-		'no-nested-ternary': 'error',
 		'no-unneeded-ternary': 'error',
 		'jsx-expressions/strict-logical-expressions': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
@@ -144,6 +133,18 @@ module.exports = {
 				ignore: ['App.tsx', 'use']
 			}
 		],
+		'no-nested-ternary': 'off',
+		'unicorn/no-null': 'off',
+		'spaced-comment': ['off'],
+		'@typescript-eslint/no-unsafe-argument': 'off',
+		'@typescript-eslint/prefer-nullish-coalescing': 'off',
+		'@typescript-eslint/no-unsafe-call': 'off',
+		'@typescript-eslint/no-unsafe-assignment': 'off',
+		'@typescript-eslint/no-unsafe-return': 'off',
+		'unicorn/explicit-length-check': 'off',
+		'@typescript-eslint/prefer-as-const': 'off',
+		'@typescript-eslint/no-redundant-type-constituents': 'off',
+		'unicorn/no-keyword-prefix': ['off'],
 		'@typescript-eslint/no-confusing-void-expression': 'off',
 		'@typescript-eslint/comma-dangle': 'off',
 		'@typescript-eslint/semi': 'off',

@@ -18,9 +18,8 @@ interface BottomSheetContextProperties {
 	closeBottomSheet: () => void
 }
 
-export const BottomSheetContext = createContext<
-	BottomSheetContextProperties | undefined
->(undefined)
+export const BottomSheetContext =
+	createContext<BottomSheetContextProperties | null>(null)
 export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [bottomSheet, setBottomSheet] = useState<{
 		component: ReactNode

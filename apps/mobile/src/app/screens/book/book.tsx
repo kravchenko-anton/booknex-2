@@ -1,10 +1,12 @@
 import { BookCard, ScrollLayout } from '@/components'
+import { Menu } from '@/components/dropdown/dropdown'
 import { useTypedNavigation } from '@/hooks'
 import { useBook } from '@/screens/book/useBook'
-import { Alert, Pen, Share as ShareIcon, Text } from 'icons'
+import { Alert, ArrowLeft, Pen, Share as ShareIcon, Text } from 'icons'
 import { Share, View } from 'react-native'
 import { Color } from 'ui/colors'
 import {
+	AnimatedIcon,
 	Button,
 	Description,
 	Flatlist,
@@ -13,17 +15,17 @@ import {
 	Title
 } from 'ui/components'
 import * as DropDown from '../../components/dropdown/dropdown'
-import * as Header from '../../components/header/header'
 
 const Book = () => {
 	const { book } = useBook()
-	const { navigate } = useTypedNavigation()
+	const { navigate, goBack } = useTypedNavigation()
 	if (!book) return <Loader />
 	return (
 		<ScrollLayout statusBarBackgroundColor={Color.shade}>
 			<View className='bg-shade z-50 items-center justify-between overflow-hidden rounded-b-3xl px-4 pb-6 pt-2'>
-				<Header.Head>
-					<Header.DropDown>
+				<View className='mt-1 w-full flex-row items-center justify-between'>
+					<AnimatedIcon icon={ArrowLeft} size='md' onPress={() => goBack()} />
+					<Menu position='right' size='md'>
 						<DropDown.Element
 							title='Share'
 							icon={ShareIcon}
@@ -49,8 +51,8 @@ const Book = () => {
 								console.log('Write review')
 							}}
 						/>
-					</Header.DropDown>
-				</Header.Head>
+					</Menu>
+				</View>
 				<Image className='-z-10' url={book.picture} height={260} width={170} />
 			</View>
 			<View className='flex-1 flex-row items-center justify-between px-4 pt-6'>

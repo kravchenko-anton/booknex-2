@@ -4,7 +4,7 @@ import type { IAuthState } from './auth-types'
 
 const initialState = {
 	isLoading: false,
-	user: undefined as IAuthState | undefined
+	user: null as IAuthState | null
 }
 
 export const authSlice = createSlice({
@@ -22,7 +22,7 @@ export const authSlice = createSlice({
 			})
 			.addCase(register.rejected, state => {
 				state.isLoading = false
-				state.user = undefined
+				state.user = null
 			})
 			.addCase(login.pending, state => {
 				state.isLoading = true
@@ -33,11 +33,11 @@ export const authSlice = createSlice({
 			})
 			.addCase(login.rejected, state => {
 				state.isLoading = false
-				state.user = undefined
+				state.user = null
 			})
 			.addCase(logout.fulfilled, state => {
 				state.isLoading = false
-				state.user = undefined
+				state.user = null
 			})
 	}
 })

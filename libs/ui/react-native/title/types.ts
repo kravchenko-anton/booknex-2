@@ -5,7 +5,7 @@ import type { fontSettings } from './settings'
 export type TitleProperties = TextDefaultProperties &
 	ColorProperties & {
 		center?: boolean
-		children: string | number | undefined | string[]
+		children: string | number | null | string[]
 		size?: number
 		weight?: keyof typeof fontSettings
 	}
