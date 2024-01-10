@@ -1,7 +1,6 @@
 import type {
 	AllUsersOutput,
 	FavoriteListOutput,
-	ToggleOutput,
 	UserLibraryOutput,
 	UserProfileOutput
 } from '@booknex/global/services-types/user-types'
@@ -21,7 +20,6 @@ import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { UserUpdatePasswordDto } from './dto/user.update.dto'
 import { UserService } from './user.service'
-import { UserLibraryCategoryType } from './user.types'
 
 @ApiTags('user')
 @ApiBearerAuth()
@@ -32,6 +30,12 @@ export class UserController {
 	@Get('/profile')
 	async profile(@CurrentUser('id') id: number): Promise<UserProfileOutput> {
 		return this.usersService.profile(+id)
+	}
+
+	@Auth()
+	@Get('/visit')
+	async visit(@CurrentUser('id') id: number) {
+		return this.usersService.visit(+id)
 	}
 
 	@Auth()
@@ -58,14 +62,24 @@ export class UserController {
 	}
 
 	@Auth()
-	@Patch('/toggle/:id')
-	async toggle(
+	@Patch('/start-reading/:id')
+	async toggle(@CurrentUser('id') userId: number, @Param('id') id: string) {
+		return this.usersService.startReading(userId, +id)
+	}
+
+	@Auth()
+	@Patch('/finish-reading/:id')
+	async finishReading(
 		@CurrentUser('id') userId: number,
-		@Param('id') id: string,
-		@Query('type')
-		type: UserLibraryCategoryType
-	): Promise<ToggleOutput> {
-		return this.usersService.toggle(userId, +id, type)
+		@Param('id') id: string
+	) {
+		return this.usersService.finishReading(userId, +id)
+	}
+
+	@Auth()
+	@Patch('/toggle-save/:id')
+	async toggleSave(@CurrentUser('id') userId: number, @Param('id') id: string) {
+		return this.usersService.toggleSave(userId, +id)
 	}
 
 	// admin

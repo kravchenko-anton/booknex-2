@@ -21,16 +21,16 @@ model Genre {
   majorBooks     Book[]         @relation("BookMajorGenre")
   similarBy      Genre[]        @relation("Similar")
   similar        Genre[]        @relation("Similar")
-
   goodReadsBooks GoodReadBook[]
 }
 
-model activity {
+model Activity {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   Book      Book?    @relation(fields: [bookId], references: [id])
   bookId    Int?
   userId    Int
+  type      String
   user      User     @relation(fields: [userId], references: [id])
 }
 
@@ -40,22 +40,12 @@ model Review {
   updatedAt DateTime @updatedAt
   bookId    Int
   userId    Int
-  emotionId Int
   text      String
-  tags      String[]
-  emotion   Emotion? @relation(fields: [emotionId], references: [id])
   book      Book     @relation(fields: [bookId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 }
 
-model Emotion {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String   @unique
-  path      String
-  Review    Review[]
-}
+
 
 model Book {
   id          Int      @id @default(autoincrement())
@@ -83,7 +73,7 @@ model Book {
   authorId    Int
   mainGenreId Int
   complaints  Complaint[]
-  activities  activity[]
+  activities  Activity[]
 }
 
 model GoodReadBook {
@@ -136,7 +126,7 @@ model User {
   finishedBooks  Book[]       @relation("FinishedBooks")
   readingBooks   Book[]       @relation("ReadingBooks")
   complaints     Complaint[]
-  activity       activity[]
+  activity       Activity[]
 }
 
 model Collection {

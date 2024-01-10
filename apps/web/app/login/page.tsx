@@ -1,9 +1,9 @@
 'use client'
 import { useAction } from '@/hooks/useAction'
-import { Mail, Password } from '@/icons'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
-import { Field } from '@/ui/components'
+import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
+import { Field } from 'ui/components'
 import { Button } from '../../../../libs/ui/react'
 
 export default function Page() {
@@ -27,7 +27,7 @@ export default function Page() {
 				<Field
 					icon={Password}
 					control={control}
-					className='my-1.5'
+					className='my-3'
 					name='password'
 					type='password'
 					placeholder='Enter your password'

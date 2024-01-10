@@ -60,7 +60,7 @@ export class CatalogService {
 					id: userId
 				},
 				select: {
-					selectedGenre: {
+					selectedGenres: {
 						select: {
 							id: true,
 							name: true
@@ -68,7 +68,7 @@ export class CatalogService {
 					}
 				}
 			})
-			.selectedGenre()
+			.selectedGenres()
 	}
 
 	private popularBooks() {
@@ -144,14 +144,14 @@ export class CatalogService {
 													id: userId
 												},
 												select: {
-													selectedGenre: {
+													selectedGenres: {
 														select: {
 															name: true
 														}
 													}
 												}
 											})
-											.selectedGenre()
+											.selectedGenres()
 											.then(initialGenres =>
 												initialGenres.map(genre => genre.name)
 											)

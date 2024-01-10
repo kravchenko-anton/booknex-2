@@ -1,5 +1,5 @@
 export const Color = {
-	foreground: '#262626' as '#262626',
+	foreground: '#222222' as '#222222',
 	vibrant: '#4d5058' as '#4d5058',
 	shade: '#181818' as '#181818',
 	background: '#0b0b0b' as '#0b0b0b',

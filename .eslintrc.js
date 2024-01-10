@@ -21,7 +21,8 @@ module.exports = {
 		'plugin:@typescript-eslint/strict',
 		'plugin:@typescript-eslint/stylistic',
 		'plugin:@typescript-eslint/stylistic-type-checked',
-		'plugin:@typescript-eslint/strict-type-checked'
+		'plugin:@typescript-eslint/strict-type-checked',
+		'plugin:security/recommended-legacy'
 	],
 	root: true,
 	ignorePatterns: ['*.js'],

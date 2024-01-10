@@ -49,7 +49,6 @@ export interface FavoriteListOutput {
 
 export interface ToggleOutput {
 	message: string
-	isExist: boolean
 }
 
 export type AllUsersOutput = Prisma.UserGetPayload<{

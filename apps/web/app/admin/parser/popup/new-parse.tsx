@@ -1,6 +1,6 @@
-import { Button, Field } from '@/ui/components'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import { Button, Field } from 'ui/components'
 
 interface NewParserPopupProperties {
 	onSubmit: (data: { link: string; page: number }) => void

@@ -3,10 +3,8 @@ import { defaultReturnObject } from '../utils/return.default.object'
 
 export const returnReviewsObject: Pick<
 	Prisma.ReviewSelect,
-	'text' | 'emotion' | 'tags' | keyof typeof defaultReturnObject
+	'text' | keyof typeof defaultReturnObject
 > = {
 	...defaultReturnObject,
-	text: true,
-	emotion: true,
-	tags: true
+	text: true
 }

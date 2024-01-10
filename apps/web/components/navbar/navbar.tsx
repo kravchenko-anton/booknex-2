@@ -1,9 +1,9 @@
 'use client'
 import { Links } from '@/components/navbar/settings'
-import { Button } from '@/ui/components'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Button } from 'ui/components'
 
 export const Navbar = () => {
 	const [open, setOpen] = useState(false)

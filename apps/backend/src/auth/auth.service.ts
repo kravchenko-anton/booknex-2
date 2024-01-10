@@ -54,7 +54,7 @@ export class AuthService {
 			data: {
 				email: dto.email,
 				password: await hash(dto.password),
-				selectedGenre: {
+				selectedGenres: {
 					connectOrCreate: dto.genres.map(genre => ({
 						where: {
 							name: genre

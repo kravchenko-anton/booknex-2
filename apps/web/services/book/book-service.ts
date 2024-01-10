@@ -1,20 +1,13 @@
-import { getAuthorUrl, getBookUrl } from '../../../../libs/global/api-config'
 import type {
 	AllBooksOutput,
 	AllSelectBooksOutput,
 	BookByIdOutput,
-	BookPayload,
-	EmotionOutput
-} from '../../../../libs/global/services-types/book-types'
+	BookPayload
+} from 'global/services-types/book-types'
+import { getAuthorUrl, getBookUrl } from '../../../../libs/global/api-config'
 import { request } from '../api/request.api'
 
 export const bookService = {
-	async emotions() {
-		return request<EmotionOutput>({
-			url: getBookUrl('/emotions')
-		})
-	},
-
 	async all(searchTerm: string) {
 		return request<AllBooksOutput>({
 			url: getBookUrl('/all'),
@@ -36,6 +29,7 @@ export const bookService = {
 			params: { searchTerm }
 		})
 	},
+
 	async toggleVisible(id: number) {
 		return request({
 			method: 'PUT',

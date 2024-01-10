@@ -6,9 +6,9 @@ import { getAverageColor } from 'fast-average-color-node'
 import { returnAuthorObject } from '../author/return.author.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
+import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import { defaultReturnObject } from '../utils/return.default.object'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 import type { ReviewBookDto } from './dto/review.book.dto'
 import { returnBookObjectWithAuthor } from './return.book.object'
@@ -31,6 +31,21 @@ export class BookService {
 		})
 		if (!book)
 			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Visit_Book,
+				user: {
+					connect: {
+						id
+					}
+				},
+				Book: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
 		return book
 	}
 
@@ -46,6 +61,21 @@ export class BookService {
 		if (!book)
 			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
 		const bookFile = await fetch(getFileUrl(book.file))
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Get_Ebook,
+				Book: {
+					connect: {
+						id
+					}
+				},
+				user: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
 		return {
 			...book,
 			file: await bookFile.text()
@@ -81,7 +111,6 @@ export class BookService {
 		const book = await this.getBookById(id, {
 			visible: true
 		})
-		console.log(!book.visible)
 		await this.prisma.book.update({
 			where: { id: book.id },
 			data: {
@@ -174,26 +203,9 @@ export class BookService {
 		})
 	}
 
-	emotions() {
-		return this.prisma.emotion.findMany({
-			select: {
-				...defaultReturnObject,
-				name: true,
-				path: true
-			}
-		})
-	}
-
 	async review(userId: number, bookId: number, dto: ReviewBookDto) {
 		await this.usersService.getUserById(userId)
 		await this.getBookById(bookId)
-		const emoji = await this.prisma.emotion.findUnique({
-			where: { name: dto.emotion }
-		})
-		if (!emoji)
-			throw new NotFoundException(
-				`Emotion ${ErrorsEnum.Not_Found}`
-			).getResponse()
 		await this.prisma.review.create({
 			data: {
 				user: {
@@ -204,12 +216,6 @@ export class BookService {
 				book: {
 					connect: {
 						id: bookId
-					}
-				},
-				tags: dto.tags,
-				emotion: {
-					connect: {
-						name: dto.emotion
 					}
 				},
 				text: dto.comment

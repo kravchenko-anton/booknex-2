@@ -1,11 +1,13 @@
 'use client'
+import { blobFormData } from '@/utils/files'
 import {
 	CaseSensitive,
 	ChevronDown,
 	ChevronUp,
 	Close
-} from '@/global/icons/react'
-import { Color } from '@/ui/colors'
+} from 'global/icons/react'
+import type { FC } from 'react'
+import { Color } from 'ui/colors'
 import {
 	Button,
 	DropZone,
@@ -15,9 +17,7 @@ import {
 	FormSelect,
 	FormTextArea,
 	TextArea
-} from '@/ui/components'
-import { blobFormData } from '@/utils/files'
-import type { FC } from 'react'
+} from 'ui/components'
 
 import CreateAuthorPopup from '../../authors/popup/create'
 import { useBookCompose } from './useBook'

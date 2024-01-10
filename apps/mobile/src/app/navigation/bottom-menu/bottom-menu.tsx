@@ -11,7 +11,7 @@ interface IBottomMenu {
 }
 
 const BottomMenu: FC<IBottomMenu> = properties => (
-	<View className='border-vibrant bg-shade w-full flex-row items-center justify-between border-t-[1px]  px-4 pb-1 pt-2'>
+	<View className='border-vibrant bg-shade w-full flex-row items-center justify-between overflow-hidden border-t-[1px]  px-4 pb-1 pt-2'>
 		{menuItems.map(item => (
 			<MenuItem key={item.path} item={item} {...properties} />
 		))}

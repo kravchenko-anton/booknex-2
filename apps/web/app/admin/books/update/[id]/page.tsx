@@ -4,13 +4,22 @@ import { useChapters } from '@/app/admin/books/update/[id]/useCharapters'
 import type { UpdateBookValidationSchemaType } from '@/app/admin/books/update/[id]/validation'
 import { updateBookValidationSchema } from '@/app/admin/books/update/[id]/validation'
 import HtmlEditor from '@/components/html-editor/html-editor'
-import { getFileUrl } from '@/global/api-config'
-import type { BookPayload } from '@/global/services-types/book-types'
-import { Trash } from '@/icons'
 import { usePopupContext } from '@/providers/popup-provider'
 import { authorService } from '@/services/author/author-service'
 import { bookService } from '@/services/book/book-service'
 import { genreService } from '@/services/genre/genre-service'
+import { useUploadFile } from '@/utils/files'
+import { errorToast, successToast } from '@/utils/toast'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import type { Editor } from '@tinymce/tinymce-react'
+import { getFileUrl } from 'global/api-config'
+import type { BookPayload } from 'global/services-types/book-types'
+import { Trash } from 'icons'
+import { useRouter } from 'next/navigation'
+import type { FC } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import {
 	Button,
 	ErrorBlock,
@@ -19,16 +28,7 @@ import {
 	FormSelect,
 	FormTextArea,
 	Input
-} from '@/ui/components'
-import { useUploadFile } from '@/utils/files'
-import { errorToast, successToast } from '@/utils/toast'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import type { Editor } from '@tinymce/tinymce-react'
-import { useRouter } from 'next/navigation'
-import type { FC } from 'react'
-import { useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
+} from 'ui/components'
 import Dropzone from '../../../../../../../libs/ui/react/dropzone/dropzone'
 import { StorageFolderEnum } from '../../../../../../backend/src/storage/storage.types'
 //TODO: пофиксить эту страницу чтобы было лучше

@@ -4,26 +4,21 @@ export type UserLibraryCategoryType = keyof Pick<
 	Prisma.UserSelect,
 	'finishedBooks' | 'readingBooks' | 'savedBooks'
 >
-export const DesignationType = {
-	finishedBooks: 'book',
-	readingBooks: 'book'
-}
 export enum UserLibraryFieldsEnum {
 	finishedBooks = 'finishedBooks',
 	readingBooks = 'readingBooks',
 	savedBooks = 'savedBooks'
 }
 
-export const CatalogTitleType = {
-	finishedBooks: 'Finished',
-	readingBooks: 'Reading',
-	savedBooks: 'Saved'
+export enum ActivityEnum {
+	Started_Reading = 'Started Reading',
+	Finished_Reading = 'Finished Reading',
+	Add_To_Saved = 'Add To Saved',
+	Remove_From_Saved = 'Remove From Saved',
+	Visit_App = 'Visit App',
+	Visit_Book = 'Visit Book',
+	Get_Ebook = 'Get Ebook'
 }
-
-export const userLibraryFields: UserLibraryCategoryType[] = [
-	UserLibraryFieldsEnum.finishedBooks,
-	UserLibraryFieldsEnum.readingBooks
-]
 
 export const idSelect = {
 	select: { id: true }

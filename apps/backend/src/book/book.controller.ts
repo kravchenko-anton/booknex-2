@@ -2,7 +2,6 @@ import type {
 	AllBooksOutput,
 	AllSelectBooksOutput,
 	BookByIdOutput,
-	EmotionOutput,
 	EpubOutput,
 	ReviewByIdOutput
 } from '@booknex/global/services-types/book-types'
@@ -29,12 +28,6 @@ import { ReviewBookDto } from './dto/review.book.dto'
 @Controller('book')
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
-
-	@Get('/emotions')
-	@Auth()
-	async emotions(): Promise<EmotionOutput> {
-		return this.bookService.emotions()
-	}
 
 	@Post('/review/:id')
 	@Auth()

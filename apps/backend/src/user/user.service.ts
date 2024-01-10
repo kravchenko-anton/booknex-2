@@ -10,13 +10,7 @@ import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { UserUpdatePasswordDto } from './dto/user.update.dto'
 import { returnUserObject } from './return.user.object'
-import type { UserLibraryCategoryType } from './user.types'
-import {
-	CatalogTitleType,
-	UserLibraryFieldsEnum,
-	idSelect,
-	userLibraryFields
-} from './user.types'
+import { ActivityEnum, UserLibraryFieldsEnum, idSelect } from './user.types'
 
 @Injectable()
 export class UserService {
@@ -57,6 +51,20 @@ export class UserService {
 			[UserLibraryFieldsEnum.finishedBooks]: library.finishedBooks,
 			[UserLibraryFieldsEnum.savedBooks]: library.savedBooks
 		}
+	}
+
+	async visit(id: number) {
+		await this.getUserById(id)
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Visit_App,
+				user: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
 	}
 
 	async profile(id: number) {
@@ -143,39 +151,157 @@ export class UserService {
 		}
 	}
 
-	async toggle(userId: number, id: number, type: UserLibraryCategoryType) {
-		if (!userLibraryFields.includes(type))
-			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
-		const existBookOrCollection = await this.prisma.book.findFirst({
+	async startReading(userId: number, id: number) {
+		const bookExist = await this.prisma.book.findUnique({
 			where: { id },
-			select: { id: true }
+			select: {
+				id: true
+			}
 		})
-		if (!existBookOrCollection)
-			throw new NotFoundException(`book ${ErrorsEnum.Not_Found}`).getResponse()
 
+		if (!bookExist)
+			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect,
-			finishedBooks: idSelect,
-			savedBooks: idSelect
+			finishedBooks: idSelect
 		})
 
-		const isExist = user[type].some(book => book.id === id)
+		const isReadingExist = user.readingBooks.some(book => book.id === id)
+		const isFinishedExist = user.finishedBooks.some(book => book.id === id)
+		if (isReadingExist) return
 
-		await this.prisma.user.update({
-			where: { id: user.id },
+		await this.prisma.activity.create({
 			data: {
-				[type]: {
-					[isExist ? 'disconnect' : 'connect']: {
+				type: ActivityEnum.Started_Reading,
+				user: {
+					connect: {
+						id: userId
+					}
+				},
+				Book: {
+					connect: {
 						id
 					}
 				}
 			}
 		})
-		return {
-			message: `book ${
-				isExist ? 'removed from' : 'added to'
-			} your ${CatalogTitleType[type].toLowerCase()} list`,
-			isExist: !isExist
-		}
+		await this.prisma.user.update({
+			where: { id: user.id },
+			data: isFinishedExist
+				? {
+						finishedBooks: {
+							disconnect: {
+								id
+							}
+						},
+						readingBooks: {
+							connect: {
+								id
+							}
+						}
+					}
+				: {
+						readingBooks: {
+							connect: {
+								id
+							}
+						}
+					}
+		})
+	}
+
+	async finishReading(userId: number, id: number) {
+		const bookExist = await this.prisma.book.findUnique({
+			where: { id },
+			select: {
+				id: true
+			}
+		})
+
+		if (!bookExist)
+			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+		const user = await this.getUserById(+userId, {
+			readingBooks: idSelect
+		})
+		const isReadingExist = user.readingBooks.some(book => book.id === id)
+		if (!isReadingExist) return
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Finished_Reading,
+				user: {
+					connect: {
+						id: userId
+					}
+				},
+				Book: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
+		await this.prisma.user.update({
+			where: { id: user.id },
+			data: {
+				readingBooks: {
+					disconnect: {
+						id
+					}
+				},
+				finishedBooks: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
+	}
+
+	async toggleSave(userId: number, id: number) {
+		const bookExist = await this.prisma.book.findUnique({
+			where: { id },
+			select: {
+				id: true
+			}
+		})
+
+		if (!bookExist) return
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: {
+				id: true,
+				savedBooks: idSelect
+			}
+		})
+		console.log(user)
+		const isSavedExist = user.savedBooks.some(book => book.id === id)
+		console.log(isSavedExist)
+		await this.prisma.activity.create({
+			data: {
+				type: isSavedExist
+					? ActivityEnum.Remove_From_Saved
+					: ActivityEnum.Add_To_Saved,
+				user: {
+					connect: {
+						id: user.id
+					}
+				},
+				Book: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
+		await this.prisma.user.update({
+			where: { id: user.id },
+			data: {
+				savedBooks: {
+					[isSavedExist ? 'disconnect' : 'connect']: {
+						id
+					}
+				}
+			}
+		})
 	}
 }

@@ -13,10 +13,10 @@ export const AdminNavbar = () => {
 	const activePath = usePathname()
 	console.log(activePath)
 	return (
-		<div className='z-50 '>
-			<div className='bg-shade border-foreground z-50 mb-0 flex h-[70px]  items-center justify-between rounded-xl border-2 md:px-10'>
+		<div className='fixed z-50 flex w-full items-center justify-center'>
+			<div className='bg-foreground z-50 mb-0 flex h-[70px] items-center justify-between rounded-2xl  bg-opacity-80 backdrop-blur-xl  md:px-10'>
 				<button
-					className='flex cursor-pointer items-center gap-1 text-2xl font-bold'
+					className='border-vibrant flex cursor-pointer items-center gap-1 border-r-2 pr-4 text-2xl font-bold'
 					onClick={() => router.push('/')}
 					type='button'
 				>
@@ -55,12 +55,15 @@ export const AdminNavbar = () => {
 				</button>
 				<ul
 					className={twMerge(
-						'bg-shade absolute left-0 z-[-1] w-full pb-8 pl-9  transition-all  duration-500 ease-in md:static md:z-auto md:flex md:w-auto md:items-center md:bg-transparent md:pb-0 md:pl-0',
+						'bg-shade absolute left-0 z-[-1] w-full pb-8 pl-9  transition-all duration-500 ease-in md:static md:z-auto md:flex md:w-auto md:items-center md:bg-transparent md:pb-0 md:pl-0',
 						open ? 'top-[50px]' : 'top-[-400px]'
 					)}
 				>
 					{AdminLinks.map(link => (
-						<li className='my-7 font-semibold md:my-0 md:ml-8' key={link.link}>
+						<li
+							className=' my-7   font-semibold md:my-0 md:ml-4'
+							key={link.link}
+						>
 							<a
 								className={twMerge(
 									' font-bold duration-500 hover:text-white',
