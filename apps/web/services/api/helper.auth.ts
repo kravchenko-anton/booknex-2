@@ -1,7 +1,7 @@
+import { saveTokensStorage } from '@//redux/auth/auth-helper'
+import type { AuthResponseType } from '@//redux/auth/auth-types'
 import axios from 'axios'
-import { getAuthUrl, SERVER_URL } from '../../../../libs/global/api-config'
-import { saveTokensStorage } from '../../redux/auth/auth-helper'
-import type { AuthResponseType } from '../../redux/auth/auth-types'
+import { getAuthUrl, SERVER_URL } from 'global/api-config'
 
 export const getNewTokens = async () => {
 	try {

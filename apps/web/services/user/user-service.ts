@@ -1,9 +1,10 @@
-import { getUsersUrl } from '../../../../libs/global/api-config'
+import { getUsersUrl } from 'global/api-config'
+import type { AllUsersOutput } from 'global/services-types/user-types'
 import { request } from '../api/request.api'
 
 export const userServices = {
 	async all(searchTerm: string) {
-		return request({
+		return request<AllUsersOutput>({
 			url: getUsersUrl('/all'),
 			method: 'GET',
 			params: {

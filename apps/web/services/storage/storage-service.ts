@@ -1,5 +1,5 @@
-import { getStorageUrl } from '../../../../libs/global/api-config'
-import type { UploadOutput } from '../../../../libs/global/services-types/storage-types'
+import { getStorageUrl } from 'global/api-config'
+import type { UploadOutput } from 'global/services-types/storage-types'
 import type {
 	FilenameDto,
 	ReplacementDto

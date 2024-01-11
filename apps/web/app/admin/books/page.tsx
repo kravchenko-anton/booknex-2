@@ -55,7 +55,7 @@ const Page: FC = () => {
 	)
 	return (
 		<div className='w-full'>
-			<div className='bg-shade flex w-full items-center justify-between rounded-xl p-3'>
+			<div className='  flex  w-full items-center justify-between   p-3'>
 				<h1 className='text-3xl font-medium'>Books</h1>
 				<div className='flex gap-5'>
 					<Field
@@ -81,7 +81,7 @@ const Page: FC = () => {
 					<Spiner height={40} width={40} />
 				</div>
 			) : (
-				<table className='bg-shade mt-4 w-full rounded-xl'>
+				<table className='bg-shade border-foreground mt-4 w-full rounded-xl border-2'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
 							<th className='min-w-[50px]   p-3'>Id</th>
@@ -98,22 +98,23 @@ const Page: FC = () => {
 						{books.map(book => {
 							return (
 								<tr
-									className='border-foreground h-[120px] items-center  justify-center border-b-2'
+									className='border-foreground h-[150px] items-center  justify-center border-b-2'
 									key={book.title + book.author.name}
 								>
 									<td className='min-w-[40px]  text-center text-2xl'>
 										{book.id}
 									</td>
-									<td className='h-[120px]'>
+									<td className='h-[130px]'>
 										<img
 											alt={book.title}
 											className='bottom-shade mx-auto w-[100px] rounded-xl'
 											src={getFileUrl(book.picture)}
 										/>
 									</td>
-									<td className='h-[100px] min-w-[140px] text-left   text-sm'>
-										{book.title} <br />{' '}
-										<p className='text-primary'>{book.author.name}</p>
+									<td className='min-w-[200px] text-left text-sm'>
+										<h3 className='text-lg'>{book.title}</h3>
+
+										<p className='text-primary mb-1'>{book.author.name}</p>
 										<Button
 											onClick={() => {
 												showPopup(<AuthorDescription text={book.description} />)
@@ -124,17 +125,22 @@ const Page: FC = () => {
 											💬 Description
 										</Button>
 									</td>
-									<td className='w-[120px] items-center justify-center p-2 text-center'>
-										<h2>{book.pages} 📖</h2>
-										<h2>{nFormatter(book.popularity)} 👍</h2>
+									<td className='w-[250px] p-2'>
+										<h2 className='text-lg font-light'>
+											Pages: <b className='font-bold'>{book.pages}</b>
+										</h2>
+										<h2 className='mt-2 text-lg font-light'>
+											Popularity:{' '}
+											<b className='font-bold'>{nFormatter(book.popularity)}</b>
+										</h2>
 									</td>
 									<td className='min-w-[600px] p-2'>
 										{
 											// TODO: сделать тут статистику
 										}
 									</td>
-									<td className='w-[200px]'>
-										<div className='my-auto  flex flex-wrap items-center justify-end'>
+									<td className='w-[300px]'>
+										<div className='my-auto  flex flex-wrap items-center'>
 											{book.genres.map(genre => (
 												<p
 													className='bg-foreground m-1 rounded-xl p-1.5 text-sm text-white'

@@ -6,9 +6,13 @@ import {
 import type { Prisma } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
+import { ReturnGenreObject } from '../genre/return.genre.object'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import type { UserUpdatePasswordDto } from './dto/user.update.dto'
+import type {
+	UserUpdatePasswordDto,
+	UserUpdateSelectedGenresDto
+} from './dto/user.update.dto'
 import { returnUserObject } from './return.user.object'
 import { ActivityEnum, UserLibraryFieldsEnum, idSelect } from './user.types'
 
@@ -51,6 +55,38 @@ export class UserService {
 			[UserLibraryFieldsEnum.finishedBooks]: library.finishedBooks,
 			[UserLibraryFieldsEnum.savedBooks]: library.savedBooks
 		}
+	}
+
+	async updateRecommendations(id: number, dto: UserUpdateSelectedGenresDto) {
+		await this.getUserById(id)
+		const selectedGenres = await this.prisma.genre.findMany({
+			where: {
+				id: {
+					in: dto.selectedGenres
+				}
+			},
+			select: {
+				id: true
+			}
+		})
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Update_Recommendations,
+				user: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
+		await this.prisma.user.update({
+			where: { id },
+			data: {
+				selectedGenres: {
+					set: selectedGenres
+				}
+			}
+		})
 	}
 
 	async visit(id: number) {
@@ -108,8 +144,13 @@ export class UserService {
 			take: 20,
 			select: {
 				...returnUserObject,
+				selectedGenres: {
+					select: ReturnGenreObject
+				},
 				_count: {
 					select: {
+						activity: true,
+						savedBooks: true,
 						finishedBooks: true,
 						readingBooks: true
 					}

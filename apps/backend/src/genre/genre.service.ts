@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { returnAuthorWithPicture } from '../author/return.author.object'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
+import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
@@ -103,6 +104,21 @@ export class GenreService {
 			}
 		})
 
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Visit_Genre,
+				user: {
+					connect: {
+						id
+					}
+				},
+				Genre: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
 		const { similar, ...rest } = genre
 		return {
 			...rest,

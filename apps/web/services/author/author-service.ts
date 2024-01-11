@@ -1,9 +1,9 @@
-import { getAuthorUrl } from '../../../../libs/global/api-config'
+import { getAuthorUrl } from 'global/api-config'
 import type {
 	AllAuthorOutput,
 	AllSelectAuthorOutput,
 	CreateAuthorOutput
-} from '../../../../libs/global/services-types/author-types'
+} from 'global/services-types/author-types'
 import type {
 	CreateAuthorDto,
 	EditAuthorDto

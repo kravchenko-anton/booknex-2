@@ -1,10 +1,7 @@
+import { deleteTokensStorage, getAccessToken } from '@/redux/auth/auth-helper'
 import axios from 'axios'
-import { SERVER_URL } from '../../../../libs/global/api-config'
-import { errorCatch } from '../../../../libs/global/utils/catch-error'
-import {
-	deleteTokensStorage,
-	getAccessToken
-} from '../../redux/auth/auth-helper'
+import { SERVER_URL } from 'global/api-config'
+import { errorCatch } from 'global/utils/catch-error'
 import { getNewTokens } from './helper.auth'
 
 const instance = axios.create({
@@ -15,11 +12,11 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(async config => {
-	const accessToken = await getAccessToken()
-	
+	const accessToken = getAccessToken()
+
 	if (config.headers && accessToken)
 		config.headers.Authorization = `Bearer ${accessToken}`
-	
+
 	return config
 })
 
@@ -43,7 +40,7 @@ instance.interceptors.response.use(
 				await deleteTokensStorage()
 			}
 		}
-		
+
 		throw error
 	}
 )

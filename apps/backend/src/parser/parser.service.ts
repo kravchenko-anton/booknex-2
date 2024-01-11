@@ -180,6 +180,7 @@ export class ParserService {
 			page.setDefaultNavigationTimeout(0)
 			page.setDefaultTimeout(0)
 			await page.setRequestInterception(true)
+			page.on('requestfailed', request => {})
 			page.on('request', request => {
 				if (
 					request.resourceType() === 'media' ||
@@ -202,9 +203,11 @@ export class ParserService {
 					request.continue()
 				}
 			})
-			page.goto(dto.url + '?page=' + dto.page, {
-				waitUntil: 'domcontentloaded'
-			})
+			await page
+				.goto(dto.url + '?page=' + dto.page, {
+					waitUntil: 'domcontentloaded'
+				})
+				.catch(() => {})
 			await page.waitForSelector('.tableList')
 			const books = await page.evaluate(() => {
 				const books = document.querySelectorAll('.tableList tr')
@@ -225,12 +228,13 @@ export class ParserService {
 				})
 			})
 
-			for (let BooksIndex = 0; BooksIndex < books.length; BooksIndex++) {
+			for (const book of books) {
 				try {
-					const book = books[BooksIndex]
-					page.goto(book.link, {
-						waitUntil: 'domcontentloaded'
-					})
+					await page
+						.goto(book.link, {
+							waitUntil: 'domcontentloaded'
+						})
+						.catch(() => {})
 					await page.waitForSelector('div.BookPageTitleSection > div > h1')
 					await page.waitForSelector(
 						'div.FeaturedPerson__infoPrimary > h4 > a > span'
@@ -362,14 +366,13 @@ export class ParserService {
 							popularity: rating
 						}
 					})
-				} catch {
-					console.log(`❌ Error for ${BooksIndex + 1}/${books.length}`)
-				}
+				} catch {}
 			}
 			await page.close()
 			await browser.close()
-		} catch {
-			console.log(`❌ Error for ${dto.url}`)
-		}
+			return {
+				success: true
+			}
+		} catch {}
 	}
 }

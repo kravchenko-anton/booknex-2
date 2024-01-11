@@ -1,7 +1,7 @@
+import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { getAuthUrl, SERVER_URL } from '../../../../libs/global/api-config'
-import { errorToast, successToast } from '../../utils/toast'
+import { SERVER_URL, getAuthUrl } from 'global/api-config'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type { AuthFieldsType, AuthResponseType } from './auth-types'
 

@@ -1,5 +1,5 @@
+import { errorToast } from '@/utils/toast'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { errorToast } from '../../utils/toast'
 import instance from './interceptors'
 
 export const request = async <T>(config: AxiosRequestConfig) => {

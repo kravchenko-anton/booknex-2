@@ -22,12 +22,19 @@ model Genre {
   similarBy      Genre[]        @relation("Similar")
   similar        Genre[]        @relation("Similar")
   goodReadsBooks GoodReadBook[]
+  activities  Activity[]
 }
 
 model Activity {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   Book      Book?    @relation(fields: [bookId], references: [id])
+  Author    Author?  @relation(fields: [authorId], references: [id])
+  Genre     Genre?   @relation(fields: [genreId], references: [id])
+  Collection Collection? @relation(fields: [collectionId], references: [id])
+  collectionId Int?
+  genreId      Int?
+  authorId  Int?
   bookId    Int?
   userId    Int
   type      String
@@ -111,8 +118,8 @@ model Author {
   picture     String
   description String
   books       Book[]
+  activities  Activity[]
 }
-//TODO: сделать тут отслеживание за активностью
 model User {
   id             Int          @id @default(autoincrement())
   createdAt      DateTime     @default(now())
@@ -137,4 +144,5 @@ model Collection {
   description String?  @default("")
   picture     String   @default("")
   books       Book[]
+  activities  Activity[]
 }

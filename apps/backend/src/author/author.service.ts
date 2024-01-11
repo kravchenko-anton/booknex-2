@@ -4,6 +4,7 @@ import {
 	NotFoundException
 } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
+import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type {
@@ -12,12 +13,32 @@ import type {
 } from './dto/manipulation.author.dto'
 import {
 	returnAuthorObject,
-	returnAuthorObjectWithDescription
+	returnAuthorObjectWithDescription,
+	returnFullAuthorObject
 } from './return.author.object'
 
 @Injectable()
 export class AuthorService {
 	constructor(private prisma: PrismaService) {}
+
+	async getAuthorInfo(id: number) {
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Visit_Author,
+				user: {
+					connect: {
+						id
+					}
+				},
+				Author: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
+		return this.getAuthorById(id, returnFullAuthorObject)
+	}
 
 	async getAuthorById(id: number, selectObject: Prisma.AuthorSelect = {}) {
 		const author = await this.prisma.author.findUnique({

@@ -1,8 +1,8 @@
-import { getGenresUrl } from '../../../../libs/global/api-config'
+import { getGenresUrl } from 'global/api-config'
 import type {
 	AllGenreOutput,
 	GenreByIdOutput
-} from '../../../../libs/global/services-types/genre-types'
+} from 'global/services-types/genre-types'
 import { request } from '../api/request.api'
 
 export const genreService = {

@@ -1,8 +1,8 @@
 export const Color = {
-	foreground: '#222222' as '#222222',
-	vibrant: '#4d5058' as '#4d5058',
-	shade: '#181818' as '#181818',
-	background: '#0b0b0b' as '#0b0b0b',
+	foreground: '#242424' as '#323232',
+	vibrant: '#323232' as '#242424',
+	shade: '#131313' as '#131313',
+	background: '#0d0d0d' as '#0d0d0d',
 	primary: '#5e548e' as '#5e548e',
 	secondary: '#685369' as '#685369',
 

@@ -1,4 +1,4 @@
-import type { AuthPayload } from '../../../../libs/global/services-types/auth-types'
+import type { AuthPayload } from 'global/services-types/auth-types'
 
 export interface AuthFieldsType {
 	email: string

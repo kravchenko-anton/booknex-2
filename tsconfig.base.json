@@ -18,9 +18,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@booknex/global/*": ["libs/global/*"],
-			"@booknex/ui/*": ["libs/ui/*"],
-			"@booknex/ui/react": ["libs/ui/react/index.ts"],
-			"@booknex/ui/react-native": ["libs/ui/react-native/src/index.ts"]
+			"@booknex/ui/*": ["libs/ui/*"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

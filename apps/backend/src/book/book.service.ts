@@ -31,21 +31,6 @@ export class BookService {
 		})
 		if (!book)
 			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
-		await this.prisma.activity.create({
-			data: {
-				type: ActivityEnum.Visit_Book,
-				user: {
-					connect: {
-						id
-					}
-				},
-				Book: {
-					connect: {
-						id
-					}
-				}
-			}
-		})
 		return book
 	}
 
@@ -255,7 +240,21 @@ export class BookService {
 				genres: { select: ReturnGenreObject }
 			}
 		})
-
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Visit_Book,
+				user: {
+					connect: {
+						id
+					}
+				},
+				Book: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
 		return {
 			...book,
 			similarBooks: similarBooks

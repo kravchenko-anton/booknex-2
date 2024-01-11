@@ -1,9 +1,9 @@
-import { getParserUrl } from '../../../../libs/global/api-config'
+import { getParserUrl } from 'global/api-config'
 import type {
 	AllGoodReadBookOutput,
 	ParserDtoPayload,
 	UnfoldOutput
-} from '../../../../libs/global/services-types/parser-types'
+} from 'global/services-types/parser-types'
 import { request } from '../api/request.api'
 
 export const parserService = {

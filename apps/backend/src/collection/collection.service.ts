@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { returnBookObjectWithAuthor } from '../book/return.book.object'
+import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type {
@@ -55,6 +56,21 @@ export class CollectionService {
 			throw new NotFoundException(
 				`Collection ${ErrorsEnum.Not_Found}`
 			).getResponse()
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Visit_Collection,
+				user: {
+					connect: {
+						id
+					}
+				},
+				Collection: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
 		const { _count, ...rest } = collection
 		return {
 			...rest,

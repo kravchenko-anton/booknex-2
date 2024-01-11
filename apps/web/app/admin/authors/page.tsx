@@ -35,7 +35,7 @@ const PageDetails: FC = () => {
 	const { closePopup, showPopup } = usePopupContext()
 	return (
 		<div>
-			<div className='bg-shade flex w-full items-center justify-between rounded-xl p-3'>
+			<div className=' flex w-full items-center justify-between  p-3'>
 				<h1 className='text-3xl font-medium'>Authors</h1>
 				<div className='flex gap-5'>
 					<Field
@@ -68,7 +68,7 @@ const PageDetails: FC = () => {
 					<Spiner height={40} width={40} />
 				</div>
 			) : (
-				<table className='bg-shade mt-4 w-full rounded-xl p-2'>
+				<table className='bg-shade border-foreground mt-4 w-full rounded-xl border-2'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
 							<th className='min-w-[40px] p-4'>Id</th>
@@ -84,29 +84,24 @@ const PageDetails: FC = () => {
 							return (
 								<tr
 									key={author.description + author.name}
-									className='border-foreground h-[90px] items-center  justify-center rounded-xl  border-b-2'
+									className='border-foreground h-[140px] items-center  justify-center rounded-xl  border-b-2'
 								>
 									<td className='w-[40px]  text-center text-2xl'>
 										{author.id}
 									</td>
 									<td className='w-[100px] max-w-[100px]'>
 										<Image
-											width={80}
-											height={80}
+											width={100}
+											height={100}
 											src={getFileUrl(author.picture)}
-											className='bottom-shade mx-auto w-[80px] rounded-xl'
+											className='bottom-shade mx-auto w-[100px] rounded-xl'
 											alt={author.name}
 										/>
 									</td>
-									<td className='w-[140px] max-w-[140px]  text-left'>
-										<h2 className='mb-2 text-white'>{author.name}</h2>
-									</td>
-									<td className='w-[500px] min-w-[500px] p-2'>
-										<p className='mb-2 text-sm'>
-											{author.description.slice(0, 200) + '...'}
-										</p>
+									<td className='w-[150px] pl-2 text-left'>
+										<h2 className='mb-2  text-white'>{author.name}</h2>
 										<Button
-											variant='primary'
+											variant='foreground'
 											onClick={() => {
 												showPopup(
 													<AuthorDescription text={author.description} />
@@ -114,10 +109,15 @@ const PageDetails: FC = () => {
 											}}
 											size='sm'
 										>
-											💬 Full Description
+											Description
 										</Button>
 									</td>
-									<td className=' flex min-w-[200px] max-w-full overflow-y-scroll  p-2'>
+									<td className='w-[700px] min-w-[500px] p-2'>
+										<p className='mb-2 text-sm'>
+											{author.description.slice(0, 400) + '...'}
+										</p>
+									</td>
+									<td className=' flex min-w-[400px] max-w-full overflow-y-scroll  p-2'>
 										{author.books.map(book => (
 											<Image
 												width={100}

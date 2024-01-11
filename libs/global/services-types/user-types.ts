@@ -1,5 +1,6 @@
 import type { Prisma } from '@prisma/client'
 import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
+import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 import type { returnUserObject } from '../../../apps/backend/src/user/return.user.object'
 import type { UserLibraryFieldsEnum } from '../../../apps/backend/src/user/user.types'
 
@@ -53,8 +54,13 @@ export interface ToggleOutput {
 
 export type AllUsersOutput = Prisma.UserGetPayload<{
 	select: typeof returnUserObject & {
+		selectedGenres: {
+			select: typeof ReturnGenreObject
+		}
 		_count: {
 			select: {
+				activity: true
+				savedBooks: true
 				finishedBooks: true
 				readingBooks: true
 			}

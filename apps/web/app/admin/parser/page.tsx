@@ -1,5 +1,6 @@
 'use client'
 
+import AuthorDescriptionPopup from '@/app/admin/authors/popup/description-popup'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
@@ -60,8 +61,8 @@ const Parser: FC = () => {
 	console.log(goodReadsBooks)
 	return (
 		<div className='w-full'>
-			<div className='bg-shade flex w-full items-center justify-between rounded-xl p-3'>
-				<h1 className='text-3xl font-medium'>Seeder</h1>
+			<div className=' flex w-full items-center justify-between  p-3'>
+				<h1 className='text-3xl font-medium'>Parser</h1>
 				<div className='flex gap-5'>
 					<Field
 						control={control}
@@ -105,15 +106,15 @@ const Parser: FC = () => {
 					<Spiner height={40} width={40} />
 				</div>
 			) : (
-				<table className='bg-shade mt-4 w-full rounded-xl'>
+				<table className='bg-shade border-foreground mt-4 w-full rounded-xl border-2'>
 					<thead>
 						<tr className='border-foreground border-b-2'>
 							<th className='min-w-[50px]   p-3'>Id</th>
 							<th className='min-w-[120px]  p-3'>Picture</th>
-							<th className='min-w-[100px]  p-3'>Bio</th>
-							<th className='w-[100px] min-w-[100px]  p-3'>Info</th>
+							<th className='min-w-[180px]  p-3'>Bio</th>
+							<th className='min-w-[180px]  p-3'>Info</th>
 							<th className='min-w-[100px]  p-3'>Description</th>
-							<th className='min-w-[100px]  p-3'>Author description</th>
+							<th className='min-w-[150px]  p-3'>Genres</th>
 							<th className='min-w-[100px] p-3'>Actions</th>
 						</tr>
 					</thead>
@@ -122,41 +123,72 @@ const Parser: FC = () => {
 						{goodReadsBooks.map(book => {
 							return (
 								<tr
-									className='border-foreground items-center  justify-center border-b-2'
+									className='border-foreground h-[150px] items-center  justify-center border-b-2'
 									key={book.title + book.authorName}
 								>
 									<td className='min-w-[40px]  text-center text-2xl'>
 										{book.id}
 									</td>
-									<td className='h-[120px]'>
+									<td className='h-[170px]'>
 										<img
 											alt={book.title}
 											className='bottom-shade mx-auto w-[100px] rounded-xl'
 											src={getFileUrl(book.picture)}
 										/>
 									</td>
-									<td className='h-[100px]  min-w-[140px]  text-left  text-xl'>
-										{book.title} <br />{' '}
-										<p className='text-primary text-lg'>{book.authorName}</p>
+									<td className='min-w-[200px] text-left   text-sm'>
+										<h3 className='text-lg'>{book.title}</h3>
+										<div className='mt-2 flex items-center gap-2'>
+											<img
+												width={45}
+												height={45}
+												className='rounded-full'
+												src={book.authorPicture}
+												alt={book.authorName}
+											/>
+											<p className=' mb-1 text-lg'>{book.authorName}</p>
+										</div>
 									</td>
-									<td className='w-[100px] items-center justify-center p-2 text-center'>
-										<h2>{book.pages} 📖</h2>
-										<h2>{nFormatter(book.popularity)} 👍</h2>
+									<td className='w-[300px] p-2'>
+										<h2 className='text-lg font-light'>
+											Pages: <b className='font-bold'>{book.pages}</b>
+										</h2>
+										<h2 className='mt-2 text-lg font-light'>
+											Popularity:{' '}
+											<b className='font-bold'>{nFormatter(book.popularity)}</b>
+										</h2>
 									</td>
-									<td className='min-w-[100px] p-2'>
-										{book.description.slice(0, 500) + '...'}
+									<td className='min-w-[600px] p-2'>
+										<p className='mb-2 text-sm'>
+											{book.description.slice(0, 300) + '...'}
+										</p>
+										<Button
+											onClick={() => {
+												showPopup(
+													<AuthorDescriptionPopup text={book.description} />
+												)
+											}}
+											size='sm'
+											variant='foreground'
+										>
+											Description
+										</Button>
 									</td>
-									<td className='min-w-[300px] max-w-[220px] p-2'>
-										<img
-											alt={book.title}
-											className='mb-1 h-[50px] w-[50px] rounded-xl'
-											src={book.authorPicture}
-										/>
-										{book.authorDescription.slice(0, 200) + '...'}
+									<td className='w-[300px]'>
+										<div className='  flex flex-wrap items-center'>
+											{book.genres.map(genre => (
+												<p
+													className='bg-foreground border-vibrant m-1 rounded-xl border-2 p-2  text-sm text-white'
+													key={genre.name}
+												>
+													{genre.name}
+												</p>
+											))}
+										</div>
 									</td>
 
-									<td className='w-[50px] p-2'>
-										<div className='flex  items-center justify-center gap-2'>
+									<td className='min-w-[120px] p-2'>
+										<div className='flex justify-center gap-2'>
 											<Edit
 												className='cursor-pointer'
 												color={Color.success}

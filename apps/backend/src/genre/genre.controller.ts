@@ -1,9 +1,9 @@
-import { Controller, Get, Param } from '@nestjs/common'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllGenreOutput,
 	GenreByIdOutput
-} from '../../../../libs/global/services-types/genre-types'
+} from '@booknex/global/services-types/genre-types'
+import { Controller, Get, Param } from '@nestjs/common'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../decorator/auth.decorator'
 import { GenreService } from './genre.service'
 

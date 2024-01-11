@@ -1,7 +1,3 @@
-export interface CheckEmailOutput {
-	isExist: boolean
-}
-
 export interface AuthPayload {
 	accessToken: string
 	refreshToken: string

@@ -1,13 +1,13 @@
 'use client'
-import { AdminNavbar } from '@/components/navbar/admin-navbar'
+import Sidebar from '@/components/sidebar'
 import type { FC, PropsWithChildren } from 'react'
 
 const AdminLayout: FC<PropsWithChildren> = ({ children }) => {
 	return (
-		<div>
-			<div className=' w-full p-3 duration-200 ease-linear'>
-				<AdminNavbar />
-				<div className='mt-[10px]'>{children}</div>
+		<div className='md:flex'>
+			<Sidebar />
+			<div className='md:w-[ calc(100% - 224px) ] mt-4 w-full p-4 pt-0 duration-200 ease-linear md:ml-56'>
+				{children}
 			</div>
 		</div>
 	)

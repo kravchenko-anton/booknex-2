@@ -8,6 +8,15 @@
 		],
 		"noImplicitThis": false,
 		"baseUrl": ".",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": false,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"removeComments": false,
+		"skipLibCheck": true,
 		"paths": {
 			"@/*": [
 				"./src/app/*"

@@ -1,7 +1,6 @@
 import { getBookUrl } from 'global/api-config'
 import type {
 	BookByIdOutput,
-	EmotionOutput,
 	EpubOutput,
 	ReviewBookPayload,
 	ReviewByIdOutput
@@ -9,12 +8,6 @@ import type {
 import { request } from '../api/request.api'
 
 export const bookService = {
-	async emotions() {
-		return request<EmotionOutput>({
-			url: getBookUrl('/emotions')
-		})
-	},
-
 	async review(bookId: string, dto: ReviewBookPayload) {
 		return request({
 			method: 'POST',

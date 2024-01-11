@@ -17,7 +17,12 @@ export enum ActivityEnum {
 	Remove_From_Saved = 'Remove From Saved',
 	Visit_App = 'Visit App',
 	Visit_Book = 'Visit Book',
-	Get_Ebook = 'Get Ebook'
+	Visit_Author = 'Visit Author',
+	Visit_Genre = 'Visit Genre',
+	Visit_Collection = 'Visit Collection',
+	Get_Ebook = 'Get Ebook',
+	Update_Recommendations = 'Update Recommendations',
+	'Register_New_User' = 'Register New User'
 }
 
 export const idSelect = {

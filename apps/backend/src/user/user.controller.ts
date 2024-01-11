@@ -18,7 +18,10 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
-import { UserUpdatePasswordDto } from './dto/user.update.dto'
+import {
+	UserUpdatePasswordDto,
+	UserUpdateSelectedGenresDto
+} from './dto/user.update.dto'
 import { UserService } from './user.service'
 
 @ApiTags('user')
@@ -36,6 +39,15 @@ export class UserController {
 	@Get('/visit')
 	async visit(@CurrentUser('id') id: number) {
 		return this.usersService.visit(+id)
+	}
+
+	@Auth()
+	@Get('/update-recommendations')
+	async updateRecommendations(
+		@CurrentUser('id') id: number,
+		@Body() dto: UserUpdateSelectedGenresDto
+	) {
+		return this.usersService.updateRecommendations(+id, dto)
 	}
 
 	@Auth()

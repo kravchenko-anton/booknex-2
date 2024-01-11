@@ -4,6 +4,7 @@ import {
 	PutObjectCommand,
 	S3Client
 } from '@aws-sdk/client-s3'
+import { getFileUrl } from '@booknex/global/api-config'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import process from 'node:process'
@@ -11,7 +12,7 @@ import sharp from 'sharp'
 import { ErrorsEnum } from '../utils/errors'
 import { optimizeFilename } from '../utils/string.functions'
 import type { StorageFolderType } from './storage.types'
-import { StorageFolderArray, UserStorageFolderArray } from './storage.types'
+import { StorageFolderArray, StorageFolderEnum } from './storage.types'
 
 @Injectable()
 export class StorageService {
@@ -61,19 +62,36 @@ export class StorageService {
 		isAdmin: boolean
 	}) {
 		console.log('upload', file, filename, folder, isAdmin)
-		const folderArray = isAdmin ? StorageFolderArray : UserStorageFolderArray
-		if (!folderArray.includes(folder)) {
+		if (!isAdmin)
+			throw new BadRequestException(
+				'You are not allowed to upload files'
+			).getResponse()
+		if (!StorageFolderArray.includes(folder)) {
 			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
 		}
-		const resizedImage = await sharp(file)
-			.resize(800, 1200)
-			.toFormat('jpeg', { progressive: true, quality: 50 })
-			.toBuffer()
+
+		const finalFile =
+			folder === StorageFolderEnum.ebooks
+				? file
+				: await sharp(file)
+						.resize(
+							(folder as StorageFolderEnum) === StorageFolderEnum.authorPictures
+								? {
+										height: 200,
+										width: 200
+									}
+								: {
+										height: 1200,
+										width: 800
+									}
+						)
+						.toFormat('jpeg', { progressive: true, quality: 50 })
+						.toBuffer()
 		await this.S3.send(
 			new PutObjectCommand({
 				Bucket: this.configService.get('AWS_BUCKET'),
 				Key: `${folder}/${optimizeFilename(filename)}`,
-				Body: resizedImage,
+				Body: finalFile,
 				ACL: 'public-read',
 				ContentDisposition: 'inline'
 			})
@@ -81,7 +99,7 @@ export class StorageService {
 			throw new BadRequestException(ErrorsEnum.Unknow_Error).getResponse()
 		})
 		return {
-			name: `${folder}/${optimizeFilename(filename)}`
+			name: getFileUrl(`${folder}/${optimizeFilename(filename)}`)
 		}
 	}
 }

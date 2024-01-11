@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt'
 import type { User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { UserService } from '../user/user.service'
+import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { AuthDto, RegisterDto } from './dto/auth.dto'
@@ -26,17 +27,6 @@ export class AuthService {
 		return {
 			user: this.userFields(user),
 			...tokens
-		}
-	}
-
-	async checkEmail(email: string) {
-		const user = await this.prisma.user.findUnique({
-			where: {
-				email
-			}
-		})
-		return {
-			isExist: !!user
 		}
 	}
 
@@ -63,6 +53,16 @@ export class AuthService {
 							name: genre
 						}
 					}))
+				}
+			}
+		})
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Register_New_User,
+				user: {
+					connect: {
+						id: user.id
+					}
 				}
 			}
 		})
