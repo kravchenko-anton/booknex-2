@@ -2,7 +2,7 @@
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from 'global/utils/useDebounce'
-import { Eye, Search, Trash } from 'icons'
+import { ScanEye, Search, Trash } from 'icons'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { Color } from 'ui/colors'
@@ -56,7 +56,7 @@ const PageDetails: FC = () => {
 										{user.id}
 									</td>
 
-									<td className='w-[300px] text-left   text-sm'>
+									<td className='w-[300px] text-left text-sm'>
 										<h3 className='text-lg'>{user.email}</h3>
 										<div className='mt-2 flex items-center gap-2'></div>
 									</td>
@@ -96,17 +96,17 @@ const PageDetails: FC = () => {
 
 									<td className='min-w-[120px] p-2'>
 										<div className='flex justify-center gap-2'>
-											<Eye
+											<ScanEye
 												//TODO: сделать полный предпросмотр пользователя со всей одробной статистикой
-												className='cursor-pointer'
-												color={Color.white}
+												className='hover:text-primary cursor-pointer transition-all duration-200'
+												color={Color.gray}
 												height={25}
 												size='sm'
 												width={25}
 											/>
 											<Trash
-												className='cursor-pointer'
-												color={Color.danger}
+												className='hover:text-primary cursor-pointer transition-all duration-200'
+												color={Color.gray}
 												height={25}
 												size='sm'
 												width={25}

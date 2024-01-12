@@ -82,6 +82,9 @@ export class BookService {
 				}
 				// TODO: сделать тут статистику посещаемости книги за месяц, год и тд
 			},
+			orderBy: {
+				visible: 'asc'
+			},
 			...(searchTerm && {
 				where: {
 					title: {

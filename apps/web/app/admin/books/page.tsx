@@ -178,8 +178,8 @@ const Page: FC = () => {
 												)}
 											</button>
 											<Edit
-												className='cursor-pointer'
-												color={Color.warning}
+												className='hover:text-primary cursor-pointer transition-all duration-200'
+												color={Color.gray}
 												height={25}
 												onClick={() => {
 													router.push(`/admin/books/update/${book.id}`)
@@ -188,8 +188,8 @@ const Page: FC = () => {
 											/>
 
 											<Trash
-												className='cursor-pointer'
-												color={Color.danger}
+												className='hover:text-primary cursor-pointer transition-all duration-200'
+												color={Color.gray}
 												height={25}
 												onClick={() => {
 													detele(book.id)

@@ -109,7 +109,12 @@ const PageDetails: FC = () => {
 											}}
 											size='sm'
 										>
-											Description
+											{author.description.length < 400 ||
+											author.description.includes(
+												'Librarian' || 'librarian' || 'Also'
+											)
+												? ' 🔴 Description'
+												: 'Description'}
 										</Button>
 									</td>
 									<td className='w-[700px] min-w-[500px] p-2'>
@@ -134,19 +139,19 @@ const PageDetails: FC = () => {
 										<div className='flex gap-2'>
 											<Edit
 												width={25}
-												className='cursor-pointer'
 												height={25}
-												color={Color.warning}
+												className='hover:text-primary cursor-pointer transition-all duration-200'
+												color={Color.gray}
 											/>
 
 											<Trash
 												width={25}
-												className='cursor-pointer'
+												className='hover:text-primary cursor-pointer transition-all duration-200'
+												color={Color.gray}
 												height={25}
 												onClick={() => {
 													deleteAuthor(author.id)
 												}}
-												color={Color.danger}
 												size='sm'
 											/>
 										</div>

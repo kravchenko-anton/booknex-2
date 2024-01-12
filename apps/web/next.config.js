@@ -10,6 +10,23 @@ const nextConfig = {
 	images: {
 		domains: ['f005.backblazeb2.com']
 	},
+	experimental: {
+		turbo: {
+			rules: {
+				// Option format
+				'*.md': [
+					{
+						loader: '@mdx-js/loader',
+						options: {
+							format: 'md'
+						}
+					}
+				],
+				// Option-less format
+				'*.mdx': ['@mdx-js/loader']
+			}
+		}
+	},
 	nx: {
 		svgr: true
 	},

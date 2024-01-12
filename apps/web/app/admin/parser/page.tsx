@@ -190,8 +190,8 @@ const Parser: FC = () => {
 									<td className='min-w-[120px] p-2'>
 										<div className='flex justify-center gap-2'>
 											<Edit
-												className='cursor-pointer'
-												color={Color.success}
+												className='hover:text-primary cursor-pointer transition-all duration-200'
+												color={Color.gray}
 												height={25}
 												onClick={async () => {
 													const blob = await fetch(book.authorPicture).then(
@@ -255,8 +255,8 @@ const Parser: FC = () => {
 											/>
 
 											<Trash
-												className='cursor-pointer'
-												color={Color.danger}
+												className='hover:text-primary cursor-pointer transition-all duration-200'
+												color={Color.gray}
 												height={25}
 												onClick={() => deleteFromParser(book.id)}
 												size='sm'
