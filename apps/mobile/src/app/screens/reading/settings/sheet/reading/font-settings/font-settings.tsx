@@ -1,18 +1,18 @@
+import { Icon, Select } from '@/components/ui'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import type { ReaderFontsEnum } from '@/redux/reading-settings/reading-settings-slice'
 import {
-	fontSizeSettings,
-	ReaderFont
+	ReaderFont,
+	fontSizeSettings
 } from '@/redux/reading-settings/reading-settings-slice'
 import LineHeightIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/line-height'
 import PageMarginIcon from '@/screens/reading/settings/sheet/reading/font-settings/icons/page-margin'
+import { Color } from 'global/colors'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Color } from 'ui/colors'
-import { Icon, Select } from 'ui/components'
 
 const FontSettings: FC = () => {
 	const { padding, lineHeight, font, fontSize } = useTypedSelector(

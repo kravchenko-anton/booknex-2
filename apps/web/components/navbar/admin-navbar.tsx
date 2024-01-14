@@ -1,10 +1,10 @@
 'use client'
 import { AdminLinks } from '@/components/navbar/settings'
+import { Button } from '@/components/ui'
 import { useAction } from '@/hooks'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Button } from 'ui/components'
 
 export const AdminNavbar = () => {
 	const [open, setOpen] = useState(false)

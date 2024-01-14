@@ -1,15 +1,15 @@
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { Button, Field, Title } from '@/components/ui'
 import { useAction, useTypedRoute } from '@/hooks'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
 import type { RegisterSchemaType } from '@/screens/auth/register/validation'
 import { registerSchema } from '@/screens/auth/register/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Color } from 'global/colors'
 import { Register as RegisterIllustration } from 'global/illustrations'
 import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Button, Field, Title } from 'ui/components'
 
 const Register = () => {
 	const {

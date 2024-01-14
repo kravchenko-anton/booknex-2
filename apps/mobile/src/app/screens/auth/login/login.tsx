@@ -1,16 +1,16 @@
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { Button, Field, Title } from '@/components/ui'
 import { useAction } from '@/hooks'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
 import type { LoginSchemaType } from '@/screens/auth/login/validation'
 import { loginSchema } from '@/screens/auth/login/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Color } from 'global/colors'
 import { Login as LoginIllustration } from 'global/illustrations'
 import { Mail, Password } from 'icons'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Button, Field, Title } from 'ui/components'
 
 const Login = () => {
 	const { login } = useAction()

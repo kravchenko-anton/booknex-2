@@ -4,7 +4,20 @@ import { useChapters } from '@/app/admin/books/update/[id]/useCharapters'
 import type { UpdateBookValidationSchemaType } from '@/app/admin/books/update/[id]/validation'
 import { updateBookValidationSchema } from '@/app/admin/books/update/[id]/validation'
 import HtmlEditor from '@/components/html-editor/html-editor'
-import { usePopupContext } from '@/providers/popup-provider'
+import { ErrorBlock, FormSelect, FormTextArea } from '@/components/ui'
+import Button from '@/components/ui/button/button'
+
+import Dropzone from '@/components/ui/dropzone/dropzone'
+import Field from '@/components/ui/field/field'
+import Input from '@/components/ui/field/input'
+//TODO: пофиксить эту страницу чтобы было лучше
+import FormAsyncSelect from '@/components/ui/select/async/form-select'
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTrigger
+} from '@/components/ui/sheet'
 import { authorService } from '@/services/author/author-service'
 import { bookService } from '@/services/book/book-service'
 import { genreService } from '@/services/genre/genre-service'
@@ -20,18 +33,7 @@ import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import {
-	Button,
-	ErrorBlock,
-	Field,
-	FormAsyncSelect,
-	FormSelect,
-	FormTextArea,
-	Input
-} from 'ui/components'
-import Dropzone from '../../../../../../../libs/ui/react/dropzone/dropzone'
 import { StorageFolderEnum } from '../../../../../../backend/src/storage/storage.types'
-//TODO: пофиксить эту страницу чтобы было лучше
 
 const Page: FC<{
 	params: {
@@ -42,7 +44,6 @@ const Page: FC<{
 		bookService.infoById(params.id)
 	)
 	const router = useRouter()
-	const { showPopup, closePopup } = usePopupContext()
 	const { data: genres } = useQuery(['genres'], () => genreService.all())
 	const { mutateAsync: authors, isLoading: authorsLoading } = useMutation(
 		['authors'],
@@ -145,202 +146,197 @@ const Page: FC<{
 
 	if (!book || !genres) return null
 	return (
-		<div>
-			<h1 className='mb-4 text-center text-3xl font-medium'>Update book</h1>
-			<div className=' flex justify-between gap-5'>
-				<div className='w-1/2'>
-					<div className='mt-2 flex justify-between gap-3'>
-						<Field
-							control={control}
-							className='w-1/2'
-							name='title'
-							placeholder='Title'
-						/>
-
-						<Field
-							type='number'
-							control={control}
-							name='pages'
-							placeholder='Pages'
-						/>
-						<Field
-							type='number'
-							control={control}
-							name='popularity'
-							placeholder='Popularity'
-						/>
-					</div>
-					<h1 className='mb-2 mt-4'>Description</h1>
-					<FormTextArea
-						control={control}
-						name='description'
-						placeholder='Enter description'
-						className='h-[250px]'
-					/>
-				</div>
-
-				<div className='h-max w-1/2'>
-					<div className='flex justify-between gap-6'>
-						<div>
-							<h1 className='mt-2  text-xl'>Cover</h1>
-							<Dropzone
-								size='md'
-								multiple={false}
-								accept='image/*'
-								onDropFile={acceptedFiles => {
-									setValue('picture', {
-										name: acceptedFiles[0].name,
-										blob: new Blob([acceptedFiles[0]])
-									})
-								}}
-							/>
-
-							<ErrorBlock
-								name='picture'
-								errors={errors}
-								render={({ message }) => (
-									<p className='text-danger text-md mt-2 italic'>{message}</p>
-								)}
-							/>
-						</div>
-					</div>
-					<div className='flex justify-between gap-6'>
-						<div className='w-1/2'>
-							<h1 className='mb-2 mt-4 flex gap-5'>
-								Genres <p className='text-gray'>First genre be main</p>
-							</h1>
-							<FormSelect
+		<Sheet>
+			<div>
+				<h1 className='mb-4 text-center text-3xl font-medium'>Update book</h1>
+				<div className=' flex justify-between gap-5'>
+					<div className='w-1/2'>
+						<div className='mt-2 flex justify-between gap-3'>
+							<Field
 								control={control}
-								name='genres'
-								isMulti
-								options={genres.map(genre => {
-									return {
-										label: genre.name,
-										value: genre.id
-									}
-								})}
-								isSearchable
-								placeholder='Select genres'
+								className='w-1/2'
+								name='title'
+								placeholder='Title'
 							/>
-						</div>
-						<div className='w-1/2'>
-							<div className='mb-2 mt-4 flex gap-3'>
-								<h1>Author</h1>
-								<Button
-									onClick={() =>
-										showPopup(
-											<CreateAuthorPopup
-												onCreate={({ id, name }) => {
-													closePopup()
-													setValue('author', {
-														label: name,
-														value: id
-													})
-												}}
-											/>
-										)
-									}
-									size='sm'
-								>
-									Create
-								</Button>
-							</div>
-							<FormAsyncSelect
+
+							<Field
+								type='number'
 								control={control}
-								name='author'
-								isLoading={authorsLoading}
-								loadOptions={authorSearch =>
-									authors(authorSearch).then(data =>
-										data.map(author => {
-											return {
-												label: author.name,
-												value: author.id
-											}
-										})
-									)
-								}
-								isSearchable
-								placeholder='Select author'
+								name='pages'
+								placeholder='Pages'
+							/>
+							<Field
+								type='number'
+								control={control}
+								name='popularity'
+								placeholder='Popularity'
 							/>
 						</div>
+						<h1 className='mb-2 mt-4'>Description</h1>
+						<FormTextArea
+							control={control}
+							name='description'
+							placeholder='Enter description'
+							className='h-[250px]'
+						/>
 					</div>
-				</div>
-			</div>
-			<div className='mt-4 flex w-full gap-5'>
-				<div className='bg-shade flex h-[1000px] w-1/3 flex-wrap justify-between gap-10  overflow-scroll rounded-xl p-4'>
-					{chapters?.state?.map(({ children, name }) => {
-						if (!name) return null
-						return (
+
+					<div className='h-max w-1/2'>
+						<div className='flex justify-between gap-6'>
 							<div>
-								<Input
-									className='mb-2'
-									value={name}
-									onChange={event => {
-										chapters.updateBookName({
-											name,
-											value: event.target.value
+								<h1 className='mt-2  text-xl'>Cover</h1>
+								<Dropzone
+									size='md'
+									multiple={false}
+									accept='image/*'
+									onDropFile={acceptedFiles => {
+										setValue('picture', {
+											name: acceptedFiles[0].name,
+											blob: new Blob([acceptedFiles[0]])
 										})
 									}}
 								/>
-								{children.map(child => {
-									return (
-										<button
-											onDoubleClick={() => {
-												navigateInEditor(child.link)
-											}}
-											className='mb-2  w-1/2 px-1'
-										>
-											<div className='bg-foreground rounded-xl  p-2'>
-												<div className='mb-2 flex items-center justify-between gap-1'>
-													<Input
-														variant='vibrant'
-														value={child.name}
-														onChange={event => {
-															chapters.updateChapterName({
-																name,
-																link: child.link,
-																value: event.target.value
-															})
-														}}
-													/>
-													<Trash
-														width={50}
-														height={45}
-														onClick={() => {
-															chapters.removeChapter({
-																name,
-																link: child.link
-															})
-														}}
-														className='bg-shade rounded-xl p-1'
-													/>
-												</div>
-												<h6 className='text-gray text-sm italic'>
-													{child.link}
-												</h6>
-											</div>
-										</button>
-									)
-								})}
+
+								<ErrorBlock
+									name='picture'
+									errors={errors}
+									render={({ message }) => (
+										<p className='text-danger text-md mt-2 italic'>{message}</p>
+									)}
+								/>
 							</div>
-						)
-					})}
+						</div>
+						<div className='flex justify-between gap-6'>
+							<div className='w-1/2'>
+								<h1 className='mb-2 mt-4 flex gap-5'>
+									Genres <p className='text-gray'>First genre be main</p>
+								</h1>
+								<FormSelect
+									control={control}
+									name='genres'
+									isMulti
+									options={genres.map(genre => {
+										return {
+											label: genre.name,
+											value: genre.id
+										}
+									})}
+									isSearchable
+									placeholder='Select genres'
+								/>
+							</div>
+							<div className='w-1/2'>
+								<div className='mb-2 mt-4 flex gap-3'>
+									<h1>Author</h1>
+									<SheetTrigger>
+										<Button size='sm'>Create</Button>
+									</SheetTrigger>
+								</div>
+								<FormAsyncSelect
+									control={control}
+									name='author'
+									isLoading={authorsLoading}
+									loadOptions={authorSearch =>
+										authors(authorSearch).then(data =>
+											data.map(author => {
+												return {
+													label: author.name,
+													value: author.id
+												}
+											})
+										)
+									}
+									isSearchable
+									placeholder='Select author'
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className='mt-4 flex w-full gap-5'>
+					<div className='bg-shade flex h-[1000px] w-1/3 flex-wrap justify-between gap-10  overflow-scroll rounded-xl p-4'>
+						{chapters?.state?.map(({ children, name }) => {
+							if (!name) return null
+							return (
+								<div>
+									<Input
+										className='mb-2'
+										value={name}
+										onChange={event => {
+											chapters.updateBookName({
+												name,
+												value: event.target.value
+											})
+										}}
+									/>
+									{children.map(child => {
+										return (
+											<button
+												onDoubleClick={() => {
+													navigateInEditor(child.link)
+												}}
+												className='mb-2  w-1/2 px-1'
+											>
+												<div className='bg-foreground rounded-xl  p-2'>
+													<div className='mb-2 flex items-center justify-between gap-1'>
+														<Input
+															variant='vibrant'
+															value={child.name}
+															onChange={event => {
+																chapters.updateChapterName({
+																	name,
+																	link: child.link,
+																	value: event.target.value
+																})
+															}}
+														/>
+														<Trash
+															width={50}
+															height={45}
+															onClick={() => {
+																chapters.removeChapter({
+																	name,
+																	link: child.link
+																})
+															}}
+															className='bg-shade rounded-xl p-1'
+														/>
+													</div>
+													<h6 className='text-gray text-sm italic'>
+														{child.link}
+													</h6>
+												</div>
+											</button>
+										)
+									})}
+								</div>
+							)
+						})}
+					</div>
+
+					<HtmlEditor
+						reference={htmlEditor}
+						className='z-0 w-full'
+						onChange={content => {
+							setIsHtmlChanged(true)
+							setHtml(content.target.getContent())
+						}}
+					/>
 				</div>
 
-				<HtmlEditor
-					reference={htmlEditor}
-					className='z-0 w-full'
-					onChange={content => {
-						setIsHtmlChanged(true)
-						setHtml(content.target.getContent())
-					}}
-				/>
+				<Button size='md' className='mt-8' onClick={onSubmit} variant='primary'>
+					Update
+				</Button>
 			</div>
-
-			<Button size='md' className='mt-8' onClick={onSubmit} variant='primary'>
-				Update
-			</Button>
-		</div>
+			<SheetContent>
+				<SheetHeader>
+					<h1 className='text-2xl font-medium'>Create author</h1>
+				</SheetHeader>
+				<div>
+					<CreateAuthorPopup onCreate={() => {}} />
+				</div>
+			</SheetContent>
+		</Sheet>
 	)
 }
 

@@ -15,7 +15,7 @@ export enum ActivityEnum {
 	Finished_Reading = 'Finished Reading',
 	Add_To_Saved = 'Add To Saved',
 	Remove_From_Saved = 'Remove From Saved',
-	Visit_App = 'Visit App',
+	Check_Catalog = 'Check Catalog',
 	Visit_Book = 'Visit Book',
 	Visit_Author = 'Visit Author',
 	Visit_Genre = 'Visit Genre',

@@ -1,6 +1,6 @@
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
 import type { FC, PropsWithChildren, ReactNode } from 'react'
-import { Color } from 'ui/colors'
+import { Color } from 'global/colors'
 
 interface BottomSheetProperties {
 	snapPoints: (string | number)[]

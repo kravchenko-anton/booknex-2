@@ -1,4 +1,4 @@
-import type { IconProperties } from '../../../../../../libs/ui/react-native/icon/types'
+import type { IconProperties } from '@/components/ui/icon/types'
 
 export interface HamburgerMenuProperties
 	extends Pick<

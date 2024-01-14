@@ -1,9 +1,9 @@
 import { Layout } from '@/components'
+import { Button, Title } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
 import { Welcome as WelcomeIllustration } from 'global/illustrations'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { Button, Title } from 'ui/components'
 
 const Welcome: FC = () => {
 	//TODO: сделать нормальный welcome скрин а не такую простую залупу

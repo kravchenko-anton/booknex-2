@@ -1,12 +1,12 @@
 import AnimatedPress from '@/components/animated-press/animated-press'
+import { Title } from '@/components/ui'
 import { useAction } from '@/hooks/useAction'
 import FontSettings from '@/screens/reading/settings/sheet/reading/font-settings/font-settings'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
+import { Color } from 'global/colors'
 import { ChevronRight } from 'icons'
 import type { FC } from 'react'
 import { Pressable, View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Title } from 'ui/components'
 
 const ReadingSettings: FC<{
 	openSelectTheme: () => void

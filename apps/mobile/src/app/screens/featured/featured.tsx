@@ -1,11 +1,11 @@
 import BookCard from '@/components/book-card/book-card'
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { Button, Flatlist, Loader } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
 import RecommendationList from '@/screens/featured/recommendation-list/recommendation-list'
 import { catalogService } from '@/services/catalog/catalog-service'
 import { useQuery } from '@tanstack/react-query'
 import { Search } from 'icons'
-import { Button, Flatlist, Loader } from 'ui/components'
 //TODO: добавить тут shelves
 const Featured = () => {
 	const { data: featured } = useQuery(['featured'], () =>

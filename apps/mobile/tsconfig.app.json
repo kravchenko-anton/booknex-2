@@ -21,12 +21,6 @@
 			"@/*": [
 				"./src/app/*"
 			],
-			"ui/components": [
-				"../../libs/ui/react-native/index.ts"
-			],
-			"ui/colors": [
-				"../../libs/ui/colors.ts"
-			],
 			"icons": [
 				"../../libs/global/icons/react-native/index.ts"
 			],

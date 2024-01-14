@@ -12,7 +12,7 @@ export class AdminService {
 			VisitsAppByMonthInYear: await this.prisma.activity
 				.groupBy({
 					where: {
-						type: ActivityEnum.Visit_App
+						type: ActivityEnum.Check_Catalog
 					},
 					by: ['createdAt'],
 					_count: {

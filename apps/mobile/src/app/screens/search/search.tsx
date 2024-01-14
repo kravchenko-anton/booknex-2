@@ -1,16 +1,16 @@
 import { AnimatedPress } from '@/components'
 import { settings } from '@/components/book-card/settings'
 import Layout from '@/components/layout/layout'
+import { Button, Flatlist, Image, Loader, Title } from '@/components/ui'
+import { fontSettings } from '@/components/ui/title/settings'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useSearch } from '@/screens/search/useSearch'
+import { Color } from 'global/colors'
 import { NothingFound } from 'global/illustrations'
 import { Close } from 'icons'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
 import { twMerge } from 'tailwind-merge'
-import { Color } from 'ui/colors'
-import { Button, Flatlist, Image, Loader, Title } from 'ui/components'
-import { fontSettings } from '../../../../../../libs/ui/react-native/title/settings'
 
 const Search = () => {
 	const { searchTerm, books, booksLoading, control, clearSearch } = useSearch()

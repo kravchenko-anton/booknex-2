@@ -1,9 +1,9 @@
+import { Flatlist, Icon, Title } from '@/components/ui'
 import type { RecommendationProperties } from '@/screens/featured/recommendation-list/types'
+import { Color } from 'global/colors'
 import { ThumbsUp } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Flatlist, Icon, Title } from 'ui/components'
 
 const RecommendationList: FC<RecommendationProperties> = ({
 	data = [],

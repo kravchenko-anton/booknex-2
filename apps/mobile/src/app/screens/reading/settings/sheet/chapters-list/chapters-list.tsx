@@ -1,9 +1,9 @@
+import { Title } from '@/components/ui'
 import { BottomSheetSectionList } from '@gorhom/bottom-sheet'
+import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Pressable } from 'react-native'
-import { Color } from 'ui/colors'
-import { Title } from 'ui/components'
 import type { ChapterType } from '../../../../../../../../backend/types'
 
 const ChaptersList: FC<{

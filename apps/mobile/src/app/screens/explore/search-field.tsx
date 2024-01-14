@@ -1,7 +1,7 @@
 import { AnimatedPress } from '@/components'
+import { Icon, Title } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
 import { Search } from 'icons'
-import { Icon, Title } from 'ui/components'
 
 const SearchField = () => {
 	const { navigate } = useTypedNavigation()

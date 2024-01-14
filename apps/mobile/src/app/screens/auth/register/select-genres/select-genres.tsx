@@ -1,13 +1,13 @@
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { Button, Loader, Title } from '@/components/ui'
 
 import { useTypedNavigation } from '@/hooks'
 import { genreService } from '@/services/genre/genre-service'
 import { useQuery } from '@tanstack/react-query'
+import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { useState } from 'react'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Button, Loader, Title } from 'ui/components'
 
 const SelectGenres: FC = () => {
 	const [selectGenres, setSelectGenres] = useState<string[]>([])

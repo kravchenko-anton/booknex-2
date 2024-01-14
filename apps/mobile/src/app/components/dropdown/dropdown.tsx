@@ -1,16 +1,16 @@
 import { usePressAnimation } from '@/animations/press-animation'
 import { AnimatedPressable, AnimatedView } from '@/components/animated'
 import { useDropDownAnimation } from '@/components/dropdown/animation'
+import { settings } from '@/components/dropdown/settings'
 import type { HamburgerMenuProperties } from '@/components/dropdown/types'
+import { Icon, Title } from '@/components/ui'
 import { useClickOutside } from '@/hooks/outside-press/useClickOutside'
+import { InnerColor } from 'global/colors'
 import { MoreHorizontal } from 'icons'
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import { twMerge } from 'tailwind-merge'
-import { InnerColor } from 'ui/colors'
-import { Icon, Title } from 'ui/components'
-import { settings } from '../../../../../../libs/ui/react-native/icon/settings'
 
 export const Menu: FC<PropsWithChildren<HamburgerMenuProperties>> = ({
 	position = 'left',

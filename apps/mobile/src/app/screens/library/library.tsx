@@ -1,9 +1,9 @@
 import BookCard from '@/components/book-card/book-card'
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { Flatlist, Loader } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
-import { Flatlist, Loader } from 'ui/components'
 
 const Library = () => {
 	const { data: library } = useQuery(['user-library'], () =>

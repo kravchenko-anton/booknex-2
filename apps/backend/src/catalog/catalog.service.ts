@@ -3,6 +3,7 @@ import {
 	returnBookObjectWithAuthor,
 	returnColorBookObjectWithAuthor
 } from '../book/return.book.object'
+import { ActivityEnum } from '../user/user.types'
 import { PrismaService } from '../utils/prisma.service'
 
 @Injectable()
@@ -10,6 +11,16 @@ export class CatalogService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async featured(userId: number) {
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Check_Catalog,
+				user: {
+					connect: {
+						id: userId
+					}
+				}
+			}
+		})
 		return {
 			relatedGenres: await this.relatedGenres(userId),
 			recommendations: await this.recommendations(userId)

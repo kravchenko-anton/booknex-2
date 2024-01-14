@@ -1,8 +1,8 @@
+import { Button, Title } from '@/components/ui'
 import type { AlertContextProperties } from '@/providers/alert-provider'
+import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { Modal, View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Button, Title } from 'ui/components'
 
 const Alert: FC<Pick<AlertContextProperties, 'alert' | 'closeAlert'>> = ({
 	closeAlert = () => {},

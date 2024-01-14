@@ -1,31 +1,25 @@
 'use client'
 
-import AuthorDescriptionPopup from '@/app/admin/authors/popup/description-popup'
+import { Button, Field, Spiner } from '@/components/ui'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
-import { Edit, Search, Trash } from 'global/icons/react'
+import { Color } from 'global/colors'
+import { Search, Trash } from 'global/icons/react'
 import type { ParserDtoPayload } from 'global/services-types/parser-types'
 import { nFormatter } from 'global/utils/number-formater'
 import { useDebounce } from 'global/utils/useDebounce'
 import { useAction, useTypedSelector } from 'hooks'
 import { useRouter } from 'next/navigation'
-import { usePopupContext } from 'providers/popup-provider'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { authorService } from 'services/author/author-service'
 import { parserService } from 'services/parser/parser-services'
-import { Color } from 'ui/colors'
-import { Button, Field, Spiner } from 'ui/components'
-import CreateAuthorPopup from '../authors/popup/create'
-import type { DefaultCreateBookValuesType } from '../books/create/types'
-import NewParse from './popup/new-parse'
 
 const Parser: FC = () => {
 	const { control, watch } = useForm()
 	const QueryClient = useQueryClient()
 	const { updateLastParsedData } = useAction()
-	const { showPopup, closePopup } = usePopupContext()
 	const { lastParsedData } = useTypedSelector(state => state.parser)
 	const { mutateAsync: parse, isLoading: parseLoading } = useMutation(
 		['parse good-reads books'],
@@ -73,27 +67,27 @@ const Parser: FC = () => {
 					/>
 					<Button
 						isLoading={parseLoading}
-						onClick={() =>
-							showPopup(
-								<NewParse
-									defaultValues={{
-										link: lastParsedData?.url ?? '',
-										page: (lastParsedData && lastParsedData.page + 1) ?? 0
-									}}
-									onSubmit={data => {
-										parse({
-											page: +data.page,
-											url: data.link
-										})
-										updateLastParsedData({
-											page: +data.page,
-											url: data.link
-										})
-										closePopup()
-									}}
-								/>
-							)
-						}
+						onClick={() => {
+							// showPopup(
+							// 	<NewParse
+							// 		defaultValues={{
+							// 			link: lastParsedData?.url ?? '',
+							// 			page: (lastParsedData && lastParsedData.page + 1) ?? 0
+							// 		}}
+							// 		onSubmit={data => {
+							// 			parse({
+							// 				page: +data.page,
+							// 				url: data.link
+							// 			})
+							// 			updateLastParsedData({
+							// 				page: +data.page,
+							// 				url: data.link
+							// 			})
+							// 			closePopup()
+							// 		}}
+							// 	/>
+							// )
+						}}
 						size='sm'
 						variant='primary'
 					>
@@ -164,9 +158,9 @@ const Parser: FC = () => {
 										</p>
 										<Button
 											onClick={() => {
-												showPopup(
-													<AuthorDescriptionPopup text={book.description} />
-												)
+												// showPopup(
+												// 	<AuthorDescriptionPopup text={book.description} />
+												// )
 											}}
 											size='sm'
 											variant='foreground'
@@ -189,70 +183,70 @@ const Parser: FC = () => {
 
 									<td className='min-w-[120px] p-2'>
 										<div className='flex justify-center gap-2'>
-											<Edit
-												className='hover:text-primary cursor-pointer transition-all duration-200'
-												color={Color.gray}
-												height={25}
-												onClick={async () => {
-													const blob = await fetch(book.authorPicture).then(
-														result => result.blob()
-													)
-													const author = await checkAuthorExist(book.authorName)
-													if (author) {
-														router.push(
-															'/admin/books/create' +
-																'?' +
-																new URLSearchParams({
-																	defaultValues: JSON.stringify({
-																		author: {
-																			id: author.id,
-																			name: author.name
-																		},
-																		title: book.title,
-																		description: book.description,
-																		pages: book.pages,
-																		popularity: book.popularity,
-																		genres: book.genres
-																	} as DefaultCreateBookValuesType)
-																}).toString()
-														)
-													} else {
-														showPopup(
-															<CreateAuthorPopup
-																defaultValues={{
-																	name: book.authorName,
-																	description: book.authorDescription,
-																	picture: {
-																		blob,
-																		name: `${book.authorName}.png`
-																	}
-																}}
-																onCreate={({ id, name }) => {
-																	closePopup()
-																	router.push(
-																		'/admin/books/create' +
-																			'?' +
-																			new URLSearchParams({
-																				defaultValues: JSON.stringify({
-																					author: {
-																						id,
-																						name
-																					},
-																					title: book.title,
-																					description: book.description,
-																					pages: book.pages,
-																					popularity: book.popularity,
-																					genres: book.genres
-																				} as DefaultCreateBookValuesType)
-																			}).toString()
-																	)
-																}}
-															/>
-														)
-													}
-												}}
-												width={25}
-											/>
+											{/* <Edit */}
+											{/* 	className='hover:text-primary cursor-pointer transition-all duration-200' */}
+											{/* 	color={Color.gray} */}
+											{/* 	height={25} */}
+											{/* 	onClick={async () => { */}
+											{/* 		const blob = await fetch(book.authorPicture).then( */}
+											{/* 			result => result.blob() */}
+											{/* 		) */}
+											{/* 		const author = await checkAuthorExist(book.authorName) */}
+											{/* 		if (author) { */}
+											{/* 			router.push( */}
+											{/* 				'/admin/books/create' + */}
+											{/* 					'?' + */}
+											{/* 					new URLSearchParams({ */}
+											{/* 						defaultValues: JSON.stringify({ */}
+											{/* 							author: { */}
+											{/* 								id: author.id, */}
+											{/* 								name: author.name */}
+											{/* 							}, */}
+											{/* 							title: book.title, */}
+											{/* 							description: book.description, */}
+											{/* 							pages: book.pages, */}
+											{/* 							popularity: book.popularity, */}
+											{/* 							genres: book.genres */}
+											{/* 						} as DefaultCreateBookValuesType) */}
+											{/* 					}).toString() */}
+											{/* 			) */}
+											{/* 		} else { */}
+											{/* 			showPopup( */}
+											{/* 				<CreateAuthorPopup */}
+											{/* 					defaultValues={{ */}
+											{/* 						name: book.authorName, */}
+											{/* 						description: book.authorDescription, */}
+											{/* 						picture: { */}
+											{/* 							blob, */}
+											{/* 							name: `${book.authorName}.png` */}
+											{/* 						} */}
+											{/* 					}} */}
+											{/* 					onCreate={({ id, name }) => { */}
+											{/* 						closePopup() */}
+											{/* 						router.push( */}
+											{/* 							'/admin/books/create' + */}
+											{/* 								'?' + */}
+											{/* 								new URLSearchParams({ */}
+											{/* 									defaultValues: JSON.stringify({ */}
+											{/* 										author: { */}
+											{/* 											id, */}
+											{/* 											name */}
+											{/* 										}, */}
+											{/* 										title: book.title, */}
+											{/* 										description: book.description, */}
+											{/* 										pages: book.pages, */}
+											{/* 										popularity: book.popularity, */}
+											{/* 										genres: book.genres */}
+											{/* 									} as DefaultCreateBookValuesType) */}
+											{/* 								}).toString() */}
+											{/* 						) */}
+											{/* 					}} */}
+											{/* 				/> */}
+											{/* 			) */}
+											{/* 		} */}
+											{/* 	}} */}
+											{/* 	width={25} */}
+											{/* /> */}
 
 											<Trash
 												className='hover:text-primary cursor-pointer transition-all duration-200'

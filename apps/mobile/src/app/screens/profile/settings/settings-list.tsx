@@ -1,3 +1,4 @@
+import { Title } from '@/components/ui'
 import type {
 	ListCategoryItemTypes,
 	ListItemTypes
@@ -6,7 +7,6 @@ import { ChevronRight } from 'icons'
 import type { PropsWithChildren } from 'react'
 import { Pressable, View } from 'react-native'
 import { twMerge } from 'tailwind-merge'
-import { Title } from 'ui/components'
 
 export const Category = ({
 	title,

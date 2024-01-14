@@ -1,12 +1,12 @@
 'use client'
+import { Field, Spiner } from '@/components/ui'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
+import { Color } from 'global/colors'
 import { useDebounce } from 'global/utils/useDebounce'
 import { ScanEye, Search, Trash } from 'icons'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { Color } from 'ui/colors'
-import { Field, Spiner } from 'ui/components'
 
 const PageDetails: FC = () => {
 	const { control, watch } = useForm()

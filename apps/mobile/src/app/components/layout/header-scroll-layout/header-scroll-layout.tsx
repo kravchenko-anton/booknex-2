@@ -5,14 +5,14 @@ import type {
 	ViewDefaultProperties
 } from '@/components/component-types'
 import ScrollLayout from '@/components/layout/scroll-layout'
+import { Title } from '@/components/ui'
+import type { IconProperties } from '@/components/ui/icon/types'
 import { useTypedNavigation } from '@/hooks'
+import { Color } from 'global/colors'
 import { ArrowLeft } from 'icons'
 import type { FC, PropsWithChildren } from 'react'
 import { Pressable, View } from 'react-native'
 import { twMerge } from 'tailwind-merge'
-import { Color } from 'ui/colors'
-import { Title } from 'ui/components'
-import type { IconProperties } from '../../../../../../../libs/ui/react-native/icon/types'
 
 const Wrapper: FC<
 	PropsWithChildren<

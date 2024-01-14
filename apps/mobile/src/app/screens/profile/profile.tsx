@@ -1,9 +1,9 @@
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { Loader, Title } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
 import { userServices } from '@/services/user/user-service'
 import { useQuery } from '@tanstack/react-query'
 import { Settings } from 'icons'
-import { Loader, Title } from 'ui/components'
 
 const Profile = () => {
 	const { data: profile } = useQuery(['user-profile'], () =>

@@ -1,12 +1,4 @@
 import { BookCard } from '@/components'
-import { useTypedNavigation } from '@/hooks/useTypedNavigation'
-import { useTypedRoute } from '@/hooks/useTypedRoute'
-import { authorService } from '@/services/author/author-service'
-import { share } from '@/utils/share-function'
-import { useQuery } from '@tanstack/react-query'
-import { ArrowLeft, Share as ShareIcon } from 'icons'
-import { StatusBar, View } from 'react-native'
-import { Color } from 'ui/colors'
 import {
 	AnimatedIcon,
 	Description,
@@ -15,7 +7,15 @@ import {
 	Loader,
 	ScrollView,
 	Title
-} from 'ui/components'
+} from '@/components/ui'
+import { useTypedNavigation } from '@/hooks/useTypedNavigation'
+import { useTypedRoute } from '@/hooks/useTypedRoute'
+import { authorService } from '@/services/author/author-service'
+import { share } from '@/utils/share-function'
+import { useQuery } from '@tanstack/react-query'
+import { Color } from 'global/colors'
+import { ArrowLeft, Share as ShareIcon } from 'icons'
+import { StatusBar, View } from 'react-native'
 
 const Author = () => {
 	const { params } = useTypedRoute<'Author'>()

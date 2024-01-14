@@ -1,10 +1,10 @@
 import type { ScrollViewDefaultProperties } from '@/components/component-types'
+import { ScrollView } from '@/components/ui'
+import { Color } from 'global/colors'
 import type { FC, PropsWithChildren } from 'react'
 import { memo } from 'react'
 import { StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Color } from 'ui/colors'
-import { ScrollView } from 'ui/components'
 
 const ScrollLayout: FC<
 	PropsWithChildren<

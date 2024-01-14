@@ -2,7 +2,7 @@ import AnimatedPress from '@/components/animated-press/animated-press'
 import type { PressableDefaultProperties } from '@/components/component-types'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
+import { Color } from 'global/colors'
 
 interface PageMarginIconProperties extends PressableDefaultProperties {
 	backgroundColor: string

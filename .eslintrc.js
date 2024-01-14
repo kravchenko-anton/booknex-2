@@ -41,10 +41,8 @@ module.exports = {
 		],
 		'react/jsx-props-no-spreading': 'off',
 		'react/react-in-jsx-scope': 'off',
-		'react/require-default-props': [
-			'error',
-			{ ignoreFunctionalComponents: true }
-		],
+		'react/require-default-props': 'off',
+		'react/prop-types': 'off',
 		'@typescript-eslint/quotes': ['error', 'single'],
 		'@typescript-eslint/no-non-null-assertion': 'warn',
 		'@typescript-eslint/no-non-null-asserted-optional-chain': 'warn',

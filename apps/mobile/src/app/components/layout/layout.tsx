@@ -4,7 +4,7 @@ import { memo } from 'react'
 import { StatusBar, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { twMerge } from 'tailwind-merge'
-import { Color } from 'ui/colors'
+import { Color } from 'global/colors'
 
 const Layout: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 	children,

@@ -1,3 +1,4 @@
+import { Loader } from '@/components/ui'
 import { useAuth } from '@/hooks/useAuth'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
 import { useCheckAuth } from '@/providers/auth-provider'
@@ -5,6 +6,7 @@ import {
 	NavigationContainer,
 	useNavigationContainerRef
 } from '@react-navigation/native'
+import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import BootSplash from 'react-native-bootsplash'
@@ -12,8 +14,6 @@ import {
 	SafeAreaProvider,
 	initialWindowMetrics
 } from 'react-native-safe-area-context'
-import { Color } from 'ui/colors'
-import { Loader } from 'ui/components'
 
 import PrivateNavigator from './private-navigator'
 

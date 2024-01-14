@@ -16,12 +16,6 @@
       "@/*": [
         "./*"
       ],
-      "ui/components": [
-        "../../libs/ui/react/index.ts"
-      ],
-      "ui/colors": [
-        "../../libs/ui/colors.ts"
-      ],
       "icons": [
         "../../libs/global/icons/react/index.ts"
       ],

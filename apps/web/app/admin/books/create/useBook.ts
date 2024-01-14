@@ -1,6 +1,5 @@
-import { errorToast } from '@/utils/toast'
+import { errorToast, successToast } from '@/utils/toast'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 
 export const useBookCompose = () => {
 	const [books, setBooks] = useState<
@@ -28,7 +27,7 @@ export const useBookCompose = () => {
 	})
 	const deleteBook = ({ name }: { name: string }) => {
 		setBooks(books?.filter(book => book.name !== name))
-		toast('Book deleted')
+		successToast('Book deleted')
 	}
 	const generateChaptersNames = (bookName: string) => {
 		setBooks(books => {
@@ -48,7 +47,7 @@ export const useBookCompose = () => {
 				return book
 			})
 		})
-		toast('Chapters names generated')
+		successToast('Chapters names generated')
 	}
 	const addNewCharacterAfterContent = ({
 		bookName,
@@ -123,7 +122,7 @@ export const useBookCompose = () => {
 				return book
 			})
 		})
-		toast('Content merged')
+		successToast('Content merged')
 	}
 
 	const updateChapterTitle = (value: string, name: string) => {
@@ -138,7 +137,7 @@ export const useBookCompose = () => {
 				return book
 			})
 		)
-		toast('Chapter title updated')
+		successToast('Chapter title updated')
 	}
 
 	const removeToc = (name: string, removedId: string) => {
@@ -153,7 +152,7 @@ export const useBookCompose = () => {
 				return book
 			})
 		)
-		toast('Chapter removed')
+		successToast('Chapter removed')
 	}
 
 	const updateTocTitle = (
@@ -235,7 +234,7 @@ export const useBookCompose = () => {
 				}
 			]
 		})
-		toast('Book uploaded')
+		successToast('Book uploaded')
 	}
 
 	return {

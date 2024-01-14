@@ -1,7 +1,7 @@
 import { AnimatedPress, BookCard, RainbowBookCard } from '@/components'
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { Flatlist, Image, Loader, Title } from '@/components/ui'
 import { useGenre } from '@/screens/genre/useGenre'
-import { Flatlist, Image, Loader, Title } from 'ui/components'
 
 const Genre = () => {
 	const { navigate, genre } = useGenre()

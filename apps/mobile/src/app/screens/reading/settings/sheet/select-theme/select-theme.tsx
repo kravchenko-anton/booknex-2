@@ -1,11 +1,11 @@
 import AnimatedPress from '@/components/animated-press/animated-press'
+import { Title } from '@/components/ui'
 import { useAction } from '@/hooks/useAction'
 import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Title } from 'ui/components'
 
 const SelectTheme: FC<{ activeThemeSlug: string }> = ({ activeThemeSlug }) => {
 	const { changeTheme } = useAction()

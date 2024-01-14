@@ -1,19 +1,17 @@
 'use client'
+import { Button, Field, Spiner } from '@/components/ui'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
+import { Color } from 'global/colors'
 import { Edit, Eye, EyeOff, Search, Trash } from 'global/icons/react'
 import { errorCatch } from 'global/utils/catch-error'
 import { nFormatter } from 'global/utils/number-formater'
 import { useDebounce } from 'global/utils/useDebounce'
 import { useRouter } from 'next/navigation'
-import { usePopupContext } from 'providers/popup-provider'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { bookService } from 'services/book/book-service'
-import { Color } from 'ui/colors'
-import { Button, Field, Spiner } from 'ui/components'
-import AuthorDescription from '../authors/popup/description-popup'
 
 const Page: FC = () => {
 	const { control, watch } = useForm()
@@ -24,8 +22,6 @@ const Page: FC = () => {
 		() => bookService.all(search)
 	)
 	const router = useRouter()
-	const { showPopup } = usePopupContext()
-
 	const { mutateAsync: toggleVisible } = useMutation(
 		['update visible'],
 		(id: number) => bookService.toggleVisible(id),
@@ -115,13 +111,8 @@ const Page: FC = () => {
 										<h3 className='text-lg'>{book.title}</h3>
 
 										<p className='text-primary mb-1'>{book.author.name}</p>
-										<Button
-											onClick={() => {
-												showPopup(<AuthorDescription text={book.description} />)
-											}}
-											size='sm'
-											variant='primary'
-										>
+										<Button size='sm' variant='primary'>
+											{/* TODO: сделать попап с отображением описания */}
 											💬 Description
 										</Button>
 									</td>

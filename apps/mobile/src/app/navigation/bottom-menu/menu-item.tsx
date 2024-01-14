@@ -1,13 +1,13 @@
 import { usePressAnimation } from '@/animations/press-animation'
 import { AnimatedPressable } from '@/components/animated'
+import { Title } from '@/components/ui'
 import type {
 	IMenuItem,
 	TypeNavigate
 } from '@/navigation/bottom-menu/menu-data'
+import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { Pressable } from 'react-native'
-import { Color } from 'ui/colors'
-import { Title } from 'ui/components'
 
 interface IMenuItemProperties {
 	currentRoute?: string

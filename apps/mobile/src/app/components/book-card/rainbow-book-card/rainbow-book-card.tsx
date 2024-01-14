@@ -1,10 +1,10 @@
 import AnimatedPress from '@/components/animated-press/animated-press'
 import type { RainbowBookCardProperties } from '@/components/book-card/rainbow-book-card/types'
+import { Image, Title } from '@/components/ui'
 import type { Style } from '@/types/global'
+import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { Color } from 'ui/colors'
-import { Image, Title } from 'ui/components'
 
 const RainbowBookCard: FC<RainbowBookCardProperties> = ({
 	image,

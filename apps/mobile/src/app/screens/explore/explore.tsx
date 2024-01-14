@@ -1,10 +1,10 @@
 import { BookCard, RainbowBookCard } from '@/components'
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { Flatlist, Loader } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import SearchField from '@/screens/explore/search-field'
 import { catalogService } from '@/services/catalog/catalog-service'
 import { useQuery } from '@tanstack/react-query'
-import { Flatlist, Loader } from 'ui/components'
 //TODO: переделать поиск под headway
 
 const Explore = () => {

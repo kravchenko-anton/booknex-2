@@ -1,7 +1,7 @@
 import { useAuth } from '@/hooks/useAuth'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import type { FC } from 'react'
-import { Color } from 'ui/colors'
+import { Color } from 'global/colors'
 
 import type { TypeRootStackParameterList } from './types'
 import { authRoutes, routes } from './user-routes'

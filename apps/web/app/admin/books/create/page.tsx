@@ -1,13 +1,4 @@
 'use client'
-import { blobFormData } from '@/utils/files'
-import {
-	CaseSensitive,
-	ChevronDown,
-	ChevronUp,
-	Close
-} from 'global/icons/react'
-import type { FC } from 'react'
-import { Color } from 'ui/colors'
 import {
 	Button,
 	DropZone,
@@ -17,15 +8,22 @@ import {
 	FormSelect,
 	FormTextArea,
 	TextArea
-} from 'ui/components'
-
-import CreateAuthorPopup from '../../authors/popup/create'
+} from '@/components/ui'
+import { blobFormData } from '@/utils/files'
+import { Color } from 'global/colors'
+import {
+	CaseSensitive,
+	ChevronDown,
+	ChevronUp,
+	Close
+} from 'global/icons/react'
+import type { FC } from 'react'
 import { useBookCompose } from './useBook'
 import { useCreate } from './useCreate'
 
 const Page: FC = () => {
 	const { books, chapters } = useBookCompose()
-	const { unfold, select, popup, form } = useCreate()
+	const { unfold, select, form } = useCreate()
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -140,19 +138,19 @@ const Page: FC = () => {
 							<div className='mb-2 mt-4 flex gap-3'>
 								<h1>Author</h1>
 								<Button
-									onClick={() =>
-										popup.show(
-											<CreateAuthorPopup
-												onCreate={({ id, name }) => {
-													popup.close()
-													form.setValue('author', {
-														label: name,
-														value: id
-													})
-												}}
-											/>
-										)
-									}
+									onClick={() => {
+										// popup.show(
+										// 	<CreateAuthorPopup
+										// 		onCreate={({ id, name }) => {
+										// 			popup.close()
+										// 			form.setValue('author', {
+										// 				label: name,
+										// 				value: id
+										// 			})
+										// 		}}
+										// 	/>
+										// )
+									}}
 									size='sm'
 								>
 									Create

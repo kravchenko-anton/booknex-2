@@ -1,4 +1,5 @@
 import { AnimatedView } from '@/components/animated'
+import { Title } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
 import { useReadingUIAnimation } from '@/screens/reading/settings/animation'
 import type { ThemePackType } from '@/screens/reading/settings/sheet/reading/theme-pack'
@@ -6,7 +7,6 @@ import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Title } from 'ui/components'
 
 const ReadingUi: FC<{
 	title: string

@@ -89,20 +89,6 @@ export class UserService {
 		})
 	}
 
-	async visit(id: number) {
-		await this.getUserById(id)
-		await this.prisma.activity.create({
-			data: {
-				type: ActivityEnum.Visit_App,
-				user: {
-					connect: {
-						id
-					}
-				}
-			}
-		})
-	}
-
 	async profile(id: number) {
 		const user = await this.getUserById(id, {
 			...returnUserObject

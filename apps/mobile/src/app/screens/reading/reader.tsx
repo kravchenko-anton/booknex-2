@@ -1,3 +1,4 @@
+import { Loader } from '@/components/ui'
 import { useTypedRoute } from '@/hooks'
 import {
 	handleDoublePress,
@@ -9,6 +10,7 @@ import { useReadingSheets } from '@/screens/reading/useReadingSheets'
 import { bookService } from '@/services/book/book-service'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'
+import { Color } from 'global/colors'
 import React, { useEffect, useRef, useState } from 'react'
 import {
 	View as RNView,
@@ -17,8 +19,6 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import WebView from 'react-native-webview'
-import { Color } from 'ui/colors'
-import { Loader } from 'ui/components'
 
 //TODO: оптимизировать тут всё
 export function Reader() {

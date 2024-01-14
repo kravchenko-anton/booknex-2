@@ -1,10 +1,10 @@
 'use client'
+import { Button, Field } from '@/components/ui'
+import FormDropzone from '@/components/ui/dropzone/form-dropzone'
+import FormTextEditor from '@/components/ui/text-editor/form-text-editor'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, Field } from 'ui/components'
-import FormDropzone from '../../../../../../libs/ui/react/dropzone/form-dropzone'
-import FormTextEditor from '../../../../../../libs/ui/react/text-editor/form-text-editor'
 import { useCreate } from './useCreate'
 import type { CreateAuthorValidationSchemaType } from './validation'
 import { createAuthorValidationSchema } from './validation'
@@ -16,6 +16,7 @@ interface CreateAuthorPopupProperties {
 
 const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 	defaultValues = {},
+
 	onCreate = () => {}
 }) => {
 	const { control, handleSubmit, setValue } =
@@ -43,7 +44,6 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 	}
 	return (
 		<div className='p-4'>
-			<h1 className='mb-4 text-center text-3xl font-medium'>Create author</h1>
 			<Field
 				control={control}
 				defaultValue={defaultValues.name}

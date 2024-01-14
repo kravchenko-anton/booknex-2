@@ -36,12 +36,6 @@ export class UserController {
 	}
 
 	@Auth()
-	@Get('/visit')
-	async visit(@CurrentUser('id') id: number) {
-		return this.usersService.visit(+id)
-	}
-
-	@Auth()
 	@Get('/update-recommendations')
 	async updateRecommendations(
 		@CurrentUser('id') id: number,

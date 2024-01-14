@@ -1,5 +1,5 @@
 import type { PressableDefaultProperties } from '@/components/component-types'
-import type { SizeProperties } from '@/types/global'
+import type { SizeProperties } from 'global/types'
 
 export interface BookCardProperties
 	extends PressableDefaultProperties,

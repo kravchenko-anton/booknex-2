@@ -1,12 +1,12 @@
 import AnimatedPress from '@/components/animated-press/animated-press'
 import { settings } from '@/components/book-card/settings'
 import type { BookCardProperties } from '@/components/book-card/types'
+import { Image, Title } from '@/components/ui'
 import type { Style } from '@/types/global'
+import { Color } from 'global/colors'
 
 import type { FC } from 'react'
 import { memo } from 'react'
-import { Color } from 'ui/colors'
-import { Image, Title } from 'ui/components'
 
 const BookCard: FC<BookCardProperties> = ({
 	image,

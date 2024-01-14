@@ -1,10 +1,5 @@
 import { BookCard, ScrollLayout } from '@/components'
 import { Menu } from '@/components/dropdown/dropdown'
-import { useTypedNavigation } from '@/hooks'
-import { useBook } from '@/screens/book/useBook'
-import { Alert, ArrowLeft, Pen, Share as ShareIcon, Text } from 'icons'
-import { Share, View } from 'react-native'
-import { Color } from 'ui/colors'
 import {
 	AnimatedIcon,
 	Button,
@@ -13,7 +8,12 @@ import {
 	Image,
 	Loader,
 	Title
-} from 'ui/components'
+} from '@/components/ui'
+import { useTypedNavigation } from '@/hooks'
+import { useBook } from '@/screens/book/useBook'
+import { Color } from 'global/colors'
+import { Alert, ArrowLeft, Pen, Share as ShareIcon, Text } from 'icons'
+import { Share, View } from 'react-native'
 import * as DropDown from '../../components/dropdown/dropdown'
 
 const Book = () => {

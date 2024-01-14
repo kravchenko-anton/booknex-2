@@ -1,5 +1,5 @@
 import type { StatusBarStyle } from 'react-native/Libraries/Components/StatusBar/StatusBar'
-import { Color } from 'ui/colors'
+import { Color } from 'global/colors'
 
 export interface ThemePackType {
 	title: string

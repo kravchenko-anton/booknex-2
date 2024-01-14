@@ -1,9 +1,9 @@
 import { BookCard } from '@/components'
+import { Description, Flatlist, Loader } from '@/components/ui'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { collectionService } from '@/services/collection/collection-service'
 import { useQuery } from '@tanstack/react-query'
 import { View } from 'react-native'
-import { Description, Flatlist, Loader } from 'ui/components'
 
 const Collection = () => {
 	const { params } = useTypedRoute<'Collection'>()
