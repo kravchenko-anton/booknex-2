@@ -43,7 +43,7 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 		})()
 	}
 	return (
-		<div className='p-4'>
+		<div className='pt-4'>
 			<Field
 				control={control}
 				defaultValue={defaultValues.name}
@@ -56,7 +56,7 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 			<FormDropzone
 				control={control}
 				name='picture'
-				size='lg'
+				size='sm'
 				defaultFiles={[defaultValues.picture?.blob as File]}
 				variant='vibrant'
 				multiple={false}

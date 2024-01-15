@@ -111,10 +111,6 @@ const Page: FC = () => {
 										<h3 className='text-lg'>{book.title}</h3>
 
 										<p className='text-primary mb-1'>{book.author.name}</p>
-										<Button size='sm' variant='primary'>
-											{/* TODO: сделать попап с отображением описания */}
-											💬 Description
-										</Button>
 									</td>
 									<td className='w-[250px] p-2'>
 										<h2 className='text-lg font-light'>

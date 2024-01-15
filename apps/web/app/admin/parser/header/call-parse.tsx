@@ -10,7 +10,7 @@ interface NewParserPopupProperties {
 	}
 }
 
-const NewParse: FC<NewParserPopupProperties> = ({
+const CallParse: FC<NewParserPopupProperties> = ({
 	onSubmit,
 	defaultValues = {}
 }) => {
@@ -19,7 +19,7 @@ const NewParse: FC<NewParserPopupProperties> = ({
 		page: number
 	}>()
 	return (
-		<div className='w-[250px] p-4'>
+		<div className=' pt-4'>
 			<Field
 				control={control}
 				variant='vibrant'
@@ -48,4 +48,4 @@ const NewParse: FC<NewParserPopupProperties> = ({
 	)
 }
 
-export default NewParse
+export default CallParse

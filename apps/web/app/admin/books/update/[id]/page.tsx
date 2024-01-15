@@ -14,6 +14,7 @@ import Input from '@/components/ui/field/input'
 import FormAsyncSelect from '@/components/ui/select/async/form-select'
 import {
 	Sheet,
+	SheetClose,
 	SheetContent,
 	SheetHeader,
 	SheetTrigger
@@ -332,9 +333,15 @@ const Page: FC<{
 				<SheetHeader>
 					<h1 className='text-2xl font-medium'>Create author</h1>
 				</SheetHeader>
-				<div>
-					<CreateAuthorPopup onCreate={() => {}} />
-				</div>
+				<CreateAuthorPopup
+					onCreate={({ id, name }) => {
+						setValue('author', {
+							label: name,
+							value: id
+						})
+						SheetClose({})
+					}}
+				/>
 			</SheetContent>
 		</Sheet>
 	)

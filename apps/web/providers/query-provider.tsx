@@ -1,5 +1,7 @@
 'use client'
 import { Toaster } from '@/components/ui/sonner'
+import { DialogProvider } from '@/providers/dialog-provider'
+import { SheetProvider } from '@/providers/sheet-provider'
 import { persistor, store } from '@/redux/store'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { PropsWithChildren } from 'react'
@@ -18,8 +20,12 @@ const Providers = ({ children }: PropsWithChildren) => {
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
 				<QueryClientProvider client={queryClient}>
-					{children}
-					<Toaster />
+					<SheetProvider>
+						<DialogProvider>
+							{children}
+							<Toaster />
+						</DialogProvider>
+					</SheetProvider>
 				</QueryClientProvider>
 			</PersistGate>
 		</Provider>
