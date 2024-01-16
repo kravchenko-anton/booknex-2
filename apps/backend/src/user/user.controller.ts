@@ -91,8 +91,11 @@ export class UserController {
 	// admin
 	@Auth('admin')
 	@Get('/all')
-	async all(@Query('searchTerm') searchTerm: string): Promise<AllUsersOutput> {
-		return this.usersService.all(searchTerm)
+	async all(
+		@Query('searchTerm') searchTerm: string,
+		@Query('page') page: number
+	): Promise<AllUsersOutput> {
+		return this.usersService.all(searchTerm, page || 1)
 	}
 
 	@Auth('admin')

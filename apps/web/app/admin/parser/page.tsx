@@ -8,18 +8,14 @@ import type { FC } from 'react'
 import * as React from 'react'
 
 const Parser: FC = () => {
-	const { tableProperties, onSearchSubmit, parse } = useParser()
-	console.log(
-		tableProperties.currentPage,
-		tableProperties.totalPages,
-		tableProperties.next.disabled
-	)
+	const { tableProperties, headerProperties, parseFunctions } = useParser()
+
 	return (
 		<div className='w-full'>
-			<DataTableHeader onSearchSubmit={onSearchSubmit}>
+			<DataTableHeader {...headerProperties}>
 				<Button
-					onClick={parse.onClick}
-					isLoading={parse.isLoading}
+					onClick={parseFunctions.onClick}
+					isLoading={parseFunctions.isLoading}
 					size='sm'
 					variant='primary'
 				>

@@ -35,8 +35,11 @@ export class AuthorController {
 
 	@Auth('admin')
 	@Get('/all')
-	async all(@Query('searchTerm') searchTerm: string): Promise<AllAuthorOutput> {
-		return this.authorService.all(searchTerm)
+	async all(
+		@Query('searchTerm') searchTerm: string,
+		@Query('page') page: number
+	): Promise<AllAuthorOutput> {
+		return this.authorService.all(searchTerm, page || 1)
 	}
 
 	@Auth('admin')

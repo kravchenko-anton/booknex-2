@@ -6,11 +6,12 @@ import { useForm } from 'react-hook-form'
 
 interface DataTableHeaderProperties {
 	onSearchSubmit: (data: { search: string }) => void
-	searchTerm?: string
+	defaultTerm: string
+	title?: string
 }
 const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 	children,
-	searchTerm,
+	defaultTerm,
 	onSearchSubmit
 }) => {
 	const { control, handleSubmit } = useForm<{ search: string }>({
@@ -26,7 +27,7 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 						control={control}
 						icon={Search}
 						name='search'
-						defaultValue={searchTerm}
+						defaultValue={defaultTerm}
 						placeholder='Explore...'
 						type='search'
 					/>

@@ -1,8 +1,9 @@
+import type { getAllTypeOutput } from '@booknex/global/services-types/utils'
 import type { Prisma } from '@prisma/client'
 import type { defaultReturnObject } from '../../../apps/backend/src/utils/return.default.object'
 
-export type AllGoodReadBookOutput = {
-	data: Prisma.GoodReadBookGetPayload<{
+export type AllGoodReadBookOutput = getAllTypeOutput<
+	Prisma.GoodReadBookGetPayload<{
 		select: typeof defaultReturnObject & {
 			title: true
 			pages: true
@@ -15,9 +16,7 @@ export type AllGoodReadBookOutput = {
 			popularity: true
 		}
 	}>[]
-	totalPages: number
-	canLoadMore: boolean
-}
+>
 
 export interface ParserDtoPayload {
 	url: string

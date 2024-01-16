@@ -1,3 +1,4 @@
+import type { getAllTypeOutput } from '@booknex/global/services-types/utils'
 import type { Prisma } from '@prisma/client'
 import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
 import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
@@ -52,18 +53,20 @@ export interface ToggleOutput {
 	message: string
 }
 
-export type AllUsersOutput = Prisma.UserGetPayload<{
-	select: typeof returnUserObject & {
-		selectedGenres: {
-			select: typeof ReturnGenreObject
-		}
-		_count: {
-			select: {
-				activity: true
-				savedBooks: true
-				finishedBooks: true
-				readingBooks: true
+export type AllUsersOutput = getAllTypeOutput<
+	Prisma.UserGetPayload<{
+		select: typeof returnUserObject & {
+			selectedGenres: {
+				select: typeof ReturnGenreObject
+			}
+			_count: {
+				select: {
+					activity: true
+					savedBooks: true
+					finishedBooks: true
+					readingBooks: true
+				}
 			}
 		}
-	}
-}>[]
+	}>[]
+>

@@ -66,27 +66,36 @@ export class AuthorService {
 		}
 	}
 
-	async all(searchTerm: string) {
-		return this.prisma.author.findMany({
-			select: {
-				...returnAuthorObjectWithDescription,
-				books: {
-					select: {
-						id: true,
-						picture: true,
-						visible: true
+	async all(searchTerm: string, page: number) {
+		const perPage = 20
+		return {
+			data: await this.prisma.author.findMany({
+				take: perPage,
+				select: {
+					...returnAuthorObjectWithDescription,
+					books: {
+						select: {
+							id: true,
+							picture: true,
+							visible: true
+						}
 					}
-				}
-			},
-			take: 20,
-			...(searchTerm && {
-				where: {
-					name: {
-						contains: searchTerm
+				},
+				...(page && {
+					skip: page * perPage
+				}),
+				...(searchTerm && {
+					where: {
+						name: {
+							contains: searchTerm
+						}
 					}
-				}
-			})
-		})
+				})
+			}),
+			canLoadMore:
+				page < Math.floor((await this.prisma.author.count()) / perPage),
+			totalPages: Math.floor((await this.prisma.author.count()) / perPage)
+		}
 	}
 
 	async allSelect(searchTerm: string) {

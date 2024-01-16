@@ -1,5 +1,5 @@
 'use client'
-import CreateAuthorPopup from '@/app/admin/authors/popup/create'
+import CreateAuthorPopup from '@/app/admin/authors/create/create'
 import {
 	Button,
 	DropZone,

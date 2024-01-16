@@ -1,4 +1,5 @@
 import { Button, Field } from '@/components/ui'
+import { SheetHeader } from '@/components/ui/sheet'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -10,7 +11,7 @@ interface NewParserPopupProperties {
 	}
 }
 
-const CallParse: FC<NewParserPopupProperties> = ({
+const CallParser: FC<NewParserPopupProperties> = ({
 	onSubmit,
 	defaultValues = {}
 }) => {
@@ -19,7 +20,10 @@ const CallParse: FC<NewParserPopupProperties> = ({
 		page: number
 	}>()
 	return (
-		<div className=' pt-4'>
+		<div>
+			<SheetHeader className='pb-4'>
+				<h1 className='text-3xl font-medium'>Parse </h1>
+			</SheetHeader>
 			<Field
 				control={control}
 				variant='vibrant'
@@ -48,4 +52,4 @@ const CallParse: FC<NewParserPopupProperties> = ({
 	)
 }
 
-export default CallParse
+export default CallParser

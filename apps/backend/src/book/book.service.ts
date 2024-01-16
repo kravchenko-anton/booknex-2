@@ -67,32 +67,40 @@ export class BookService {
 		}
 	}
 
-	async all(searchTerm: string) {
-		return this.prisma.book.findMany({
-			take: 20,
-			select: {
-				...returnBookObjectWithAuthor,
-				genres: { select: ReturnGenreObject },
-				pages: true,
-				popularity: true,
-				visible: true,
-				description: true,
-				majorGenre: {
-					select: ReturnGenreObject
-				}
-				// TODO: сделать тут статистику посещаемости книги за месяц, год и тд
-			},
-			orderBy: {
-				visible: 'asc'
-			},
-			...(searchTerm && {
-				where: {
-					title: {
-						contains: searchTerm
+	async all(searchTerm: string, page: number) {
+		const perPage = 20
+		return {
+			data: await this.prisma.book.findMany({
+				take: perPage,
+				select: {
+					...returnBookObjectWithAuthor,
+					genres: { select: ReturnGenreObject },
+					pages: true,
+					popularity: true,
+					visible: true,
+					description: true,
+					majorGenre: {
+						select: ReturnGenreObject
 					}
-				}
-			})
-		})
+				},
+				orderBy: {
+					visible: 'asc'
+				},
+				...(page && {
+					skip: page * perPage
+				}),
+				...(searchTerm && {
+					where: {
+						title: {
+							contains: searchTerm
+						}
+					}
+				})
+			}),
+			canLoadMore:
+				page < Math.floor((await this.prisma.book.count()) / perPage),
+			totalPages: Math.floor((await this.prisma.book.count()) / perPage)
+		}
 	}
 
 	async toggleVisible(id: number) {

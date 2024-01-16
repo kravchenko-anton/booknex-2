@@ -125,31 +125,41 @@ export class UserService {
 		})
 	}
 
-	async all(searchTerm: string) {
-		return this.prisma.user.findMany({
-			take: 20,
-			select: {
-				...returnUserObject,
-				selectedGenres: {
-					select: ReturnGenreObject
-				},
-				_count: {
-					select: {
-						activity: true,
-						savedBooks: true,
-						finishedBooks: true,
-						readingBooks: true
-					}
-				},
-				...(searchTerm && {
-					where: {
-						title: {
-							contains: searchTerm
+	async all(searchTerm: string, page: number) {
+		const perPage = 20
+		return {
+			data: await this.prisma.user.findMany({
+				take: perPage,
+
+				select: {
+					...returnUserObject,
+					selectedGenres: {
+						select: ReturnGenreObject
+					},
+					_count: {
+						select: {
+							activity: true,
+							savedBooks: true,
+							finishedBooks: true,
+							readingBooks: true
 						}
-					}
+					},
+					...(searchTerm && {
+						where: {
+							title: {
+								contains: searchTerm
+							}
+						}
+					})
+				},
+				...(page && {
+					skip: page * perPage
 				})
-			}
-		})
+			}),
+			canLoadMore:
+				page < Math.floor((await this.prisma.user.count()) / perPage),
+			totalPages: Math.floor((await this.prisma.user.count()) / perPage)
+		}
 	}
 
 	async delete(id: number) {

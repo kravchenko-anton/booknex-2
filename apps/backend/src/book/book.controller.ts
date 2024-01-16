@@ -64,8 +64,11 @@ export class BookController {
 
 	@Auth('admin')
 	@Get('/all')
-	async all(@Query('searchTerm') searchTerm: string): Promise<AllBooksOutput> {
-		return this.bookService.all(searchTerm)
+	async all(
+		@Query('searchTerm') searchTerm: string,
+		@Query('page') page: number
+	): Promise<AllBooksOutput> {
+		return this.bookService.all(searchTerm, page || 1)
 	}
 
 	@Auth('admin')

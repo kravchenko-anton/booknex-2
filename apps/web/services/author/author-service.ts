@@ -11,10 +11,10 @@ import type {
 import { request } from '../api/request.api'
 
 export const authorService = {
-	async all(searchTerm?: string) {
+	async all(parameters: { page: number; searchTerm?: string }) {
 		return request<AllAuthorOutput>({
 			url: getAuthorUrl('/all'),
-			params: { searchTerm }
+			params: parameters
 		})
 	},
 

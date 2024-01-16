@@ -1,3 +1,4 @@
+import type { getAllTypeOutput } from '@booknex/global/services-types/utils'
 import type { Prisma } from '@prisma/client'
 import type {
 	returnAuthorObject,
@@ -9,17 +10,20 @@ export type InfoByIdOutput = Prisma.AuthorGetPayload<{
 	select: typeof returnFullAuthorObject
 }>
 
-export type AllAuthorOutput = Prisma.AuthorGetPayload<{
-	select: typeof returnAuthorObjectWithDescription & {
-		books: {
-			select: {
-				id: true
-				picture: true
-				visible: true
+export type AllAuthorOutput = getAllTypeOutput<
+	Prisma.AuthorGetPayload<{
+		select: typeof returnAuthorObjectWithDescription & {
+			books: {
+				select: {
+					id: true
+					picture: true
+					visible: true
+				}
 			}
 		}
-	}
-}>[]
+	}>[]
+>
+
 export type AllSelectAuthorOutput = Prisma.AuthorGetPayload<{
 	select: {
 		id: true

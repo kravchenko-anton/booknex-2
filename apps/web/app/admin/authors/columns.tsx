@@ -1,4 +1,3 @@
-import type { EditAndUseProperties } from '@/app/admin/parser/types'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -7,17 +6,16 @@ import {
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { getFileUrl } from 'global/api-config'
-import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
 import * as React from 'react'
 import { useState } from 'react'
 
 export const columns = ({
-	deleteFromParser,
-	editAndUse
+	remove,
+	edit
 }: {
-	deleteFromParser: (id: number) => Promise<void>
-	editAndUse: (data: EditAndUseProperties) => void
+	remove: (id: number) => Promise<void>
+	edit: () => void
 }) => [
 	{
 		id: 'id',
@@ -41,42 +39,12 @@ export const columns = ({
 			)
 		}
 	},
+
 	{
-		id: 'bio',
-		header: () => <p className='text-center text-xl'>Bio</p>,
+		id: 'name',
+		header: () => <p className='text-center text-xl'>Name</p>,
 		cell: ({ row }) => {
-			return (
-				<div>
-					<h3 className='text-lg'>{row.original.title}</h3>
-					<div className='mt-2 flex items-center gap-2'>
-						<img
-							width={45}
-							height={45}
-							className='rounded-full'
-							src={row.original.authorPicture}
-							alt={row.original.authorName}
-						/>
-						<p className=' mb-1 text-lg'>{row.original.authorName}</p>
-					</div>
-				</div>
-			)
-		}
-	},
-	{
-		id: 'info',
-		header: () => <p className='text-center text-xl'>Info</p>,
-		cell: ({ row }) => {
-			return (
-				<div className='w-[120px]'>
-					<h2 className='text-lg font-light'>
-						Pages: <b className='font-bold'>{row.original.pages}</b>
-					</h2>
-					<h2 className='mt-2 text-lg font-light'>
-						Popularity:{' '}
-						<b className='font-bold'>{nFormatter(row.original.popularity)}</b>
-					</h2>
-				</div>
-			)
+			return <h2 className='text-lg font-light'>{row.original.name}</h2>
 		}
 	},
 	{
@@ -94,18 +62,20 @@ export const columns = ({
 		}
 	},
 	{
-		id: 'genres',
-		header: () => <p className='text-center text-xl'>Genres</p>,
+		id: 'books',
+		header: () => <p className='text-center text-xl'>Books</p>,
 		cell: ({ row }) => {
 			return (
-				<div className='flex  w-[200px] flex-wrap items-center'>
-					{row.original.genres.map(genre => (
-						<p
-							className='bg-foreground border-vibrant m-1 rounded-xl border-2 p-2  text-sm text-white'
-							key={genre.name}
-						>
-							{genre.name}
-						</p>
+				<div className='flex w-[250px]  gap-2 overflow-y-scroll'>
+					{row.original.books.map(book => (
+						<img
+							width={100}
+							height={100}
+							key={book.picture}
+							src={getFileUrl(book.picture)}
+							className='mr-2 rounded-xl'
+							alt={book.name}
+						/>
 					))}
 				</div>
 			)
@@ -124,15 +94,9 @@ export const columns = ({
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
-						<DropdownMenuItem
-							onClick={() => {
-								editAndUse({ ...row.original })
-							}}
-						>
-							Edit
-						</DropdownMenuItem>
+						<DropdownMenuItem onClick={edit}>Edit</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => deleteFromParser(row.original.id)}>
+						<DropdownMenuItem onClick={() => remove(row.original.id)}>
 							Delete
 						</DropdownMenuItem>
 					</DropdownMenuContent>

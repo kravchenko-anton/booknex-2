@@ -1,5 +1,5 @@
 'use client'
-import CreateAuthorPopup from '@/app/admin/authors/popup/create'
+import CreateAuthorPopup from '@/app/admin/authors/create/create'
 import { useChapters } from '@/app/admin/books/update/[id]/useCharapters'
 import type { UpdateBookValidationSchemaType } from '@/app/admin/books/update/[id]/validation'
 import { updateBookValidationSchema } from '@/app/admin/books/update/[id]/validation'

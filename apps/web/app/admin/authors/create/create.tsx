@@ -1,6 +1,7 @@
 'use client'
 import { Button, Field } from '@/components/ui'
 import FormDropzone from '@/components/ui/dropzone/form-dropzone'
+import { SheetHeader } from '@/components/ui/sheet'
 import FormTextEditor from '@/components/ui/text-editor/form-text-editor'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { FC } from 'react'
@@ -9,14 +10,13 @@ import { useCreate } from './useCreate'
 import type { CreateAuthorValidationSchemaType } from './validation'
 import { createAuthorValidationSchema } from './validation'
 
-interface CreateAuthorPopupProperties {
+interface CreateAuthorProperties {
 	onCreate: ({ id, name }: { name: string; id: number }) => void
 	defaultValues?: CreateAuthorValidationSchemaType
 }
 
-const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
+const CreateAuthor: FC<CreateAuthorProperties> = ({
 	defaultValues = {},
-
 	onCreate = () => {}
 }) => {
 	const { control, handleSubmit, setValue } =
@@ -43,7 +43,10 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 		})()
 	}
 	return (
-		<div className='pt-4'>
+		<div>
+			<SheetHeader className='pb-4'>
+				<h1 className='text-2xl font-medium'>Create author</h1>
+			</SheetHeader>
 			<Field
 				control={control}
 				defaultValue={defaultValues.name}
@@ -90,4 +93,4 @@ const CreateAuthorPopup: FC<CreateAuthorPopupProperties> = ({
 	)
 }
 
-export default CreateAuthorPopup
+export default CreateAuthor
