@@ -18,51 +18,61 @@ interface Chapter {
 export class ParserService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async all(searchTerm: string) {
-		return this.prisma.goodReadBook.findMany({
-			select: {
-				...defaultReturnObject,
-				title: true,
-				pages: true,
-				description: true,
-				authorPicture: true,
-				authorDescription: true,
-				authorName: true,
-				genres: true,
-				picture: true,
-				popularity: true
-			},
-			...(searchTerm && {
-				where: {
-					OR: [
-						{
-							title: {
-								contains: searchTerm,
-								mode: 'insensitive'
+	async all(searchTerm: string, page: number) {
+		const perPage = 20
+		return {
+			data: await this.prisma.goodReadBook.findMany({
+				take: perPage,
+				select: {
+					...defaultReturnObject,
+					title: true,
+					pages: true,
+					description: true,
+					authorPicture: true,
+					authorDescription: true,
+					authorName: true,
+					genres: true,
+					picture: true,
+					popularity: true
+				},
+				...(page && {
+					skip: page * perPage
+				}),
+				...(searchTerm && {
+					where: {
+						OR: [
+							{
+								title: {
+									contains: searchTerm,
+									mode: 'insensitive'
+								}
+							},
+							{
+								authorName: {
+									contains: searchTerm,
+									mode: 'insensitive'
+								}
+							},
+							{
+								authorDescription: {
+									contains: searchTerm,
+									mode: 'insensitive'
+								}
+							},
+							{
+								description: {
+									contains: searchTerm,
+									mode: 'insensitive'
+								}
 							}
-						},
-						{
-							authorName: {
-								contains: searchTerm,
-								mode: 'insensitive'
-							}
-						},
-						{
-							authorDescription: {
-								contains: searchTerm,
-								mode: 'insensitive'
-							}
-						},
-						{
-							description: {
-								contains: searchTerm,
-								mode: 'insensitive'
-							}
-						}
-					]
-				}
-			})
-		})
+						]
+					}
+				})
+			}),
+			canLoadMore:
+				page < Math.floor((await this.prisma.goodReadBook.count()) / perPage),
+			totalPages: Math.floor((await this.prisma.goodReadBook.count()) / perPage)
+		}
 	}
 
 	async delete(id: number) {

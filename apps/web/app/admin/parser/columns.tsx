@@ -9,7 +9,6 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
-import * as React from 'react'
 import { useState } from 'react'
 
 export const columns: ColumnDef<{

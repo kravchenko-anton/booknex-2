@@ -27,9 +27,10 @@ export class ParserController {
 
 	@Get('/all')
 	async all(
-		@Query('searchTerm') searchTerm: string
+		@Query('searchTerm') searchTerm: string,
+		@Query('page') page: number
 	): Promise<AllGoodReadBookOutput> {
-		return this.parserService.all(searchTerm)
+		return this.parserService.all(searchTerm, page || 1)
 	}
 
 	@Post('/parse')

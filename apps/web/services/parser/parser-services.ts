@@ -7,12 +7,13 @@ import type {
 import { request } from '../api/request.api'
 
 export const parserService = {
-	async all(searchTerm?: string): Promise<AllGoodReadBookOutput> {
+	async all(parameters: {
+		page: number
+		searchTerm?: string
+	}): Promise<AllGoodReadBookOutput> {
 		return request({
 			url: getParserUrl('/all'),
-			params: {
-				searchTerm
-			}
+			params: parameters
 		})
 	},
 
