@@ -3,18 +3,16 @@ import type { AllUsersOutput } from 'global/services-types/user-types'
 import { request } from '../api/request.api'
 
 export const userServices = {
-	async all(searchTerm: string) {
+	async all(parameters: { page: number; searchTerm?: string }) {
 		return request<AllUsersOutput>({
 			url: getUsersUrl('/all'),
 			method: 'GET',
-			params: {
-				searchTerm
-			}
+			params: parameters
 		})
 	},
 
-	async delete(id: string) {
-		return request({
+	async delete(id: number) {
+		return request<null>({
 			url: getUsersUrl(`/delete/${id}`),
 			method: 'DELETE'
 		})

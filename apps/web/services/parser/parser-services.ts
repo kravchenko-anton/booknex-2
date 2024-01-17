@@ -40,7 +40,7 @@ export const parserService = {
 	},
 
 	async delete(id: number) {
-		return request({
+		return request<null>({
 			url: getParserUrl(`/delete/${id}`),
 			method: 'DELETE'
 		})

@@ -14,9 +14,9 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 		['delete  author'],
 		(id: number) => authorService.delete(id),
 		{
-			onSuccess: () => {
+			onSuccess: async () => {
 				successToast('Author deleted')
-				queryClient.invalidateQueries(['authors'])
+				await queryClient.invalidateQueries(['authors', searchTerm, page])
 			}
 		}
 	)

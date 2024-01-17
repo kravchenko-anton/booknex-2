@@ -1,6 +1,6 @@
 'use client'
 
-import { useParser } from '@/app/admin/parser/useParser'
+import { useData } from '@/app/admin/parser/useData'
 import DataTable from '@/components/data-table'
 import DataTableHeader from '@/components/table-search'
 import { Button } from '@/components/ui'
@@ -8,11 +8,11 @@ import type { FC } from 'react'
 import * as React from 'react'
 
 const Parser: FC = () => {
-	const { tableProperties, headerProperties, parseFunctions } = useParser()
+	const { tableProperties, headerProperties, parseFunctions } = useData()
 
 	return (
 		<div className='w-full'>
-			<DataTableHeader {...headerProperties}>
+			<DataTableHeader title='Parser' {...headerProperties}>
 				<Button
 					onClick={parseFunctions.onClick}
 					isLoading={parseFunctions.isLoading}

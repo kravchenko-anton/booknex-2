@@ -5,21 +5,20 @@ import { columns } from '@/app/admin/parser/columns'
 import type { EditAndUseProperties } from '@/app/admin/parser/types'
 import { useQueries } from '@/app/admin/parser/useQueries'
 import { useAction, useTypedSelector } from '@/hooks'
+import { useTableParameters } from '@/hooks/useTableParameters'
 import { useSheetContext } from '@/providers/sheet-provider'
 import { generateParameters } from '@/utils/generate-parameters'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
-export const useParser = () => {
+export const useData = () => {
 	//TODO: оптимизнуть этот хук на сколько это возможно
 	const router = useRouter()
 	const { updateLastParsedData } = useAction()
 	const { lastParsedData } = useTypedSelector(state => state.parser)
-	const parameters = useSearchParams()
 	const { showSheet, closeSheet } = useSheetContext()
+	const { page, searchTerm } = useTableParameters()
 	//TODO: вынести парсинг даты в отдельный хук
-	const searchTerm = parameters.get('searchTerm') ?? ''
-	const page = +(parameters.get('page') ?? 1)
 	const { books, checkAuthorExist, deleteFromParser, parse, parseLoading } =
 		useQueries({ page, searchTerm })
 	const editAndUse = async (properties: EditAndUseProperties) => {
@@ -27,7 +26,6 @@ export const useParser = () => {
 			result.blob()
 		)
 		const author = await checkAuthorExist(properties.authorName)
-		//Вынести эту функцию но сделать так чтобы я передавал фунуцию если автора нету и там в параметрах будет createAuthor
 		if (author)
 			router.push(
 				'/admin/books/create' +
@@ -59,10 +57,7 @@ export const useParser = () => {
 	const table = useReactTable({
 		data: books.data ?? [],
 		columns: columns({
-			deleteFromParser: async id => {
-				await deleteFromParser(id)
-				router.refresh()
-			},
+			deleteFromParser: deleteFromParser,
 			editAndUse: editAndUse
 		}),
 		getCoreRowModel: getCoreRowModel()

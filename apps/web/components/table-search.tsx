@@ -12,6 +12,7 @@ interface DataTableHeaderProperties {
 const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 	children,
 	defaultTerm,
+	title = '',
 	onSearchSubmit
 }) => {
 	const { control, handleSubmit } = useForm<{ search: string }>({
@@ -20,7 +21,7 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 
 	return (
 		<div className=' flex w-full items-center justify-between  p-3'>
-			<h1 className='text-3xl font-medium'>Parser</h1>
+			<h1 className='text-3xl font-medium'>{title}</h1>
 			<div className='flex gap-5'>
 				<form onSubmit={handleSubmit(onSearchSubmit)}>
 					<Field

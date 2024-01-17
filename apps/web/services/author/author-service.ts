@@ -52,7 +52,7 @@ export const authorService = {
 	},
 
 	async delete(id: number) {
-		return request({
+		return request<null>({
 			url: getAuthorUrl(`/delete/${id}`),
 			method: 'DELETE'
 		})

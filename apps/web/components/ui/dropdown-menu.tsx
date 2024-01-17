@@ -168,7 +168,7 @@ const DropdownMenuSeparator = forwardRef<
 >(({ className, ...properties }, reference) => (
 	<DropdownMenuPrimitive.Separator
 		ref={reference}
-		className={cn('bg-muted -mx-1 my-1 h-px', className)}
+		className={cn('bg-foreground  -mx-1 my-1 h-px', className)}
 		{...properties}
 	/>
 ))

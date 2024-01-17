@@ -23,9 +23,13 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 		['delete from parser'],
 		(id: number) => parserService.delete(id),
 		{
-			onSuccess: () => {
+			onSuccess: async () => {
 				successToast('Book deleted')
-				queryClient.invalidateQueries(['good-reads books', searchTerm, page])
+				await queryClient.invalidateQueries([
+					'good-reads books',
+					searchTerm,
+					page
+				])
 			}
 		}
 	)

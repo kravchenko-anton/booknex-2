@@ -8,12 +8,10 @@ import type {
 import { request } from '../api/request.api'
 
 export const bookService = {
-	async all(searchTerm: string) {
+	async all(parameters: { page: number; searchTerm?: string }) {
 		return request<AllBooksOutput>({
 			url: getBookUrl('/all'),
-			params: {
-				searchTerm
-			}
+			params: parameters
 		})
 	},
 

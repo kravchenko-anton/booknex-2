@@ -56,7 +56,7 @@ export const columns = ({
 				<p className='mb-2 text-sm' onClick={() => setShowMore(!showMore)}>
 					{showMore
 						? row.original.description
-						: row.original.description.slice(0, 500) + '...'}
+						: row.original.description.slice(0, 250) + '...'}
 				</p>
 			)
 		}
@@ -94,7 +94,7 @@ export const columns = ({
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
-						<DropdownMenuItem onClick={edit}>Edit</DropdownMenuItem>
+						<DropdownMenuItem onClick={() => edit()}>Edit</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={() => remove(row.original.id)}>
 							Delete

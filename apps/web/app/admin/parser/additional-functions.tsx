@@ -1,10 +1,4 @@
-interface SearchParametersProperties {
-	title: string
-	description: string
-	pages: number
-	popularity: number
-	genres: string[]
-}
+import type { SearchParametersProperties } from '@/app/admin/parser/types'
 
 export const searchParameters = (
 	author: { id: number; name: string },

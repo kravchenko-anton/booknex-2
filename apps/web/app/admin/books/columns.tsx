@@ -1,4 +1,3 @@
-import type { EditAndUseProperties } from '@/app/admin/parser/types'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -11,13 +10,18 @@ import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
 import * as React from 'react'
 import { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const columns = ({
-	deleteFromParser,
-	editAndUse
+	remove,
+	update,
+	toggleVisible,
+	overview
 }: {
-	deleteFromParser: (id: number) => Promise<void>
-	editAndUse: (data: EditAndUseProperties) => void
+	remove: (id: number) => void
+	update: (id: number) => void
+	overview: (id: number) => void
+	toggleVisible: (id: number) => void
 }) => [
 	{
 		id: 'id',
@@ -46,8 +50,9 @@ export const columns = ({
 		header: () => <p className='text-center text-xl'>Information</p>,
 		cell: ({ row }) => {
 			return (
-				<div className='w-[250px]'>
-					<h3 className='text-xl'>{row.original.title}</h3>
+				<div className='w-[210px]'>
+					<h3 className='mb-1 text-xl'>{row.original.title}</h3>
+					<p>{row.original.author.name}</p>
 					<div className='flex flex-wrap gap-2'>
 						<p className='bg-foreground mt-2 rounded-xl p-1 font-light'>
 							<b className='font-bold text-white'>{row.original.pages}</b> pages
@@ -59,24 +64,6 @@ export const columns = ({
 							popularity
 						</p>
 					</div>
-				</div>
-			)
-		}
-	},
-	{
-		id: 'Author',
-		header: () => <p className='text-center text-xl'>Author</p>,
-		cell: ({ row }) => {
-			return (
-				<div className='mt-2 w-[100px] items-center justify-center gap-2'>
-					<img
-						width={60}
-						height={60}
-						className='mx-auto mb-2 h-[60px] w-[60px] rounded-full object-cover'
-						src={row.original.authorPicture}
-						alt={row.original.authorName}
-					/>
-					<p className=' text-md mb-1 text-center'>{row.original.authorName}</p>
 				</div>
 			)
 		}
@@ -100,16 +87,32 @@ export const columns = ({
 		header: () => <p className='text-center text-xl'>Genres</p>,
 		cell: ({ row }) => {
 			return (
-				<div className='flex  w-[200px] flex-wrap items-center justify-center'>
+				<div className='flex w-[300px] flex-wrap items-center justify-center'>
 					{row.original.genres.map(genre => (
 						<p
-							className='bg-foreground border-vibrant m-1 rounded-xl border-2 p-2  text-sm text-white'
+							className='bg-foreground border-vibrant m-1 rounded-xl border-2 p-1.5  text-sm text-white'
 							key={genre.name}
 						>
 							{genre.name}
 						</p>
 					))}
 				</div>
+			)
+		}
+	},
+	{
+		id: 'Visible',
+		header: () => <p className='text-center text-xl'>Visible</p>,
+		cell: ({ row }) => {
+			return (
+				<p
+					className={twMerge(
+						'text-md rounded-xl p-1 text-center text-white',
+						row.original.visible ? 'bg-success' : 'bg-danger'
+					)}
+				>
+					{row.original.visible ? 'Yes' : 'No'}
+				</p>
 			)
 		}
 	},
@@ -126,15 +129,20 @@ export const columns = ({
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
-						<DropdownMenuItem
-							onClick={() => {
-								editAndUse({ ...row.original })
-							}}
-						>
+						<DropdownMenuItem onClick={() => overview(row.original.id)}>
+							Overview
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem onClick={() => toggleVisible(row.original.id)}>
+							Toggle Visibility
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
+
+						<DropdownMenuItem onClick={() => update(row.original.id)}>
 							Edit
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => deleteFromParser(row.original.id)}>
+						<DropdownMenuItem onClick={() => remove(row.original.id)}>
 							Delete
 						</DropdownMenuItem>
 					</DropdownMenuContent>
