@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const createAuthorValidationSchema = z.object({
+export const ManipulationAuthorValidationSchema = z.object({
 	name: z.string(),
 	picture: z.object({
 		name: z.string(),
@@ -9,6 +9,6 @@ export const createAuthorValidationSchema = z.object({
 	description: z.string()
 })
 
-export type CreateAuthorValidationSchemaType = z.infer<
-	typeof createAuthorValidationSchema
+export type ManipulationAuthorValidationSchemaType = z.infer<
+	typeof ManipulationAuthorValidationSchema
 >

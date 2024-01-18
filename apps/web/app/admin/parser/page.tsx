@@ -5,7 +5,6 @@ import DataTable from '@/components/data-table'
 import DataTableHeader from '@/components/table-search'
 import { Button } from '@/components/ui'
 import type { FC } from 'react'
-import * as React from 'react'
 
 const Parser: FC = () => {
 	const { tableProperties, headerProperties, parseFunctions } = useData()

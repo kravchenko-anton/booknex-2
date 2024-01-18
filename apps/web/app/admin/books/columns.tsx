@@ -8,8 +8,8 @@ import {
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
-import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 
 export const columns = ({
@@ -142,7 +142,16 @@ export const columns = ({
 							Edit
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => remove(row.original.id)}>
+						<DropdownMenuItem
+							onClick={() =>
+								toast('Are you sure you want to delete this book?', {
+									action: {
+										label: 'Delete',
+										onClick: () => remove(row.original.id)
+									}
+								})
+							}
+						>
 							Delete
 						</DropdownMenuItem>
 					</DropdownMenuContent>

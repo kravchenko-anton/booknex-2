@@ -7,7 +7,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
-import * as React from 'react'
 
 export const columns = ({
 	remove,

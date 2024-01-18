@@ -28,10 +28,10 @@ model Genre {
 model Activity {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  Book      Book?    @relation(fields: [bookId], references: [id])
-  Author    Author?  @relation(fields: [authorId], references: [id])
-  Genre     Genre?   @relation(fields: [genreId], references: [id])
-  Collection Collection? @relation(fields: [collectionId], references: [id])
+  book      Book?    @relation(fields: [bookId], references: [id])
+  author    Author?  @relation(fields: [authorId], references: [id])
+  genre     Genre?   @relation(fields: [genreId], references: [id])
+  collection Collection? @relation(fields: [collectionId], references: [id])
   collectionId Int?
   genreId      Int?
   authorId  Int?

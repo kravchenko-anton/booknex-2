@@ -1,7 +1,6 @@
 import { Field } from '@/components/ui'
 import { Search } from 'icons'
 import type { FC, PropsWithChildren } from 'react'
-import * as React from 'react'
 import { useForm } from 'react-hook-form'
 
 interface DataTableHeaderProperties {

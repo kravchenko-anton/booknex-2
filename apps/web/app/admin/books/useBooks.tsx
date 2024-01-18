@@ -13,8 +13,8 @@ export const useBooks = () => {
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			overview: id => router.push(`admin/books/overview/${id}`),
-			update: id => router.push(`admin/books/update/${id}`),
+			overview: id => router.push(`admin/books/${id}/overview`),
+			update: id => router.push(`admin/books/${id}/update`),
 			remove: deleteBook,
 			toggleVisible: toggleVisible
 		}),

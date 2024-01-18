@@ -2,37 +2,42 @@ import { authorService } from '@/services/author/author-service'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import { StorageFolderEnum } from '../../../../../backend/src/storage/storage.types'
+import { StorageFolderEnum } from '../../../../../../backend/src/storage/storage.types'
 
-export const useCreate = () => {
+export const useUpdate = (id: number) => {
 	const { upload } = useUploadFile()
-	const { mutateAsync: create } = useMutation(
-		['create  author'],
+	const { mutateAsync: update } = useMutation(
+		['update  author'],
 		({
 			name,
 			picture,
+			books,
 			description
 		}: {
 			name: string
 			picture: string
 			description: string
+			books: number[]
 		}) =>
-			authorService.create({
+			authorService.update(id, {
 				name,
 				picture,
-				description
+				description,
+				books
 			}),
 		{
-			onSuccess: () => successToast('Author created'),
+			onSuccess: () => successToast('Author update'),
 			onError: () => errorToast('An error occurred while creating the author')
 		}
 	)
 
-	const createAuthor = async ({
+	const updateAuthor = async ({
 		name,
 		picture,
+		books,
 		description
 	}: {
+		books: number[]
 		name: string
 		picture: {
 			name: string
@@ -45,17 +50,15 @@ export const useCreate = () => {
 			blob: picture.blob,
 			folder: StorageFolderEnum.authorPictures
 		})
-		const author = await create({
+		return update({
 			name,
 			picture: uploadPictureName,
-			description
+			description,
+			books
 		})
-		return {
-			...author
-		}
 	}
 
 	return {
-		createAuthor
+		updateAuthor
 	}
 }

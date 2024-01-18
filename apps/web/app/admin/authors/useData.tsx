@@ -1,8 +1,6 @@
 import { columns } from '@/app/admin/authors/columns'
-import CreateAuthor from '@/app/admin/authors/create/create'
 import { useQueries } from '@/app/admin/authors/useQueries'
 import { useTableParameters } from '@/hooks/useTableParameters'
-import { useSheetContext } from '@/providers/sheet-provider'
 import { generateParameters } from '@/utils/generate-parameters'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
@@ -11,14 +9,12 @@ export const useData = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
 	const { authors, deleteAuthor } = useQueries({ page, searchTerm })
-	const { showSheet, closeSheet } = useSheetContext()
-	const createAuthor = () => showSheet(<CreateAuthor onCreate={closeSheet} />)
 
 	const table = useReactTable({
 		data: authors?.data ?? [],
 		columns: columns({
 			//TODO: сделать эдит автора
-			edit: null,
+			update: null,
 			remove: id => deleteAuthor(id)
 		}),
 		getCoreRowModel: getCoreRowModel()
@@ -64,7 +60,6 @@ export const useData = () => {
 	}
 	return {
 		headerProperties,
-		tableProperties,
-		createAuthor
+		tableProperties
 	}
 }

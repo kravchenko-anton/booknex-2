@@ -1,4 +1,4 @@
-'use client'
+import { useUpdate } from '@/app/admin/authors/[id]/update/useUpdate'
 import type { ManipulationAuthorValidationSchemaType } from '@/app/admin/authors/validation'
 import { ManipulationAuthorValidationSchema } from '@/app/admin/authors/validation'
 import { Button, Field } from '@/components/ui'
@@ -6,42 +6,46 @@ import FormDropzone from '@/components/ui/dropzone/form-dropzone'
 import { SheetHeader } from '@/components/ui/sheet'
 import FormTextEditor from '@/components/ui/text-editor/form-text-editor'
 import { zodResolver } from '@hookform/resolvers/zod'
-import type { FC } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { useCreate } from './useCreate'
 
-interface CreateAuthorProperties {
-	onCreate: ({ id, name }: { name: string; id: number }) => void
-	defaultValues?: ManipulationAuthorValidationSchemaType
-}
-
-const CreateAuthor: FC<CreateAuthorProperties> = ({
-	defaultValues = {},
-	onCreate = () => {}
-}) => {
-	const { control, handleSubmit, setValue } =
-		useForm<ManipulationAuthorValidationSchemaType>({
+const Page = () => {
+	const { control, setValue } = useForm<ManipulationAuthorValidationSchemaType>(
+		{
 			resolver: zodResolver(ManipulationAuthorValidationSchema)
-		})
-	const { createAuthor } = useCreate()
-
-	const onSubmit = () => {
-		if (defaultValues.picture) {
-			setValue('picture', defaultValues.picture)
 		}
-		handleSubmit(data => {
-			createAuthor({
-				description: data.description,
-				name: data.name,
-				picture: {
-					blob: data.picture?.blob,
-					name: data.picture?.name
-				}
-			}).then(({ id, name }) => {
-				onCreate({ id, name })
-			})
-		})()
-	}
+	)
+
+	const parameters = useSearchParams()
+	const id = +parameters.get('id')
+	const { updateAuthor } = useUpdate(id)
+	// const { data } = useQuery(
+	// 	['update  author'],
+	// 	({
+	// 		id,
+	// 		name,
+	// 		picture,
+	// 		description,
+	// 		books
+	// 	}: {
+	// 		id: number
+	// 		name: string
+	// 		picture: string
+	// 		description: string
+	// 		books: string
+	// 	}) =>
+	// 		authorService.update(id, {
+	// 			name,
+	// 			picture,
+	// 			description,
+	// 			books
+	// 		}),
+	// 	{
+	// 		onSuccess: () => successToast('Author update'),
+	// 		onError: () => errorToast('An error occurred while creating the author')
+	// 	}
+	// )
+
 	return (
 		<div>
 			<SheetHeader className='pb-4'>
@@ -49,7 +53,7 @@ const CreateAuthor: FC<CreateAuthorProperties> = ({
 			</SheetHeader>
 			<Field
 				control={control}
-				defaultValue={defaultValues.name}
+				// defaultValue={defaultValues.name}
 				name='name'
 				type='text'
 				variant='shade'
@@ -60,7 +64,7 @@ const CreateAuthor: FC<CreateAuthorProperties> = ({
 				control={control}
 				name='picture'
 				size='sm'
-				defaultFiles={[defaultValues.picture?.blob as File]}
+				// defaultFiles={[defaultValues.picture?.blob as File]}
 				variant='vibrant'
 				multiple={false}
 				accept={'image/*'}
@@ -72,7 +76,7 @@ const CreateAuthor: FC<CreateAuthorProperties> = ({
 				}}
 			/>
 			<FormTextEditor
-				defaultValue={defaultValues.description}
+				// defaultValue={defaultValues.description}
 				variant='shade'
 				control={control}
 				name='description'
@@ -83,7 +87,7 @@ const CreateAuthor: FC<CreateAuthorProperties> = ({
 			<Button
 				size='md'
 				className='mt-8'
-				onClick={onSubmit}
+				// onClick={onSubmit}
 				type='submit'
 				variant='primary'
 			>
@@ -93,4 +97,4 @@ const CreateAuthor: FC<CreateAuthorProperties> = ({
 	)
 }
 
-export default CreateAuthor
+export default Page

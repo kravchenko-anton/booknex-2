@@ -8,6 +8,7 @@ import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
+import { groupActivity } from '../utils/group-activity'
 import { PrismaService } from '../utils/prisma.service'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 import type { ReviewBookDto } from './dto/review.book.dto'
@@ -34,7 +35,27 @@ export class BookService {
 		return book
 	}
 
-	async ebookById(id: number) {
+	async infoByIdAdmin(id: number) {
+		const author = await this.prisma.book.findUnique({
+			where: { id },
+			include: {
+				activities: {
+					select: {
+						id: true,
+						createdAt: true
+					}
+				}
+			}
+		})
+		const { activities, ...rest } = author
+
+		return {
+			...rest,
+			activities: groupActivity(activities)
+		}
+	}
+
+	async ebookById(id: number, userId: number) {
 		const book = await this.prisma.book.findUnique({
 			where: { id },
 			select: {
@@ -56,7 +77,7 @@ export class BookService {
 				},
 				user: {
 					connect: {
-						id
+						id: userId
 					}
 				}
 			}
@@ -228,7 +249,7 @@ export class BookService {
 		})
 	}
 
-	async infoById(id: number) {
+	async infoById(id: number, userId: number) {
 		const book = await this.prisma.book.findUnique({
 			where: { id: +id },
 			include: {
@@ -256,7 +277,7 @@ export class BookService {
 				type: ActivityEnum.Visit_Book,
 				user: {
 					connect: {
-						id
+						id: userId
 					}
 				},
 				Book: {

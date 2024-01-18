@@ -41,8 +41,11 @@ export class BookController {
 
 	@Auth()
 	@Get('/by-id/:id')
-	async infoById(@Param('id') bookId: string): Promise<BookByIdOutput> {
-		return this.bookService.infoById(+bookId)
+	async infoById(
+		@Param('id') bookId: string,
+		@CurrentUser('id') userId: string
+	): Promise<BookByIdOutput> {
+		return this.bookService.infoById(+bookId, +userId)
 	}
 
 	@Auth()
@@ -56,14 +59,23 @@ export class BookController {
 
 	@Auth()
 	@Get('/ebook/:id')
-	async ebookById(@Param('id') bookId: string): Promise<EpubOutput> {
-		return this.bookService.ebookById(+bookId)
+	async ebookById(
+		@Param('id') bookId: string,
+		@CurrentUser('id') userId: string
+	): Promise<EpubOutput> {
+		return this.bookService.ebookById(+bookId, +userId)
 	}
 
 	//  admin
 
 	@Auth('admin')
-	@Get('/all')
+	@Get('admin/by-id/:id')
+	async infoByIdAdmin(@Param('id') id: string) {
+		return this.bookService.infoByIdAdmin(+id)
+	}
+
+	@Auth('admin')
+	@Get('/admin/all')
 	async all(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
@@ -72,7 +84,7 @@ export class BookController {
 	}
 
 	@Auth('admin')
-	@Get('/all/select')
+	@Get('admin/all/select')
 	async allSelect(
 		@Query('searchTerm') searchTerm: string
 	): Promise<AllSelectBooksOutput> {
@@ -80,25 +92,25 @@ export class BookController {
 	}
 
 	@Auth('admin')
-	@Post('/create')
+	@Post('admin/create')
 	async create(@Body() dto: CreateBookDto) {
 		return this.bookService.create(dto)
 	}
 
 	@Auth('admin')
-	@Put('/toggle-visible/:id')
+	@Put('admin/toggle-visible/:id')
 	toggleVisible(@Param('id') id: string) {
 		return this.bookService.toggleVisible(+id)
 	}
 
 	@Auth('admin')
-	@Put('/update/:id')
+	@Put('admin/update/:id')
 	async update(@Param('id') bookId: string, @Body() dto: EditBookDto) {
 		return this.bookService.update(+bookId, dto)
 	}
 
 	@Auth('admin')
-	@Delete('/delete/:id')
+	@Delete('admin/delete/:id')
 	async delete(@Param('id') bookId: string) {
 		return this.bookService.delete(+bookId)
 	}

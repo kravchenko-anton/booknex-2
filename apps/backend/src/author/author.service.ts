@@ -6,6 +6,7 @@ import {
 import type { Prisma } from '@prisma/client'
 import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
+import { groupActivity } from '../utils/group-activity'
 import { PrismaService } from '../utils/prisma.service'
 import type {
 	CreateAuthorDto,
@@ -21,13 +22,13 @@ import {
 export class AuthorService {
 	constructor(private prisma: PrismaService) {}
 
-	async getAuthorInfo(id: number) {
+	async getAuthorInfo(id: number, userId: number) {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Visit_Author,
 				user: {
 					connect: {
-						id
+						id: userId
 					}
 				},
 				Author: {
@@ -63,6 +64,35 @@ export class AuthorService {
 		return {
 			id: author.id,
 			name: author.name
+		}
+	}
+
+	async infoByIdAdmin(id: number) {
+		const author = await this.prisma.author.findUnique({
+			where: { id },
+			select: {
+				...returnAuthorObjectWithDescription,
+				activities: {
+					select: {
+						id: true,
+						createdAt: true
+					}
+				},
+
+				books: {
+					select: {
+						id: true,
+						picture: true,
+						visible: true
+					}
+				}
+			}
+		})
+		const { activities, ...rest } = author
+
+		return {
+			...rest,
+			activities: groupActivity(activities)
 		}
 	}
 

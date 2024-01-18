@@ -12,14 +12,14 @@ export const parserService = {
 		searchTerm?: string
 	}): Promise<AllGoodReadBookOutput> {
 		return request({
-			url: getParserUrl('/all'),
+			url: getParserUrl('/admin/all'),
 			params: parameters
 		})
 	},
 
 	async parse(dto: ParserDtoPayload) {
 		return request({
-			url: getParserUrl('/parse'),
+			url: getParserUrl('/admin/parse'),
 			data: {
 				...dto
 			},
@@ -29,7 +29,7 @@ export const parserService = {
 	},
 	unfold(file: FormData): Promise<UnfoldOutput> {
 		return request({
-			url: getParserUrl('/unfold'),
+			url: getParserUrl('/admin/unfold'),
 			method: 'POST',
 			data: file,
 			timeout: 10_000,

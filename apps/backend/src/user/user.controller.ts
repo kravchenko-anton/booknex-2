@@ -90,7 +90,7 @@ export class UserController {
 
 	// admin
 	@Auth('admin')
-	@Get('/all')
+	@Get('admin/all')
 	async all(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
@@ -99,7 +99,7 @@ export class UserController {
 	}
 
 	@Auth('admin')
-	@Delete('/delete/:id')
+	@Delete('admin/delete/:id')
 	async delete(@Param('id') id: string) {
 		return this.usersService.delete(+id)
 	}

@@ -12,26 +12,24 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
 export const useData = () => {
-	//TODO: оптимизнуть этот хук на сколько это возможно
+	const { page, searchTerm } = useTableParameters()
 	const router = useRouter()
 	const { updateLastParsedData } = useAction()
 	const { lastParsedData } = useTypedSelector(state => state.parser)
 	const { showSheet, closeSheet } = useSheetContext()
-	const { page, searchTerm } = useTableParameters()
-	//TODO: вынести парсинг даты в отдельный хук
 	const { books, checkAuthorExist, deleteFromParser, parse, parseLoading } =
 		useQueries({ page, searchTerm })
-	const editAndUse = async (properties: EditAndUseProperties) => {
-		const blob = await fetch(properties.authorPicture).then(result =>
-			result.blob()
-		)
+	const useAsTemplate = async (properties: EditAndUseProperties) => {
 		const author = await checkAuthorExist(properties.authorName)
 		if (author)
-			router.push(
+			return router.push(
 				'/admin/books/create' +
 					'?' +
 					searchParameters(author, { ...properties })
 			)
+		const blob = await fetch(properties.authorPicture).then(result =>
+			result.blob()
+		)
 		showSheet(
 			<CreateAuthor
 				defaultValues={{
@@ -57,8 +55,8 @@ export const useData = () => {
 	const table = useReactTable({
 		data: books.data ?? [],
 		columns: columns({
-			deleteFromParser: deleteFromParser,
-			editAndUse: editAndUse
+			remove: deleteFromParser,
+			useAsTemplate
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})

@@ -5,7 +5,7 @@ import { request } from '../api/request.api'
 export const adminService = {
 	statistics() {
 		return request<StatisticsOutput>({
-			url: getAdminUrl('/statistics'),
+			url: getAdminUrl('/dashboard'),
 			method: 'GET'
 		})
 	}

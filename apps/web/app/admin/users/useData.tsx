@@ -13,7 +13,7 @@ export const useData = () => {
 	const table = useReactTable({
 		data: users?.data ?? [],
 		columns: columns({
-			edit: null,
+			update: null,
 			remove: deleteUser
 		}),
 		getCoreRowModel: getCoreRowModel()

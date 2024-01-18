@@ -7,15 +7,15 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { getFileUrl } from 'global/api-config'
 import { MoreHorizontal } from 'icons'
-import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 export const columns = ({
 	remove,
-	edit
+	update
 }: {
 	remove: (id: number) => Promise<void>
-	edit: () => void
+	update: () => void
 }) => [
 	{
 		id: 'id',
@@ -94,9 +94,18 @@ export const columns = ({
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
-						<DropdownMenuItem onClick={() => edit()}>Edit</DropdownMenuItem>
+						<DropdownMenuItem onClick={() => update()}>Edit</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => remove(row.original.id)}>
+						<DropdownMenuItem
+							onClick={() =>
+								toast('Are you sure you want to delete this book?', {
+									action: {
+										label: 'Delete',
+										onClick: () => remove(row.original.id)
+									}
+								})
+							}
+						>
 							Delete
 						</DropdownMenuItem>
 					</DropdownMenuContent>

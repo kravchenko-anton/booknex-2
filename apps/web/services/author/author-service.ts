@@ -13,14 +13,14 @@ import { request } from '../api/request.api'
 export const authorService = {
 	async all(parameters: { page: number; searchTerm?: string }) {
 		return request<AllAuthorOutput>({
-			url: getAuthorUrl('/all'),
+			url: getAuthorUrl('admin/all'),
 			params: parameters
 		})
 	},
 
 	async allSelect(searchTerm?: string) {
 		return request<AllSelectAuthorOutput>({
-			url: getAuthorUrl('/all/select'),
+			url: getAuthorUrl('admin/all/select'),
 			params: { searchTerm }
 		})
 	},
@@ -30,14 +30,14 @@ export const authorService = {
 			id: number
 			name: string
 		} | null>({
-			url: getAuthorUrl(`/exist/${name}`),
+			url: getAuthorUrl(`/admin/exist/${name}`),
 			method: 'PUT'
 		})
 	},
 
 	async create(dto: CreateAuthorDto): Promise<CreateAuthorOutput> {
 		return request({
-			url: getAuthorUrl('/create'),
+			url: getAuthorUrl('/admin/create'),
 			method: 'POST',
 			data: dto
 		})
@@ -45,7 +45,7 @@ export const authorService = {
 
 	async update(id: number, dto: EditAuthorDto) {
 		return request({
-			url: getAuthorUrl(`/update/${id}`),
+			url: getAuthorUrl(`/admin/update/${id}`),
 			method: 'PUT',
 			data: dto
 		})
@@ -53,7 +53,7 @@ export const authorService = {
 
 	async delete(id: number) {
 		return request<null>({
-			url: getAuthorUrl(`/delete/${id}`),
+			url: getAuthorUrl(`/admin/delete/${id}`),
 			method: 'DELETE'
 		})
 	}

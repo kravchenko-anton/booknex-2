@@ -10,8 +10,8 @@ import { AdminService } from './admin.service'
 export class AdminController {
 	constructor(private readonly adminService: AdminService) {}
 	@Auth('admin')
-	@Get('/statistics')
-	async statistics(): Promise<StatisticsOutput> {
-		return this.adminService.statistics()
+	@Get('/dashboard')
+	async dashboard(): Promise<StatisticsOutput> {
+		return this.adminService.dashboard()
 	}
 }

@@ -11,13 +11,14 @@ import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
 import * as React from 'react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 export const columns = ({
-	deleteFromParser,
-	editAndUse
+	remove,
+	useAsTemplate
 }: {
-	deleteFromParser: (id: number) => Promise<void>
-	editAndUse: (data: EditAndUseProperties) => void
+	remove: (id: number) => Promise<void>
+	useAsTemplate: (data: EditAndUseProperties) => void
 }) => [
 	{
 		id: 'id',
@@ -128,13 +129,22 @@ export const columns = ({
 					<DropdownMenuContent align='end'>
 						<DropdownMenuItem
 							onClick={() => {
-								editAndUse({ ...row.original })
+								useAsTemplate({ ...row.original })
 							}}
 						>
-							Edit
+							Use as template
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => deleteFromParser(row.original.id)}>
+						<DropdownMenuItem
+							onClick={() =>
+								toast('Are you sure you want to delete this book?', {
+									action: {
+										label: 'Delete',
+										onClick: () => remove(row.original.id)
+									}
+								})
+							}
+						>
 							Delete
 						</DropdownMenuItem>
 					</DropdownMenuContent>

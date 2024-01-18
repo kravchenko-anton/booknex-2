@@ -48,7 +48,6 @@ export const useCreate = () => {
 				blob: data.picture.blob,
 				folder: StorageFolderEnum.booksCovers
 			})
-			console.log(uploadPicture, 'uploadPicture')
 			const { name: uploadHtml } = await upload({
 				name: data.title + '.html',
 				blob: new Blob(
@@ -71,20 +70,6 @@ export const useCreate = () => {
 				folder: StorageFolderEnum.ebooks
 			})
 
-			console.log(uploadHtml, 'uploadHtml', data.title + '.html')
-			console.log({
-				title: data.title,
-				description: data.description,
-				picture: uploadPicture,
-				chapters: data.chapters,
-				author: {
-					id: Number(data.author.value)
-				},
-				genres: data.genres.map(genre => genre.value),
-				file: uploadHtml,
-				pages: Number(data.pages),
-				popularity: Number(data.popularity)
-			})
 			await createBook({
 				title: data.title,
 				description: data.description,

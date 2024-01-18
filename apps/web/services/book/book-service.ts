@@ -10,20 +10,20 @@ import { request } from '../api/request.api'
 export const bookService = {
 	async all(parameters: { page: number; searchTerm?: string }) {
 		return request<AllBooksOutput>({
-			url: getBookUrl('/all'),
+			url: getBookUrl('/admin/all'),
 			params: parameters
 		})
 	},
 
 	async infoById(id: number) {
 		return request<BookByIdOutput>({
-			url: getBookUrl(`/by-id/${id}`)
+			url: getBookUrl(`/admin/by-id/${id}`)
 		})
 	},
 
 	async allSelect(searchTerm?: string) {
 		return request<AllSelectBooksOutput>({
-			url: getAuthorUrl('/all/select'),
+			url: getAuthorUrl('/admin/all/select'),
 			params: { searchTerm }
 		})
 	},
@@ -31,14 +31,14 @@ export const bookService = {
 	async toggleVisible(id: number) {
 		return request({
 			method: 'PUT',
-			url: getBookUrl(`/toggle-visible/${id}`)
+			url: getBookUrl(`/admin/toggle-visible/${id}`)
 		})
 	},
 
 	async create(dto: BookPayload) {
 		return request({
 			method: 'POST',
-			url: getBookUrl('/create'),
+			url: getBookUrl('/admin/create'),
 			data: dto
 		})
 	},
@@ -46,7 +46,7 @@ export const bookService = {
 	async update(id: number, dto: Partial<BookPayload>) {
 		return request({
 			method: 'PUT',
-			url: getBookUrl(`/update/${id}`),
+			url: getBookUrl(`/admin/update/${id}`),
 			data: dto
 		})
 	},
@@ -54,7 +54,7 @@ export const bookService = {
 	async delete(id: number) {
 		return request({
 			method: 'DELETE',
-			url: getBookUrl(`/delete/${id}`)
+			url: getBookUrl(`/admin/delete/${id}`)
 		})
 	}
 }

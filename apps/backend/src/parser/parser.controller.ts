@@ -25,7 +25,7 @@ import { ParserService } from './parser.service'
 export class ParserController {
 	constructor(private readonly parserService: ParserService) {}
 
-	@Get('/all')
+	@Get('admin/all')
 	async all(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
@@ -33,12 +33,12 @@ export class ParserController {
 		return this.parserService.all(searchTerm, page || 1)
 	}
 
-	@Post('/parse')
+	@Post('admin/parse')
 	async parse(@Body() dto: ParserDto) {
 		return this.parserService.parse(dto)
 	}
 
-	@Post('/unfold')
+	@Post('admin/unfold')
 	@UseInterceptors(FileInterceptor('file'))
 	async unfold(
 		@UploadedFile(
