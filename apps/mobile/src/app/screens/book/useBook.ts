@@ -1,29 +1,27 @@
-import { useToggle } from '@/hooks/useToggle/useToggle'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
 import { bookService } from '@/services/book/book-service'
-import { useQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
+import { userServices } from '@/services/user/user-service'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { errorToast } from '../../../../../web/utils/toast'
 
 export const useBook = () => {
 	const { params } = useTypedRoute<'Book'>()
 	const { data: book } = useQuery(['book ', params.id], () =>
 		bookService.infoById(+params.id)
 	)
-	const { handleToggle: toggleReadingBooks, isSmashed: isSmashedReadingBooks } =
-		useToggle(
+
+	const { mutateAsync: startReadingBook, isLoading: startReadingLoading } =
+		useMutation(
+			['start reading book'],
+			(id: number) => userServices.startReading(id),
 			{
-				type: 'readingBooks',
-				id: params.id
-			},
-			['library']
+				onError: () => errorToast('An error occurred while starting the book')
+			}
 		)
 
-	return useMemo(
-		() => ({
-			book,
-			toggleReadingBooks,
-			isSmashedReadingBooks
-		}),
-		[book, toggleReadingBooks, isSmashedReadingBooks]
-	)
+	return {
+		book,
+		startReadingBook,
+		startReadingLoading
+	}
 }

@@ -20,13 +20,8 @@ export const useReadingSheets = ({
 		})
 	const openReadingSettings = () =>
 		showBottomSheet({
-			component: (
-				<ReadingSettings
-					activeThemeSlug={activeThemeSlug}
-					openSelectTheme={openSelectTheme}
-				/>
-			),
-			snapPoints: [230, 230]
+			component: <ReadingSettings openSelectTheme={openSelectTheme} />,
+			snapPoints: [300, 300]
 		})
 	const openChapterList = ({
 		chapters,

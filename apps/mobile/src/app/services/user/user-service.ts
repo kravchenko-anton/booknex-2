@@ -1,12 +1,13 @@
 import { getUsersUrl } from 'global/api-config'
 import type {
 	FavoriteListOutput,
-	ToggleOutput,
 	UserLibraryOutput,
 	UserProfileOutput
 } from 'global/services-types/user-types'
-import type { UserUpdatePasswordDto } from '../../../../../backend/src/user/dto/user.update.dto'
-import type { UserLibraryCategoryType } from '../../../../../backend/src/user/user.types'
+import type {
+	UserUpdatePasswordDto,
+	UserUpdateSelectedGenresDto
+} from '../../../../../backend/src/user/dto/user.update.dto'
 import { request } from '../api/request.api'
 
 export const userServices = {
@@ -23,7 +24,6 @@ export const userServices = {
 			method: 'GET'
 		})
 	},
-
 	async updatePassword(dto: UserUpdatePasswordDto) {
 		return request({
 			url: getUsersUrl('/update-password'),
@@ -38,14 +38,29 @@ export const userServices = {
 			method: 'GET'
 		})
 	},
-
-	async toggle(id: number, type: UserLibraryCategoryType) {
-		return request<ToggleOutput>({
-			url: getUsersUrl(`/toggle/${id}`),
-			method: 'PATCH',
-			params: {
-				type
-			}
+	async startReading(id: number) {
+		return request({
+			url: getUsersUrl(`/start-reading/${id}`),
+			method: 'PATCH'
+		})
+	},
+	async finishReading(id: number) {
+		return request({
+			url: getUsersUrl(`/finish-reading/${id}`),
+			method: 'PATCH'
+		})
+	},
+	async toggleSave(id: number) {
+		return request({
+			url: getUsersUrl(`/toggle-save/${id}`),
+			method: 'PATCH'
+		})
+	},
+	async updateRecommendations(dto: UserUpdateSelectedGenresDto) {
+		return request({
+			url: getUsersUrl('/update-recommendations'),
+			method: 'GET',
+			data: dto
 		})
 	}
 }

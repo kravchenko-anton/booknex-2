@@ -28,19 +28,14 @@ const Author = () => {
 	if (!author) return <Loader />
 	return (
 		<ScrollView>
-			<StatusBar backgroundColor={Color.shade} />
-			<View
-				style={{
-					backgroundColor: Color.shade
-				}}
-				className='h-[250px] rounded-b-3xl'
-			>
-				<View className='flex-1 p-4 pt-0'>
+			<StatusBar />
+			<View className='h-[250px] rounded-b-3xl'>
+				<View className='flex-1 p-4 pt-2'>
 					<View className='mt-1 w-full flex-row items-center justify-between'>
-						<AnimatedIcon icon={ArrowLeft} size='md' onPress={() => goBack()} />
+						<AnimatedIcon icon={ArrowLeft} size='sm' onPress={() => goBack()} />
 						<AnimatedIcon
 							icon={ShareIcon}
-							size='md'
+							size='sm'
 							onPress={() =>
 								share(`${author.name} is a great author! Check him on Booknex!`)
 							}
@@ -63,29 +58,34 @@ const Author = () => {
 					</Title>
 				</View>
 			</View>
-			<View className='px-4'>
-				<Description size={22} className='mt-4 w-full' weight='regular'>
+			<Flatlist
+				horizontal
+				data={author.books}
+				renderItem={({ item: book }) => (
+					<BookCard
+						size='md'
+						image={{
+							uri: book.picture
+						}}
+						title={book.title}
+						onPress={() => {
+							navigate('Book', { id: book.id })
+						}}
+					/>
+				)}
+			/>
+			<View className='mb-4 px-2'>
+				<Title size={22} weight='semiBold' className='mt-4'>
+					About author
+				</Title>
+				<Description
+					color={Color.gray}
+					size={22}
+					className='mt-4 w-full'
+					weight='regular'
+				>
 					{author.description}
 				</Description>
-
-				<Flatlist
-					title='Books'
-					data={author.books}
-					scrollEnabled={false}
-					className='mb-2'
-					renderItem={({ item: book }) => (
-						<BookCard
-							size='md'
-							image={{
-								uri: book.picture
-							}}
-							title={book.title}
-							onPress={() => {
-								navigate('Book', { id: book.id })
-							}}
-						/>
-					)}
-				/>
 			</View>
 		</ScrollView>
 	)

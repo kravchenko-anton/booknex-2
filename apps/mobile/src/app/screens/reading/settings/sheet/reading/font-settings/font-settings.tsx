@@ -1,4 +1,5 @@
-import { Icon, Select } from '@/components/ui'
+import { AnimatedPress } from '@/components'
+import { Icon, Title } from '@/components/ui'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import type { ReaderFontsEnum } from '@/redux/reading-settings/reading-settings-slice'
@@ -12,7 +13,8 @@ import { Color } from 'global/colors'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import { twMerge } from 'tailwind-merge'
 
 const FontSettings: FC = () => {
 	const { padding, lineHeight, font, fontSize } = useTypedSelector(
@@ -22,56 +24,76 @@ const FontSettings: FC = () => {
 		useAction()
 	console.log(fontSize)
 	return (
-		<View className='px-4'>
-			<View className='mt-4 w-full flex-row  items-center justify-between'>
-				<Select
-					onSelect={value => {
-						changeFontFamily({
-							fontFamily: value.value as ReaderFontsEnum,
-							title: value.label
-						})
+		<View>
+			<View className='w-full'>
+				<FlatList
+					horizontal
+					contentContainerStyle={{
+						paddingHorizontal: 8
 					}}
-					color={Color.white}
-					backgroundColor={Color.shade}
-					elements={ReaderFont.map(font => {
+					data={ReaderFont.map(font => {
 						return {
 							value: font.fontFamily,
 							label: font.title
 						}
 					})}
-					active={{
-						value: font.fontFamily,
-						label: font.title
+					renderItem={({ item }) => {
+						return (
+							<AnimatedPress
+								className={twMerge(
+									'bg-shade mb-2 mr-2 rounded-xl border-2 border-transparent p-2 px-4',
+									item.value === font.fontFamily && 'border-primary '
+								)}
+								onPress={() =>
+									changeFontFamily({
+										fontFamily: item.value as ReaderFontsEnum,
+										title: item.label
+									})
+								}
+							>
+								<Title weight='semiBold' size={18}>
+									{item.label}
+								</Title>
+							</AnimatedPress>
+						)
 					}}
 				/>
-
-				<View className='flex-row items-center'>
-					<TouchableOpacity
-						disabled={fontSize === fontSizeSettings.min}
-						onPress={() => {
-							changeFontSize(fontSize - 2)
-						}}
-					>
-						<Icon
-							className='w-[50px] rounded-r-none border-r-0 p-2'
-							variant={fontSize === fontSizeSettings.min ? 'vibrant' : 'shade'}
-							icon={Minus}
-							size='md'
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity
-						disabled={fontSize === fontSizeSettings.max}
-						onPress={() => {
-							changeFontSize(fontSize + 2)
-						}}
-					>
-						<Icon
-							variant={fontSize === fontSizeSettings.max ? 'vibrant' : 'shade'}
-							icon={Plus}
-							className='w-[50px] rounded-l-none p-2'
-							size='md'
-						/>
-					</TouchableOpacity>
+				<View className='my-1.5 flex-row items-center justify-between px-8'>
+					<Title weight='semiBold' size={22}>
+						Font size
+					</Title>
+					<View className='flex-row items-center'>
+						<TouchableOpacity
+							disabled={fontSize === fontSizeSettings.min}
+							onPress={() => {
+								changeFontSize(fontSize - 2)
+							}}
+						>
+							<Icon
+								className='w-[50px] rounded-r-none border-r-0 p-2'
+								variant={
+									fontSize === fontSizeSettings.min ? 'vibrant' : 'shade'
+								}
+								icon={Minus}
+								size='md'
+							/>
+						</TouchableOpacity>
+						<TouchableOpacity
+							disabled={fontSize === fontSizeSettings.max}
+							onPress={() => {
+								changeFontSize(fontSize + 2)
+							}}
+						>
+							<Icon
+								variant={
+									fontSize === fontSizeSettings.max ? 'vibrant' : 'shade'
+								}
+								icon={Plus}
+								className='w-[50px] rounded-l-none p-2'
+								size='md'
+							/>
+						</TouchableOpacity>
+					</View>
 				</View>
 			</View>
 

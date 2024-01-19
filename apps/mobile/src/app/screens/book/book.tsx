@@ -1,5 +1,4 @@
 import { BookCard, ScrollLayout } from '@/components'
-import { Menu } from '@/components/dropdown/dropdown'
 import {
 	AnimatedIcon,
 	Button,
@@ -12,46 +11,23 @@ import {
 import { useTypedNavigation } from '@/hooks'
 import { useBook } from '@/screens/book/useBook'
 import { Color } from 'global/colors'
-import { Alert, ArrowLeft, Pen, Share as ShareIcon, Text } from 'icons'
-import { Share, View } from 'react-native'
-import * as DropDown from '../../components/dropdown/dropdown'
+import { ArrowLeft, Text } from 'icons'
+import { View } from 'react-native'
 
 const Book = () => {
-	const { book } = useBook()
+	const { book, startReadingLoading, startReadingBook } = useBook()
 	const { navigate, goBack } = useTypedNavigation()
 	if (!book) return <Loader />
 	return (
-		<ScrollLayout statusBarBackgroundColor={Color.shade}>
-			<View className='bg-shade z-50 items-center justify-between overflow-hidden rounded-b-3xl px-4 pb-6 pt-2'>
+		<ScrollLayout>
+			<View className='z-50 items-center justify-between overflow-hidden rounded-b-3xl px-4 pb-6 pt-2'>
 				<View className='mt-1 w-full flex-row items-center justify-between'>
-					<AnimatedIcon icon={ArrowLeft} size='md' onPress={() => goBack()} />
-					<Menu position='right' size='md'>
-						<DropDown.Element
-							title='Share'
-							icon={ShareIcon}
-							onPress={() => {
-								Share.share({
-									message: `Wow! I see ${
-										book?.title || 'amazing'
-									} book on booker and I think you will like it too!`
-								})
-							}}
-						/>
-						<DropDown.Element
-							title='Report problem'
-							icon={Alert}
-							onPress={() => {
-								console.log('Report problem')
-							}}
-						/>
-						<DropDown.Element
-							title='Write review'
-							icon={Pen}
-							onPress={() => {
-								console.log('Write review')
-							}}
-						/>
-					</Menu>
+					<AnimatedIcon
+						variant='shade'
+						icon={ArrowLeft}
+						size='sm'
+						onPress={() => goBack()}
+					/>
 				</View>
 				<Image className='-z-10' url={book.picture} height={260} width={170} />
 			</View>
@@ -73,9 +49,12 @@ const Book = () => {
 				</View>
 				<Button
 					icon={Text}
+					isLoading={startReadingLoading}
 					className='rounded-xl'
-					onPress={() => {
-						navigate('Reader', { id: book.id })
+					onPress={async () => {
+						await startReadingBook(book.id).then(() => {
+							navigate('Reader', { id: book.id })
+						})
 					}}
 					variant='primary'
 					size='sm'
