@@ -185,7 +185,6 @@ export class UserService {
 		})
 
 		const isReadingExist = user.readingBooks.some(book => book.id === id)
-		const isFinishedExist = user.finishedBooks.some(book => book.id === id)
 		if (isReadingExist) return
 
 		await this.prisma.activity.create({
@@ -205,31 +204,23 @@ export class UserService {
 		})
 		await this.prisma.user.update({
 			where: { id: user.id },
-			data: isFinishedExist
-				? {
-						finishedBooks: {
-							disconnect: {
-								id
-							}
-						},
-						savedBooks: {
-							disconnect: {
-								id
-							}
-						},
-						readingBooks: {
-							connect: {
-								id
-							}
-						}
+			data: {
+				readingBooks: {
+					connect: {
+						id
 					}
-				: {
-						readingBooks: {
-							connect: {
-								id
-							}
-						}
+				},
+				savedBooks: {
+					disconnect: {
+						id
 					}
+				},
+				finishedBooks: {
+					disconnect: {
+						id
+					}
+				}
+			}
 		})
 	}
 

@@ -8,7 +8,6 @@ import {
 	Loader,
 	Title
 } from '@/components/ui'
-import { useTypedNavigation } from '@/hooks'
 import { useBook } from '@/screens/book/useBook'
 import { share } from '@/utils/share-function'
 import { Color } from 'global/colors'
@@ -21,10 +20,11 @@ const Book = () => {
 		isSaved,
 		toggleSavedLoading,
 		startReadingLoading,
+		navigate,
+		goBack,
 		toggleSaved,
 		startReadingBook
 	} = useBook()
-	const { navigate, goBack } = useTypedNavigation()
 	if (!book) return <Loader />
 	return (
 		<ScrollLayout>
@@ -78,11 +78,7 @@ const Book = () => {
 					icon={Text}
 					isLoading={startReadingLoading}
 					className='rounded-xl'
-					onPress={async () => {
-						await startReadingBook(book.id).then(() => {
-							navigate('Reader', { id: book.id })
-						})
-					}}
+					onPress={startReadingBook}
 					variant='primary'
 					size='sm'
 				>

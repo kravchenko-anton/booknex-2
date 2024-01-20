@@ -1,8 +1,8 @@
+import BannerList from '@/components/banner-list/banner-list'
 import BookCard from '@/components/book-card/book-card'
 import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 import { Button, Flatlist, Loader } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
-import RecommendationList from '@/screens/featured/recommendation-list/recommendation-list'
 import { catalogService } from '@/services/catalog/catalog-service'
 import { useQuery } from '@tanstack/react-query'
 import { Search } from 'icons'
@@ -26,7 +26,8 @@ const Featured = () => {
 				</Layout.Header>
 			}
 		>
-			<RecommendationList
+			<BannerList
+				title='Recommended for you'
 				data={featured.recommendations}
 				renderItem={({ item: book }) => (
 					<BookCard
@@ -40,7 +41,6 @@ const Featured = () => {
 			/>
 			<Flatlist
 				horizontal
-				title='Your favorite genres'
 				data={featured.relatedGenres}
 				renderItem={({ item: genre }) => (
 					<Button

@@ -1,5 +1,4 @@
 import type {
-	ExploreOutput,
 	FeaturedOutput,
 	SearchOutput
 } from '@booknex/global/services-types/catalog.types'
@@ -25,10 +24,5 @@ export class CatalogController {
 	@Get('/featured')
 	async featured(@CurrentUser('id') userId: number): Promise<FeaturedOutput> {
 		return this.catalogService.featured(+userId)
-	}
-
-	@Get('/explore')
-	async explore(): Promise<ExploreOutput> {
-		return this.catalogService.explore()
 	}
 }

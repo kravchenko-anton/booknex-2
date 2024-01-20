@@ -1,3 +1,4 @@
+import { useTypedNavigation } from '@/hooks'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
 import { bookService } from '@/services/book/book-service'
 import { userServices } from '@/services/user/user-service'
@@ -10,8 +11,9 @@ export const useBook = () => {
 	const { data: book } = useQuery(['book ', params.id], () =>
 		bookService.infoById(+params.id)
 	)
+	const { navigate, goBack } = useTypedNavigation()
 
-	const { mutateAsync: startReadingBook, isLoading: startReadingLoading } =
+	const { mutateAsync: startReading, isLoading: startReadingLoading } =
 		useMutation(['start reading book'], (id: number) =>
 			userServices.startReading(id)
 		)
@@ -24,6 +26,7 @@ export const useBook = () => {
 				onSuccess: async isSaved => {
 					successToast(`Book ${isSaved ? 'saved' : 'removed from saved'}`)
 					await queryClient.invalidateQueries(['isSaved book', params.id])
+					await queryClient.invalidateQueries(['user-library'])
 				}
 			}
 		)
@@ -31,9 +34,17 @@ export const useBook = () => {
 	const { data: isSaved } = useQuery(['isSaved book', params.id], () =>
 		userServices.isSaved(+params.id)
 	)
-	console.log(isSaved)
+
+	const startReadingBook = async () => {
+		await startReading(book.id).then(() => {
+			queryClient.invalidateQueries(['user-library'])
+			navigate('Reader', { id: book.id })
+		})
+	}
 	return {
 		book,
+		navigate,
+		goBack,
 		startReadingBook,
 		startReadingLoading,
 		toggleSavedLoading,

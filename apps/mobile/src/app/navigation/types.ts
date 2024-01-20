@@ -9,7 +9,7 @@ export type TypeRootStackParameterList = {
 		type: keyof UserLibraryCategoryType
 	}
 	Featured: null
-
+	Feedback: { id: number }
 	Genre: { id: number }
 	Library: null
 	Login: null

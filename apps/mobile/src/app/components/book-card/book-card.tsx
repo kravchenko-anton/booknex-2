@@ -30,7 +30,6 @@ const BookCard: FC<BookCardProperties> = ({
 			height={settings.height[size]}
 			width={settings.width[size]}
 		/>
-
 		<Title numberOfLines={2} color={Color.gray} weight='medium' size={16}>
 			{properties.title}
 		</Title>
