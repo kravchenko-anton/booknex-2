@@ -1,5 +1,5 @@
-import { FlatList as DefaultFlatlist, View } from 'react-native'
 import { Color } from 'global/colors'
+import { FlatList as DefaultFlatlist, View } from 'react-native'
 import Title from '../title/title'
 import type { FlatListProperties } from './types'
 
@@ -19,7 +19,7 @@ const FlatList = <T,>({
 	return (
 		<>
 			<Title
-				className='mb-4'
+				className='mb-3'
 				style={{
 					marginTop: mt,
 					paddingHorizontal: properties.horizontal ? px : 0

@@ -10,28 +10,55 @@ import {
 } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
 import { useBook } from '@/screens/book/useBook'
+import { share } from '@/utils/share-function'
 import { Color } from 'global/colors'
-import { ArrowLeft, Text } from 'icons'
+import { ArrowLeft, Bookmarked, Share, Text } from 'icons'
 import { View } from 'react-native'
 
 const Book = () => {
-	const { book, startReadingLoading, startReadingBook } = useBook()
+	const {
+		book,
+		isSaved,
+		toggleSavedLoading,
+		startReadingLoading,
+		toggleSaved,
+		startReadingBook
+	} = useBook()
 	const { navigate, goBack } = useTypedNavigation()
 	if (!book) return <Loader />
 	return (
 		<ScrollLayout>
-			<View className='z-50 items-center justify-between overflow-hidden rounded-b-3xl px-4 pb-6 pt-2'>
-				<View className='mt-1 w-full flex-row items-center justify-between'>
+			<View className='z-50 items-center justify-between overflow-hidden rounded-b-3xl px-2 pb-6 pt-2'>
+				<View className='mt-1 w-full flex-row items-start justify-between'>
 					<AnimatedIcon
 						variant='shade'
 						icon={ArrowLeft}
 						size='sm'
 						onPress={() => goBack()}
 					/>
+					<View>
+						<AnimatedIcon
+							variant='transparent'
+							icon={Share}
+							size='sm'
+							onPress={() =>
+								share(`${book.title} is a great book! Check it on Booknex!`)
+							}
+						/>
+						<AnimatedIcon
+							variant='transparent'
+							icon={Bookmarked}
+							fatness={2}
+							disabled={toggleSavedLoading}
+							size='sm'
+							fill={!!isSaved}
+							onPress={() => toggleSaved(book.id)}
+						/>
+					</View>
 				</View>
-				<Image className='-z-10' url={book.picture} height={260} width={170} />
+				<Image className='-mt-16' url={book.picture} height={260} width={170} />
 			</View>
-			<View className='flex-1 flex-row items-center justify-between px-4 pt-6'>
+			<View className='flex-1 flex-row items-center justify-between px-2 pt-4'>
 				<View className='mr-4 flex-1'>
 					<Title numberOfLines={2} weight='semiBold' size={25} className='mt-2'>
 						{book.title}
@@ -65,7 +92,6 @@ const Book = () => {
 			<Flatlist
 				title='About book'
 				horizontal
-				px={16}
 				data={book.genres}
 				renderItem={({ item: genre }) => (
 					<Button
@@ -79,14 +105,14 @@ const Book = () => {
 					</Button>
 				)}
 			/>
-			<Description size={18} className='mt-2 px-4' weight='light'>
+			<Description size={18} className='mt-2 px-2' weight='light'>
 				{book.description}
 			</Description>
 
 			<Flatlist
 				data={book.similarBooks}
 				horizontal
-				px={16}
+				px={8}
 				title='Similar books'
 				renderItem={({ item: similarBook }) => (
 					<BookCard

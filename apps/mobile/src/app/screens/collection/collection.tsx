@@ -17,7 +17,7 @@ const Collection = () => {
 	return (
 		<View>
 			<View className='flex-row items-center justify-center gap-5 pt-4'></View>
-			<View className='bg-pale mx-2 mt-4  rounded-xl p-4'>
+			<View className='mx-2 mt-4 rounded-xl p-4'>
 				<Description defaultSentences={2} size={22} weight='regular'>
 					{collection.description}
 				</Description>

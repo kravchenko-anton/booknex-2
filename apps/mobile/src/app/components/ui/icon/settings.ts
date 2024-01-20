@@ -6,10 +6,10 @@ export const settings: {
 	size: Record<IconProperties['size'], number>
 } = {
 	colors: {
-		foreground: 'bg-foreground',
-		vibrant: 'bg-vibrant',
+		foreground: 'bg-foreground border-[1px] border-vibrant',
+		vibrant: 'bg-vibrant border-[1px] border-foreground',
 		'white-outlined': 'bg-transparent border-white border-[1px]',
-		shade: 'bg-shade',
+		shade: 'bg-shade border-[1px] border-foreground',
 		background: 'bg-background',
 		transparent: 'bg-transparent'
 	},

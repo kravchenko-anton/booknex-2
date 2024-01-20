@@ -1,27 +1,43 @@
 import { useTypedRoute } from '@/hooks/useTypedRoute'
 import { bookService } from '@/services/book/book-service'
 import { userServices } from '@/services/user/user-service'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { errorToast } from '../../../../../web/utils/toast'
+import { successToast } from '@/utils/toast'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const useBook = () => {
 	const { params } = useTypedRoute<'Book'>()
+	const queryClient = useQueryClient()
 	const { data: book } = useQuery(['book ', params.id], () =>
 		bookService.infoById(+params.id)
 	)
 
 	const { mutateAsync: startReadingBook, isLoading: startReadingLoading } =
+		useMutation(['start reading book'], (id: number) =>
+			userServices.startReading(id)
+		)
+
+	const { mutateAsync: toggleSaved, isLoading: toggleSavedLoading } =
 		useMutation(
-			['start reading book'],
-			(id: number) => userServices.startReading(id),
+			['toggle saved book'],
+			(id: number) => userServices.toggleSave(id),
 			{
-				onError: () => errorToast('An error occurred while starting the book')
+				onSuccess: async isSaved => {
+					successToast(`Book ${isSaved ? 'saved' : 'removed from saved'}`)
+					await queryClient.invalidateQueries(['isSaved book', params.id])
+				}
 			}
 		)
 
+	const { data: isSaved } = useQuery(['isSaved book', params.id], () =>
+		userServices.isSaved(+params.id)
+	)
+	console.log(isSaved)
 	return {
 		book,
 		startReadingBook,
-		startReadingLoading
+		startReadingLoading,
+		toggleSavedLoading,
+		toggleSaved,
+		isSaved
 	}
 }

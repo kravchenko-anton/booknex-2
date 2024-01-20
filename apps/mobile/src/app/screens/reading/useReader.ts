@@ -1,12 +1,11 @@
 import { useTypedNavigation } from '@/hooks'
 import { useAction } from '@/hooks/useAction'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import {
-	beforeLoad,
-	getStyleTag,
-	scrollProgressDetect
-} from '@/screens/reading/additional-function'
+import { getStyleTag } from '@/screens/reading/additional-function'
 import type { WebviewMessage } from '@/screens/reading/types'
+import { userServices } from '@/services/user/user-service'
+import { successToast } from '@/utils/toast'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { AppState } from 'react-native'
 import type { WebViewMessageEvent } from 'react-native-webview'
@@ -15,19 +14,21 @@ export const useReader = (id: number) => {
 	const { colorScheme, padding, lineHeight, font, fontSize, books } =
 		useTypedSelector(state => state.readingSettings)
 	//TODO: возможно пофиксить положение по возвращению к книге, оно другое
-	console.log(
-		books.find(book => book.id === id)?.lastProgress.progress || 0,
-		books.find(book => book.id === id)?.lastProgress.location || 0
-	)
 	const [readerState, setReaderState] = useState({
-		progress: books.find(book => book.id === id)?.lastProgress.progress || 0,
-		scrollTop: books.find(book => book.id === id)?.lastProgress.location || 0
+		progress: books.find(book => book.id === id)?.lastProgress.progress,
+		scrollTop: books.find(book => book.id === id)?.lastProgress.location
 	})
+	const { navigate } = useTypedNavigation()
+	const { invalidateQueries } = useQueryClient()
+	const { mutateAsync: finishReading } = useMutation(
+		['end reading book'],
+		(id: number) => userServices.finishReading(id)
+	)
 	const { addListener } = useTypedNavigation()
 	const { updateReadingProgress } = useAction()
 
 	const onMessage = useCallback(
-		(event: WebViewMessageEvent) => {
+		async (event: WebViewMessageEvent) => {
 			const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessage
 			const { type, payload } = parsedEvent
 			if (type === 'scroll') {
@@ -37,13 +38,20 @@ export const useReader = (id: number) => {
 					scrollTop: payload.scrollTop
 				})
 			}
+			if (type === 'finishBook') {
+				await finishReading(id).then(() => {
+					setReaderState({
+						progress: 0,
+						scrollTop: 0
+					})
+					successToast('Book successfully finished')
+					invalidateQueries(['user-library'])
+					navigate('Library')
+				})
+			}
 		},
 		[readerState.progress]
 	)
-	const injectedJavaScriptBeforeLoad = `
-		${beforeLoad(readerState.scrollTop)}
-		${scrollProgressDetect}
-		`
 
 	useEffect(() => {
 		const unsubscribe = addListener('beforeRemove', () => {
@@ -76,20 +84,19 @@ export const useReader = (id: number) => {
 		padding
 	})
 
-	console.log('readerState.progress', readerState.progress)
 	return useMemo(
 		() => ({
 			colorScheme,
 			styleTag,
 			onMessage,
 			progress: Math.round(readerState.progress),
-			injectedJavaScriptBeforeLoad
+			initialScroll: readerState.scrollTop
 		}),
 		[
 			colorScheme,
-			injectedJavaScriptBeforeLoad,
 			onMessage,
 			readerState.progress,
+			readerState.scrollTop,
 			styleTag
 		]
 	)

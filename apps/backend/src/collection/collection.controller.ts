@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../decorator/auth.decorator'
+import { CurrentUser } from '../decorator/user.decorator'
 import { CollectionService } from './collection.service'
 import { CreateCollectionDto, UpdateCollectionDto } from './dto/collection.dto'
 
@@ -25,8 +26,11 @@ export class CollectionController {
 
 	@Get('/by-id/:id')
 	@Auth()
-	async byId(@Param('id') id: number): Promise<CollectionByIdOutput> {
-		return this.shelvesService.infoById(+id)
+	async byId(
+		@Param('id') id: number,
+		@CurrentUser('id') userId: number
+	): Promise<CollectionByIdOutput> {
+		return this.shelvesService.infoById(+id, +userId)
 	}
 
 	// admin

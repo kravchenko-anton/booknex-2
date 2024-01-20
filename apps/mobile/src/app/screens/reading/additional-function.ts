@@ -1,3 +1,5 @@
+import { Color } from 'global/colors'
+
 let lastTap: number | null
 let timer: NodeJS.Timeout
 export const handleDoublePress = (handleAction: () => void) => {
@@ -16,6 +18,48 @@ export const handleDoublePress = (handleAction: () => void) => {
 
 export const beforeLoad = (lastPosition: number) => `
 	window.scrollTo({ top: ${lastPosition} });
+`
+
+export const finishBookButton = `
+		<div
+		  class="finish-book-button-container"
+		 style="
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				left: 0;
+				right: 0;
+				height: 70px;
+				font-weight: bold;
+				">
+				
+				<div
+				 style="
+				  display: flex;
+				  align-items: center;
+				  justify-content: space-between;
+					color: ${Color.white};
+				font-size: 15px;
+				width: 95%;
+				">
+				Read it till the end?
+				<div
+				class="finish-book-button"
+				onclick="window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finishBook' }))"
+				style="
+				border: 0;
+				color: ${Color.white};
+				font-size: 16px;
+				border-radius: 12px;
+				padding: 6px 12px;
+				"
+				>
+				Finish book
+				</div>
+</div>
+
+</div>
 `
 
 export const scrollProgressDetect = `
@@ -144,6 +188,16 @@ export const getStyleTag = ({
 	i {
 		font-style: italic !important;
 		color: ${colorPalette.primary} !important;
+	}
+	
+	.finish-book-button {
+		background: ${colorPalette.primary} !important;
+		color: ${colorPalette.text} !important;
+		
+	}
+	.finish-book-button-container {
+		background: ${colorPalette.background.darker} !important;
+		border-top: 2px solid ${colorPalette.secondary} !important;
 	}
 	`
 }

@@ -169,25 +169,6 @@ export class UserService {
 		})
 	}
 
-	async favoriteList(userId: number) {
-		const favoriteList = await this.prisma.user.findUnique({
-			where: { id: userId },
-			select: {
-				readingBooks: idSelect,
-				finishedBooks: idSelect,
-				savedBooks: idSelect
-			}
-		})
-		if (!favoriteList)
-			throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
-
-		return {
-			readingBooks: favoriteList.readingBooks.map(book => book.id),
-			finishedBooks: favoriteList.finishedBooks.map(book => book.id),
-			savedBooks: favoriteList.savedBooks.map(book => book.id)
-		}
-	}
-
 	async startReading(userId: number, id: number) {
 		const bookExist = await this.prisma.book.findUnique({
 			where: { id },
@@ -215,7 +196,7 @@ export class UserService {
 						id: userId
 					}
 				},
-				Book: {
+				book: {
 					connect: {
 						id
 					}
@@ -227,6 +208,11 @@ export class UserService {
 			data: isFinishedExist
 				? {
 						finishedBooks: {
+							disconnect: {
+								id
+							}
+						},
+						savedBooks: {
 							disconnect: {
 								id
 							}
@@ -270,7 +256,7 @@ export class UserService {
 						id: userId
 					}
 				},
-				Book: {
+				book: {
 					connect: {
 						id
 					}
@@ -285,6 +271,11 @@ export class UserService {
 						id
 					}
 				},
+				savedBooks: {
+					disconnect: {
+						id
+					}
+				},
 				finishedBooks: {
 					connect: {
 						id
@@ -292,6 +283,25 @@ export class UserService {
 				}
 			}
 		})
+	}
+
+	async isSaved(userId: number, id: number) {
+		const bookExist = await this.prisma.book.findUnique({
+			where: { id },
+			select: {
+				id: true
+			}
+		})
+
+		if (!bookExist) return false
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: {
+				id: true,
+				savedBooks: idSelect
+			}
+		})
+		return user.savedBooks.some(book => book.id === id)
 	}
 
 	async toggleSave(userId: number, id: number) {
@@ -323,7 +333,7 @@ export class UserService {
 						id: user.id
 					}
 				},
-				Book: {
+				book: {
 					connect: {
 						id
 					}
@@ -337,8 +347,22 @@ export class UserService {
 					[isSavedExist ? 'disconnect' : 'connect']: {
 						id
 					}
-				}
+				},
+				...(!isSavedExist && {
+					readingBooks: {
+						disconnect: {
+							id
+						}
+					},
+					finishedBooks: {
+						disconnect: {
+							id
+						}
+					}
+				})
 			}
 		})
+
+		return !isSavedExist
 	}
 }

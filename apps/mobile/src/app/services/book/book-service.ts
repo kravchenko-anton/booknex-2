@@ -2,12 +2,12 @@ import { getBookUrl } from 'global/api-config'
 import type {
 	BookByIdOutput,
 	EpubOutput,
-	ReviewBookPayload,
-	ReviewByIdOutput
+	ReviewBookPayload
 } from 'global/services-types/book-types'
 import { request } from '../api/request.api'
 
 export const bookService = {
+	//TODO: переделать
 	async review(bookId: string, dto: ReviewBookPayload) {
 		return request({
 			method: 'POST',
@@ -19,15 +19,6 @@ export const bookService = {
 	async infoById(id: number) {
 		return request<BookByIdOutput>({
 			url: getBookUrl(`/by-id/${id}`)
-		})
-	},
-
-	async reviewsById(id: number, cursor?: number) {
-		return request<ReviewByIdOutput>({
-			url: getBookUrl(`/by-id/${id}/reviews`),
-			params: {
-				cursor
-			}
 		})
 	},
 

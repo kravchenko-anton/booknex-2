@@ -30,7 +30,7 @@ export class CollectionService {
 		return collection
 	}
 
-	async infoById(id: number) {
+	async infoById(id: number, userId: number) {
 		const collection = await this.prisma.collection.findUnique({
 			where: {
 				id: +id
@@ -64,9 +64,9 @@ export class CollectionService {
 						id
 					}
 				},
-				Collection: {
+				collection: {
 					connect: {
-						id
+						id: userId
 					}
 				}
 			}

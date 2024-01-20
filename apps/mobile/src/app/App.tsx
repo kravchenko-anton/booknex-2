@@ -1,3 +1,4 @@
+import Toast from '@/components/toast'
 import { Loader } from '@/components/ui'
 import { ClickOutsideProvider } from '@/hooks/outside-press/Provider'
 import Navigation from '@/navigation/navigation'
@@ -11,7 +12,6 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { Color } from 'global/colors'
 import { StatusBar, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import Toast from 'react-native-toast-message'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 

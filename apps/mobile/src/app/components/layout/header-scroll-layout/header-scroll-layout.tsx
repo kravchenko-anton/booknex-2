@@ -21,12 +21,18 @@ const Wrapper: FC<
 			header: JSX.Element
 		}
 	>
-> = ({ header, children, className, ...properties }) => (
+> = ({ header, children, contentContainerStyle, ...properties }) => (
 	<>
 		{header}
 		<ScrollLayout
+			contentContainerStyle={[
+				{
+					paddingBottom: 8,
+					paddingTop: 8
+				},
+				contentContainerStyle
+			]}
 			statusBarBackgroundColor={Color.shade}
-			className={twMerge('py-2', className)}
 			{...properties}
 		>
 			{children}

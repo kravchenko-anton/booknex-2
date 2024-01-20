@@ -2,7 +2,6 @@ import type { getAllTypeOutput } from '@booknex/global/services-types/utils'
 import type { Prisma } from '@prisma/client'
 import type { returnAuthorObject } from '../../../apps/backend/src/author/return.author.object'
 import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
-import type { returnReviewsObject } from '../../../apps/backend/src/book/return.reviews.object'
 import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 
 export interface ReviewBookPayload {
@@ -45,10 +44,6 @@ export type AllBooksOutput = getAllTypeOutput<
 		}
 	}>[]
 >
-
-export type ReviewByIdOutput = Prisma.ReviewGetPayload<{
-	select: typeof returnReviewsObject
-}>[]
 
 export interface BookPayload {
 	title: string

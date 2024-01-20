@@ -13,6 +13,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 	size = 'sm',
 	fatness = 2,
 	className = '',
+	fill = false,
 	noPadding = false,
 	...properties
 }) => (
@@ -30,6 +31,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 			width={settings.size[size]}
 			height={settings.size[size]}
 			strokeWidth={fatness}
+			fill={fill ? InnerColor[variant] : 'none'}
 			stroke={InnerColor[variant]}
 		/>
 	</AnimatedPress>

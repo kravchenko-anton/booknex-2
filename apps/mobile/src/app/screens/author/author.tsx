@@ -29,34 +29,32 @@ const Author = () => {
 	return (
 		<ScrollView>
 			<StatusBar />
-			<View className='h-[250px] rounded-b-3xl'>
-				<View className='flex-1 p-4 pt-2'>
-					<View className='mt-1 w-full flex-row items-center justify-between'>
-						<AnimatedIcon icon={ArrowLeft} size='sm' onPress={() => goBack()} />
-						<AnimatedIcon
-							icon={ShareIcon}
-							size='sm'
-							onPress={() =>
-								share(`${author.name} is a great author! Check him on Booknex!`)
-							}
-						/>
-					</View>
-					<Image
-						url={author.picture}
-						className='mb-4 mt-2 self-center'
-						height={100}
-						width={100}
+			<View className='flex-1 p-4 pt-2'>
+				<View className='mt-1 w-full flex-row items-center justify-between'>
+					<AnimatedIcon icon={ArrowLeft} size='sm' onPress={() => goBack()} />
+					<AnimatedIcon
+						icon={ShareIcon}
+						size='sm'
+						onPress={() =>
+							share(`${author.name} is a great author! Check him on Booknex!`)
+						}
 					/>
-					<Title
-						size={26}
-						color={Color.white}
-						center={true}
-						weight='bold'
-						numberOfLines={2}
-					>
-						{author.name}
-					</Title>
 				</View>
+				<Image
+					url={author.picture}
+					className='-mt-8  mb-4 self-center'
+					height={100}
+					width={100}
+				/>
+				<Title
+					size={26}
+					color={Color.white}
+					center={true}
+					weight='bold'
+					numberOfLines={2}
+				>
+					{author.name}
+				</Title>
 			</View>
 			<Flatlist
 				horizontal

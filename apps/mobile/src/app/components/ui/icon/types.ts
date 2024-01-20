@@ -9,6 +9,7 @@ export interface IconProperties
 		SizeProperties {
 	icon: FC<SvgProps> | FC<SVGProps<SVGSVGElement>>
 	fatness?: number
+	fill?: boolean
 	fullRounded?: boolean
 	noPadding?: boolean
 	variant?: ClampPaletteType | 'white-outlined' | 'transparent'

@@ -1,13 +1,9 @@
 import { getUsersUrl } from 'global/api-config'
 import type {
-	FavoriteListOutput,
 	UserLibraryOutput,
 	UserProfileOutput
 } from 'global/services-types/user-types'
-import type {
-	UserUpdatePasswordDto,
-	UserUpdateSelectedGenresDto
-} from '../../../../../backend/src/user/dto/user.update.dto'
+import type { UserUpdateSelectedGenresDto } from '../../../../../backend/src/user/dto/user.update.dto'
 import { request } from '../api/request.api'
 
 export const userServices = {
@@ -24,20 +20,6 @@ export const userServices = {
 			method: 'GET'
 		})
 	},
-	async updatePassword(dto: UserUpdatePasswordDto) {
-		return request({
-			url: getUsersUrl('/update-password'),
-			method: 'POST',
-			data: dto
-		})
-	},
-
-	async favoriteList() {
-		return request<FavoriteListOutput>({
-			url: getUsersUrl('/favorite-list'),
-			method: 'GET'
-		})
-	},
 	async startReading(id: number) {
 		return request({
 			url: getUsersUrl(`/start-reading/${id}`),
@@ -51,7 +33,7 @@ export const userServices = {
 		})
 	},
 	async toggleSave(id: number) {
-		return request({
+		return request<boolean>({
 			url: getUsersUrl(`/toggle-save/${id}`),
 			method: 'PATCH'
 		})
@@ -61,6 +43,12 @@ export const userServices = {
 			url: getUsersUrl('/update-recommendations'),
 			method: 'GET',
 			data: dto
+		})
+	},
+	async isSaved(id: number) {
+		return request<boolean>({
+			url: getUsersUrl(`/is-saved/${id}`),
+			method: 'GET'
 		})
 	}
 }

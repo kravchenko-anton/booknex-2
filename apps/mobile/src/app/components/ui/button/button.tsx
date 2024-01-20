@@ -31,6 +31,7 @@ const Button = ({
 		>
 			{isLoading && (
 				<ActivityIndicator
+					className='mr-2 mt-0.5'
 					color={InnerColor[variant]}
 					style={{
 						width: settings.iconSize[size],

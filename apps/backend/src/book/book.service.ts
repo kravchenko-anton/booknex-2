@@ -13,7 +13,6 @@ import { PrismaService } from '../utils/prisma.service'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 import type { ReviewBookDto } from './dto/review.book.dto'
 import { returnBookObjectWithAuthor } from './return.book.object'
-import { returnReviewsObject } from './return.reviews.object'
 
 @Injectable()
 export class BookService {
@@ -70,7 +69,7 @@ export class BookService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Get_Ebook,
-				Book: {
+				book: {
 					connect: {
 						id
 					}
@@ -223,8 +222,11 @@ export class BookService {
 	async review(userId: number, bookId: number, dto: ReviewBookDto) {
 		await this.usersService.getUserById(userId)
 		await this.getBookById(bookId)
-		await this.prisma.review.create({
+		await this.prisma.feedback.create({
+			//TODO: пофиксить тут
 			data: {
+				rating: 4,
+				tags: ['dsa'],
 				user: {
 					connect: {
 						id: userId
@@ -237,15 +239,6 @@ export class BookService {
 				},
 				text: dto.comment
 			}
-		})
-	}
-
-	async reviewsById(id: number, cursorId: number) {
-		return this.prisma.review.findMany({
-			where: { bookId: id },
-			take: 20,
-			cursor: cursorId && { id: cursorId },
-			select: returnReviewsObject
 		})
 	}
 
@@ -280,7 +273,7 @@ export class BookService {
 						id: userId
 					}
 				},
-				Book: {
+				book: {
 					connect: {
 						id
 					}

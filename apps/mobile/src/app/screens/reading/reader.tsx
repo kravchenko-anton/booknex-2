@@ -1,8 +1,11 @@
 import { Loader } from '@/components/ui'
 import { useTypedRoute } from '@/hooks'
 import {
+	beforeLoad,
+	finishBookButton,
 	handleDoublePress,
-	injectStyle
+	injectStyle,
+	scrollProgressDetect
 } from '@/screens/reading/additional-function'
 import ReadingUi from '@/screens/reading/settings/reading-ui'
 import { useReader } from '@/screens/reading/useReader'
@@ -28,13 +31,8 @@ export function Reader() {
 	)
 	const [readerUiVisible, setReaderUiVisible] = useState(true)
 	const reference = useRef<WebView>(null)
-	const {
-		colorScheme,
-		injectedJavaScriptBeforeLoad,
-		onMessage,
-		styleTag,
-		progress
-	} = useReader(params.id)
+	const { colorScheme, onMessage, styleTag, progress, initialScroll } =
+		useReader(params.id)
 
 	const { openChapterList, openReadingSettings } = useReadingSheets({
 		activeThemeSlug: colorScheme.slug
@@ -45,7 +43,7 @@ export function Reader() {
 	}, [styleTag])
 
 	const [defaultTheme] = useState(styleTag)
-	if (!ebook || !injectedJavaScriptBeforeLoad || !styleTag) return <Loader />
+	if (!ebook || !styleTag) return <Loader />
 	return (
 		<SafeAreaView className='flex-1'>
 			<RNView className='m-0 h-screen w-full items-center justify-center p-0'>
@@ -62,8 +60,11 @@ export function Reader() {
 								<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 								<title>${ebook.title}</title>
 								</head>
+							
 								<style>${defaultTheme}</style>
-								${ebook.file}`
+${ebook.file}
+${finishBookButton}
+`
 						}}
 						originWhitelist={['*']}
 						scrollEnabled
@@ -71,7 +72,10 @@ export function Reader() {
 						renderLoading={() => <Loader />}
 						startInLoadingState
 						showsVerticalScrollIndicator={false}
-						injectedJavaScriptBeforeContentLoaded={injectedJavaScriptBeforeLoad}
+						injectedJavaScriptBeforeContentLoaded={`
+		${beforeLoad(initialScroll)}
+		${scrollProgressDetect}
+		`}
 						onMessage={onMessage}
 						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
 						style={{

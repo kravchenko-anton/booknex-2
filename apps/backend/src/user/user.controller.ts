@@ -1,6 +1,5 @@
 import type {
 	AllUsersOutput,
-	FavoriteListOutput,
 	UserLibraryOutput,
 	UserProfileOutput
 } from '@booknex/global/services-types/user-types'
@@ -60,14 +59,6 @@ export class UserController {
 	}
 
 	@Auth()
-	@Get('/favorite-list')
-	async favoriteList(
-		@CurrentUser('id') id: number
-	): Promise<FavoriteListOutput> {
-		return this.usersService.favoriteList(+id)
-	}
-
-	@Auth()
 	@Patch('/start-reading/:id')
 	async toggle(@CurrentUser('id') userId: number, @Param('id') id: string) {
 		return this.usersService.startReading(userId, +id)
@@ -86,6 +77,12 @@ export class UserController {
 	@Patch('/toggle-save/:id')
 	async toggleSave(@CurrentUser('id') userId: number, @Param('id') id: string) {
 		return this.usersService.toggleSave(userId, +id)
+	}
+
+	@Auth()
+	@Get('/is-saved/:id')
+	async isSaved(@CurrentUser('id') userId: number, @Param('id') id: string) {
+		return this.usersService.isSaved(userId, +id)
 	}
 
 	// admin

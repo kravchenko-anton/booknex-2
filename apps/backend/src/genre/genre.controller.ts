@@ -5,6 +5,7 @@ import type {
 import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../decorator/auth.decorator'
+import { CurrentUser } from '../decorator/user.decorator'
 import { GenreService } from './genre.service'
 
 @ApiTags('genre')
@@ -20,7 +21,10 @@ export class GenreController {
 
 	@Auth()
 	@Get('/by-id/:id')
-	async byId(@Param('id') genreId: string): Promise<GenreByIdOutput> {
-		return this.genreService.byId(+genreId)
+	async byId(
+		@Param('id') genreId: string,
+		@CurrentUser('id') userId: string
+	): Promise<GenreByIdOutput> {
+		return this.genreService.byId(+genreId, +userId)
 	}
 }

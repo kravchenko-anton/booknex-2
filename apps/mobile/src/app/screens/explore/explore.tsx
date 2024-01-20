@@ -16,7 +16,7 @@ const Explore = () => {
 	return (
 		<Layout.Wrapper
 			contentContainerStyle={{
-				marginTop: 10
+				paddingTop: 14
 			}}
 			header={
 				<Layout.Header>

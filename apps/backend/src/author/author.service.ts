@@ -31,7 +31,7 @@ export class AuthorService {
 						id: userId
 					}
 				},
-				Author: {
+				author: {
 					connect: {
 						id
 					}

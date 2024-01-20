@@ -101,7 +101,7 @@ export type Theme = {
 }
 
 export type WebviewMessage = {
-	type: 'scroll'
+	type: 'scroll' | 'finishBook'
 	payload: {
 		scrollTop: number
 		progress: number

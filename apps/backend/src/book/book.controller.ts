@@ -2,8 +2,7 @@ import type {
 	AllBooksOutput,
 	AllSelectBooksOutput,
 	BookByIdOutput,
-	EpubOutput,
-	ReviewByIdOutput
+	EpubOutput
 } from '@booknex/global/services-types/book-types'
 import {
 	Body,
@@ -28,7 +27,7 @@ import { ReviewBookDto } from './dto/review.book.dto'
 @Controller('book')
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
-
+	//TODO: сделать send feedback
 	@Post('/review/:id')
 	@Auth()
 	async review(
@@ -46,15 +45,6 @@ export class BookController {
 		@CurrentUser('id') userId: string
 	): Promise<BookByIdOutput> {
 		return this.bookService.infoById(+bookId, +userId)
-	}
-
-	@Auth()
-	@Get('/by-id/:id/reviews')
-	async reviewsById(
-		@Param('id') bookId: string,
-		@Query('cursor') cursorId: number
-	): Promise<ReviewByIdOutput> {
-		return this.bookService.reviewsById(+bookId, +cursorId || null)
 	}
 
 	@Auth()

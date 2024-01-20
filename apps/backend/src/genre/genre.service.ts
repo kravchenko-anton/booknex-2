@@ -20,7 +20,7 @@ export class GenreService {
 		})
 	}
 
-	async byId(id: number) {
+	async byId(id: number, userId: number) {
 		const genre = await this.prisma.genre.findUnique({
 			where: {
 				id: +id
@@ -109,10 +109,10 @@ export class GenreService {
 				type: ActivityEnum.Visit_Genre,
 				user: {
 					connect: {
-						id
+						id: userId
 					}
 				},
-				Genre: {
+				genre: {
 					connect: {
 						id
 					}

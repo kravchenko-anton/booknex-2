@@ -12,6 +12,7 @@ const Icon: FC<IconProperties> = ({
 	size = 'sm',
 	fatness = 2,
 	className = '',
+	fill = false,
 	fullRounded = false,
 	noPadding = false,
 	...properties
@@ -31,6 +32,7 @@ const Icon: FC<IconProperties> = ({
 			width={settings.size[size]}
 			height={settings.size[size]}
 			strokeWidth={fatness}
+			fill={fill ? InnerColor[variant] : 'none'}
 			stroke={InnerColor[variant]}
 		/>
 	</Pressable>
