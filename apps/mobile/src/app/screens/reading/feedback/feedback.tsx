@@ -62,8 +62,8 @@ const Feedback = () => {
 			id: params.id,
 			dto: {
 				rating: selectedStars,
-				comment: data.AdditionalComments || '',
-				tags: selectedTags
+				comment: data.AdditionalComments || 'No comment',
+				tags: selectedTags || []
 			}
 		}).then(() => {
 			successToast('Feedback sent successfully')

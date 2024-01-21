@@ -1,7 +1,6 @@
-import { AnimatedPress } from '@/components'
-import { settings } from '@/components/book-card/settings'
 import Layout from '@/components/layout/layout'
-import { Button, Flatlist, Image, Loader, Title } from '@/components/ui'
+import CatalogList from '@/components/lists/catalog-list/catalog-list'
+import { Button, Loader, Title } from '@/components/ui'
 import { fontSettings } from '@/components/ui/title/settings'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useSearch } from '@/screens/search/useSearch'
@@ -65,35 +64,10 @@ const Search = () => {
 				<View className='flex-1'>
 					{booksLoading ? (
 						<Loader />
-					) : books.length > 0 ? (
-						<Flatlist
-							mt={10}
-							className='w-full px-2'
-							numColumns={2}
-							columnWrapperStyle={{
-								justifyContent: 'space-between'
-							}}
+					) : books.length >= 2 ? (
+						<CatalogList
 							data={books}
-							renderItem={({ item: book }) => (
-								<AnimatedPress
-									onPress={() => {
-										navigate('Book', { id: book.id })
-									}}
-									className='mx-2 mb-4 w-[45%]'
-								>
-									<Image
-										className='w-full'
-										height={settings.height.md}
-										url={book.picture}
-									/>
-									<Title color={Color.gray} weight='medium'>
-										{book.title}
-									</Title>
-									<Title color={Color.vibrant} size={16} weight='semiBold'>
-										{book.author.name}
-									</Title>
-								</AnimatedPress>
-							)}
+							onElementPress={id => navigate('Book', { id })}
 						/>
 					) : (
 						<View className='flex-1 items-center justify-start'>

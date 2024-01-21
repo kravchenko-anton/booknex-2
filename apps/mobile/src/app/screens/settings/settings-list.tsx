@@ -2,7 +2,7 @@ import { Title } from '@/components/ui'
 import type {
 	ListCategoryItemTypes,
 	ListItemTypes
-} from '@/screens/profile/settings/types'
+} from '@/screens/settings/types'
 import { ChevronRight } from 'icons'
 import type { PropsWithChildren } from 'react'
 import { Pressable, View } from 'react-native'

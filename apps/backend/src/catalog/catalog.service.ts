@@ -23,7 +23,10 @@ export class CatalogService {
 		})
 		return {
 			relatedGenres: await this.relatedGenres(userId),
-			recommendations: await this.recommendations(userId)
+			recommendations: await this.recommendations(userId),
+			popularBooks: await this.popularBooks(),
+			bestSellingBooks: await this.bestSellingBooks(),
+			newReleases: await this.newReleases()
 			//TODO: сделать тут исходя из реков списки
 		}
 	}
@@ -57,21 +60,7 @@ export class CatalogService {
 	}
 
 	private async relatedGenres(userId: number) {
-		return this.prisma.user
-			.findUnique({
-				where: {
-					id: userId
-				},
-				select: {
-					selectedGenres: {
-						select: {
-							id: true,
-							name: true
-						}
-					}
-				}
-			})
-			.selectedGenres()
+		return this.prisma.genre.findMany({})
 	}
 
 	private popularBooks() {

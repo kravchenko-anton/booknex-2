@@ -10,7 +10,7 @@ export type TypeRootStackParameterList = {
 	}
 	Featured: null
 	Feedback: { id: number }
-	Genre: { id: number }
+	Genre: { id: number; name: string }
 	Library: null
 	Login: null
 	Registration: { selectGenres: string[] }

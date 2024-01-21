@@ -21,10 +21,6 @@ export const returnColorBookObjectWithAuthor = {
 	color: true
 }
 
-export const returnBookObjectWithPages = {
-	...returnBookObjectWithAuthor,
-	pages: true
-}
 export const returnBookObjectWithStatistics = {
 	...returnBookObjectWithAuthor,
 	pages: true

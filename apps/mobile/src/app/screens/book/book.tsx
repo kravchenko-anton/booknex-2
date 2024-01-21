@@ -92,7 +92,7 @@ const Book = () => {
 				renderItem={({ item: genre }) => (
 					<Button
 						onPress={() => {
-							navigate('Genre', { id: genre.id })
+							navigate('Genre', { id: genre.id, name: genre.name })
 						}}
 						variant='shade'
 						size='sm'
