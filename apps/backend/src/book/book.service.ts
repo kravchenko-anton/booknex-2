@@ -10,8 +10,8 @@ import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { groupActivity } from '../utils/group-activity'
 import { PrismaService } from '../utils/prisma.service'
+import type { FeedbackBookDto } from './dto/feedback.book.dto'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
-import type { ReviewBookDto } from './dto/review.book.dto'
 import { returnBookObjectWithAuthor } from './return.book.object'
 
 @Injectable()
@@ -219,14 +219,14 @@ export class BookService {
 		})
 	}
 
-	async review(userId: number, bookId: number, dto: ReviewBookDto) {
+	async feedback(userId: number, bookId: number, dto: FeedbackBookDto) {
 		await this.usersService.getUserById(userId)
 		await this.getBookById(bookId)
 		await this.prisma.feedback.create({
-			//TODO: пофиксить тут
 			data: {
-				rating: 4,
-				tags: ['dsa'],
+				rating: dto.rating,
+				tags: dto.tags,
+				text: dto.comment,
 				user: {
 					connect: {
 						id: userId
@@ -236,8 +236,7 @@ export class BookService {
 					connect: {
 						id: bookId
 					}
-				},
-				text: dto.comment
+				}
 			}
 		})
 	}

@@ -19,8 +19,8 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'
+import { FeedbackBookDto } from './dto/feedback.book.dto'
 import { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
-import { ReviewBookDto } from './dto/review.book.dto'
 
 @ApiTags('book')
 @ApiBearerAuth()
@@ -28,14 +28,14 @@ import { ReviewBookDto } from './dto/review.book.dto'
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
 	//TODO: сделать send feedback
-	@Post('/review/:id')
+	@Post('/feedback/:id')
 	@Auth()
-	async review(
+	async feedback(
 		@CurrentUser('id') userId: number,
 		@Param('id') bookId: string,
-		@Body() dto: ReviewBookDto
+		@Body() dto: FeedbackBookDto
 	) {
-		return this.bookService.review(+userId, +bookId, dto)
+		return this.bookService.feedback(+userId, +bookId, dto)
 	}
 
 	@Auth()

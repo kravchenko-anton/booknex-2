@@ -24,9 +24,9 @@ instance.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
-		if (!error.response.status) throw new Error('Network Error')
+		if (!error.response?.status) throw new Error('Network Error')
 		if (
-			(error.response.status === 401 ||
+			(error.response?.status === 401 ||
 				errorCatch(error) === 'jwt expired' ||
 				errorCatch(error) === 'jwt must be provided') &&
 			error.config &&
@@ -37,7 +37,9 @@ instance.interceptors.response.use(
 				await getNewTokens()
 				return await instance.request(originalRequest)
 			} catch {
-				await deleteTokensStorage()
+				if (error.response?.status === 401) {
+					await deleteTokensStorage()
+				}
 			}
 		}
 

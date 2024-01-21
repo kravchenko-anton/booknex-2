@@ -28,14 +28,6 @@ export class CatalogService {
 		}
 	}
 
-	async explore() {
-		return {
-			popularNow: await this.popularBooks(),
-			bestSellers: await this.bestSellingBooks(),
-			newReleases: await this.newReleases()
-		}
-	}
-
 	// TODO: сделать тут поиск и сделать в поиске посмотреть больше
 	search(query: string) {
 		return this.prisma.book.findMany({

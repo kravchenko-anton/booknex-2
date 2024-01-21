@@ -31,6 +31,7 @@ const Search = () => {
 									onPress={() => goBack()}
 								/>
 								<TextInput
+									autoFocus={true}
 									autoCapitalize='none'
 									onBlur={onBlur}
 									className='ml-2 w-full'

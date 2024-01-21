@@ -4,8 +4,8 @@ import type { returnAuthorObject } from '../../../apps/backend/src/author/return
 import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
 import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 
-export interface ReviewBookPayload {
-	emotion: string
+export interface FeedbackBookPayload {
+	rating: number
 	tags: string[]
 	comment: string
 }

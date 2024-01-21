@@ -12,12 +12,18 @@ export const settings: {
 			'bg-vibrant border-[1px] border-foreground text-white hover:bg-foreground',
 		shade:
 			'bg-shade text-white border-[1px] border-foreground hover:bg-foreground',
-		primary: 'bg-primary text-white hover:bg-secondary',
-		secondary: 'bg-secondary text-white hover:bg-primary',
-		danger: 'bg-danger text-white hover:bg-danger',
-		background: 'bg-background text-white hover:bg-vibrant',
-		success: 'bg-success text-white hover:bg-success',
-		warning: 'bg-warning text-white hover:bg-warning'
+		primary:
+			'bg-primary text-white border-[1px] border-transparent hover:bg-secondary',
+		secondary:
+			'bg-secondary text-white border-[1px] border-transparent hover:bg-primary',
+		danger:
+			'bg-danger text-white border-[1px] border-transparent hover:bg-danger',
+		background:
+			'bg-background border-[1px] border-transparent text-white hover:bg-vibrant',
+		success:
+			'bg-success text-white border-[1px] border-transparent hover:bg-success',
+		warning:
+			'bg-warning text-white border-[1px] border-transparent hover:bg-warning'
 	},
 	size: {
 		sm: 'px-3 py-1.5 text-sm',

@@ -10,12 +10,12 @@ export const settings: {
 		foreground: 'bg-foreground border-[1px] border-vibrant',
 		vibrant: 'bg-vibrant border-[1px] border-foreground',
 		shade: 'bg-shade border-[1px] border-foreground',
-		primary: 'bg-primary',
-		secondary: 'bg-secondary',
-		danger: 'bg-danger',
-		background: 'bg-background',
-		success: 'bg-success',
-		warning: 'bg-warning'
+		primary: 'bg-primary border-[1px] border-transparent',
+		secondary: 'bg-secondary border-[1px] border-transparent',
+		danger: 'bg-danger border-[1px] border-transparent',
+		background: 'bg-background border-[1px] border-transparent',
+		success: 'bg-success border-[1px] border-transparent',
+		warning: 'bg-warning border-[1px] border-transparent'
 	},
 	iconSize: {
 		sm: 16,

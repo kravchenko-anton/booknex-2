@@ -12,6 +12,8 @@ const Field = <T extends Record<string, any>>({
 	variant = 'foreground',
 	icon: Icon,
 	className = '',
+	style = {},
+	isArea = false,
 	...properties
 }: FieldProperties<T>): JSX.Element | null => (
 	<Controller
@@ -22,15 +24,16 @@ const Field = <T extends Record<string, any>>({
 			<>
 				<View
 					className={twMerge(
-						'relative my-1 flex w-full justify-center rounded-xl border-[1px] border-transparent px-4 py-0.5',
+						'relative my-1 flex w-full justify-center rounded-xl border-[1px] border-transparent px-2 py-0.5',
 						error && 'border-danger',
 						Icon && 'pl-9',
 						settings.colors[variant],
 						className
 					)}
+					style={style}
 				>
 					<TextInput
-						className='text-lg'
+						className='text-lg '
 						autoCapitalize='none'
 						onBlur={onBlur}
 						onChangeText={onChange}
@@ -38,11 +41,18 @@ const Field = <T extends Record<string, any>>({
 						defaultValue={properties.defaultValue}
 						value={value}
 						keyboardAppearance='dark'
+						multiline={isArea}
 						renderToHardwareTextureAndroid={true}
-						style={{
-							fontFamily: fontSettings.bold,
-							color: InnerColor[variant]
-						}}
+						style={[
+							{
+								fontFamily: fontSettings.bold,
+								color: InnerColor[variant]
+							},
+							isArea && {
+								height: 140,
+								textAlignVertical: 'top'
+							}
+						]}
 						{...properties}
 					/>
 					{Icon && (

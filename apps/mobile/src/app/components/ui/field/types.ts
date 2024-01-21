@@ -9,6 +9,7 @@ export interface FieldProperties<T extends FieldValues>
 		TextInputProps,
 		'onChange' | 'onChangeText' | 'value' | 'testID'
 	> {
+	isArea?: boolean
 	control: Control<T>
 	icon?: FC<SvgProps>
 	keyboardType?: KeyboardTypeOptions

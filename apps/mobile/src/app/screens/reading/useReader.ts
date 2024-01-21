@@ -5,7 +5,7 @@ import { getStyleTag } from '@/screens/reading/additional-function'
 import type { WebviewMessage } from '@/screens/reading/types'
 import { userServices } from '@/services/user/user-service'
 import { successToast } from '@/utils/toast'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { AppState } from 'react-native'
 import type { WebViewMessageEvent } from 'react-native-webview'
@@ -19,7 +19,6 @@ export const useReader = (id: number) => {
 		scrollTop: books.find(book => book.id === id)?.lastProgress.location
 	})
 	const { navigate } = useTypedNavigation()
-	const { invalidateQueries } = useQueryClient()
 	const { mutateAsync: finishReading } = useMutation(
 		['end reading book'],
 		(id: number) => userServices.finishReading(id)
@@ -45,8 +44,9 @@ export const useReader = (id: number) => {
 						scrollTop: 0
 					})
 					successToast('Book successfully finished')
-					invalidateQueries(['user-library'])
-					navigate('Library')
+					navigate('Feedback', {
+						id
+					})
 				})
 			}
 		},

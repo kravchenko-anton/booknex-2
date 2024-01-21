@@ -12,6 +12,7 @@ export type ButtonProperties = PressableDefaultProperties &
 		children?: string
 		isDisabled?: boolean
 		uppercase?: boolean
+		pulse?: boolean
 		variant?: VividPaletteType
 		width?: number | string
 	}
