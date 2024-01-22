@@ -42,7 +42,7 @@ const Navigation: FC = () => {
 			<NavigationContainer
 				onReady={() => BootSplash.hide({ fade: true })}
 				ref={navReference}
-				fallback={<Loader size='screen' />}
+				fallback={<Loader />}
 			>
 				<PrivateNavigator />
 			</NavigationContainer>

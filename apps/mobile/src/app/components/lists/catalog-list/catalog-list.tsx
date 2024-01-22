@@ -4,7 +4,7 @@ import { Flatlist, Image, Title } from '@/components/ui'
 import { Color } from 'global/colors'
 
 const CatalogList = ({
-	data = [],
+	data,
 	disabledScroll = false,
 	onElementPress = () => {}
 }: {

@@ -31,4 +31,7 @@ export type TypeRootStackParameterList = {
 export interface IRoute {
 	component: ComponentType
 	name: keyof TypeRootStackParameterList
+	options?: {
+		statusBarColor?: string
+	}
 }

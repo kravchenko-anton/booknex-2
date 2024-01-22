@@ -1,5 +1,4 @@
-import { useTypedNavigation } from '@/hooks'
-import { useTypedRoute } from '@/hooks/useTypedRoute'
+import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { bookService } from '@/services/book/book-service'
 import { userServices } from '@/services/user/user-service'
 import { successToast } from '@/utils/toast'
@@ -7,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const useBook = () => {
 	const { params } = useTypedRoute<'Book'>()
+
 	const queryClient = useQueryClient()
 	const { data: book } = useQuery(['book ', params.id], () =>
 		bookService.infoById(+params.id)

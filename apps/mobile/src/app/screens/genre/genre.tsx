@@ -4,7 +4,6 @@ import { Loader } from '@/components/ui'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { genreService } from '@/services/genre/genre-service'
 import { useQuery } from '@tanstack/react-query'
-import { Suspense } from 'react'
 
 const Genre = () => {
 	const { params } = useTypedRoute<'Genre'>()
@@ -20,13 +19,15 @@ const Genre = () => {
 				</Layout.Header>
 			}
 		>
-			<Suspense fallback={<Loader />}>
+			{genre ? (
 				<CatalogList
 					disabledScroll
 					data={genre.majorBooks}
 					onElementPress={id => navigate('Book', { id })}
 				/>
-			</Suspense>
+			) : (
+				<Loader />
+			)}
 		</Layout.Wrapper>
 	)
 }

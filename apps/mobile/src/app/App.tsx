@@ -9,8 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { Color } from 'global/colors'
-import { StatusBar, View } from 'react-native'
+import { View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -59,7 +58,6 @@ export default function App() {
 							<Toast />
 						</ClickOutsideProvider>
 					</AlertProvider>
-					<StatusBar backgroundColor={Color.background} />
 				</PersistQueryClientProvider>
 			</PersistGate>
 		</Provider>

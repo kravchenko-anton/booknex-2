@@ -5,7 +5,7 @@ import type { FlatListProperties } from './types'
 
 const FlatList = <T,>({
 	title,
-	data = [],
+	data,
 	Ref,
 	elementSpacing = 12,
 	contentContainerStyle,

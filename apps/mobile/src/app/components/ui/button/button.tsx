@@ -14,7 +14,6 @@ const Button = ({
 	isLoading = false,
 	icon: Icon,
 	className = '',
-	pulse = false,
 	children = '',
 	...properties
 }: ButtonProperties) => {

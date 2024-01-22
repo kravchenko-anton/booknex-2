@@ -1,27 +1,22 @@
 import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { memo } from 'react'
-import { ActivityIndicator, StatusBar, View } from 'react-native'
-import { settings } from './settings'
-import type { LoaderProperties } from './types'
+import { ActivityIndicator, View } from 'react-native'
 
-const Loader: FC<LoaderProperties> = ({
-	backgroundColor = Color.background,
-	size = 'full'
+const Loader: FC<{ background?: string }> = ({
+	background = Color.background
 }) => (
 	<View
 		style={{
-			backgroundColor: backgroundColor,
-			...settings.size[size]
+			backgroundColor: background
 		}}
-		className='absolute items-center justify-center'
+		className='flex-1 items-center justify-center'
 	>
 		<ActivityIndicator
 			size='large'
 			color={Color.secondary}
-			className='h-[30px] w-[30px]'
+			className='h-[40px] w-[40px] '
 		/>
-		<StatusBar backgroundColor={backgroundColor} />
 	</View>
 )
 

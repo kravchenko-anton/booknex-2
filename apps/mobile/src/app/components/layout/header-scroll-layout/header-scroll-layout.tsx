@@ -11,7 +11,7 @@ import { useTypedNavigation } from '@/hooks'
 import { Color } from 'global/colors'
 import { ArrowLeft } from 'icons'
 import type { FC, PropsWithChildren } from 'react'
-import { Pressable, View } from 'react-native'
+import { Pressable, StatusBar, View } from 'react-native'
 import { twMerge } from 'tailwind-merge'
 
 const Wrapper: FC<
@@ -36,6 +36,7 @@ const Wrapper: FC<
 			{...properties}
 		>
 			{children}
+			<StatusBar backgroundColor={Color.shade} />
 		</ScrollLayout>
 	</>
 )

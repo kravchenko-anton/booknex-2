@@ -15,5 +15,5 @@ export const getCollectionUrl = (string: string) => `/collection${string}`
 export const getHistoryUrl = (string: string) => `/history${string}`
 export const getFileUrl = (path: string) => {
 	if (path?.startsWith('http')) return path
-	return `${'https://f005.backblazeb2.com/file/Booknex'}/${path}`
+	return `https://f005.backblazeb2.com/file/Booknex/${path}`
 }
