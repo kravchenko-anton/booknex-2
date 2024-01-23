@@ -9,7 +9,7 @@ interface BannerListProperties<T> extends FlatListProperties<T> {
 
 const BannerList = <T,>({ title, data, ...rest }: BannerListProperties<T>) => {
 	return (
-		<View className='bg-shade border-vibrant mb-0 ml-0.5 mt-4 rounded-2xl rounded-r-none border-2 border-r-0  p-3 px-0'>
+		<View className='bg-foreground border-muted mb-0 ml-2 mt-4 rounded-2xl rounded-r-none border-2 border-r-0  p-3 px-0'>
 			<View className='pl-4'>
 				<Title weight='bold' color={Color.white}>
 					{title}

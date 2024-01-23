@@ -1,8 +1,3 @@
-import type {
-	AllUsersOutput,
-	UserLibraryOutput,
-	UserProfileOutput
-} from '@booknex/global/services-types/user-types'
 import {
 	Body,
 	Controller,
@@ -14,6 +9,11 @@ import {
 	Query
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import type {
+	AllUsersOutput,
+	UserLibraryOutput,
+	UserProfileOutput
+} from '../../../../libs/global/services-types/user-types'
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'

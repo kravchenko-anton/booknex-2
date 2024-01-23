@@ -17,8 +17,7 @@ export const returnBookObjectWithAuthor: Pick<
 
 export const returnColorBookObjectWithAuthor = {
 	...returnBookObjectWithAuthor,
-	description: true,
-	color: true
+	description: true
 }
 
 export const returnBookObjectWithStatistics = {

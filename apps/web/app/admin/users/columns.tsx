@@ -38,16 +38,16 @@ export const columns = ({
 		cell: ({ row }) => {
 			return (
 				<div className='flex flex-wrap items-center justify-center gap-4'>
-					<h2 className='bg-foreground border-vibrant mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
+					<h2 className='bg-foreground border-muted mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
 						{nFormatter(row.original._count.activity)} Activities
 					</h2>
-					<h2 className='bg-foreground border-vibrant mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
+					<h2 className='bg-foreground border-muted mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
 						{row.original._count.savedBooks} Saved Books
 					</h2>
-					<h2 className='bg-foreground border-vibrant mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
+					<h2 className='bg-foreground border-muted mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
 						{row.original._count.readingBooks} Reading Books
 					</h2>
-					<h2 className='bg-foreground border-vibrant mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
+					<h2 className='bg-foreground border-muted mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
 						{row.original._count.finishedBooks} Finished Books
 					</h2>
 				</div>
@@ -62,7 +62,7 @@ export const columns = ({
 			return (
 				<div className='flex flex-wrap items-center justify-center gap-2'>
 					{row.original.selectedGenres.map((genre: { name: string }) => (
-						<p className='bg-foreground border-vibrant mt-2 rounded-xl border-2 p-1.5 font-light'>
+						<p className='bg-foreground border-muted mt-2 rounded-xl border-2 p-1.5 font-light'>
 							<b className='font-bold text-white'>{genre.name}</b>
 						</p>
 					))}
@@ -79,7 +79,7 @@ export const columns = ({
 						<MoreHorizontal
 							height={40}
 							width={40}
-							className='bg-foreground border-vibrant rounded-xl border-2 p-2'
+							className='bg-foreground border-muted rounded-xl border-2 p-2'
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>

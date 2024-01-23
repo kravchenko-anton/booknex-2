@@ -2,7 +2,6 @@ import Toast from '@/components/toast'
 import { Loader } from '@/components/ui'
 import { ClickOutsideProvider } from '@/hooks/outside-press/Provider'
 import Navigation from '@/navigation/navigation'
-import { AlertProvider } from '@/providers/alert-provider'
 import { BottomSheetProvider } from '@/providers/bottom-sheet-provider'
 import { persistor, store } from '@/redux/store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -48,16 +47,14 @@ export default function App() {
 					client={queryClient}
 					persistOptions={{ persister: asyncStoragePersister }}
 				>
-					<AlertProvider>
-						<ClickOutsideProvider>
-							<GestureHandlerRootView style={flexStyle}>
-								<BottomSheetProvider>
-									<Navigation />
-								</BottomSheetProvider>
-							</GestureHandlerRootView>
-							<Toast />
-						</ClickOutsideProvider>
-					</AlertProvider>
+					<ClickOutsideProvider>
+						<GestureHandlerRootView style={flexStyle}>
+							<BottomSheetProvider>
+								<Navigation />
+							</BottomSheetProvider>
+						</GestureHandlerRootView>
+						<Toast />
+					</ClickOutsideProvider>
 				</PersistQueryClientProvider>
 			</PersistGate>
 		</Provider>

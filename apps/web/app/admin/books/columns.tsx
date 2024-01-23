@@ -39,7 +39,7 @@ export const columns = ({
 			return (
 				<img
 					alt={row.original.title}
-					className='bottom-shade mx-auto w-[100px] rounded-xl'
+					className=' mx-auto w-[100px] rounded-xl'
 					src={getFileUrl(row.original.picture)}
 				/>
 			)
@@ -90,7 +90,7 @@ export const columns = ({
 				<div className='flex w-[300px] flex-wrap items-center justify-center'>
 					{row.original.genres.map(genre => (
 						<p
-							className='bg-foreground border-vibrant m-1 rounded-xl border-2 p-1.5  text-sm text-white'
+							className='bg-foreground border-muted m-1 rounded-xl border-2 p-1.5  text-sm text-white'
 							key={genre.name}
 						>
 							{genre.name}
@@ -125,7 +125,7 @@ export const columns = ({
 						<MoreHorizontal
 							height={40}
 							width={40}
-							className='bg-foreground border-vibrant rounded-xl border-2 p-2'
+							className='bg-foreground border-muted rounded-xl border-2 p-2'
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>

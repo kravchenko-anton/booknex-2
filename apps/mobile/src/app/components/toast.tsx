@@ -10,7 +10,7 @@ const options = () => ({
 		alignItems: 'center' as 'center',
 		borderRadius: 12,
 		height: 45,
-		borderColor: Color.vibrant,
+		borderColor: Color.muted,
 		borderWidth: 1.5,
 		borderLeftWidth: 1.5,
 		shadowColor: Color.transparent

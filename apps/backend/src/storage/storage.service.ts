@@ -4,11 +4,11 @@ import {
 	PutObjectCommand,
 	S3Client
 } from '@aws-sdk/client-s3'
-import { getFileUrl } from '@booknex/global/api-config'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import process from 'node:process'
 import sharp from 'sharp'
+import { getFileUrl } from '../../../../libs/global/api-config'
 import { ErrorsEnum } from '../utils/errors'
 import { optimizeFilename } from '../utils/string.functions'
 import type { StorageFolderType } from './storage.types'

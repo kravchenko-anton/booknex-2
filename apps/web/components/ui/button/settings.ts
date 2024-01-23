@@ -7,11 +7,9 @@ export const settings: {
 } = {
 	colors: {
 		foreground:
-			'bg-foreground border-[1px] border-vibrant text-white hover:bg-vibrant',
-		vibrant:
-			'bg-vibrant border-[1px] border-foreground text-white hover:bg-foreground',
-		shade:
-			'bg-shade text-white border-[1px] border-foreground hover:bg-foreground',
+			'bg-foreground border-[1px] border-muted text-white hover:bg-muted',
+		muted:
+			'bg-muted border-[1px] border-foreground text-white hover:bg-foreground',
 		primary:
 			'bg-primary text-white border-[1px] border-transparent hover:bg-secondary',
 		secondary:
@@ -19,7 +17,7 @@ export const settings: {
 		danger:
 			'bg-danger text-white border-[1px] border-transparent hover:bg-danger',
 		background:
-			'bg-background border-[1px] border-transparent text-white hover:bg-vibrant',
+			'bg-background border-[1px] border-transparent text-white hover:bg-muted',
 		success:
 			'bg-success text-white border-[1px] border-transparent hover:bg-success',
 		warning:

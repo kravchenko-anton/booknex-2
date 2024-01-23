@@ -1,4 +1,7 @@
-import type { ComponentType } from 'react'
+import type { ParamListBase } from '@react-navigation/native'
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import type { ComponentType, FC } from 'react'
+import type { SvgProps } from 'react-native-svg'
 import type { UserLibraryCategoryType } from '../../../../backend/src/user/user.types'
 
 export type TypeRootStackParameterList = {
@@ -18,6 +21,13 @@ export type TypeRootStackParameterList = {
 	EnterField: {
 		selectGenres: string[]
 	}
+	Alert: {
+		icon: FC<SvgProps>
+		type: 'danger' | 'primary' | 'secondary'
+		description: string
+		acceptText: string
+		onAccept: () => void
+	}
 	SelectGenres: null
 	Profile: null
 	Reader: { id: number }
@@ -32,6 +42,12 @@ export interface IRoute {
 	component: ComponentType
 	name: keyof TypeRootStackParameterList
 	options?: {
-		statusBarColor?: string
+		header?: ({
+			navigation
+		}: {
+			navigation: NativeStackNavigationProp<ParamListBase>
+		}) => JSX.Element
+		headerShown?: boolean
+		statusBarHidden?: boolean
 	}
 }

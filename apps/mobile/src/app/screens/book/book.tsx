@@ -31,7 +31,7 @@ const Book = () => {
 			<View className='z-50 items-center justify-between overflow-hidden rounded-b-3xl px-2 pb-6 pt-2'>
 				<View className='mt-1 w-full flex-row items-start justify-between'>
 					<AnimatedIcon
-						variant='shade'
+						variant='foreground'
 						icon={ArrowLeft}
 						size='sm'
 						onPress={() => goBack()}
@@ -94,7 +94,7 @@ const Book = () => {
 						onPress={() => {
 							navigate('Genre', { id: genre.id, name: genre.name })
 						}}
-						variant='shade'
+						variant='foreground'
 						size='sm'
 					>
 						{genre.name}

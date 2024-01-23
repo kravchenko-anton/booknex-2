@@ -1,9 +1,9 @@
+import { Controller, Get, Param } from '@nestjs/common'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	FeaturedOutput,
 	SearchOutput
-} from '@booknex/global/services-types/catalog.types'
-import { Controller, Get, Param } from '@nestjs/common'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+} from '../../../../libs/global/services-types/catalog.types'
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'

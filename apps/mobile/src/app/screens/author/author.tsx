@@ -15,7 +15,7 @@ import { share } from '@/utils/share-function'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { ArrowLeft, Share as ShareIcon } from 'icons'
-import { StatusBar, View } from 'react-native'
+import { View } from 'react-native'
 
 const Author = () => {
 	const { params } = useTypedRoute<'Author'>()
@@ -28,7 +28,6 @@ const Author = () => {
 	if (!author) return <Loader />
 	return (
 		<ScrollView>
-			<StatusBar />
 			<View className='flex-1 p-4 pt-2'>
 				<View className='mt-1 w-full flex-row items-center justify-between'>
 					<AnimatedIcon icon={ArrowLeft} size='sm' onPress={() => goBack()} />

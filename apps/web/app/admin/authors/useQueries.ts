@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
-	const { data: authors = [] } = useQuery(['authors ', searchTerm, page], () =>
+	const { data: authors } = useQuery(['authors ', searchTerm, page], () =>
 		authorService.all({
 			searchTerm: searchTerm,
 			page: +page

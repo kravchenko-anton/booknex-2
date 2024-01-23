@@ -16,10 +16,6 @@
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
-		"paths": {
-			"@booknex/global/*": ["libs/global/*"],
-			"@booknex/ui/*": ["libs/ui/*"]
-		}
 	},
 	"exclude": ["node_modules", "tmp"]
 }

@@ -35,7 +35,7 @@ const ChaptersList: FC<{
 				return (
 					<Title
 						weight='bold'
-						className='bg-foreground border-vibrant mt-[-1px] border-b-[1px] p-4'
+						className='bg-foreground border-muted mt-[-1px] border-b-[1px] p-4'
 						size={22}
 						style={{
 							backgroundColor: Color.foreground
@@ -51,7 +51,7 @@ const ChaptersList: FC<{
 						onPress={() => {
 							openChapter(item.link)
 						}}
-						className='bg-shade border-vibrant w-full border-b-[1px] p-4'
+						className='bg-muted border-muted w-full border-b-[1px] p-4'
 					>
 						<Title size={18} weight='semiBold'>
 							{item.title}

@@ -1,7 +1,6 @@
-import { AnimatedPress } from '@/components'
+import { AnimatedPress, ScrollLayout } from '@/components'
 import BookCard from '@/components/book-card/book-card'
 import { settings } from '@/components/book-card/settings'
-import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
 import BannerList from '@/components/lists/banner-list/banner-list'
 import { Flatlist, Image, Loader } from '@/components/ui'
 import { useTypedNavigation } from '@/hooks'
@@ -15,13 +14,7 @@ const Library = () => {
 	const { navigate } = useTypedNavigation()
 	if (!library) return <Loader />
 	return (
-		<Layout.Wrapper
-			header={
-				<Layout.Header>
-					<Layout.BackWithTitle title='Library' />
-				</Layout.Header>
-			}
-		>
+		<ScrollLayout>
 			<BannerList
 				title='Continue reading'
 				data={library.readingBooks}
@@ -64,7 +57,7 @@ const Library = () => {
 					/>
 				)}
 			/>
-		</Layout.Wrapper>
+		</ScrollLayout>
 	)
 }
 

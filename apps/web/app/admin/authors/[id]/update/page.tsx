@@ -56,7 +56,7 @@ const Page = () => {
 				// defaultValue={defaultValues.name}
 				name='name'
 				type='text'
-				variant='shade'
+				variant='muted'
 				placeholder='Name'
 			/>
 			<h1 className='mb-2 mt-4 text-xl'>Picture</h1>
@@ -65,7 +65,7 @@ const Page = () => {
 				name='picture'
 				size='sm'
 				// defaultFiles={[defaultValues.picture?.blob as File]}
-				variant='vibrant'
+				variant='muted'
 				multiple={false}
 				accept={'image/*'}
 				onDropFile={acceptedFiles => {
@@ -77,7 +77,7 @@ const Page = () => {
 			/>
 			<FormTextEditor
 				// defaultValue={defaultValues.description}
-				variant='shade'
+				variant='muted'
 				control={control}
 				name='description'
 				placeholder='Enter description'

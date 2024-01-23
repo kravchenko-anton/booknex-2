@@ -7,13 +7,11 @@ import { toast } from 'sonner'
 
 export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
-	const { data: books = [] } = useQuery(
-		['good-reads books', searchTerm, page],
-		() =>
-			parserService.all({
-				searchTerm: searchTerm,
-				page: +page
-			})
+	const { data: books } = useQuery(['good-reads books', searchTerm, page], () =>
+		parserService.all({
+			searchTerm: searchTerm,
+			page: +page
+		})
 	)
 	const { mutateAsync: checkAuthorExist } = useMutation(
 		['check author exist'],

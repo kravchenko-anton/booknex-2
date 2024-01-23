@@ -34,7 +34,7 @@ const Feedback = () => {
 				<Button
 					size='sm'
 					key={tag.id}
-					variant={selectedTags.includes(tag.name) ? 'primary' : 'shade'}
+					variant={selectedTags.includes(tag.name) ? 'primary' : 'muted'}
 					onPress={() => {
 						if (selectedTags.includes(tag.name)) {
 							setSelectedTags(
@@ -77,7 +77,7 @@ const Feedback = () => {
 				icon={Close}
 				size='md'
 				onPress={() => navigate('Library')}
-				variant='shade'
+				variant='muted'
 			/>
 			<FinishBook className='mx-auto' height={200} width={250} />
 			<Title className='mt-8 text-center' size={26} weight='bold'>

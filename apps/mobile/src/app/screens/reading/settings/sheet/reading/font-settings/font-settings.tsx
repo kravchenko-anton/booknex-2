@@ -41,7 +41,7 @@ const FontSettings: FC = () => {
 						return (
 							<AnimatedPress
 								className={twMerge(
-									'bg-shade mb-2 mr-2 rounded-xl border-2 border-transparent p-2 px-4',
+									'bg-muted mb-2 mr-2 rounded-xl border-2 border-transparent p-2 px-4',
 									item.value === font.fontFamily && 'border-primary '
 								)}
 								onPress={() =>
@@ -72,7 +72,7 @@ const FontSettings: FC = () => {
 							<Icon
 								className='w-[50px] rounded-r-none border-r-0 p-2'
 								variant={
-									fontSize === fontSizeSettings.min ? 'vibrant' : 'shade'
+									fontSize === fontSizeSettings.min ? 'foreground' : 'muted'
 								}
 								icon={Minus}
 								size='md'
@@ -86,7 +86,7 @@ const FontSettings: FC = () => {
 						>
 							<Icon
 								variant={
-									fontSize === fontSizeSettings.max ? 'vibrant' : 'shade'
+									fontSize === fontSizeSettings.max ? 'foreground' : 'muted'
 								}
 								icon={Plus}
 								className='w-[50px] rounded-l-none p-2'

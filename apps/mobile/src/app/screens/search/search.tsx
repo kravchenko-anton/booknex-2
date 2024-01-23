@@ -20,7 +20,7 @@ const Search = () => {
 				control={control}
 				name='searchTerm'
 				render={({ field: { value, onChange, onBlur } }) => (
-					<View className='border-vibrant border-b-[1px]'>
+					<View className='border-muted border-b-[1px]'>
 						<View className=' w-full flex-row items-center justify-between px-2'>
 							<View className='w-3/4 flex-row items-center'>
 								<Close

@@ -15,7 +15,6 @@ model Genre {
   updatedAt      DateTime       @updatedAt
   name           String         @unique
   description    String         @default("")
-  color          String         @default("#22333b")
   users          User[]
   books          Book[]         @relation("BookGenre")
   majorBooks     Book[]         @relation("BookMajorGenre")
@@ -69,7 +68,6 @@ model Book {
   chapters Json[]
   file       String
 
-  color       String       @default("#264653")
   pages       Int
   popularity  Int          @default(0)
   visible     Boolean      @default(false)

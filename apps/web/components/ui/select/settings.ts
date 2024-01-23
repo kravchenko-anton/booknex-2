@@ -10,15 +10,9 @@ export const selectStyle = {
 		border: 0,
 		cursor: 'pointer'
 	}),
-	// option: (_: never, state: any) => ({
-	// 	backgroundColor: state.isFocused ? Color.primary : Color.shade,
-	// 	padding: 6,
-	// 	color: Color.white,
-	// 	cursor: 'pointer'
-	// }),
 	menu: (provided: object) => ({
 		...provided,
-		backgroundColor: Color.shade
+		backgroundColor: Color.muted
 	}),
 	singleValue: (provided: object) => ({
 		...provided,

@@ -33,7 +33,7 @@ export const columns = ({
 			return (
 				<img
 					alt={row.original.title}
-					className='bottom-shade mx-auto w-[100px] rounded-xl'
+					className=' mx-auto w-[100px] rounded-xl'
 					src={getFileUrl(row.original.picture)}
 				/>
 			)
@@ -90,7 +90,7 @@ export const columns = ({
 						<MoreHorizontal
 							height={40}
 							width={40}
-							className='bg-foreground border-vibrant rounded-xl border-2 p-2'
+							className='bg-foreground border-muted rounded-xl border-2 p-2'
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>

@@ -1,35 +1,30 @@
 import { Button, Title } from '@/components/ui'
-import type { AlertContextProperties } from '@/providers/alert-provider'
+import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { Color } from 'global/colors'
-import type { FC } from 'react'
 import { Modal, View } from 'react-native'
 
-const Alert: FC<Pick<AlertContextProperties, 'alert' | 'closeAlert'>> = ({
-	closeAlert = () => {},
-	alert = null
-}) => {
-	if (!alert) return null
+const Alert = () => {
+	const { goBack } = useTypedNavigation()
+	const { params } = useTypedRoute<'Alert'>()
+	if (!params) return null
 	return (
 		<Modal
 			animationType='fade'
 			presentationStyle='overFullScreen'
 			transparent={true}
 			statusBarTranslucent={true}
-			visible={!!alert}
-			onRequestClose={closeAlert}
+			visible={true}
+			onRequestClose={goBack}
 		>
 			<View
-				onTouchStart={closeAlert}
-				style={{
-					backgroundColor: 'rgba(18, 18, 18, 0.65)'
-				}}
+				onTouchStart={goBack}
 				className='flex-1 items-center  justify-center '
 			>
 				<View
 					onTouchStart={event => event.stopPropagation()}
 					className='bg-foreground z-50 w-10/12 items-center rounded-2xl p-4'
 				>
-					<alert.icon
+					<params.icon
 						className='mt-2'
 						width={40}
 						height={40}
@@ -43,22 +38,22 @@ const Alert: FC<Pick<AlertContextProperties, 'alert' | 'closeAlert'>> = ({
 						numberOfLines={2}
 						center
 					>
-						{alert.description}
+						{params.description}
 					</Title>
 
 					<Button
 						onPress={() => {
-							alert.onAccept()
-							closeAlert()
+							params.onAccept()
+							goBack()
 						}}
 						className='mt-4 w-full'
-						variant={alert.type}
+						variant={params.type}
 						size='md'
 					>
-						{alert.acceptText}
+						{params.acceptText}
 					</Button>
 					<Button
-						onPress={closeAlert}
+						onPress={goBack}
 						className='mt-2 w-full'
 						variant='foreground'
 						size='md'

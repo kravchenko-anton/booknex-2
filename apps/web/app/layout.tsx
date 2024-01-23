@@ -5,7 +5,7 @@ import Providers from '../providers/query-provider'
 import './global.css'
 
 export const metadata = {
-	title: 'Booker',
+	title: 'Booknex',
 	description: 'Mobile app for reading books'
 }
 

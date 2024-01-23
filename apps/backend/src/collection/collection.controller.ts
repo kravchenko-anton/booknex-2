@@ -1,7 +1,3 @@
-import type {
-	AllCollectionOutput,
-	CollectionByIdOutput
-} from '@booknex/global/services-types/collection-types'
 import {
 	Body,
 	Controller,
@@ -13,6 +9,10 @@ import {
 	Query
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import type {
+	AllCollectionOutput,
+	CollectionByIdOutput
+} from '../../../../libs/global/services-types/collection-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { CollectionService } from './collection.service'

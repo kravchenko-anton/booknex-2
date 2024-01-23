@@ -17,13 +17,13 @@ export default function Sidebar(): JSX.Element {
 	const activePath = usePathname()
 	return (
 		<div className='fixed z-0 h-full w-[220px] justify-center duration-100 ease-linear md:flex-col'>
-			<ul className='bg-shade border-foreground flex h-full w-full flex-col justify-between border-r-2 p-5 text-sm'>
+			<ul className='bg-muted border-foreground flex h-full w-full flex-col justify-between border-r-2 p-5 text-sm'>
 				<button
 					className='mb-12 flex cursor-pointer items-center text-2xl font-bold'
 					type='button'
 				>
 					<span className='bg-foreground rounded-xl p-2  text-white '>
-						Booker dev 😈
+						Booknex dev 😈
 					</span>
 				</button>
 				{iconsList.map(icon => {

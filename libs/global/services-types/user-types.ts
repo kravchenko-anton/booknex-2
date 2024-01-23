@@ -1,9 +1,9 @@
-import type { getAllTypeOutput } from '@booknex/global/services-types/utils'
 import type { Prisma } from '@prisma/client'
 import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
 import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 import type { returnUserObject } from '../../../apps/backend/src/user/return.user.object'
 import type { UserLibraryFieldsEnum } from '../../../apps/backend/src/user/user.types'
+import type { GetAllTypeOutput } from './utils'
 
 export type UserProfileOutput = Prisma.UserGetPayload<
 	{
@@ -43,7 +43,7 @@ export interface UserUpdatePasswordPayload {
 	oldPassword: string
 }
 
-export type AllUsersOutput = getAllTypeOutput<
+export type AllUsersOutput = GetAllTypeOutput<
 	Prisma.UserGetPayload<{
 		select: typeof returnUserObject & {
 			selectedGenres: {

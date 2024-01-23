@@ -185,7 +185,7 @@ const Page: FC = () => {
 												books.updateChapterTitle(event.target.value, book.name)
 											}
 											value={book.name}
-											className='bg-vibrant hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-xl border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
+											className='bg-muted hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-xl border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
 										/>
 										<CaseSensitive
 											width={45}
@@ -194,13 +194,13 @@ const Page: FC = () => {
 												books.generateChaptersNames(book.name)
 												console.log('generate chapters names')
 											}}
-											className='bg-vibrant cursor-pointer rounded-xl p-2'
+											className='bg-muted cursor-pointer rounded-xl p-2'
 										/>
 									</div>
 									{book.content.map((content, index) => (
 										<div
 											key={content.id}
-											className='bg-shade m-2 rounded-xl p-2'
+											className='bg-muted m-2 rounded-xl p-2'
 										>
 											<div className='mb-2 flex w-full items-center justify-between gap-2'>
 												<input
@@ -226,7 +226,7 @@ const Page: FC = () => {
 															})
 															console.log('merge with top character')
 														}}
-														className='bg-vibrant cursor-pointer rounded-xl p-2'
+														className='bg-muted cursor-pointer rounded-xl p-2'
 													/>
 													<ChevronDown
 														width={36}
@@ -238,7 +238,7 @@ const Page: FC = () => {
 															})
 															console.log('add new character')
 														}}
-														className='bg-vibrant cursor-pointer rounded-xl p-2'
+														className='bg-muted cursor-pointer rounded-xl p-2'
 													/>
 													<Close
 														width={36}
@@ -247,7 +247,7 @@ const Page: FC = () => {
 															books.removeToc(book.name, content.id)
 															console.log('remove toc')
 														}}
-														className='bg-vibrant cursor-pointer rounded-xl p-2'
+														className='bg-muted cursor-pointer rounded-xl p-2'
 													/>
 												</div>
 											</div>

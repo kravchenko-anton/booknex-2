@@ -1,4 +1,4 @@
-import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { ScrollLayout } from '@/components'
 import { Button, Field, Title } from '@/components/ui'
 import { useAction } from '@/hooks'
 import type { AuthFieldsType } from '@/redux/auth/auth-types'
@@ -21,17 +21,7 @@ const Login = () => {
 	const onSubmit: SubmitHandler<AuthFieldsType> = ({ password, email }) =>
 		login({ password, email })
 	return (
-		<Layout.Wrapper
-			className='px-2'
-			contentContainerStyle={{
-				justifyContent: 'center'
-			}}
-			header={
-				<Layout.Header>
-					<Layout.BackWithTitle title='Sign in' />
-				</Layout.Header>
-			}
-		>
+		<ScrollLayout className='px-2'>
 			<View className='mt-4'>
 				<LoginIllustration
 					width={200}
@@ -71,7 +61,7 @@ const Login = () => {
 					</View>
 				</View>
 			</View>
-		</Layout.Wrapper>
+		</ScrollLayout>
 	)
 }
 

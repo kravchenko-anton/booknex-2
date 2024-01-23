@@ -1,9 +1,3 @@
-import type {
-	AllBooksOutput,
-	AllSelectBooksOutput,
-	BookByIdOutput,
-	EpubOutput
-} from '@booknex/global/services-types/book-types'
 import {
 	Body,
 	Controller,
@@ -15,6 +9,12 @@ import {
 	Query
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import type {
+	AllBooksOutput,
+	AllSelectBooksOutput,
+	BookByIdOutput,
+	EpubOutput
+} from '../../../../libs/global/services-types/book-types'
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'

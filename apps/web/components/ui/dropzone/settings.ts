@@ -6,10 +6,9 @@ export const settings: {
 	maxWidth: Record<DropzoneProperties['size'], string>
 } = {
 	colors: {
-		foreground: 'border-foreground  hover:border-vibrant',
-		vibrant: 'border-vibrant  hover:border-foreground',
-		shade: 'border-shade  hover:border-foreground',
-		background: 'border-background  hover:border-vibrant'
+		foreground: 'border-foreground  hover:border-muted',
+		muted: 'border-muted  hover:border-foreground',
+		background: 'border-background  hover:border-muted'
 	},
 	padding: {
 		sm: 'p-4',

@@ -26,13 +26,13 @@ const CallParser: FC<NewParserPopupProperties> = ({
 			</SheetHeader>
 			<Field
 				control={control}
-				variant='vibrant'
+				variant='muted'
 				defaultValue={defaultValues.link}
 				name='link'
 				placeholder='Link'
 			/>
 			<Field
-				variant='vibrant'
+				variant='muted'
 				control={control}
 				defaultValue={defaultValues.page}
 				className='my-2'

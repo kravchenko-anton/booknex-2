@@ -1,4 +1,4 @@
-import Layout from '@/components/layout/header-scroll-layout/header-scroll-layout'
+import { ScrollLayout } from '@/components'
 import { Button, Field, Title } from '@/components/ui'
 import { useAction, useTypedRoute } from '@/hooks'
 import type { RegisterFieldsType } from '@/redux/auth/auth-types'
@@ -24,26 +24,16 @@ const Register = () => {
 		register({ ...data, genres: selectGenres })
 	}
 	return (
-		<Layout.Wrapper
-			className=' px-2'
-			contentContainerStyle={{
-				justifyContent: 'center'
-			}}
-			header={
-				<Layout.Header>
-					<Layout.BackWithTitle title='Sign up' />
-				</Layout.Header>
-			}
-		>
+		<ScrollLayout className='px-2'>
 			<View className='mt-4'>
 				<RegisterIllustration
 					width={200}
 					height={200}
-					className='mx-auto mt-8 w-full'
+					className='mx-auto mt-2 w-full'
 				/>
 				<View className='mt-2 items-center'>
-					<Title size={32} center weight='bold'>
-						Welcome to the club
+					<Title size={30} center weight='bold'>
+						Welcome to the club 🎉
 					</Title>
 					<Title size={18} center weight='light' color={Color.gray}>
 						Enter your credentials to continue
@@ -60,6 +50,7 @@ const Register = () => {
 							icon={Password}
 							control={control}
 							name='password'
+							className='my-1.5'
 							placeholder='Password'
 							secureTextEntry
 						/>
@@ -74,7 +65,7 @@ const Register = () => {
 					</View>
 				</View>
 			</View>
-		</Layout.Wrapper>
+		</ScrollLayout>
 	)
 }
 

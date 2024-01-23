@@ -1,5 +1,5 @@
-import type { BookPayload } from '@booknex/global/services-types/book-types'
 import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator'
+import type { BookPayload } from '../../../../../libs/global/services-types/book-types'
 
 export class CreateBookDto implements BookPayload {
 	@IsString() title: string

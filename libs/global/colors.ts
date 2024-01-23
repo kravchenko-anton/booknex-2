@@ -1,8 +1,8 @@
 export const Color = {
-	foreground: '#242424' as '#323232',
-	vibrant: '#323232' as '#242424',
-	shade: '#131313' as '#131313',
-	background: '#0d0d0d' as '#0d0d0d',
+	muted: '#303030' as '#303030',
+
+	background: '#111111' as '#111111',
+	foreground: '#202020' as '#202020',
 	primary: '#5e548e' as '#5e548e',
 	secondary: '#685369' as '#685369',
 
@@ -18,8 +18,7 @@ export const Color = {
 
 export const InnerColor = {
 	foreground: Color.white,
-	vibrant: Color.white,
-	shade: Color.white,
+	muted: Color.white,
 	background: Color.white,
 	primary: Color.white,
 	secondary: Color.white,
@@ -41,7 +40,7 @@ export type LineColorType = {
 	[K in keyof typeof Color]: (typeof Color)[K]
 }[keyof typeof Color]
 
-export type ClampPaletteType = 'foreground' | 'background' | 'vibrant' | 'shade'
+export type ClampPaletteType = 'foreground' | 'background' | 'muted'
 
 export type VividPaletteType =
 	| 'primary'

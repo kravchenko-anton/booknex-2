@@ -5,7 +5,7 @@ import { errorCatch } from 'global/utils/catch-error'
 
 export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
-	const { data: books = [] } = useQuery(['books', searchTerm, page], () =>
+	const { data: books } = useQuery(['books', searchTerm, page], () =>
 		bookService.all({
 			page,
 			searchTerm

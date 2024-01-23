@@ -18,7 +18,7 @@ const Welcome: FC = () => {
 						className='mx-auto w-full p-0'
 					/>
 					<Title numberOfLines={2} center size={26} weight='bold'>
-						Welcome to Booker, {'\n'}
+						Welcome to Boonex, {'\n'}
 						best place to read books
 					</Title>
 				</View>

@@ -29,7 +29,7 @@ const ReadingSettings: FC<{
 						<AnimatedPress
 							key='other theme'
 							style={{
-								backgroundColor: Color.shade,
+								backgroundColor: Color.muted,
 								borderColor: themePack
 									.slice(1, 5)
 									.map(theme => {

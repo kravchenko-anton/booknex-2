@@ -1,8 +1,6 @@
-import { getFileUrl } from '@booknex/global/api-config'
-import { shadeRGBColor } from '@booknex/global/utils/shade-color'
 import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
-import { getAverageColor } from 'fast-average-color-node'
+import { getFileUrl } from '../../../../libs/global/api-config'
 import { returnAuthorObject } from '../author/return.author.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
@@ -172,12 +170,6 @@ export class BookService {
 						id: dto.author.id
 					}
 				},
-				color: shadeRGBColor(
-					await getAverageColor(getFileUrl(dto.picture)).then(
-						color => color.hex
-					),
-					-25
-				),
 				genres: {
 					connect: dto.genres.map(g => ({ id: g }))
 				}

@@ -1,45 +1,16 @@
 import type {
 	PressableDefaultProperties,
-	ScrollViewDefaultProperties,
 	TextDefaultProperties,
 	ViewDefaultProperties
 } from '@/components/component-types'
-import ScrollLayout from '@/components/layout/scroll-layout'
 import { Title } from '@/components/ui'
 import type { IconProperties } from '@/components/ui/icon/types'
 import { useTypedNavigation } from '@/hooks'
 import { Color } from 'global/colors'
 import { ArrowLeft } from 'icons'
 import type { FC, PropsWithChildren } from 'react'
-import { Pressable, StatusBar, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { twMerge } from 'tailwind-merge'
-
-const Wrapper: FC<
-	PropsWithChildren<
-		ScrollViewDefaultProperties & {
-			statusBarBackgroundColor?: string
-			header: JSX.Element
-		}
-	>
-> = ({ header, children, contentContainerStyle, ...properties }) => (
-	<>
-		{header}
-		<ScrollLayout
-			contentContainerStyle={[
-				{
-					paddingBottom: 8,
-					paddingTop: 8
-				},
-				contentContainerStyle
-			]}
-			statusBarBackgroundColor={Color.shade}
-			{...properties}
-		>
-			{children}
-			<StatusBar backgroundColor={Color.shade} />
-		</ScrollLayout>
-	</>
-)
 
 export const Header: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 	children,
@@ -49,7 +20,7 @@ export const Header: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 	return (
 		<View
 			className={twMerge(
-				'bg-shade border-vibrant z-50 w-full flex-row items-center justify-between border-b-[1px]',
+				'bg-background border-muted z-50 w-full flex-row items-center justify-between border-b-[1px]',
 				className
 			)}
 			{...properties}
@@ -96,7 +67,7 @@ export const Logo: FC<Omit<TextDefaultProperties, 'onPress'>> = ({
 			color={Color.white}
 			{...properties}
 		>
-			Booker
+			Booknex
 		</Title>
 	)
 }
@@ -105,10 +76,10 @@ export const Icon: FC<
 	Omit<IconProperties, 'variant' | 'noPadding' | 'size'>
 > = ({ icon: Icon, className, ...properties }) => {
 	return (
-		<Pressable className={twMerge('py-2', className)} {...properties}>
+		<Pressable className={twMerge('py-2 ', className)} {...properties}>
 			<Icon width={26} height={26} color={Color.white} />
 		</Pressable>
 	)
 }
 
-export default { Header, Wrapper, Logo, BackWithTitle, Icon }
+export default { Header, Logo, BackWithTitle, Icon }

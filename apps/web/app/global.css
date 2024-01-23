@@ -29,7 +29,7 @@ li {
 }
 
 ::-webkit-scrollbar-thumb {
-	@apply bg-vibrant rounded-xl;
+	@apply bg-muted rounded-xl;
 }
 
 ::-webkit-scrollbar-track {

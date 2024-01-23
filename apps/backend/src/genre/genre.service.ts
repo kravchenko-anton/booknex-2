@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
+import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { ReturnGenreObject } from './return.genre.object'
@@ -10,13 +11,27 @@ export class GenreService {
 	all() {
 		return this.prisma.genre.findMany({
 			select: {
-				...ReturnGenreObject,
-				color: true
+				...ReturnGenreObject
 			}
 		})
 	}
 
 	async byId(id: number, userId: number) {
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Visit_Genre,
+				user: {
+					connect: {
+						id: userId
+					}
+				},
+				genre: {
+					connect: {
+						id
+					}
+				}
+			}
+		})
 		const genre = await this.prisma.genre.findUnique({
 			where: {
 				id: +id
