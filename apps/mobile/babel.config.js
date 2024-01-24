@@ -8,7 +8,7 @@ module.exports = function (api) {
 				'module-resolver',
 				{
 					alias: {
-						'@': './src/app',
+						'@': './src',
 						'ui/components': '../../libs/ui/react-native',
 						'ui/colors': '../../libs/ui/colors.ts',
 						icons: '../../libs/global/icons/react-native',

@@ -1,0 +1,36 @@
+import { useAction, useAuth } from '@/shared/hooks'
+import { errorCatch } from 'global/utils/catch-error'
+import { useEffect } from 'react'
+import EncryptedStorage from 'react-native-encrypted-storage'
+import { errorToast } from '../../../shared/utils/toast'
+
+export const useCheckAuth = (routeName?: string) => {
+	const { user } = useAuth()
+	const { getNewToken, logout } = useAction()
+	useEffect(() => {
+		const checkToken = async () => {
+			const accessToken = await EncryptedStorage.getItem('accessToken')
+			const refreshToken = await EncryptedStorage.getItem('refreshToken')
+			if (!accessToken && refreshToken) {
+				try {
+					getNewToken(refreshToken)
+				} catch (error) {
+					errorToast(errorCatch(error))
+					logout()
+				}
+			}
+		}
+		checkToken()
+	}, [user])
+
+	useEffect(() => {
+		const checkRefreshToken = async () => {
+			const refreshToken = await EncryptedStorage.getItem('refreshToken')
+			if (!refreshToken && user) {
+				logout()
+			}
+		}
+
+		checkRefreshToken()
+	}, [routeName, user])
+}

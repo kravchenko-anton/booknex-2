@@ -1,0 +1,59 @@
+import Navigation from '@/features/navigation/navigation'
+import { ClickOutsideProvider } from '@/shared/hooks/outside-press/Provider'
+import { persistor, store } from '@/shared/redux/store'
+import Loader from '@/shared/ui/loader/loader'
+import Toast from '@/shared/ui/toast'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
+import { QueryClient } from '@tanstack/react-query'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { View } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			cacheTime: 1000 * 60 * 60 * 24,
+			networkMode: 'offlineFirst',
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false
+		}
+	}
+})
+
+const asyncStoragePersister = createAsyncStoragePersister({
+	storage: AsyncStorage
+})
+
+export default function App() {
+	return (
+		<Provider store={store}>
+			<PersistGate
+				persistor={persistor}
+				loading={
+					<View className='bg-background h-screen w-screen'>
+						<Loader />
+					</View>
+				}
+			>
+				<PersistQueryClientProvider
+					client={queryClient}
+					persistOptions={{ persister: asyncStoragePersister }}
+				>
+					<ClickOutsideProvider>
+						<GestureHandlerRootView
+							style={{
+								flex: 1
+							}}
+						>
+							<Navigation />
+						</GestureHandlerRootView>
+						<Toast />
+					</ClickOutsideProvider>
+				</PersistQueryClientProvider>
+			</PersistGate>
+		</Provider>
+	)
+}

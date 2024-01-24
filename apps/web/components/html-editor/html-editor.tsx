@@ -72,7 +72,7 @@ const HtmlEditor: FC<RichEditorProperties> = ({
 						)
 					},
 					plugins:
-						'anchor autolink ai charmap codesample preview lists media searchreplace  visualblocks wordcount checklist mediaembed casechange pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+						'anchor autolink ai charmap codesample preview book-lists media searchreplace  visualblocks wordcount checklist mediaembed casechange pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
 					toolbar:
 						'undo redo | aidialog | blocks  fontsize | bold italic underline strikethrough  align lineheight |  removeformat',
 					toolbar_mode: 'floating',

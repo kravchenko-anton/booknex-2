@@ -20,7 +20,7 @@
 		"declaration": true,
 		"paths": {
 			"@/*": [
-				"./src/app/*"
+				"./src/*"
 			],
 			"icons": [
 				"../../libs/global/icons/react-native/index.ts"
