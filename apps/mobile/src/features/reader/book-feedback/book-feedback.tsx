@@ -1,5 +1,5 @@
-import { feedbackTags } from '@/screens/reading/feedback/feedback-tags'
-import type { SendFeedbackSchemaType } from '@/screens/reading/feedback/validation'
+import { feedbackTags } from '@/features/reader/book-feedback/feedback-tags'
+import type { SendFeedbackSchemaType } from '@/features/reader/book-feedback/validation'
 import { bookService } from '@/shared/api/services'
 import { useTypedNavigation, useTypedRoute } from '@/shared/hooks'
 import { Button, Field, Icon, ScrollView, Title } from '@/shared/ui'
@@ -13,8 +13,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
 
-const Feedback = () => {
-	const { params } = useTypedRoute<'Feedback'>()
+const BookFeedback = () => {
+	const { params } = useTypedRoute<'BookFeedback'>()
 	const [selectedStars, setSelectedStars] = useState(0)
 	const { navigate } = useTypedNavigation()
 	const { control, setValue, handleSubmit, watch } =
@@ -66,7 +66,7 @@ const Feedback = () => {
 				tags: selectedTags || []
 			}
 		}).then(() => {
-			successToast('Feedback sent successfully')
+			successToast('BookFeedback sent successfully')
 			navigate('Library')
 		})
 	}
@@ -135,4 +135,4 @@ const Feedback = () => {
 	)
 }
 
-export default Feedback
+export default BookFeedback

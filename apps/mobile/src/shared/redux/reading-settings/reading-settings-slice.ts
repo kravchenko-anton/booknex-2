@@ -1,5 +1,5 @@
-import type { ThemePackType } from '@/screens/reading/settings/sheet/reading/theme-pack'
-import { themePack } from '@/screens/reading/settings/sheet/reading/theme-pack'
+import type { ThemePackType } from '@/features/reader/sheets/reading/theme-pack'
+import { themePack } from '@/features/reader/sheets/reading/theme-pack'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -36,7 +36,7 @@ const initialState = {
 	},
 	fontSize: fontSizeSettings.min,
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
-	padding: 14 as 14 | 8 | 20,
+	padding: 14 as 14 | 4 | 20,
 	//TODO: переделать на более оптимальный вариант
 	books: [] as NonNullable<
 		{
@@ -61,7 +61,7 @@ const ReadingSettingsSlice = createSlice({
 		changeLineHeight: (state, { payload }: PayloadAction<1.3 | 1.5 | 1.8>) => {
 			state.lineHeight = payload
 		},
-		changePadding: (state, { payload }: PayloadAction<14 | 8 | 20>) => {
+		changePadding: (state, { payload }: PayloadAction<14 | 4 | 20>) => {
 			state.padding = payload
 		},
 		changeFontFamily: (

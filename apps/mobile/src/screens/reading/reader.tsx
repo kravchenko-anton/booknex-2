@@ -4,10 +4,10 @@ import {
 	handleDoublePress,
 	injectStyle,
 	scrollProgressDetect
-} from '@/screens/reading/additional-function'
-import ReadingUi from '@/screens/reading/settings/reading-ui'
-import { useReader } from '@/screens/reading/useReader'
-import { useReadingSheets } from '@/screens/reading/useReadingSheets'
+} from '@/features/reader/book-viewer-function'
+import { useReadingSheets } from '@/features/reader/sheets/useReadingSheets'
+import { useReading } from '@/features/reader/useReading'
+import ReadingUi from '@/screens/reading/reading-ui'
 import { bookService } from '@/shared/api/services'
 import { useTypedRoute } from '@/shared/hooks'
 import { Loader } from '@/shared/ui'
@@ -27,12 +27,11 @@ export function Reader() {
 	)
 	const [readerUiVisible, setReaderUiVisible] = useState(true)
 	const reference = useRef<WebView>(null)
-	const { colorScheme, onMessage, styleTag, progress, initialScroll } =
-		useReader(params.id)
 
-	const { openChapterList, openReadingSettings } = useReadingSheets({
-		activeThemeSlug: colorScheme.slug
-	})
+	const { openReadingSettings, openChapterList } = useReadingSheets()
+	const { colorScheme, onMessage, styleTag, progress, initialScroll } =
+		useReading(params.id)
+
 	useEffect(() => {
 		if (!reference.current) return
 		reference.current.injectJavaScript(injectStyle(styleTag))
@@ -53,25 +52,24 @@ export function Reader() {
 						menuItems={[]}
 						source={{
 							html: `<head>
-								<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-								<title>${ebook.title}</title>
-								</head>
-							
-								<style>${defaultTheme}</style>
-${ebook.file}
-${finishBookButton}
-`
+							<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+							<title>${ebook.title}</title>
+							</head>
+							<style>${defaultTheme}</style>
+							${ebook.file}
+							${finishBookButton}
+							`
 						}}
 						originWhitelist={['*']}
 						scrollEnabled
 						javaScriptEnabled
-						renderLoading={() => <Loader />}
 						startInLoadingState
+						renderLoading={() => <RNView className='h-screen w-screen' />}
 						showsVerticalScrollIndicator={false}
 						injectedJavaScriptBeforeContentLoaded={`
-		${beforeLoad(initialScroll)}
-		${scrollProgressDetect}
-		`}
+						${beforeLoad(initialScroll)}
+						${scrollProgressDetect}
+						`}
 						onMessage={onMessage}
 						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
 						style={{
@@ -83,7 +81,8 @@ ${finishBookButton}
 				</TouchableWithoutFeedback>
 			</RNView>
 			<ReadingUi
-				openChapterList={() =>
+				onSelectThemeIconPress={() => openReadingSettings()}
+				onChapterIconPress={() =>
 					openChapterList({
 						chapters: ebook.chapters,
 						openChapter: (chapterId: string) =>
@@ -92,7 +91,6 @@ ${finishBookButton}
 							)
 					})
 				}
-				openReadingSettings={openReadingSettings}
 				colorPalette={colorScheme.colorPalette}
 				visible={readerUiVisible}
 				progress={progress}

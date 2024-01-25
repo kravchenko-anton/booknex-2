@@ -1,11 +1,9 @@
 import { useCheckAuth } from '@/features/auth/provider/auth-provider'
+import { authRoutes } from '@/features/navigation/auth-routes'
 import BottomMenu from '@/features/navigation/bottom-menu/bottom-menu'
+import { otherRoutes } from '@/features/navigation/other-routes'
 import type { TypeRootStackParameterList } from '@/features/navigation/types'
-import {
-	authRoutes,
-	modalRoutes,
-	routes
-} from '@/features/navigation/user-routes'
+import { routes } from '@/features/navigation/user-routes'
 import { useAuth } from '@/shared/hooks'
 import { Loader } from '@/shared/ui'
 import {
@@ -85,7 +83,7 @@ const Navigation: FC = () => {
 									{...route}
 								/>
 							))}
-					{modalRoutes.map(route => (
+					{otherRoutes.map(route => (
 						<Stack.Screen
 							options={{
 								headerShown: false
@@ -96,7 +94,7 @@ const Navigation: FC = () => {
 					))}
 				</Stack.Navigator>
 			</NavigationContainer>
-			{user && !['Reader', 'Feedback'].includes(currentRoute) && (
+			{user && !['Reader', 'Feedback', 'Search'].includes(currentRoute) && (
 				<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
 			)}
 		</SafeAreaProvider>

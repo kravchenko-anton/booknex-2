@@ -1,8 +1,4 @@
-import LogoutModal from '@/features/auth/modal/logout-modal'
-import Login from '@/screens/auth/login/login'
-import Register from '@/screens/auth/register/register'
-import SelectGenres from '@/screens/auth/select-genres/select-genres'
-import Welcome from '@/screens/auth/welcome/welcome'
+import BookFeedback from '@/features/reader/book-feedback/book-feedback'
 import Author from '@/screens/author/author'
 import Book from '@/screens/book/book'
 import Collection from '@/screens/collection/collection'
@@ -10,7 +6,6 @@ import Featured from '@/screens/featured/featured'
 import Genre from '@/screens/genre/genre'
 import Library from '@/screens/library/library'
 import Profile from '@/screens/profile/profile'
-import Feedback from '@/screens/reading/feedback/feedback'
 import { Reader } from '@/screens/reading/reader'
 import SearchCatalog from '@/screens/search/search'
 import Settings from '@/screens/settings/settings'
@@ -37,8 +32,8 @@ export const routes: IRoute[] = [
 		}
 	},
 	{
-		name: 'Feedback',
-		component: Feedback,
+		name: 'BookFeedback',
+		component: BookFeedback,
 		options: {
 			headerShown: false
 		}
@@ -124,55 +119,5 @@ export const routes: IRoute[] = [
 		options: {
 			headerShown: false
 		}
-	}
-]
-
-export const authRoutes: IRoute[] = [
-	{
-		name: 'Welcome',
-		component: Welcome
-	},
-	{
-		name: 'Login',
-		component: Login,
-		options: {
-			headerShown: true,
-			header: () => (
-				<Header.Head>
-					<Header.BackWithTitle title='Sign in' />
-				</Header.Head>
-			)
-		}
-	},
-	{
-		name: 'Registration',
-		component: Register,
-		options: {
-			headerShown: true,
-			header: () => (
-				<Header.Head>
-					<Header.BackWithTitle title='Sign up' />
-				</Header.Head>
-			)
-		}
-	},
-	{
-		name: 'SelectGenres',
-		component: SelectGenres,
-		options: {
-			headerShown: true,
-			header: () => (
-				<Header.Head>
-					<Header.BackWithTitle title='Select genres' />
-				</Header.Head>
-			)
-		}
-	}
-]
-
-export const modalRoutes: IRoute[] = [
-	{
-		name: 'LogoutModal',
-		component: LogoutModal
 	}
 ]

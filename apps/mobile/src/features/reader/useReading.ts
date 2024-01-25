@@ -1,28 +1,33 @@
-import { getStyleTag } from '@/screens/reading/additional-function'
-import type { WebviewMessage } from '@/screens/reading/types'
+import { getStyleTag } from '@/features/reader/book-viewer-function'
+import { useSaveProgress } from '@/features/reader/useSaveProgress'
 import { userServices } from '@/shared/api/services/user/user-service'
-import { useAction, useTypedNavigation, useTypedSelector } from '@/shared/hooks'
+import { useTypedNavigation, useTypedSelector } from '@/shared/hooks'
 import { successToast } from '@/shared/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { AppState } from 'react-native'
+import { useCallback, useMemo, useState } from 'react'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
-export const useReader = (id: number) => {
+export type WebviewMessage = {
+	type: 'scroll' | 'finishBook'
+	payload: {
+		scrollTop: number
+		progress: number
+	}
+}
+export const useReading = (id: number) => {
 	const { colorScheme, padding, lineHeight, font, fontSize, books } =
 		useTypedSelector(state => state.readingSettings)
-	//TODO: возможно пофиксить положение по возвращению к книге, оно другое
+	const { navigate, goBack } = useTypedNavigation()
 	const [readerState, setReaderState] = useState({
 		progress: books.find(book => book.id === id)?.lastProgress.progress,
 		scrollTop: books.find(book => book.id === id)?.lastProgress.location
 	})
-	const { navigate } = useTypedNavigation()
+
+	useSaveProgress({ id, readerState })
 	const { mutateAsync: finishReading } = useMutation(
 		['end reading book'],
 		(id: number) => userServices.finishReading(id)
 	)
-	const { addListener } = useTypedNavigation()
-	const { updateReadingProgress } = useAction()
 
 	const onMessage = useCallback(
 		async (event: WebViewMessageEvent) => {
@@ -42,7 +47,7 @@ export const useReader = (id: number) => {
 						scrollTop: 0
 					})
 					successToast('Book successfully finished')
-					navigate('Feedback', {
+					navigate('BookFeedback', {
 						id
 					})
 				})
@@ -50,29 +55,6 @@ export const useReader = (id: number) => {
 		},
 		[readerState.progress]
 	)
-
-	useEffect(() => {
-		const unsubscribe = addListener('beforeRemove', () => {
-			updateReadingProgress({
-				id,
-				progress: readerState.progress,
-				location: readerState.scrollTop
-			})
-		})
-		const subscription = AppState.addEventListener('change', nextAppState => {
-			if (/inactive|background/.test(nextAppState)) {
-				updateReadingProgress({
-					id,
-					progress: readerState.progress,
-					location: readerState.scrollTop
-				})
-			}
-		})
-		return () => {
-			unsubscribe()
-			subscription.remove()
-		}
-	}, [addListener, id, readerState, updateReadingProgress])
 
 	const styleTag = getStyleTag({
 		colorPalette: colorScheme.colorPalette,
@@ -84,6 +66,7 @@ export const useReader = (id: number) => {
 
 	return useMemo(
 		() => ({
+			goBack,
 			colorScheme,
 			styleTag,
 			onMessage,
@@ -91,6 +74,7 @@ export const useReader = (id: number) => {
 			initialScroll: readerState.scrollTop
 		}),
 		[
+			goBack,
 			colorScheme,
 			onMessage,
 			readerState.progress,

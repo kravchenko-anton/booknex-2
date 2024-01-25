@@ -41,6 +41,7 @@ module.exports = {
 		],
 		'react/jsx-props-no-spreading': 'off',
 		'react/react-in-jsx-scope': 'off',
+		'react/display-name': 'off',
 		'react/require-default-props': 'off',
 		'react/prop-types': 'off',
 		'@typescript-eslint/quotes': ['error', 'single'],
@@ -52,7 +53,7 @@ module.exports = {
 		'@typescript-eslint/no-empty-interface': 'error',
 		'@typescript-eslint/no-explicit-any': 'error',
 		'@typescript-eslint/no-extra-non-null-assertion': 'error',
-		'max-params': ['error', 4],
+		'max-params': ['error', 3],
 		complexity: ['error', 10],
 		'no-unneeded-ternary': 'error',
 		'jsx-expressions/strict-logical-expressions': 'error',
@@ -62,10 +63,6 @@ module.exports = {
 		'react-native/no-inline-styles': 1,
 		'react-native/no-color-literals': 2,
 		'react-native/no-single-element-style-arrays': 2,
-		'max-len': [
-			'error',
-			{ code: 500, ignoreTemplateLiterals: true, ignoreUrls: true }
-		],
 		'no-param-reassign': ['error', { props: false }],
 		'no-restricted-syntax': [
 			'error',
@@ -92,9 +89,9 @@ module.exports = {
 			},
 			{
 				selector: 'variableLike',
-				format: ['camelCase'],
+				format: ['PascalCase', 'camelCase'],
 				filter: {
-					regex: '^_count$|^_isRetry$|^ai_request$|',
+					regex: '^_count$|^_isRetry$|^ai_request$',
 					match: false
 				}
 			},

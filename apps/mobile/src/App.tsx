@@ -1,5 +1,6 @@
 import Navigation from '@/features/navigation/navigation'
 import { ClickOutsideProvider } from '@/shared/hooks/outside-press/Provider'
+import { BottomSheetProvider } from '@/shared/providers/bottom-sheet-provider'
 import { persistor, store } from '@/shared/redux/store'
 import Loader from '@/shared/ui/loader/loader'
 import Toast from '@/shared/ui/toast'
@@ -27,7 +28,7 @@ const asyncStoragePersister = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
 
-export default function App() {
+export default function app() {
 	return (
 		<Provider store={store}>
 			<PersistGate
@@ -48,7 +49,9 @@ export default function App() {
 								flex: 1
 							}}
 						>
-							<Navigation />
+							<BottomSheetProvider>
+								<Navigation />
+							</BottomSheetProvider>
 						</GestureHandlerRootView>
 						<Toast />
 					</ClickOutsideProvider>

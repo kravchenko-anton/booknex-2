@@ -1,5 +1,5 @@
-import type { StatusBarStyle } from 'react-native/Libraries/Components/StatusBar/StatusBar'
 import { Color } from 'global/colors'
+import type { StatusBarStyle } from 'react-native/Libraries/Components/StatusBar/StatusBar'
 
 export interface ThemePackType {
 	title: string
@@ -19,21 +19,6 @@ export interface ThemePackType {
 
 export const themePack: ThemePackType[] = [
 	{
-		title: 'Light',
-		slug: 'light',
-		statusBar: 'light-content',
-		colorPalette: {
-			primary: Color.primary,
-			secondary: Color.secondary,
-			background: {
-				normal: Color.white,
-				lighter: '#f9f9f9',
-				darker: '#f2f2f2'
-			},
-			text: Color.black
-		}
-	},
-	{
 		title: 'Dark',
 		slug: 'dark',
 		statusBar: 'light-content',
@@ -46,6 +31,21 @@ export const themePack: ThemePackType[] = [
 				darker: '#1a1a1a'
 			},
 			text: '#fff'
+		}
+	},
+	{
+		title: 'Light',
+		slug: 'light',
+		statusBar: 'light-content',
+		colorPalette: {
+			primary: Color.primary,
+			secondary: Color.secondary,
+			background: {
+				normal: Color.white,
+				lighter: '#f9f9f9',
+				darker: '#f2f2f2'
+			},
+			text: Color.black
 		}
 	},
 	{
@@ -78,21 +78,7 @@ export const themePack: ThemePackType[] = [
 			text: '#d3cedc'
 		}
 	},
-	{
-		title: 'Dark green',
-		slug: 'dark-green',
-		statusBar: 'light-content',
-		colorPalette: {
-			primary: '#fb4934',
-			secondary: '#ffc66d',
-			background: {
-				normal: '#1d2021',
-				lighter: '#272a2b',
-				darker: '#1a1c1d'
-			},
-			text: '#c2ccd7'
-		}
-	},
+
 	{
 		title: 'Tokyo night',
 		slug: 'tokyo-night',

@@ -72,6 +72,7 @@ const Featured = () => {
 				)}
 			/>
 			<BannerList
+				className='mb-4'
 				title='Best selling books'
 				data={featured.bestSellingBooks}
 				renderItem={({ item: book }) => (

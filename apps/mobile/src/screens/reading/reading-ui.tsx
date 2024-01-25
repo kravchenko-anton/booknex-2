@@ -1,31 +1,36 @@
-import { useReadingUIAnimation } from '@/screens/reading/settings/animation'
-import type { ThemePackType } from '@/screens/reading/settings/sheet/reading/theme-pack'
 import { useTypedNavigation } from '@/shared/hooks'
 import { Title } from '@/shared/ui'
 import { AnimatedView } from '@/shared/ui/animated-components'
 import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
+import React from 'react'
 import { View } from 'react-native'
+import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const ReadingUi: FC<{
 	title: string
-	openChapterList(): void
-	openReadingSettings(): void
-	colorPalette: ThemePackType['colorPalette']
 	visible: boolean
 	progress: number
+	onChapterIconPress: () => void
+	onSelectThemeIconPress: () => void
+	colorPalette: any
 }> = ({
 	visible = false,
 	colorPalette = {},
-	openChapterList,
-	openReadingSettings,
+	onChapterIconPress,
+	onSelectThemeIconPress,
 	title = '',
 	progress = 0
 }) => {
 	const { goBack } = useTypedNavigation()
 	const { top, bottom } = useSafeAreaInsets()
-	const { opacityAnimation } = useReadingUIAnimation(visible)
+	const opacityAnimation = useAnimatedStyle(() => {
+		return {
+			opacity: withTiming(visible ? 1 : 0)
+		}
+	})
+
 	return (
 		<View className='absolute h-screen w-full'>
 			<AnimatedView
@@ -60,13 +65,13 @@ const ReadingUi: FC<{
 					<ListOrdered
 						width={28}
 						height={28}
+						onPress={onChapterIconPress}
 						color={colorPalette.text}
-						onPress={openChapterList}
 					/>
 					<CaseSenSitive
-						onPress={openReadingSettings}
 						width={28}
 						height={28}
+						onPress={onSelectThemeIconPress}
 						color={colorPalette.text}
 					/>
 				</View>
