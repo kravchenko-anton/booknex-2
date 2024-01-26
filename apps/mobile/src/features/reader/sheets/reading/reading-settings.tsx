@@ -1,13 +1,13 @@
+import {
+	fontSizeSettings,
+	ReaderFont,
+	type ReaderFontsEnum
+} from '@/features/reader/action/reading-settings-slice'
 import LineHeightIcon from '@/features/reader/sheets/reading/icons/line-height'
 import PageMarginIcon from '@/features/reader/sheets/reading/icons/page-margin'
 import { themePack } from '@/features/reader/sheets/reading/theme-pack'
 import type { DefaultBottomSheetProperties } from '@/features/reader/types'
 import { useAction, useTypedSelector } from '@/shared/hooks'
-import {
-	ReaderFont,
-	fontSizeSettings,
-	type ReaderFontsEnum
-} from '@/shared/redux/reading-settings/reading-settings-slice'
 import { AnimatedPress, Title } from '@/shared/ui'
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
 import { Color } from 'global/colors'
@@ -130,7 +130,7 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 								)
 							}}
 						/>
-						<View className='my-1.5 flex-row items-center justify-between px-8'>
+						<View className='my-1.5 flex-row items-center justify-between px-3'>
 							<Title
 								weight='semiBold'
 								size={22}

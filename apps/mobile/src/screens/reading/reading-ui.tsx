@@ -3,7 +3,7 @@ import { Title } from '@/shared/ui'
 import { AnimatedView } from '@/shared/ui/animated-components'
 import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
-import React from 'react'
+import React, { memo } from 'react'
 import { View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -107,4 +107,4 @@ const ReadingUi: FC<{
 	)
 }
 
-export default ReadingUi
+export default memo(ReadingUi)

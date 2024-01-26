@@ -21,6 +21,9 @@
       ],
       "global/*": [
         "../../libs/global/*"
+      ],
+      "backend/*": [
+        "../backend/*"
       ]
     },
     "module": "esnext",
@@ -38,7 +41,8 @@
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "strictNullChecks": true
   },
   "include": [
     "**/*.ts",

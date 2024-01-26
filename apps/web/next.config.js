@@ -12,10 +12,6 @@ const nextConfig = {
 	},
 	nx: {
 		svgr: true
-	},
-	env: {
-		TINYMCE: process.env.TINYMCE,
-		GPT_TINYMCE: process.env.GPT_TINYMCE
 	}
 }
 

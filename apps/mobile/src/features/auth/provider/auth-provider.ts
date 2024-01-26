@@ -1,8 +1,8 @@
 import { useAction, useAuth } from '@/shared/hooks'
+import { errorToast } from '@/shared/utils/toast'
 import { errorCatch } from 'global/utils/catch-error'
 import { useEffect } from 'react'
 import EncryptedStorage from 'react-native-encrypted-storage'
-import { errorToast } from '../../../shared/utils/toast'
 
 export const useCheckAuth = (routeName?: string) => {
 	const { user } = useAuth()
@@ -21,7 +21,7 @@ export const useCheckAuth = (routeName?: string) => {
 			}
 		}
 		checkToken()
-	}, [user])
+	}, [getNewToken, logout, user])
 
 	useEffect(() => {
 		const checkRefreshToken = async () => {
@@ -32,5 +32,5 @@ export const useCheckAuth = (routeName?: string) => {
 		}
 
 		checkRefreshToken()
-	}, [routeName, user])
+	}, [logout, routeName, user])
 }

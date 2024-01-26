@@ -1,22 +1,6 @@
 'use client'
-import { useBooks } from '@/app/admin/books/useBooks'
-import DataTable from '@/components/data-table'
-import DataTableHeader from '@/components/table-search'
-import { Button } from '@/components/ui'
+import BookCatalog from '@/pages/books/catalog'
 import type { FC } from 'react'
 
-const Page: FC = () => {
-	const { headerProperties, tableProperties, onCreateButtonClick } = useBooks()
-	return (
-		<div className='w-full'>
-			<DataTableHeader title='Books' {...headerProperties}>
-				<Button onClick={onCreateButtonClick} size='sm' variant='primary'>
-					Create
-				</Button>
-			</DataTableHeader>
-			<DataTable {...tableProperties} />
-		</div>
-	)
-}
-
+const Page: FC = () => <BookCatalog />
 export default Page

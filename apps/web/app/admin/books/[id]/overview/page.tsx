@@ -1,15 +1,5 @@
 'use client'
-import { bookService } from '@/services/book/book-service'
-import { useQuery } from '@tanstack/react-query'
-import { useParams } from 'next/navigation'
+import BookOverview from '@/pages/books/overview'
 
-const Page = () => {
-	const parameters = useParams()
-	const { data: book } = useQuery(['book overview'], () =>
-		bookService.infoById(+parameters.id)
-	)
-	console.log(book)
-	return <div>Page</div>
-}
-
+const Page = () => <BookOverview />
 export default Page

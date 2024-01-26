@@ -26,6 +26,9 @@
 			],
 			"global/*": [
 				"../../libs/global/*"
+			],
+			"backend/*": [
+				"../backend/*"
 			]
 		},
 		"allowJs": true

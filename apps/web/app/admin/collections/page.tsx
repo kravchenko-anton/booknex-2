@@ -1,8 +1,6 @@
+import CollectionsCatalog from '@/pages/collections/catalog'
 import type { FC } from 'react'
 
-const Page: FC = () => {
-	console.log(Page)
-	return <div>Collection (Comming soon)</div>
-}
+const Page: FC = () => <CollectionsCatalog />
 
 export default Page

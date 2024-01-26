@@ -1,7 +1,7 @@
-import { AuthProvider } from '@/providers/auth-provider'
+import { AuthProvider } from '@/features/auth/auth-provider'
+import Providers from '@/shared/providers/query-provider'
 import { Space_Grotesk } from 'next/font/google'
 import type { ReactNode } from 'react'
-import Providers from '../providers/query-provider'
 import './global.css'
 
 export const metadata = {

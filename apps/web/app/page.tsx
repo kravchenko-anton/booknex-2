@@ -1,10 +1,6 @@
-import Layout from '@/components/layout/layout'
+import Landing from '@/pages/landing/landing'
+import type { FC } from 'react'
 
-export default function Index() {
-	return (
-		<Layout>
-			<h1>Booknex</h1>
-			<p>Mobile app for reading books </p>
-		</Layout>
-	)
-}
+const Index: FC = () => <Landing />
+
+export default Index

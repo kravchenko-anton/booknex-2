@@ -14,13 +14,13 @@ import { Loader } from '@/shared/ui'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/shared/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
-import React, { useEffect, useRef, useState } from 'react'
-import { View as RNView, TouchableWithoutFeedback } from 'react-native'
+import React, { memo, useEffect, useRef, useState } from 'react'
+import { TouchableWithoutFeedback, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import WebView from 'react-native-webview'
 
 //TODO: оптимизировать тут всё
-export function Reader() {
+function Reader() {
 	const { params } = useTypedRoute<'Reader'>()
 	const { data: ebook } = useQuery(['e-book', params.id], () =>
 		bookService.ebookById(params.id)
@@ -41,7 +41,7 @@ export function Reader() {
 	if (!ebook || !styleTag) return <Loader />
 	return (
 		<SafeAreaView className='flex-1'>
-			<RNView className='m-0 h-screen w-full items-center justify-center p-0'>
+			<View className='m-0 h-screen w-full items-center justify-center p-0'>
 				<TouchableWithoutFeedback
 					onPress={() =>
 						handleDoublePress(() => setReaderUiVisible(!readerUiVisible))
@@ -64,7 +64,7 @@ export function Reader() {
 						scrollEnabled
 						javaScriptEnabled
 						startInLoadingState
-						renderLoading={() => <RNView className='h-screen w-screen' />}
+						renderLoading={() => <View className='h-screen w-screen' />}
 						showsVerticalScrollIndicator={false}
 						injectedJavaScriptBeforeContentLoaded={`
 						${beforeLoad(initialScroll)}
@@ -79,7 +79,7 @@ export function Reader() {
 						}}
 					/>
 				</TouchableWithoutFeedback>
-			</RNView>
+			</View>
 			<ReadingUi
 				onSelectThemeIconPress={() => openReadingSettings()}
 				onChapterIconPress={() =>
@@ -99,3 +99,5 @@ export function Reader() {
 		</SafeAreaView>
 	)
 }
+
+export default memo(Reader)

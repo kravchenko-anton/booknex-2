@@ -1,8 +1,8 @@
 import ChaptersList from '@/features/reader/sheets/chapters-list/chapters-list'
 import ReadingSettings from '@/features/reader/sheets/reading/reading-settings'
 import { useBottomSheetContext } from '@/shared/providers/bottom-sheet-provider'
+import type { ChapterType } from 'backend/types'
 import React from 'react'
-import type { ChapterType } from '../../../../../backend/types'
 
 export const useReadingSheets = () => {
 	const { showBottomSheet, closeBottomSheet } = useBottomSheetContext()

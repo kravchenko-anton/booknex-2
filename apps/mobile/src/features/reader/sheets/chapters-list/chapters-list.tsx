@@ -5,7 +5,6 @@ import BottomSheet, {
 	BottomSheetBackdrop,
 	BottomSheetSectionList
 } from '@gorhom/bottom-sheet'
-import { Color } from 'global/colors'
 import type { FC } from 'react'
 import React, { useMemo } from 'react'
 import { Pressable } from 'react-native'
@@ -64,10 +63,12 @@ const ChaptersList: FC<
 					return (
 						<Title
 							weight='bold'
-							className='bg-foreground border-muted mt-[-1px] border-b-[1px] p-4'
+							className='  mt-[-1px] border-b-[1px] p-4'
 							size={22}
+							color={colorScheme.colorPalette.text}
 							style={{
-								backgroundColor: Color.foreground
+								borderColor: colorScheme.colorPalette.background.lighter,
+								backgroundColor: colorScheme.colorPalette.background.darker
 							}}
 						>
 							{section.title}
@@ -80,9 +81,19 @@ const ChaptersList: FC<
 							onPress={() => {
 								openChapter(item.link)
 							}}
-							className='bg-muted border-muted w-full border-b-[1px] p-4'
+							style={{
+								backgroundColor: colorScheme.colorPalette.background.lighter,
+								borderColor: colorScheme.colorPalette.background.normal
+							}}
+							className=' w-full border-b-[1px] p-4'
 						>
-							<Title size={18} weight='semiBold'>
+							<Title
+								size={18}
+								weight='semiBold'
+								style={{
+									color: colorScheme.colorPalette.text
+								}}
+							>
 								{item.title}
 							</Title>
 						</Pressable>

@@ -1,5 +1,5 @@
 'use client'
-import Sidebar from '@/components/sidebar'
+import Sidebar from '@/widgets/sidebar/sidebar'
 import type { FC, PropsWithChildren } from 'react'
 
 const AdminLayout: FC<PropsWithChildren> = ({ children }) => {
