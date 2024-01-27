@@ -2,9 +2,6 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "strict": false,
     "lib": [
       "dom",
@@ -37,12 +34,14 @@
       "jest",
       "node"
     ],
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
+    "allowJs": false,
+    "noEmit": false,
+    "incremental": false,
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "strictNullChecks": true
+    "strictNullChecks": false,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "**/*.ts",

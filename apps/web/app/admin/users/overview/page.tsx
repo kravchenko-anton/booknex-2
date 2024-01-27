@@ -1,5 +1,5 @@
-import UserOverview from '@/pages/users/overview'
-
-const Page = () => <UserOverview />
+const Page = () => {
+	return <div>UserOverview</div>
+}
 
 export default Page

@@ -1,5 +1,5 @@
-import AuthorOverview from '@/pages/authors/overview'
-
-const Page = () => <AuthorOverview />
+const Page = () => {
+	return <div>AuthorOverview</div>
+}
 
 export default Page

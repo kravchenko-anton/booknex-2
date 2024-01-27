@@ -53,7 +53,7 @@ export const useData = () => {
 	}
 
 	const table = useReactTable({
-		data: books.data ?? [],
+		data: books?.data ?? [],
 		columns: columns({
 			remove: deleteFromParser,
 			useAsTemplate
@@ -75,7 +75,7 @@ export const useData = () => {
 
 	const tableProperties = {
 		table,
-		totalPages: books.totalPages,
+		totalPages: books?.totalPages,
 		currentPage: page,
 		previous: {
 			onClick: () => {
@@ -96,7 +96,7 @@ export const useData = () => {
 				)
 				router.refresh()
 			},
-			disabled: !books.canLoadMore
+			disabled: !books?.canLoadMore
 		}
 	}
 

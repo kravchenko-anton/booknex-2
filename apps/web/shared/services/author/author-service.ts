@@ -14,14 +14,14 @@ import { request } from '../api/request.api'
 export const authorService = {
 	async all(parameters: { page: number; searchTerm?: string }) {
 		return request<AllAuthorOutput>({
-			url: getAuthorUrl('admin/all'),
+			url: getAuthorUrl('/admin/all'),
 			params: parameters
 		})
 	},
 
 	async allSelect(searchTerm?: string) {
 		return request<AllSelectAuthorOutput>({
-			url: getAuthorUrl('admin/all/select'),
+			url: getAuthorUrl('/admin/all/select'),
 			params: { searchTerm }
 		})
 	},

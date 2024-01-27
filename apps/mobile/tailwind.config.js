@@ -1,16 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require('tailwindcss/colors')
 module.exports = {
-	content: [
-		'./App.{js,jsx,ts,tsx}',
-		'./src/**/*.{js,jsx,ts,tsx}',
-		'../../libs/ui/react-native/**/*.{js,ts,jsx,tsx,mdx}'
-	],
+	content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
 	theme: {
 		extend: {
 			colors: {
 				muted: '#303030',
-
 				background: '#111111',
 				foreground: '#202020',
 				primary: '#5e548e',

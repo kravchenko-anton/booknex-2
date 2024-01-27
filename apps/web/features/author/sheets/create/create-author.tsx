@@ -4,19 +4,28 @@ import type { ManipulationAuthorValidationSchemaType } from '@/features/author/v
 import { ManipulationAuthorValidationSchema } from '@/features/author/validation'
 import { Button, Field } from '@/shared/ui'
 import FormDropzone from '@/shared/ui/dropzone/form-dropzone'
-import { SheetHeader } from '@/shared/ui/sheet'
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetPortal
+} from '@/shared/ui/sheet'
 import FormTextEditor from '@/shared/ui/text-editor/form-text-editor'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface CreateAuthorProperties {
+	open?: boolean
 	onCreate: ({ id, name }: { name: string; id: number }) => void
+	onOpenChange?: (open: boolean) => void
 	defaultValues?: ManipulationAuthorValidationSchemaType
 }
 
 const CreateAuthor: FC<CreateAuthorProperties> = ({
 	defaultValues = {},
+	open = false,
+	onOpenChange = () => {},
 	onCreate = () => {}
 }) => {
 	const { control, handleSubmit, setValue } =
@@ -43,53 +52,57 @@ const CreateAuthor: FC<CreateAuthorProperties> = ({
 		})()
 	}
 	return (
-		<div>
-			<SheetHeader className='pb-4'>
-				<h1 className='text-2xl font-medium'>Create author</h1>
-			</SheetHeader>
-			<Field
-				control={control}
-				defaultValue={defaultValues.name}
-				name='name'
-				type='text'
-				variant='muted'
-				placeholder='Name'
-			/>
-			<h1 className='mb-2 mt-4 text-xl'>Picture</h1>
-			<FormDropzone
-				control={control}
-				name='picture'
-				size='sm'
-				defaultFiles={[defaultValues.picture?.blob as File]}
-				variant='muted'
-				multiple={false}
-				accept={'image/*'}
-				onDropFile={acceptedFiles => {
-					setValue('picture', {
-						name: acceptedFiles[0].name,
-						blob: new Blob([acceptedFiles[0]])
-					})
-				}}
-			/>
-			<FormTextEditor
-				defaultValue={defaultValues.description}
-				variant='muted'
-				control={control}
-				name='description'
-				placeholder='Enter description'
-				className='mt-4 h-[150px]'
-			/>
+		<Sheet open={open} onOpenChange={onOpenChange}>
+			<SheetPortal>
+				<SheetContent>
+					<SheetHeader className='pb-4'>
+						<h1 className='text-2xl font-medium'>Create author</h1>
+					</SheetHeader>
+					<Field
+						control={control}
+						defaultValue={defaultValues.name}
+						name='name'
+						type='text'
+						variant='muted'
+						placeholder='Name'
+					/>
+					<h1 className='mb-2 mt-4 text-xl'>Picture</h1>
+					<FormDropzone
+						control={control}
+						name='picture'
+						size='sm'
+						defaultFiles={[defaultValues.picture?.blob as File]}
+						variant='muted'
+						multiple={false}
+						accept={'image/*'}
+						onDropFile={acceptedFiles => {
+							setValue('picture', {
+								name: acceptedFiles[0].name,
+								blob: new Blob([acceptedFiles[0]])
+							})
+						}}
+					/>
+					<FormTextEditor
+						defaultValue={defaultValues.description}
+						variant='muted'
+						control={control}
+						name='description'
+						placeholder='Enter description'
+						className='mt-4 h-[150px]'
+					/>
 
-			<Button
-				size='md'
-				className='mt-8'
-				onClick={onSubmit}
-				type='submit'
-				variant='primary'
-			>
-				Create
-			</Button>
-		</div>
+					<Button
+						size='md'
+						className='mt-8'
+						onClick={onSubmit}
+						type='submit'
+						variant='primary'
+					>
+						Create
+					</Button>
+				</SheetContent>
+			</SheetPortal>
+		</Sheet>
 	)
 }
 

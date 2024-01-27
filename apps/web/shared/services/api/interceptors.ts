@@ -40,7 +40,10 @@ instance.interceptors.response.use(
 				await getNewTokens()
 				return await instance.request(originalRequest)
 			} catch {
-				await deleteTokensStorage()
+				console.log(error)
+				if (error.response?.status === 401) {
+					deleteTokensStorage()
+				}
 			}
 		}
 

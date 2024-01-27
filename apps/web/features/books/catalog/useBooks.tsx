@@ -37,7 +37,7 @@ export const useBooks = () => {
 
 	const tableProperties = {
 		table,
-		totalPages: books.totalPages,
+		totalPages: books?.totalPages,
 		currentPage: page,
 		previous: {
 			onClick: () => {
@@ -58,7 +58,7 @@ export const useBooks = () => {
 				)
 				router.refresh()
 			},
-			disabled: !books.canLoadMore
+			disabled: !books?.canLoadMore
 		}
 	}
 	return {

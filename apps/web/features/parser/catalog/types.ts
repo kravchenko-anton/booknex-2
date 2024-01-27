@@ -10,3 +10,11 @@ export interface EditAndUseProperties {
 	title: string
 	id: number
 }
+
+export interface SearchParametersProperties {
+	title: string
+	description: string
+	pages: number
+	popularity: number
+	genres: string[]
+}

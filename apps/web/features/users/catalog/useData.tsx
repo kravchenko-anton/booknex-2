@@ -34,7 +34,7 @@ export const useData = () => {
 
 	const tableProperties = {
 		table,
-		totalPages: users.totalPages,
+		totalPages: users?.totalPages,
 		currentPage: page,
 		previous: {
 			onClick: () => {
@@ -55,7 +55,7 @@ export const useData = () => {
 				)
 				router.refresh()
 			},
-			disabled: !users.canLoadMore
+			disabled: !users?.canLoadMore
 		}
 	}
 	return {

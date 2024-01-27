@@ -1,5 +1,5 @@
-import { AuthProvider } from '@/features/auth/auth-provider'
-import Providers from '@/shared/providers/query-provider'
+import { AuthProvider } from '@/features/auth/provider/auth-provider'
+import Providers from '@/shared/providers/app-provider'
 import { Space_Grotesk } from 'next/font/google'
 import type { ReactNode } from 'react'
 import './global.css'
@@ -14,7 +14,7 @@ const font = Space_Grotesk({ subsets: ['latin'] })
 export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang='en'>
-			<body style={{ ...font.style }} id='body'>
+			<body style={{ ...font.style }} id='Body'>
 				<Providers>
 					<AuthProvider>{children}</AuthProvider>
 				</Providers>

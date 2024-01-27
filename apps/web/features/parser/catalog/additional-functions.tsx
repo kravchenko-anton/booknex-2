@@ -1,4 +1,4 @@
-import type { SearchParametersProperties } from '@/app/admin/parser/types'
+import type { SearchParametersProperties } from '@/features/parser/catalog/types'
 
 export const searchParameters = (
 	author: { id: number; name: string },

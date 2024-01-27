@@ -1,4 +1,3 @@
-import { errorToast } from '@/shared/utils/toast'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import instance from './interceptors'
 
@@ -6,7 +5,6 @@ export const request = async <T>(config: AxiosRequestConfig) => {
 	const onSuccess = (response: AxiosResponse<T>) => response.data
 
 	const onError = (error: AxiosError<T>) => {
-		errorToast(error)
 		return Promise.reject(error)
 	}
 

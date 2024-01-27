@@ -1,5 +1,6 @@
 'use client'
-import BookOverview from '@/pages/books/overview'
 
-const Page = () => <BookOverview />
+const Page = () => {
+	return <div>BookOverview</div>
+}
 export default Page

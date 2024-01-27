@@ -1,4 +1,4 @@
-import { columns } from '@/app/admin/parser/columns'
+import { columns } from '@/features/parser/catalog/columns'
 import { Button } from '@/shared/ui'
 import {
 	Table,

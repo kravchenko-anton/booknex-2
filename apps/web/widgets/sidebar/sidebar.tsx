@@ -17,12 +17,12 @@ export default function Sidebar(): JSX.Element {
 	const activePath = usePathname()
 	return (
 		<div className='fixed z-0 h-full w-[220px] justify-center duration-100 ease-linear md:flex-col'>
-			<ul className='bg-muted border-foreground flex h-full w-full flex-col justify-between border-r-2 p-5 text-sm'>
+			<ul className='bg-foreground border-muted flex h-full w-full flex-col justify-between border-r-2 p-5 text-sm'>
 				<button
 					className='mb-12 flex cursor-pointer items-center text-2xl font-bold'
 					type='button'
 				>
-					<span className='bg-foreground rounded-xl p-2  text-white '>
+					<span className='bg-muted rounded-xl p-2  text-white '>
 						Booknex dev 😈
 					</span>
 				</button>
@@ -34,7 +34,7 @@ export default function Sidebar(): JSX.Element {
 								className={twMerge(
 									'my-2 flex items-center gap-3 p-2  duration-100 ease-linear',
 									activePath === icon.link
-										? 'bg-foreground rounded-lg text-white'
+										? 'bg-muted rounded-lg text-white'
 										: ''
 								)}
 							>

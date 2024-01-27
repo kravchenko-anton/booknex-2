@@ -13,7 +13,7 @@ export const getNewTokens = async () => {
 			>(SERVER_URL + getAuthUrl('/access-token'), { refreshToken })
 			.then(result => result.data)
 		if (response.accessToken)
-			await saveTokensStorage({
+			saveTokensStorage({
 				accessToken: response.accessToken,
 				refreshToken: response.refreshToken
 			})
