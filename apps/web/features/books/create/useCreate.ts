@@ -1,4 +1,3 @@
-import { authorService } from '@/shared/services/author/author-service'
 import { bookService } from '@/shared/services/book/book-service'
 import { genreService } from '@/shared/services/genre/genre-service'
 import { parserService } from '@/shared/services/parser/parser-services'
@@ -34,10 +33,7 @@ export const useCreate = () => {
 			onError: () => errorToast('Error while uploading book')
 		}
 	)
-	const { mutateAsync: authors, isLoading: authorsLoading } = useMutation(
-		['authors'],
-		(authorSearch: string) => authorService.allSelect(authorSearch)
-	)
+
 	const { data: genres } = useQuery(['genres'], () => genreService.all())
 
 	const submitBook = handleSubmit(
@@ -82,9 +78,7 @@ export const useCreate = () => {
 						link: child.link
 					}))
 				})),
-				author: {
-					id: data.author.value
-				},
+				author: data.author,
 				genres: data.genres.map(genre => genre.value),
 				file: uploadHtml,
 				pages: data.pages,
@@ -99,14 +93,7 @@ export const useCreate = () => {
 		}
 	)
 	return {
-		select: {
-			author: {
-				load: authors,
-				loading: authorsLoading
-			},
-			genres
-		},
-
+		genres,
 		unfold,
 		form: {
 			watch,

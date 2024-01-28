@@ -3,10 +3,7 @@ import type { BookPayload } from '../../../../../libs/global/services-types/book
 
 export class CreateBookDto implements BookPayload {
 	@IsString() title: string
-	@IsObject()
-	author: {
-		id: number
-	}
+	@IsString() author: string
 
 	@IsString() description: string
 	@IsString() picture: string
@@ -23,10 +20,7 @@ export class CreateBookDto implements BookPayload {
 
 export class EditBookDto implements Partial<BookPayload> {
 	@IsString() title: string
-	@IsObject()
-	author: {
-		id: number
-	}
+	@IsString() @IsOptional() author: string
 
 	@IsString() @IsOptional() description: string
 	@IsString() @IsOptional() picture: string

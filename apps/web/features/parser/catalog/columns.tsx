@@ -1,4 +1,3 @@
-import type { EditAndUseProperties } from '@/features/parser/catalog/types'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -18,7 +17,7 @@ export const columns = ({
 	useAsTemplate
 }: {
 	remove: (id: number) => Promise<void>
-	useAsTemplate: (data: EditAndUseProperties) => void
+	useAsTemplate: (data: string) => void
 }) => [
 	{
 		id: 'id',
@@ -49,35 +48,18 @@ export const columns = ({
 			return (
 				<div className='w-[250px]'>
 					<h3 className='text-xl'>{row.original.title}</h3>
+					<p>{row.original.author}</p>
 					<div className='flex flex-wrap gap-2'>
-						<p className='bg-foreground mt-2 rounded-xl p-1 font-light'>
+						<p className='bg-foreground mt-2 rounded-xl p-1.5 font-light'>
 							<b className='font-bold text-white'>{row.original.pages}</b> pages
 						</p>
-						<p className='bg-foreground mt-2 rounded-xl p-1 font-light'>
+						<p className='bg-foreground mt-2 rounded-xl p-1.5 font-light'>
 							<b className='font-bold text-white'>
 								{nFormatter(row.original.popularity)}{' '}
 							</b>{' '}
 							popularity
 						</p>
 					</div>
-				</div>
-			)
-		}
-	},
-	{
-		id: 'Author',
-		header: () => <p className='text-center text-xl'>Author</p>,
-		cell: ({ row }) => {
-			return (
-				<div className='mt-2 w-[100px] items-center justify-center gap-2'>
-					<img
-						width={60}
-						height={60}
-						className='mx-auto mb-2 h-[60px] w-[60px] rounded-full object-cover'
-						src={row.original.authorPicture}
-						alt={row.original.authorName}
-					/>
-					<p className=' text-md mb-1 text-center'>{row.original.authorName}</p>
 				</div>
 			)
 		}
@@ -101,7 +83,7 @@ export const columns = ({
 		header: () => <p className='text-center text-xl'>Genres</p>,
 		cell: ({ row }) => {
 			return (
-				<div className='flex  w-[200px] flex-wrap items-center justify-center'>
+				<div className='flex  w-[300px] flex-wrap items-center justify-center'>
 					{row.original.genres.map(genre => (
 						<p
 							className='bg-foreground border-muted m-1 rounded-xl border-2 p-2  text-sm text-white'
@@ -129,7 +111,7 @@ export const columns = ({
 					<DropdownMenuContent align='end'>
 						<DropdownMenuItem
 							onClick={() => {
-								useAsTemplate({ ...row.original })
+								useAsTemplate(row.original.id)
 							}}
 						>
 							Use as template

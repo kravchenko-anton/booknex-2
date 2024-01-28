@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
-import { returnBookObjectWithAuthor } from '../book/return.book.object'
+import { returnBookObject } from '../book/return.book.object'
 import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
@@ -45,7 +45,7 @@ export class CollectionService {
 				},
 				books: {
 					select: {
-						...returnBookObjectWithAuthor,
+						...returnBookObject,
 						pages: true
 					}
 				}

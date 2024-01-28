@@ -4,6 +4,6 @@ export const useTableParameters = () => {
 	const parameters = useSearchParams()
 	const searchTerm = parameters.get('searchTerm') ?? ''
 	const page = +(parameters.get('page') ?? 0)
-
-	return { searchTerm, page }
+	const dialog = parameters.get('dialog') ?? ''
+	return { searchTerm, page, dialog }
 }

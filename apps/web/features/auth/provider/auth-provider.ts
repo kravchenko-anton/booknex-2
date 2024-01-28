@@ -2,7 +2,7 @@
 import { useAction, useAuth } from '@/shared/hooks'
 import { errorToast } from '@/shared/utils/toast'
 import type { FC, PropsWithChildren } from 'react'
-import { useEffect, useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { user } = useAuth()
@@ -23,10 +23,11 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 		checkToken()
 	}, [getNewToken, logout, user])
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const checkRefreshToken = () => {
 			const refreshToken = window.sessionStorage.getItem('refreshToken')
 			if (!refreshToken && user) {
+				console.log('logout')
 				logout()
 			}
 		}

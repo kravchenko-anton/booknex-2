@@ -1,16 +1,12 @@
 import type { Prisma } from '@prisma/client'
-import type {
-	returnBookObjectWithAuthor,
-	returnBookObjectWithStatistics,
-	returnColorBookObjectWithAuthor
-} from '../../../apps/backend/src/book/return.book.object'
+import type { returnBookObject } from '../../../apps/backend/src/book/return.book.object'
 import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 
 type BookWithAuthor = Prisma.BookGetPayload<{
-	select: typeof returnBookObjectWithAuthor
+	select: typeof returnBookObject
 }>[]
 type ColorBookWithAuthor = Prisma.BookGetPayload<{
-	select: typeof returnColorBookObjectWithAuthor
+	select: typeof returnBookObject
 }>[]
 
 export interface FeaturedOutput {
@@ -24,5 +20,5 @@ export interface FeaturedOutput {
 }
 
 export type SearchOutput = Prisma.BookGetPayload<{
-	select: typeof returnBookObjectWithStatistics
+	select: typeof returnBookObject
 }>[]

@@ -1,8 +1,6 @@
 'use client'
-import { DialogProvider } from '@/shared/providers/dialog-provider'
 import { SheetProvider } from '@/shared/providers/sheet-provider'
 import { persistor, store } from '@/shared/redux/store'
-import { Sheet } from '@/shared/ui/sheet'
 import { Toaster } from '@/shared/ui/sonner'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { PropsWithChildren } from 'react'
@@ -22,10 +20,8 @@ const Providers = ({ children }: PropsWithChildren) => {
 			<PersistGate persistor={persistor}>
 				<QueryClientProvider client={queryClient}>
 					<SheetProvider>
-						<DialogProvider>
-							<Sheet modal={true}>{children}</Sheet>
-							<Toaster />
-						</DialogProvider>
+						{children}
+						<Toaster />
 					</SheetProvider>
 				</QueryClientProvider>
 			</PersistGate>

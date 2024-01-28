@@ -1,5 +1,6 @@
 'use client'
 
+import type { DialogProperties } from '@/shared/types/global'
 import { cn } from '@/shared/utils/utils'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -7,7 +8,9 @@ import { Close } from 'icons'
 import type {
 	ComponentPropsWithoutRef,
 	ElementRef,
-	HTMLAttributes
+	FC,
+	HTMLAttributes,
+	PropsWithChildren
 } from 'react'
 import { forwardRef } from 'react'
 
@@ -130,9 +133,22 @@ const SheetDescription = forwardRef<
 ))
 SheetDescription.displayName = SheetPrimitive.Description.displayName
 
+const SheetComponent: FC<PropsWithChildren<DialogProperties>> = ({
+	children,
+	isOpen = false,
+	onClose = () => {}
+}) => (
+	<Sheet open={isOpen} onOpenChange={onClose}>
+		<SheetPortal>
+			<SheetContent>{children}</SheetContent>
+		</SheetPortal>
+	</Sheet>
+)
+
 export {
 	Sheet,
 	SheetClose,
+	SheetComponent,
 	SheetContent,
 	SheetDescription,
 	SheetFooter,

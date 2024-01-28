@@ -20,7 +20,7 @@ model Genre {
   majorBooks     Book[]         @relation("BookMajorGenre")
   similarBy      Genre[]        @relation("Similar")
   similar        Genre[]        @relation("Similar")
-  goodReadsBooks GoodReadBook[]
+  bookTemplates      BookTemplate[]
   activities  Activity[]
 }
 
@@ -28,7 +28,6 @@ model Activity {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   book      Book?    @relation(fields: [bookId], references: [id])
-  author    Author?  @relation(fields: [authorId], references: [id])
   genre     Genre?   @relation(fields: [genreId], references: [id])
   collection Collection? @relation(fields: [collectionId], references: [id])
   collectionId Int?
@@ -61,7 +60,7 @@ model Book {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   title       String   @unique
-  author      Author   @relation(fields: [authorId], references: [id])
+  author      String
   description String
   picture     String
   /// [Chapter]
@@ -78,20 +77,17 @@ model Book {
   finishedBy  User[]       @relation("FinishedBooks")
   savedBy     User[]       @relation("SavedBooks")
   readingBy   User[]       @relation("ReadingBooks")
-  authorId    Int
   mainGenreId Int
   complaints  Complaint[]
   activities  Activity[]
 }
 
-model GoodReadBook {
+model BookTemplate {
   id                Int      @id @default(autoincrement())
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   title             String   @unique
-  authorName        String
-  authorPicture     String
-  authorDescription String
+  author        String
   description       String
   picture           String
   pages             Int
@@ -111,16 +107,6 @@ model Complaint {
   userId    Int
 }
 
-model Author {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String   @unique
-  picture     String
-  description String
-  books       Book[]
-  activities  Activity[]
-}
 model User {
   id             Int          @id @default(autoincrement())
   createdAt      DateTime     @default(now())

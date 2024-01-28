@@ -1,3 +1,4 @@
+import { bookRoute } from '@/features/books/catalog/useCatalog'
 import { columns } from '@/features/users/catalog/columns'
 import { useQueries } from '@/features/users/catalog/useQueries'
 import { useTableParameters } from '@/shared/hooks/useTableParameters'
@@ -5,7 +6,7 @@ import { generateParameters } from '@/shared/utils/generate-parameters'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
-export const useData = () => {
+export const useCatalog = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
 	const { users, deleteUser } = useQueries({ page, searchTerm })
@@ -20,43 +21,26 @@ export const useData = () => {
 		getCoreRowModel: getCoreRowModel()
 	})
 
+	const pushParameters = (parameters: NonNullable<unknown>) => {
+		router.replace(
+			generateParameters(bookRoute, {
+				...parameters
+			})
+		)
+	}
 	const headerProperties = {
 		defaultTerm: searchTerm,
-		onSearchSubmit: data => {
-			router.push(
-				generateParameters('/admin/users', {
-					searchTerm: data.search
-				})
-			)
-			router.refresh()
-		}
+		onSearchSubmit: (data: { searchTerm: string }) =>
+			pushParameters({ searchTerm: data.searchTerm })
 	}
 
 	const tableProperties = {
 		table,
 		totalPages: users?.totalPages,
 		currentPage: page,
-		previous: {
-			onClick: () => {
-				router.push(
-					generateParameters('/admin/users', {
-						page: page - 1
-					})
-				)
-				router.refresh()
-			}
-		},
-		next: {
-			onClick: () => {
-				router.push(
-					generateParameters('/admin/users', {
-						page: page + 1
-					})
-				)
-				router.refresh()
-			},
-			disabled: !users?.canLoadMore
-		}
+		previous: () => pushParameters({ page: page - 1 }),
+		next: () => pushParameters({ page: page + 1 }),
+		canLoadMore: !users?.canLoadMore
 	}
 	return {
 		headerProperties,

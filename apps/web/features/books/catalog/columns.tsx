@@ -52,7 +52,7 @@ export const columns = ({
 			return (
 				<div className='w-[210px]'>
 					<h3 className='mb-1 text-xl'>{row.original.title}</h3>
-					<p>{row.original.author.name}</p>
+					<p>{row.original.author}</p>
 					<div className='flex flex-wrap gap-2'>
 						<p className='bg-foreground mt-2 rounded-xl p-1 font-light'>
 							<b className='font-bold text-white'>{row.original.pages}</b> pages

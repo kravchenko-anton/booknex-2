@@ -1,5 +1,5 @@
 import { useAction } from '@/shared/hooks'
-import { Book, Graph, Library, Logout, PenNib, Settings, User } from 'icons'
+import { Book, Graph, Library, Logout, Settings, User } from 'icons'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 
@@ -7,7 +7,6 @@ export const iconsList = [
 	{ icon: Graph, link: '/admin/dashboard', name: 'Dashboard' },
 	{ icon: User, link: '/admin/users', name: 'Users' },
 	{ icon: Book, link: '/admin/books', name: 'Books' },
-	{ icon: PenNib, link: '/admin/authors', name: 'Authors' },
 	{ icon: Settings, link: '/admin/parser', name: 'Parser' },
 	{ icon: Library, link: '/admin/collections', name: 'Collections' }
 ]

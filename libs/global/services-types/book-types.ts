@@ -1,6 +1,5 @@
 import type { Prisma } from '@prisma/client'
-import type { returnAuthorObject } from '../../../apps/backend/src/author/return.author.object'
-import type { returnBookObjectWithAuthor } from '../../../apps/backend/src/book/return.book.object'
+import type { returnBookObject } from '../../../apps/backend/src/book/return.book.object'
 import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 import type { GetAllTypeOutput } from './utils'
 
@@ -13,16 +12,14 @@ export interface FeedbackBookPayload {
 export type BookByIdOutput = Prisma.BookGetPayload<{
 	include: {
 		majorGenre: false
-		author: {
-			select: typeof returnAuthorObject
-		}
 		genres: { select: typeof ReturnGenreObject }
 	}
 }> & {
 	similarBooks: Prisma.BookGetPayload<{
-		select: typeof returnBookObjectWithAuthor
+		select: typeof returnBookObject
 	}>[]
 }
+
 export type AllSelectBooksOutput = Prisma.BookGetPayload<{
 	select: {
 		id: true
@@ -32,7 +29,7 @@ export type AllSelectBooksOutput = Prisma.BookGetPayload<{
 
 export type AllBooksOutput = GetAllTypeOutput<
 	Prisma.BookGetPayload<{
-		select: typeof returnBookObjectWithAuthor & {
+		select: typeof returnBookObject & {
 			genres: { select: typeof ReturnGenreObject }
 			pages: true
 			popularity: true
@@ -47,9 +44,7 @@ export type AllBooksOutput = GetAllTypeOutput<
 
 export interface BookPayload {
 	title: string
-	author: {
-		id: number
-	}
+	author: string
 	description: string
 	picture: string
 	file: string

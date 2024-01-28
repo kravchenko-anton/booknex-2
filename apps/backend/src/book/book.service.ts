@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
-import { returnAuthorObject } from '../author/return.author.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
@@ -10,7 +9,7 @@ import { groupActivity } from '../utils/group-activity'
 import { PrismaService } from '../utils/prisma.service'
 import type { FeedbackBookDto } from './dto/feedback.book.dto'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
-import { returnBookObjectWithAuthor } from './return.book.object'
+import { returnBookObject } from './return.book.object'
 
 @Injectable()
 export class BookService {
@@ -23,7 +22,7 @@ export class BookService {
 		const book = await this.prisma.book.findUnique({
 			where: { id },
 			select: {
-				...returnBookObjectWithAuthor,
+				...returnBookObject,
 				...selectObject
 			}
 		})
@@ -91,7 +90,7 @@ export class BookService {
 			data: await this.prisma.book.findMany({
 				take: perPage,
 				select: {
-					...returnBookObjectWithAuthor,
+					...returnBookObject,
 					genres: { select: ReturnGenreObject },
 					pages: true,
 					popularity: true,
@@ -133,23 +132,6 @@ export class BookService {
 		})
 	}
 
-	async allSelect(searchTerm: string) {
-		return this.prisma.book.findMany({
-			take: 20,
-			select: {
-				id: true,
-				title: true
-			},
-			...(searchTerm && {
-				where: {
-					title: {
-						contains: searchTerm
-					}
-				}
-			})
-		})
-	}
-
 	async create(dto: CreateBookDto) {
 		await this.prisma.book.create({
 			data: {
@@ -165,11 +147,7 @@ export class BookService {
 				picture: dto.picture,
 				file: dto.file,
 				chapters: dto.chapters,
-				author: {
-					connect: {
-						id: dto.author.id
-					}
-				},
+				author: dto.author,
 				genres: {
 					connect: dto.genres.map(g => ({ id: g }))
 				}
@@ -194,11 +172,7 @@ export class BookService {
 				picture: dto.picture || book.picture,
 				file: dto.file || book.file,
 				chapters: dto.chapters || book.chapters,
-				author: {
-					connect: {
-						id: dto.author.id
-					}
-				},
+				author: dto.author || book.author,
 				majorGenre: {
 					connect: {
 						id: dto.genres[0]
@@ -238,9 +212,6 @@ export class BookService {
 			where: { id: +id },
 			include: {
 				majorGenre: false,
-				author: {
-					select: returnAuthorObject
-				},
 				genres: { select: ReturnGenreObject }
 			}
 		})
@@ -252,7 +223,7 @@ export class BookService {
 				genres: { some: { id: { in: genreIds } } }
 			},
 			select: {
-				...returnBookObjectWithAuthor,
+				...returnBookObject,
 				genres: { select: ReturnGenreObject }
 			}
 		})

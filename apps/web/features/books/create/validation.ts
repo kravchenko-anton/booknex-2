@@ -9,10 +9,7 @@ export const createBookValidationSchema = z.object({
 	pages: z.number().positive(),
 	description: z.string(),
 	popularity: z.number().positive(),
-	author: z.object({
-		label: z.string(),
-		value: z.number()
-	}),
+	author: z.string(),
 	chapters: z
 		.array(
 			z.object({

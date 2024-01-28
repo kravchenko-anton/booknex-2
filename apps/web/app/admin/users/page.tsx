@@ -1,11 +1,11 @@
 'use client'
-import { useData } from '@/features/users/catalog/useData'
+import { useCatalog } from '@/features/users/catalog/useCatalog'
 import DataTable from '@/widgets/table/data-table'
 import DataTableHeader from '@/widgets/table/table-search'
 import type { FC } from 'react'
 
 const Page: FC = () => {
-	const { headerProperties, tableProperties } = useData()
+	const { headerProperties, tableProperties } = useCatalog()
 	return (
 		<div className='w-full'>
 			<DataTableHeader title='Users' {...headerProperties}></DataTableHeader>

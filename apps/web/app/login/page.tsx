@@ -1,17 +1,27 @@
+'use client'
 import type { AuthFieldsType } from '@/features/auth/action/auth-types'
-import { useAction } from '@/shared/hooks'
+import { useAction, useAuth } from '@/shared/hooks'
 import { Button, Field } from '@/shared/ui'
 import { Mail, Password } from 'icons'
+import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Page: FC = () => {
 	const { login } = useAction()
+	const router = useRouter()
+	const { user } = useAuth()
 	//TODO: сделать валидацию через zod
 	const { handleSubmit, control } = useForm<AuthFieldsType>({
 		mode: 'onSubmit'
 	})
-	const onSubmit = (data: AuthFieldsType) => login(data)
+	useEffect(() => {
+		if (user) router.replace('/admin/dashboard')
+	}, [user, router])
+	const onSubmit = (data: AuthFieldsType) => {
+		login(data)
+	}
 	return (
 		<div className='flex h-screen w-screen items-center justify-center'>
 			<div className='bg-foreground w-[450px] rounded-xl p-8'>

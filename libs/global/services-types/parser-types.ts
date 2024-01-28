@@ -3,14 +3,12 @@ import type { defaultReturnObject } from '../../../apps/backend/src/utils/return
 import type { GetAllTypeOutput } from './utils'
 
 export type AllGoodReadBookOutput = GetAllTypeOutput<
-	Prisma.GoodReadBookGetPayload<{
+	Prisma.BookTemplateGetPayload<{
 		select: typeof defaultReturnObject & {
 			title: true
 			pages: true
 			description: true
-			authorPicture: true
-			authorDescription: true
-			authorName: true
+			author: true
 			genres: true
 			picture: true
 			popularity: true

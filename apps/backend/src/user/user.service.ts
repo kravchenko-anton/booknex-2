@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { hash, verify } from 'argon2'
-import { returnBookObjectWithAuthor } from '../book/return.book.object'
+import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
@@ -38,13 +38,13 @@ export class UserService {
 			where: { id },
 			select: {
 				readingBooks: {
-					select: returnBookObjectWithAuthor
+					select: returnBookObject
 				},
 				finishedBooks: {
-					select: returnBookObjectWithAuthor
+					select: returnBookObject
 				},
 				savedBooks: {
-					select: returnBookObjectWithAuthor
+					select: returnBookObject
 				}
 			}
 		})

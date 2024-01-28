@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import {
-	returnBookObjectWithAuthor,
-	returnColorBookObjectWithAuthor
-} from '../book/return.book.object'
+import { returnBookObject } from '../book/return.book.object'
 import { ActivityEnum } from '../user/user.types'
 import { PrismaService } from '../utils/prisma.service'
 
@@ -22,7 +19,7 @@ export class CatalogService {
 			}
 		})
 		return {
-			relatedGenres: await this.relatedGenres(userId),
+			relatedGenres: await this.relatedGenres(),
 			recommendations: await this.recommendations(userId),
 			popularBooks: await this.popularBooks(),
 			bestSellingBooks: await this.bestSellingBooks(),
@@ -35,7 +32,7 @@ export class CatalogService {
 	search(query: string) {
 		return this.prisma.book.findMany({
 			select: {
-				...returnBookObjectWithAuthor,
+				...returnBookObject,
 				pages: true
 			},
 			where: {
@@ -48,10 +45,8 @@ export class CatalogService {
 					},
 					{
 						author: {
-							name: {
-								contains: query,
-								mode: 'insensitive'
-							}
+							contains: query,
+							mode: 'insensitive'
 						}
 					}
 				]
@@ -59,7 +54,7 @@ export class CatalogService {
 		})
 	}
 
-	private async relatedGenres(userId: number) {
+	private async relatedGenres() {
 		return this.prisma.genre.findMany({})
 	}
 
@@ -69,7 +64,7 @@ export class CatalogService {
 			orderBy: {
 				popularity: 'desc'
 			},
-			select: returnColorBookObjectWithAuthor
+			select: returnBookObject
 		})
 	}
 
@@ -79,7 +74,7 @@ export class CatalogService {
 			orderBy: {
 				popularity: 'desc'
 			},
-			select: returnBookObjectWithAuthor
+			select: returnBookObject
 		})
 	}
 
@@ -89,7 +84,7 @@ export class CatalogService {
 			orderBy: {
 				updatedAt: 'desc'
 			},
-			select: returnBookObjectWithAuthor
+			select: returnBookObject
 		})
 	}
 
@@ -122,7 +117,7 @@ export class CatalogService {
 		return this.prisma.book.findMany({
 			take: 10,
 			orderBy: { popularity: 'desc' },
-			select: returnBookObjectWithAuthor,
+			select: returnBookObject,
 			where: {
 				genres: {
 					some: {

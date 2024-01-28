@@ -6,6 +6,7 @@ module.exports = {
 		'sonarjs',
 		'unicorn',
 		'react-native',
+		'destructuring',
 		'jsx-a11y',
 		'react',
 		'jsx-expressions'
@@ -22,7 +23,8 @@ module.exports = {
 		'plugin:@typescript-eslint/stylistic',
 		'plugin:@typescript-eslint/stylistic-type-checked',
 		'plugin:@typescript-eslint/strict-type-checked',
-		'plugin:security/recommended-legacy'
+		'plugin:security/recommended-legacy',
+		'plugin:destructuring/recommended'
 	],
 	root: true,
 	ignorePatterns: ['*.js'],
@@ -54,7 +56,9 @@ module.exports = {
 		'@typescript-eslint/no-explicit-any': 'error',
 		'@typescript-eslint/no-extra-non-null-assertion': 'error',
 		'max-params': ['error', 3],
-		complexity: ['error', 10],
+		'destructuring/in-params': ['error', { 'max-params': 2 }],
+		complexity: ['error', 8],
+		'destructuring/no-rename': 'off',
 		'no-unneeded-ternary': 'error',
 		'jsx-expressions/strict-logical-expressions': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
@@ -132,7 +136,7 @@ module.exports = {
 		'no-nested-ternary': 'off',
 		'unicorn/no-null': 'off',
 		'spaced-comment': ['off'],
-		'@typescript-eslint/no-unsafe-argument': 'off',
+		'@typescript-eslint/no-unsafe-argument': ['error'],
 		'@typescript-eslint/prefer-nullish-coalescing': 'off',
 		'@typescript-eslint/no-unsafe-call': 'off',
 		'@typescript-eslint/no-unsafe-assignment': 'off',

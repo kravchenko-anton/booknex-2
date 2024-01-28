@@ -4,7 +4,7 @@ import type { FC, PropsWithChildren } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface DataTableHeaderProperties {
-	onSearchSubmit: (data: { search: string }) => void
+	onSearchSubmit: (data: { searchTerm: string }) => void
 	defaultTerm: string
 	title?: string
 }
@@ -14,7 +14,7 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 	title = '',
 	onSearchSubmit
 }) => {
-	const { control, handleSubmit } = useForm<{ search: string }>({
+	const { control, handleSubmit } = useForm<{ searchTerm: string }>({
 		mode: 'onSubmit'
 	})
 
@@ -26,7 +26,7 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 					<Field
 						control={control}
 						icon={Search}
-						name='search'
+						name='searchTerm'
 						defaultValue={defaultTerm}
 						placeholder='Explore...'
 						type='search'

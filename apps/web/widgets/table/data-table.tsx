@@ -17,19 +17,16 @@ export interface DataTableProperties {
 	table: ReturnType<typeof useReactTable<any>>
 	totalPages: number
 	currentPage: number
-	previous: {
-		onClick: () => void
-	}
-	next: {
-		onClick: () => void
-		disabled: boolean
-	}
+	previous: () => void
+	next: () => void
+	canLoadMore?: boolean
 }
 const DataTable: FC<DataTableProperties> = ({
 	next,
 	currentPage,
 	previous,
 	table,
+	canLoadMore,
 	totalPages
 }) => {
 	return (
@@ -86,12 +83,12 @@ const DataTable: FC<DataTableProperties> = ({
 					<Button
 						size='sm'
 						variant='secondary'
-						onClick={previous.onClick}
+						onClick={previous}
 						disabled={!!(typeof currentPage !== 'number' || currentPage < 1)}
 					>
 						Previous
 					</Button>
-					<Button size='sm' onClick={next.onClick} disabled={next.disabled}>
+					<Button size='sm' onClick={next} disabled={canLoadMore}>
 						Next
 					</Button>
 				</div>

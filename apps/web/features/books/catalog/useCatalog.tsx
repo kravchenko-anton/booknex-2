@@ -5,7 +5,8 @@ import { generateParameters } from '@/shared/utils/generate-parameters'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
-export const useBooks = () => {
+export const bookRoute = '/admin/books'
+export const useCatalog = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
 	const { books, deleteBook, toggleVisible } = useQueries({ page, searchTerm })
@@ -13,24 +14,26 @@ export const useBooks = () => {
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			overview: id => router.push(`admin/books/${id}/overview`),
-			update: id => router.push(`admin/books/${id}/update`),
+			overview: id => router.push(`${bookRoute}/${id}/overview`),
+			update: id => router.push(`${bookRoute}/${id}/update`),
 			remove: deleteBook,
 			toggleVisible: toggleVisible
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})
 
+	const pushParameters = (parameters: NonNullable<unknown>) => {
+		router.replace(
+			generateParameters(bookRoute, {
+				...parameters
+			})
+		)
+	}
+
 	const headerProperties = {
 		defaultTerm: searchTerm,
-		onSearchSubmit: data => {
-			router.push(
-				generateParameters('/admin/books', {
-					searchTerm: data.search
-				})
-			)
-			router.refresh()
-		}
+		onSearchSubmit: (data: { searchTerm: string }) =>
+			pushParameters({ searchTerm: data.searchTerm })
 	}
 
 	const onCreateButtonClick = () => router.push('/admin/books/create')
@@ -39,27 +42,9 @@ export const useBooks = () => {
 		table,
 		totalPages: books?.totalPages,
 		currentPage: page,
-		previous: {
-			onClick: () => {
-				router.push(
-					generateParameters('/admin/books', {
-						page: page - 1
-					})
-				)
-				router.refresh()
-			}
-		},
-		next: {
-			onClick: () => {
-				router.push(
-					generateParameters('/admin/books', {
-						page: page + 1
-					})
-				)
-				router.refresh()
-			},
-			disabled: !books?.canLoadMore
-		}
+		canLoadMore: !books?.canLoadMore,
+		previous: () => pushParameters({ page: page - 1 }),
+		next: () => pushParameters({ page: page + 1 })
 	}
 	return {
 		onCreateButtonClick,

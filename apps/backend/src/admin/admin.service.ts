@@ -8,7 +8,6 @@ export class AdminService {
 		// дейли трафик, статистика регистации по дням, самые активные книги, самые активные пользователи и авторы и статистика, и жанры
 		return {
 			totalUsers: await this.prisma.user.count(),
-			totalAuthors: await this.prisma.author.count(),
 			totalBooks: await this.prisma.book.count(),
 			totalGenres: await this.prisma.genre.count()
 		}

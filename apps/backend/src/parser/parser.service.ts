@@ -21,16 +21,14 @@ export class ParserService {
 	async all(searchTerm: string, page: number) {
 		const perPage = 20
 		return {
-			data: await this.prisma.goodReadBook.findMany({
+			data: await this.prisma.bookTemplate.findMany({
 				take: perPage,
 				select: {
 					...defaultReturnObject,
 					title: true,
 					pages: true,
 					description: true,
-					authorPicture: true,
-					authorDescription: true,
-					authorName: true,
+					author: true,
 					genres: true,
 					picture: true,
 					popularity: true
@@ -42,25 +40,13 @@ export class ParserService {
 					where: {
 						OR: [
 							{
+								author: {
+									contains: searchTerm,
+									mode: 'insensitive'
+								}
+							},
+							{
 								title: {
-									contains: searchTerm,
-									mode: 'insensitive'
-								}
-							},
-							{
-								authorName: {
-									contains: searchTerm,
-									mode: 'insensitive'
-								}
-							},
-							{
-								authorDescription: {
-									contains: searchTerm,
-									mode: 'insensitive'
-								}
-							},
-							{
-								description: {
 									contains: searchTerm,
 									mode: 'insensitive'
 								}
@@ -70,13 +56,13 @@ export class ParserService {
 				})
 			}),
 			canLoadMore:
-				page < Math.floor((await this.prisma.goodReadBook.count()) / perPage),
-			totalPages: Math.floor((await this.prisma.goodReadBook.count()) / perPage)
+				page < Math.floor((await this.prisma.bookTemplate.count()) / perPage),
+			totalPages: Math.floor((await this.prisma.bookTemplate.count()) / perPage)
 		}
 	}
 
 	async delete(id: number) {
-		return this.prisma.goodReadBook.delete({
+		return this.prisma.bookTemplate.delete({
 			where: {
 				id
 			}
@@ -175,7 +161,7 @@ export class ParserService {
 
 	async parse(dto: ParserDto) {
 		try {
-			const goodReadBook = await this.prisma.goodReadBook.findMany({
+			const bookTemplate = await this.prisma.bookTemplate.findMany({
 				select: {
 					title: true
 				}
@@ -250,12 +236,6 @@ export class ParserService {
 						'div.FeaturedPerson__infoPrimary > h4 > a > span'
 					)
 					await page.waitForSelector(
-						'div.FeaturedPerson__profile > div.FeaturedPerson__avatar > a > img'
-					)
-					await page.waitForSelector(
-						'div.BookPageMetadataSection > div.PageSection > div.TruncatedContent > div.TruncatedContent__text.TruncatedContent__text--medium > div > div > span'
-					)
-					await page.waitForSelector(
 						'div.BookPageMetadataSection > div.BookPageMetadataSection__description > div > div.TruncatedContent__text.TruncatedContent__text--large > div > div > span'
 					)
 
@@ -280,21 +260,8 @@ export class ParserService {
 						const author = document.querySelector(
 							'div.FeaturedPerson__infoPrimary > h4 > a > span'
 						)
-						const authorPicture = document.querySelector(
-							'div.FeaturedPerson__profile > div.FeaturedPerson__avatar > a > img'
-						)
-						const authorDescription = document.querySelector(
-							'div.BookPageMetadataSection > div.PageSection > div.TruncatedContent > div.TruncatedContent__text.TruncatedContent__text--medium > div > div > span'
-						)
 						return {
-							name: author.textContent ?? 'No author name',
-							picture: authorPicture.getAttribute('src') ?? 'No author picture',
-							description: authorDescription.textContent
-								? authorDescription.textContent.replaceAll(
-										/(Librarian's note|Contributor note|See also).*?\./g,
-										''
-									)
-								: 'No author description'
+							name: author.textContent ?? 'No author name'
 						}
 					})
 
@@ -338,13 +305,13 @@ export class ParserService {
 					})
 
 					const genres = await page.evaluate(() => {
-						const genres: any = document.querySelectorAll(
+						const genres = document.querySelectorAll(
 							'div.BookPageMetadataSection > div.BookPageMetadataSection__genres > ul > span:nth-child(1) > span > a > .Button__labelItem'
 						)
 						return [...genres].map(genre => genre.textContent) ?? ['No genres']
 					})
 					if (rating < 40_000) continue
-					if (goodReadBook.some(b => b.title === title.trim())) continue
+					if (bookTemplate.some(b => b.title === title.trim())) continue
 					const goodGenres = await this.prisma.genre.findMany({
 						where: {
 							OR: genres.map(genre => {
@@ -357,12 +324,10 @@ export class ParserService {
 							})
 						}
 					})
-					await this.prisma.goodReadBook.create({
+					await this.prisma.bookTemplate.create({
 						data: {
 							title: title.trim(),
-							authorName: author.name,
-							authorPicture: author.picture,
-							authorDescription: author.description,
+							author: author.name,
 							description,
 							picture,
 							pages,

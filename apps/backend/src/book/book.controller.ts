@@ -11,7 +11,6 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllBooksOutput,
-	AllSelectBooksOutput,
 	BookByIdOutput,
 	EpubOutput
 } from '../../../../libs/global/services-types/book-types'
@@ -71,14 +70,6 @@ export class BookController {
 		@Query('page') page: number
 	): Promise<AllBooksOutput> {
 		return this.bookService.all(searchTerm, page || 1)
-	}
-
-	@Auth('admin')
-	@Get('admin/all/select')
-	async allSelect(
-		@Query('searchTerm') searchTerm: string
-	): Promise<AllSelectBooksOutput> {
-		return this.bookService.allSelect(searchTerm)
 	}
 
 	@Auth('admin')
