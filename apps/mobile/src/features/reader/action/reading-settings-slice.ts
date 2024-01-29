@@ -29,7 +29,7 @@ export const ReaderFont = [
 ]
 
 const initialState = {
-	colorScheme: themePack[1],
+	colorScheme: themePack[0],
 	font: {
 		title: 'Courier New',
 		fontFamily: ReaderFontsEnum.Courier

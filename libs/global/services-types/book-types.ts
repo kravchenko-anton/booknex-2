@@ -47,17 +47,19 @@ export interface BookPayload {
 	author: string
 	description: string
 	picture: string
-	file: string
-	chapters: { name: string; children: { name: string; link: string }[] }[]
+	ebook: string
 	pages: number
 	popularity: number
 	genres: number[]
 }
 
-export type EpubOutput = Prisma.BookGetPayload<{
-	select: {
-		chapters: true
-		title: true
-		file: true
-	}
-}>
+export type EpubOutput = {
+	chapters: ChaptersType
+	title: string
+	file: string[]
+}
+
+export type ChaptersType = {
+	name: string
+	children: { title: string; link: string }[]
+}[]

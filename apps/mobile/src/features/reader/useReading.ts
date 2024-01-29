@@ -24,10 +24,10 @@ export const useReading = (id: number) => {
 	})
 
 	useSaveProgress({ id, readerState })
-	const { mutateAsync: finishReading } = useMutation(
-		['end reading book'],
-		(id: number) => userServices.finishReading(id)
-	)
+	const { mutateAsync: finishReading } = useMutation({
+		mutationKey: ['end reading book'],
+		mutationFn: (id: number) => userServices.finishReading(id)
+	})
 
 	const onMessage = useCallback(
 		async (event: WebViewMessageEvent) => {

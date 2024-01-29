@@ -9,7 +9,10 @@ import { View } from 'react-native'
 
 const SelectGenres: FC = () => {
 	const [selectGenres, setSelectGenres] = useState<string[]>([])
-	const { data: genres } = useQuery(['genres'], () => genreService.all())
+	const { data: genres } = useQuery({
+		queryKey: ['genres'],
+		queryFn: () => genreService.all()
+	})
 	const { navigate } = useTypedNavigation()
 	if (!genres) return <Loader />
 	return (

@@ -56,13 +56,18 @@ export class BookService {
 			where: { id },
 			select: {
 				title: true,
-				chapters: true,
-				file: true
+				ebook: true
 			}
 		})
 		if (!book)
 			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
-		const bookFile = await fetch(getFileUrl(book.file))
+		const ebook: {
+			name: string
+			content: {
+				title: string
+				content: string
+			}[]
+		}[] = await fetch(getFileUrl(book.ebook)).then(result => result.json())
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Get_Ebook,
@@ -80,7 +85,24 @@ export class BookService {
 		})
 		return {
 			...book,
-			file: await bookFile.text()
+			file: ebook.map(({ content }) => {
+				return content
+					.map(
+						({ title, content }) => `<label id="${title}"></label> ${content}`
+					)
+					.join(' ')
+			}),
+			chapters: ebook.map(({ name, content }) => {
+				return {
+					name,
+					children: content.map(({ title }) => {
+						return {
+							title,
+							link: `#${title}`
+						}
+					})
+				}
+			})
 		}
 	}
 
@@ -145,8 +167,7 @@ export class BookService {
 				pages: dto.pages,
 				description: dto.description,
 				picture: dto.picture,
-				file: dto.file,
-				chapters: dto.chapters,
+				ebook: dto.ebook,
 				author: dto.author,
 				genres: {
 					connect: dto.genres.map(g => ({ id: g }))
@@ -170,8 +191,7 @@ export class BookService {
 				pages: dto.pages || book.pages,
 				description: dto.description || book.description,
 				picture: dto.picture || book.picture,
-				file: dto.file || book.file,
-				chapters: dto.chapters || book.chapters,
+				ebook: dto.ebook || book.ebook,
 				author: dto.author || book.author,
 				majorGenre: {
 					connect: {

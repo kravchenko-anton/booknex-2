@@ -123,7 +123,7 @@ export class ParserService {
 									id: chapter.id,
 									title: chapter.title,
 									content: finalContent
-										.replaceAll(/<(\/)?(body|html|head).*?>/g, '')
+										.replaceAll(/<(\/)?(body|html|head|div).*?>/g, '')
 										.trim()
 										.replaceAll(/\n{2,}/g, '\n')
 								})
@@ -157,6 +157,24 @@ export class ParserService {
 		}).catch(error => {
 			throw new BadRequestException(error)
 		}) as Promise<UnfoldOutput>
+	}
+
+	async byId(id: number) {
+		return this.prisma.bookTemplate.findUnique({
+			where: {
+				id
+			},
+			select: {
+				...defaultReturnObject,
+				title: true,
+				pages: true,
+				description: true,
+				author: true,
+				picture: true,
+				genres: true,
+				popularity: true
+			}
+		})
 	}
 
 	async parse(dto: ParserDto) {

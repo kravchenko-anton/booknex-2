@@ -1,6 +1,7 @@
 import { columns } from '@/features/books/catalog/columns'
 import { useQueries } from '@/features/books/catalog/useQueries'
 import { useTableParameters } from '@/shared/hooks/useTableParameters'
+import type { GenerateParametersType } from '@/shared/utils/generate-parameters'
 import { generateParameters } from '@/shared/utils/generate-parameters'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
@@ -22,13 +23,8 @@ export const useCatalog = () => {
 		getCoreRowModel: getCoreRowModel()
 	})
 
-	const pushParameters = (parameters: NonNullable<unknown>) => {
-		router.replace(
-			generateParameters(bookRoute, {
-				...parameters
-			})
-		)
-	}
+	const pushParameters = (parameters: GenerateParametersType) =>
+		router.replace(generateParameters(bookRoute, parameters))
 
 	const headerProperties = {
 		defaultTerm: searchTerm,

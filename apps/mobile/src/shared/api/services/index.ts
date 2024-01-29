@@ -1,4 +1,3 @@
-export { authorService } from './author/author-service'
 export { bookService } from './book/book-service'
 export { catalogService } from './catalog/catalog-service'
 export { genreService } from './genre/genre-service'

@@ -1,4 +1,6 @@
+export type GenerateParametersType = Record<any, any>
+
 export const generateParameters = (
 	link: string,
-	parameters: Record<any, any>
+	parameters: GenerateParametersType
 ) => `${link}?${new URLSearchParams(parameters).toString()}`

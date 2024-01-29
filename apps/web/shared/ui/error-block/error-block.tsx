@@ -1,18 +1,12 @@
 import type { FieldErrors } from 'react-hook-form'
-import { get, useFormContext } from 'react-hook-form'
 import type { Properties } from './types'
 
 export const ErrorMessage = <TFieldErrorsType extends FieldErrors>({
 	errors,
-	name,
-	message
+	name
 }: Properties<TFieldErrorsType>) => {
-	const methods = useFormContext()
-	const error = get(errors || methods.formState.errors, name)
+	const error = errors[name]?.message
 
-	if (!error) {
-		return null
-	}
-
-	return <p className='text-danger text-md mt-2 italic'>{message}</p>
+	if (error && typeof error === 'string')
+		return <p className='text-danger text-md mt-2 italic'>{error}</p>
 }

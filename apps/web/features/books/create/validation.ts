@@ -10,19 +10,6 @@ export const createBookValidationSchema = z.object({
 	description: z.string(),
 	popularity: z.number().positive(),
 	author: z.string(),
-	chapters: z
-		.array(
-			z.object({
-				name: z.string(),
-				children: z.array(
-					z.object({
-						name: z.string(),
-						link: z.string()
-					})
-				)
-			})
-		)
-		.min(1),
 	books: z
 		.array(
 			z
@@ -44,14 +31,7 @@ export const createBookValidationSchema = z.object({
 				})
 		)
 		.min(1),
-	genres: z
-		.array(
-			z.object({
-				label: z.string(),
-				value: z.number()
-			})
-		)
-		.min(1)
+	genres: z.array(z.number()).min(1)
 })
 
 export type CreateBookValidationSchemaType = z.infer<

@@ -22,6 +22,10 @@ import { UserModule } from './user/user.module'
 		GenreModule,
 		BookModule,
 		StorageModule,
+
+		CollectionModule,
+		ParserModule,
+		AdminModule,
 		ThrottlerModule.forRoot([
 			{
 				ttl: 60,
@@ -32,10 +36,7 @@ import { UserModule } from './user/user.module'
 			isGlobal: true,
 			ttl: 5000,
 			max: 1000
-		}),
-		AdminModule,
-		CollectionModule,
-		ParserModule
+		})
 	],
 	controllers: [AppController],
 	providers: [AppService, ConfigService]

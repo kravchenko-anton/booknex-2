@@ -2,7 +2,10 @@ import { bookRoute } from '@/features/books/catalog/useCatalog'
 import { columns } from '@/features/parser/catalog/columns'
 import { useQueries } from '@/features/parser/catalog/useQueries'
 import { useTableParameters } from '@/shared/hooks/useTableParameters'
-import { generateParameters } from '@/shared/utils/generate-parameters'
+import {
+	generateParameters,
+	type GenerateParametersType
+} from '@/shared/utils/generate-parameters'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
@@ -16,19 +19,14 @@ export const useCatalog = () => {
 		searchTerm
 	})
 
-	const pushParameters = (parameters: NonNullable<unknown>) => {
-		router.replace(
-			generateParameters(parserRoute, {
-				...parameters
-			})
-		)
-	}
+	const pushParameters = (parameters: GenerateParametersType) =>
+		router.replace(generateParameters(parserRoute, parameters))
 
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
 			remove: deleteFromParser,
-			useAsTemplate: id => router.push(`${bookRoute}/${id}/template-create`)
+			useAsTemplate: id => router.push(`${bookRoute}/create?template=${id}`)
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})

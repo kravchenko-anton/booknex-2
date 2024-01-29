@@ -1,11 +1,14 @@
-import { bookRoute } from '@/features/books/catalog/useCatalog'
 import { columns } from '@/features/users/catalog/columns'
 import { useQueries } from '@/features/users/catalog/useQueries'
 import { useTableParameters } from '@/shared/hooks/useTableParameters'
-import { generateParameters } from '@/shared/utils/generate-parameters'
+import {
+	generateParameters,
+	type GenerateParametersType
+} from '@/shared/utils/generate-parameters'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
+export const userRoute = '/admin/users'
 export const useCatalog = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
@@ -15,19 +18,15 @@ export const useCatalog = () => {
 		data: users?.data ?? [],
 		columns: columns({
 			//TODO: пофиксить тут
-			update: () => {},
+			preview: (id: number) => router.push(`/admin/users/${id}/preview`),
 			remove: deleteUser
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})
 
-	const pushParameters = (parameters: NonNullable<unknown>) => {
-		router.replace(
-			generateParameters(bookRoute, {
-				...parameters
-			})
-		)
-	}
+	const pushParameters = (parameters: GenerateParametersType) =>
+		router.replace(generateParameters(userRoute, parameters))
+
 	const headerProperties = {
 		defaultTerm: searchTerm,
 		onSearchSubmit: (data: { searchTerm: string }) =>

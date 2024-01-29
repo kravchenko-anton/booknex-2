@@ -69,10 +69,9 @@ const Book = () => {
 						color={Color.gray}
 						weight='regular'
 						size={16}
-						onPress={() => navigate('Author', { id: book.author.id })}
 						className='mt-1'
 					>
-						{book.author.name}
+						{book.author}
 					</Title>
 				</View>
 				<Button

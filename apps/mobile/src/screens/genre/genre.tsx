@@ -8,9 +8,10 @@ import { useLayoutEffect } from 'react'
 
 const Genre = () => {
 	const { params } = useTypedRoute<'Genre'>()
-	const { data: genre } = useQuery(['genre', params.id], () =>
-		genreService.byId(+params.id)
-	)
+	const { data: genre } = useQuery({
+		queryKey: ['genre', +params.id],
+		queryFn: () => genreService.byId(+params.id)
+	})
 	const { setOptions, navigate } = useTypedNavigation()
 	useLayoutEffect(() => {
 		setOptions({

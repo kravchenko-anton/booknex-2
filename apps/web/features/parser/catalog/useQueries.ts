@@ -4,23 +4,23 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
-	const { data: books } = useQuery(['book-templates', searchTerm, page], () =>
-		parserService.all({
-			searchTerm: searchTerm,
-			page: +page
-		})
-	)
+	const { data: books } = useQuery({
+		queryKey: ['book-templates', searchTerm, page],
+		queryFn: () =>
+			parserService.all({
+				searchTerm: searchTerm,
+				page: +page
+			})
+	})
 
-	const { mutateAsync: deleteFromParser } = useMutation(
-		['delete from parser'],
-		(id: number) => parserService.delete(id),
-		{
-			onSuccess: async () => {
-				successToast('Book deleted')
-				await queryClient.invalidateQueries(['book-templates'])
-			}
+	const { mutateAsync: deleteFromParser } = useMutation({
+		mutationKey: ['delete book from parser'],
+		mutationFn: (id: number) => parserService.delete(id),
+		async onSuccess() {
+			successToast('Book deleted')
+			await queryClient.invalidateQueries(['book-templates'])
 		}
-	)
+	})
 
 	return {
 		books,

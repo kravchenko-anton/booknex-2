@@ -16,21 +16,19 @@ export const blobFormData = (blob: Blob, fileName: string) => {
 }
 // TODO: переписать абсолютно везде на этот хук
 export const useUploadFile = () => {
-	const { mutateAsync: upload } = useMutation(
-		['upload file'],
-		({ folder, blob, name }: UploadFileProperties) => {
+	const { mutateAsync: upload } = useMutation({
+		mutationKey: ['upload file'],
+		mutationFn: ({ folder, blob, name }: UploadFileProperties) => {
 			const formData = blobFormData(blob, name)
 			return storageService.upload(formData, folder)
 		},
-		{
-			onError: () =>
-				errorToast({
-					text1: 'Upload file',
-					text2: 'An error occurred',
-					type: 'error'
-				})
-		}
-	)
+		onError: () =>
+			errorToast({
+				text1: 'Upload file',
+				text2: 'An error occurred',
+				type: 'error'
+			})
+	})
 	return {
 		upload
 	}

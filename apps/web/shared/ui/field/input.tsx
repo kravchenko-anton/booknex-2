@@ -9,7 +9,7 @@ const Input: FC<InputProperties> = ({
 	isError = false,
 	className = '',
 	variant = 'foreground',
-	value = '',
+	value,
 	...properties
 }) => {
 	return (

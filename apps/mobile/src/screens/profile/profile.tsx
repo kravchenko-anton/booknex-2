@@ -3,9 +3,10 @@ import { Loader, ScrollLayout, Title } from '@/shared/ui'
 import { useQuery } from '@tanstack/react-query'
 
 const Profile = () => {
-	const { data: profile } = useQuery(['user-profile'], () =>
-		userServices.profile()
-	)
+	const { data: profile } = useQuery({
+		queryKey: ['user-profile'],
+		queryFn: () => userServices.profile()
+	})
 	if (!profile) return <Loader />
 	return (
 		<ScrollLayout className='px-2'>

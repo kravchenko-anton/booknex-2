@@ -20,7 +20,7 @@ const Command = forwardRef<
 	<CommandPrimitive
 		ref={reference}
 		className={cn(
-			'bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md',
+			'bg-background  text-gray flex h-full w-full flex-col overflow-hidden rounded-md',
 			className
 		)}
 		{...properties}
@@ -49,7 +49,7 @@ const CommandInput = forwardRef<
 	ElementRef<typeof CommandPrimitive.Input>,
 	ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...properties }, reference) => (
-	<div className='flex items-center border-b px-3'>
+	<div className='border-muted flex items-center border-b px-3'>
 		<Search className='mr-2 h-4 w-4 shrink-0 opacity-50' />
 		<CommandPrimitive.Input
 			ref={reference}
@@ -112,7 +112,7 @@ const CommandSeparator = forwardRef<
 >(({ className, ...properties }, reference) => (
 	<CommandPrimitive.Separator
 		ref={reference}
-		className={cn('bg-border -mx-1 h-px', className)}
+		className={cn('bg-muted -mx-1 h-px', className)}
 		{...properties}
 	/>
 ))

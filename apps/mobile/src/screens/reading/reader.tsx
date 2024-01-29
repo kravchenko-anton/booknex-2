@@ -22,15 +22,16 @@ import WebView from 'react-native-webview'
 //TODO: оптимизировать тут всё
 function Reader() {
 	const { params } = useTypedRoute<'Reader'>()
-	const { data: ebook } = useQuery(['e-book', params.id], () =>
-		bookService.ebookById(params.id)
-	)
+	const { data: ebook } = useQuery({
+		queryKey: ['e-books', +params.id],
+		queryFn: () => bookService.ebookById(+params.id)
+	})
 	const [readerUiVisible, setReaderUiVisible] = useState(true)
 	const reference = useRef<WebView>(null)
 
 	const { openReadingSettings, openChapterList } = useReadingSheets()
 	const { colorScheme, onMessage, styleTag, progress, initialScroll } =
-		useReading(params.id)
+		useReading(+params.id)
 
 	useEffect(() => {
 		if (!reference.current) return
@@ -38,7 +39,9 @@ function Reader() {
 	}, [styleTag])
 
 	const [defaultTheme] = useState(styleTag)
+
 	if (!ebook || !styleTag) return <Loader />
+	console.log(ebook.file)
 	return (
 		<SafeAreaView className='flex-1'>
 			<View className='m-0 h-screen w-full items-center justify-center p-0'>
@@ -87,7 +90,7 @@ function Reader() {
 						chapters: ebook.chapters,
 						openChapter: (chapterId: string) =>
 							reference.current?.injectJavaScript(
-								`window.location.hash = '#${chapterId}'`
+								`window.location.hash = '${chapterId}'`
 							)
 					})
 				}

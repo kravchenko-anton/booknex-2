@@ -1,4 +1,3 @@
-import Author from '@/screens/author/author'
 import BookFeedback from '@/screens/book-feedback/book-feedback'
 import Book from '@/screens/book/book'
 import Collection from '@/screens/collection/collection'
@@ -60,13 +59,6 @@ export const routes: IRoute[] = [
 	{
 		name: 'Collection',
 		component: Collection,
-		options: {
-			headerShown: false
-		}
-	},
-	{
-		name: 'Author',
-		component: Author,
 		options: {
 			headerShown: false
 		}

@@ -1,7 +1,16 @@
+import { parserService } from '@/shared/services/parser/parser-services'
+import { blobFormData } from '@/shared/utils/files'
 import { errorToast, successToast } from '@/shared/utils/toast'
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 
 export const useBookCompose = () => {
+	const { mutateAsync: unfold } = useMutation({
+		mutationKey: ['unfold ebook'],
+		mutationFn: (formData: FormData) => parserService.unfold(formData),
+		onSuccess: () => successToast('File uploaded'),
+		onError: () => errorToast('Error while uploading book')
+	})
 	const [books, setBooks] = useState<
 		{
 			name: string
@@ -13,18 +22,6 @@ export const useBookCompose = () => {
 		}[]
 	>([])
 
-	const chapters = books.map(book => {
-		return {
-			name: book.name,
-			children: book.content.map(content => {
-				return {
-					id: content.id,
-					name: content.title,
-					link: book.name + '/' + content.title
-				}
-			})
-		}
-	})
 	const deleteBook = ({ name }: { name: string }) => {
 		setBooks(books?.filter(book => book.name !== name))
 		successToast('Book deleted')
@@ -237,14 +234,24 @@ export const useBookCompose = () => {
 		successToast('Book uploaded')
 	}
 
+	const unfoldWithUpload = (files: File[]) => {
+		for (const file of files) {
+			unfold(blobFormData(new Blob([file]), file.name)).then(data => {
+				upload({
+					name: file.name,
+					content: data
+				})
+			})
+		}
+	}
+
 	return {
-		chapters,
 		books: {
+			upload: unfoldWithUpload,
 			state: books,
 			generateChaptersNames,
 			addNewCharacterAfterContent,
 			delete: deleteBook,
-			upload,
 			updateTocContent,
 			updateTocTitle,
 			updateChapterTitle,

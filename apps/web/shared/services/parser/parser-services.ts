@@ -1,6 +1,7 @@
 import { getParserUrl } from 'global/api-config'
 import type {
 	AllGoodReadBookOutput,
+	ByIdOutput,
 	ParserDtoPayload,
 	UnfoldOutput
 } from 'global/services-types/parser-types'
@@ -14,6 +15,13 @@ export const parserService = {
 		return request({
 			url: getParserUrl('/admin/all'),
 			params: parameters
+		})
+	},
+
+	async byId(id: number) {
+		return request<ByIdOutput>({
+			url: getParserUrl(`/admin/by-id/${id}`),
+			method: 'GET'
 		})
 	},
 
@@ -41,7 +49,7 @@ export const parserService = {
 
 	async delete(id: number) {
 		return request<null>({
-			url: getParserUrl(`/delete/${id}`),
+			url: getParserUrl(`/admin/delete/${id}`),
 			method: 'DELETE'
 		})
 	}

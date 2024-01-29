@@ -3,7 +3,6 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { ComponentType } from 'react'
 
 export type TypeRootStackParameterList = {
-	Author: { id: number }
 	Book: { id: number }
 
 	Featured: null

@@ -5,9 +5,10 @@ import BannerList from '@/shared/ui/book-lists/banner-list'
 import { useQuery } from '@tanstack/react-query'
 //TODO: добавить тут shelves
 const Featured = () => {
-	const { data: featured } = useQuery(['featured'], () =>
-		catalogService.featured()
-	)
+	const { data: featured } = useQuery({
+		queryKey: ['featured'],
+		queryFn: () => catalogService.featured()
+	})
 	const { navigate } = useTypedNavigation()
 	if (!featured) return <Loader />
 	return (
@@ -50,7 +51,7 @@ const Featured = () => {
 						size='md'
 						onPress={() => navigate('Book', { id: book.id })}
 						title={book.title}
-						author={book.author.name}
+						author={book.author}
 						image={{
 							uri: book.picture
 						}}
@@ -77,7 +78,7 @@ const Featured = () => {
 				data={featured.bestSellingBooks}
 				renderItem={({ item: book }) => (
 					<BookCard
-						author={book.author.name}
+						author={book.author}
 						onPress={() => navigate('Book', { id: book.id })}
 						size='md'
 						image={{

@@ -6,10 +6,10 @@ import { View } from 'react-native'
 
 const Collection = () => {
 	const { params } = useTypedRoute<'Collection'>()
-	const { data: collection } = useQuery(
-		['library', 'collection', params.id],
-		() => collectionService.byId(params.id)
-	)
+	const { data: collection } = useQuery({
+		queryKey: ['collection', params.id],
+		queryFn: () => collectionService.byId(params.id)
+	})
 
 	const { navigate } = useTypedNavigation()
 	if (!collection) return <Loader />

@@ -1,7 +1,7 @@
 import ChaptersList from '@/features/reader/sheets/chapters-list/chapters-list'
 import ReadingSettings from '@/features/reader/sheets/reading/reading-settings'
 import { useBottomSheetContext } from '@/shared/providers/bottom-sheet-provider'
-import type { ChapterType } from 'backend/types'
+import type { ChaptersType } from 'global/services-types/book-types'
 import React from 'react'
 
 export const useReadingSheets = () => {
@@ -13,7 +13,7 @@ export const useReadingSheets = () => {
 		chapters,
 		openChapter
 	}: {
-		chapters: ChapterType[]
+		chapters: ChaptersType
 		openChapter: (chapterId: string) => void
 	}) =>
 		showBottomSheet(

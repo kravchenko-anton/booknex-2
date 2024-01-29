@@ -14,6 +14,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express'
 import type {
 	AllGoodReadBookOutput,
+	ByIdOutput,
 	UnfoldOutput
 } from '../../../../libs/global/services-types/parser-types'
 import { Auth } from '../decorator/auth.decorator'
@@ -38,6 +39,11 @@ export class ParserController {
 		return this.parserService.parse(dto)
 	}
 
+	@Get('admin/by-id/:id')
+	byId(@Param('id') id: string): Promise<ByIdOutput> {
+		return this.parserService.byId(+id)
+	}
+
 	@Post('admin/unfold')
 	@UseInterceptors(FileInterceptor('file'))
 	async unfold(
@@ -55,7 +61,7 @@ export class ParserController {
 		return this.parserService.unfold(file)
 	}
 
-	@Delete('/delete/:id')
+	@Delete('admin/delete/:id')
 	async delete(@Param('id') id: string) {
 		return this.parserService.delete(+id)
 	}

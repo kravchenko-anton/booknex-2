@@ -1,48 +1,64 @@
 'use client'
-import { useBookCompose } from '@/features/books/create/useBook'
-import { useCreate } from '@/features/books/create/useCreate'
+import SelectGenres from '@/features/books/create/select-genres'
+import { useBookCompose } from '@/features/books/create/useBookCompose'
+import { useCreateForm } from '@/features/books/create/useForm'
 import {
 	Button,
 	DropZone,
 	ErrorMessage,
 	Field,
-	FormSelect,
 	FormTextArea,
 	TextArea
 } from '@/shared/ui'
-import { SheetTrigger } from '@/shared/ui/sheet'
-import { blobFormData } from '@/shared/utils/files'
 import { CaseSensitive, ChevronDown, ChevronUp, Close } from 'icons'
 import type { FC } from 'react'
-//TODO: полностью переделать по нормальному
+
 const Page: FC = () => {
-	const { books, chapters } = useBookCompose()
-	const { unfold, genres, form } = useCreate()
+	const { books } = useBookCompose()
+	const form = useCreateForm()
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
 			<div className=' flex justify-between gap-5'>
-				<div className='w-1/2'>
+				<div className='w-11/12'>
 					<div className='mt-2 flex justify-between gap-3'>
-						<Field
-							control={form.control}
-							className='w-1/2'
-							name='title'
-							placeholder='Title'
-						/>
+						<div className='w-1/3'>
+							<h1 className='mb-2'>Title</h1>
+							<Field
+								type='text'
+								control={form.control}
+								name='title'
+								placeholder='Title'
+							/>
+						</div>
+						<div className='w-1/3'>
+							<h1 className='mb-2'>Author</h1>
+							<Field
+								type='text'
+								control={form.control}
+								name='author'
+								placeholder='Author'
+							/>
+						</div>
 
-						<Field
-							type='number'
-							control={form.control}
-							name='pages'
-							placeholder='Pages'
-						/>
-						<Field
-							type='number'
-							control={form.control}
-							name='popularity'
-							placeholder='Popularity'
-						/>
+						<div>
+							<h1 className='mb-2'>Pages</h1>
+							<Field
+								type='number'
+								control={form.control}
+								name='pages'
+								placeholder='Pages'
+							/>
+						</div>
+						<div>
+							<h1 className='mb-2'>Popularity</h1>
+							<Field
+								type='number'
+								control={form.control}
+								name='popularity'
+								placeholder='Popularity'
+							/>
+						</div>
 					</div>
 					<h1 className='mb-2 mt-4'>Description</h1>
 					<FormTextArea
@@ -53,90 +69,48 @@ const Page: FC = () => {
 					/>
 				</div>
 
-				<div className='h-max w-1/2'>
-					<div className='flex justify-between gap-6'>
-						<div>
-							<h1 className='mt-2  text-xl'>Book file</h1>
-							<DropZone
-								size='md'
-								multiple={true}
-								accept='.epub'
-								onFileDelete={file =>
-									books.delete({
-										name: file.name
-									})
-								}
-								onDropFile={files => {
-									for (const file of files) {
-										unfold(blobFormData(new Blob([file]), file.name)).then(
-											data => {
-												books.upload({
-													name: file.name,
-													content: data
-												})
-											}
-										)
-									}
-								}}
-							/>
-							<ErrorMessage name='books' errors={form.errors} />
-						</div>
-						<div>
-							<h1 className='mt-2  text-xl'>Cover</h1>
-							<DropZone
-								size='md'
-								multiple={false}
-								accept='image/*'
-								onDropFile={acceptedFiles => {
-									form.setValue('picture', {
-										name: acceptedFiles[0].name,
-										blob: new Blob([acceptedFiles[0]])
-									})
-								}}
-							/>
-							<ErrorMessage name='picture' errors={form.errors} />
-						</div>
+				<div>
+					<div>
+						<h1 className='mt-2  text-xl'>Book file</h1>
+						<DropZone
+							size='md'
+							multiple={true}
+							accept='.epub'
+							onFileDelete={file =>
+								books.delete({
+									name: file.name
+								})
+							}
+							onDropFile={books.upload}
+						/>
+						<ErrorMessage name='books' errors={form.errors} />
 					</div>
-					<div className='flex justify-between gap-6'>
-						<div className='w-1/2'>
-							<h1 className='mb-2 mt-4 flex gap-5'>
-								Genres <p className='text-gray'>First genre be main</p>
-							</h1>
-							<FormSelect
-								control={form.control}
-								name='genres'
-								isMulti
-								options={genres?.map(genre => {
-									return {
-										label: genre.name,
-										value: genre.id
-									}
-								})}
-								isSearchable
-								placeholder='Select genres'
-							/>
-						</div>
-						<div className='w-1/2'>
-							<div className='mb-2 mt-4 flex gap-3'>
-								<h1>Author</h1>
-								<SheetTrigger>
-									<Button size='sm'>Create</Button>
-								</SheetTrigger>
-							</div>
-							<Field
-								type='text'
-								control={form.control}
-								name='author'
-								placeholder='Author'
-							/>
-						</div>
+					<div>
+						<h1 className='mt-2  text-xl'>Cover</h1>
+						<DropZone
+							size='md'
+							multiple={false}
+							accept='image/*'
+							onDropFile={acceptedFiles => {
+								form.setValue('picture', {
+									name: acceptedFiles[0].name,
+									blob: new Blob([acceptedFiles[0]])
+								})
+							}}
+						/>
+						<ErrorMessage name='picture' errors={form.errors} />
 					</div>
+					<SelectGenres
+						selectedGenres={form.watch('genres') || []}
+						setSelectedGenres={genres => form.setValue('genres', genres)}
+					/>
+					<ErrorMessage name='genres' errors={form.errors} />
 				</div>
 			</div>
 
 			{books.state && (
 				<div>
-					<div className='mt-14  grid grid-cols-2 gap-2'>
+					<div className='mt-8  grid grid-cols-2 gap-2'>
 						{books.state.map((book, index) => (
 							<div
 								key={book.name + index}
@@ -144,10 +118,10 @@ const Page: FC = () => {
 							>
 								<div className='mb-4 flex items-center  justify-between gap-2'>
 									<input
-										onChange={event =>
+										onBlur={event =>
 											books.updateChapterTitle(event.target.value, book.name)
 										}
-										value={book.name}
+										defaultValue={book.name}
 										className='bg-muted hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-xl border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
 									/>
 									<CaseSensitive
@@ -229,16 +203,14 @@ const Page: FC = () => {
 							</div>
 						))}
 					</div>
-					<ErrorMessage name='books' errors={form.errors} />
 				</div>
 			)}
+
 			<Button
 				size='md'
-				className='mt-8'
+				className='mt-4'
 				onClick={() => {
-					if (!books.state) return
 					form.setValue('books', books.state)
-					form.setValue('chapters', chapters)
 					form.submitBook()
 				}}
 				variant='primary'

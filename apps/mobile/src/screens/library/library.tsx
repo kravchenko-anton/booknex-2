@@ -13,9 +13,10 @@ import BannerList from '@/shared/ui/book-lists/banner-list'
 import { useQuery } from '@tanstack/react-query'
 
 const Library = () => {
-	const { data: library } = useQuery(['user-library'], () =>
-		userServices.library()
-	)
+	const { data: library } = useQuery({
+		queryKey: ['user-library'],
+		queryFn: () => userServices.library()
+	})
 	const { navigate } = useTypedNavigation()
 	if (!library) return <Loader />
 	return (
@@ -43,7 +44,7 @@ const Library = () => {
 						size='sm'
 						onPress={() => navigate('Book', { id: item.id })}
 						image={{ uri: item.picture }}
-						author={item.author.name}
+						author={item.author}
 					/>
 				)}
 			/>
@@ -58,7 +59,7 @@ const Library = () => {
 						size='sm'
 						onPress={() => navigate('Book', { id: item.id })}
 						image={{ uri: item.picture }}
-						author={item.author.name}
+						author={item.author}
 					/>
 				)}
 			/>

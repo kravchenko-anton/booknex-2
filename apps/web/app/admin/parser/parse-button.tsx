@@ -24,16 +24,14 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 		? JSON.parse(window.localStorage.getItem('lastParsedData') ?? '')
 		: null
 
-	const { mutateAsync: parse, isLoading: parseLoading } = useMutation(
-		['parse good-reads books'],
-		(dto: ParserDtoPayload) => parserService.parse(dto),
-		{
-			onSuccess: async () => {
-				toast.success('Books parsed')
-				await queryClient.invalidateQueries(['book-templates'])
-			}
+	const { mutateAsync: parse, isLoading: parseLoading } = useMutation({
+		mutationKey: ['parse book-templates'],
+		mutationFn: (dto: ParserDtoPayload) => parserService.parse(dto),
+		onSuccess: async () => {
+			toast.success('Books parsed')
+			await queryClient.invalidateQueries(['book-templates'])
 		}
-	)
+	})
 	return (
 		<>
 			<Button

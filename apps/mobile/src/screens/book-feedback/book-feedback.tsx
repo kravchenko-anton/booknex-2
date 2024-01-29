@@ -51,11 +51,11 @@ const BookFeedback = () => {
 		})
 	}
 
-	const { mutateAsync: sendFeedback, isLoading } = useMutation(
-		['feedback'],
-		({ id, dto }: { id: number; dto: FeedbackBookPayload }) =>
+	const { mutateAsync: sendFeedback, isLoading } = useMutation({
+		mutationKey: ['feedback'],
+		mutationFn: ({ id, dto }: { id: number; dto: FeedbackBookPayload }) =>
 			bookService.feedback(id, dto)
-	)
+	})
 
 	const submitFeedback = async (data: SendFeedbackSchemaType) => {
 		await sendFeedback({

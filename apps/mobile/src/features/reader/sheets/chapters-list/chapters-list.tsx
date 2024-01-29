@@ -5,14 +5,14 @@ import BottomSheet, {
 	BottomSheetBackdrop,
 	BottomSheetSectionList
 } from '@gorhom/bottom-sheet'
+import type { ChaptersType } from 'global/services-types/book-types'
 import type { FC } from 'react'
 import React, { useMemo } from 'react'
 import { Pressable } from 'react-native'
-import type { ChapterType } from '../../../../../../backend/types'
 
 const ChaptersList: FC<
 	{
-		chapters: ChapterType[]
+		chapters: ChaptersType
 		openChapter: (chapterId: string) => void
 	} & DefaultBottomSheetProperties
 > = ({ chapters, close, openChapter }) => {
@@ -23,7 +23,7 @@ const ChaptersList: FC<
 				title: chapter.name,
 				data: chapter.children.map(child => {
 					return {
-						title: child.name,
+						title: child.title,
 						link: child.link
 					}
 				})
@@ -63,6 +63,7 @@ const ChaptersList: FC<
 					return (
 						<Title
 							weight='bold'
+							numberOfLines={2}
 							className='  mt-[-1px] border-b-[1px] p-4'
 							size={22}
 							color={colorScheme.colorPalette.text}
@@ -79,6 +80,7 @@ const ChaptersList: FC<
 					return (
 						<Pressable
 							onPress={() => {
+								console.log(item.link)
 								openChapter(item.link)
 							}}
 							style={{
@@ -88,6 +90,7 @@ const ChaptersList: FC<
 							className=' w-full border-b-[1px] p-4'
 						>
 							<Title
+								numberOfLines={2}
 								size={18}
 								weight='semiBold'
 								style={{

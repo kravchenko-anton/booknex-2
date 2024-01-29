@@ -10,10 +10,10 @@ import { MoreHorizontal } from 'icons'
 
 export const columns = ({
 	remove,
-	update
+	preview
 }: {
 	remove: (id: number) => void
-	update: (id: number) => void
+	preview: (id: number) => void
 }) => [
 	{
 		id: 'id',
@@ -83,8 +83,8 @@ export const columns = ({
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
-						<DropdownMenuItem onClick={() => update(row.original.id)}>
-							Edit
+						<DropdownMenuItem onClick={() => preview(row.original.id)}>
+							Preview
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={() => remove(row.original.id)}>

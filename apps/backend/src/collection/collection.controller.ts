@@ -8,7 +8,7 @@ import {
 	Put,
 	Query
 } from '@nestjs/common'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { ApiTags } from '@nestjs/swagger'
 import type {
 	AllCollectionOutput,
 	CollectionByIdOutput
@@ -19,7 +19,6 @@ import { CollectionService } from './collection.service'
 import { CreateCollectionDto, UpdateCollectionDto } from './dto/collection.dto'
 
 @ApiTags('collection')
-@ApiBearerAuth()
 @Controller('collection')
 export class CollectionController {
 	constructor(private readonly shelvesService: CollectionService) {}

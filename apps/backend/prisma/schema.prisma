@@ -63,16 +63,13 @@ model Book {
   author      String
   description String
   picture     String
-  /// [Chapter]
-  chapters Json[]
-  file       String
-
+  ebook       String
   pages       Int
   popularity  Int          @default(0)
   visible     Boolean      @default(false)
   majorGenre  Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres      Genre[]      @relation("BookGenre")
-  feedback     Feedback[]
+  feedback    Feedback[]
   shelves     Collection[]
   finishedBy  User[]       @relation("FinishedBooks")
   savedBy     User[]       @relation("SavedBooks")
