@@ -155,11 +155,29 @@ export class BookService {
 	}
 
 	async create(dto: CreateBookDto) {
+		const majorGenre = await this.prisma.genre.findMany({
+			where: {
+				id: {
+					in: dto.genres
+				}
+			},
+			select: {
+				id: true
+			},
+			orderBy: {
+				majorBooks: {
+					_count: 'asc'
+				}
+			}
+		})
+
+		console.log(majorGenre, 'it is major genres')
+		console.log(majorGenre)
 		await this.prisma.book.create({
 			data: {
 				majorGenre: {
 					connect: {
-						id: dto.genres[0]
+						id: majorGenre[0].id
 					}
 				},
 				title: dto.title,

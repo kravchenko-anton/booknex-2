@@ -16,7 +16,6 @@ export const useCatalog = () => {
 		data: books?.data ?? [],
 		columns: columns({
 			overview: id => router.push(`${bookRoute}/${id}/overview`),
-			update: id => router.push(`${bookRoute}/${id}/update`),
 			remove: deleteBook,
 			toggleVisible: toggleVisible
 		}),

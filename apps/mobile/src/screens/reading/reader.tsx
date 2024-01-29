@@ -41,7 +41,7 @@ function Reader() {
 	const [defaultTheme] = useState(styleTag)
 
 	if (!ebook || !styleTag) return <Loader />
-	console.log(ebook.file)
+	console.log('rerender')
 	return (
 		<SafeAreaView className='flex-1'>
 			<View className='m-0 h-screen w-full items-center justify-center p-0'>

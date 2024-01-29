@@ -77,7 +77,7 @@ window.addEventListener('scroll', function() {
        progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight) * 100)
      }
    }));
- }, 500);
+ }, 1000);
 });
 `
 

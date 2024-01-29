@@ -14,12 +14,10 @@ import { twMerge } from 'tailwind-merge'
 
 export const columns = ({
 	remove,
-	update,
 	toggleVisible,
 	overview
 }: {
 	remove: (id: number) => void
-	update: (id: number) => void
 	overview: (id: number) => void
 	toggleVisible: (id: number) => void
 }) => [
@@ -138,9 +136,6 @@ export const columns = ({
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 
-						<DropdownMenuItem onClick={() => update(row.original.id)}>
-							Edit
-						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							onClick={() =>

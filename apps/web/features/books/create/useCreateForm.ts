@@ -1,4 +1,6 @@
 import { useTemplate } from '@/features/books/create/useTemplate'
+import type { CreateBookValidationSchemaType } from '@/features/books/create/validation'
+import { createBookValidationSchema } from '@/features/books/create/validation'
 import { bookService } from '@/shared/services/book/book-service'
 import { useUploadFile } from '@/shared/utils/files'
 import { errorToast, successToast } from '@/shared/utils/toast'
@@ -8,8 +10,6 @@ import { StorageFolderEnum } from 'backend/src/storage/storage.types'
 import type { BookPayload } from 'global/services-types/book-types'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import type { CreateBookValidationSchemaType } from './validation'
-import { createBookValidationSchema } from './validation'
 
 export const useCreateForm = () => {
 	const { upload } = useUploadFile()
