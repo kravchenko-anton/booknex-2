@@ -32,11 +32,11 @@ model Activity {
   collection Collection? @relation(fields: [collectionId], references: [id])
   collectionId Int?
   genreId      Int?
-  authorId  Int?
   bookId    Int?
-  userId    Int
+  userId    Int?
   type      String
-  user      User     @relation(fields: [userId], references: [id])
+  importance Int
+  user      User?     @relation(fields: [userId], references: [id])
 }
 
 model Feedback {
@@ -70,12 +70,11 @@ model Book {
   majorGenre  Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres      Genre[]      @relation("BookGenre")
   feedback    Feedback[]
-  shelves     Collection[]
+  collections     Collection[]
   finishedBy  User[]       @relation("FinishedBooks")
   savedBy     User[]       @relation("SavedBooks")
   readingBy   User[]       @relation("ReadingBooks")
   mainGenreId Int
-  complaints  Complaint[]
   activities  Activity[]
 }
 
@@ -93,16 +92,7 @@ model BookTemplate {
   genres Genre[]
 }
 
-model Complaint {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  text      String
-  book      Book?    @relation(fields: [bookId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-  bookId    Int?
-  userId    Int
-}
+
 
 model User {
   id             Int          @id @default(autoincrement())
@@ -116,7 +106,6 @@ model User {
   savedBooks     Book[]       @relation("SavedBooks")
   finishedBooks  Book[]       @relation("FinishedBooks")
   readingBooks   Book[]       @relation("ReadingBooks")
-  complaints     Complaint[]
   activity       Activity[]
 }
 

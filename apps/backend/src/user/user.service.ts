@@ -72,6 +72,7 @@ export class UserService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Update_Recommendations,
+				importance: 5,
 				user: {
 					connect: {
 						id
@@ -190,6 +191,7 @@ export class UserService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Started_Reading,
+				importance: 2,
 				user: {
 					connect: {
 						id: userId
@@ -242,6 +244,7 @@ export class UserService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Finished_Reading,
+				importance: 3,
 				user: {
 					connect: {
 						id: userId
@@ -319,6 +322,7 @@ export class UserService {
 				type: isSavedExist
 					? ActivityEnum.Remove_From_Saved
 					: ActivityEnum.Add_To_Saved,
+				importance: 1,
 				user: {
 					connect: {
 						id: user.id

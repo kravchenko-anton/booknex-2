@@ -1,9 +1,9 @@
-import { getAuthorUrl, getBookUrl } from 'global/api-config'
+import { getBookUrl } from 'global/api-config'
 import type {
 	AllBooksOutput,
-	AllSelectBooksOutput,
-	BookByIdOutput,
-	BookPayload
+	BookPayload,
+	BookUpdatePayload,
+	InfoByIdAdmin
 } from 'global/services-types/book-types'
 import { request } from '../api/request.api'
 
@@ -16,15 +16,8 @@ export const bookService = {
 	},
 
 	async infoById(id: number) {
-		return request<BookByIdOutput>({
+		return request<InfoByIdAdmin>({
 			url: getBookUrl(`/admin/by-id/${id}`)
-		})
-	},
-
-	async allSelect(searchTerm?: string) {
-		return request<AllSelectBooksOutput>({
-			url: getAuthorUrl('/admin/all/select'),
-			params: { searchTerm }
 		})
 	},
 
@@ -43,7 +36,7 @@ export const bookService = {
 		})
 	},
 
-	async update(id: number, dto: Partial<BookPayload>) {
+	async update(id: number, dto: BookUpdatePayload) {
 		return request({
 			method: 'PUT',
 			url: getBookUrl(`/admin/update/${id}`),

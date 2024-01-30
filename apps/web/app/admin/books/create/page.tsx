@@ -10,7 +10,15 @@ import {
 	FormTextArea,
 	TextArea
 } from '@/shared/ui'
-import { CaseSensitive, ChevronDown, ChevronUp, Close } from 'icons'
+import {
+	Book,
+	CaseSensitive,
+	ChevronDown,
+	ChevronUp,
+	Close,
+	PenNib,
+	User
+} from 'icons'
 import type { FC } from 'react'
 
 const Page: FC = () => {
@@ -35,6 +43,7 @@ const Page: FC = () => {
 							<h1 className='mb-2'>Author</h1>
 							<Field
 								type='text'
+								icon={PenNib}
 								control={form.control}
 								name='author'
 								placeholder='Author'
@@ -45,6 +54,7 @@ const Page: FC = () => {
 							<h1 className='mb-2'>Pages</h1>
 							<Field
 								type='number'
+								icon={Book}
 								control={form.control}
 								name='pages'
 								placeholder='Pages'
@@ -53,6 +63,7 @@ const Page: FC = () => {
 						<div>
 							<h1 className='mb-2'>Popularity</h1>
 							<Field
+								icon={User}
 								type='number'
 								control={form.control}
 								name='popularity'
@@ -100,11 +111,8 @@ const Page: FC = () => {
 						/>
 						<ErrorMessage name='picture' errors={form.errors} />
 					</div>
-					<SelectGenres
-						selectedGenres={form.watch('genres') || []}
-						setSelectedGenres={genres => form.setValue('genres', genres)}
-					/>
-					<ErrorMessage name='genres' errors={form.errors} />
+					<h1 className='mb-2 mt-2  text-xl'>Genres</h1>
+					<SelectGenres control={form.control} />
 				</div>
 			</div>
 			{books.state && (

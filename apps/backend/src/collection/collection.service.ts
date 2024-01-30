@@ -59,6 +59,7 @@ export class CollectionService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Visit_Collection,
+				importance: 1,
 				user: {
 					connect: {
 						id

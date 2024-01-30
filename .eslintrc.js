@@ -54,6 +54,7 @@ module.exports = {
 		'@typescript-eslint/no-duplicate-type-constituents': 'error',
 		'@typescript-eslint/no-empty-interface': 'error',
 		'@typescript-eslint/no-explicit-any': 'error',
+		'unicorn/no-array-reduce': 'off',
 		'@typescript-eslint/no-extra-non-null-assertion': 'error',
 		'max-params': ['error', 3],
 		'destructuring/in-params': ['error', { 'max-params': 2 }],

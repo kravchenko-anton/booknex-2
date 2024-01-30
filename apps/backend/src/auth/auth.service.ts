@@ -59,6 +59,7 @@ export class AuthService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Register_New_User,
+				importance: 1,
 				user: {
 					connect: {
 						id: user.id

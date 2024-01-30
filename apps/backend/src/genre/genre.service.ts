@@ -20,6 +20,7 @@ export class GenreService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Visit_Genre,
+				importance: 1,
 				user: {
 					connect: {
 						id: userId

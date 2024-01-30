@@ -21,7 +21,7 @@ const Input: FC<InputProperties> = ({
 					Icon && 'pl-9',
 					isError && 'border-danger border-2',
 					settings.colors[variant],
-					properties.disabled && 'cursor-not-allowed opacity-50',
+					properties.disabled && 'cursor-not-allowed',
 					className
 				)}
 				{...properties}

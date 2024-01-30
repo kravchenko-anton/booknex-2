@@ -5,8 +5,9 @@ import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
-import { groupActivity } from '../utils/group-activity'
+import { formatYYYYMMDD } from '../utils/format-date'
 import { PrismaService } from '../utils/prisma.service'
+import { defaultReturnObject } from '../utils/return.default.object'
 import type { FeedbackBookDto } from './dto/feedback.book.dto'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 import { returnBookObject } from './return.book.object'
@@ -34,20 +35,99 @@ export class BookService {
 	async infoByIdAdmin(id: number) {
 		const author = await this.prisma.book.findUnique({
 			where: { id },
-			include: {
+			select: {
+				...returnBookObject,
+				createdAt: true,
+				updatedAt: true,
+				pages: true,
+				popularity: true,
+				genres: { select: ReturnGenreObject },
+				ebook: true,
+				description: true,
+				visible: true,
+				feedback: {
+					select: {
+						...defaultReturnObject,
+						tags: true,
+						text: true,
+						rating: true,
+						user: {
+							select: {
+								id: true,
+								email: true
+							}
+						}
+					}
+				},
+				_count: {
+					select: {
+						finishedBy: true,
+						readingBy: true,
+						savedBy: true
+					}
+				},
 				activities: {
 					select: {
+						type: true,
+						user: {
+							select: {
+								id: true,
+								email: true
+							}
+						},
 						id: true,
+						importance: true,
 						createdAt: true
 					}
 				}
 			}
 		})
 		const { activities, ...rest } = author
+		const activitiesByDate = activities.reduce<
+			Record<
+				string,
+				{
+					date: string
+					activities: {
+						message: string
+						importance: number
+					}[]
+					count: number
+				}
+			>
+		>((accumulator, activity) => {
+			const date = formatYYYYMMDD(activity.createdAt)
+			accumulator[date] = accumulator[date] || {
+				date,
+				count: 0,
+				activities: []
+			}
+			accumulator[date].activities.push({
+				importance: activity.importance,
+				message: `${new Date(
+					activity.createdAt
+				).getHours()}:${new Date(activity.createdAt).getMinutes()} ${activity.type}`
+			})
+			accumulator[date].count++
+			return accumulator
+		}, {})
+
+		const activitiesWithLevel = Object.values(activitiesByDate).map(
+			({ activities, count, date }) => ({
+				date,
+				count,
+				level:
+					activities.reduce(
+						(accumulator, { importance }) => accumulator + importance,
+						0
+					) / activities.length,
+				activities: activities.map(({ message }) => message)
+			})
+		)
 
 		return {
 			...rest,
-			activities: groupActivity(activities)
+			activities: activitiesWithLevel
 		}
 	}
 
@@ -71,6 +151,7 @@ export class BookService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Get_Ebook,
+				importance: 1,
 				book: {
 					connect: {
 						id
@@ -168,11 +249,12 @@ export class BookService {
 				majorBooks: {
 					_count: 'asc'
 				}
-			}
+			},
+			take: 1
 		})
 
 		console.log(majorGenre, 'it is major genres')
-		console.log(majorGenre)
+
 		await this.prisma.book.create({
 			data: {
 				majorGenre: {
@@ -180,7 +262,14 @@ export class BookService {
 						id: majorGenre[0].id
 					}
 				},
+				activities: {
+					create: {
+						type: ActivityEnum.Create_Book,
+						importance: 9
+					}
+				},
 				title: dto.title,
+
 				popularity: dto.popularity,
 				pages: dto.pages,
 				description: dto.description,
@@ -199,25 +288,73 @@ export class BookService {
 		await this.prisma.book.delete({ where: { id: book.id } })
 	}
 
+	//TODO: сделать запрос более гипким
 	async update(id: number, dto: EditBookDto) {
-		const book = await this.getBookById(id)
+		console.log(dto, 'it is dto')
+		const book = await this.prisma.book.findUnique({
+			where: { id },
+			select: {
+				id: true,
+				title: true,
+				popularity: true,
+				pages: true,
+				description: true,
+				picture: true,
+				ebook: true,
+				author: true,
+				genres: {
+					select: {
+						id: true
+					}
+				}
+			}
+		})
+		if (!book) throw new NotFoundException('Book not found').getResponse()
+		const { genres: dtoGenres, ...other } = dto
+
+		const majorGenre = await this.prisma.genre.findMany({
+			where: {
+				id: {
+					in: dtoGenres
+				}
+			},
+			select: {
+				id: true
+			},
+			orderBy: {
+				majorBooks: {
+					_count: 'asc'
+				}
+			},
+			take: 1
+		})
+
+		console.log(other, 'it is major genres')
 		await this.prisma.book.update({
 			where: { id: book.id },
 			data: {
-				title: dto.title || book.title,
-				popularity: dto.popularity || book.popularity,
-				pages: dto.pages || book.pages,
-				description: dto.description || book.description,
-				picture: dto.picture || book.picture,
-				ebook: dto.ebook || book.ebook,
-				author: dto.author || book.author,
-				majorGenre: {
-					connect: {
-						id: dto.genres[0]
+				...other,
+				...(dtoGenres && {
+					genres: {
+						set: dtoGenres.map(g => ({ id: g }))
+					},
+					majorGenre: {
+						connect: {
+							id: majorGenre[0].id
+						}
 					}
-				},
-				genres: {
-					connect: dto.genres.map(g => ({ id: g }))
+				})
+			}
+		})
+
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Update_Book,
+				importance: 9,
+				book: {
+					connect: {
+						id: book.id
+					}
 				}
 			}
 		})
@@ -226,6 +363,22 @@ export class BookService {
 	async feedback(userId: number, bookId: number, dto: FeedbackBookDto) {
 		await this.usersService.getUserById(userId)
 		await this.getBookById(bookId)
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Feedback_Book,
+				importance: 4,
+				user: {
+					connect: {
+						id: userId
+					}
+				},
+				book: {
+					connect: {
+						id: bookId
+					}
+				}
+			}
+		})
 		await this.prisma.feedback.create({
 			data: {
 				rating: dto.rating,
@@ -268,6 +421,7 @@ export class BookService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Visit_Book,
+				importance: 1,
 				user: {
 					connect: {
 						id: userId

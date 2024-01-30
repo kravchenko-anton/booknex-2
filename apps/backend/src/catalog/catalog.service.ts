@@ -11,6 +11,7 @@ export class CatalogService {
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Check_Catalog,
+				importance: 1,
 				user: {
 					connect: {
 						id: userId

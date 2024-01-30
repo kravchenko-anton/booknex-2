@@ -14,6 +14,7 @@ const TextArea: FC<TextAreaProperties> = ({
 			className={twMerge(
 				'placeholder-gray h-full w-full resize-none rounded-xl p-2 text-white focus:outline-0',
 				settings.colors[variant],
+				properties.disabled && 'cursor-not-allowed',
 				className
 			)}
 			{...properties}

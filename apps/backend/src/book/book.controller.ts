@@ -12,7 +12,8 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import type {
 	AllBooksOutput,
 	BookByIdOutput,
-	EpubOutput
+	EpubOutput,
+	InfoByIdAdmin
 } from '../../../../libs/global/services-types/book-types'
 
 import { Auth } from '../decorator/auth.decorator'
@@ -59,7 +60,7 @@ export class BookController {
 
 	@Auth('admin')
 	@Get('admin/by-id/:id')
-	async infoByIdAdmin(@Param('id') id: string) {
+	async infoByIdAdmin(@Param('id') id: string): Promise<InfoByIdAdmin> {
 		return this.bookService.infoByIdAdmin(+id)
 	}
 
