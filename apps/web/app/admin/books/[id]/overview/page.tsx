@@ -1,21 +1,20 @@
 'use client'
 
-import EbookInfo from '@/app/admin/books/[id]/overview/ebook-info'
-import FeedbackTable from '@/app/admin/books/[id]/overview/feedback-table'
-import UpdateBio from '@/app/admin/books/[id]/overview/update-bio'
-import UpdatePicture from '@/app/admin/books/[id]/overview/update-picture'
-import { feedbackColumns } from '@/features/books/overview/feedback-columns'
+import ActivityList from '@/features/books/overview/activity-list'
+import EbookInfo from '@/features/books/overview/ebook-info'
+import FeedbackTable from '@/features/books/overview/feedback-table'
+import UpdateBio from '@/features/books/overview/update-bio'
+import UpdatePicture from '@/features/books/overview/update-picture'
 import { bookService } from '@/shared/services/book/book-service'
 import Loader from '@/shared/ui/loader/loader'
 import { useUploadFile } from '@/shared/utils/files'
 import { successToast } from '@/shared/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
-import { getFileUrl } from 'global/api-config'
 import type { BookUpdatePayload } from 'global/services-types/book-types'
 import { useParams } from 'next/navigation'
 import * as React from 'react'
+import { Suspense } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 const Page = () => {
@@ -36,29 +35,6 @@ const Page = () => {
 		}
 	})
 
-	const table = useReactTable({
-		data: book?.feedback ?? [],
-		columns: feedbackColumns(),
-		getCoreRowModel: getCoreRowModel()
-	})
-
-	const { data: preview } = useQuery({
-		queryKey: ['book-preview', +parameters.id],
-		queryFn: () =>
-			fetch(getFileUrl(book.ebook))
-				.then(res => res.json())
-				.then(res =>
-					res.map(({ content }) => {
-						return content
-							.map(
-								({ title, content }) =>
-									`<label id="${title}"></label> ${content}`
-							)
-							.join(' ')
-					})
-				),
-		enabled: !!book
-	})
 	if (!book) return <Loader />
 
 	return (
@@ -71,7 +47,7 @@ const Page = () => {
 						updatePicture={async picture => {
 							await upload({
 								folder: StorageFolderEnum.ebooks,
-								name: book.title,
+								name: book.title + '.png',
 								blob: new Blob([picture])
 							}).then(async url => {
 								await update({
@@ -86,7 +62,7 @@ const Page = () => {
 					<div className='mt-4 px-0.5'>
 						<div className='border-foreground my-2 border-2 p-2'>
 							<p className='text-md mb-1'>
-								finished By:{' '}
+								finished By:
 								<b className='text-white'> {book._count.finishedBy}</b>
 							</p>
 							<p className='text-md mb-1'>
@@ -94,22 +70,20 @@ const Page = () => {
 							</p>
 
 							<p className='text-md mb-1'>
-								reading By:{' '}
+								reading By:
 								<b className='text-white'> {book._count.readingBy}</b>
 							</p>
 
 							<p className='text-md mb-1'>
-								create At:{' '}
+								create At:
 								<b className='text-white'>
-									{' '}
-									{new Date(book.createdAt).toLocaleDateString()}
+									{' ' + new Date(book.createdAt).toLocaleDateString()}
 								</b>
 							</p>
 							<p className='text-md'>
-								update At:{' '}
+								update At:
 								<b className='text-white'>
-									{' '}
-									{new Date(book.updatedAt).toLocaleDateString()}
+									{' ' + new Date(book.updatedAt).toLocaleDateString()}
 								</b>
 							</p>
 						</div>
@@ -148,8 +122,16 @@ const Page = () => {
 						pages={book.pages}
 						popularity={book.popularity}
 					/>
-					<EbookInfo bookLink={book.ebook} />
-					<FeedbackTable />
+					<Suspense fallback={<Loader />}>
+						<EbookInfo
+							onEdit={async books => {
+								console.log(books)
+							}}
+							bookLink={book.ebook}
+						/>
+					</Suspense>
+					<ActivityList data={book.activities} />
+					<FeedbackTable feedback={book.feedback} />
 				</div>
 			</div>
 		</div>

@@ -1,3 +1,4 @@
+import { feedbackColumns } from '@/features/books/overview/feedback-columns'
 import { columns } from '@/features/parser/catalog/columns'
 import {
 	Table,
@@ -7,12 +8,27 @@ import {
 	TableHeader,
 	TableRow
 } from '@/shared/ui/table'
-import { flexRender } from '@tanstack/react-table'
+import {
+	flexRender,
+	getCoreRowModel,
+	useReactTable
+} from '@tanstack/react-table'
+import type { InfoByIdAdmin } from 'global/services-types/book-types'
+import type { FC } from 'react'
 import * as React from 'react'
 
-const FeedbackTable = () => {
+interface FeedbackTableProperties {
+	feedback: InfoByIdAdmin['feedback']
+}
+
+const FeedbackTable: FC<FeedbackTableProperties> = ({ feedback }) => {
+	const table = useReactTable({
+		data: feedback ?? [],
+		columns: feedbackColumns(),
+		getCoreRowModel: getCoreRowModel()
+	})
 	return (
-		<div className='mt-4 w-full'>
+		<div className='mt-4 '>
 			<h1 className='mb-2 text-xl'>Feedback</h1>
 			<Table>
 				<TableHeader>

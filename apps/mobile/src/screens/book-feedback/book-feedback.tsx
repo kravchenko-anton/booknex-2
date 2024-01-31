@@ -58,6 +58,14 @@ const BookFeedback = () => {
 	})
 
 	const submitFeedback = async (data: SendFeedbackSchemaType) => {
+		console.log({
+			id: params.id,
+			dto: {
+				rating: selectedStars,
+				comment: data.AdditionalComments || 'No comment',
+				tags: selectedTags || []
+			}
+		})
 		await sendFeedback({
 			id: params.id,
 			dto: {
@@ -66,7 +74,7 @@ const BookFeedback = () => {
 				tags: selectedTags || []
 			}
 		}).then(() => {
-			successToast('BookFeedback sent successfully')
+			successToast('thanks for feedback')
 			navigate('Library')
 		})
 	}

@@ -28,7 +28,7 @@ import { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
 	//TODO: сделать send book-feedback
-	@Post('/book-feedback/:id')
+	@Post('/feedback/:id')
 	@Auth()
 	async feedback(
 		@CurrentUser('id') userId: number,

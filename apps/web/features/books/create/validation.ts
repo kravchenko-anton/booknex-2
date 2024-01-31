@@ -20,6 +20,7 @@ export const createBookValidationSchema = z.object({
 					content: z
 						.array(
 							z.object({
+								id: z.number().positive(),
 								title: z.string(),
 								content: z.string()
 							})

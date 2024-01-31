@@ -34,7 +34,7 @@ export interface ParserDtoPayload {
 }
 
 export type UnfoldOutput = {
-	id: string
+	id: number
 	title: string
 	content: string
 }[]

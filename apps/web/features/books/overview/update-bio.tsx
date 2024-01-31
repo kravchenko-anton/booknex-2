@@ -4,7 +4,7 @@ import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 import * as React from 'react'
 import { useState } from 'react'
-import { useForm, useFormState } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
 
 export function dirtyValues(
@@ -35,12 +35,14 @@ interface UpdateBioProperties extends UpdateBioFormProperties {
 
 const UpdateBio: FC<UpdateBioProperties> = properties => {
 	const [isEditing, setIsEditing] = useState(false)
-	const { handleSubmit, control, reset } = useForm<UpdateBioFormProperties>({
+	const {
+		handleSubmit,
+		control,
+		reset,
+		formState: { dirtyFields }
+	} = useForm<UpdateBioFormProperties>({
 		mode: 'onSubmit'
 	})
-
-	const { dirtyFields } = useFormState({ control })
-	console.log(dirtyFields)
 	return (
 		<div>
 			<div className='mb-4 flex gap-2'>

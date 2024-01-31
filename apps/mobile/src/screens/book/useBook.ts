@@ -16,13 +16,13 @@ export const useBook = () => {
 
 	const { mutateAsync: startReading, isLoading: startReadingLoading } =
 		useMutation({
-			mutationKey: ['start reading book'],
+			mutationKey: ['start-reading', params.id],
 			mutationFn: (id: number) => userServices.startReading(id)
 		})
 
 	const { mutateAsync: toggleSaved, isLoading: toggleSavedLoading } =
 		useMutation({
-			mutationKey: ['toggle saved book'],
+			mutationKey: ['toggle-saved', params.id],
 			mutationFn: (id: number) => userServices.toggleSave(id),
 			onSuccess: async isSaved => {
 				successToast(`Book ${isSaved ? 'saved' : 'removed from saved'}`)
@@ -32,7 +32,7 @@ export const useBook = () => {
 		})
 
 	const { data: isSaved } = useQuery({
-		queryKey: ['isSaved book', params.id],
+		queryKey: ['is-saved', +params.id],
 		queryFn: () => userServices.isSaved(+params.id)
 	})
 

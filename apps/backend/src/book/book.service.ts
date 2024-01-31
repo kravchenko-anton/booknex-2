@@ -116,11 +116,12 @@ export class BookService {
 			({ activities, count, date }) => ({
 				date,
 				count,
-				level:
+				level: Math.round(
 					activities.reduce(
 						(accumulator, { importance }) => accumulator + importance,
 						0
-					) / activities.length,
+					) / activities.length
+				),
 				activities: activities.map(({ message }) => message)
 			})
 		)

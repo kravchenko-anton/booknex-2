@@ -10,7 +10,7 @@ export const useTemplate = ({
 }) => {
 	const parameters = useSearchParams()
 	const { data: template } = useQuery({
-		queryKey: ['book template'],
+		queryKey: ['book-template'],
 		queryFn: () => parserService.byId(+parameters.get('template')),
 		enabled: Boolean(+parameters.get('template'))
 	})

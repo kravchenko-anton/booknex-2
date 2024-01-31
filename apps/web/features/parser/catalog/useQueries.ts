@@ -14,7 +14,7 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	})
 
 	const { mutateAsync: deleteFromParser } = useMutation({
-		mutationKey: ['delete book from parser'],
+		mutationKey: ['delete-template'],
 		mutationFn: (id: number) => parserService.delete(id),
 		async onSuccess() {
 			successToast('Book deleted')

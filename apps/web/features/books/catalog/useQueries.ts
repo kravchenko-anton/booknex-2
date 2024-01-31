@@ -14,7 +14,7 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 			})
 	})
 	const { mutateAsync: toggleVisible } = useMutation({
-		mutationKey: ['toggle visible'],
+		mutationKey: ['toggle-visible'],
 		mutationFn: (id: number) => bookService.toggleVisible(id),
 		onError(error: string) {
 			errorCatch(error)
@@ -26,7 +26,7 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	})
 
 	const { mutateAsync: deleteBook } = useMutation({
-		mutationKey: ['delete book'],
+		mutationKey: ['delete-book'],
 		mutationFn: (id: number) => bookService.delete(id),
 		onError(error: string) {
 			errorCatch(error)

@@ -25,7 +25,7 @@ export const useReading = (id: number) => {
 
 	useSaveProgress({ id, readerState })
 	const { mutateAsync: finishReading } = useMutation({
-		mutationKey: ['end reading book'],
+		mutationKey: ['end-reading', id],
 		mutationFn: (id: number) => userServices.finishReading(id)
 	})
 

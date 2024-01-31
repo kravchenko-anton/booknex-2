@@ -26,7 +26,7 @@ export const useCreateForm = () => {
 	useTemplate({ setValue })
 
 	const { mutateAsync: createBook } = useMutation({
-		mutationKey: ['upload book'],
+		mutationKey: ['upload-book'],
 		mutationFn: (payload: BookPayload) => bookService.create(payload),
 		onSuccess: () => {
 			successToast('Book created')

@@ -17,7 +17,7 @@ export const blobFormData = (blob: Blob, fileName: string) => {
 // TODO: переписать абсолютно везде на этот хук
 export const useUploadFile = () => {
 	const { mutateAsync: upload } = useMutation({
-		mutationKey: ['upload file'],
+		mutationKey: ['upload-file'],
 		mutationFn: ({ folder, blob, name }: UploadFileProperties) => {
 			const formData = blobFormData(blob, name)
 			return storageService.upload(formData, folder)

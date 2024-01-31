@@ -18,7 +18,6 @@ export const useCatalog = () => {
 		data: users?.data ?? [],
 		columns: columns({
 			//TODO: пофиксить тут
-			preview: (id: number) => router.push(`/admin/users/${id}/preview`),
 			remove: deleteUser
 		}),
 		getCoreRowModel: getCoreRowModel()

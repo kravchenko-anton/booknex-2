@@ -8,13 +8,7 @@ import {
 import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
 
-export const columns = ({
-	remove,
-	preview
-}: {
-	remove: (id: number) => void
-	preview: (id: number) => void
-}) => [
+export const columns = ({ remove }: { remove: (id: number) => void }) => [
 	{
 		id: 'id',
 		enableHiding: false,
@@ -28,7 +22,7 @@ export const columns = ({
 		enableHiding: false,
 		header: () => <p className='text-center text-xl'>Email</p>,
 		cell: ({ row }) => {
-			return <h3 className='mb-1 w-[200px] text-xl'>{row.original.email}</h3>
+			return <h3 className='mb-1 text-xl'>{row.original.email}</h3>
 		}
 	},
 	{
@@ -37,7 +31,7 @@ export const columns = ({
 		header: () => <p className='text-center text-lg'>Activities</p>,
 		cell: ({ row }) => {
 			return (
-				<div className='flex flex-wrap items-center justify-center gap-4'>
+				<div className='flex flex-wrap items-center justify-center gap-2'>
 					<h2 className='bg-foreground border-muted mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
 						{nFormatter(row.original._count.activity)} Activities
 					</h2>
@@ -83,9 +77,6 @@ export const columns = ({
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
-						<DropdownMenuItem onClick={() => preview(row.original.id)}>
-							Preview
-						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={() => remove(row.original.id)}>
 							Delete

@@ -9,7 +9,7 @@ import { defaultReturnObject } from '../utils/return.default.object'
 import type { ParserDto } from './dto/parser.dto'
 
 interface Chapter {
-	id: string
+	id: number
 	title: string
 	content: string
 }
@@ -75,65 +75,67 @@ export class ParserService {
 		return new Promise(resolve => {
 			const epub = new EPub(file.buffer as unknown as string)
 			epub.on('end', function () {
-				const flow: Promise<Chapter | null>[] = epub.flow.map(chapter => {
-					return new Promise<Chapter | null>(resolve => {
-						try {
-							epub.getChapter(chapter.id, (error, text) => {
-								if (error) {
-									return null
-								}
-
-								const updatedContent = () => {
-									const dom = new JSDOM(text.toString())
-									const elements = dom.window.document.querySelectorAll('*')
-									for (const element of elements) {
-										if (
-											element.textContent === '' ||
-											element.textContent === ' ' ||
-											element.textContent === '\n'
-										) {
-											element.remove()
-										}
-										const attributes = element.getAttributeNames()
-										for (const attribute of attributes) {
-											element.removeAttribute(attribute)
-										}
-										if (element.tagName === 'image') {
-											element.remove()
-										}
-										if (element.tagName === 'img') {
-											element.remove()
-										}
-										if (element.tagName === 'svg') {
-											element.remove()
-										}
-										if (element.tagName === 'a') {
-											const span = dom.window.document.createElement('span')
-											span.textContent = element.textContent
-											element.replaceWith(span)
-										}
+				const flow: Promise<Chapter | null>[] = epub.flow.map(
+					(chapter, index) => {
+						return new Promise<Chapter | null>(resolve => {
+							try {
+								epub.getChapter(chapter.id, (error, text) => {
+									if (error) {
+										return null
 									}
 
-									return dom.serialize()
-								}
+									const updatedContent = () => {
+										const dom = new JSDOM(text.toString())
+										const elements = dom.window.document.querySelectorAll('*')
+										for (const element of elements) {
+											if (
+												element.textContent === '' ||
+												element.textContent === ' ' ||
+												element.textContent === '\n'
+											) {
+												element.remove()
+											}
+											const attributes = element.getAttributeNames()
+											for (const attribute of attributes) {
+												element.removeAttribute(attribute)
+											}
+											if (element.tagName === 'image') {
+												element.remove()
+											}
+											if (element.tagName === 'img') {
+												element.remove()
+											}
+											if (element.tagName === 'svg') {
+												element.remove()
+											}
+											if (element.tagName === 'a') {
+												const span = dom.window.document.createElement('span')
+												span.textContent = element.textContent
+												element.replaceWith(span)
+											}
+										}
 
-								const finalContent = updatedContent()
+										return dom.serialize()
+									}
 
-								resolve({
-									id: chapter.id,
-									title: chapter.title,
-									content: finalContent
-										.replaceAll(/<(\/)?(body|html|head|div).*?>/g, '')
-										.trim()
-										.replaceAll(/\n{2,}/g, '\n')
+									const finalContent = updatedContent()
+
+									resolve({
+										id: index,
+										title: chapter.title,
+										content: finalContent
+											.replaceAll(/<(\/)?(body|html|head|div).*?>/g, '')
+											.trim()
+											.replaceAll(/\n{2,}/g, '\n')
+									})
 								})
-							})
-						} catch (error) {
-							console.log(error)
-							new BadRequestException(ErrorsEnum.INVALID_FILE + ' chapter')
-						}
-					})
-				})
+							} catch (error) {
+								console.log(error)
+								new BadRequestException(ErrorsEnum.INVALID_FILE + ' chapter')
+							}
+						})
+					}
+				)
 				Promise.all(flow)
 					.then((chapters: (Chapter | null)[]) => {
 						const validChapters = chapters.filter(
@@ -142,7 +144,7 @@ export class ParserService {
 						resolve(
 							validChapters.map((chapter, index) => {
 								return {
-									id: (index + 1).toString(),
+									id: index + 1,
 									title: chapter.title || '',
 									content: chapter.content || ''
 								}

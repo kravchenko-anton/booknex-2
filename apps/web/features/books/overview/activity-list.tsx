@@ -6,7 +6,12 @@ interface ActivityListProperties {
 	data: Activity[]
 }
 
+type ActivityType = Activity & {
+	activities: string[]
+}
+
 const ActivityList: FC<ActivityListProperties> = ({ data }) => {
+	console.log(data, 'data')
 	return (
 		<div>
 			<h1 className='mb-2 mt-2 text-xl'>Activities</h1>
@@ -31,16 +36,10 @@ const ActivityList: FC<ActivityListProperties> = ({ data }) => {
 					]
 				}}
 				eventHandlers={{
-					onClick:
-						event =>
-						(
-							activity: Activity & {
-								activities: string[]
-							}
-						) => {
-							//TODO: сделать групировку по юзерам и чтобы сверху было без юзеров
-							alert(activity.activities.join('\n'))
-						}
+					onClick: () => (activity: ActivityType) => {
+						//TODO: сделать групировку по юзерам и чтобы сверху было без юзеров
+						alert(activity.activities.join('\n'))
+					}
 				}}
 				maxLevel={10}
 				data={data}

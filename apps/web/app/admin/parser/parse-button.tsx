@@ -25,7 +25,7 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 		: null
 
 	const { mutateAsync: parse, isLoading: parseLoading } = useMutation({
-		mutationKey: ['parse book-templates'],
+		mutationKey: ['parse-templates'],
 		mutationFn: (dto: ParserDtoPayload) => parserService.parse(dto),
 		onSuccess: async () => {
 			toast.success('Books parsed')

@@ -14,7 +14,7 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	})
 
 	const { mutateAsync: deleteUser } = useMutation({
-		mutationKey: ['delete user'],
+		mutationKey: ['delete-user'],
 		mutationFn: (id: number) => userServices.delete(id),
 		onError(error: string) {
 			console.log('error', error)

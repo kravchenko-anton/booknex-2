@@ -50,7 +50,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 									{...properties}
 								>
 									<span className='flex flex-wrap gap-2'>
-										Selected genres ({value})
+										Selected genres ({value.length})
 									</span>
 								</div>
 							</PopoverTrigger>

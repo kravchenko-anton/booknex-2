@@ -34,6 +34,10 @@ export const feedbackTags = {
 		{
 			id: 4,
 			name: 'Not interesting'
+		},
+		{
+			id: 5,
+			name: 'Incomplete book'
 		}
 	]
 }

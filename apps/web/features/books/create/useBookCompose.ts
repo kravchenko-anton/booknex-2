@@ -2,25 +2,31 @@ import { parserService } from '@/shared/services/parser/parser-services'
 import { blobFormData } from '@/shared/utils/files'
 import { errorToast, successToast } from '@/shared/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
-export const useBookCompose = () => {
+export interface EbookType {
+	name: string
+	content: {
+		id: number
+		title: string
+		content: string
+	}[]
+}
+
+export const useBookCompose = (defaultBooks?: EbookType[]) => {
+	console.log(defaultBooks, 'defaultBooks')
+	const [books, setBooks] = useState<EbookType[]>()
+
+	useLayoutEffect(() => {
+		setBooks(defaultBooks || [])
+	}, [defaultBooks])
+
 	const { mutateAsync: unfold } = useMutation({
-		mutationKey: ['unfold ebook'],
+		mutationKey: ['unfold'],
 		mutationFn: (formData: FormData) => parserService.unfold(formData),
 		onSuccess: () => successToast('File uploaded'),
 		onError: () => errorToast('Error while uploading book')
 	})
-	const [books, setBooks] = useState<
-		{
-			name: string
-			content: {
-				id: string
-				title: string
-				content: string
-			}[]
-		}[]
-	>([])
 
 	const deleteBook = ({ name }: { name: string }) => {
 		setBooks(books?.filter(book => book.name !== name))
@@ -66,7 +72,7 @@ export const useBookCompose = () => {
 							content: [
 								...book.content.slice(0, index + 1),
 								{
-									id: Date.now().toString(),
+									id: Math.round(Math.random() * 1_000_000),
 									title: '',
 									content: ''
 								},
@@ -87,7 +93,7 @@ export const useBookCompose = () => {
 		insertedContent
 	}: {
 		bookName: string
-		topChapterId: string
+		topChapterId: number
 		insertedContent: string
 	}) => {
 		setBooks(books => {
@@ -137,7 +143,7 @@ export const useBookCompose = () => {
 		successToast('Chapter title updated')
 	}
 
-	const removeToc = (name: string, removedId: string) => {
+	const removeToc = (name: string, removedId: number) => {
 		setBooks(
 			books.map(book => {
 				if (book.name === name) {
@@ -153,7 +159,7 @@ export const useBookCompose = () => {
 	}
 
 	const updateTocTitle = (
-		oldId: string,
+		oldId: number,
 		bookName: string,
 		newContent: string
 	) => {
@@ -179,7 +185,7 @@ export const useBookCompose = () => {
 		})
 	}
 
-	const updateTocContent = (name: string, id: string, newContent: string) => {
+	const updateTocContent = (name: string, id: number, newContent: string) => {
 		setBooks(books => {
 			if (!books) return books
 			return books.map(book => {
@@ -208,7 +214,7 @@ export const useBookCompose = () => {
 	}: {
 		name: string
 		content: {
-			id: string
+			id: number
 			title: string
 			content: string
 		}[]
@@ -218,7 +224,7 @@ export const useBookCompose = () => {
 				return [
 					...books,
 					{
-						id: Date.now().toString(),
+						id: Math.round(Math.random() * 1_000_000),
 						name: name || '',
 						content: content || []
 					}
@@ -226,6 +232,7 @@ export const useBookCompose = () => {
 			}
 			return [
 				{
+					id: Math.round(Math.random() * 1_000_000),
 					name: name || '',
 					content: content || []
 				}

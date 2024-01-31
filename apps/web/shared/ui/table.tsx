@@ -61,7 +61,7 @@ const TableRow = forwardRef<
 	<tr
 		ref={reference}
 		className={cn(
-			'hover:bg-muted data-[state=selected]:bg-foreground  border-foreground border-b  transition-colors',
+			'hover:bg-muted  data-[state=selected]:bg-foreground  border-foreground border-b  transition-colors',
 			className
 		)}
 		{...properties}
