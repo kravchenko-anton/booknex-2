@@ -286,12 +286,18 @@ export class BookService {
 
 	async delete(id: number) {
 		const book = await this.getBookById(id)
+		await this.prisma.feedback.deleteMany({
+			where: {
+				bookId: id
+			}
+		})
 		await this.prisma.book.delete({ where: { id: book.id } })
 	}
 
 	//TODO: сделать запрос более гипким
 	async update(id: number, dto: EditBookDto) {
 		console.log(dto, 'it is dto')
+
 		const book = await this.prisma.book.findUnique({
 			where: { id },
 			select: {

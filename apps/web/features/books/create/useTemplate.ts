@@ -27,4 +27,8 @@ export const useTemplate = ({
 			)
 		}
 	}, [setValue, template])
+
+	return {
+		id: +parameters.get('template')
+	}
 }

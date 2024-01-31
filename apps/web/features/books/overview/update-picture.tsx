@@ -25,7 +25,7 @@ const UpdatePicture: FC<UpdatePictureProperties> = ({
 			/>
 			<Image
 				width={220}
-				className='border-muted rounded-xl border-2'
+				className='border-muted cursor-pointer rounded-xl border-2'
 				height={300}
 				onClick={() => {
 					const element: HTMLElement =

@@ -9,18 +9,18 @@ import { bookService } from '@/shared/services/book/book-service'
 import Loader from '@/shared/ui/loader/loader'
 import { useUploadFile } from '@/shared/utils/files'
 import { successToast } from '@/shared/utils/toast'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
 import type { BookUpdatePayload } from 'global/services-types/book-types'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import * as React from 'react'
-import { Suspense } from 'react'
+import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 
 const Page = () => {
 	const { upload } = useUploadFile()
 	const parameters = useParams()
-	const queryClient = useQueryClient()
+	const router = useRouter()
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', +parameters.id],
 		queryFn: () => bookService.infoById(+parameters.id)
@@ -30,8 +30,17 @@ const Page = () => {
 		mutationFn: ({ id, payload }: { id: number; payload: BookUpdatePayload }) =>
 			bookService.update(id, payload),
 		onSuccess: async () => {
-			await queryClient.invalidateQueries(['book-overview', +parameters.id])
 			successToast('Book updated')
+			router.refresh()
+		}
+	})
+
+	const { mutateAsync: remove } = useMutation({
+		mutationKey: ['remove-book'],
+		mutationFn: (id: number) => bookService.delete(id),
+		onSuccess: () => {
+			successToast('Book removed')
+			router.push('/admin/books')
 		}
 	})
 
@@ -87,7 +96,7 @@ const Page = () => {
 								</b>
 							</p>
 						</div>
-						<div>
+						<div className='flex gap-2'>
 							<button
 								onClick={() =>
 									update({
@@ -99,10 +108,25 @@ const Page = () => {
 								}
 								className={twMerge(
 									'mt-1 rounded-md px-2 py-1 text-white',
-									book.visible ? 'bg-success' : 'bg-danger'
+									book.visible ? 'bg-success' : 'bg-warning'
 								)}
 							>
 								{book.visible ? 'Make unavailable' : 'Make available'}
+							</button>
+							<button
+								onClick={() =>
+									toast('Are you sure you want to delete this book?', {
+										action: {
+											label: 'Delete',
+											onClick: () => remove(book.id)
+										}
+									})
+								}
+								className={twMerge(
+									'bg-danger mt-1 rounded-md px-2 py-1 text-white'
+								)}
+							>
+								Remove
 							</button>
 						</div>
 					</div>
@@ -114,6 +138,7 @@ const Page = () => {
 						title={book.title}
 						description={book.description}
 						onSaveEdit={async data => {
+							console.log(data, 'bio')
 							await update({
 								id: book.id,
 								payload: data
@@ -122,14 +147,23 @@ const Page = () => {
 						pages={book.pages}
 						popularity={book.popularity}
 					/>
-					<Suspense fallback={<Loader />}>
-						<EbookInfo
-							onEdit={async books => {
-								console.log(books)
-							}}
-							bookLink={book.ebook}
-						/>
-					</Suspense>
+					<EbookInfo
+						onEdit={async books => {
+							await upload({
+								name: book.title + '.json',
+								blob: new Blob([JSON.stringify(books)]),
+								folder: StorageFolderEnum.ebooks
+							}).then(async url => {
+								await update({
+									id: book.id,
+									payload: {
+										ebook: url.name
+									}
+								})
+							})
+						}}
+						bookLink={book.ebook}
+					/>
 					<ActivityList data={book.activities} />
 					<FeedbackTable feedback={book.feedback} />
 				</div>

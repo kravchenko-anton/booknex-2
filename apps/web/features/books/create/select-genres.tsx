@@ -63,7 +63,15 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 											<CommandItem
 												key={genre.id}
 												value={genre.name}
-												onSelect={() => onChange(genre.id)}
+												onSelect={() =>
+													onChange(
+														value.includes(genre.id)
+															? value.filter(
+																	selectedGenre => selectedGenre !== genre.id
+																)
+															: [...value, genre.id]
+													)
+												}
 											>
 												<Check
 													color={Color.white}

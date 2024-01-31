@@ -224,7 +224,6 @@ export const useBookCompose = (defaultBooks?: EbookType[]) => {
 				return [
 					...books,
 					{
-						id: Math.round(Math.random() * 1_000_000),
 						name: name || '',
 						content: content || []
 					}
@@ -232,7 +231,6 @@ export const useBookCompose = (defaultBooks?: EbookType[]) => {
 			}
 			return [
 				{
-					id: Math.round(Math.random() * 1_000_000),
 					name: name || '',
 					content: content || []
 				}

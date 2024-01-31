@@ -9,13 +9,13 @@ const Input: FC<InputProperties> = ({
 	isError = false,
 	className = '',
 	variant = 'foreground',
-	value,
 	...properties
 }) => {
+	console.log(properties.type)
 	return (
 		<div className='relative flex items-center justify-center'>
 			<input
-				value={value}
+				type={properties.type}
 				className={twMerge(
 					'placeholder-gray focus:shadow-outline w-full rounded-xl border-0 px-4 py-3.5 text-sm text-white duration-200 ease-linear focus:outline-0',
 					Icon && 'pl-9',

@@ -121,7 +121,7 @@ export class ParserService {
 									const finalContent = updatedContent()
 
 									resolve({
-										id: index,
+										id: index + 1,
 										title: chapter.title,
 										content: finalContent
 											.replaceAll(/<(\/)?(body|html|head|div).*?>/g, '')

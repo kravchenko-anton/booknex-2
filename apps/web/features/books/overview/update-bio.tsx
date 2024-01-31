@@ -1,37 +1,37 @@
 import SelectGenres from '@/features/books/create/select-genres'
 import { Button, Field, FormTextArea } from '@/shared/ui'
+import { dirtyValues } from '@/shared/utils/form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 import * as React from 'react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
+import { z } from 'zod'
 
-export function dirtyValues(
-	dirtyFields: object | boolean,
-	allValues: object
-): object {
-	if (dirtyFields === true || Array.isArray(dirtyFields)) return allValues
-	// Here, we have an object
-	return Object.fromEntries(
-		Object.keys(dirtyFields).map(key => [
-			key,
-			dirtyValues(dirtyFields[key], allValues[key])
-		])
-	)
-}
-interface UpdateBioFormProperties {
+interface UpdateBioProperties {
 	title: string
 	author: string
 	pages: number
 	popularity: number
 	description: string
 	genres: number[]
-}
-
-interface UpdateBioProperties extends UpdateBioFormProperties {
 	onSaveEdit: (data: object) => void
 }
+
+const UpdateBioValidationSchema = z.object({
+	title: z.string(),
+	author: z.string(),
+	pages: z.number(),
+	popularity: z.number(),
+	description: z.string(),
+	genres: z.array(z.number())
+})
+
+export type UpdateBioValidationSchemaType = z.infer<
+	typeof UpdateBioValidationSchema
+>
 
 const UpdateBio: FC<UpdateBioProperties> = properties => {
 	const [isEditing, setIsEditing] = useState(false)
@@ -40,8 +40,9 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 		control,
 		reset,
 		formState: { dirtyFields }
-	} = useForm<UpdateBioFormProperties>({
-		mode: 'onSubmit'
+	} = useForm<UpdateBioValidationSchemaType>({
+		mode: 'onSubmit',
+		resolver: zodResolver(UpdateBioValidationSchema)
 	})
 	return (
 		<div>
@@ -69,9 +70,9 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 				<div className='w-4/12'>
 					<h1 className='mb-2 text-xl'>Pages</h1>
 					<Field
-						onClick={() => setIsEditing(true)}
 						control={control}
 						name='pages'
+						type='number'
 						defaultValue={properties.pages}
 						icon={Book}
 					/>
@@ -83,6 +84,7 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						onClick={() => setIsEditing(true)}
 						control={control}
 						name='popularity'
+						type='number'
 						defaultValue={properties.popularity}
 						icon={User}
 					/>
