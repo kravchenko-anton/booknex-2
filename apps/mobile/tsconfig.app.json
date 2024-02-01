@@ -2,21 +2,10 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"outDir": "../../dist/out-tsc",
-		"moduleResolution": "node",
-		"types": [
-			"node"
-		],
-		"noImplicitThis": false,
 		"baseUrl": ".",
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"strict": false,
-		"forceConsistentCasingInFileNames": true,
-		"noEmit": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"removeComments": false,
-		"skipLibCheck": true,
+		"allowJs": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
 		"paths": {
 			"@/*": [
 				"./src/*"
@@ -31,7 +20,6 @@
 				"../backend/*"
 			]
 		},
-		"allowJs": true
 	},
 	"files": [
 		"../../node_modules/@nx/react-native/typings/svg.d.ts"

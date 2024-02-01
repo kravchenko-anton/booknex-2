@@ -1,4 +1,4 @@
-import { feedbackColumns } from '@/features/books/overview/feedback-columns'
+import { feedbackColumns } from '@/features/books/overview/feedback/feedback-columns'
 import { columns } from '@/features/parser/catalog/columns'
 import {
 	Table,

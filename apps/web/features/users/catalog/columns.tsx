@@ -5,10 +5,26 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/shared/ui/dropdown-menu'
+import type { ColumnDef } from '@tanstack/react-table'
 import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
 
-export const columns = ({ remove }: { remove: (id: number) => void }) => [
+type ColumnType = ColumnDef<{
+	id: number
+	email: string
+	_count: {
+		activity: number
+		savedBooks: number
+		readingBooks: number
+		finishedBooks: number
+	}
+	selectedGenres: { name: string }[]
+}>[]
+export const columns = ({
+	remove
+}: {
+	remove: (id: number) => void
+}): ColumnType => [
 	{
 		id: 'id',
 		enableHiding: false,
@@ -56,7 +72,10 @@ export const columns = ({ remove }: { remove: (id: number) => void }) => [
 			return (
 				<div className='flex flex-wrap items-center justify-center gap-2'>
 					{row.original.selectedGenres.map((genre: { name: string }) => (
-						<p className='bg-foreground border-muted mt-2 rounded-xl border-2 p-1.5 font-light'>
+						<p
+							key={genre.name}
+							className='bg-foreground border-muted mt-2 rounded-xl border-2 p-1.5 font-light'
+						>
 							<b className='font-bold text-white'>{genre.name}</b>
 						</p>
 					))}

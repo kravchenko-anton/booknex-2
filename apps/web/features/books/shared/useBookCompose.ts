@@ -14,7 +14,6 @@ export interface EbookType {
 }
 
 export const useBookCompose = (defaultBooks?: EbookType[]) => {
-	console.log(defaultBooks, 'defaultBooks')
 	const [books, setBooks] = useState<EbookType[]>()
 
 	useLayoutEffect(() => {
@@ -97,6 +96,7 @@ export const useBookCompose = (defaultBooks?: EbookType[]) => {
 		insertedContent: string
 	}) => {
 		setBooks(books => {
+			if (!books) return books
 			return books.map(book => {
 				if (book.name === bookName) {
 					const element = book.content.find(
@@ -129,6 +129,7 @@ export const useBookCompose = (defaultBooks?: EbookType[]) => {
 	}
 
 	const updateChapterTitle = (value: string, name: string) => {
+		if (!books) return errorToast('Error updating chapter title')
 		setBooks(
 			books.map(book => {
 				if (book.name === name) {
@@ -144,6 +145,7 @@ export const useBookCompose = (defaultBooks?: EbookType[]) => {
 	}
 
 	const removeToc = (name: string, removedId: number) => {
+		if (!books) return errorToast('Error removing chapter')
 		setBooks(
 			books.map(book => {
 				if (book.name === name) {
@@ -220,16 +222,15 @@ export const useBookCompose = (defaultBooks?: EbookType[]) => {
 		}[]
 	}) => {
 		setBooks(books => {
-			if (books) {
+			if (!books)
 				return [
-					...books,
 					{
 						name: name || '',
 						content: content || []
 					}
 				]
-			}
 			return [
+				...books,
 				{
 					name: name || '',
 					content: content || []

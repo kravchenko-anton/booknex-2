@@ -8,6 +8,28 @@ import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 import type { ParserDto } from './dto/parser.dto'
 
+const parseSelectors = {
+	title: 'div.BookPageTitleSection > div > h1',
+	author: 'div.FeaturedPerson__infoPrimary > h4 > a > span',
+	description:
+		'div.BookPageMetadataSection > div.BookPageMetadataSection__description > div > div.TruncatedContent__text.TruncatedContent__text--large > div > div > span',
+	ratingCount: '[data-testid="ratingsCount"]',
+	pages: '[data-testid="pagesFormat"]',
+	picture: 'div.BookPage__bookCover > div > div > div > div > div > div > img',
+	genres:
+		'div.BookPageMetadataSection > div.BookPageMetadataSection__genres > ul'
+}
+
+export const ignoredManifest = [
+	'https://pagead2.googlesyndication.com',
+	'https://creativecdn.com',
+	'https://www.googletagmanager.com',
+	'https://cdn.krxd.net',
+	'https://adservice.google.com',
+	'https://cdn.concert.io',
+	'https://z.moatads.com',
+	'https://cdn.permutive.com'
+]
 interface Chapter {
 	id: number
 	title: string
@@ -99,15 +121,9 @@ export class ParserService {
 											for (const attribute of attributes) {
 												element.removeAttribute(attribute)
 											}
-											if (element.tagName === 'image') {
-												element.remove()
-											}
-											if (element.tagName === 'img') {
-												element.remove()
-											}
-											if (element.tagName === 'svg') {
-												element.remove()
-											}
+											if (element.tagName === 'image') element.remove()
+											if (element.tagName === 'img') element.remove()
+											if (element.tagName === 'svg') element.remove()
 											if (element.tagName === 'a') {
 												const span = dom.window.document.createElement('span')
 												span.textContent = element.textContent
@@ -196,23 +212,13 @@ export class ParserService {
 			page.setDefaultNavigationTimeout(0)
 			page.setDefaultTimeout(0)
 			await page.setRequestInterception(true)
-			page.on('requestfailed', request => {})
 			page.on('request', request => {
 				if (
 					request.resourceType() === 'media' ||
 					request.resourceType() === 'font' ||
 					request.resourceType() === 'stylesheet' ||
 					request.resourceType() === 'manifest' ||
-					[
-						'https://pagead2.googlesyndication.com',
-						'https://creativecdn.com',
-						'https://www.googletagmanager.com',
-						'https://cdn.krxd.net',
-						'https://adservice.google.com',
-						'https://cdn.concert.io',
-						'https://z.moatads.com',
-						'https://cdn.permutive.com'
-					].some(d => request.url().startsWith(d))
+					ignoredManifest.some(d => request.url().startsWith(d))
 				) {
 					request.abort()
 				} else {
@@ -251,23 +257,17 @@ export class ParserService {
 							waitUntil: 'domcontentloaded'
 						})
 						.catch(() => {})
-					await page.waitForSelector('div.BookPageTitleSection > div > h1')
-					await page.waitForSelector(
-						'div.FeaturedPerson__infoPrimary > h4 > a > span'
-					)
-					await page.waitForSelector(
-						'div.BookPageMetadataSection > div.BookPageMetadataSection__description > div > div.TruncatedContent__text.TruncatedContent__text--large > div > div > span'
-					)
 
-					await page.waitForSelector('[data-testid="ratingsCount"]')
-					await page.waitForSelector('[data-testid="pagesFormat"]')
+					await page.waitForSelector(parseSelectors.title)
+					await page.waitForSelector(parseSelectors.author)
+					await page.waitForSelector(parseSelectors.description)
+					await page.waitForSelector(parseSelectors.ratingCount)
+					await page.waitForSelector(parseSelectors.pages)
+					await page.waitForSelector(parseSelectors.picture)
 
 					await page.waitForSelector(
-						'div.BookPage__bookCover > div > div > div > div > div > div > img'
-					)
-
-					await page.waitForSelector(
-						'div.BookPageMetadataSection > div.BookPageMetadataSection__genres > ul > span:nth-child(1) > span > a > .Button__labelItem'
+						parseSelectors.genres +
+							' > span:nth-child(1) > span > a > .Button__labelItem'
 					)
 
 					const title = await page.evaluate(() => {
@@ -285,19 +285,16 @@ export class ParserService {
 						}
 					})
 
-					const description = await page.evaluate(() => {
-						const description = document.querySelector(
-							'div.BookPageMetadataSection > div.BookPageMetadataSection__description > div > div.TruncatedContent__text.TruncatedContent__text--large > div > div > span'
-						)
+					const description = await page.evaluate(selector => {
+						const description = document.querySelector(selector)
 						return description.textContent
 							? description.textContent.replaceAll(
 									/(Librarian's note|Contributor note|See also).*?\./g,
 									''
 								)
 							: 'No description'
-					})
-					const rating = await page.evaluate(() => {
-						const selector = '[data-testid="ratingsCount"]'
+					}, parseSelectors.description)
+					const rating = await page.evaluate(selector => {
 						const ratingCount = document.querySelector(selector)
 						return ratingCount.textContent
 							? Number.parseInt(
@@ -307,29 +304,26 @@ export class ParserService {
 										.trim()
 								)
 							: 0
-					})
-					const pages = await page.evaluate(() => {
-						const selector = '[data-testid="pagesFormat"]'
+					}, parseSelectors.ratingCount)
+					const pages = await page.evaluate(selector => {
 						const pages = document.querySelector(selector)
 						return pages.textContent
 							? Number.parseInt(
 									pages.textContent.replaceAll(/[^\d\s,]/g, '').trim()
 								)
 							: 0
-					})
-					const picture = await page.evaluate(() => {
-						const picture = document.querySelector(
-							'div.BookPage__bookCover > div > div > div > div > div > div > img'
-						)
+					}, parseSelectors.pages)
+					const picture = await page.evaluate(selector => {
+						const picture = document.querySelector(selector)
 						return picture.getAttribute('src') ?? 'No picture'
-					})
+					}, parseSelectors.picture)
 
-					const genres = await page.evaluate(() => {
+					const genres = await page.evaluate(selector => {
 						const genres = document.querySelectorAll(
-							'div.BookPageMetadataSection > div.BookPageMetadataSection__genres > ul > span:nth-child(1) > span > a > .Button__labelItem'
+							selector + ' > span:nth-child(1) > span > a > .Button__labelItem'
 						)
 						return [...genres].map(genre => genre.textContent) ?? ['No genres']
-					})
+					}, parseSelectors.genres)
 					if (rating < 40_000) continue
 					if (bookTemplate.some(b => b.title === title.trim())) continue
 					const goodGenres = await this.prisma.genre.findMany({
@@ -365,9 +359,6 @@ export class ParserService {
 			}
 			await page.close()
 			await browser.close()
-			return {
-				success: true
-			}
 		} catch {}
 	}
 }

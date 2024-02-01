@@ -9,10 +9,11 @@ export const useTemplate = ({
 	setValue: (field: string, value: string | number | number[]) => void
 }) => {
 	const parameters = useSearchParams()
+	const id = Number(parameters.get('template'))
 	const { data: template } = useQuery({
 		queryKey: ['book-template'],
-		queryFn: () => parserService.byId(+parameters.get('template')),
-		enabled: Boolean(+parameters.get('template'))
+		queryFn: () => parserService.byId(id),
+		enabled: Boolean(id)
 	})
 	useLayoutEffect(() => {
 		if (template) {
@@ -29,6 +30,6 @@ export const useTemplate = ({
 	}, [setValue, template])
 
 	return {
-		id: +parameters.get('template')
+		id
 	}
 }

@@ -1,8 +1,8 @@
 'use client'
-import Editor from '@/features/books/book-compose/editor'
-import SelectGenres from '@/features/books/create/select-genres'
-import { useBookCompose } from '@/features/books/create/useBookCompose'
 import { useCreateForm } from '@/features/books/create/useCreateForm'
+import Editor from '@/features/books/shared/editor'
+import SelectGenres from '@/features/books/shared/select-genres'
+import { useBookCompose } from '@/features/books/shared/useBookCompose'
 import {
 	Button,
 	DropZone,

@@ -5,6 +5,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/shared/ui/dropdown-menu'
+import type { ColumnDef } from '@tanstack/react-table'
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
@@ -12,13 +13,25 @@ import * as React from 'react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
+type ColumnType = ColumnDef<{
+	id: number
+	title: string
+	author: string
+	picture: string
+	description: string
+	visible: boolean
+	pages: number
+	popularity: number
+	genres: { name: string }[]
+}>[]
+
 export const columns = ({
 	remove,
 	useAsTemplate
 }: {
 	remove: (id: number) => Promise<void>
-	useAsTemplate: (data: string) => void
-}) => [
+	useAsTemplate: (id: number) => void
+}): ColumnType => [
 	{
 		id: 'id',
 		enableHiding: false,
@@ -70,11 +83,11 @@ export const columns = ({
 		cell: ({ row }) => {
 			const [showMore, setShowMore] = useState(false)
 			return (
-				<p className='mb-2 text-sm' onClick={() => setShowMore(!showMore)}>
+				<button className='mb-2 text-sm' onClick={() => setShowMore(!showMore)}>
 					{showMore
 						? row.original.description
 						: row.original.description.slice(0, 250) + '...'}
-				</p>
+				</button>
 			)
 		}
 	},

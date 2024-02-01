@@ -295,6 +295,7 @@ export class UserService {
 				savedBooks: idSelect
 			}
 		})
+		if (!user) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`)
 		return user.savedBooks.some(book => book.id === id)
 	}
 
@@ -306,7 +307,7 @@ export class UserService {
 			}
 		})
 
-		if (!bookExist) return
+		if (!bookExist) throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -314,9 +315,8 @@ export class UserService {
 				savedBooks: idSelect
 			}
 		})
-		console.log(user)
+		if (!user) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`)
 		const isSavedExist = user.savedBooks.some(book => book.id === id)
-		console.log(isSavedExist)
 		await this.prisma.activity.create({
 			data: {
 				type: isSavedExist

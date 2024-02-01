@@ -11,7 +11,6 @@ type ActivityType = Activity & {
 }
 
 const ActivityList: FC<ActivityListProperties> = ({ data }) => {
-	console.log(data, 'data')
 	return (
 		<div>
 			<h1 className='mb-2 mt-2 text-xl'>Activities</h1>

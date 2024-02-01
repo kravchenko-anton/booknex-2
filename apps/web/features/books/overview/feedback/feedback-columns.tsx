@@ -1,9 +1,19 @@
+import type { ColumnDef } from '@tanstack/react-table'
 import { Color } from 'global/colors'
 import { Star } from 'icons'
 import * as React from 'react'
 import { useState } from 'react'
 
-export const feedbackColumns = () => [
+type ColumnType = ColumnDef<{
+	id: number
+	user: {
+		email: string
+	}
+	rating: number
+	text: string
+	tags: string[]
+}>[]
+export const feedbackColumns = (): ColumnType => [
 	{
 		id: 'id',
 		enableHiding: false,
@@ -52,11 +62,11 @@ export const feedbackColumns = () => [
 			const [showMore, setShowMore] = useState(false)
 			return (
 				<div className='flex items-center justify-center'>
-					<p className=' text-sm' onClick={() => setShowMore(!showMore)}>
+					<button className=' text-sm' onClick={() => setShowMore(!showMore)}>
 						{showMore
 							? row.original.text
 							: row.original.text.slice(0, 250) + '...'}
-					</p>
+					</button>
 				</div>
 			)
 		}
@@ -70,7 +80,10 @@ export const feedbackColumns = () => [
 				<div className='flex flex-wrap items-center justify-center gap-1.5'>
 					{row.original.tags.map(tag => {
 						return (
-							<p className='bg-foreground rounded-xl p-1.5 font-light'>
+							<p
+								key={tag}
+								className='bg-foreground rounded-xl p-1.5 font-light'
+							>
 								<b className='font-bold text-white'>{tag}</b>
 							</p>
 						)

@@ -6,9 +6,9 @@ export const createBookValidationSchema = z.object({
 		name: z.string(),
 		blob: z.instanceof(Blob)
 	}),
-	pages: z.number().positive(),
+	pages: z.coerce.number().positive(),
 	description: z.string(),
-	popularity: z.number().positive(),
+	popularity: z.coerce.number().positive(),
 	author: z.string(),
 	books: z
 		.array(

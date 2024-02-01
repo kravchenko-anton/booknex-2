@@ -1,9 +1,26 @@
+import type { ColumnDef } from '@tanstack/react-table'
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/utils/number-formater'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-export const columns = ({ preview }: { preview: (id: number) => void }) => [
+type ColumnType = ColumnDef<{
+	id: number
+	title: string
+	author: string
+	picture: string
+	description: string
+	visible: boolean
+	pages: number
+	popularity: number
+	genres: { name: string }[]
+}>[]
+
+export const columns = ({
+	preview
+}: {
+	preview: (id: number) => void
+}): ColumnType => [
 	{
 		id: 'id',
 		enableHiding: false,
@@ -32,10 +49,8 @@ export const columns = ({ preview }: { preview: (id: number) => void }) => [
 		header: () => <p className='text-center text-xl'>Information</p>,
 		cell: ({ row }) => {
 			return (
-				<div className='w-[210px]'>
-					<h3 onClick={() => preview(row.original.id)} className='mb-1 text-xl'>
-						{row.original.title}
-					</h3>
+				<button onClick={() => preview(row.original.id)} className='w-[210px]'>
+					<h3 className='mb-1 text-xl'>{row.original.title}</h3>
 					<p>{row.original.author}</p>
 					<div className='mt-2 flex flex-wrap gap-2'>
 						<p className='bg-foreground rounded-md p-1.5 font-light'>
@@ -59,7 +74,7 @@ export const columns = ({ preview }: { preview: (id: number) => void }) => [
 							popularity
 						</p>
 					</div>
-				</div>
+				</button>
 			)
 		}
 	},
@@ -70,11 +85,11 @@ export const columns = ({ preview }: { preview: (id: number) => void }) => [
 		cell: ({ row }) => {
 			const [showMore, setShowMore] = useState(false)
 			return (
-				<p className='mb-2 text-sm' onClick={() => setShowMore(!showMore)}>
+				<button className='mb-2 text-sm' onClick={() => setShowMore(!showMore)}>
 					{showMore
 						? row.original.description
 						: row.original.description.slice(0, 250) + '...'}
-				</p>
+				</button>
 			)
 		}
 	},

@@ -2,13 +2,20 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "strict": false,
+    "baseUrl": ".",
+    "strictNullChecks": true,
+    "allowJs": false,
+    "noEmit": false,
+    "incremental": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
@@ -34,14 +41,7 @@
       "jest",
       "node"
     ],
-    "allowJs": false,
-    "noEmit": false,
-    "incremental": false,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "strictNullChecks": false,
-    "forceConsistentCasingInFileNames": true
+   
   },
   "include": [
     "**/*.ts",

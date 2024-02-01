@@ -1,11 +1,38 @@
-import type { EbookType } from '@/features/books/create/useBookCompose'
-import EditEbook from '@/features/books/overview/edit-ebook'
+import Editor from '@/features/books/shared/editor'
+import type { EbookType } from '@/features/books/shared/useBookCompose'
+import { useBookCompose } from '@/features/books/shared/useBookCompose'
+import { Button, DropZone } from '@/shared/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs'
+import { errorToast } from '@/shared/utils/toast'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { getFileUrl } from 'global/api-config'
 import type { FC } from 'react'
 import * as React from 'react'
+import { twMerge } from 'tailwind-merge'
+import { z } from 'zod'
+
+const ebookValidator = z
+	.array(
+		z
+			.object({
+				name: z.string().refine(value => !value.includes('epub'), {
+					message: 'Book name can not include "epub"'
+				}),
+				content: z
+					.array(
+						z.object({
+							title: z.string(),
+							content: z.string()
+						})
+					)
+					.min(1)
+			})
+			.refine(value => value.name.length > 0, {
+				message: 'File is required'
+			})
+	)
+	.min(1)
 
 interface EbookInfoProperties {
 	bookLink: string
@@ -21,6 +48,7 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 				.then(response => response.data),
 		enabled: !!bookLink
 	})
+	const { books } = useBookCompose(ebook)
 
 	if (!ebook) return null
 	return (
@@ -42,11 +70,45 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 									.join(' ')
 							})
 						}}
-						className=' mb-4 h-[700px] w-full overflow-y-scroll'
+						className='mb-4 h-[700px] w-full overflow-y-scroll'
 					></p>
 				</TabsContent>
 				<TabsContent value='edit'>
-					<EditEbook onEdit={onEdit} ebook={ebook} />
+					<DropZone
+						size='sm'
+						multiple={true}
+						accept='.epub'
+						onFileDelete={file =>
+							books.delete({
+								name: file.name
+							})
+						}
+						onDropFile={books.upload}
+					/>
+					{books.state && (
+						<div
+							className={twMerge(
+								'mt-8   gap-2',
+								books.state.length > 1 && 'grid grid-cols-2'
+							)}
+						>
+							<Editor {...books} />
+						</div>
+					)}
+					<Button
+						size='md'
+						variant='primary'
+						onClick={() => {
+							ebookValidator
+								.parseAsync(books.state)
+								.then(value => onEdit(value as any))
+								.catch(error => {
+									errorToast(error)
+								})
+						}}
+					>
+						Save
+					</Button>
 				</TabsContent>
 			</div>
 		</Tabs>

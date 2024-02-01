@@ -1,4 +1,4 @@
-import SelectGenres from '@/features/books/create/select-genres'
+import SelectGenres from '@/features/books/shared/select-genres'
 import { Button, Field, FormTextArea } from '@/shared/ui'
 import { dirtyValues } from '@/shared/utils/form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -23,8 +23,8 @@ interface UpdateBioProperties {
 const UpdateBioValidationSchema = z.object({
 	title: z.string(),
 	author: z.string(),
-	pages: z.number(),
-	popularity: z.number(),
+	pages: z.coerce.number(),
+	popularity: z.coerce.number(),
 	description: z.string(),
 	genres: z.array(z.number())
 })
@@ -72,6 +72,7 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 					<Field
 						control={control}
 						name='pages'
+						onClick={() => setIsEditing(true)}
 						type='number'
 						defaultValue={properties.pages}
 						icon={Book}

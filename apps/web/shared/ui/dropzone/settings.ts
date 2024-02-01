@@ -1,7 +1,7 @@
 import type { DropzoneProperties } from './types'
 
 export const settings: {
-	colors: Record<DropzoneProperties['variant'], string>
+	colors: Record<Required<DropzoneProperties>['variant'], string>
 	padding: Record<DropzoneProperties['size'], string>
 	maxWidth: Record<DropzoneProperties['size'], string>
 } = {

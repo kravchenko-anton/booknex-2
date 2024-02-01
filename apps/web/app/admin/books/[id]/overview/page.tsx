@@ -1,10 +1,10 @@
 'use client'
 
-import ActivityList from '@/features/books/overview/activity-list'
 import EbookInfo from '@/features/books/overview/ebook-info'
-import FeedbackTable from '@/features/books/overview/feedback-table'
+import FeedbackTable from '@/features/books/overview/feedback/feedback-table'
 import UpdateBio from '@/features/books/overview/update-bio'
 import UpdatePicture from '@/features/books/overview/update-picture'
+import ActivityList from '@/features/books/shared/activity-list'
 import { bookService } from '@/shared/services/book/book-service'
 import Loader from '@/shared/ui/loader/loader'
 import { useUploadFile } from '@/shared/utils/files'
@@ -29,7 +29,7 @@ const Page = () => {
 		mutationKey: ['update-book'],
 		mutationFn: ({ id, payload }: { id: number; payload: BookUpdatePayload }) =>
 			bookService.update(id, payload),
-		onSuccess: async () => {
+		onSuccess: () => {
 			successToast('Book updated')
 			router.refresh()
 		}

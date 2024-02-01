@@ -37,6 +37,7 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'@typescript-eslint/no-loop-func': 'off',
 		'react/jsx-curly-brace-presence': [
 			'error',
 			{ props: `never`, children: 'never' }
