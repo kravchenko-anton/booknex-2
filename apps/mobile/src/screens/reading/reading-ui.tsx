@@ -3,7 +3,7 @@ import { Title } from '@/shared/ui'
 import { AnimatedView } from '@/shared/ui/animated-components'
 import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -25,15 +25,14 @@ const ReadingUi: FC<{
 }) => {
 	const { goBack } = useTypedNavigation()
 	const { top, bottom } = useSafeAreaInsets()
-	const opacityAnimation = useAnimatedStyle(() => {
-		return {
-			opacity: withTiming(visible ? 1 : 0)
-		}
-	})
+	const opacityAnimation = useAnimatedStyle(() => ({
+		opacity: withTiming(visible ? 1 : 0)
+	}))
 
 	return (
 		<View className='absolute h-screen w-full'>
 			<AnimatedView
+				className=' absolute z-50 mb-0 mt-0 w-full flex-1 justify-center border-b-2'
 				style={[
 					opacityAnimation,
 					{
@@ -42,7 +41,6 @@ const ReadingUi: FC<{
 						borderBottomColor: colorPalette.background.lighter
 					}
 				]}
-				className=' absolute z-50 mb-0 mt-0 w-full flex-1 justify-center border-b-2'
 			>
 				<View className='mt-0 w-full flex-row items-center justify-between px-4 pb-2.5 pt-2.5'>
 					<View className='w-2/3 flex-row items-center'>
@@ -53,8 +51,8 @@ const ReadingUi: FC<{
 							onPress={() => goBack()}
 						/>
 						<Title
-							size={20}
 							center
+							size={20}
 							className='ml-2'
 							weight='bold'
 							color={colorPalette.text}
@@ -65,14 +63,14 @@ const ReadingUi: FC<{
 					<ListOrdered
 						width={28}
 						height={28}
-						onPress={onChapterIconPress}
 						color={colorPalette.text}
+						onPress={onChapterIconPress}
 					/>
 					<CaseSenSitive
 						width={28}
 						height={28}
-						onPress={onSelectThemeIconPress}
 						color={colorPalette.text}
+						onPress={onSelectThemeIconPress}
 					/>
 				</View>
 			</AnimatedView>
@@ -100,7 +98,7 @@ const ReadingUi: FC<{
 							borderBottomRightRadius: 100,
 							borderTopRightRadius: 100
 						}}
-					></View>
+					/>
 				</View>
 			</View>
 		</View>

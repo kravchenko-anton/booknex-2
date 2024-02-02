@@ -11,21 +11,7 @@ module.exports = {
 		'react',
 		'jsx-expressions'
 	],
-	extends: [
-		'airbnb-typescript',
-		'plugin:unicorn/all',
-		'plugin:sonarjs/recommended',
-		'plugin:jsx-a11y/recommended',
-		'plugin:react/recommended',
-		'plugin:react-native/all',
-		'plugin:react-hooks/recommended',
-		'plugin:@typescript-eslint/strict',
-		'plugin:@typescript-eslint/stylistic',
-		'plugin:@typescript-eslint/stylistic-type-checked',
-		'plugin:@typescript-eslint/strict-type-checked',
-		'plugin:security/recommended-legacy',
-		'plugin:destructuring/recommended'
-	],
+	extends: [],
 	root: true,
 	ignorePatterns: ['*.js'],
 	parserOptions: {
@@ -37,87 +23,13 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
-		'@typescript-eslint/no-loop-func': 'off',
-		'react/jsx-curly-brace-presence': [
-			'error',
-			{ props: `never`, children: 'never' }
-		],
-		'react/jsx-props-no-spreading': 'off',
-		'react/react-in-jsx-scope': 'off',
-		'react/display-name': 'off',
-		'react/require-default-props': 'off',
-		'react/prop-types': 'off',
-		'@typescript-eslint/quotes': ['error', 'single'],
-		'@typescript-eslint/no-non-null-assertion': 'warn',
-		'@typescript-eslint/no-non-null-asserted-optional-chain': 'warn',
-		'@typescript-eslint/consistent-type-imports': 'error',
-		'@typescript-eslint/no-duplicate-enum-values': 'error',
-		'@typescript-eslint/no-duplicate-type-constituents': 'error',
-		'@typescript-eslint/no-empty-interface': 'error',
-		'@typescript-eslint/no-explicit-any': 'error',
-		'unicorn/no-array-reduce': 'off',
-		'@typescript-eslint/no-extra-non-null-assertion': 'error',
-		'max-params': ['error', 3],
-		'destructuring/in-params': ['error', { 'max-params': 2 }],
-		complexity: ['error', 8],
-		'destructuring/no-rename': 'off',
-		'no-unneeded-ternary': 'error',
-		'jsx-expressions/strict-logical-expressions': 'error',
-		'react-hooks/exhaustive-deps': 'warn',
-		'react-native/no-unused-styles': 2,
-		'react-native/split-platform-components': 2,
-		'react-native/no-inline-styles': 1,
-		'react-native/no-color-literals': 2,
-		'react-native/no-single-element-style-arrays': 2,
-		'no-param-reassign': ['error', { props: false }],
-		'no-restricted-syntax': [
-			'error',
-			'ForInStatement',
-			'LabeledStatement',
-			'WithStatement'
-		],
-		'no-underscore-dangle': ['error', { allow: ['_isRetry', '_count'] }],
-		'no-void': ['error', { allowAsStatement: true }],
-		'@typescript-eslint/lines-between-class-members': [
-			'error',
-			'always',
-			{ exceptAfterSingleLine: true }
-		],
-		'sonarjs/cognitive-complexity': 'error',
-		'sonarjs/no-identical-expressions': 'error',
+		'arrow-body-style': ['error', 'as-needed'],
+		'react/self-closing-comp': ['error', { component: true, html: true }],
 		'@typescript-eslint/naming-convention': [
 			'error',
-			{ selector: 'default', format: null },
 			{
-				selector: 'variable',
-				format: ['camelCase'],
-				types: ['boolean', 'string', 'number']
-			},
-			{
-				selector: 'variableLike',
-				format: ['PascalCase', 'camelCase'],
-				filter: {
-					regex: '^_count$|^_isRetry$|^ai_request$',
-					match: false
-				}
-			},
-			{ selector: 'parameter', format: null },
-			{
-				selector: 'memberLike',
-				format: ['camelCase']
-			},
-			{
-				selector: 'typeLike',
-				format: ['PascalCase']
-			},
-			{
-				selector: 'typeParameter',
-				format: ['PascalCase'],
-				suffix: ['Properties', 'Type', 'Enum'],
-				filter: {
-					regex: '^K$|^T$',
-					match: false
-				}
+				selector: 'default',
+				format: ['camelCase', 'PascalCase']
 			},
 			{
 				selector: 'variable',
@@ -125,53 +37,162 @@ module.exports = {
 				format: ['PascalCase'],
 				prefix: ['is', 'should', 'has', 'can', 'did', 'will']
 			},
-			{ selector: 'property', format: null },
-			{ selector: 'enumMember', format: null }
+
+			{
+				selector: 'variable',
+				format: ['camelCase'],
+				types: ['boolean', 'string', 'number']
+			},
+			{
+				selector: 'memberLike',
+				modifiers: ['private'],
+				format: ['camelCase']
+			},
+			{
+				selector: 'property',
+				format: null,
+				modifiers: ['requiresQuotes']
+			},
+			{
+				selector: 'typeParameter',
+				format: ['PascalCase'],
+				prefix: ['T']
+			},
+			{
+				selector: 'interface',
+				format: ['PascalCase'],
+				suffix: ['Interface', 'Type', 'Properties', 'Output', 'Payload']
+			},
+			{
+				selector: 'variable',
+				types: ['number'],
+				format: ['UPPER_CASE']
+			}
 		],
 		'unicorn/filename-case': [
 			'error',
 			{
 				case: 'kebabCase',
-				ignore: ['App.tsx', 'use']
+				ignore: ['use']
 			}
 		],
-		'no-nested-ternary': 'off',
-		'unicorn/no-null': 'off',
-		'spaced-comment': ['off'],
-		'@typescript-eslint/no-unsafe-argument': 'off',
-		// '@typescript-eslint/no-unsafe-argument': ['error'],
-		'@typescript-eslint/prefer-nullish-coalescing': 'off',
-		'@typescript-eslint/no-unsafe-call': 'off',
-		'@typescript-eslint/no-unsafe-assignment': 'off',
-		'@typescript-eslint/no-unsafe-return': 'off',
-		'unicorn/explicit-length-check': 'off',
-		'@typescript-eslint/prefer-as-const': 'off',
-		'@typescript-eslint/no-redundant-type-constituents': 'off',
-		'unicorn/no-keyword-prefix': ['off'],
-		'@typescript-eslint/no-confusing-void-expression': 'off',
-		'@typescript-eslint/comma-dangle': 'off',
-		'@typescript-eslint/semi': 'off',
-		'@typescript-eslint/unbound-method': 'off',
-		'@typescript-eslint/no-misused-promises': 'off',
-		'@typescript-eslint/no-shadow': 'off',
-		'@typescript-eslint/no-floating-promises': 'off',
-		'@typescript-eslint/indent': 'off',
-		'@typescript-eslint/no-extraneous-class': 'off',
-		'@typescript-eslint/consistent-type-assertions': 'off',
-		'@typescript-eslint/no-unsafe-member-access': 'off',
-		'@typescript-eslint/no-unnecessary-condition': 'off',
-		'@typescript-eslint/consistent-type-definitions': 'off',
-		'@typescript-eslint/no-throw-literal': 'off',
-		'no-shadow': 'off',
-		'no-mixed-spaces-and-tabs': 'off',
-		'class-methods-use-this': 'off',
-		'consistent-return': 'off',
-		'newline-per-chained-call': 'off',
-		'no-await-in-loop': 'off',
-		'no-continue': 'off',
-		'react-native/no-raw-text': 'off',
-		'react/jsx-filename-extension': 'off',
-		'import/no-extraneous-dependencies': 'off',
-		'import/extensions': 'off'
+		'unicorn/better-regex': 2,
+		'unicorn/explicit-length-check': 2,
+		'unicorn/consistent-function-scoping': 2,
+		'unicorn/prefer-default-parameters': 2,
+		'unicorn/no-array-push-push': 2,
+		'unicorn/prefer-array-index-of': 2,
+		'unicorn/prefer-array-flat-map': 2,
+		'unicorn/prefer-array-some': 2,
+		'unicorn/prefer-array-find': 2,
+		'unicorn/prefer-array-flat': 2,
+		'unicorn/prefer-includes': 2,
+		'unicorn/prefer-top-level-await': 2,
+		'unicorn/prefer-spread': 2,
+		'unicorn/no-useless-spread': 2,
+		'unicorn/no-useless-fallback-in-spread': 2,
+		'unicorn/no-for-loop': 2,
+		'unicorn/prefer-set-size': 2,
+		'unicorn/prefer-type-error': 2,
+		'unicorn/prefer-object-from-entries': 2,
+		'unicorn/no-instanceof-array': 2,
+		'unicorn/prefer-native-coercion-functions': 2,
+		'unicorn/prefer-logical-operator-over-ternary': 2,
+		'unicorn/prefer-event-target': 2,
+		'unicorn/no-await-expression-member': 2,
+		'unicorn/no-new-array': 2,
+		'unicorn/throw-new-error': 2,
+		'unicorn/no-useless-length-check': 2,
+		'unicorn/prefer-prototype-methods': 2,
+		'unicorn/prefer-date-now': 2,
+		'unicorn/prefer-export-from': [2, { ignoreUsedVariables: true }],
+		'unicorn/no-new-buffer': 2,
+		'unicorn/prefer-query-selector': 2,
+		'unicorn/prefer-string-replace-all': 2,
+		'unicorn/prefer-switch': [2, { emptyDefaultCase: 'do-nothing-comment' }],
+		'unicorn/switch-case-braces': 2,
+		'unicorn/catch-error-name': 2,
+		'unicorn/consistent-destructuring': 2,
+
+		'react/prop-types': 2,
+		'react/no-unstable-nested-components': [2, { allowAsProps: false }],
+		'react/jsx-no-useless-fragment': [2, { allowExpressions: true }],
+		'react/function-component-definition': [
+			2,
+			{ namedComponents: 'arrow-function' }
+		],
+		'react/jsx-boolean-value': 2,
+		'react/jsx-fragments': 2,
+		'react/hook-use-state': 2,
+		'react/jsx-filename-extension': [
+			2,
+			{
+				extensions: ['.jsx', '.tsx', '.mtsx', '.mjsx']
+			}
+		],
+		'react/no-multi-comp': 2,
+		'react/no-array-index-key': 2,
+		'react/jsx-props-no-spreading': 0,
+		'react/jsx-sort-props': [
+			2,
+			{
+				callbacksLast: true,
+				shorthandFirst: true,
+				shorthandLast: false,
+				ignoreCase: true,
+				noSortAlphabetically: true,
+				multiline: 'last',
+				reservedFirst: false
+			}
+		],
+		'@typescript-eslint/ban-ts-comment': 0,
+		'@typescript-eslint/no-unsafe-assignment': 0,
+		'@typescript-eslint/no-array-constructor': 0,
+		'@typescript-eslint/no-use-before-define': 2,
+		'@typescript-eslint/no-inferrable-types': 2,
+		'@typescript-eslint/no-loop-func': 2,
+		'@typescript-eslint/no-non-null-assertion': 2,
+		'@typescript-eslint/prefer-function-type': 2,
+		'@typescript-eslint/prefer-string-starts-ends-with': 2,
+		'@typescript-eslint/return-await': 2,
+		'@typescript-eslint/consistent-type-definitions': 2,
+		'@typescript-eslint/consistent-type-assertions': 2,
+		'@typescript-eslint/consistent-type-imports': [
+			2,
+			{
+				fixStyle: 'inline-type-imports'
+			}
+		],
+		'@typescript-eslint/consistent-type-exports': [
+			2,
+			{ fixMixedExportsWithInlineTypeSpecifier: true }
+		],
+		'@typescript-eslint/switch-exhaustiveness-check': 2,
+		'@typescript-eslint/method-signature-style': 2,
+		'@typescript-eslint/unified-signatures': 2,
+		'@typescript-eslint/no-unused-expressions': [
+			2,
+			{
+				allowShortCircuit: true,
+				allowTernary: true,
+				allowTaggedTemplates: true,
+				enforceForJSX: true
+			}
+		],
+		'@typescript-eslint/array-type': 2,
+		'@typescript-eslint/no-empty-function': 2,
+		'@typescript-eslint/prefer-optional-chain': 2,
+		'@typescript-eslint/dot-notation': 2,
+		'@typescript-eslint/no-import-type-side-effects': 2,
+		'@typescript-eslint/default-param-last': 2,
+		'@typescript-eslint/no-shadow': [
+			2,
+			{
+				hoist: 'all',
+				allow: ['resolve', 'reject', 'done', 'next', 'err', 'error'],
+				ignoreTypeValueShadow: true,
+				ignoreFunctionTypeParameterNameValueShadow: true
+			}
+		]
 	}
 }

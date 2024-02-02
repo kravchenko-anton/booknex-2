@@ -1,4 +1,3 @@
-import type { RegisterFieldsType } from '@/features/auth/action/auth-types'
 import type { AuthValidationSchemaType } from '@/features/auth/validation'
 import { authValidationSchema } from '@/features/auth/validation'
 import { useAction, useTypedRoute } from '@/shared/hooks'
@@ -7,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Color } from 'global/colors'
 import { Register as RegisterIllustration } from 'global/illustrations'
 import { Mail, Password } from 'icons'
-import { useForm } from 'react-hook-form'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import { View } from 'react-native'
 
 const Register = () => {
@@ -18,9 +17,16 @@ const Register = () => {
 	const { control, handleSubmit } = useForm<AuthValidationSchemaType>({
 		resolver: zodResolver(authValidationSchema)
 	})
-	const onSubmit = (data: RegisterFieldsType) => {
+	const onSubmit: SubmitHandler<AuthValidationSchemaType> = ({
+		email,
+		password
+	}) => {
 		if (selectGenres.length === 0 || selectGenres.length < 3) return
-		register({ ...data, genres: selectGenres })
+		register({
+			genres: selectGenres,
+			password,
+			email
+		})
 	}
 	return (
 		<ScrollLayout className='px-2'>
@@ -31,10 +37,10 @@ const Register = () => {
 					className='mx-auto mt-2 w-full'
 				/>
 				<View className='mt-2 items-center'>
-					<Title size={30} center weight='bold'>
+					<Title center size={30} weight='bold'>
 						Welcome to the club 🎉
 					</Title>
-					<Title size={18} center weight='light' color={Color.gray}>
+					<Title center size={18} weight='light' color={Color.gray}>
 						Enter your credentials to continue
 					</Title>
 					<View className='mt-6 w-full'>
@@ -46,12 +52,12 @@ const Register = () => {
 							placeholder='Email'
 						/>
 						<Field
+							secureTextEntry
 							icon={Password}
 							control={control}
 							name='password'
 							className='my-1.5'
 							placeholder='Password'
-							secureTextEntry
 						/>
 						<Button
 							size='md'

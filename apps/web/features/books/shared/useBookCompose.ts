@@ -13,7 +13,31 @@ export interface EbookType {
 	}[]
 }
 
-export const useBookCompose = (defaultBooks?: EbookType[]) => {
+export interface BookComposeReturnType {
+	upload: (files: File[]) => void
+	state: EbookType[] | undefined
+	delete: (book: { name: string }) => void
+	generateChaptersNames: (bookName: string) => void
+	addNewCharacterAfterContent: (data: {
+		bookName: string
+		afterContent: string
+	}) => void
+	mergeContentWithTopCharacter: (data: {
+		bookName: string
+		topChapterId: number
+		insertedContent: string
+	}) => void
+	updateTocContent: (name: string, id: number, newContent: string) => void
+	updateTocTitle: (oldId: number, bookName: string, newContent: string) => void
+	updateChapterTitle: (value: string, name: string) => void
+	removeToc: (name: string, removedId: number) => void
+}
+
+export const useBookCompose = (
+	defaultBooks?: EbookType[]
+): {
+	books: BookComposeReturnType
+} => {
 	const [books, setBooks] = useState<EbookType[]>()
 
 	useLayoutEffect(() => {
@@ -38,12 +62,10 @@ export const useBookCompose = (defaultBooks?: EbookType[]) => {
 				if (book.name === bookName) {
 					return {
 						...book,
-						content: book.content.map((content, index) => {
-							return {
-								...content,
-								title: `Chapter ${index + 1}`
-							}
-						})
+						content: book.content.map((content, index) => ({
+							...content,
+							title: `Chapter ${index + 1}`
+						}))
 					}
 				}
 				return book

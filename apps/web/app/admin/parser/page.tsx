@@ -14,9 +14,9 @@ const Parser: FC = () => {
 		<div className='w-full'>
 			<DataTableHeader title='Parser' {...headerProperties}>
 				<ParseButton
-					onClose={parseButtonProperties.close}
 					isOpen={parseButtonProperties.isOpen}
 					openParserDialog={parseButtonProperties.open}
+					onClose={parseButtonProperties.close}
 				/>
 			</DataTableHeader>
 			<DataTable {...tableProperties} />

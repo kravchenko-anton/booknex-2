@@ -14,7 +14,14 @@ export const onTouch = (event: GestureResponderEvent) => {
 	for (const item of collection) {
 		// @ts-expect-error
 		item.ref?.current?.measure(
-			(_x, _y, width: number, height: number, x: number, y: number) => {
+			(
+				_b: unknown,
+				_s: unknown,
+				width: number,
+				height: number,
+				x: number,
+				y: number
+			) => {
 				if (pageX < x || pageX > x + width || pageY < y || pageY > y + height)
 					item.cb()
 			}

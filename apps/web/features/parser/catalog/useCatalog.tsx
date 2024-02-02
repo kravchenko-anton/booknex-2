@@ -25,7 +25,7 @@ export const useCatalog = () => {
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			remove: deleteFromParser,
+			remove: (id: number) => deleteFromParser(id),
 			useAsTemplate: id => router.push(`${bookRoute}/create?template=${id}`)
 		}),
 		getCoreRowModel: getCoreRowModel()
@@ -38,7 +38,7 @@ export const useCatalog = () => {
 	}
 	const tableProperties = {
 		table,
-		totalPages: books?.totalPages,
+		totalPages: books?.totalPages ?? 0,
 		currentPage: page,
 		canLoadMore: !books?.canLoadMore,
 		previous: () => pushParameters({ page: page - 1 }),

@@ -11,11 +11,15 @@ type ActivityType = Activity & {
 }
 
 const ActivityList: FC<ActivityListProperties> = ({ data }) => {
+	console.log(data)
+	//TODO: сделать тут попап с обображением всех активностей в виде логов
 	return (
 		<div>
 			<h1 className='mb-2 mt-2 text-xl'>Activities</h1>
 
 			<ActivityCalendar
+				maxLevel={10}
+				data={data}
 				style={{
 					width: '100%'
 				}}
@@ -40,8 +44,6 @@ const ActivityList: FC<ActivityListProperties> = ({ data }) => {
 						alert(activity.activities.join('\n'))
 					}
 				}}
-				maxLevel={10}
-				data={data}
 			/>
 		</div>
 	)

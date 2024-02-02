@@ -77,15 +77,15 @@ const Page: FC = () => {
 					<div>
 						<h1 className='mt-2  text-xl'>Book file</h1>
 						<DropZone
+							multiple
 							size='md'
-							multiple={true}
 							accept='.epub'
+							onDropFile={books.upload}
 							onFileDelete={file =>
 								books.delete({
 									name: file.name
 								})
 							}
-							onDropFile={books.upload}
 						/>
 						<ErrorMessage name='books' errors={form.errors} />
 					</div>
@@ -113,11 +113,12 @@ const Page: FC = () => {
 			<Button
 				size='md'
 				className='mt-4'
+				variant='primary'
 				onClick={() => {
+					if (!books.state) return
 					form.setValue('books', books.state)
 					form.submit()
 				}}
-				variant='primary'
 			>
 				Create
 			</Button>

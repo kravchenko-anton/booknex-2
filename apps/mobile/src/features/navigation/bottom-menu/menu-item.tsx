@@ -1,5 +1,5 @@
 import type {
-	IMenuItem,
+	MenuItemType,
 	TypeNavigate
 } from '@/features/navigation/bottom-menu/menu-data'
 import { Title } from '@/shared/ui'
@@ -11,7 +11,7 @@ import { Pressable } from 'react-native'
 
 interface IMenuItemProperties {
 	currentRoute?: string
-	item: IMenuItem
+	item: MenuItemType
 	nav: TypeNavigate
 }
 

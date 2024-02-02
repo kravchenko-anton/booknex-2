@@ -11,7 +11,7 @@ const Page: FC = () => {
 	return (
 		<div className='w-full'>
 			<DataTableHeader title='Books' {...headerProperties}>
-				<Button onClick={onCreateButtonClick} size='sm' variant='primary'>
+				<Button size='sm' variant='primary' onClick={onCreateButtonClick}>
 					Create
 				</Button>
 			</DataTableHeader>

@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
-export type WebviewMessage = {
+export interface WebviewMessage {
 	type: 'scroll' | 'finishBook'
 	payload: {
 		scrollTop: number
@@ -19,11 +19,14 @@ export const useReading = (id: number) => {
 		useTypedSelector(state => state.readingSettings)
 	const { navigate, goBack } = useTypedNavigation()
 	const [readerState, setReaderState] = useState({
-		progress: books.find(book => book.id === id)?.lastProgress.progress,
-		scrollTop: books.find(book => book.id === id)?.lastProgress.location
+		progress: Number(books.find(book => book.id === id)?.lastProgress.progress),
+		scrollTop: Number(books.find(book => book.id === id)?.lastProgress.location)
 	})
 
-	useSaveProgress({ id, readerState })
+	useSaveProgress({
+		id,
+		readerState
+	})
 	const { mutateAsync: finishReading } = useMutation({
 		mutationKey: ['end-reading', id],
 		mutationFn: (id: number) => userServices.finishReading(id)

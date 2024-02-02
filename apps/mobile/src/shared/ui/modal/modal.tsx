@@ -12,55 +12,55 @@ const Modal: FC<{
 	acceptText: string
 	type: VividPaletteType
 	onAccept: () => void
-}> = ({ acceptText, description, icon: Icon = null, onAccept, type }) => {
+}> = ({ acceptText, description, icon: Icon, onAccept, type }) => {
 	const { goBack } = useTypedNavigation()
 	return (
 		<DefaultModal
+			transparent
+			statusBarTranslucent
+			visible
 			animationType='fade'
-			transparent={true}
-			statusBarTranslucent={true}
-			visible={true}
 			onRequestClose={goBack}
 		>
 			<View
-				onTouchStart={goBack}
+				className='flex-1 items-center justify-center'
 				style={{
 					backgroundColor: `${Color.background}99`
 				}}
-				className='flex-1 items-center justify-center'
+				onTouchStart={goBack}
 			>
 				<View
-					onTouchStart={event => event.stopPropagation()}
 					className='bg-foreground z-50 w-10/12 items-center rounded-2xl p-4'
+					onTouchStart={event => event.stopPropagation()}
 				>
 					<Icon className='mt-2' width={40} height={40} color={Color.gray} />
 					<Title
+						center
 						size={18}
 						color={Color.gray}
 						className='mb-1 mt-2 px-2'
 						weight='semiBold'
 						numberOfLines={2}
-						center
 					>
 						{description}
 					</Title>
 
 					<Button
+						className='mt-4 w-full'
+						variant={type}
+						size='md'
 						onPress={() => {
 							onAccept()
 							goBack()
 						}}
-						className='mt-4 w-full'
-						variant={type}
-						size='md'
 					>
 						{acceptText}
 					</Button>
 					<Button
-						onPress={goBack}
 						className='mt-2 w-full'
 						variant='foreground'
 						size='md'
+						onPress={goBack}
 					>
 						Cancel
 					</Button>

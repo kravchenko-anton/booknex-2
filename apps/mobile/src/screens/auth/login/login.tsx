@@ -1,4 +1,3 @@
-import type { AuthFieldsType } from '@/features/auth/action/auth-types'
 import type { AuthValidationSchemaType } from '@/features/auth/validation'
 import { authValidationSchema } from '@/features/auth/validation'
 import { useAction } from '@/shared/hooks'
@@ -17,8 +16,10 @@ const Login = () => {
 		mode: 'onSubmit',
 		resolver: zodResolver(authValidationSchema)
 	})
-	const onSubmit: SubmitHandler<AuthFieldsType> = ({ password, email }) =>
-		login({ password, email })
+	const onSubmit: SubmitHandler<AuthValidationSchemaType> = ({
+		password,
+		email
+	}) => login({ password, email })
 	return (
 		<ScrollLayout className='px-2'>
 			<View className='mt-4'>
@@ -43,17 +44,17 @@ const Login = () => {
 							placeholder='Email'
 						/>
 						<Field
+							secureTextEntry
 							icon={Password}
 							control={control}
 							name='password'
 							placeholder='Password'
-							secureTextEntry={true}
 						/>
 						<Button
-							onPress={handleSubmit(onSubmit)}
 							size='md'
 							variant='primary'
 							className='mb-4 mt-2'
+							onPress={handleSubmit(onSubmit)}
 						>
 							Sign in
 						</Button>

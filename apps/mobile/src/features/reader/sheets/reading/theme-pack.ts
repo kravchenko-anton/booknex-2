@@ -17,11 +17,16 @@ export interface ThemePackType {
 	}
 }
 
+const statusBar = {
+	light: 'light-content' as 'light-content',
+	dark: 'dark-content' as 'dark-content'
+}
+
 export const themePack: ThemePackType[] = [
 	{
 		title: 'Dark',
 		slug: 'dark',
-		statusBar: 'light-content',
+		statusBar: statusBar.light,
 		colorPalette: {
 			primary: '#4d92d3',
 			secondary: '#cf8e6d',
@@ -36,7 +41,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Light',
 		slug: 'light',
-		statusBar: 'light-content',
+		statusBar: statusBar.light,
 		colorPalette: {
 			primary: Color.primary,
 			secondary: Color.secondary,
@@ -51,7 +56,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Sepia',
 		slug: 'sepia',
-		statusBar: 'dark-content',
+		statusBar: statusBar.dark,
 		colorPalette: {
 			primary: '#606c38',
 			secondary: '#684E32',
@@ -66,7 +71,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Dark purple',
 		slug: 'dark-purple',
-		statusBar: 'light-content',
+		statusBar: statusBar.light,
 		colorPalette: {
 			primary: '#bb77b0',
 			secondary: '#ebbcba',
@@ -82,7 +87,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Tokyo night',
 		slug: 'tokyo-night',
-		statusBar: 'light-content',
+		statusBar: statusBar.light,
 		colorPalette: {
 			primary: '#72d7c8',
 			secondary: '#ffc66d',
@@ -97,7 +102,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Solarized',
 		slug: 'solarized',
-		statusBar: 'light-content',
+		statusBar: statusBar.light,
 		colorPalette: {
 			primary: '#b58900',
 			secondary: '#cb4b16',
@@ -112,7 +117,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Blue night',
 		slug: 'blue-night',
-		statusBar: 'light-content',
+		statusBar: statusBar.light,
 		colorPalette: {
 			primary: '#24b5a8',
 			secondary: '#3398d3',
@@ -127,7 +132,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Kanagawa',
 		slug: 'kanagawa',
-		statusBar: 'light-content',
+		statusBar: statusBar.light,
 		colorPalette: {
 			primary: '#957fb8',
 			secondary: '#ff4848',
@@ -142,7 +147,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Pink owl',
 		slug: 'pink-owl',
-		statusBar: 'light-content',
+		statusBar: statusBar.light,
 		colorPalette: {
 			primary: '#ff699a',
 			secondary: '#e7de79',

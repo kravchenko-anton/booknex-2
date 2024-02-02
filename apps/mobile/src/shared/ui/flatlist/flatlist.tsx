@@ -15,25 +15,35 @@ const FlatList = <T,>({
 	style,
 	...properties
 }: FlatListProperties<T>) => {
-	if (data.length === 0 && !properties.ListEmptyComponent) return
+	if (!data && !properties.ListEmptyComponent) return null
 	return (
 		<>
 			<Title
 				className='mb-3'
+				color={Color.white}
+				size={20}
+				weight='semiBold'
 				style={{
 					marginTop: mt,
 					paddingHorizontal: properties.horizontal ? px : 0
 				}}
-				color={Color.white}
-				size={20}
-				weight='semiBold'
 			>
 				{title}
 			</Title>
 			<DefaultFlatlist
+				renderToHardwareTextureAndroid
 				data={data}
 				ref={Ref}
 				style={title ? style : [{ marginTop: mt }, style]}
+				overScrollMode='never'
+				bounces={false}
+				alwaysBounceHorizontal={false}
+				alwaysBounceVertical={false}
+				maxToRenderPerBatch={10}
+				initialNumToRender={10}
+				showsHorizontalScrollIndicator={false}
+				showsVerticalScrollIndicator={false}
+				decelerationRate='normal'
 				ItemSeparatorComponent={() => (
 					<View
 						style={
@@ -47,16 +57,6 @@ const FlatList = <T,>({
 					paddingHorizontal: properties.horizontal ? px : 0,
 					paddingBottom: 8
 				}}
-				overScrollMode='never'
-				bounces={false}
-				renderToHardwareTextureAndroid={true}
-				alwaysBounceHorizontal={false}
-				alwaysBounceVertical={false}
-				maxToRenderPerBatch={10}
-				initialNumToRender={10}
-				showsHorizontalScrollIndicator={false}
-				showsVerticalScrollIndicator={false}
-				decelerationRate='normal'
 				{...properties}
 			/>
 		</>

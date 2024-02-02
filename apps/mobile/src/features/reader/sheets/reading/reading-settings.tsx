@@ -13,7 +13,6 @@ import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
 import { Color } from 'global/colors'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
-import React from 'react'
 import { Pressable, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { twMerge } from 'tailwind-merge'
@@ -31,56 +30,54 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 	)
 	return (
 		<BottomSheet
+			enableContentPanningGesture
+			enableHandlePanningGesture
+			enablePanDownToClose
+			enableOverDrag
 			snapPoints={[290, 290]}
-			enableContentPanningGesture={true}
-			enableHandlePanningGesture={true}
-			enablePanDownToClose={true}
-			enableOverDrag={true}
+			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
 			backgroundStyle={{
 				backgroundColor: colorScheme.colorPalette.background.darker
 			}}
-			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
 			backdropComponent={backdropProperties => (
 				<BottomSheetBackdrop
 					onPress={close}
 					{...backdropProperties}
-					enableTouchThrough={true}
+					enableTouchThrough
 				/>
 			)}
 		>
 			<Pressable>
 				<FlatList
+					horizontal
 					className='mt-4'
+					showsHorizontalScrollIndicator={false}
+					data={themePack}
 					contentContainerStyle={{
 						paddingHorizontal: 8
 					}}
-					showsHorizontalScrollIndicator={false}
-					horizontal={true}
-					data={themePack}
-					renderItem={({ item: theme }) => {
-						return (
-							<AnimatedPress
-								key={`${theme.slug}-${theme.title}`}
-								style={{
-									backgroundColor: theme.colorPalette.background.darker,
-									borderColor:
-										colorScheme.slug === theme.slug
-											? colorScheme.colorPalette.primary
-											: Color.transparent
-								}}
-								onPress={() => changeTheme(theme.slug)}
-								className='mb-4 mr-2 rounded-xl border-2 p-2 px-6'
+					renderItem={({ item: theme }) => (
+						<AnimatedPress
+							key={`${theme.slug}-${theme.title}`}
+							className='mb-4 mr-2 rounded-xl border-2 p-2 px-6'
+							style={{
+								backgroundColor: theme.colorPalette.background.darker,
+								borderColor:
+									colorScheme.slug === theme.slug
+										? colorScheme.colorPalette.primary
+										: Color.transparent
+							}}
+							onPress={() => changeTheme(theme.slug)}
+						>
+							<Title
+								weight='semiBold'
+								size={18}
+								style={{ color: theme.colorPalette.text }}
 							>
-								<Title
-									weight='semiBold'
-									size={18}
-									style={{ color: theme.colorPalette.text }}
-								>
-									{theme.title}
-								</Title>
-							</AnimatedPress>
-						)
-					}}
+								{theme.title}
+							</Title>
+						</AnimatedPress>
+					)}
 				/>
 				<View>
 					<View className='w-full'>
@@ -89,46 +86,42 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 							contentContainerStyle={{
 								paddingHorizontal: 8
 							}}
-							data={ReaderFont.map(font => {
-								return {
-									value: font.fontFamily,
-									label: font.title
-								}
-							})}
-							renderItem={({ item }) => {
-								return (
-									<AnimatedPress
+							data={ReaderFont.map(font => ({
+								value: font.fontFamily,
+								label: font.title
+							}))}
+							renderItem={({ item }) => (
+								<AnimatedPress
+									style={{
+										backgroundColor:
+											colorScheme.colorPalette.background.lighter,
+										borderColor:
+											font.fontFamily === item.value
+												? colorScheme.colorPalette.secondary
+												: Color.transparent
+									}}
+									className={twMerge(
+										' mb-2 mr-2 rounded-xl border-2 border-transparent p-2 px-4',
+										item.value === font.fontFamily && 'border-primary '
+									)}
+									onPress={() =>
+										changeFontFamily({
+											fontFamily: item.value as ReaderFontsEnum,
+											title: item.label
+										})
+									}
+								>
+									<Title
+										weight='semiBold'
+										size={18}
 										style={{
-											backgroundColor:
-												colorScheme.colorPalette.background.lighter,
-											borderColor:
-												font.fontFamily === item.value
-													? colorScheme.colorPalette.secondary
-													: Color.transparent
+											color: colorScheme.colorPalette.text
 										}}
-										className={twMerge(
-											' mb-2 mr-2 rounded-xl border-2 border-transparent p-2 px-4',
-											item.value === font.fontFamily && 'border-primary '
-										)}
-										onPress={() =>
-											changeFontFamily({
-												fontFamily: item.value as ReaderFontsEnum,
-												title: item.label
-											})
-										}
 									>
-										<Title
-											weight='semiBold'
-											size={18}
-											style={{
-												color: colorScheme.colorPalette.text
-											}}
-										>
-											{item.label}
-										</Title>
-									</AnimatedPress>
-								)
-							}}
+										{item.label}
+									</Title>
+								</AnimatedPress>
+							)}
 						/>
 						<View className='my-1.5 flex-row items-center justify-between px-3'>
 							<Title
@@ -140,14 +133,14 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 							</Title>
 							<View className='flex-row items-center'>
 								<TouchableOpacity
+									className='rounded-l-xl p-2 px-4'
+									disabled={fontSize === fontSizeSettings.min}
 									style={{
 										backgroundColor:
 											fontSize === fontSizeSettings.min
 												? colorScheme.colorPalette.background.normal
 												: colorScheme.colorPalette.background.lighter
 									}}
-									className='rounded-l-xl p-2 px-4'
-									disabled={fontSize === fontSizeSettings.min}
 									onPress={() => changeFontSize(fontSize - 2)}
 								>
 									<Minus
@@ -158,14 +151,14 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 									/>
 								</TouchableOpacity>
 								<TouchableOpacity
+									className='rounded-r-xl p-2 px-4'
+									disabled={fontSize === fontSizeSettings.max}
 									style={{
 										backgroundColor:
 											fontSize === fontSizeSettings.max
 												? colorScheme.colorPalette.background.normal
 												: colorScheme.colorPalette.background.lighter
 									}}
-									className='rounded-r-xl p-2 px-4'
-									disabled={fontSize === fontSizeSettings.max}
 									onPress={() => changeFontSize(fontSize + 2)}
 								>
 									<Plus
@@ -183,61 +176,61 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 						<View className='mr-4 flex-row items-center'>
 							<LineHeightIcon
 								lineCount={3}
-								onPress={() => changeLineHeight(1.8)}
 								backgroundColor={
 									lineHeight === 1.8
 										? colorScheme.colorPalette.primary
 										: colorScheme.colorPalette.text
 								}
+								onPress={() => changeLineHeight(1.8)}
 							/>
 							<LineHeightIcon
 								lineCount={4}
 								className='mx-3'
-								onPress={() => changeLineHeight(1.5)}
 								backgroundColor={
 									lineHeight === 1.5
 										? colorScheme.colorPalette.primary
 										: colorScheme.colorPalette.text
 								}
+								onPress={() => changeLineHeight(1.5)}
 							/>
 							<LineHeightIcon
 								lineCount={5}
-								onPress={() => changeLineHeight(1.3)}
 								backgroundColor={
 									lineHeight === 1.3
 										? colorScheme.colorPalette.primary
 										: colorScheme.colorPalette.text
 								}
+								onPress={() => changeLineHeight(1.3)}
 							/>
 						</View>
 
 						<View className='ml-4 flex-row items-center'>
 							<PageMarginIcon
 								className='p-1  pb-0.5'
-								onPress={() => changePadding(4)}
 								backgroundColor={
 									padding === 4
 										? colorScheme.colorPalette.primary
 										: colorScheme.colorPalette.text
 								}
+								onPress={() => changePadding(4)}
 							/>
 							<PageMarginIcon
 								className='mx-3 p-1.5  pb-0.5'
-								onPress={() => changePadding(14)}
 								backgroundColor={
 									padding === 14
 										? colorScheme.colorPalette.primary
 										: colorScheme.colorPalette.text
 								}
+								onPress={() => changePadding(14)}
 							/>
 							<PageMarginIcon
 								className='p-2 pb-0.5'
-								onPress={() => changePadding(20)}
 								backgroundColor={
 									padding === 20
 										? colorScheme.colorPalette.primary
 										: colorScheme.colorPalette.text
 								}
+								onPress={() => changePadding(20)}
 							/>
 						</View>
 					</View>

@@ -34,7 +34,7 @@ export const useCatalog = () => {
 
 	const tableProperties = {
 		table,
-		totalPages: users?.totalPages,
+		totalPages: users?.totalPages ?? 0,
 		currentPage: page,
 		previous: () => pushParameters({ page: page - 1 }),
 		next: () => pushParameters({ page: page + 1 }),

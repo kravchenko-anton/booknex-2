@@ -49,7 +49,10 @@ export const columns = ({
 		header: () => <p className='text-center text-xl'>Information</p>,
 		cell: ({ row }) => {
 			return (
-				<button onClick={() => preview(row.original.id)} className='w-[210px]'>
+				<button
+					onClick={() => preview(row.original.id)}
+					className='w-[210px] items-start justify-start text-left'
+				>
 					<h3 className='mb-1 text-xl'>{row.original.title}</h3>
 					<p>{row.original.author}</p>
 					<div className='mt-2 flex flex-wrap gap-2'>

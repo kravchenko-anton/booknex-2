@@ -3,6 +3,7 @@ import { userServices } from '@/shared/api/services/user/user-service'
 import { useTypedNavigation, useTypedRoute } from '@/shared/hooks'
 import { successToast } from '@/shared/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { ErrorsEnum } from 'backend/src/utils/errors'
 
 export const useBook = () => {
 	const { params } = useTypedRoute<'Book'>()
@@ -26,8 +27,12 @@ export const useBook = () => {
 			mutationFn: (id: number) => userServices.toggleSave(id),
 			onSuccess: async isSaved => {
 				successToast(`Book ${isSaved ? 'saved' : 'removed from saved'}`)
-				await queryClient.invalidateQueries(['isSaved book', params.id])
-				await queryClient.invalidateQueries(['user-library'])
+				await queryClient.invalidateQueries({
+					queryKey: ['is-saved', +params.id]
+				})
+				await queryClient.invalidateQueries({
+					queryKey: ['user-library']
+				})
 			}
 		})
 
@@ -37,8 +42,11 @@ export const useBook = () => {
 	})
 
 	const startReadingBook = async () => {
+		if (!book) throw new Error(ErrorsEnum.Something_Went_Wrong)
 		await startReading(book.id).then(() => {
-			queryClient.invalidateQueries(['user-library'])
+			queryClient.invalidateQueries({
+				queryKey: ['user-library']
+			})
 			navigate('Reader', { id: book.id })
 		})
 	}

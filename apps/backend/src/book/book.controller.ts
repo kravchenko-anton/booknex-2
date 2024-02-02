@@ -18,9 +18,9 @@ import type {
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
-import { BookService } from './book.service'
-import { FeedbackBookDto } from './dto/feedback.book.dto'
-import { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
+import type { BookService } from './book.service'
+import type { FeedbackBookDto } from './dto/feedback.book.dto'
+import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 
 @ApiTags('book')
 @ApiBearerAuth()
@@ -77,12 +77,6 @@ export class BookController {
 	@Post('admin/create')
 	async create(@Body() dto: CreateBookDto) {
 		return this.bookService.create(dto)
-	}
-
-	@Auth('admin')
-	@Put('admin/toggle-visible/:id')
-	toggleVisible(@Param('id') id: string) {
-		return this.bookService.toggleVisible(+id)
 	}
 
 	@Auth('admin')

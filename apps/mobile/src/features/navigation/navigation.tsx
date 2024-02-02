@@ -1,7 +1,6 @@
 import { useCheckAuth } from '@/features/auth/provider/auth-provider'
 import { authRoutes } from '@/features/navigation/auth-routes'
 import BottomMenu from '@/features/navigation/bottom-menu/bottom-menu'
-import { otherRoutes } from '@/features/navigation/other-routes'
 import type { TypeRootStackParameterList } from '@/features/navigation/types'
 import { routes } from '@/features/navigation/user-routes'
 import { useAuth } from '@/shared/hooks'
@@ -45,9 +44,9 @@ const Navigation: FC = () => {
 			}}
 		>
 			<NavigationContainer
-				onReady={() => BootSplash.hide({ fade: true })}
 				ref={navReference}
 				fallback={<Loader />}
+				onReady={() => BootSplash.hide({ fade: true })}
 			>
 				<Stack.Navigator
 					initialRouteName={user ? 'Featured' : 'Welcome'}
@@ -55,48 +54,26 @@ const Navigation: FC = () => {
 						animation: 'fade_from_bottom',
 						presentation: 'transparentModal',
 						headerShown: false,
+						contentStyle: {
+							backgroundColor: Color.background
+						},
 						statusBarColor: Color.background
 					}}
 				>
 					{user
 						? routes.map(({ options, ...route }) => (
-								<Stack.Screen
-									key={route.name}
-									options={{
-										contentStyle: {
-											backgroundColor: Color.background
-										},
-										...options
-									}}
-									{...route}
-								/>
+								<Stack.Screen key={route.name} {...route} />
 							))
 						: authRoutes.map(({ options, ...route }) => (
-								<Stack.Screen
-									key={route.name}
-									options={{
-										contentStyle: {
-											backgroundColor: Color.background
-										},
-										...options
-									}}
-									{...route}
-								/>
+								<Stack.Screen key={route.name} {...route} />
 							))}
-					{otherRoutes.map(route => (
-						<Stack.Screen
-							options={{
-								headerShown: false
-							}}
-							key={route.name}
-							{...route}
-						/>
-					))}
 				</Stack.Navigator>
 			</NavigationContainer>
-			{user && !['Reader', 'Feedback', 'Search'].includes(currentRoute) && (
-				<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
-			)}
+			{user &&
+				currentRoute &&
+				!['Reader', 'Feedback', 'Search'].includes(currentRoute) && (
+					<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
+				)}
 		</SafeAreaProvider>
 	)
 }

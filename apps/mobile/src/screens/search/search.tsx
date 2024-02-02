@@ -1,4 +1,3 @@
-
 import { useSearch } from '@/screens/search/useSearch'
 import { useTypedNavigation } from '@/shared/hooks'
 import { Button, Layout, Loader, Title } from '@/shared/ui'
@@ -30,28 +29,28 @@ const Search = () => {
 									onPress={() => goBack()}
 								/>
 								<TextInput
-									autoFocus={true}
+									autoFocus
+									renderToHardwareTextureAndroid
 									autoCapitalize='none'
-									onBlur={onBlur}
 									className='ml-2 w-full'
-									onChangeText={onChange}
 									value={value}
 									placeholderTextColor={Color.gray}
 									placeholder='Type something to search'
 									keyboardAppearance='dark'
-									renderToHardwareTextureAndroid={true}
 									style={{
 										fontFamily: fontSettings.bold,
 										color: Color.white
 									}}
+									onBlur={onBlur}
+									onChangeText={onChange}
 								/>
 							</View>
 
 							<Button
-								onPress={() => clearSearch()}
 								className={twMerge(!searchTerm && 'hidden')}
 								variant='foreground'
 								size='sm'
+								onPress={() => clearSearch()}
 							>
 								Clear
 							</Button>
@@ -64,7 +63,7 @@ const Search = () => {
 				<View className='flex-1'>
 					{booksLoading ? (
 						<Loader />
-					) : books.length >= 2 ? (
+					) : books && books.length >= 2 ? (
 						<CatalogList
 							data={books}
 							onElementPress={id => navigate('Book', { id })}

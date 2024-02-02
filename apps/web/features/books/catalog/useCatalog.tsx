@@ -40,7 +40,7 @@ export const useCatalog = () => {
 
 	const tableProperties = {
 		table,
-		totalPages: books?.totalPages,
+		totalPages: books?.totalPages ?? 0,
 		currentPage: page,
 		canLoadMore: !books?.canLoadMore,
 		previous: () => pushParameters({ page: page - 1 }),

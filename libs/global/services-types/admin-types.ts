@@ -1,3 +1,3 @@
-export interface StatisticsOutput {
+export interface StatisticsOutputType {
 	totalUsers: number
 }

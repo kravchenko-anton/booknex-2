@@ -2,7 +2,7 @@ import { useAction, useTypedNavigation } from '@/shared/hooks'
 import { useEffect } from 'react'
 import { AppState } from 'react-native'
 
-export const useSaveProgress = async ({
+export const useSaveProgress = ({
 	id,
 	readerState
 }: {

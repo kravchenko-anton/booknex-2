@@ -1,7 +1,7 @@
 import type { IconProperties } from './types'
 
 export const settings: {
-	colors: Record<IconProperties['variant'], string>
+	colors: Record<Required<IconProperties>['variant'], string>
 	padding: Record<IconProperties['size'], string>
 	size: Record<IconProperties['size'], number>
 } = {

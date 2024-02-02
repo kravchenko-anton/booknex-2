@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import type { StatisticsOutput } from '../../../../libs/global/services-types/admin-types'
+import type { StatisticsOutputType } from '../../../../libs/global/services-types/admin-types'
 import { Auth } from '../decorator/auth.decorator'
 import { AdminService } from './admin.service'
 
@@ -11,7 +11,7 @@ export class AdminController {
 	constructor(private readonly adminService: AdminService) {}
 	@Auth('admin')
 	@Get('/dashboard')
-	async dashboard(): Promise<StatisticsOutput> {
+	async dashboard(): Promise<StatisticsOutputType> {
 		return this.adminService.dashboard()
 	}
 }

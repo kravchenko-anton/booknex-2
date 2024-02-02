@@ -3,13 +3,11 @@
 	"compilerOptions": {
 		"rootDir": ".",
 		"sourceMap": true,
-		"strict": false,
 		"declaration": false,
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"importHelpers": true,
-//		"strictNullChecks": true,
 		"noImplicitAny": true,
 		"noImplicitThis": true,
 		"noImplicitReturns": true,

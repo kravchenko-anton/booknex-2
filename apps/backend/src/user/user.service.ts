@@ -8,13 +8,13 @@ import { hash, verify } from 'argon2'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { ErrorsEnum } from '../utils/errors'
-import { PrismaService } from '../utils/prisma.service'
+import type { PrismaService } from '../utils/prisma.service'
+import { returnUserObject } from './return.user.object'
+import { ActivityEnum, UserLibraryFieldsEnum, idSelect } from './user.types'
 import type {
 	UserUpdatePasswordDto,
 	UserUpdateSelectedGenresDto
-} from './dto/user.update.dto'
-import { returnUserObject } from './return.user.object'
-import { ActivityEnum, UserLibraryFieldsEnum, idSelect } from './user.types'
+} from './user.update.dto'
 
 @Injectable()
 export class UserService {

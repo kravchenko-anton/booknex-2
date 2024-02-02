@@ -1,5 +1,5 @@
 import Navigation from '@/features/navigation/navigation'
-import { ClickOutsideProvider } from '@/shared/hooks/outside-press/Provider'
+import { ClickOutsideProvider } from '@/shared/hooks/outside-press/provider'
 import { BottomSheetProvider } from '@/shared/providers/bottom-sheet-provider'
 import { persistor, store } from '@/shared/redux/store'
 import Loader from '@/shared/ui/loader/loader'
@@ -16,7 +16,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
-			cacheTime: 1000 * 60 * 60 * 24,
 			networkMode: 'offlineFirst',
 			refetchOnWindowFocus: false,
 			refetchOnReconnect: false

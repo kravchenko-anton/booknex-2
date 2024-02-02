@@ -1,7 +1,7 @@
 import type { FieldProperties } from './types'
 
 export const settings: {
-	colors: Record<FieldProperties<never>['variant'], string>
+	colors: Record<Required<FieldProperties<never>>['variant'], string>
 } = {
 	colors: {
 		foreground: 'bg-foreground border-[1px] border-muted',

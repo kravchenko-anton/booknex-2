@@ -1,6 +1,12 @@
 import { Sheet, SheetContent } from '@/shared/ui/sheet'
-import type { FC, PropsWithChildren } from 'react'
-import { createContext, useContext, useMemo, useState } from 'react'
+import {
+	createContext,
+	useContext,
+	useMemo,
+	useState,
+	type FC,
+	type PropsWithChildren
+} from 'react'
 
 export interface SheetContextProperties {
 	sheet: JSX.Element | null
@@ -29,14 +35,18 @@ export const SheetProvider: FC<PropsWithChildren> = ({ children }) => {
 		}),
 		[sheet]
 	)
+
 	console.log(sheetContextValue)
+
 	return (
 		<SheetContext.Provider value={sheetContextValue}>
 			<Sheet
+				open={Boolean(sheet)}
 				onOpenChange={open => {
-					if (!open) closeSheet()
+					if (!open) {
+						closeSheet()
+					}
 				}}
-				open={!!sheet}
 			>
 				{children}
 				<SheetContent>{sheet}</SheetContent>

@@ -17,11 +17,11 @@ import type {
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
-import {
+import type { UserService } from './user.service'
+import type {
 	UserUpdatePasswordDto,
 	UserUpdateSelectedGenresDto
-} from './dto/user.update.dto'
-import { UserService } from './user.service'
+} from './user.update.dto'
 
 @ApiTags('user')
 @ApiBearerAuth()

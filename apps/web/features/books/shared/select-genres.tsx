@@ -67,7 +67,8 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 													onChange(
 														value.includes(genre.id)
 															? value.filter(
-																	selectedGenre => selectedGenre !== genre.id
+																	(selectedGenre: number) =>
+																		selectedGenre !== genre.id
 																)
 															: [...value, genre.id]
 													)

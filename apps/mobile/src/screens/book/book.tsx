@@ -13,9 +13,10 @@ import {
 import { share } from '@/shared/utils/share-function'
 import { Color } from 'global/colors'
 import { ArrowLeft, Bookmarked, Share, Text } from 'icons'
+import type { FC } from 'react'
 import { View } from 'react-native'
 
-const Book = () => {
+const Book: FC = () => {
 	const {
 		book,
 		isSaved,
@@ -78,24 +79,24 @@ const Book = () => {
 					icon={Text}
 					isLoading={startReadingLoading}
 					className='rounded-xl'
-					onPress={startReadingBook}
 					variant='primary'
 					size='sm'
+					onPress={startReadingBook}
 				>
 					Read
 				</Button>
 			</View>
 			<Flatlist
-				title='About book'
 				horizontal
+				title='About book'
 				data={book.genres}
 				renderItem={({ item: genre }) => (
 					<Button
+						variant='foreground'
+						size='sm'
 						onPress={() => {
 							navigate('Genre', { id: genre.id, name: genre.name })
 						}}
-						variant='foreground'
-						size='sm'
 					>
 						{genre.name}
 					</Button>
@@ -106,17 +107,17 @@ const Book = () => {
 			</Description>
 
 			<Flatlist
-				data={book.similarBooks}
 				horizontal
+				data={book.similarBooks}
 				px={8}
 				title='Similar books'
 				renderItem={({ item: similarBook }) => (
 					<BookCard
 						size='md'
+						image={{ uri: similarBook.picture }}
 						onPress={() => {
 							navigate('Book', { id: similarBook.id })
 						}}
-						image={{ uri: similarBook.picture }}
 					/>
 				)}
 			/>

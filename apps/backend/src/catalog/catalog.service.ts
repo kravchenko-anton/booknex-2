@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { returnBookObject } from '../book/return.book.object'
 import { ActivityEnum } from '../user/user.types'
-import { PrismaService } from '../utils/prisma.service'
+import type { PrismaService } from '../utils/prisma.service'
 
 @Injectable()
 export class CatalogService {

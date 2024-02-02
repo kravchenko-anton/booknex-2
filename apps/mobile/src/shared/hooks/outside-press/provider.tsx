@@ -1,17 +1,16 @@
 import { isInRange } from '@/shared/hooks/outside-press/utils/helpers'
-import type { FC } from 'react'
-import React from 'react'
+import type { FC, ReactNode } from 'react'
 import { Pressable } from 'react-native'
 import { onTouch, setIsTouch } from './utils/collection'
 
-type ClickOutsideProviderProperties = {
+interface ClickOutsideProviderProperties {
 	activateOnSwipe?: boolean
 	swipeThreshold?: number
-	children: React.ReactNode
+	children: ReactNode
 }
 
-let touchX: number | null
-let touchY: number | null
+let touchX: number | undefined
+let touchY: number | undefined
 export const ClickOutsideProvider: FC<ClickOutsideProviderProperties> = ({
 	children,
 	activateOnSwipe = true,
@@ -39,8 +38,8 @@ export const ClickOutsideProvider: FC<ClickOutsideProviderProperties> = ({
 			else if (activateOnSwipe) setIsTouch(true)
 			else setIsTouch(false)
 			onTouch(e)
-			touchX = null
-			touchY = null
+			touchX = undefined
+			touchY = undefined
 		}}
 		onTouchStart={e => {
 			touchX = e.nativeEvent.changedTouches[0]?.pageX

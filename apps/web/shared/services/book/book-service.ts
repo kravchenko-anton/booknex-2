@@ -21,13 +21,6 @@ export const bookService = {
 		})
 	},
 
-	async toggleVisible(id: number) {
-		return request({
-			method: 'PUT',
-			url: getBookUrl(`/admin/toggle-visible/${id}`)
-		})
-	},
-
 	async create(dto: BookPayload) {
 		return request({
 			method: 'POST',

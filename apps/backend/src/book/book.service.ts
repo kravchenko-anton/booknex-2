@@ -167,24 +167,20 @@ export class BookService {
 		})
 		return {
 			...book,
-			file: ebook.map(({ content }) => {
-				return content
+			file: ebook.map(({ content }) =>
+				content
 					.map(
 						({ title, content }) => `<label id="${title}"></label> ${content}`
 					)
 					.join(' ')
-			}),
-			chapters: ebook.map(({ name, content }) => {
-				return {
-					name,
-					children: content.map(({ title }) => {
-						return {
-							title,
-							link: `#${title}`
-						}
-					})
-				}
-			})
+			),
+			chapters: ebook.map(({ name, content }) => ({
+				name,
+				children: content.map(({ title }) => ({
+					title,
+					link: `#${title}`
+				}))
+			}))
 		}
 	}
 
@@ -222,18 +218,6 @@ export class BookService {
 				page < Math.floor((await this.prisma.book.count()) / perPage),
 			totalPages: Math.floor((await this.prisma.book.count()) / perPage)
 		}
-	}
-
-	async toggleVisible(id: number) {
-		const book = await this.getBookById(id, {
-			visible: true
-		})
-		await this.prisma.book.update({
-			where: { id: book.id },
-			data: {
-				visible: !book.visible
-			}
-		})
 	}
 
 	async create(dto: CreateBookDto) {

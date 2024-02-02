@@ -1,7 +1,7 @@
 import type { ButtonProperties } from './types'
 
 export const settings: {
-	colors: Record<ButtonProperties['variant'], string>
+	colors: Record<Required<ButtonProperties>['variant'], string>
 	titleSize: Record<ButtonProperties['size'], number>
 	padding: Record<ButtonProperties['size'], string>
 	iconSize: Record<ButtonProperties['size'], number>

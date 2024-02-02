@@ -8,7 +8,7 @@ const Page: FC = () => {
 	const { headerProperties, tableProperties } = useCatalog()
 	return (
 		<div className='w-full'>
-			<DataTableHeader title='Users' {...headerProperties}></DataTableHeader>
+			<DataTableHeader title='Users' {...headerProperties} />
 			<DataTable {...tableProperties} />
 		</div>
 	)

@@ -47,6 +47,15 @@
 		"metro-react-native-babel-preset": "*",
 		"react-native-svg-transformer": "*",
 		"@testing-library/jest-native": "*",
-		"@testing-library/react-native": "*"
+		"@testing-library/react-native": "*",
+		"eslint": "*",
+		"eslint-define-config": "*",
+		"eslint-config-sheriff": "*",
+		"eslint-plugin-react": "*",
+		"eslint-plugin-react-hooks": "*",
+		"eslint-plugin-react-native": "*",
+		"eslint-plugin-react-native-globals": "*",
+		"@typescript-eslint/eslint-plugin": "*",
+		"@typescript-eslint/parser": "*"
 	}
 }

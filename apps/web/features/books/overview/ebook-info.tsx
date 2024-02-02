@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { getFileUrl } from 'global/api-config'
 import type { FC } from 'react'
-import * as React from 'react'
 import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
 
@@ -60,35 +59,35 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 			<div className=' border-muted mt-4 border-[1px] p-2'>
 				<TabsContent value='preview'>
 					<p
+						className='mb-4 h-[700px] w-full overflow-y-scroll'
 						dangerouslySetInnerHTML={{
-							__html: ebook.map(({ content }) => {
-								return content
+							__html: ebook.map(({ content }) =>
+								content
 									.map(
 										({ title, content }) =>
 											`<label id="${title}"></label> ${content}`
 									)
 									.join(' ')
-							})
+							)
 						}}
-						className='mb-4 h-[700px] w-full overflow-y-scroll'
-					></p>
+					/>
 				</TabsContent>
 				<TabsContent value='edit'>
 					<DropZone
+						multiple
 						size='sm'
-						multiple={true}
 						accept='.epub'
+						onDropFile={books.upload}
 						onFileDelete={file =>
 							books.delete({
 								name: file.name
 							})
 						}
-						onDropFile={books.upload}
 					/>
 					{books.state && (
 						<div
 							className={twMerge(
-								'mt-8   gap-2',
+								'mt-8 gap-2',
 								books.state.length > 1 && 'grid grid-cols-2'
 							)}
 						>

@@ -10,34 +10,31 @@ interface UpdatePictureProperties {
 const UpdatePicture: FC<UpdatePictureProperties> = ({
 	picture,
 	updatePicture
-}) => {
-	return (
-		<div>
-			<input
-				type='file'
-				className='hidden'
-				onChange={event => {
-					const file = event.target.files[0]
-					if (file) {
-						updatePicture(file)
-					}
-				}}
-			/>
-			<Image
-				width={220}
-				className='border-muted cursor-pointer rounded-xl border-2'
-				height={300}
-				onClick={() => {
-					const element: HTMLElement =
-						document.querySelector('input[type=file]')
-					element?.click()
-				}}
-				src={picture}
-				alt='Cover'
-				objectFit='cover'
-			/>
-		</div>
-	)
-}
+}) => (
+	<div>
+		<input
+			type='file'
+			className='hidden'
+			onChange={({ target }) => {
+				const file = target?.files?.[0]
+				if (!file) return
+				updatePicture(file)
+			}}
+		/>
+		<Image
+			width={220}
+			className='border-muted cursor-pointer rounded-xl border-2'
+			height={300}
+			src={picture}
+			alt='Cover'
+			objectFit='cover'
+			onClick={() => {
+				const element: HTMLElement | null =
+					document.querySelector('input[type=file]')
+				element?.click()
+			}}
+		/>
+	</div>
+)
 
 export default UpdatePicture

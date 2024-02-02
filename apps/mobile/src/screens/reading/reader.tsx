@@ -14,13 +14,13 @@ import { Loader } from '@/shared/ui'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/shared/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
-import React, { memo, useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import WebView from 'react-native-webview'
 
 //TODO: оптимизировать тут всё
-function Reader() {
+const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()
 	const { data: ebook } = useQuery({
 		queryKey: ['e-books', +params.id],
@@ -41,7 +41,6 @@ function Reader() {
 	const [defaultTheme] = useState(styleTag)
 
 	if (!ebook || !styleTag) return <Loader />
-	console.log('rerender')
 	return (
 		<SafeAreaView className='flex-1'>
 			<View className='m-0 h-screen w-full items-center justify-center p-0'>
@@ -51,8 +50,15 @@ function Reader() {
 					}
 				>
 					<WebView
+						scrollEnabled
+						javaScriptEnabled
+						startInLoadingState
 						ref={reference}
 						menuItems={[]}
+						originWhitelist={['*']}
+						renderLoading={() => <View className='h-screen w-screen' />}
+						showsVerticalScrollIndicator={false}
+						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
 						source={{
 							html: `<head>
 							<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -63,27 +69,24 @@ function Reader() {
 							${finishBookButton}
 							`
 						}}
-						originWhitelist={['*']}
-						scrollEnabled
-						javaScriptEnabled
-						startInLoadingState
-						renderLoading={() => <View className='h-screen w-screen' />}
-						showsVerticalScrollIndicator={false}
 						injectedJavaScriptBeforeContentLoaded={`
-						${beforeLoad(initialScroll)}
+						${beforeLoad(Number(initialScroll))}
 						${scrollProgressDetect}
 						`}
-						onMessage={onMessage}
-						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
 						style={{
 							width: WINDOW_WIDTH,
 							height: WINDOW_HEIGHT,
 							backgroundColor: Color.background
 						}}
+						onMessage={onMessage}
 					/>
 				</TouchableWithoutFeedback>
 			</View>
 			<ReadingUi
+				colorPalette={colorScheme.colorPalette}
+				visible={readerUiVisible}
+				progress={progress}
+				title={ebook.title}
 				onSelectThemeIconPress={() => openReadingSettings()}
 				onChapterIconPress={() =>
 					openChapterList({
@@ -94,10 +97,6 @@ function Reader() {
 							)
 					})
 				}
-				colorPalette={colorScheme.colorPalette}
-				visible={readerUiVisible}
-				progress={progress}
-				title={ebook.title}
 			/>
 		</SafeAreaView>
 	)

@@ -5,23 +5,21 @@ import type { ComponentType } from 'react'
 export type TypeRootStackParameterList = {
 	Book: { id: number }
 
-	Featured: null
+	Featured: undefined
 	BookFeedback: { id: number }
 	Genre: { id: number; name: string }
-	Library: null
-	Login: null
+	Library: undefined
+	Login: undefined
 	Registration: { selectGenres: string[] }
-	SelectGenres: null
-	Profile: null
+	SelectGenres: undefined
+	Profile: undefined
 	Reader: { id: number }
-	Search: null
-	Settings: null
+	Search: undefined
+	Settings: undefined
 	Collection: { id: number }
-	Welcome: null
+	Welcome: undefined
 
 	// other routes
-
-	LogoutModal: null
 }
 
 export interface IRoute {

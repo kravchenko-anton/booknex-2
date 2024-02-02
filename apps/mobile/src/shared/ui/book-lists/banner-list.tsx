@@ -13,6 +13,7 @@ const BannerList = <T,>({
 	style,
 	...properties
 }: BannerListProperties<T>) => {
+	if (!data) return null
 	return (
 		<View
 			style={style}

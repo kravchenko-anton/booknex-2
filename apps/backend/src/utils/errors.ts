@@ -4,5 +4,6 @@ export enum ErrorsEnum {
 	Already_Exist = 'Already exist',
 	INVALID_FILE = 'Invalid file',
 	Invalid_Value = 'Invalid value',
-	Unknow_Error = 'Unknow error, please try again later'
+	Unknow_Error = 'Unknow error, please try again later',
+	Something_Went_Wrong = 'Something went wrong, please try again later'
 }

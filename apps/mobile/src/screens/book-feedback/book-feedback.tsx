@@ -9,11 +9,11 @@ import { Color } from 'global/colors'
 import { FinishBook } from 'global/illustrations'
 import type { FeedbackBookPayload } from 'global/services-types/book-types'
 import { Close, Star } from 'icons'
-import { useState } from 'react'
+import { useState, type FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
 
-const BookFeedback = () => {
+const BookFeedback: FC = () => {
 	const { params } = useTypedRoute<'BookFeedback'>()
 	const [selectedStars, setSelectedStars] = useState(0)
 	const { navigate } = useTypedNavigation()
@@ -28,28 +28,25 @@ const BookFeedback = () => {
 			id: number
 			name: string
 		}[]
-	) => {
-		return tags.map(tag => {
-			return (
-				<Button
-					size='sm'
-					key={tag.id}
-					variant={selectedTags.includes(tag.name) ? 'primary' : 'muted'}
-					onPress={() => {
-						if (selectedTags.includes(tag.name)) {
-							setSelectedTags(
-								selectedTags.filter(selectedTag => selectedTag !== tag.name)
-							)
-						} else {
-							setSelectedTags([...selectedTags, tag.name])
-						}
-					}}
-				>
-					{tag.name}
-				</Button>
-			)
-		})
-	}
+	) =>
+		tags.map(tag => (
+			<Button
+				size='sm'
+				key={tag.id}
+				variant={selectedTags.includes(tag.name) ? 'primary' : 'muted'}
+				onPress={() => {
+					if (selectedTags.includes(tag.name)) {
+						setSelectedTags(
+							selectedTags.filter(selectedTag => selectedTag !== tag.name)
+						)
+					} else {
+						setSelectedTags([...selectedTags, tag.name])
+					}
+				}}
+			>
+				{tag.name}
+			</Button>
+		))
 
 	const { mutateAsync: sendFeedback, isLoading } = useMutation({
 		mutationKey: ['feedback'],
@@ -84,8 +81,8 @@ const BookFeedback = () => {
 				className=' m-2 w-[50px] items-start'
 				icon={Close}
 				size='md'
-				onPress={() => navigate('Library')}
 				variant='muted'
+				onPress={() => navigate('Library')}
 			/>
 			<FinishBook className='mx-auto' height={200} width={250} />
 			<Title className='mt-8 text-center' size={26} weight='bold'>
@@ -96,18 +93,16 @@ const BookFeedback = () => {
 			</Title>
 			<View className='w-full items-center justify-center pt-4'>
 				<View className=' flex-row items-center gap-5'>
-					{[1, 2, 3, 4, 5].map(star => {
-						return (
-							<Star
-								width={35}
-								height={35}
-								key={star}
-								stroke={Color.warning}
-								fill={star <= selectedStars ? Color.warning : Color.transparent}
-								onPress={() => setSelectedStars(star)}
-							/>
-						)
-					})}
+					{[1, 2, 3, 4, 5].map(star => (
+						<Star
+							width={35}
+							height={35}
+							key={star}
+							stroke={Color.warning}
+							fill={star <= selectedStars ? Color.warning : Color.transparent}
+							onPress={() => setSelectedStars(star)}
+						/>
+					))}
 				</View>
 			</View>
 			{selectedStars > 0 && (
@@ -132,8 +127,8 @@ const BookFeedback = () => {
 						size='lg'
 						isLoading={isLoading}
 						variant='primary'
-						onPress={handleSubmit(submitFeedback)}
 						className='mb-4 w-full'
+						onPress={handleSubmit(submitFeedback)}
 					>
 						Submit
 					</Button>
