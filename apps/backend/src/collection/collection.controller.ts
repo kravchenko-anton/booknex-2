@@ -8,7 +8,13 @@ import {
 	Put,
 	Query
 } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiParam,
+	ApiQuery,
+	ApiTags
+} from '@nestjs/swagger'
 import type {
 	AllCollectionOutput,
 	CollectionByIdOutput
@@ -19,6 +25,7 @@ import { CollectionService } from './collection.service'
 import { CreateCollectionDto, UpdateCollectionDto } from './dto/collection.dto'
 
 @ApiTags('collection')
+@ApiBearerAuth()
 @Controller('collection')
 export class CollectionController {
 	constructor(private readonly shelvesService: CollectionService) {}
@@ -35,24 +42,29 @@ export class CollectionController {
 	// admin
 	@Get('/all')
 	@Auth('admin')
+	@ApiQuery({ name: 'searchTerm', required: false })
 	all(@Query('searchTerm') searchTerm: string): Promise<AllCollectionOutput> {
 		return this.shelvesService.all(searchTerm)
 	}
 
 	@Post('/create')
 	@Auth('admin')
+	@ApiBody({ type: CreateCollectionDto })
 	async create(@Body() dto: CreateCollectionDto) {
 		return this.shelvesService.create(dto)
 	}
 
 	@Delete('/delete/:id')
 	@Auth('admin')
+	@ApiParam({ name: 'id' })
 	async delete(@Param('id') id: string) {
 		return this.shelvesService.delete(+id)
 	}
 
 	@Put('/update/:id')
 	@Auth('admin')
+	@ApiParam({ name: 'id' })
+	@ApiBody({ type: UpdateCollectionDto })
 	async update(@Param('id') id: string, @Body() dto: UpdateCollectionDto) {
 		return this.shelvesService.update(+id, dto)
 	}

@@ -10,7 +10,7 @@ import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import type { AuthDto, RegisterDto } from './dto/auth.dto'
+import type { AuthDto, RegisterDto, SignDto } from './dto/auth.dto'
 
 @Injectable()
 export class AuthService {
@@ -19,6 +19,22 @@ export class AuthService {
 		private readonly jwt: JwtService,
 		private readonly usersService: UserService
 	) {}
+
+	//google sign in
+	async sign(dto: SignDto) {
+		const socialId = dto.socialId
+		const genres = dto.genres
+		const user = await this.prisma.user.findUnique({
+			where: {
+				socialId
+			}
+		})
+		if (user)
+			return {
+				user: this.userFields(user),
+				...this.issueToken(user.id)
+			}
+	}
 
 	async login(dto: AuthDto) {
 		const user = await this.validateUser(dto)
@@ -58,8 +74,8 @@ export class AuthService {
 		})
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Register_New_User,
 				importance: 1,
+				type: ActivityEnum.Register_New_User,
 				user: {
 					connect: {
 						id: user.id
@@ -126,7 +142,7 @@ export class AuthService {
 		return {
 			id: user.id,
 			email: user.email,
-			isAdmin: user.isAdmin
+			role: user.role
 		}
 	}
 }

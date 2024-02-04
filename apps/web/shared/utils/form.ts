@@ -8,8 +8,6 @@ export function dirtyValues(
 	return Object.fromEntries(
 		Object.keys(dirtyFields).map(key => [
 			key,
-			// eslint-disable-next-line security/detect-object-injection
-			// @ts-expect-error dirtyFields is an object
 			dirtyValues(dirtyFields[key], allValues[key])
 		])
 	)

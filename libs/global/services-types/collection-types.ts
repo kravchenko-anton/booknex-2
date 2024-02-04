@@ -17,10 +17,6 @@ export type CollectionByIdOutput = Prisma.CollectionGetPayload<{
 	}
 }
 
-export type CollectionCatalogOutput = Prisma.CollectionGetPayload<{
-	select: typeof returnCollectionObject
-}>[]
-
 export type AllCollectionOutput = Prisma.CollectionGetPayload<{
 	select: typeof returnCollectionObject
 }>[]

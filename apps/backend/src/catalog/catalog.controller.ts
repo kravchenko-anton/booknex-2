@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger'
 import type {
 	FeaturedOutput,
 	SearchOutput
@@ -17,6 +17,7 @@ export class CatalogController {
 	constructor(private readonly catalogService: CatalogService) {}
 
 	@Get('/search/:query')
+	@ApiParam({ name: 'query' })
 	async search(@Param('query') query: string): Promise<SearchOutput> {
 		return this.catalogService.search(query)
 	}

@@ -2,11 +2,24 @@ import { parserService } from '@/shared/services/parser/parser-services'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import { useLayoutEffect } from 'react'
+import type { UseFormSetValue } from 'react-hook-form'
 
 export const useTemplate = ({
 	setValue
 }: {
-	setValue: (field: string, value: string | number | number[]) => void
+	setValue: UseFormSetValue<{
+		title?: string
+		picture?: { name?: string; blob?: Blob }
+		pages?: number
+		description?: string
+		popularity?: number
+		author?: string
+		books?: {
+			name?: string
+			content?: { id?: number; title?: string; content?: string }[]
+		}[]
+		genres?: number[]
+	}>
 }) => {
 	const parameters = useSearchParams()
 	const id = Number(parameters.get('template'))

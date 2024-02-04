@@ -5,10 +5,15 @@ import {
 	Get,
 	Param,
 	Patch,
-	Post,
 	Query
 } from '@nestjs/common'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiParam,
+	ApiQuery,
+	ApiTags
+} from '@nestjs/swagger'
 import type {
 	AllUsersOutput,
 	UserLibraryOutput,
@@ -17,15 +22,12 @@ import type {
 
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
-import type { UserService } from './user.service'
-import type {
-	UserUpdatePasswordDto,
-	UserUpdateSelectedGenresDto
-} from './user.update.dto'
+import { UserUpdateSelectedGenresDto } from './dto'
+import { UserService } from './user.service'
 
-@ApiTags('user')
 @ApiBearerAuth()
 @Controller('user')
+@ApiTags('user')
 export class UserController {
 	constructor(private readonly usersService: UserService) {}
 	@Auth()
@@ -36,6 +38,7 @@ export class UserController {
 
 	@Auth()
 	@Get('/update-recommendations')
+	@ApiBody({ type: UserUpdateSelectedGenresDto })
 	async updateRecommendations(
 		@CurrentUser('id') id: number,
 		@Body() dto: UserUpdateSelectedGenresDto
@@ -50,22 +53,15 @@ export class UserController {
 	}
 
 	@Auth()
-	@Post('/update-password')
-	async updatePassword(
-		@CurrentUser('id') id: number,
-		@Body() dto: UserUpdatePasswordDto
-	) {
-		return this.usersService.updatePassword(+id, dto)
-	}
-
-	@Auth()
 	@Patch('/start-reading/:id')
+	@ApiParam({ name: 'id', required: false, example: 1 })
 	async toggle(@CurrentUser('id') userId: number, @Param('id') id: string) {
 		return this.usersService.startReading(userId, +id)
 	}
 
 	@Auth()
 	@Patch('/finish-reading/:id')
+	@ApiParam({ name: 'id', required: false, example: 1 })
 	async finishReading(
 		@CurrentUser('id') userId: number,
 		@Param('id') id: string
@@ -75,12 +71,14 @@ export class UserController {
 
 	@Auth()
 	@Patch('/toggle-save/:id')
+	@ApiParam({ name: 'id', required: false, example: 1 })
 	async toggleSave(@CurrentUser('id') userId: number, @Param('id') id: string) {
 		return this.usersService.toggleSave(userId, +id)
 	}
 
 	@Auth()
 	@Get('/is-saved/:id')
+	@ApiParam({ name: 'id', required: false, example: 1 })
 	async isSaved(@CurrentUser('id') userId: number, @Param('id') id: string) {
 		return this.usersService.isSaved(userId, +id)
 	}
@@ -88,15 +86,19 @@ export class UserController {
 	// admin
 	@Auth('admin')
 	@Get('admin/all')
+	@ApiQuery({ name: 'searchTerm', required: false, example: '' })
+	@ApiQuery({ name: 'page', required: false, example: 1 })
+	// remove in swagger api/user and stay only admin/all
 	async all(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
 	): Promise<AllUsersOutput> {
-		return this.usersService.all(searchTerm, page || 1)
+		return this.usersService.all(searchTerm || '', page || 1)
 	}
 
 	@Auth('admin')
 	@Delete('admin/delete/:id')
+	@ApiParam({ name: 'id', required: false, example: 1 })
 	async delete(@Param('id') id: string) {
 		return this.usersService.delete(+id)
 	}

@@ -1,7 +1,7 @@
 'use client'
-import { SheetProvider } from '@/shared/providers/sheet-provider'
 import { persistor, store } from '@/shared/redux/store'
 import { Toaster } from '@/shared/ui/sonner'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { PropsWithChildren } from 'react'
 import { Provider } from 'react-redux'
@@ -15,14 +15,19 @@ const Providers = ({ children }: PropsWithChildren) => {
 			}
 		}
 	})
+
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
 				<QueryClientProvider client={queryClient}>
-					<SheetProvider>
+					<GoogleOAuthProvider
+						clientId={
+							'390949311214-hqfqvic7p47pt3elpne00es58k99nonh.apps.googleusercontent.com'
+						}
+					>
 						{children}
 						<Toaster />
-					</SheetProvider>
+					</GoogleOAuthProvider>
 				</QueryClientProvider>
 			</PersistGate>
 		</Provider>

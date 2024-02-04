@@ -12,6 +12,13 @@ import {
 	UseInterceptors
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiParam,
+	ApiQuery,
+	ApiTags
+} from '@nestjs/swagger'
 import type {
 	AllGoodReadBookOutput,
 	ByIdOutput,
@@ -22,11 +29,15 @@ import { ParserDto } from './dto/parser.dto'
 import { ParserService } from './parser.service'
 
 @Auth('admin')
+@ApiTags('parser')
+@ApiBearerAuth()
 @Controller('parser')
 export class ParserController {
 	constructor(private readonly parserService: ParserService) {}
 
 	@Get('admin/all')
+	@ApiQuery({ name: 'searchTerm', required: false, example: 'The Hobbit' })
+	@ApiQuery({ name: 'page', required: false, example: 1 })
 	async all(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
@@ -35,11 +46,13 @@ export class ParserController {
 	}
 
 	@Post('admin/parse')
+	@ApiBody({ type: ParserDto })
 	async parse(@Body() dto: ParserDto) {
 		return this.parserService.parse(dto)
 	}
 
 	@Get('admin/by-id/:id')
+	@ApiParam({ name: 'id', required: false, example: 1 })
 	byId(@Param('id') id: string): Promise<ByIdOutput> {
 		return this.parserService.byId(+id)
 	}
@@ -62,6 +75,7 @@ export class ParserController {
 	}
 
 	@Delete('admin/delete/:id')
+	@ApiParam({ name: 'id', required: false, example: 1 })
 	async delete(@Param('id') id: string) {
 		return this.parserService.delete(+id)
 	}

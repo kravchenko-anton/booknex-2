@@ -93,7 +93,7 @@ export type BookUpdatePayload = Partial<
 	}
 >
 
-export type EpubOutput = {
+export interface EpubOutputType {
 	chapters: ChaptersType
 	title: string
 	file: string[]

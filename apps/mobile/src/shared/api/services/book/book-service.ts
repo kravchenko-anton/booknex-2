@@ -1,7 +1,7 @@
 import { getBookUrl } from 'global/api-config'
 import type {
 	BookByIdOutput,
-	EpubOutput,
+	EpubOutputType,
 	FeedbackBookPayload
 } from 'global/services-types/book-types'
 import { request } from '../../request.api'
@@ -22,7 +22,7 @@ export const bookService = {
 	},
 
 	ebookById(id: number) {
-		return request<EpubOutput>({
+		return request<EpubOutputType>({
 			url: getBookUrl(`/ebook/${id}`)
 		})
 	}

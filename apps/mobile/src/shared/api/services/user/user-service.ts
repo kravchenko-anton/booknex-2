@@ -1,9 +1,9 @@
+import type { UserUpdateSelectedGenresDto } from 'backend/src/user/dto'
 import { getUsersUrl } from 'global/api-config'
 import type {
 	UserLibraryOutput,
 	UserProfileOutput
 } from 'global/services-types/user-types'
-import type { UserUpdateSelectedGenresDto } from 'backend/src/user/user.update.dto'
 import { request } from '../../request.api'
 
 export const userServices = {

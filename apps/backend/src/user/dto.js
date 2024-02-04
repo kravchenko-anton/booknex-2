@@ -7,8 +7,8 @@ var __decorate =
 				c < 3
 					? target
 					: desc === null
-					  ? (desc = Object.getOwnPropertyDescriptor(target, key))
-					  : desc,
+						? (desc = Object.getOwnPropertyDescriptor(target, key))
+						: desc,
 			d
 		if (typeof Reflect === 'object' && typeof Reflect.decorate === 'function')
 			r = Reflect.decorate(decorators, target, key, desc)
@@ -19,31 +19,30 @@ var __decorate =
 		return c > 3 && r && Object.defineProperty(target, key, r), r
 	}
 exports.__esModule = true
-exports.RefreshDto = exports.AuthDto = void 0
+exports.UserUpdateDto = void 0
 var class_validator_1 = require('class-validator')
-var AuthDto = /** @class */ (function () {
-	function AuthDto() {}
-	__decorate([(0, class_validator_1.IsEmail)()], AuthDto.prototype, 'email')
+var Dto = /** @class */ (function () {
+	function UserUpdateDto() {}
+	__decorate(
+		[(0, class_validator_1.IsEmail)()],
+		UserUpdateDto.prototype,
+		'email'
+	)
 	__decorate(
 		[
 			(0, class_validator_1.MinLength)(8, {
-				message: 'Password is too short. Minimal length is 8'
+				message: 'Password is too short. Minimal length is characters'
 			}),
-			(0, class_validator_1.IsString)()
+			(0, class_validator_1.IsOptional)()
 		],
-		AuthDto.prototype,
+		UserUpdateDto.prototype,
 		'password'
 	)
-	return AuthDto
-})()
-exports.AuthDto = AuthDto
-var RefreshDto = /** @class */ (function () {
-	function RefreshDto() {}
 	__decorate(
-		[(0, class_validator_1.IsString)()],
-		RefreshDto.prototype,
-		'refresh_token'
+		[(0, class_validator_1.IsOptional)()],
+		UserUpdateDto.prototype,
+		'name'
 	)
-	return RefreshDto
+	return UserUpdateDto
 })()
-exports.RefreshDto = RefreshDto
+exports.UserUpdateDto = Dto

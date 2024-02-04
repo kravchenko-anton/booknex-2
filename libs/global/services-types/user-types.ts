@@ -38,11 +38,6 @@ export interface UserLibraryOutput {
 	}>['savedBooks']
 }
 
-export interface UserUpdatePasswordPayload {
-	password: string
-	oldPassword: string
-}
-
 export type AllUsersOutput = GetAllTypeOutput<
 	Prisma.UserGetPayload<{
 		select: typeof returnUserObject & {

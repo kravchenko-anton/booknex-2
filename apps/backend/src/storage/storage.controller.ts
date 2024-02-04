@@ -9,13 +9,13 @@ import {
 	UseInterceptors
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
 import type { UploadOutput } from '../../../../libs/global/services-types/storage-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { FilenameDto, ReplacementDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
-import { StorageFolderType } from './storage.types'
+import { StorageFolderEnum, StorageFolderType } from './storage.types'
 
 @ApiTags('storage')
 @ApiBearerAuth()
@@ -25,12 +25,14 @@ export class StorageController {
 
 	@Auth()
 	@Post('/delete')
+	@ApiBody({ type: FilenameDto })
 	async delete(@Body() dto: FilenameDto) {
 		return this.uploadService.delete(dto.filename)
 	}
 
 	@Auth()
 	@Post('/replacement')
+	@ApiBody({ type: ReplacementDto })
 	@UseInterceptors(FileInterceptor('file'))
 	async replacement(
 		@UploadedFile(
@@ -43,7 +45,7 @@ export class StorageController {
 			})
 		)
 		file: Express.Multer.File,
-		@CurrentUser('isAdmin') isAdmin: boolean,
+		@CurrentUser('role') role: 'USER' | 'ADMIN',
 		@Body() dto: ReplacementDto
 	) {
 		await this.uploadService.delete(dto.deleteFilename)
@@ -52,13 +54,15 @@ export class StorageController {
 			file: file.buffer,
 			filename: file.originalname,
 			folder: dto.folder,
-			isAdmin
+			role
 		})
 	}
 
 	@Post('/:folder')
 	@Auth()
 	@UseInterceptors(FileInterceptor('file'))
+	@ApiBody({ type: FilenameDto })
+	@ApiParam({ name: 'folder', enum: StorageFolderEnum })
 	async upload(
 		@UploadedFile(
 			new ParseFilePipe({
@@ -71,13 +75,13 @@ export class StorageController {
 		)
 		file: Express.Multer.File,
 		@Param('folder') folder: StorageFolderType,
-		@CurrentUser('isAdmin') isAdmin: boolean
+		@CurrentUser('role') role: 'USER' | 'ADMIN'
 	): Promise<UploadOutput> {
 		return this.uploadService.upload({
 			file: file.buffer,
 			filename: file.originalname,
 			folder,
-			isAdmin
+			role
 		})
 	}
 }

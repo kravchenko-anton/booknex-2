@@ -7,10 +7,3 @@ export interface AuthPayload {
 		isAdmin: boolean
 	}
 }
-
-export interface RegisterPayload {
-	email: string
-	password: string
-	name: string | null
-	genres: string[]
-}

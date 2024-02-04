@@ -8,7 +8,7 @@ export class AdminGuard implements CanActivate {
 	canActivate(context: ExecutionContext): boolean {
 		const request = context.switchToHttp().getRequest<{ user: User }>()
 		const user = request.user
-		if (!user.isAdmin)
+		if (user.role !== 'ADMIN')
 			throw new ForbiddenException(ErrorsEnum.Not_Enough_Rights).getResponse()
 		return true
 	}

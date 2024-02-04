@@ -99,14 +99,15 @@ model User {
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   email          String       @unique
-  password       String
-  isAdmin        Boolean      @default(false)
+  socialId       String?      @unique
   selectedGenres  Genre[]
+  role           Role         @default(USER)
   feedback       Feedback[]
   savedBooks     Book[]       @relation("SavedBooks")
   finishedBooks  Book[]       @relation("FinishedBooks")
   readingBooks   Book[]       @relation("ReadingBooks")
   activity       Activity[]
+  sessions       Session[]
 }
 
 model Collection {
@@ -118,4 +119,18 @@ model Collection {
   picture     String   @default("")
   books       Book[]
   activities  Activity[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+
+model Session {
+  id          String @id @default(uuid())
+  user        User   @relation(fields: [userId], references: [id])
+  userId      Int
+  createdAt   DateTime @default(now())
+  deletedAt   DateTime?
 }

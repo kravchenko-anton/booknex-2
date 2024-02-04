@@ -39,6 +39,8 @@ const ActivityList: FC<ActivityListProperties> = ({ data }) => {
 					]
 				}}
 				eventHandlers={{
+					// @ts-ignore
+					// eslint-disable-next-line unicorn/consistent-function-scoping
 					onClick: () => (activity: ActivityType) => {
 						//TODO: сделать групировку по юзерам и чтобы сверху было без юзеров
 						alert(activity.activities.join('\n'))

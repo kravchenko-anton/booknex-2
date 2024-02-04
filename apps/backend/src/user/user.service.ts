@@ -1,20 +1,12 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException
-} from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
-import { hash, verify } from 'argon2'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { ErrorsEnum } from '../utils/errors'
-import type { PrismaService } from '../utils/prisma.service'
+import { PrismaService } from '../utils/prisma.service'
+import type { UserUpdateSelectedGenresDto } from './dto'
 import { returnUserObject } from './return.user.object'
 import { ActivityEnum, UserLibraryFieldsEnum, idSelect } from './user.types'
-import type {
-	UserUpdatePasswordDto,
-	UserUpdateSelectedGenresDto
-} from './user.update.dto'
 
 @Injectable()
 export class UserService {
@@ -109,21 +101,6 @@ export class UserService {
 			bookCount: bookCount ?? 0,
 			totalPageCount: totalPageCount ?? 0
 		}
-	}
-
-	async updatePassword(userId: number, dto: UserUpdatePasswordDto) {
-		const user = await this.getUserById(userId, {
-			password: true
-		})
-		const isPasswordValid = await verify(user.password, dto.oldPassword)
-		if (!isPasswordValid)
-			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
-		await this.prisma.user.update({
-			where: { id: userId },
-			data: {
-				password: await hash(dto.password)
-			}
-		})
 	}
 
 	async all(searchTerm: string, page: number) {

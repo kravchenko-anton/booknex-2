@@ -1,10 +1,10 @@
-interface DefaultModelFields {
+interface DefaultModelFieldsType {
 	createdAt: string
 	id: number
 	updatedAt: string
 }
 
-export interface UserType extends DefaultModelFields {
+export interface UserType extends DefaultModelFieldsType {
 	email: string
 	name: string
 	picture: string

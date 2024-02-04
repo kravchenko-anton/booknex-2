@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger'
 import type {
 	AllGenreOutput,
 	GenreByIdOutput
@@ -21,6 +21,7 @@ export class GenreController {
 
 	@Auth()
 	@Get('/by-id/:id')
+	@ApiParam({ name: 'id' })
 	async byId(
 		@Param('id') genreId: string,
 		@CurrentUser('id') userId: string

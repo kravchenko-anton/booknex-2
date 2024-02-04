@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger'
 import { IsString } from 'class-validator'
 import type {
 	FileUploadPayload,
@@ -6,10 +7,29 @@ import type {
 import { StorageFolderType } from '../storage.types'
 
 export class FilenameDto implements FileUploadPayload {
-	@IsString() filename: string
+	@ApiProperty({
+		example: 'file.jpg',
+		description: 'Filename to upload',
+		required: true
+	})
+	@IsString()
+	filename: string
 }
 
 export class ReplacementDto implements ReplacementPayload {
-	@IsString() deleteFilename: string
-	@IsString() folder: StorageFolderType
+	@ApiProperty({
+		example: 'file.jpg',
+		description: 'Filename to delete',
+		required: true
+	})
+	@IsString()
+	deleteFilename: string
+
+	@ApiProperty({
+		example: 'ebooks' || 'books-covers',
+		description: 'Folder to upload',
+		required: true
+	})
+	@IsString()
+	folder: StorageFolderType
 }
