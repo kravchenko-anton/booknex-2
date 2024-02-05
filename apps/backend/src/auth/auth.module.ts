@@ -10,7 +10,13 @@ import { JwtStrategy } from './strategy/jwt.stategy'
 
 @Module({
 	controllers: [AuthController],
-	providers: [AuthService, PrismaService, JwtStrategy, UserService],
+	providers: [
+		AuthService,
+		PrismaService,
+		JwtStrategy,
+		UserService,
+		ConfigService
+	],
 	imports: [
 		ConfigModule,
 		JwtModule.registerAsync({

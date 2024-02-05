@@ -10,7 +10,7 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post('/')
-	async sign(@Body() dto: SignDto): Promise<AuthPayload> {
+	async sign(@Body() dto: SignDto) {
 		return this.authService.sign(dto)
 	}
 

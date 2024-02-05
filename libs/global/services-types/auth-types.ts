@@ -4,6 +4,6 @@ export interface AuthPayload {
 	user: {
 		id: number
 		email: string
-		isAdmin: boolean
+		role: 'USER' | 'ADMIN'
 	}
 }

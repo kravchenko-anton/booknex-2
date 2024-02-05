@@ -1,5 +1,15 @@
+import { rtkQueryErrorLogger } from '@/shared/redux/middlewares/error.middleware'
 import { configureStore } from '@reduxjs/toolkit'
-import { persistReducer, persistStore } from 'redux-persist'
+import {
+	FLUSH,
+	PAUSE,
+	PERSIST,
+	persistReducer,
+	persistStore,
+	PURGE,
+	REGISTER,
+	REHYDRATE
+} from 'redux-persist'
 import storage from 'redux-persist/es/storage'
 import { reducers } from './root-reducer'
 
@@ -14,9 +24,10 @@ export const store = configureStore({
 	reducer: persistedReducer,
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware({
-			serializableCheck: false,
-			immutableCheck: false
-		})
+			serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+			}
+		}).concat(rtkQueryErrorLogger)
 })
 export const persistor = persistStore(store)
 

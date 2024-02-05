@@ -1,91 +1,112 @@
 import {
 	BadRequestException,
-	Injectable,
-	NotFoundException
+	HttpException,
+	HttpStatus,
+	Injectable
 } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import type { User } from '@prisma/client'
-import { hash, verify } from 'argon2'
+import { OAuth2Client } from 'google-auth-library'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import type { AuthDto, RegisterDto, SignDto } from './dto/auth.dto'
+import type { SignDto } from './dto/auth.dto'
 
 @Injectable()
 export class AuthService {
+	private google: OAuth2Client
 	constructor(
 		private readonly prisma: PrismaService,
 		private readonly jwt: JwtService,
-		private readonly usersService: UserService
-	) {}
+		private readonly usersService: UserService,
+		private readonly configService: ConfigService
+	) {
+		this.google = new OAuth2Client(
+			configService.get('GOOGLE_CLIENT_ID'),
+			configService.get('GOOGLE_CLIENT_SECRET')
+		)
+	}
 
 	//google sign in
 	async sign(dto: SignDto) {
-		const socialId = dto.socialId
-		const genres = dto.genres
+		const ticket = await this.google.verifyIdToken({
+			idToken: dto.socialId,
+			audience: [this.configService.getOrThrow('GOOGLE_CLIENT_ID')]
+		})
+
+		const data = ticket.getPayload()
+
+		if (!data) {
+			throw new HttpException(
+				{
+					status: HttpStatus.UNPROCESSABLE_ENTITY,
+					errors: {
+						user: 'wrongToken'
+					}
+				},
+				HttpStatus.UNPROCESSABLE_ENTITY
+			)
+		}
+
 		const user = await this.prisma.user.findUnique({
 			where: {
-				socialId
+				socialId: data.sub
 			}
 		})
-		if (user)
+		if (user) {
+			console.log('User exist and i just logged in')
+			const tokens = this.issueToken(user.id)
+			await this.prisma.activity.create({
+				data: {
+					importance: 1,
+					type: ActivityEnum.Login_User,
+					user: {
+						connect: {
+							id: user.id
+						}
+					}
+				}
+			})
 			return {
 				user: this.userFields(user),
-				...this.issueToken(user.id)
+				...tokens
 			}
-	}
-
-	async login(dto: AuthDto) {
-		const user = await this.validateUser(dto)
-		const tokens = this.issueToken(user.id)
-
-		return {
-			user: this.userFields(user),
-			...tokens
 		}
-	}
 
-	async register(dto: RegisterDto) {
-		const oldUser = await this.prisma.user.findUnique({
-			where: {
-				email: dto.email
+		console.log('User does not exist and i just registered it')
+		const mostPopularGenres = await this.prisma.genre.findMany({
+			take: 3,
+			select: {
+				id: true
 			}
 		})
-		if (oldUser)
-			throw new BadRequestException(
-				`User ${ErrorsEnum.Already_Exist}`
-			).getResponse()
-		const user = await this.prisma.user.create({
+
+		const newUser = await this.prisma.user.create({
 			data: {
-				email: dto.email,
-				password: await hash(dto.password),
+				email: data.email,
+				socialId: data.sub,
 				selectedGenres: {
-					connectOrCreate: dto.genres.map(genre => ({
-						where: {
-							name: genre
-						},
-						create: {
-							name: genre
-						}
-					}))
+					connect: mostPopularGenres
 				}
 			}
 		})
+
+		const tokens = this.issueToken(newUser.id)
 		await this.prisma.activity.create({
 			data: {
 				importance: 1,
-				type: ActivityEnum.Register_New_User,
+				type: ActivityEnum.Login_User,
 				user: {
 					connect: {
-						id: user.id
+						id: newUser.id
 					}
 				}
 			}
 		})
-		const tokens = this.issueToken(user.id)
 		return {
-			user: this.userFields(user),
+			user: this.userFields(newUser),
 			...tokens
 		}
 	}
@@ -110,32 +131,12 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				expiresIn: '1h'
+				expiresIn: '1m'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'
 			})
 		}
-	}
-
-	private async validateUser(dto: AuthDto) {
-		const user = await this.prisma.user.findUnique({
-			where: {
-				email: dto.email
-			}
-		})
-		if (!user)
-			throw new NotFoundException(
-				"Email or password doesn't work"
-			).getResponse()
-
-		const isPasswordValid = await verify(user.password, dto.password)
-		if (!isPasswordValid)
-			throw new BadRequestException(
-				"Email or password doesn't work"
-			).getResponse()
-
-		return user
 	}
 
 	private userFields(user: User) {

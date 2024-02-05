@@ -24,7 +24,8 @@ export enum ActivityEnum {
 	Visit_Collection = 'Visit Collection',
 	Get_Ebook = 'Get Ebook',
 	Update_Recommendations = 'Update Recommendations',
-	'Register_New_User' = 'Register New User'
+	'Register_New_User' = 'Register New User',
+	'Login_User' = 'Login User'
 }
 
 export const idSelect = {
