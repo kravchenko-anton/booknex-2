@@ -15,6 +15,7 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import {
 	ApiBearerAuth,
 	ApiBody,
+	ApiConsumes,
 	ApiParam,
 	ApiQuery,
 	ApiTags
@@ -58,6 +59,18 @@ export class ParserController {
 	}
 
 	@Post('admin/unfold')
+	@ApiConsumes('multipart/form-data')
+	@ApiBody({
+		schema: {
+			type: 'object',
+			properties: {
+				file: {
+					type: 'string',
+					format: 'epub'
+				}
+			}
+		}
+	})
 	@UseInterceptors(FileInterceptor('file'))
 	async unfold(
 		@UploadedFile(

@@ -7,7 +7,7 @@ import {
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import sharp from 'sharp'
-import { getFileUrl } from '../../../../libs/global/api-config'
+import { RoleEnum, type RoleType } from '../auth/auth.service'
 import { ErrorsEnum } from '../utils/errors'
 import { optimizeFilename } from '../utils/string.functions'
 import type { StorageFolderType } from './storage.types'
@@ -60,9 +60,9 @@ export class StorageService {
 		file: Buffer
 		filename: string
 		folder: StorageFolderType
-		role: 'USER' | 'ADMIN'
+		role: RoleType
 	}) {
-		if (!(role === 'ADMIN'))
+		if (!(role === RoleEnum.ADMIN))
 			throw new BadRequestException(
 				'You are not allowed to upload files'
 			).getResponse()
@@ -94,7 +94,7 @@ export class StorageService {
 				throw new BadRequestException(ErrorsEnum.Unknow_Error).getResponse()
 			})
 		return {
-			name: getFileUrl(`${folder}/${optimizeFilename(filename)}`)
+			name: `${folder}/${optimizeFilename(filename)}`
 		}
 	}
 }

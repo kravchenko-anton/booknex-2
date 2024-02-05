@@ -1,10 +1,13 @@
-import { saveTokensStorage } from '@/features/auth/action/auth-helper'
+import {
+	getRefreshToken,
+	saveTokensStorage
+} from '@/features/auth/action/auth-helper'
 import type { AuthResponseType } from '@/features/auth/action/auth-types'
 import axios from 'axios'
-import { getAuthUrl, SERVER_URL } from 'global/api-config'
+import { SERVER_URL, getAuthUrl } from 'global/api-config'
 
 export const getNewTokens = async () => {
-	const refreshToken = window.sessionStorage.getItem('refreshToken')
+	const refreshToken = getRefreshToken()
 	if (!refreshToken) throw new Error('No refresh token')
 	const response = await axios
 		.post<

@@ -9,8 +9,15 @@ import {
 	UseInterceptors
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiConsumes,
+	ApiParam,
+	ApiTags
+} from '@nestjs/swagger'
 import type { UploadOutput } from '../../../../libs/global/services-types/storage-types'
+import { RoleType } from '../auth/auth.service'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { FilenameDto, ReplacementDto } from './dto/upload.dto'
@@ -32,7 +39,21 @@ export class StorageController {
 
 	@Auth()
 	@Post('/replacement')
-	@ApiBody({ type: ReplacementDto })
+	@ApiConsumes('multipart/form-data')
+	@ApiBody({
+		schema: {
+			type: 'object',
+			properties: {
+				file: {
+					type: 'string',
+					format: 'binary'
+				},
+				deleteFilename: {
+					type: 'string'
+				}
+			}
+		}
+	})
 	@UseInterceptors(FileInterceptor('file'))
 	async replacement(
 		@UploadedFile(
@@ -45,7 +66,7 @@ export class StorageController {
 			})
 		)
 		file: Express.Multer.File,
-		@CurrentUser('role') role: 'USER' | 'ADMIN',
+		@CurrentUser('role') role: RoleType,
 		@Body() dto: ReplacementDto
 	) {
 		await this.uploadService.delete(dto.deleteFilename)
@@ -61,7 +82,18 @@ export class StorageController {
 	@Post('/:folder')
 	@Auth()
 	@UseInterceptors(FileInterceptor('file'))
-	@ApiBody({ type: FilenameDto })
+	@ApiConsumes('multipart/form-data')
+	@ApiBody({
+		schema: {
+			type: 'object',
+			properties: {
+				file: {
+					type: 'string',
+					format: 'binary'
+				}
+			}
+		}
+	})
 	@ApiParam({ name: 'folder', enum: StorageFolderEnum })
 	async upload(
 		@UploadedFile(
@@ -75,7 +107,7 @@ export class StorageController {
 		)
 		file: Express.Multer.File,
 		@Param('folder') folder: StorageFolderType,
-		@CurrentUser('role') role: 'USER' | 'ADMIN'
+		@CurrentUser('role') role: RoleType
 	): Promise<UploadOutput> {
 		return this.uploadService.upload({
 			file: file.buffer,

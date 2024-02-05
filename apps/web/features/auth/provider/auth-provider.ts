@@ -1,16 +1,18 @@
 'use client'
+import {
+	getRefreshToken,
+	getTokensStorage
+} from '@/features/auth/action/auth-helper'
 import { useAction, useAuth } from '@/shared/hooks'
 import { errorToast } from '@/shared/utils/toast'
-import type { FC, PropsWithChildren } from 'react'
-import { useLayoutEffect } from 'react'
+import { useEffect, type FC, type PropsWithChildren } from 'react'
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { user } = useAuth()
 	const { getNewToken, logout } = useAction()
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const checkToken = () => {
-			const accessToken = window.sessionStorage.getItem('accessToken')
-			const refreshToken = window.sessionStorage.getItem('refreshToken')
+			const { accessToken, refreshToken } = getTokensStorage()
 			if (!accessToken && refreshToken) {
 				try {
 					getNewToken(refreshToken)
@@ -23,11 +25,10 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 		checkToken()
 	}, [getNewToken, logout, user])
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const checkRefreshToken = () => {
-			const refreshToken = window.sessionStorage.getItem('refreshToken')
+			const refreshToken = getRefreshToken()
 			if (!refreshToken && user) {
-				console.log('logout')
 				logout()
 			}
 		}

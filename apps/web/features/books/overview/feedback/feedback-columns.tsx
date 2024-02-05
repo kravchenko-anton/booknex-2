@@ -18,18 +18,16 @@ export const feedbackColumns = (): ColumnType => [
 		id: 'id',
 		enableHiding: false,
 		header: () => <p className='text-center text-xl'>id</p>,
-		cell: ({ row }) => {
-			return <p className='text-2xl'>{row.original.id}</p>
-		}
+		cell: ({ row }) => <p className='text-2xl'>{row.original.id}</p>
 	},
 	{
 		id: 'User',
 		enableHiding: false,
 		header: () => <p className='text-center text-xl'>User</p>,
-		cell: ({ row }) => {
+		cell: ({ row }) => (
 			//TODO: добавить тут данные пользователя после того как я сделаю авторизацию через google
-			return <h1 className='text-lg'>{row.original.user.email}</h1>
-		}
+			<h1 className='text-lg'>{row.original.user.email}</h1>
+		)
 	},
 
 	{
@@ -39,18 +37,16 @@ export const feedbackColumns = (): ColumnType => [
 			console.log(row.original.rating, 'row.original.rating')
 			return (
 				<div className='flex  items-center justify-center'>
-					{Array.from({ length: 5 - row.original.rating }).map(star => {
-						return (
-							<Star
-								className='mx-1 cursor-pointer'
-								width={22}
-								height={22}
-								key={star}
-								fill={Color.warning}
-								stroke={Color.warning}
-							/>
-						)
-					})}
+					{Array.from({ length: 5 - row.original.rating }).map(star => (
+						<Star
+							className='mx-1 cursor-pointer'
+							width={22}
+							height={22}
+							key={star}
+							fill={Color.warning}
+							stroke={Color.warning}
+						/>
+					))}
 				</div>
 			)
 		}
@@ -75,21 +71,14 @@ export const feedbackColumns = (): ColumnType => [
 	{
 		id: 'tags',
 		header: () => <p className='text-center text-xl'>Tags</p>,
-		cell: ({ row }) => {
-			return (
-				<div className='flex flex-wrap items-center justify-center gap-1.5'>
-					{row.original.tags.map(tag => {
-						return (
-							<p
-								key={tag}
-								className='bg-foreground rounded-xl p-1.5 font-light'
-							>
-								<b className='font-bold text-white'>{tag}</b>
-							</p>
-						)
-					})}
-				</div>
-			)
-		}
+		cell: ({ row }) => (
+			<div className='flex flex-wrap items-center justify-center gap-1.5'>
+				{row.original.tags.map(tag => (
+					<p key={tag} className='bg-foreground rounded-xl p-1.5 font-light'>
+						<b className='font-bold text-white'>{tag}</b>
+					</p>
+				))}
+			</div>
+		)
 	}
 ]

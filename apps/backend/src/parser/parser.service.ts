@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import EPub from 'epub2'
+import prettify from 'html-prettify'
 import { JSDOM } from 'jsdom'
 import puppeteer from 'puppeteer'
 import type { UnfoldOutput } from '../../../../libs/global/services-types/parser-types'
@@ -98,8 +99,8 @@ export class ParserService {
 			const epub = new EPub(file.buffer as unknown as string)
 			epub.on('end', function () {
 				const flow: Promise<Chapter | null>[] = epub.flow.map(
-					(chapter, index) => {
-						return new Promise<Chapter | null>(resolve => {
+					(chapter, index) =>
+						new Promise<Chapter | null>(resolve => {
 							try {
 								epub.getChapter(chapter.id, (error, text) => {
 									if (error) {
@@ -110,10 +111,13 @@ export class ParserService {
 										const dom = new JSDOM(text.toString())
 										const elements = dom.window.document.querySelectorAll('*')
 										for (const element of elements) {
+											console.log(element.tagName)
 											if (
 												element.textContent === '' ||
 												element.textContent === ' ' ||
-												element.textContent === '\n'
+												element.textContent === '\n' ||
+												!element.textContent ||
+												element.textContent === '\n\n'
 											) {
 												element.remove()
 											}
@@ -124,14 +128,13 @@ export class ParserService {
 											if (element.tagName === 'image') element.remove()
 											if (element.tagName === 'img') element.remove()
 											if (element.tagName === 'svg') element.remove()
-											if (element.tagName === 'a') {
-												const span = dom.window.document.createElement('span')
-												span.textContent = element.textContent
-												element.replaceWith(span)
-											}
+											if (element.tagName === 'iframe') element.remove()
+											if (element.tagName === 'script') element.remove()
+											if (element.tagName === 'style') element.remove()
+											if (element.tagName === 'table') element.remove()
 										}
 
-										return dom.serialize()
+										return dom.window.document.body?.innerHTML
 									}
 
 									const finalContent = updatedContent()
@@ -139,10 +142,7 @@ export class ParserService {
 									resolve({
 										id: index + 1,
 										title: chapter.title,
-										content: finalContent
-											.replaceAll(/<(\/)?(body|html|head|div).*?>/g, '')
-											.trim()
-											.replaceAll(/\n{2,}/g, '\n')
+										content: prettify(finalContent.toString())
 									})
 								})
 							} catch (error) {
@@ -150,7 +150,6 @@ export class ParserService {
 								new BadRequestException(ErrorsEnum.INVALID_FILE + ' chapter')
 							}
 						})
-					}
 				)
 				Promise.all(flow)
 					.then((chapters: (Chapter | null)[]) => {
@@ -158,13 +157,11 @@ export class ParserService {
 							chapter => chapter?.content !== null
 						)
 						resolve(
-							validChapters.map((chapter, index) => {
-								return {
-									id: index + 1,
-									title: chapter.title || '',
-									content: chapter.content || ''
-								}
-							})
+							validChapters.map((chapter, index) => ({
+								id: index + 1,
+								title: chapter.title || '',
+								content: chapter.content || ''
+							}))
 						)
 					})
 					.catch(error => {
@@ -328,14 +325,12 @@ export class ParserService {
 					if (bookTemplate.some(b => b.title === title.trim())) continue
 					const goodGenres = await this.prisma.genre.findMany({
 						where: {
-							OR: genres.map(genre => {
-								return {
-									name: {
-										contains: genre,
-										mode: 'insensitive'
-									}
+							OR: genres.map(genre => ({
+								name: {
+									contains: genre,
+									mode: 'insensitive'
 								}
-							})
+							}))
 						}
 					})
 					await this.prisma.bookTemplate.create({
@@ -346,11 +341,9 @@ export class ParserService {
 							picture,
 							pages,
 							genres: {
-								connect: goodGenres.map(genre => {
-									return {
-										name: genre.name
-									}
-								})
+								connect: goodGenres.map(genre => ({
+									name: genre.name
+								}))
 							},
 							popularity: rating
 						}

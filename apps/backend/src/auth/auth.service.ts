@@ -14,6 +14,13 @@ import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { SignDto } from './dto/auth.dto'
 
+export enum RoleEnum {
+	ADMIN = 'ADMIN',
+	USER = 'USER'
+}
+
+export type RoleType = keyof typeof RoleEnum
+
 @Injectable()
 export class AuthService {
 	private google: OAuth2Client
@@ -28,8 +35,6 @@ export class AuthService {
 			configService.get('GOOGLE_CLIENT_SECRET')
 		)
 	}
-
-	//google sign in
 	async sign(dto: SignDto) {
 		const ticket = await this.google.verifyIdToken({
 			idToken: dto.socialId,
@@ -37,8 +42,7 @@ export class AuthService {
 		})
 
 		const data = ticket.getPayload()
-
-		if (!data) {
+		if (!data.email) {
 			throw new HttpException(
 				{
 					status: HttpStatus.UNPROCESSABLE_ENTITY,
@@ -89,11 +93,18 @@ export class AuthService {
 				socialId: data.sub,
 				selectedGenres: {
 					connect: mostPopularGenres
-				}
+				},
+				role: 'USER',
+				fullName:
+					data.given_name && data.family_name
+						? `${data.given_name} ${data.family_name}`
+						: data.email.split('@')[0],
+				picture: data.picture || 'fallback.png',
+				location: data.locale || 'unknown'
 			}
 		})
 
-		const tokens = this.issueToken(newUser.id)
+		const newTokens = this.issueToken(newUser.id)
 		await this.prisma.activity.create({
 			data: {
 				importance: 1,
@@ -107,7 +118,7 @@ export class AuthService {
 		})
 		return {
 			user: this.userFields(newUser),
-			...tokens
+			...newTokens
 		}
 	}
 
@@ -131,7 +142,7 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				expiresIn: '1m'
+				expiresIn: '1h'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'
