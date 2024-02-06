@@ -1,6 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table'
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/utils/number-formater'
+import Image from 'next/image'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -25,61 +26,35 @@ export const columns = ({
 		id: 'id',
 		enableHiding: false,
 		header: () => <p className='text-center text-xl'>id</p>,
-		cell: ({ row }) => {
-			return <p className='text-2xl'>{row.original.id}</p>
-		}
+		cell: ({ row }) => <p className='text-2xl'>{row.original.id}</p>
 	},
 	{
 		id: 'picture',
 		enableHiding: false,
 		header: () => <p className='text-center text-xl'>Picture</p>,
-		cell: ({ row }) => {
-			return (
-				<img
-					onClick={() => preview(row.original.id)}
-					alt={row.original.title}
-					className=' mx-auto w-[100px] cursor-pointer rounded-xl'
-					src={getFileUrl(row.original.picture)}
-				/>
-			)
-		}
+		cell: ({ row }) => (
+			<Image
+				alt={row.original.title}
+				className=' mx-auto w-[100px] cursor-pointer rounded-xl'
+				src={getFileUrl(row.original.picture)}
+				width={200}
+				height={250}
+				onClick={() => preview(row.original.id)}
+			/>
+		)
 	},
 	{
 		id: 'Information',
 		header: () => <p className='text-center text-xl'>Information</p>,
-		cell: ({ row }) => {
-			return (
-				<button
-					onClick={() => preview(row.original.id)}
-					className='w-[210px] items-start justify-start text-left'
-				>
-					<h3 className='mb-1 text-xl'>{row.original.title}</h3>
-					<p>{row.original.author}</p>
-					<div className='mt-2 flex flex-wrap gap-2'>
-						<p className='bg-foreground rounded-md p-1.5 font-light'>
-							visible:{' '}
-							<b
-								className={twMerge(
-									'font-bold',
-									row.original.visible ? 'text-success' : 'text-warning'
-								)}
-							>
-								{row.original.visible ? 'true' : 'false'}
-							</b>
-						</p>
-						<p className='bg-foreground rounded-md p-1.5 font-light'>
-							<b className='font-bold text-white'>{row.original.pages}</b> pages
-						</p>
-						<p className='bg-foreground rounded-md p-1.5 font-light'>
-							<b className='font-bold text-white'>
-								{nFormatter(row.original.popularity)}{' '}
-							</b>{' '}
-							popularity
-						</p>
-					</div>
-				</button>
-			)
-		}
+		cell: ({ row }) => (
+			<button
+				className='w-[210px] items-start justify-start text-left'
+				onClick={() => preview(row.original.id)}
+			>
+				<h3 className='mb-1 text-xl'>{row.original.title}</h3>
+				<p>{row.original.author}</p>
+			</button>
+		)
 	},
 
 	{
@@ -88,10 +63,13 @@ export const columns = ({
 		cell: ({ row }) => {
 			const [showMore, setShowMore] = useState(false)
 			return (
-				<button className='mb-2 text-sm' onClick={() => setShowMore(!showMore)}>
+				<button
+					className='mb-2 text-justify'
+					onClick={() => setShowMore(!showMore)}
+				>
 					{showMore
 						? row.original.description
-						: row.original.description.slice(0, 250) + '...'}
+						: row.original.description.slice(0, 400) + '...'}
 				</button>
 			)
 		}
@@ -99,19 +77,46 @@ export const columns = ({
 	{
 		id: 'genres',
 		header: () => <p className='text-center text-xl'>Genres</p>,
-		cell: ({ row }) => {
-			return (
-				<div className='flex w-[300px] flex-wrap items-center justify-center'>
-					{row.original.genres.map(genre => (
-						<p
-							className='bg-foreground border-muted m-1 rounded-xl border-2 p-1.5  text-sm text-white'
-							key={genre.name}
+		cell: ({ row }) => (
+			<div className='flex flex-wrap items-center justify-center'>
+				{row.original.genres.map(genre => (
+					<p
+						className='bg-foreground border-muted m-1 rounded-xl border-2 p-1.5  text-sm text-white'
+						key={genre.name}
+					>
+						{genre.name}
+					</p>
+				))}
+			</div>
+		)
+	},
+	{
+		id: 'statistic',
+		header: () => <p className='text-center text-xl'>Statistic</p>,
+		cell: ({ row }) => (
+			<div className='flex w-[140px] flex-wrap gap-2'>
+				<div className='mt-2 gap-2 text-center'>
+					<p className='bg-foreground mb-2 rounded-md p-1.5 font-light'>
+						<b
+							className={twMerge(
+								'font-bold',
+								row.original.visible ? 'text-success' : 'text-danger'
+							)}
 						>
-							{genre.name}
-						</p>
-					))}
+							{row.original.visible ? 'Visible' : 'Hidden'}
+						</b>
+					</p>
+					<p className='bg-foreground mb-2 rounded-md p-1.5 font-light'>
+						<b className='font-bold text-white'>{row.original.pages}</b> pages
+					</p>
+					<p className='bg-foreground rounded-md p-1.5 font-light'>
+						<b className='font-bold text-white'>
+							{nFormatter(row.original.popularity)}{' '}
+						</b>{' '}
+						popularity
+					</p>
 				</div>
-			)
-		}
+			</div>
+		)
 	}
 ]

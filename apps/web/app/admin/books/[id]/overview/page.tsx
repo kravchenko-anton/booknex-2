@@ -98,6 +98,10 @@ const Page = () => {
 						</div>
 						<div className='flex gap-2'>
 							<button
+								className={twMerge(
+									'mt-1 rounded-md px-2 py-1 text-white',
+									book.visible ? 'bg-success' : 'bg-warning'
+								)}
 								onClick={() =>
 									update({
 										id: book.id,
@@ -106,14 +110,13 @@ const Page = () => {
 										}
 									})
 								}
-								className={twMerge(
-									'mt-1 rounded-md px-2 py-1 text-white',
-									book.visible ? 'bg-success' : 'bg-warning'
-								)}
 							>
 								{book.visible ? 'Make unavailable' : 'Make available'}
 							</button>
 							<button
+								className={twMerge(
+									'bg-danger mt-1 rounded-md px-2 py-1 text-white'
+								)}
 								onClick={() =>
 									toast('Are you sure you want to delete this book?', {
 										action: {
@@ -122,9 +125,6 @@ const Page = () => {
 										}
 									})
 								}
-								className={twMerge(
-									'bg-danger mt-1 rounded-md px-2 py-1 text-white'
-								)}
 							>
 								Remove
 							</button>
@@ -137,6 +137,8 @@ const Page = () => {
 						author={book.author}
 						title={book.title}
 						description={book.description}
+						pages={book.pages}
+						popularity={book.popularity}
 						onSaveEdit={async data => {
 							console.log(data, 'bio')
 							await update({
@@ -144,10 +146,9 @@ const Page = () => {
 								payload: data
 							})
 						}}
-						pages={book.pages}
-						popularity={book.popularity}
 					/>
 					<EbookInfo
+						bookLink={book.ebook}
 						onEdit={async books => {
 							await upload({
 								name: book.title + '.json',
@@ -162,7 +163,6 @@ const Page = () => {
 								})
 							})
 						}}
-						bookLink={book.ebook}
 					/>
 					<ActivityList data={book.activities} />
 					<FeedbackTable feedback={book.feedback} />

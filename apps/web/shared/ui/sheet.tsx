@@ -16,10 +16,6 @@ import { forwardRef } from 'react'
 
 const Sheet = SheetPrimitive.Root
 
-const SheetTrigger = SheetPrimitive.Trigger
-
-const SheetClose = SheetPrimitive.Close
-
 const SheetPortal = SheetPrimitive.Portal
 
 const SheetOverlay = forwardRef<
@@ -47,7 +43,7 @@ const sheetVariants = cva(
 					'inset-x-0 bottom-0 border-t border-foreground data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
 				left: 'inset-y-0 left-0 h-full w-3/4 border-foreground border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm',
 				right:
-					'inset-y-0 right-0 h-full w-3/4 border-l border-foreground data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm'
+					'inset-y-0 right-0 h-full w-3/4 border-l border-foreground data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right md:max-w-lg sm:max-w-sm'
 			}
 		},
 		defaultVariants: {
@@ -147,7 +143,6 @@ const SheetComponent: FC<PropsWithChildren<DialogProperties>> = ({
 
 export {
 	Sheet,
-	SheetClose,
 	SheetComponent,
 	SheetContent,
 	SheetDescription,
@@ -155,6 +150,5 @@ export {
 	SheetHeader,
 	SheetOverlay,
 	SheetPortal,
-	SheetTitle,
-	SheetTrigger
+	SheetTitle
 }

@@ -69,7 +69,7 @@ export class StorageService {
 		if (!StorageFolderArray.includes(folder)) {
 			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
 		}
-
+		console.log('file', file)
 		const finalFile =
 			folder === StorageFolderEnum.ebooks
 				? file

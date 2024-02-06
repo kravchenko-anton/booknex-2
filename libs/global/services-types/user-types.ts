@@ -3,6 +3,7 @@ import type { returnBookObject } from '../../../apps/backend/src/book/return.boo
 import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 import type { returnUserObject } from '../../../apps/backend/src/user/return.user.object'
 import type { UserLibraryFieldsEnum } from '../../../apps/backend/src/user/user.types'
+import type { ActivitiesOutput } from '../../../apps/backend/src/utils/activity-transformer'
 import type { GetAllTypeOutput } from './utils'
 
 export type UserProfileOutput = Prisma.UserGetPayload<
@@ -39,19 +40,27 @@ export interface UserLibraryOutput {
 }
 
 export type AllUsersOutput = GetAllTypeOutput<
-	Prisma.UserGetPayload<{
+	(Prisma.UserGetPayload<{
 		select: typeof returnUserObject & {
+			picture: true
+			socialId: true
+			role: true
+			createdAt: true
+			fullName: true
+			location: true
 			selectedGenres: {
 				select: typeof ReturnGenreObject
 			}
 			_count: {
 				select: {
-					activity: true
 					savedBooks: true
+					feedback: true
 					finishedBooks: true
 					readingBooks: true
 				}
 			}
 		}
-	}>[]
+	}> & {
+		activities: ActivitiesOutput[]
+	})[]
 >

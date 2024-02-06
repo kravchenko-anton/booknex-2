@@ -5,7 +5,7 @@
 		"isolatedModules": true,
 		"emitDecoratorMetadata": true,
 		"strict": false,
-		"esModuleInterop": false,
+		"esModuleInterop": true,
 		"noImplicitAny": false,
 		"moduleResolution": "node",
 		"sourceMap": true,

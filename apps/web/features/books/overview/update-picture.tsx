@@ -1,3 +1,4 @@
+import { getFileUrl } from 'global/api-config'
 import Image from 'next/image'
 import type { FC } from 'react'
 import * as React from 'react'
@@ -25,7 +26,7 @@ const UpdatePicture: FC<UpdatePictureProperties> = ({
 			width={220}
 			className='border-muted cursor-pointer rounded-xl border-2'
 			height={300}
-			src={picture}
+			src={getFileUrl(picture)}
 			alt='Cover'
 			objectFit='cover'
 			onClick={() => {

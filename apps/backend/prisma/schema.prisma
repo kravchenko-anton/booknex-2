@@ -10,33 +10,33 @@ datasource db {
 }
 
 model Genre {
-  id             Int            @id @default(autoincrement())
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  name           String         @unique
-  description    String         @default("")
-  users          User[]
-  books          Book[]         @relation("BookGenre")
-  majorBooks     Book[]         @relation("BookMajorGenre")
-  similarBy      Genre[]        @relation("Similar")
-  similar        Genre[]        @relation("Similar")
+  id                 Int            @id @default(autoincrement())
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  name               String         @unique
+  description        String         @default("")
+  users              User[]
+  books              Book[]         @relation("BookGenre")
+  majorBooks         Book[]         @relation("BookMajorGenre")
+  similarBy          Genre[]        @relation("Similar")
+  similar            Genre[]        @relation("Similar")
   bookTemplates      BookTemplate[]
-  activities  Activity[]
+  activities         Activity[]
 }
 
 model Activity {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  book      Book?    @relation(fields: [bookId], references: [id])
-  genre     Genre?   @relation(fields: [genreId], references: [id])
-  collection Collection? @relation(fields: [collectionId], references: [id])
-  collectionId Int?
-  genreId      Int?
-  bookId    Int?
-  userId    Int?
-  type      String
-  importance Int
-  user      User?     @relation(fields: [userId], references: [id])
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  book          Book?    @relation(fields: [bookId], references: [id])
+  genre         Genre?   @relation(fields: [genreId], references: [id])
+  collection    Collection? @relation(fields: [collectionId], references: [id])
+  collectionId  Int?
+  genreId       Int?
+  bookId        Int?
+  userId        Int?
+  type          String
+  importance    Int
+  user          User?     @relation(fields: [userId], references: [id])
 }
 
 model Feedback {
@@ -48,7 +48,6 @@ model Feedback {
   text      String
   book      Book     @relation(fields: [bookId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
-
   bookId    Int
   userId    Int
 }
@@ -70,7 +69,7 @@ model Book {
   majorGenre  Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres      Genre[]      @relation("BookGenre")
   feedback    Feedback[]
-  collections     Collection[]
+  collections Collection[]
   finishedBy  User[]       @relation("FinishedBooks")
   savedBy     User[]       @relation("SavedBooks")
   readingBy   User[]       @relation("ReadingBooks")
@@ -83,33 +82,33 @@ model BookTemplate {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   title             String   @unique
-  author        String
+  author            String
   description       String
   picture           String
   pages             Int
   popularity        Int
+  genres            Genre[]
 
-  genres Genre[]
 }
 
 
 
 model User {
-  id             Int          @id @default(autoincrement())
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  email          String       @unique
-  socialId       String?      @unique
+  id              Int          @id @default(autoincrement())
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  email           String       @unique
+  socialId        String      @unique
   selectedGenres  Genre[]
-  picture        String       @default("fallback.png")
-  fullName           String       @default("unknown")
-  location       String       @default("unknown")
-  role           Role         @default(USER)
-  feedback       Feedback[]
-  savedBooks     Book[]       @relation("SavedBooks")
-  finishedBooks  Book[]       @relation("FinishedBooks")
-  readingBooks   Book[]       @relation("ReadingBooks")
-  activity       Activity[]
+  picture         String       @default("fallback.png")
+  fullName        String       @default("unknown")
+  location        String       @default("unknown")
+  role            Role         @default(USER)
+  feedback        Feedback[]
+  savedBooks      Book[]       @relation("SavedBooks")
+  finishedBooks   Book[]       @relation("FinishedBooks")
+  readingBooks    Book[]       @relation("ReadingBooks")
+  activity        Activity[]
 }
 
 model Collection {

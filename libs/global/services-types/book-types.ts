@@ -1,6 +1,7 @@
 import type { Prisma } from '@prisma/client'
 import type { returnBookObject } from '../../../apps/backend/src/book/return.book.object'
 import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
+import type { ActivitiesOutput } from '../../../apps/backend/src/utils/activity-transformer'
 import type { defaultReturnObject } from '../../../apps/backend/src/utils/return.default.object'
 import type { GetAllTypeOutput } from './utils'
 
@@ -42,12 +43,7 @@ export type InfoByIdAdmin = Prisma.BookGetPayload<{
 		}
 	}
 }> & {
-	activities: {
-		level: number
-		date: string
-		count: number
-		activities: string[]
-	}[]
+	activities: ActivitiesOutput[]
 }
 
 export type BookByIdOutput = Prisma.BookGetPayload<{

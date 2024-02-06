@@ -4,8 +4,8 @@ import { getFileUrl } from '../../../../libs/global/api-config'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
+import { transformActivity } from '../utils/activity-transformer'
 import { ErrorsEnum } from '../utils/errors'
-import { formatYYYYMMDD } from '../utils/format-date'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 import type { FeedbackBookDto } from './dto/feedback.book.dto'
@@ -69,66 +69,22 @@ export class BookService {
 				activities: {
 					select: {
 						type: true,
-						user: {
-							select: {
-								id: true,
-								email: true
-							}
-						},
 						id: true,
 						importance: true,
-						createdAt: true
+						createdAt: true,
+						genreId: true,
+						bookId: true,
+						userId: true,
+						collectionId: true
 					}
 				}
 			}
 		})
 		const { activities, ...rest } = author
-		const activitiesByDate = activities.reduce<
-			Record<
-				string,
-				{
-					date: string
-					activities: {
-						message: string
-						importance: number
-					}[]
-					count: number
-				}
-			>
-		>((accumulator, activity) => {
-			const date = formatYYYYMMDD(activity.createdAt)
-			accumulator[date] = accumulator[date] || {
-				date,
-				count: 0,
-				activities: []
-			}
-			accumulator[date].activities.push({
-				importance: activity.importance,
-				message: `${new Date(
-					activity.createdAt
-				).getHours()}:${new Date(activity.createdAt).getMinutes()} ${activity.type}`
-			})
-			accumulator[date].count++
-			return accumulator
-		}, {})
-
-		const activitiesWithLevel = Object.values(activitiesByDate).map(
-			({ activities, count, date }) => ({
-				date,
-				count,
-				level: Math.round(
-					activities.reduce(
-						(accumulator, { importance }) => accumulator + importance,
-						0
-					) / activities.length
-				),
-				activities: activities.map(({ message }) => message)
-			})
-		)
 
 		return {
 			...rest,
-			activities: activitiesWithLevel
+			activities: transformActivity(activities)
 		}
 	}
 

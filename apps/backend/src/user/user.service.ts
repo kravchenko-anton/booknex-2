@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
+import { transformActivity } from '../utils/activity-transformer'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { UserUpdateSelectedGenresDto } from './dto'
@@ -105,35 +106,57 @@ export class UserService {
 
 	async all(searchTerm: string, page: number) {
 		const perPage = 20
-		return {
-			data: await this.prisma.user.findMany({
-				take: perPage,
+		const data = await this.prisma.user.findMany({
+			take: perPage,
 
-				select: {
-					...returnUserObject,
-					selectedGenres: {
-						select: ReturnGenreObject
-					},
-					_count: {
-						select: {
-							activity: true,
-							savedBooks: true,
-							finishedBooks: true,
-							readingBooks: true
-						}
-					},
-					...(searchTerm && {
-						where: {
-							title: {
-								contains: searchTerm
-							}
-						}
-					})
+			select: {
+				...returnUserObject,
+				picture: true,
+				socialId: true,
+				role: true,
+				createdAt: true,
+				fullName: true,
+				location: true,
+				selectedGenres: {
+					select: ReturnGenreObject
 				},
-				...(page && {
-					skip: page * perPage
+				activity: {
+					select: {
+						type: true,
+						id: true,
+						importance: true,
+						createdAt: true,
+						userId: true,
+						bookId: true,
+						genreId: true,
+						collectionId: true
+					}
+				},
+				_count: {
+					select: {
+						savedBooks: true,
+						feedback: true,
+						finishedBooks: true,
+						readingBooks: true
+					}
+				},
+				...(searchTerm && {
+					where: {
+						title: {
+							contains: searchTerm
+						}
+					}
 				})
-			}),
+			},
+			...(page && {
+				skip: page * perPage
+			})
+		})
+		return {
+			data: data.map(({ activity, ...user }) => ({
+				...user,
+				activities: transformActivity(activity)
+			})),
 			canLoadMore:
 				page < Math.floor((await this.prisma.user.count()) / perPage),
 			totalPages: Math.floor((await this.prisma.user.count()) / perPage)

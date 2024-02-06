@@ -1,9 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import EPub from 'epub2'
-import prettify from 'html-prettify'
 import { JSDOM } from 'jsdom'
 import puppeteer from 'puppeteer'
-import type { UnfoldOutput } from '../../../../libs/global/services-types/parser-types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
@@ -102,16 +100,16 @@ export class ParserService {
 					(chapter, index) =>
 						new Promise<Chapter | null>(resolve => {
 							try {
-								epub.getChapter(chapter.id, (error, text) => {
+								epub.getChapter(chapter.id, async (error, text) => {
 									if (error) {
 										return null
 									}
 
-									const updatedContent = () => {
+									const updatedContent = async () => {
 										const dom = new JSDOM(text.toString())
+										const prettify = require('@liquify/prettify')
 										const elements = dom.window.document.querySelectorAll('*')
 										for (const element of elements) {
-											console.log(element.tagName)
 											if (
 												element.textContent === '' ||
 												element.textContent === ' ' ||
@@ -133,16 +131,20 @@ export class ParserService {
 											if (element.tagName === 'style') element.remove()
 											if (element.tagName === 'table') element.remove()
 										}
-
-										return dom.window.document.body?.innerHTML
+										return prettify
+											.format(dom.window.document.body?.innerHTML || '', {
+												language: 'html',
+												indentSize: 2,
+												endNewline: true
+											})
+											.then((formatted: string) => formatted)
 									}
 
-									const finalContent = updatedContent()
-
+									const finalContent = await updatedContent()
 									resolve({
 										id: index + 1,
 										title: chapter.title,
-										content: prettify(finalContent.toString())
+										content: finalContent
 									})
 								})
 							} catch (error) {
@@ -156,6 +158,7 @@ export class ParserService {
 						const validChapters = chapters.filter(
 							chapter => chapter?.content !== null
 						)
+
 						resolve(
 							validChapters.map((chapter, index) => ({
 								id: index + 1,
@@ -168,10 +171,11 @@ export class ParserService {
 						throw new BadRequestException(error)
 					})
 			})
+
 			epub.parse()
 		}).catch(error => {
 			throw new BadRequestException(error)
-		}) as Promise<UnfoldOutput>
+		}) as Promise<Chapter[]>
 	}
 
 	async byId(id: number) {

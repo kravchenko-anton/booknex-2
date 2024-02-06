@@ -76,7 +76,10 @@ export const columns = ({
 		cell: ({ row }) => {
 			const [showMore, setShowMore] = useState(false)
 			return (
-				<button className='mb-2 text-sm' onClick={() => setShowMore(!showMore)}>
+				<button
+					className='mb-2 text-justify text-sm'
+					onClick={() => setShowMore(!showMore)}
+				>
 					{showMore
 						? row.original.description
 						: row.original.description.slice(0, 250) + '...'}
@@ -88,7 +91,7 @@ export const columns = ({
 		id: 'genres',
 		header: () => <p className='text-center text-xl'>Genres</p>,
 		cell: ({ row }) => (
-			<div className='flex  w-[300px] flex-wrap items-center justify-center'>
+			<div className='flex flex-wrap items-center justify-center'>
 				{row.original.genres.map(genre => (
 					<p
 						className='bg-foreground border-muted m-1 rounded-xl border-2 p-2  text-sm text-white'
