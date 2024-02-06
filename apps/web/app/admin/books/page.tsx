@@ -1,8 +1,9 @@
 'use client'
-import { useCatalog } from '@/features/books/catalog/useCatalog'
-import { Button } from '@/shared/ui'
-import DataTable from '@/widgets/table/data-table'
-import DataTableHeader from '@/widgets/table/table-search'
+
+import { useCatalog } from '@/app/admin/books/useCatalog'
+import DataTable from '@/components/table/data-table'
+import DataTableHeader from '@/components/table/table-search'
+import { Button } from '@/components/ui'
 import type { FC } from 'react'
 
 const Page: FC = () => {

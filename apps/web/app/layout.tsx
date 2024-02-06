@@ -1,5 +1,5 @@
-import { AuthProvider } from '@/features/auth/provider/auth-provider'
-import Providers from '@/shared/providers/app-provider'
+import Providers from '@/providers/app-provider'
+import { AuthProvider } from '@/providers/auth-provider'
 import { Space_Grotesk } from 'next/font/google'
 import type { ReactNode } from 'react'
 import './global.css'

@@ -1,7 +1,8 @@
-import CallParserDialog from '@/features/parser/catalog/dialogs/call-parser'
-import { parserService } from '@/shared/services/parser/parser-services'
-import type { DialogProperties } from '@/shared/types/global'
-import { Button } from '@/shared/ui'
+import CallParserDialog from '@/app/admin/parser/dialogs/call-parser'
+import { Button } from '@/components/ui'
+import type { DialogProperties } from '@/components/ui/components-props-types'
+import { parserService } from '@/services/parser/parser-services'
+
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ParserDtoPayload } from 'global/services-types/parser-types'
 import type { FC } from 'react'
@@ -35,21 +36,21 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 	return (
 		<>
 			<Button
-				onClick={properties.openParserDialog}
 				isLoading={parseLoading}
 				size='sm'
 				variant='primary'
+				onClick={properties.openParserDialog}
 			>
 				Parsing
 			</Button>
 
 			<CallParserDialog
 				isOpen={properties.isOpen}
-				onClose={properties.onClose}
 				defaultValues={{
 					link: lastParsedData?.url ?? '',
 					page: (lastParsedData && lastParsedData.page + 1) ?? 0
 				}}
+				onClose={properties.onClose}
 				onSubmit={async data => {
 					await parse({
 						page: +data.page,

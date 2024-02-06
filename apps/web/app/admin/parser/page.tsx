@@ -1,9 +1,10 @@
 'use client'
 
 import ParseButton from '@/app/admin/parser/parse-button'
-import { useCatalog } from '@/features/parser/catalog/useCatalog'
-import DataTable from '@/widgets/table/data-table'
-import DataTableHeader from '@/widgets/table/table-search'
+import { useCatalog } from '@/app/admin/parser/useCatalog'
+import DataTable from '@/components/table/data-table'
+import DataTableHeader from '@/components/table/table-search'
+
 import type { FC } from 'react'
 
 const Parser: FC = () => {

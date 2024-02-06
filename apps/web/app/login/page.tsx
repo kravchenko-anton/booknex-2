@@ -1,6 +1,6 @@
 'use client'
-import { loginRoute } from '@/features/auth/provider/secure-route'
-import { useAction } from '@/shared/hooks'
+import { useAction } from '@/hooks'
+import { loginRoute } from '@/providers/secure-route'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
 import type { FC } from 'react'
 

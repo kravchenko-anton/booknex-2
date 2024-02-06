@@ -1,15 +1,15 @@
 'use client'
-import { useCreateForm } from '@/features/books/create/useCreateForm'
-import Editor from '@/features/books/shared/editor'
-import SelectGenres from '@/features/books/shared/select-genres'
-import { useBookCompose } from '@/features/books/shared/useBookCompose'
+import { useCreateForm } from '@/app/admin/books/create/useCreateForm'
+import Editor from '@/app/admin/books/editor'
+import SelectGenres from '@/app/admin/books/select-genres'
+import { useBookCompose } from '@/app/admin/books/useBookCompose'
 import {
 	Button,
 	DropZone,
 	ErrorMessage,
 	Field,
 	FormTextArea
-} from '@/shared/ui'
+} from '@/components/ui'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 
