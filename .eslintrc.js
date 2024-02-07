@@ -155,7 +155,6 @@ module.exports = {
 		'@typescript-eslint/prefer-function-type': 2,
 		'@typescript-eslint/prefer-string-starts-ends-with': 2,
 		'@typescript-eslint/return-await': 2,
-		'@typescript-eslint/consistent-type-definitions': 2,
 		'@typescript-eslint/consistent-type-assertions': 2,
 		'@typescript-eslint/consistent-type-imports': [
 			2,

@@ -1,8 +1,8 @@
-import { genreService } from '@/shared/api/services'
-import { useTypedNavigation, useTypedRoute } from '@/shared/hooks'
-import { Loader, ScrollLayout } from '@/shared/ui'
-import CatalogList from '@/shared/ui/book-lists/catalog-list'
-import Header from '@/shared/ui/header/header'
+import { genreService } from '@/api/services'
+import { useTypedNavigation, useTypedRoute } from '@/hooks'
+import { Loader, ScrollLayout } from '@/ui'
+import CatalogList from '@/ui/book-lists/catalog-list'
+import Header from '@/ui/header/header'
 import { useQuery } from '@tanstack/react-query'
 import { useLayoutEffect } from 'react'
 

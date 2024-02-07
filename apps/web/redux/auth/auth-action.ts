@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { ErrorsEnum } from 'backend/src/utils/errors'
 import { SERVER_URL, getAuthUrl } from 'global/api-config'
-import type { AuthFieldsType } from '../../../mobile/src/features/auth/action/auth-types'
+import type { AuthFieldsType } from '../../../mobile/src/redux/auth/auth-types'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type { AuthResponseType } from './auth-types'
 
@@ -12,7 +12,7 @@ export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const loginResponse = await axios
-				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/login'), {
+				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/mail-login'), {
 					email,
 					password
 				})
@@ -41,7 +41,7 @@ export const googleLogin = createAsyncThunk<
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
 		const loginResponse = await axios
-			.post<AuthResponseType>(SERVER_URL + getAuthUrl('/'), {
+			.post<AuthResponseType>(SERVER_URL + getAuthUrl('/google-sign'), {
 				socialId
 			})
 			.then(response => response.data)
@@ -59,26 +59,6 @@ export const googleLogin = createAsyncThunk<
 		return thunkAPI.rejectWithValue(error)
 	}
 })
-
-export const getNewToken = createAsyncThunk<AuthResponseType, string>(
-	'auth/getToken',
-	async (refreshToken, thunkAPI) => {
-		try {
-			const tokensResponse = await axios
-				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/refresh'), {
-					refreshToken
-				})
-				.then(response => response.data)
-			saveTokensStorage({
-				accessToken: tokensResponse.accessToken,
-				refreshToken: tokensResponse.refreshToken
-			})
-			return tokensResponse
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error)
-		}
-	}
-)
 
 export const logout = createAsyncThunk('auth/logout', () => {
 	try {

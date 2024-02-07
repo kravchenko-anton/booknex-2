@@ -1,17 +1,16 @@
-import type { AuthValidationSchemaType } from '@/features/auth/validation'
-import { authValidationSchema } from '@/features/auth/validation'
-import { useAction } from '@/shared/hooks'
-import { Button, Field, ScrollLayout, Title } from '@/shared/ui'
+import { useAction } from '@/hooks'
+import {
+	authValidationSchema,
+	type AuthValidationSchemaType
+} from '@/screens/auth/validation'
+import { Button, Field, ScrollLayout } from '@/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Color } from 'global/colors'
-import { Login as LoginIllustration } from 'global/illustrations'
 import { Mail, Password } from 'icons'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
-import { View } from 'react-native'
 
 const Login = () => {
-	const { login } = useAction()
+	const { mailLogin } = useAction()
 	const { control, handleSubmit } = useForm<AuthValidationSchemaType>({
 		mode: 'onSubmit',
 		resolver: zodResolver(authValidationSchema)
@@ -19,48 +18,31 @@ const Login = () => {
 	const onSubmit: SubmitHandler<AuthValidationSchemaType> = ({
 		password,
 		email
-	}) => login({ password, email })
+	}) => mailLogin({ password, email })
 	return (
-		<ScrollLayout className='px-2'>
-			<View className='mt-4'>
-				<LoginIllustration
-					width={200}
-					height={200}
-					className='mx-auto mt-8 w-full p-0'
-				/>
-				<View className='mt-4 items-center'>
-					<Title size={34} weight='bold'>
-						Welcome back
-					</Title>
-					<Title size={18} weight='light' color={Color.gray}>
-						Enter your credentials to continue
-					</Title>
-					<View className='mt-6 w-full'>
-						<Field
-							icon={Mail}
-							control={control}
-							name='email'
-							keyboardType='email-address'
-							placeholder='Email'
-						/>
-						<Field
-							secureTextEntry
-							icon={Password}
-							control={control}
-							name='password'
-							placeholder='Password'
-						/>
-						<Button
-							size='md'
-							variant='primary'
-							className='mb-4 mt-2'
-							onPress={handleSubmit(onSubmit)}
-						>
-							Sign in
-						</Button>
-					</View>
-				</View>
-			</View>
+		<ScrollLayout className='px-2 py-4'>
+			<Field
+				icon={Mail}
+				control={control}
+				name='email'
+				keyboardType='email-address'
+				placeholder='Email'
+			/>
+			<Field
+				secureTextEntry
+				icon={Password}
+				control={control}
+				name='password'
+				placeholder='Password'
+			/>
+			<Button
+				size='lg'
+				variant='primary'
+				className='mb-4 mt-2'
+				onPress={handleSubmit(onSubmit)}
+			>
+				Sign in
+			</Button>
 		</ScrollLayout>
 	)
 }

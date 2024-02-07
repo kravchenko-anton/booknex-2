@@ -1,5 +1,5 @@
-import { ScrollLayout } from '@/shared/ui'
-import { errorToast } from '@/shared/utils/toast'
+import { ScrollLayout } from '@/ui'
+import { errorToast } from '@/utils/toast'
 import { Bug, Logout, MessageCircleQuestion } from 'icons'
 import * as List from './settings-list'
 //TODO: после обновления проложения добавить тут больше разнообразия и пофиксить консоль логи

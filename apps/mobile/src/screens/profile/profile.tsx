@@ -1,5 +1,5 @@
-import { userServices } from '@/shared/api/services/user/user-service'
-import { Loader, ScrollLayout, Title } from '@/shared/ui'
+import { userServices } from '@/api/services/user/user-service'
+import { Loader, ScrollLayout, Title } from '@/ui'
 import { useQuery } from '@tanstack/react-query'
 
 const Profile = () => {
@@ -11,9 +11,9 @@ const Profile = () => {
 	return (
 		<ScrollLayout className='px-2'>
 			<Title
+				center
 				className='mt-40 items-center justify-center'
 				weight='bold'
-				center
 				size={25}
 				numberOfLines={6}
 			>

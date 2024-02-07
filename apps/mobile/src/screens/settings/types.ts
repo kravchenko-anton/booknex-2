@@ -1,7 +1,7 @@
 import type {
 	PressableDefaultProperties,
 	ViewDefaultProperties
-} from '@/shared/types/component-types'
+} from '@/types/component-types'
 import type { FC } from 'react'
 import type { SvgProps } from 'react-native-svg'
 

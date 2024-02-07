@@ -9,8 +9,8 @@ import {
 	Loader,
 	ScrollLayout,
 	Title
-} from '@/shared/ui'
-import { share } from '@/shared/utils/share-function'
+} from '@/ui'
+import { share } from '@/utils/share-function'
 import { Color } from 'global/colors'
 import { ArrowLeft, Bookmarked, Share, Text } from 'icons'
 import type { FC } from 'react'

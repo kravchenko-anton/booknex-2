@@ -1,5 +1,4 @@
 import Providers from '@/providers/app-provider'
-import { AuthProvider } from '@/providers/auth-provider'
 import { Space_Grotesk } from 'next/font/google'
 import type { ReactNode } from 'react'
 import './global.css'
@@ -15,9 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang='en'>
 			<body style={{ ...font.style }}>
-				<Providers>
-					<AuthProvider>{children}</AuthProvider>
-				</Providers>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	)

@@ -9,12 +9,12 @@ import { AuthDto, RefreshDto, SignDto } from './dto/auth.dto'
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
-	@Post('/')
+	@Post('/google-sign')
 	async googleSign(@Body() dto: SignDto) {
 		return this.authService.googleSign(dto)
 	}
 
-	@Post('/register')
+	@Post('/mail-register')
 	@ApiBody({
 		type: AuthDto,
 		description: 'Register new user'
@@ -23,7 +23,7 @@ export class AuthController {
 		return this.authService.register(dto)
 	}
 
-	@Post('/login')
+	@Post('/mail-login')
 	@ApiBody({
 		type: AuthDto,
 		description: 'Login user'

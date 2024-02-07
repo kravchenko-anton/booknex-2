@@ -1,7 +1,7 @@
-import { catalogService } from '@/shared/api/services/catalog/catalog-service'
-import { useTypedNavigation } from '@/shared/hooks'
-import { BookCard, Button, Flatlist, Loader, ScrollLayout } from '@/shared/ui'
-import BannerList from '@/shared/ui/book-lists/banner-list'
+import { catalogService } from '@/api/services/catalog/catalog-service'
+import { useTypedNavigation } from '@/hooks'
+import { BookCard, Button, Flatlist, Loader, ScrollLayout } from '@/ui'
+import BannerList from '@/ui/book-lists/banner-list'
 import { useQuery } from '@tanstack/react-query'
 //TODO: добавить тут shelves
 const Featured = () => {
@@ -18,11 +18,11 @@ const Featured = () => {
 				data={featured.recommendations}
 				renderItem={({ item: book }) => (
 					<BookCard
-						onPress={() => navigate('Book', { id: book.id })}
 						size='md'
 						image={{
 							uri: book.picture
 						}}
+						onPress={() => navigate('Book', { id: book.id })}
 					/>
 				)}
 			/>
@@ -31,44 +31,44 @@ const Featured = () => {
 				data={featured.relatedGenres}
 				renderItem={({ item: genre }) => (
 					<Button
+						size='md'
+						variant='foreground'
 						onPress={() => {
 							navigate('Genre', { id: genre.id, name: genre.name })
 						}}
-						size='md'
-						variant='foreground'
 					>
 						{genre.name}
 					</Button>
 				)}
 			/>
 			<BannerList
+				horizontal
 				mt={5}
 				title='Popular books'
-				horizontal
 				data={featured.popularBooks}
 				renderItem={({ item: book }) => (
 					<BookCard
 						size='md'
-						onPress={() => navigate('Book', { id: book.id })}
 						title={book.title}
 						author={book.author}
 						image={{
 							uri: book.picture
 						}}
+						onPress={() => navigate('Book', { id: book.id })}
 					/>
 				)}
 			/>
 			<Flatlist
-				title='New releases'
 				horizontal
+				title='New releases'
 				data={featured.newReleases}
 				renderItem={({ item: book }) => (
 					<BookCard
 						size='md'
-						onPress={() => navigate('Book', { id: book.id })}
 						image={{
 							uri: book.picture
 						}}
+						onPress={() => navigate('Book', { id: book.id })}
 					/>
 				)}
 			/>
@@ -79,11 +79,11 @@ const Featured = () => {
 				renderItem={({ item: book }) => (
 					<BookCard
 						author={book.author}
-						onPress={() => navigate('Book', { id: book.id })}
 						size='md'
 						image={{
 							uri: book.picture
 						}}
+						onPress={() => navigate('Book', { id: book.id })}
 					/>
 				)}
 			/>

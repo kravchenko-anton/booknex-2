@@ -6,7 +6,7 @@ import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
 import { Mail, Password } from 'icons'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import type { AuthFieldsType } from '../../mobile/src/features/auth/action/auth-types'
+import type { AuthFieldsType } from '../../mobile/src/redux/auth/auth-types'
 
 const Index: FC = () => {
 	const { mailLogin, googleLogin } = useAction()
@@ -56,10 +56,8 @@ const Index: FC = () => {
 						Login
 					</Button>
 					<GoogleLogin
-						auto_select
+						useOneTap
 						size='large'
-						type='icon'
-						text='continue_with'
 						shape={'rectangular'}
 						theme='outline'
 						onSuccess={onGoogleLoginSuccess}

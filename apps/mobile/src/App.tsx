@@ -1,9 +1,8 @@
-import Navigation from '@/features/navigation/navigation'
-import { ClickOutsideProvider } from '@/shared/hooks/outside-press/provider'
-import { BottomSheetProvider } from '@/shared/providers/bottom-sheet-provider'
-import { persistor, store } from '@/shared/redux/store'
-import Loader from '@/shared/ui/loader/loader'
-import Toast from '@/shared/ui/toast'
+import { ClickOutsideProvider } from '@/hooks/outside-press/provider'
+import Navigation from '@/navigation/navigation'
+import { persistor, store } from '@/redux/store'
+import Loader from '@/ui/loader/loader'
+import Toast from '@/ui/toast'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
@@ -48,9 +47,7 @@ export default function app() {
 								flex: 1
 							}}
 						>
-							<BottomSheetProvider>
-								<Navigation />
-							</BottomSheetProvider>
+							<Navigation />
 						</GestureHandlerRootView>
 						<Toast />
 					</ClickOutsideProvider>

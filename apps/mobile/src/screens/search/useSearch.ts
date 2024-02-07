@@ -1,5 +1,5 @@
+import { catalogService } from '@/api/services'
 import { useSearchForm } from '@/screens/search/useSearchForm'
-import { catalogService } from '@/shared/api/services'
 import { useQuery } from '@tanstack/react-query'
 
 export const useSearch = () => {

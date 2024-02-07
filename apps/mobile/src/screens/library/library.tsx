@@ -1,5 +1,5 @@
-import { userServices } from '@/shared/api/services/user/user-service'
-import { useTypedNavigation } from '@/shared/hooks'
+import { userServices } from '@/api/services/user/user-service'
+import { useTypedNavigation } from '@/hooks'
 import {
 	AnimatedPress,
 	BookCard,
@@ -7,9 +7,9 @@ import {
 	Image,
 	Loader,
 	ScrollLayout
-} from '@/shared/ui'
-import { settings } from '@/shared/ui/book-card/settings'
-import BannerList from '@/shared/ui/book-lists/banner-list'
+} from '@/ui'
+import { settings } from '@/ui/book-card/settings'
+import BannerList from '@/ui/book-lists/banner-list'
 import { useQuery } from '@tanstack/react-query'
 
 const Library = () => {
@@ -42,24 +42,24 @@ const Library = () => {
 				renderItem={({ item }) => (
 					<BookCard
 						size='sm'
-						onPress={() => navigate('Book', { id: item.id })}
 						image={{ uri: item.picture }}
 						author={item.author}
+						onPress={() => navigate('Book', { id: item.id })}
 					/>
 				)}
 			/>
 			<Flatlist
+				horizontal
 				mt={5}
 				className='mb-4'
-				horizontal
 				title='Finished'
 				data={library.finishedBooks}
 				renderItem={({ item }) => (
 					<BookCard
 						size='sm'
-						onPress={() => navigate('Book', { id: item.id })}
 						image={{ uri: item.picture }}
 						author={item.author}
+						onPress={() => navigate('Book', { id: item.id })}
 					/>
 				)}
 			/>

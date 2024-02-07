@@ -37,7 +37,8 @@
 		
 		"@tanstack/react-query": "*",
 		"@tanstack/query-async-storage-persister": "*",
-		"@tanstack/react-query-persist-client": "*"
+		"@tanstack/react-query-persist-client": "*",
+		"@react-native-google-signin/google-signin\n": "*"
 	},
 	"devDependencies": {
 		"metro-config": "*",

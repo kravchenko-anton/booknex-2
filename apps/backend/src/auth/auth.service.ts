@@ -52,7 +52,7 @@ export class AuthService {
 		const oldUser = await this.prisma.user.findUnique({
 			where: {
 				email: dto.email,
-				socialId: null
+				authType: 'email'
 			}
 		})
 		if (oldUser)
@@ -115,7 +115,7 @@ export class AuthService {
 		const user = await this.prisma.user.findUnique({
 			where: {
 				socialId: data.sub,
-				password: null
+				authType: 'google'
 			}
 		})
 		if (user) {
@@ -133,6 +133,7 @@ export class AuthService {
 				}
 			})
 			return {
+				type: 'login',
 				user: this.userFields(user),
 				...tokens
 			}
@@ -176,6 +177,7 @@ export class AuthService {
 			}
 		})
 		return {
+			type: 'register',
 			user: this.userFields(newUser),
 			...newTokens
 		}
@@ -201,7 +203,7 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				expiresIn: '1h'
+				expiresIn: '40s'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'
@@ -209,13 +211,13 @@ export class AuthService {
 		}
 	}
 	private async validateUser(dto: AuthDto) {
-		const user = await this.prisma.user.findFirst({
+		const user = await this.prisma.user.findUnique({
 			where: {
 				email: dto.email,
-				socialId: null
+				authType: 'email'
 			}
 		})
-		if (!user?.password)
+		if (!user)
 			throw new NotFoundException(
 				"Email or password doesn't work"
 			).getResponse()

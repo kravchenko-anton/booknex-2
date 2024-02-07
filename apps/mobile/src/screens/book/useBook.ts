@@ -1,7 +1,7 @@
-import { bookService } from '@/shared/api/services'
-import { userServices } from '@/shared/api/services/user/user-service'
-import { useTypedNavigation, useTypedRoute } from '@/shared/hooks'
-import { successToast } from '@/shared/utils/toast'
+import { bookService } from '@/api/services'
+import { userServices } from '@/api/services/user/user-service'
+import { useTypedNavigation, useTypedRoute } from '@/hooks'
+import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { ErrorsEnum } from 'backend/src/utils/errors'
 
