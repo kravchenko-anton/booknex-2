@@ -1,6 +1,6 @@
 'use client'
 
-import { useCatalog } from '@/app/admin/books/useCatalog'
+import { useCatalog } from '@/app/admin/users/_catalog/useCatalog'
 import DataTable from '@/components/table/data-table'
 import DataTableHeader from '@/components/table/table-search'
 import type { FC } from 'react'

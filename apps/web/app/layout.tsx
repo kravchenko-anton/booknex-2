@@ -14,7 +14,7 @@ const font = Space_Grotesk({ subsets: ['latin'] })
 export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang='en'>
-			<body style={{ ...font.style }} id='Body'>
+			<body style={{ ...font.style }}>
 				<Providers>
 					<AuthProvider>{children}</AuthProvider>
 				</Providers>

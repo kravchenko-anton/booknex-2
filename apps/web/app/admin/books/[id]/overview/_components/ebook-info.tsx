@@ -1,8 +1,8 @@
-import Editor from '@/app/admin/books/editor'
+import Editor from '@/app/admin/books/_shared/editor'
 import {
 	useBookCompose,
 	type EbookType
-} from '@/app/admin/books/useBookCompose'
+} from '@/app/admin/books/_shared/useBookCompose'
 import { Button, DropZone } from '@/components/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { errorToast } from '@/utils/toast'

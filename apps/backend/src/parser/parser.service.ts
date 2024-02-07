@@ -130,6 +130,8 @@ export class ParserService {
 											if (element.tagName === 'script') element.remove()
 											if (element.tagName === 'style') element.remove()
 											if (element.tagName === 'table') element.remove()
+											if (element.tagName === 'SUP') element.remove()
+											if (element.tagName === 'SUB') element.remove()
 										}
 										return prettify
 											.format(dom.window.document.body?.innerHTML || '', {

@@ -1,15 +1,15 @@
 'use client'
 
-import EbookInfo from '@/app/admin/books/[id]/overview/ebook-info'
-import FeedbackTable from '@/app/admin/books/[id]/overview/feedback/feedback-table'
-import UpdateBio from '@/app/admin/books/[id]/overview/update-bio'
-import UpdatePicture from '@/app/admin/books/[id]/overview/update-picture'
+import EbookInfo from '@/app/admin/books/[id]/overview/_components/ebook-info'
+import FeedbackTable from '@/app/admin/books/[id]/overview/_components/feedback/feedback-table'
+import UpdateBio from '@/app/admin/books/[id]/overview/_components/update-bio'
+import UpdatePicture from '@/app/admin/books/[id]/overview/_components/update-picture'
 import ActivityList from '@/components/dialogs/activity-list'
 import Loader from '@/components/ui/loader/loader'
 import { bookService } from '@/services/book/book-service'
 import { useUploadFile } from '@/utils/files'
 import { successToast } from '@/utils/toast'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
 import type { BookUpdatePayload } from 'global/services-types/book-types'
 import { useParams, useRouter } from 'next/navigation'
@@ -20,6 +20,7 @@ import { twMerge } from 'tailwind-merge'
 const Page = () => {
 	const { upload } = useUploadFile()
 	const parameters = useParams()
+	const queryClient = useQueryClient()
 	const router = useRouter()
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', +parameters.id],
@@ -29,9 +30,11 @@ const Page = () => {
 		mutationKey: ['update-book'],
 		mutationFn: ({ id, payload }: { id: number; payload: BookUpdatePayload }) =>
 			bookService.update(id, payload),
-		onSuccess: () => {
+		onSuccess: async () => {
 			successToast('Book updated')
-			router.refresh()
+			await queryClient.invalidateQueries({
+				queryKey: ['book-overview', +parameters.id]
+			})
 		}
 	})
 
@@ -111,7 +114,7 @@ const Page = () => {
 									})
 								}
 							>
-								{book.visible ? 'Make unavailable' : 'Make available'}
+								{book.visible ? 'Hide' : 'Show'}
 							</button>
 							<button
 								className={twMerge(
@@ -140,13 +143,14 @@ const Page = () => {
 						pages={book.pages}
 						popularity={book.popularity}
 						onSaveEdit={async data => {
-							console.log(data, 'bio')
 							await update({
 								id: book.id,
 								payload: data
 							})
 						}}
 					/>
+					<ActivityList data={book.activities} />
+
 					<EbookInfo
 						bookLink={book.ebook}
 						onEdit={async books => {
@@ -164,7 +168,6 @@ const Page = () => {
 							})
 						}}
 					/>
-					<ActivityList data={book.activities} />
 					<FeedbackTable feedback={book.feedback} />
 				</div>
 			</div>

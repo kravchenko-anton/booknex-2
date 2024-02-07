@@ -1,8 +1,8 @@
-import { useTemplate } from '@/app/admin/books/create/useTemplate'
+import { useTemplate } from '@/app/admin/books/create/_features/useTemplate'
 import {
 	createBookValidationSchema,
 	type CreateBookValidationSchemaType
-} from '@/app/admin/books/create/validation'
+} from '@/app/admin/books/create/_features/validation'
 import { bookService } from '@/services/book/book-service'
 import { parserService } from '@/services/parser/parser-services'
 import { useUploadFile } from '@/utils/files'

@@ -43,12 +43,12 @@ export const useBook = () => {
 
 	const startReadingBook = async () => {
 		if (!book) throw new Error(ErrorsEnum.Something_Went_Wrong)
-		await startReading(book.id).then(() => {
-			queryClient.invalidateQueries({
+		await startReading(book.id)
+		await queryClient
+			.invalidateQueries({
 				queryKey: ['user-library']
 			})
-			navigate('Reader', { id: book.id })
-		})
+			.then(() => navigate('Reader', { id: book.id }))
 	}
 	return {
 		book,

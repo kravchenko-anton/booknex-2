@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { login, logout } from './auth-action'
+import { googleLogin, logout, mailLogin } from './auth-action'
 import type { IAuthState } from './auth-types'
 
 const initialState = {
@@ -13,14 +13,25 @@ export const authSlice = createSlice({
 	reducers: {},
 	extraReducers: builder => {
 		builder
-			.addCase(login.pending, state => {
+			.addCase(mailLogin.pending, state => {
 				state.isLoading = true
 			})
-			.addCase(login.fulfilled, (state, { payload }) => {
+			.addCase(mailLogin.fulfilled, (state, { payload }) => {
 				state.isLoading = false
 				state.user = payload.user
 			})
-			.addCase(login.rejected, state => {
+			.addCase(mailLogin.rejected, state => {
+				state.isLoading = false
+				state.user = null
+			})
+			.addCase(googleLogin.pending, state => {
+				state.isLoading = true
+			})
+			.addCase(googleLogin.fulfilled, (state, { payload }) => {
+				state.isLoading = false
+				state.user = payload.user
+			})
+			.addCase(googleLogin.rejected, state => {
 				state.isLoading = false
 				state.user = null
 			})

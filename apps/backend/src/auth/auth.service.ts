@@ -2,17 +2,19 @@ import {
 	BadRequestException,
 	HttpException,
 	HttpStatus,
-	Injectable
+	Injectable,
+	NotFoundException
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import type { User } from '@prisma/client'
+import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
-import type { SignDto } from './dto/auth.dto'
+import type { AuthDto, SignDto } from './dto/auth.dto'
 
 export enum RoleEnum {
 	ADMIN = 'ADMIN',
@@ -35,7 +37,63 @@ export class AuthService {
 			configService.get('GOOGLE_CLIENT_SECRET')
 		)
 	}
-	async sign(dto: SignDto) {
+
+	async login(dto: AuthDto) {
+		const user = await this.validateUser(dto)
+		const tokens = this.issueToken(user.id)
+
+		return {
+			user: this.userFields(user),
+			...tokens
+		}
+	}
+
+	async register(dto: AuthDto) {
+		const oldUser = await this.prisma.user.findUnique({
+			where: {
+				email: dto.email,
+				socialId: null
+			}
+		})
+		if (oldUser)
+			throw new BadRequestException(
+				`User ${ErrorsEnum.Already_Exist}`
+			).getResponse()
+
+		const mostPopularGenres = await this.prisma.genre.findMany({
+			take: 3,
+			select: {
+				id: true
+			}
+		})
+		const user = await this.prisma.user.create({
+			data: {
+				email: dto.email,
+				password: await hash(dto.password),
+				selectedGenres: {
+					connect: mostPopularGenres
+				}
+			}
+		})
+		await this.prisma.activity.create({
+			data: {
+				type: ActivityEnum.Register_New_User,
+				importance: 1,
+				user: {
+					connect: {
+						id: user.id
+					}
+				}
+			}
+		})
+		const tokens = this.issueToken(user.id)
+		return {
+			user: this.userFields(user),
+			...tokens
+		}
+	}
+
+	async googleSign(dto: SignDto) {
 		const ticket = await this.google.verifyIdToken({
 			idToken: dto.socialId,
 			audience: [this.configService.getOrThrow('GOOGLE_CLIENT_ID')]
@@ -56,7 +114,8 @@ export class AuthService {
 
 		const user = await this.prisma.user.findUnique({
 			where: {
-				socialId: data.sub
+				socialId: data.sub,
+				password: null
 			}
 		})
 		if (user) {
@@ -148,6 +207,25 @@ export class AuthService {
 				expiresIn: '10d'
 			})
 		}
+	}
+	private async validateUser(dto: AuthDto) {
+		const user = await this.prisma.user.findFirst({
+			where: {
+				email: dto.email,
+				socialId: null
+			}
+		})
+		if (!user?.password)
+			throw new NotFoundException(
+				"Email or password doesn't work"
+			).getResponse()
+		const isPasswordValid = await verify(user.password, dto.password)
+		if (!isPasswordValid)
+			throw new BadRequestException(
+				"Email or password doesn't work"
+			).getResponse()
+
+		return user
 	}
 
 	private userFields(user: User) {

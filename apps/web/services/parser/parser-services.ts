@@ -1,4 +1,4 @@
-import { getParserUrl } from 'global/api-config'
+import { getAdminUrl, getParserUrl } from 'global/api-config'
 import type {
 	AllGoodReadBookOutput,
 	ByIdOutput,
@@ -13,21 +13,21 @@ export const parserService = {
 		searchTerm?: string
 	}): Promise<AllGoodReadBookOutput> {
 		return request({
-			url: getParserUrl('/admin/all'),
+			url: getParserUrl(getAdminUrl('/all')),
 			params: parameters
 		})
 	},
 
 	async byId(id: number) {
 		return request<ByIdOutput>({
-			url: getParserUrl(`/admin/by-id/${id}`),
+			url: getParserUrl(getAdminUrl(`/by-id/${id}`)),
 			method: 'GET'
 		})
 	},
 
 	async parse(dto: ParserDtoPayload) {
 		return request({
-			url: getParserUrl('/admin/parse'),
+			url: getParserUrl(getAdminUrl('/parse')),
 			data: {
 				...dto
 			},
@@ -37,7 +37,7 @@ export const parserService = {
 	},
 	unfold(file: FormData): Promise<UnfoldOutput> {
 		return request({
-			url: getParserUrl('/admin/unfold'),
+			url: getParserUrl(getAdminUrl('/unfold')),
 			method: 'POST',
 			data: file,
 			timeout: 10_000,
@@ -49,7 +49,7 @@ export const parserService = {
 
 	async delete(id: number) {
 		return request<null>({
-			url: getParserUrl(`/admin/delete/${id}`),
+			url: getParserUrl(getAdminUrl(`/delete/${id}`)),
 			method: 'DELETE'
 		})
 	}

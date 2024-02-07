@@ -48,7 +48,7 @@ export const columns = ({
 		header: () => <p className='text-center text-xl'>Information</p>,
 		cell: ({ row }) => (
 			<button
-				className='w-[210px] items-start justify-start text-left'
+				className=' items-start justify-start text-left'
 				onClick={() => preview(row.original.id)}
 			>
 				<h3 className='mb-1 text-xl'>{row.original.title}</h3>
@@ -78,10 +78,10 @@ export const columns = ({
 		id: 'genres',
 		header: () => <p className='text-center text-xl'>Genres</p>,
 		cell: ({ row }) => (
-			<div className='flex flex-wrap items-center justify-center'>
+			<div className='flex w-[140px]  flex-wrap items-center gap-1'>
 				{row.original.genres.map(genre => (
 					<p
-						className='bg-foreground border-muted m-1 rounded-xl border-2 p-1.5  text-sm text-white'
+						className='bg-foreground border-muted rounded-xl border-2 p-1.5  text-sm text-white'
 						key={genre.name}
 					>
 						{genre.name}
@@ -94,7 +94,7 @@ export const columns = ({
 		id: 'statistic',
 		header: () => <p className='text-center text-xl'>Statistic</p>,
 		cell: ({ row }) => (
-			<div className='flex w-[140px] flex-wrap gap-2'>
+			<div className='flex w-[130px] flex-wrap gap-2'>
 				<div className='mt-2 gap-2 text-center'>
 					<p className='bg-foreground mb-2 rounded-md p-1.5 font-light'>
 						<b

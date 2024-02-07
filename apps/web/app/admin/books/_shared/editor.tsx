@@ -1,4 +1,4 @@
-import type { BookComposeReturnType } from '@/app/admin/books/useBookCompose'
+import type { BookComposeReturnType } from '@/app/admin/books/_shared/useBookCompose'
 import { TextArea } from '@/components/ui'
 import { CaseSensitive, ChevronDown, ChevronUp, Close } from 'icons'
 import type { FC } from 'react'

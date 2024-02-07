@@ -1,41 +1,45 @@
-import { bookRoute } from '@/app/admin/books/useCatalog'
-import { columns } from '@/app/admin/parser/columns'
-import { useQueries } from '@/app/admin/parser/useQueries'
+import { columns } from '@/app/admin/books/_catalog/columns'
 import { useTableParameters } from '@/hooks/useTableParameters'
+import { bookService } from '@/services/book/book-service'
 import {
 	generateParameters,
 	type GenerateParametersType
 } from '@/utils/generate-parameters'
+import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
-const parserRoute = '/admin/parser'
-
+export const bookRoute = '/admin/books'
 export const useCatalog = () => {
-	const { page, searchTerm, dialog } = useTableParameters()
 	const router = useRouter()
-	const { books, deleteFromParser } = useQueries({
-		page,
-		searchTerm
+	const { page, searchTerm } = useTableParameters()
+	const { data: books } = useQuery({
+		queryKey: ['books', searchTerm, page],
+		queryFn: () =>
+			bookService.all({
+				searchTerm: searchTerm,
+				page: +page
+			})
 	})
-
-	const pushParameters = (parameters: GenerateParametersType) =>
-		router.replace(generateParameters(parserRoute, parameters))
-
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			remove: (id: number) => deleteFromParser(id),
-			useAsTemplate: id => router.push(`${bookRoute}/create?template=${id}`)
+			preview: id => router.push(`/admin/books/${id}/overview`)
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})
+
+	const pushParameters = (parameters: GenerateParametersType) =>
+		router.replace(generateParameters(bookRoute, parameters))
 
 	const headerProperties = {
 		defaultTerm: searchTerm,
 		onSearchSubmit: (data: { searchTerm: string }) =>
 			pushParameters({ searchTerm: data.searchTerm })
 	}
+
+	const onCreateButtonClick = () => router.push('/admin/books/create')
+
 	const tableProperties = {
 		table,
 		totalPages: books?.totalPages ?? 0,
@@ -44,16 +48,9 @@ export const useCatalog = () => {
 		previous: () => pushParameters({ page: page - 1 }),
 		next: () => pushParameters({ page: page + 1 })
 	}
-
-	const parseButtonProperties = {
-		isOpen: dialog === 'parse',
-		open: () => pushParameters({ dialog: 'parse' }),
-		close: () => router.replace(parserRoute)
-	}
-
 	return {
+		onCreateButtonClick,
 		headerProperties,
-		tableProperties,
-		parseButtonProperties
+		tableProperties
 	}
 }

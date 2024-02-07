@@ -18,7 +18,9 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 		mutationFn: (id: number) => parserService.delete(id),
 		async onSuccess() {
 			successToast('Book deleted')
-			await queryClient.invalidateQueries(['book-templates'])
+			await queryClient.invalidateQueries({
+				queryKey: ['book-templates']
+			})
 		}
 	})
 

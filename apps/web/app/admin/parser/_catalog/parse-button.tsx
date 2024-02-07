@@ -1,4 +1,4 @@
-import CallParserDialog from '@/app/admin/parser/dialogs/call-parser'
+import CallParserDialog from '@/app/admin/parser/_catalog/dialogs/call-parser'
 import { Button } from '@/components/ui'
 import type { DialogProperties } from '@/components/ui/components-props-types'
 import { parserService } from '@/services/parser/parser-services'
@@ -30,7 +30,9 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 		mutationFn: (dto: ParserDtoPayload) => parserService.parse(dto),
 		onSuccess: async () => {
 			toast.success('Books parsed')
-			await queryClient.invalidateQueries(['book-templates'])
+			await queryClient.invalidateQueries({
+				queryKey: ['book-templates']
+			})
 		}
 	})
 	return (

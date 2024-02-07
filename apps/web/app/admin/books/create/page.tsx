@@ -1,8 +1,8 @@
 'use client'
-import { useCreateForm } from '@/app/admin/books/create/useCreateForm'
-import Editor from '@/app/admin/books/editor'
-import SelectGenres from '@/app/admin/books/select-genres'
-import { useBookCompose } from '@/app/admin/books/useBookCompose'
+import Editor from '@/app/admin/books/_shared/editor'
+import SelectGenres from '@/app/admin/books/_shared/select-genres'
+import { useBookCompose } from '@/app/admin/books/_shared/useBookCompose'
+import { useCreateForm } from '@/app/admin/books/create/_features/useCreateForm'
 import {
 	Button,
 	DropZone,
@@ -78,7 +78,7 @@ const Page: FC = () => {
 						<h1 className='mt-2  text-xl'>Book file</h1>
 						<DropZone
 							multiple
-							size='md'
+							size='sm'
 							accept='.epub'
 							onDropFile={books.upload}
 							onFileDelete={file =>
@@ -92,7 +92,7 @@ const Page: FC = () => {
 					<div>
 						<h1 className='mt-2  text-xl'>Cover</h1>
 						<DropZone
-							size='md'
+							size='sm'
 							multiple={false}
 							accept='image/*'
 							onDropFile={acceptedFiles => {

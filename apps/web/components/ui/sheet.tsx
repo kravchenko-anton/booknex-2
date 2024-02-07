@@ -1,7 +1,7 @@
 'use client'
 
 import type { DialogProperties } from '@/components/ui/components-props-types'
-import { cn } from '@/utils/cn'
+import { cn } from '@/utils'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { Close } from 'icons'

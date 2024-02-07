@@ -12,6 +12,9 @@ const nextConfig = {
 	},
 	nx: {
 		svgr: true
+	},
+	env: {
+		CLIENT_ID: process.env.CLIENT_ID
 	}
 }
 

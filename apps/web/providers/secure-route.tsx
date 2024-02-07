@@ -20,7 +20,7 @@ export const adminRoute = (Component: FC) =>
 		const { user, isLoading } = useAuth()
 
 		useEffect(() => {
-			if (!user && !isLoading) redirect('/login')
+			if (!user && !isLoading) redirect('/')
 		}, [user, isLoading])
 
 		return <Component {...props} />

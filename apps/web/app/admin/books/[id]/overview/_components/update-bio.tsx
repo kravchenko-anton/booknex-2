@@ -1,4 +1,4 @@
-import SelectGenres from '@/app/admin/books/select-genres'
+import SelectGenres from '@/app/admin/books/_shared/select-genres'
 import { Button, Field, FormTextArea } from '@/components/ui'
 import { dirtyValues } from '@/utils/form'
 import { zodResolver } from '@hookform/resolvers/zod'

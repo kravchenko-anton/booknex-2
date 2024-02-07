@@ -1,7 +1,7 @@
 'use client'
 
 import { Dialog, DialogContent } from '@/components/ui/dialog'
-import { cn } from '@/utils/cn'
+import { cn } from '@/utils'
 
 import type { DialogProps } from '@radix-ui/react-dialog'
 import { Command as CommandPrimitive } from 'cmdk'
@@ -12,6 +12,7 @@ import type {
 	HTMLAttributes
 } from 'react'
 import { forwardRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 const Command = forwardRef<
 	ElementRef<typeof CommandPrimitive>,
@@ -51,7 +52,7 @@ const CommandInput = forwardRef<
 		<Search className='mr-2 h-4 w-4 shrink-0 opacity-50' />
 		<CommandPrimitive.Input
 			ref={reference}
-			className={cn(
+			className={twMerge(
 				'flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-white disabled:cursor-not-allowed disabled:opacity-50',
 				className
 			)}
@@ -68,7 +69,10 @@ const CommandList = forwardRef<
 >(({ className, ...properties }, reference) => (
 	<CommandPrimitive.List
 		ref={reference}
-		className={cn('max-h-[300px] overflow-y-auto overflow-x-hidden', className)}
+		className={twMerge(
+			'max-h-[300px] overflow-y-auto overflow-x-hidden',
+			className
+		)}
 		{...properties}
 	/>
 ))
@@ -94,7 +98,7 @@ const CommandGroup = forwardRef<
 >(({ className, ...properties }, reference) => (
 	<CommandPrimitive.Group
 		ref={reference}
-		className={cn(
+		className={twMerge(
 			'text-gray overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-white',
 			className
 		)}
@@ -110,7 +114,7 @@ const CommandSeparator = forwardRef<
 >(({ className, ...properties }, reference) => (
 	<CommandPrimitive.Separator
 		ref={reference}
-		className={cn('bg-muted -mx-1 h-px', className)}
+		className={twMerge('bg-muted -mx-1 h-px', className)}
 		{...properties}
 	/>
 ))
@@ -122,7 +126,7 @@ const CommandItem = forwardRef<
 >(({ className, ...properties }, reference) => (
 	<CommandPrimitive.Item
 		ref={reference}
-		className={cn(
+		className={twMerge(
 			'aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
 			className
 		)}
@@ -137,7 +141,7 @@ const CommandShortcut = ({
 	...properties
 }: HTMLAttributes<HTMLSpanElement>) => (
 	<span
-		className={cn(
+		className={twMerge(
 			'text-muted-foreground ml-auto text-xs tracking-widest',
 			className
 		)}

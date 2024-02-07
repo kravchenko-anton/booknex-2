@@ -1,5 +1,5 @@
-import { feedbackColumns } from '@/app/admin/books/[id]/overview/feedback/feedback-columns'
-import { columns } from '@/app/admin/books/columns'
+import { feedbackColumns } from '@/app/admin/books/[id]/overview/_components/feedback/feedback-columns'
+import { columns } from '@/app/admin/books/_catalog/columns'
 import {
 	Table,
 	TableBody,

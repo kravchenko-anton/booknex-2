@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/utils/cn'
+import { cn } from '@/utils'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Close } from 'icons'
 import type {

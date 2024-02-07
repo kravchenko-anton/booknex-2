@@ -98,12 +98,13 @@ model User {
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
   email           String       @unique
-  socialId        String      @unique
+  socialId        String?      @unique
   selectedGenres  Genre[]
   picture         String       @default("fallback.png")
   fullName        String       @default("unknown")
   location        String       @default("unknown")
   role            Role         @default(USER)
+  password       String?
   feedback        Feedback[]
   savedBooks      Book[]       @relation("SavedBooks")
   finishedBooks   Book[]       @relation("FinishedBooks")
