@@ -51,8 +51,7 @@ export class AuthService {
 	async register(dto: AuthDto) {
 		const oldUser = await this.prisma.user.findUnique({
 			where: {
-				email: dto.email,
-				authType: 'email'
+				email: dto.email
 			}
 		})
 		if (oldUser)
@@ -101,6 +100,7 @@ export class AuthService {
 
 		const data = ticket.getPayload()
 		if (!data.email) {
+			//TODO: пофиксить ошибку
 			throw new HttpException(
 				{
 					status: HttpStatus.UNPROCESSABLE_ENTITY,
@@ -114,8 +114,7 @@ export class AuthService {
 
 		const user = await this.prisma.user.findUnique({
 			where: {
-				socialId: data.sub,
-				authType: 'google'
+				socialId: data.sub
 			}
 		})
 		if (user) {
@@ -213,8 +212,7 @@ export class AuthService {
 	private async validateUser(dto: AuthDto) {
 		const user = await this.prisma.user.findUnique({
 			where: {
-				email: dto.email,
-				authType: 'email'
+				email: dto.email
 			}
 		})
 		if (!user)

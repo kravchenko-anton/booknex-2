@@ -1,31 +1,58 @@
 import { useTypedNavigation } from '@/hooks'
-import { Button, Icon, Layout, Title } from '@/ui'
+import { Icon, Layout, Title } from '@/ui'
+import {
+	GoogleSignin,
+	GoogleSigninButton,
+	statusCodes
+} from '@react-native-google-signin/google-signin'
 import { Color } from 'global/colors'
 import { Welcome as WelcomeIllustration } from 'global/illustrations'
-import { Google, Mail } from 'icons'
-import type { FC } from 'react'
+import { Mail } from 'icons'
+import { useEffect, type FC } from 'react'
 import { View } from 'react-native'
 
 const Welcome: FC = () => {
 	//TODO: сделать нормальный welcome скрин а не такую простую залупу
 	const { navigate } = useTypedNavigation()
-	// useEffect(() => {
-	// 	GoogleSignin.configure({
-	// 		scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-	// 		webClientId:
-	// 			'390949311214-hqfqvic7p47pt3elpne00es58k99nonh.apps.googleusercontent.com',
-	// 		offlineAccess: true
-	// 	})
-	// }, [])
-	// const signIn = async () => {
-	// 	try {
-	// 		await GoogleSignin.hasPlayServices()
-	// 		const userInfo = await GoogleSignin.signIn()
-	// 		console.log(userInfo)
-	// 	} catch (error) {
-	// 		console.log(JSON.stringify(error))
-	// 	}
-	// }
+	useEffect(() => {
+		GoogleSignin.configure({
+			webClientId:
+				'390949311214-20tt61lvbofiikucs1gq98sfqhfkb6g7.apps.googleusercontent.com',
+			offlineAccess: true,
+			forceCodeForRefreshToken: true
+		})
+	}, [])
+	const signIn = async () => {
+		try {
+			await GoogleSignin.hasPlayServices()
+			const userInfo = await GoogleSignin.signIn()
+
+			console.log(userInfo)
+		} catch (error: any) {
+			switch (error.code) {
+				case statusCodes.SIGN_IN_CANCELLED: {
+					console.log('User cancelled the login flow')
+
+					break
+				}
+				case statusCodes.IN_PROGRESS: {
+					console.log('Signing in')
+
+					break
+				}
+				case statusCodes.PLAY_SERVICES_NOT_AVAILABLE: {
+					console.log('Play services not available')
+
+					break
+				}
+				default: {
+					console.log('Some other error happened')
+					console.log(error.message)
+					console.log(error.code)
+				}
+			}
+		}
+	}
 
 	return (
 		<Layout className='justify-end'>
@@ -61,9 +88,12 @@ const Welcome: FC = () => {
 
 				<View className='mb-4 w-full flex-row items-center justify-between gap-0'>
 					<View>
-						<Button icon={Google} size='lg' variant='foreground'>
-							Sign in with Google
-						</Button>
+						<GoogleSigninButton
+							style={{ width: 192, height: 48, marginTop: 30 }}
+							size={GoogleSigninButton.Size.Wide}
+							color={GoogleSigninButton.Color.Light}
+							onPress={signIn}
+						/>
 					</View>
 
 					<Icon
