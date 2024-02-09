@@ -14,6 +14,7 @@ export type TypeRootStackParameterListType = {
 	Profile: undefined
 	Welcome: undefined
 	Reader: { id: number }
+	UpdateRecommendation: undefined
 	Search: undefined
 	Settings: undefined
 }

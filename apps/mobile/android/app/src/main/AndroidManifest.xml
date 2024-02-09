@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mobile"
+    package="com.reactnative.booknex"
 >
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -18,13 +18,11 @@
                 android:launchMode="singleTask"
                 android:windowSoftInputMode="adjustResize"
                 android:exported="true"
-                android:theme="@style/BootTheme"> <!-- Apply @style/BootTheme on .MainActivity -->
-            <!-- … -->
+                android:theme="@style/BootTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

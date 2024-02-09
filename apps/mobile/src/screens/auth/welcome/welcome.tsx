@@ -1,56 +1,41 @@
-import { useTypedNavigation } from '@/hooks'
-import { Icon, Layout, Title } from '@/ui'
-import {
-	GoogleSignin,
-	GoogleSigninButton,
-	statusCodes
-} from '@react-native-google-signin/google-signin'
+import { useAction, useAuth, useTypedNavigation } from '@/hooks'
+import { Button, Icon, Layout, Title } from '@/ui'
+import { errorToast } from '@/utils/toast'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { Color } from 'global/colors'
 import { Welcome as WelcomeIllustration } from 'global/illustrations'
-import { Mail } from 'icons'
-import { useEffect, type FC } from 'react'
+import { Google, Mail } from 'icons'
+import { useEffect, useLayoutEffect, type FC } from 'react'
 import { View } from 'react-native'
 
 const Welcome: FC = () => {
-	//TODO: сделать нормальный welcome скрин а не такую простую залупу
+	const { user, isLoading, authType } = useAuth()
+	const { googleLogin } = useAction()
 	const { navigate } = useTypedNavigation()
+
 	useEffect(() => {
+		if (user && authType === 'login') navigate('Featured')
+		if (user && authType === 'register') navigate('UpdateRecommendation')
+	}, [user, authType])
+
+	useLayoutEffect(() => {
 		GoogleSignin.configure({
+			scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
 			webClientId:
-				'390949311214-20tt61lvbofiikucs1gq98sfqhfkb6g7.apps.googleusercontent.com',
-			offlineAccess: true,
-			forceCodeForRefreshToken: true
+				'390949311214-hqfqvic7p47pt3elpne00es58k99nonh.apps.googleusercontent.com'
 		})
 	}, [])
+
 	const signIn = async () => {
 		try {
 			await GoogleSignin.hasPlayServices()
 			const userInfo = await GoogleSignin.signIn()
-
-			console.log(userInfo)
-		} catch (error: any) {
-			switch (error.code) {
-				case statusCodes.SIGN_IN_CANCELLED: {
-					console.log('User cancelled the login flow')
-
-					break
-				}
-				case statusCodes.IN_PROGRESS: {
-					console.log('Signing in')
-
-					break
-				}
-				case statusCodes.PLAY_SERVICES_NOT_AVAILABLE: {
-					console.log('Play services not available')
-
-					break
-				}
-				default: {
-					console.log('Some other error happened')
-					console.log(error.message)
-					console.log(error.code)
-				}
-			}
+			console.log('userInfo', userInfo)
+			googleLogin({
+				socialId: userInfo.idToken
+			})
+		} catch (error) {
+			errorToast('Something went wrong')
 		}
 	}
 
@@ -86,19 +71,18 @@ const Welcome: FC = () => {
 					</Title>
 				</View>
 
-				<View className='mb-4 w-full flex-row items-center justify-between gap-0'>
-					<View>
-						<GoogleSigninButton
-							style={{ width: 192, height: 48, marginTop: 30 }}
-							size={GoogleSigninButton.Size.Wide}
-							color={GoogleSigninButton.Color.Light}
-							onPress={signIn}
-						/>
-					</View>
-
+				<View className='mb-2 w-full flex-row items-center justify-between'>
+					<Button
+						size='md'
+						isLoading={isLoading}
+						className='mr-2 flex-1'
+						icon={Google}
+						onPress={signIn}
+					>
+						Sign in with Google
+					</Button>
 					<Icon
-						size='lg'
-						className=''
+						size='md'
 						variant='foreground'
 						icon={Mail}
 						onPress={() => navigate('Register')}

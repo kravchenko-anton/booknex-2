@@ -10,6 +10,7 @@ import {
 } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import BannerList from '@/ui/book-lists/banner-list'
+import NothingFount from '@/ui/nothing-fount'
 import { useQuery } from '@tanstack/react-query'
 
 const Library = () => {
@@ -18,7 +19,21 @@ const Library = () => {
 		queryFn: () => userServices.library()
 	})
 	const { navigate } = useTypedNavigation()
+	console.log('library', library)
 	if (!library) return <Loader />
+	if (
+		library.readingBooks.length === 0 &&
+		library.savedBooks.length === 0 &&
+		library.finishedBooks.length === 0
+	)
+		return (
+			<NothingFount
+				text={
+					'You haven’t saved any books yet. \n' +
+					'Go to the catalog and find something to read.'
+				}
+			/>
+		)
 	return (
 		<ScrollLayout>
 			<BannerList

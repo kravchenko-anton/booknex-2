@@ -41,7 +41,7 @@ export const userServices = {
 	async updateRecommendations(dto: UserUpdateSelectedGenresDto) {
 		return request({
 			url: getUsersUrl('/update-recommendations'),
-			method: 'GET',
+			method: 'POST',
 			data: dto
 		})
 	},

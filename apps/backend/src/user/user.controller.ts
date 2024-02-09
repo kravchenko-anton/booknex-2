@@ -5,6 +5,7 @@ import {
 	Get,
 	Param,
 	Patch,
+	Post,
 	Query
 } from '@nestjs/common'
 import {
@@ -37,7 +38,7 @@ export class UserController {
 	}
 
 	@Auth()
-	@Get('/update-recommendations')
+	@Post('/update-recommendations')
 	@ApiBody({ type: UserUpdateSelectedGenresDto })
 	async updateRecommendations(
 		@CurrentUser('id') id: number,

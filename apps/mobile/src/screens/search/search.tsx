@@ -1,10 +1,10 @@
 import { useTypedNavigation } from '@/hooks'
 import { useSearch } from '@/screens/search/useSearch'
-import { Button, Layout, Loader, Title } from '@/ui'
+import { Button, Layout, Loader } from '@/ui'
 import CatalogList from '@/ui/book-lists/catalog-list'
+import NothingFount from '@/ui/nothing-fount'
 import { fontSettings } from '@/ui/title/settings'
 import { Color } from 'global/colors'
-import { NothingFound } from 'global/illustrations'
 import { Close } from 'icons'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
@@ -69,20 +69,7 @@ const Search = () => {
 							onElementPress={id => navigate('Book', { id })}
 						/>
 					) : (
-						<View className='flex-1 items-center justify-start'>
-							<NothingFound width={250} height={220} />
-							<Title
-								center
-								weight='medium'
-								numberOfLines={2}
-								color={Color.gray}
-								size={16}
-							>
-								Nothing found, try looking
-								{'\n'}
-								for something else
-							</Title>
-						</View>
+						<NothingFount />
 					)}
 				</View>
 			) : null}

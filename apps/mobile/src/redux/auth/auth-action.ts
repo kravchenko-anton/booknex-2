@@ -1,27 +1,32 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { EMULATOR_SERVER_URL, getAuthUrl, SERVER_URL } from 'global/api-config'
+import { EMULATOR_SERVER_URL, getAuthUrl } from 'global/api-config'
 import { errorToast, successToast } from '../../../../web/utils/toast'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type {
 	AuthFieldsType,
 	AuthResponseType,
-	googleAuthResponseType,
-	RegisterFieldsType
+	RegisterFieldsType,
+	googleAuthResponseType
 } from './auth-types'
 
 export const googleLogin = createAsyncThunk<
-	AuthResponseType,
+	googleAuthResponseType,
 	{
 		socialId: string
 	}
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
+		console.log('socialId', socialId)
 		const loginResponse = await axios
-			.post<googleAuthResponseType>(SERVER_URL + getAuthUrl('/google-sign'), {
-				socialId
-			})
+			.post<googleAuthResponseType>(
+				EMULATOR_SERVER_URL + getAuthUrl('/google-sign'),
+				{
+					socialId
+				}
+			)
 			.then(response => response.data)
+		console.log('loginResponse', loginResponse)
 		await saveTokensStorage({
 			accessToken: loginResponse.accessToken,
 			refreshToken: loginResponse.refreshToken

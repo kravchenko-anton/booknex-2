@@ -22,7 +22,10 @@ const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
 
 const Navigation: FC = () => {
 	const { user } = useAuth()
-	const [currentRoute, setCurrentRoute] = useState<string | null>()
+
+	const [currentRoute, setCurrentRoute] = useState<string | null>(
+		user ? 'Featured' : 'Welcome'
+	)
 
 	const navReference = useNavigationContainerRef()
 	useEffect(() => {
@@ -33,6 +36,7 @@ const Navigation: FC = () => {
 			navReference.removeListener('state', listener)
 		}
 	}, [])
+
 	//TODO: добавить проверку роута и делать редирект на нужный роут если юзера разлогинело
 	return (
 		<SafeAreaProvider

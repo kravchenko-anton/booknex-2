@@ -5,7 +5,7 @@ import type { FlatListProperties } from './types'
 
 const FlatList = <T,>({
 	title,
-	data,
+	data = [],
 	Ref,
 	elementSpacing = 12,
 	contentContainerStyle,
@@ -15,7 +15,7 @@ const FlatList = <T,>({
 	style,
 	...properties
 }: FlatListProperties<T>) => {
-	if (!data && !properties.ListEmptyComponent) return null
+	if (data.length === 0 && !properties.ListEmptyComponent) return null
 	return (
 		<>
 			<Title

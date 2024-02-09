@@ -9,11 +9,11 @@ interface BannerListProperties<T> extends FlatListProperties<T> {
 
 const BannerList = <T,>({
 	title,
-	data,
+	data = [],
 	style,
 	...properties
 }: BannerListProperties<T>) => {
-	if (!data) return null
+	if (data.length === 0) return null
 	return (
 		<View
 			style={style}

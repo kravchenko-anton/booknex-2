@@ -17,6 +17,16 @@ export interface FeaturedOutput {
 	popularBooks: ColorBookWithAuthor
 	bestSellingBooks: BookWithAuthor
 	newReleases: BookWithAuthor
+	currentRecommendationGenres: Prisma.UserGetPayload<{
+		select: {
+			selectedGenres: {
+				select: {
+					id: true
+					name: true
+				}
+			}
+		}
+	}>['selectedGenres']
 }
 
 export type SearchOutput = Prisma.BookGetPayload<{

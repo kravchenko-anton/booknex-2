@@ -7,6 +7,7 @@ import Profile from '@/screens/profile/profile'
 import Reader from '@/screens/reading/reader'
 import SearchCatalog from '@/screens/search/search'
 import Settings from '@/screens/settings/settings'
+import UpdateRecommendation from '@/screens/update-recommendation/update-recommendation'
 import * as Header from '@/ui/header/header'
 import { Search as SearchIcon, Settings as SettingsIcon } from 'icons'
 import type { IRouteType } from './types'
@@ -101,6 +102,13 @@ export const routes: IRouteType[] = [
 	{
 		name: 'Book',
 		component: Book,
+		options: {
+			headerShown: false
+		}
+	},
+	{
+		name: 'UpdateRecommendation',
+		component: UpdateRecommendation,
 		options: {
 			headerShown: false
 		}

@@ -1,4 +1,5 @@
 import { useAction } from '@/hooks'
+import { authRoute } from '@/screens/auth/auth-route'
 import {
 	authValidationSchema,
 	type AuthValidationSchemaType
@@ -17,6 +18,7 @@ const Register = () => {
 		email,
 		password
 	}) => {
+		console.log('email', email)
 		mailRegister({
 			password,
 			email
@@ -51,4 +53,4 @@ const Register = () => {
 	)
 }
 
-export default Register
+export default authRoute(Register)

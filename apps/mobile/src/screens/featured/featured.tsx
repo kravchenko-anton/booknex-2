@@ -1,5 +1,6 @@
 import { catalogService } from '@/api/services/catalog/catalog-service'
 import { useTypedNavigation } from '@/hooks'
+import ManageRecommendationMenu from '@/screens/featured/manage-recommendation-menu'
 import { BookCard, Button, Flatlist, Loader, ScrollLayout } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
 import { useQuery } from '@tanstack/react-query'
@@ -90,6 +91,10 @@ const Featured = () => {
 			{
 				// TODO: сделать колекцию, обновление своих рекомендаций, жанры относительно фаворитных жанров
 			}
+			<ManageRecommendationMenu
+				currentGenres={featured.currentRecommendationGenres}
+				onManagePress={() => navigate('UpdateRecommendation')}
+			/>
 		</ScrollLayout>
 	)
 }
