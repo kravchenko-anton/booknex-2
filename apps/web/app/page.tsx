@@ -4,16 +4,14 @@ import { useAction } from '@/hooks'
 import { loginRoute } from '@/providers/secure-route'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
 import { Mail, Password } from 'icons'
-import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import type { AuthFieldsType } from '../../mobile/src/redux/auth/auth-types'
+import type { AuthFieldsType } from '../../mobile/src/features/auth/action/auth-types'
 
-const Index: FC = () => {
+const Index = () => {
 	const { mailLogin, googleLogin } = useAction()
 	const { handleSubmit, control } = useForm<AuthFieldsType>({
 		mode: 'onSubmit'
 	})
-
 	const onSubmit = (data: AuthFieldsType) => {
 		mailLogin(data)
 	}

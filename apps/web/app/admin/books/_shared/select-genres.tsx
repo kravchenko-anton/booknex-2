@@ -11,12 +11,12 @@ import {
 	PopoverTrigger
 } from '@/components/ui/popover'
 import { genreService } from '@/services/genre/genre-service'
+import { cn } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { Check } from 'icons'
 import type { FC } from 'react'
 import { Controller } from 'react-hook-form'
-import { twMerge } from 'tailwind-merge'
 
 interface SelectGenresProperties {
 	disable?: boolean
@@ -46,7 +46,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 						<Popover>
 							<PopoverTrigger className='w-full'>
 								<div
-									className={twMerge(
+									className={cn(
 										'border-muted h-full rounded-xl border-2 px-4 py-3',
 										disable && 'cursor-not-allowed'
 									)}
@@ -79,7 +79,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 											>
 												<Check
 													color={Color.white}
-													className={twMerge(
+													className={cn(
 														'mr-2 h-4 w-4',
 														value.includes(genre.id)
 															? 'opacity-100'

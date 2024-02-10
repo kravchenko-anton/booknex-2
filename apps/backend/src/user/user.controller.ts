@@ -48,6 +48,17 @@ export class UserController {
 	}
 
 	@Auth()
+	@Get('/recommendation-genres')
+	async recommendationsGenres(@CurrentUser('id') userId: number): Promise<
+		{
+			id: number
+			name: string
+		}[]
+	> {
+		return this.usersService.recommendationGenres(+userId)
+	}
+
+	@Auth()
 	@Get('/library')
 	async library(@CurrentUser('id') id: number): Promise<UserLibraryOutput> {
 		return this.usersService.library(+id)

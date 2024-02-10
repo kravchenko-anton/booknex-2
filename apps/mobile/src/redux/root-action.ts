@@ -1,5 +1,5 @@
-import * as authActions from '@/redux/auth/auth-action'
-import { ReadingSettingsAction } from '@/redux/reader/reading-settings-slice'
+import * as authActions from '@/features/auth/action/auth-action'
+import { ReadingSettingsAction } from '@/features/reader/action/reading-settings-slice'
 
 export const rootAction = {
 	...authActions,

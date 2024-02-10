@@ -1,21 +1,21 @@
-import { useAction, useTypedSelector } from '@/hooks'
 import {
-	ReaderFont,
 	fontSizeSettings,
+	ReaderFont,
 	type ReaderFontsEnum
-} from '@/redux/reader/reading-settings-slice'
-import LineHeightIcon from '@/screens/reading/features/sheets/reading/icons/line-height'
-import PageMarginIcon from '@/screens/reading/features/sheets/reading/icons/page-margin'
-import { themePack } from '@/screens/reading/features/sheets/reading/theme-pack'
-import type { DefaultBottomSheetProperties } from '@/screens/reading/features/types'
+} from '@/features/reader/action/reading-settings-slice'
+import LineHeightIcon from '@/features/reader/sheet/reading/icons/line-height'
+import PageMarginIcon from '@/features/reader/sheet/reading/icons/page-margin'
+import { themePack } from '@/features/reader/sheet/reading/theme-pack'
+import type { DefaultBottomSheetProperties } from '@/features/reader/types'
+import { useAction, useTypedSelector } from '@/hooks'
 import { AnimatedPress, Title } from '@/ui'
+import { cn } from '@/utils'
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
 import { Color } from 'global/colors'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { Pressable, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-import { twMerge } from 'tailwind-merge'
 
 const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 	const {
@@ -100,7 +100,7 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 												? colorScheme.colorPalette.secondary
 												: Color.transparent
 									}}
-									className={twMerge(
+									className={cn(
 										' mb-2 mr-2 rounded-xl border-2 border-transparent p-2 px-4',
 										item.value === font.fontFamily && 'border-primary '
 									)}

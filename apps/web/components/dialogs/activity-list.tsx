@@ -1,9 +1,9 @@
 import { SheetComponent, SheetHeader } from '@/components/ui/sheet'
+import { cn } from '@/utils'
 import type { ActivitiesOutput } from 'backend/src/utils/activity-transformer'
 import type { FC } from 'react'
 import * as React from 'react'
 import ActivityCalendar from 'react-activity-calendar'
-import { twMerge } from 'tailwind-merge'
 
 const activityPalette = [
 	'hsl(0, 0%, 20%)',
@@ -23,9 +23,10 @@ const activityPalette = [
 const ActivityList: FC<{
 	data: ActivitiesOutput[]
 }> = ({ data = [] }) => {
-	const [activity, setActivity] = React.useState<ActivitiesOutput | null>(null)
-	const onActivityClick = active => {
-		setActivity(active)
+	const [selectActivity, setSelectActivity] =
+		React.useState<ActivitiesOutput | null>(null)
+	const onActivityClick = (active: any) => {
+		setSelectActivity(active)
 	}
 	return (
 		<>
@@ -44,31 +45,40 @@ const ActivityList: FC<{
 					onClick: () => onActivityClick
 				}}
 			/>
-			<SheetComponent isOpen={!!activity} onClose={() => setActivity(null)}>
-				<SheetHeader className='pb-2'>
-					<h1 className='text-3xl font-medium'>
-						Activities: {new Date(activity?.date).toLocaleDateString()}
-					</h1>
-				</SheetHeader>
-				<div className='no-scrollbar h-[95%] w-full overflow-y-scroll'>
-					{activity?.activities.map(activity => (
-						<p
-							key={activity.time}
-							className={twMerge('text-success  font-mono text-lg')}
-						>
-							<b className='text-gray'>[{activity.time}]</b>{' '}
-							<b
-								className='font-mono'
-								style={{
-									color: activityPalette[activity.importance]
-								}}
-							>
-								[{activity.importance}]
-							</b>{' '}
-							{activity.message}
-						</p>
-					))}
-				</div>
+			<SheetComponent
+				isOpen={!!selectActivity}
+				onClose={() => setSelectActivity(null)}
+			>
+				{!selectActivity ? (
+					<div>Nothing selected</div>
+				) : (
+					<>
+						<SheetHeader className='pb-2'>
+							<h1 className='text-3xl font-medium'>
+								Activities: {new Date(selectActivity.date).toLocaleDateString()}
+							</h1>
+						</SheetHeader>
+						<div className='no-scrollbar h-[95%] w-full overflow-y-scroll'>
+							{selectActivity.activities.map(activity => (
+								<p
+									key={activity.time}
+									className={cn('text-success  font-mono text-lg')}
+								>
+									<b className='text-gray'>[{activity.time}]</b>{' '}
+									<b
+										className='font-mono'
+										style={{
+											color: activityPalette[activity.importance]
+										}}
+									>
+										[{activity.importance}]
+									</b>{' '}
+									{activity.message}
+								</p>
+							))}
+						</div>
+					</>
+				)}
 			</SheetComponent>
 		</>
 	)

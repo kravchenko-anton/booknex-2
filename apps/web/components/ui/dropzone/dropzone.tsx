@@ -1,8 +1,8 @@
 'use client'
+import { cn } from '@/utils'
 import { Color } from 'global/colors'
 import { File } from 'icons'
 import { useCallback, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { settings } from './settings'
 import type { DropzoneProperties } from './types'
 
@@ -34,9 +34,9 @@ const Dropzone = ({
 	)
 
 	return (
-		<div className={twMerge(settings.maxWidth[size], className)} style={style}>
+		<div className={cn(settings.maxWidth[size], className)} style={style}>
 			<div
-				className={twMerge(
+				className={cn(
 					'flex gap-2 overflow-scroll',
 					files.length === 0 && 'hidden'
 				)}
@@ -47,7 +47,7 @@ const Dropzone = ({
 							<div key={file.name + file.type}>
 								<button
 									color={variant}
-									className={twMerge(
+									className={cn(
 										'mb-2 max-w-[200px] items-center justify-center rounded-xl border-[1px] p-2 text-center',
 										settings.colors[variant]
 									)}
@@ -69,7 +69,7 @@ const Dropzone = ({
 				)}
 			</div>
 			<div
-				className={twMerge(
+				className={cn(
 					'mt-2 flex cursor-pointer items-center justify-center rounded-xl  border-2  duration-200',
 					settings.padding[size],
 					settings.colors[variant]

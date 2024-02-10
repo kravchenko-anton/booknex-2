@@ -2,7 +2,7 @@ import { InnerColor } from 'global/colors'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Pressable } from 'react-native'
-import { twMerge } from 'tailwind-merge'
+import { cn } from '../../../../web/utils'
 import { settings } from './settings'
 import type { IconProperties } from './types'
 
@@ -18,7 +18,7 @@ const Icon: FC<IconProperties> = ({
 	...properties
 }) => (
 	<Pressable
-		className={twMerge(
+		className={cn(
 			'items-center justify-center rounded-2xl',
 			properties.disabled && 'opacity-50',
 			noPadding ? 'p-0' : settings.padding[size],

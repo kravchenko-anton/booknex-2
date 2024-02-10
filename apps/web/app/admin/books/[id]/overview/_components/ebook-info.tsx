@@ -5,12 +5,12 @@ import {
 } from '@/app/admin/books/_shared/useBookCompose'
 import { Button, DropZone } from '@/components/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { cn } from '@/utils'
 import { errorToast } from '@/utils/toast'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { getFileUrl } from 'global/api-config'
 import type { FC } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
 
 const ebookValidator = z
@@ -88,7 +88,7 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 					/>
 					{books.state && (
 						<div
-							className={twMerge(
+							className={cn(
 								'mt-8 gap-2',
 								books.state.length > 1 && 'grid grid-cols-2'
 							)}

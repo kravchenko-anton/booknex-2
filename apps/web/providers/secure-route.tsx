@@ -1,6 +1,7 @@
 'use client'
 
-import { useAuth } from '@/hooks'
+import { useAction, useAuth } from '@/hooks'
+import { getRefreshToken } from '@/redux/auth/auth-helper'
 import { redirect } from 'next/navigation'
 import { useEffect, type FC } from 'react'
 
@@ -18,8 +19,16 @@ export const loginRoute = (Component: FC) =>
 export const adminRoute = (Component: FC) =>
 	function (props: {}) {
 		const { user, isLoading } = useAuth()
-
+		const { logout } = useAction()
 		useEffect(() => {
+			const checkRefreshToken = async () => {
+				const refreshToken = getRefreshToken()
+				if (!refreshToken && user) {
+					logout()
+				}
+			}
+
+			checkRefreshToken()
 			if (!user && !isLoading) redirect('/')
 		}, [user, isLoading])
 

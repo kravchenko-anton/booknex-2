@@ -4,11 +4,11 @@ import { Button, Layout, Loader } from '@/ui'
 import CatalogList from '@/ui/book-lists/catalog-list'
 import NothingFount from '@/ui/nothing-fount'
 import { fontSettings } from '@/ui/title/settings'
+import { cn } from '@/utils'
 import { Color } from 'global/colors'
 import { Close } from 'icons'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
-import { twMerge } from 'tailwind-merge'
 
 const Search = () => {
 	const { searchTerm, books, booksLoading, control, clearSearch } = useSearch()
@@ -47,7 +47,7 @@ const Search = () => {
 							</View>
 
 							<Button
-								className={twMerge(!searchTerm && 'hidden')}
+								className={cn(!searchTerm && 'hidden')}
 								variant='foreground'
 								size='sm'
 								onPress={() => clearSearch()}

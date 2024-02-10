@@ -1,5 +1,5 @@
-import ChaptersList from '@/screens/reading/features/sheets/chapters-list/chapters-list'
-import ReadingSettings from '@/screens/reading/features/sheets/reading/reading-settings'
+import ChaptersList from '@/features/reader/sheet/chapters-list/chapters-list'
+import ReadingSettings from '@/features/reader/sheet/reading/reading-settings'
 import type { ChaptersType } from 'global/services-types/book-types'
 
 export const useReadingSheets = () => {

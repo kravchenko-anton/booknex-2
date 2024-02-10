@@ -1,7 +1,7 @@
 import {
 	themePack,
 	type ThemePackType
-} from '@/screens/reading/features/sheets/reading/theme-pack'
+} from '@/features/reader/sheet/reading/theme-pack'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -31,7 +31,7 @@ export const ReaderFont = [
 ]
 
 const initialState = {
-	colorScheme: themePack[0],
+	colorScheme: themePack[0] as ThemePackType,
 	font: {
 		title: 'Courier New',
 		fontFamily: ReaderFontsEnum.Courier

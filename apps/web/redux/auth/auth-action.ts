@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { ErrorsEnum } from 'backend/src/utils/errors'
 import { SERVER_URL, getAuthUrl } from 'global/api-config'
-import type { AuthFieldsType } from '../../../mobile/src/redux/auth/auth-types'
+import type { AuthFieldsType } from '../../../mobile/src/features/auth/action/auth-types'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type { AuthResponseType } from './auth-types'
 

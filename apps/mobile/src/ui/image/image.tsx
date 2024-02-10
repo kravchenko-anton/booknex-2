@@ -1,8 +1,8 @@
+import { cn } from '@/utils'
 import { getFileUrl } from 'global/api-config'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Image as DefaultImage } from 'react-native'
-import { twMerge } from 'tailwind-merge'
 import type { Types } from './types'
 
 const Image: FC<Types> = ({
@@ -16,6 +16,7 @@ const Image: FC<Types> = ({
 	...properties
 }) => (
 	<DefaultImage
+		className={cn('bg-muted', fullSize ? 'h-full' : 'h-auto', className)}
 		source={{
 			uri: getFileUrl(url),
 			width,
@@ -29,7 +30,6 @@ const Image: FC<Types> = ({
 			},
 			style
 		]}
-		className={twMerge('bg-muted', fullSize ? 'h-full' : 'h-auto', className)}
 		{...properties}
 	/>
 )

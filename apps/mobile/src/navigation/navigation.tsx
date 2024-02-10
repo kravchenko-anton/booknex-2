@@ -1,6 +1,7 @@
 import { useAuth } from '@/hooks'
 import { authRoutes } from '@/navigation/auth-routes'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
+import { authRequired, loginRoute } from '@/navigation/secure-route'
 import type { TypeRootStackParameterListType } from '@/navigation/types'
 import { routes } from '@/navigation/user-routes'
 import { Loader } from '@/ui'
@@ -22,8 +23,8 @@ const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
 
 const Navigation: FC = () => {
 	const { user } = useAuth()
-
-	const [currentRoute, setCurrentRoute] = useState<string | null>(
+	console.log('user', user)
+	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)
 
@@ -63,11 +64,19 @@ const Navigation: FC = () => {
 					}}
 				>
 					{user
-						? routes.map(({ ...route }) => (
-								<Stack.Screen key={route.name} {...route} />
+						? routes.map(({ component, ...route }) => (
+								<Stack.Screen
+									component={authRequired(component)}
+									key={route.name}
+									{...route}
+								/>
 							))
-						: authRoutes.map(({ ...route }) => (
-								<Stack.Screen key={route.name} {...route} />
+						: authRoutes.map(({ component, ...route }) => (
+								<Stack.Screen
+									component={loginRoute(component)}
+									key={route.name}
+									{...route}
+								/>
 							))}
 				</Stack.Navigator>
 			</NavigationContainer>

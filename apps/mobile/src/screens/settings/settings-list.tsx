@@ -3,10 +3,10 @@ import type {
 	ListItemTypes
 } from '@/screens/settings/types'
 import { Title } from '@/ui'
+import { cn } from '@/utils'
 import { ChevronRight } from 'icons'
 import type { PropsWithChildren } from 'react'
 import { Pressable, View } from 'react-native'
-import { twMerge } from 'tailwind-merge'
 
 export const Category = ({
 	title,
@@ -16,7 +16,7 @@ export const Category = ({
 }: PropsWithChildren<ListCategoryItemTypes>) => (
 	<View
 		key={title}
-		className={twMerge('bg-dust mb-2 w-full rounded-xl', className)}
+		className={cn('bg-dust mb-2 w-full rounded-xl', className)}
 		{...properties}
 	>
 		<Title size={26} weight='bold' className='mb-2'>
@@ -36,7 +36,7 @@ export const Item = ({
 }: ListItemTypes) => (
 	<Pressable
 		key={title}
-		className={twMerge(
+		className={cn(
 			'flex-row items-center justify-between px-2 py-2',
 			bordered && 'border-muted border-b-[1px] pb-3',
 			className

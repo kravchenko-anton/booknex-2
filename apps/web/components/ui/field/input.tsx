@@ -1,6 +1,6 @@
+import { cn } from '@/utils'
 import { Color } from 'global/colors'
 import type { FC } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { settings } from './settings'
 import type { InputProperties } from './types'
 
@@ -16,7 +16,7 @@ const Input: FC<InputProperties> = ({
 		<div className='relative flex items-center justify-center'>
 			<input
 				type={properties.type}
-				className={twMerge(
+				className={cn(
 					'placeholder-gray focus:shadow-outline w-full rounded-xl border-0 px-4 py-3.5 text-sm text-white duration-200 ease-linear focus:outline-0',
 					Icon && 'pl-9',
 					isError && 'border-danger border-2',

@@ -1,5 +1,4 @@
 import { useAction } from '@/hooks'
-import { authRoute } from '@/screens/auth/auth-route'
 import {
 	authValidationSchema,
 	type AuthValidationSchemaType
@@ -53,4 +52,4 @@ const Register = () => {
 	)
 }
 
-export default authRoute(Register)
+export default Register

@@ -7,11 +7,11 @@ import type {
 import BaseButton from '@/ui/button/button'
 import type { ButtonProperties } from '@/ui/button/types'
 import type { IconProperties } from '@/ui/icon/types'
+import { cn } from '@/utils'
 import { Color } from 'global/colors'
 import { ArrowLeft } from 'icons'
 import type { FC, PropsWithChildren } from 'react'
 import { Pressable, View } from 'react-native'
-import { twMerge } from 'tailwind-merge'
 import { Title } from '../../ui'
 
 export const Head: FC<PropsWithChildren<ViewDefaultProperties>> = ({
@@ -20,7 +20,7 @@ export const Head: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 	...properties
 }) => (
 	<View
-		className={twMerge(
+		className={cn(
 			'bg-background  border-muted z-50 w-full flex-row items-center justify-between border-b-[1px]',
 			className
 		)}
@@ -37,7 +37,7 @@ export const BackButton: FC<PressableDefaultProperties> = ({
 	const { goBack } = useTypedNavigation()
 	return (
 		<Pressable
-			className={twMerge('py-2', className)}
+			className={cn('py-2', className)}
 			onPress={goBack}
 			{...properties}
 		>
@@ -60,7 +60,7 @@ export const Logo: FC<Omit<TextDefaultProperties, 'onPress'>> = ({
 	<Title
 		size={22}
 		weight='bold'
-		className={twMerge('py-2', className)}
+		className={cn('py-2', className)}
 		color={Color.white}
 		{...properties}
 	>
@@ -73,7 +73,7 @@ export const Button: FC<
 	<BaseButton
 		size='sm'
 		variant={variant}
-		className='my-1 mr-2 py-1.5'
+		className='my-2 mr-2 py-1.5'
 		onPress={onPress}
 	>
 		Sign in
@@ -82,7 +82,7 @@ export const Button: FC<
 export const Icon: FC<
 	Omit<IconProperties, 'variant' | 'noPadding' | 'size'>
 > = ({ icon: Icon, className, ...properties }) => (
-	<Pressable className={twMerge('py-2 ', className)} {...properties}>
+	<Pressable className={cn('py-2 ', className)} {...properties}>
 		<Icon width={26} height={26} color={Color.white} />
 	</Pressable>
 )

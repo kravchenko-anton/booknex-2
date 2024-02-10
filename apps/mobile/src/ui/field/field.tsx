@@ -1,8 +1,8 @@
+import { cn } from '@/utils'
 import { Color, InnerColor } from 'global/colors'
 import type { Path, PathValue } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
-import { twMerge } from 'tailwind-merge'
 import { Title } from '../index'
 import { fontSettings } from '../title/settings'
 import { settings } from './settings'
@@ -24,7 +24,7 @@ const Field = <T extends Record<string, any>>({
 			<>
 				<View
 					style={style}
-					className={twMerge(
+					className={cn(
 						'relative my-1 flex w-full justify-center rounded-xl border-[1px] border-transparent px-2 py-0.5',
 						error && 'border-danger',
 						Icon && 'pl-9',

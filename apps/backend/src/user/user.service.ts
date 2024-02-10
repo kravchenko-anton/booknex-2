@@ -50,6 +50,23 @@ export class UserService {
 		}
 	}
 
+	recommendationGenres(userId: number) {
+		return this.prisma.user
+			.findUnique({
+				where: {
+					id: userId
+				},
+				select: {
+					selectedGenres: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			})
+			.selectedGenres()
+	}
 	async updateRecommendations(id: number, dto: UserUpdateSelectedGenresDto) {
 		await this.getUserById(id)
 		const selectedGenres = await this.prisma.genre.findMany({

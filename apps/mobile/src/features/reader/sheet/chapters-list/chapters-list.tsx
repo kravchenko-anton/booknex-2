@@ -1,5 +1,5 @@
+import type { DefaultBottomSheetProperties } from '@/features/reader/types'
 import { useTypedSelector } from '@/hooks'
-import type { DefaultBottomSheetProperties } from '@/screens/reading/features/types'
 import { Title } from '@/ui'
 import BottomSheet, {
 	BottomSheetBackdrop,

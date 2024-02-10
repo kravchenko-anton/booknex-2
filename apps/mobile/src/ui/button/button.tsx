@@ -1,8 +1,8 @@
 import AnimatedPress from '@/ui/animated-press/animated-press'
+import { cn } from '@/utils'
 import { InnerColor } from 'global/colors'
 import { memo } from 'react'
 import { ActivityIndicator } from 'react-native'
-import { twMerge } from 'tailwind-merge'
 import Title from '../title/title'
 import { settings } from './settings'
 import type { ButtonProperties } from './types'
@@ -19,7 +19,7 @@ const Button = ({
 }: ButtonProperties) => (
 	<AnimatedPress
 		disabled={disabled || isLoading}
-		className={twMerge(
+		className={cn(
 			'flex-row items-center justify-center rounded-xl',
 			settings.padding[size],
 			settings.colors[variant],

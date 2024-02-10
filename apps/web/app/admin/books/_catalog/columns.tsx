@@ -1,9 +1,9 @@
+import { cn } from '@/utils'
 import type { ColumnDef } from '@tanstack/react-table'
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/utils/number-formater'
 import Image from 'next/image'
 import { useState } from 'react'
-import { twMerge } from 'tailwind-merge'
 
 type ColumnType = ColumnDef<{
 	id: number
@@ -98,7 +98,7 @@ export const columns = ({
 				<div className='mt-2 gap-2 text-center'>
 					<p className='bg-foreground mb-2 rounded-md p-1.5 font-light'>
 						<b
-							className={twMerge(
+							className={cn(
 								'font-bold',
 								row.original.visible ? 'text-success' : 'text-danger'
 							)}

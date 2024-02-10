@@ -1,13 +1,14 @@
 import { userServices } from '@/api/services/user/user-service'
+import { getStyleTag } from '@/features/reader/book-viewer-function'
+import { useSaveProgress } from '@/features/reader/useSaveProgress'
 import { useTypedNavigation, useTypedSelector } from '@/hooks'
-import { getStyleTag } from '@/screens/reading/features/book-viewer-function'
-import { useSaveProgress } from '@/screens/reading/features/useSaveProgress'
+
 import { successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
-export interface WebviewMessage {
+export interface WebviewMessageType {
 	type: 'scroll' | 'finishBook'
 	payload: {
 		scrollTop: number
@@ -34,7 +35,9 @@ export const useReading = (id: number) => {
 
 	const onMessage = useCallback(
 		async (event: WebViewMessageEvent) => {
-			const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessage
+			const parsedEvent = JSON.parse(
+				event.nativeEvent.data
+			) as WebviewMessageType
 			const { type, payload } = parsedEvent
 			if (type === 'scroll') {
 				if (readerState.progress === payload.progress) return

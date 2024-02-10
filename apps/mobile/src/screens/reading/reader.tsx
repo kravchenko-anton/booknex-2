@@ -1,16 +1,16 @@
 import { bookService } from '@/api/services'
-import { useTypedRoute } from '@/hooks'
 import {
 	beforeLoad,
 	finishBookButton,
 	handleDoublePress,
 	injectStyle,
 	scrollProgressDetect
-} from '@/screens/reading/features/book-viewer-function'
-import { useReadingSheets } from '@/screens/reading/features/sheets/useReadingSheets'
-import { useReading } from '@/screens/reading/features/useReading'
+} from '@/features/reader/book-viewer-function'
+import ReadingUi from '@/features/reader/reading-ui'
+import { useReadingSheets } from '@/features/reader/sheet/useReadingSheets'
+import { useReading } from '@/features/reader/useReading'
+import { useTypedRoute } from '@/hooks'
 
-import ReadingUi from '@/screens/reading/reading-ui'
 import { Loader } from '@/ui'
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'

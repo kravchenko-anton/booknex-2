@@ -1,7 +1,7 @@
 import { useAction } from '@/hooks'
+import { cn } from '@/utils'
 import { Book, Graph, Logout, Settings, User } from 'icons'
 import { usePathname } from 'next/navigation'
-import { twMerge } from 'tailwind-merge'
 
 export const iconsList = [
 	{ icon: Graph, link: '/admin/dashboard', name: 'Dashboard' },
@@ -29,7 +29,7 @@ export default function Sidebar(): JSX.Element {
 					<li className='w-full' key={icon.link}>
 						<a
 							href={icon.link}
-							className={twMerge(
+							className={cn(
 								'my-2 flex items-center gap-3 p-2  duration-100 ease-linear',
 								activePath === icon.link ? 'bg-muted rounded-lg text-white' : ''
 							)}

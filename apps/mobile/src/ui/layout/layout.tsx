@@ -1,9 +1,9 @@
 import type { ViewDefaultProperties } from '@/types/component-types'
+import { cn } from '@/utils'
 import type { FC, PropsWithChildren } from 'react'
 import { memo } from 'react'
 import { View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { twMerge } from 'tailwind-merge'
 
 const Layout: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 	children,
@@ -11,7 +11,7 @@ const Layout: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 	...properties
 }) => (
 	<SafeAreaView edges={['right', 'top', 'left']} className='flex-1'>
-		<View className={twMerge('flex-1 p-2', className)} {...properties}>
+		<View className={cn('flex-1 p-2', className)} {...properties}>
 			{children}
 		</View>
 	</SafeAreaView>

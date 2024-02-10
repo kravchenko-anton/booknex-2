@@ -24,22 +24,7 @@ export class CatalogService {
 			recommendations: await this.recommendations(userId),
 			popularBooks: await this.popularBooks(),
 			bestSellingBooks: await this.bestSellingBooks(),
-			newReleases: await this.newReleases(),
-			currentRecommendationGenres: await this.prisma.user
-				.findUnique({
-					where: {
-						id: userId
-					},
-					select: {
-						selectedGenres: {
-							select: {
-								id: true,
-								name: true
-							}
-						}
-					}
-				})
-				.selectedGenres()
+			newReleases: await this.newReleases()
 			//TODO: сделать тут исходя из реков списки
 		}
 	}

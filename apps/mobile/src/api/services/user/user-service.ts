@@ -45,6 +45,12 @@ export const userServices = {
 			data: dto
 		})
 	},
+	async recommendationGenres() {
+		return request<{ id: number; name: string }[]>({
+			url: getUsersUrl('/recommendation-genres'),
+			method: 'GET'
+		})
+	},
 	async isSaved(id: number) {
 		return request<boolean>({
 			url: getUsersUrl(`/is-saved/${id}`),

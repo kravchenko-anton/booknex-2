@@ -1,8 +1,8 @@
 import { AnimatedPress } from '@/ui'
+import { cn } from '@/utils'
 import { InnerColor } from 'global/colors'
 import type { FC } from 'react'
 import { memo } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { settings } from './settings'
 
 import type { IconProperties } from './types'
@@ -18,7 +18,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 	...properties
 }) => (
 	<AnimatedPress
-		className={twMerge(
+		className={cn(
 			'items-center justify-center rounded-2xl',
 			properties.disabled && 'opacity-50',
 			noPadding ? 'p-0' : settings.padding[size],

@@ -1,17 +1,20 @@
-import { getRefreshToken, saveTokensStorage } from '@/redux/auth/auth-helper'
-import type { AuthResponseType } from '@/redux/auth/auth-types'
+import {
+	getRefreshToken,
+	saveTokensStorage
+} from '@/features/auth/action/auth-helper'
+import type { AuthResponseType } from '@/features/auth/action/auth-types'
 import axios from 'axios'
-import { SERVER_URL, getAuthUrl } from 'global/api-config'
+import { EMULATOR_SERVER_URL, getAuthUrl } from 'global/api-config'
 
 export const getNewTokens = async () => {
-	const refreshToken = getRefreshToken()
+	const refreshToken = await getRefreshToken()
 	if (!refreshToken) throw new Error('No refresh token')
 	console.log('refreshToken', refreshToken)
 	const response = await axios
 		.post<
 			string,
 			{ data: AuthResponseType }
-		>(SERVER_URL + getAuthUrl('/refresh'), { refreshToken })
+		>(EMULATOR_SERVER_URL + getAuthUrl('/refresh'), { refreshToken })
 		.then(result => result.data)
 	console.log(
 		'response',
@@ -20,7 +23,7 @@ export const getNewTokens = async () => {
 		response.accessToken
 	)
 	if (response.accessToken)
-		saveTokensStorage({
+		await saveTokensStorage({
 			accessToken: response.accessToken,
 			refreshToken: response.refreshToken
 		})

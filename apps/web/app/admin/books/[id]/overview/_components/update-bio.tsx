@@ -1,5 +1,6 @@
 import SelectGenres from '@/app/admin/books/_shared/select-genres'
 import { Button, Field, FormTextArea } from '@/components/ui'
+import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Book, PenNib, User } from 'icons'
@@ -7,7 +8,6 @@ import type { FC } from 'react'
 import * as React from 'react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
 
 interface UpdateBioProperties {
@@ -109,7 +109,7 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 				/>
 			</div>
 
-			<div className={twMerge('', isEditing ? 'mt-4 flex gap-2' : 'hidden')}>
+			<div className={cn('', isEditing ? 'mt-4 flex gap-2' : 'hidden')}>
 				<Button
 					size='sm'
 					variant='foreground'

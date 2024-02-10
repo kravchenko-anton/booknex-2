@@ -1,17 +1,8 @@
 {
-  "files": [],
-  "include": [
-    ".next/types/**/*.ts"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ],
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": ".",
     "allowJs": true,
     "noEmit": true,
     "isolatedModules": true,
@@ -38,17 +29,46 @@
       "dom.iterable",
       "esnext"
     ],
-    "skipLibCheck": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "icons": [
+        "../../libs/global/icons/react/index.ts"
+      ],
+      "global/*": [
+        "../../libs/global/*"
+      ],
+      "backend/*": [
+        "../backend/*"
+      ]
+    },
     "module": "esnext",
     "moduleResolution": "node",
-    "jsx": "preserve",
     "plugins": [
       {
         "name": "next"
       }
-    ]
-  },
+    ],
+    "types": [
+      "jest",
+      "node"
+    ],
+   },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "../../apps/web/.next/types/**/*.ts",
+    "../../dist/apps/web/.next/types/**/*.ts",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
   ]
 }

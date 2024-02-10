@@ -2,6 +2,7 @@ import { genreService } from '@/api/services'
 import { userServices } from '@/api/services/user/user-service'
 import { useTypedNavigation } from '@/hooks'
 import { Button, Icon, Loader, ScrollLayout, Title } from '@/ui'
+import { cn } from '@/utils'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import type { UserUpdateSelectedGenresDto } from 'backend/src/user/dto'
 import { Color } from 'global/colors'
@@ -35,18 +36,24 @@ const UpdateRecommendation = () => {
 				/>
 				<View>
 					<Title size={32} weight='bold' className='mb-2' numberOfLines={2}>
-						Choose your favorite genres
+						What you next goal?
 					</Title>
-					<Title size={18} weight='light' color={Color.gray} className='mb-4'>
-						Select at least 3 genres
+					<Title
+						size={18}
+						numberOfLines={2}
+						weight='light'
+						color={Color.gray}
+						className='mb-4'
+					>
+						Select 3 genres for better recommendations
 					</Title>
 				</View>
-				<View className='flex w-full flex-row flex-wrap '>
+				<View className='flex w-full flex-row flex-wrap'>
 					{genres.map(genre => (
 						<Button
 							key={genre.id}
 							size='md'
-							className='mb-2 mr-2'
+							className='mb-2.5 mr-2.5'
 							variant={
 								selectedGenres.includes(genre.id) ? 'primary' : 'foreground'
 							}
@@ -55,7 +62,8 @@ const UpdateRecommendation = () => {
 									? setSelectedGenres(
 											selectedGenres.filter(g => g !== genre.id)
 										)
-									: setSelectedGenres([...selectedGenres, genre.id])
+									: selectedGenres.length < 3 &&
+										setSelectedGenres([...selectedGenres, genre.id])
 							}}
 						>
 							{genre.name}
@@ -64,10 +72,10 @@ const UpdateRecommendation = () => {
 				</View>
 			</ScrollLayout>
 			<Button
-				className='mx-2 mb-4'
-				disabled={selectedGenres.length < 3}
+				disabled={selectedGenres.length !== 3}
 				variant='secondary'
 				size='lg'
+				className={cn('mx-2 mb-4', selectedGenres.length === 0 && 'hidden')}
 				onPress={async () => {
 					await update({ selectedGenres })
 					navigate('Featured')

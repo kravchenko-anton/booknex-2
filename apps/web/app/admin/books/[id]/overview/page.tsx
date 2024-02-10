@@ -7,6 +7,7 @@ import UpdatePicture from '@/app/admin/books/[id]/overview/_components/update-pi
 import ActivityList from '@/components/dialogs/activity-list'
 import Loader from '@/components/ui/loader/loader'
 import { bookService } from '@/services/book/book-service'
+import { cn } from '@/utils'
 import { useUploadFile } from '@/utils/files'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -15,7 +16,6 @@ import type { BookUpdatePayload } from 'global/services-types/book-types'
 import { useParams, useRouter } from 'next/navigation'
 import * as React from 'react'
 import { toast } from 'sonner'
-import { twMerge } from 'tailwind-merge'
 
 const Page = () => {
 	const { upload } = useUploadFile()
@@ -101,7 +101,7 @@ const Page = () => {
 						</div>
 						<div className='flex gap-2'>
 							<button
-								className={twMerge(
+								className={cn(
 									'mt-1 rounded-md px-2 py-1 text-white',
 									book.visible ? 'bg-success' : 'bg-warning'
 								)}
@@ -117,9 +117,7 @@ const Page = () => {
 								{book.visible ? 'Hide' : 'Show'}
 							</button>
 							<button
-								className={twMerge(
-									'bg-danger mt-1 rounded-md px-2 py-1 text-white'
-								)}
+								className={cn('bg-danger mt-1 rounded-md px-2 py-1 text-white')}
 								onClick={() =>
 									toast('Are you sure you want to delete this book?', {
 										action: {
