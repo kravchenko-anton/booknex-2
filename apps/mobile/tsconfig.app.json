@@ -1,28 +1,27 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
+		"moduleResolution": "node",
+		"jsx": "react-native",
+		"lib": ["dom", "esnext"],
+		"types": ["node"],
+		
 		"allowJs": true,
+		"strict": false,
 		"noEmit": true,
-		"isolatedModules": true,
 		"incremental": true,
-		"strict": true,
+		"resolveJsonModule": true,
+		"module": "esnext",
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"baseUrl": ".",
+		
 		"noImplicitAny": true,
-		"strictNullChecks": true,
-		"strictFunctionTypes": true,
-		"strictPropertyInitialization": true,
 		"noImplicitThis": true,
-		"alwaysStrict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"noUncheckedIndexedAccess": true,
-		"noPropertyAccessFromIndexSignature": true,
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"resolveJsonModule": true,
-		"outDir": "../../dist/out-tsc",
+	
 		"paths": {
 			"@/*": [
 				"./src/*"

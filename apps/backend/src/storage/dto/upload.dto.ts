@@ -4,7 +4,6 @@ import type {
 	FileUploadPayload,
 	ReplacementPayload
 } from '../../../../../libs/global/services-types/storage-types'
-import { StorageFolderType } from '../storage.types'
 
 export class FilenameDto implements FileUploadPayload {
 	@ApiProperty({
@@ -31,5 +30,5 @@ export class ReplacementDto implements ReplacementPayload {
 		required: true
 	})
 	@IsString()
-	folder: StorageFolderType
+	folder: 'ebooks' | 'booksCovers'
 }

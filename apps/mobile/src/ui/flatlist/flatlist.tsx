@@ -15,7 +15,7 @@ const FlatList = <T,>({
 	style,
 	...properties
 }: FlatListProperties<T>) => {
-	if (data.length === 0 && !properties.ListEmptyComponent) return null
+	if (data?.length === 0 && !properties.ListEmptyComponent) return null
 	return (
 		<>
 			<Title

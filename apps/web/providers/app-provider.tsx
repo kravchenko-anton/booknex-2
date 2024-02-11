@@ -3,7 +3,6 @@ import { Toaster } from '@/components/ui/sonner'
 import { persistor, store } from '@/redux/store'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import * as process from 'process'
 import type { PropsWithChildren } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -17,7 +16,7 @@ const Providers = ({ children }: PropsWithChildren) => {
 		}
 	})
 
-	const clientId = process.env['CLIENT_ID']
+	const clientId = process.env.CLIENT_ID
 	if (!clientId) throw new Error('Google client id is not set')
 
 	return (

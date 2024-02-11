@@ -1,34 +1,24 @@
 {
+	"extends": "./tsconfig.json",
 	"compilerOptions": {
+		"outDir": "../dist/out-tsc",
 		"module": "commonjs",
-		"declaration": true,
-		"removeComments": true,
+		"types": ["node","express",	"multer" ],
 		"emitDecoratorMetadata": true,
-		"isolatedModules": false,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"experimentalDecorators": true,
+		"target": "es2021",
+		"isolatedModules": true,
 		"strictPropertyInitialization": false,
-		"sourceMap": true,
-		"noEmit": true,
-		"incremental": true,
-		"moduleResolution": "node",
-		"outDir": "./dist",
-		"baseUrl": ".",
-		"types": [
-			"node",
-			"express",
-			"multer"
-		],
-		"target": "es2021"
+		
+		
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		
+		"downlevelIteration": true,
+		"experimentalDecorators": true
 	},
-	"exclude": [
-		"jest.config.ts",
-		"src/**/*.spec.ts",
-		"src/**/*.test.ts",
-		"../../node_modules"
-	],
-	"include": [
-		"src/**/*.ts"
-	]
+	"exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+	"include": ["src/**/*.ts"]
 }

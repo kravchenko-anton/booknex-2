@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEmail, IsString, MinLength } from 'class-validator'
+import 'reflect-metadata'
 
 export class SignDto {
 	@IsString()

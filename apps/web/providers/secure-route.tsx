@@ -6,18 +6,18 @@ import { redirect } from 'next/navigation'
 import { useEffect, type FC } from 'react'
 
 export const loginRoute = (Component: FC) =>
-	function (props: {}) {
+	function (properties: {}) {
 		const { user, isLoading } = useAuth()
 
 		useEffect(() => {
 			if (user) redirect('/admin/dashboard')
 		}, [user, isLoading])
 
-		return <Component {...props} />
+		return <Component {...properties} />
 	}
 
 export const adminRoute = (Component: FC) =>
-	function (props: {}) {
+	function (properties: {}) {
 		const { user, isLoading } = useAuth()
 		const { logout } = useAction()
 		useEffect(() => {
@@ -32,5 +32,5 @@ export const adminRoute = (Component: FC) =>
 			if (!user && !isLoading) redirect('/')
 		}, [user, isLoading])
 
-		return <Component {...props} />
+		return <Component {...properties} />
 	}

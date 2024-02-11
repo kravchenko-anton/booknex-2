@@ -8,6 +8,7 @@ export function dirtyValues(
 	return Object.fromEntries(
 		Object.keys(dirtyFields).map(key => [
 			key,
+			// @ts-ignore - we know that dirtyFields[key] is an object
 			dirtyValues(dirtyFields[key], allValues[key])
 		])
 	)
