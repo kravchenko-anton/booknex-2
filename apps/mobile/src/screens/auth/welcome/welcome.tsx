@@ -1,22 +1,17 @@
-import { useAction, useAuth, useTypedNavigation } from '@/hooks'
+import { useAction } from '@/hooks'
+import { useAuthorize } from '@/screens/auth/useAuthorize'
 import { Button, Icon, Layout, Title } from '@/ui'
 import { errorToast } from '@/utils/toast'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { Color } from 'global/colors'
 import { Welcome as WelcomeIllustration } from 'global/illustrations'
 import { Google, Mail } from 'icons'
-import { useEffect, useLayoutEffect, type FC } from 'react'
+import { useLayoutEffect, type FC } from 'react'
 import { View } from 'react-native'
 
 const Welcome: FC = () => {
-	const { user, isLoading, authType } = useAuth()
 	const { googleLogin } = useAction()
-	const { navigate } = useTypedNavigation()
-
-	useEffect(() => {
-		if (user && authType === 'login') navigate('Featured')
-		if (user && authType === 'register') navigate('UpdateRecommendation')
-	}, [user, authType])
+	const { isLoading, onMainButtonPress } = useAuthorize()
 
 	useLayoutEffect(() => {
 		GoogleSignin.configure({
@@ -30,11 +25,11 @@ const Welcome: FC = () => {
 		try {
 			await GoogleSignin.hasPlayServices()
 			const userInfo = await GoogleSignin.signIn()
-			console.log('userInfo', userInfo)
+			if (!userInfo.idToken) return errorToast('Something went wrong')
 			googleLogin({
 				socialId: userInfo.idToken
 			})
-		} catch (error) {
+		} catch {
 			errorToast('Something went wrong')
 		}
 	}
@@ -85,7 +80,7 @@ const Welcome: FC = () => {
 						size='md'
 						variant='foreground'
 						icon={Mail}
-						onPress={() => navigate('Register')}
+						onPress={onMainButtonPress}
 					/>
 				</View>
 			</View>

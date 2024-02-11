@@ -79,7 +79,7 @@ const DataTable: FC<DataTableProperties> = ({
 			<div className='flex space-x-2'>
 				<Button
 					size='sm'
-					variant='secondary'
+					variant='primary'
 					disabled={!!(typeof currentPage !== 'number' || currentPage < 1)}
 					onClick={previous}
 				>

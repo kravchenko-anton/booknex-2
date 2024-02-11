@@ -22,9 +22,10 @@ const Page = () => {
 	const parameters = useParams()
 	const queryClient = useQueryClient()
 	const router = useRouter()
+	const id = Number(parameters.id)
 	const { data: book } = useQuery({
-		queryKey: ['book-overview', +parameters.id],
-		queryFn: () => bookService.infoById(+parameters.id)
+		queryKey: ['book-overview', id],
+		queryFn: () => bookService.infoById(id)
 	})
 	const { mutateAsync: update } = useMutation({
 		mutationKey: ['update-book'],
@@ -33,7 +34,7 @@ const Page = () => {
 		onSuccess: async () => {
 			successToast('Book updated')
 			await queryClient.invalidateQueries({
-				queryKey: ['book-overview', +parameters.id]
+				queryKey: ['book-overview', id]
 			})
 		}
 	})

@@ -19,7 +19,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "noPropertyAccessFromIndexSignature": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -29,20 +28,6 @@
       "dom.iterable",
       "esnext"
     ],
-    "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "icons": [
-        "../../libs/global/icons/react/index.ts"
-      ],
-      "global/*": [
-        "../../libs/global/*"
-      ],
-      "backend/*": [
-        "../backend/*"
-      ]
-    },
     "module": "esnext",
     "moduleResolution": "node",
     "plugins": [

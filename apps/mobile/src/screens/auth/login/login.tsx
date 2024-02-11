@@ -1,4 +1,5 @@
 import { useAction } from '@/hooks'
+import { useAuthorize } from '@/screens/auth/useAuthorize'
 import {
 	authValidationSchema,
 	type AuthValidationSchemaType
@@ -11,14 +12,17 @@ import { useForm } from 'react-hook-form'
 
 const Login = () => {
 	const { mailLogin } = useAction()
+	const { isLoading } = useAuthorize()
 	const { control, handleSubmit } = useForm<AuthValidationSchemaType>({
 		mode: 'onSubmit',
 		resolver: zodResolver(authValidationSchema)
 	})
+
 	const onSubmit: SubmitHandler<AuthValidationSchemaType> = ({
 		password,
 		email
 	}) => mailLogin({ password, email })
+
 	return (
 		<ScrollLayout className='px-2 py-4'>
 			<Field
@@ -37,6 +41,7 @@ const Login = () => {
 			/>
 			<Button
 				size='lg'
+				isLoading={isLoading}
 				variant='primary'
 				className='mb-4 mt-2'
 				onPress={handleSubmit(onSubmit)}

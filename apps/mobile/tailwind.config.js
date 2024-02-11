@@ -9,7 +9,6 @@ module.exports = {
 				background: '#111111',
 				foreground: '#202020',
 				primary: '#5e548e',
-				secondary: '#685369',
 				black: '#000000',
 				gray: '#9F9F9F',
 				white: '#ffffff',

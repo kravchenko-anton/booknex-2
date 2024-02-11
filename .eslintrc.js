@@ -11,7 +11,7 @@ module.exports = {
 		'react',
 		'jsx-expressions'
 	],
-	extends: [],
+	extends: ['plugin:unicorn/recommended'],
 	root: true,
 	ignorePatterns: ['*.js'],
 	parserOptions: {
@@ -23,6 +23,10 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'unicorn/no-array-reduce': 0,
+		'unicorn/no-null': 0,
+		'arrow-parens': 'off',
+		'react/prop-types': ['error', { ignore: ['navigation'] }],
 		'arrow-body-style': ['error', 'as-needed'],
 		'react/self-closing-comp': ['error', { component: true, html: true }],
 		'@typescript-eslint/naming-convention': [
@@ -114,7 +118,6 @@ module.exports = {
 		'unicorn/catch-error-name': 2,
 		'unicorn/consistent-destructuring': 2,
 
-		'react/prop-types': 2,
 		'react/no-unstable-nested-components': [2, { allowAsProps: false }],
 		'react/jsx-no-useless-fragment': [2, { allowExpressions: true }],
 		'react/function-component-definition': [
@@ -188,7 +191,7 @@ module.exports = {
 			2,
 			{
 				hoist: 'all',
-				allow: ['resolve', 'reject', 'done', 'next', 'err', 'error'],
+				allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'id'],
 				ignoreTypeValueShadow: true,
 				ignoreFunctionTypeParameterNameValueShadow: true
 			}

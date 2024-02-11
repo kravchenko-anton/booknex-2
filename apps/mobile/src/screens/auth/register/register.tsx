@@ -1,4 +1,5 @@
 import { useAction } from '@/hooks'
+import { useAuthorize } from '@/screens/auth/useAuthorize'
 import {
 	authValidationSchema,
 	type AuthValidationSchemaType
@@ -9,6 +10,7 @@ import { Mail, Password } from 'icons'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 const Register = () => {
+	const { isLoading } = useAuthorize()
 	const { mailRegister } = useAction()
 	const { control, handleSubmit } = useForm<AuthValidationSchemaType>({
 		resolver: zodResolver(authValidationSchema)
@@ -17,7 +19,6 @@ const Register = () => {
 		email,
 		password
 	}) => {
-		console.log('email', email)
 		mailRegister({
 			password,
 			email
@@ -41,6 +42,7 @@ const Register = () => {
 				placeholder='Password'
 			/>
 			<Button
+				isLoading={isLoading}
 				size='lg'
 				className='mb-2 mt-1'
 				variant='primary'

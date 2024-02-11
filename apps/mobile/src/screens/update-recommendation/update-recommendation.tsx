@@ -73,7 +73,7 @@ const UpdateRecommendation = () => {
 			</ScrollLayout>
 			<Button
 				disabled={selectedGenres.length !== 3}
-				variant='secondary'
+				variant='primary'
 				size='lg'
 				className={cn('mx-2 mb-4', selectedGenres.length === 0 && 'hidden')}
 				onPress={async () => {

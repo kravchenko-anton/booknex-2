@@ -4,7 +4,6 @@ import type { ComponentType } from 'react'
 
 export type TypeRootStackParameterListType = {
 	Book: { id: number }
-
 	Featured: undefined
 	BookFeedback: { id: number }
 	Genre: { id: number; name: string }
@@ -17,10 +16,16 @@ export type TypeRootStackParameterListType = {
 	UpdateRecommendation: undefined
 	Search: undefined
 	Settings: undefined
+
+	Logout: undefined
+}
+
+export type RouteProperties = {
+	navigation?: NativeStackNavigationProp<TypeRootStackParameterListType>
 }
 
 export interface IRouteType {
-	component: ComponentType
+	component: ComponentType<RouteProperties>
 	name: keyof TypeRootStackParameterListType
 	options?: {
 		header?: ({

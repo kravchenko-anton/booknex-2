@@ -4,7 +4,6 @@ export const Color = {
 	background: '#111111' as '#111111',
 	foreground: '#202020' as '#202020',
 	primary: '#5e548e' as '#5e548e',
-	secondary: '#685369' as '#685369',
 
 	black: '#000000' as '#000000',
 	gray: '#9F9F9F' as '#9F9F9F',
@@ -21,7 +20,6 @@ export const InnerColor = {
 	muted: Color.white,
 	background: Color.white,
 	primary: Color.white,
-	secondary: Color.white,
 
 	black: Color.white,
 	gray: Color.white,
@@ -44,7 +42,6 @@ export type ClampPaletteType = 'foreground' | 'background' | 'muted'
 
 export type VividPaletteType =
 	| 'primary'
-	| 'secondary'
 	| 'danger'
 	| 'success'
 	| 'warning'

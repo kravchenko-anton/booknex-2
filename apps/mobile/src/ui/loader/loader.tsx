@@ -7,14 +7,14 @@ const Loader: FC<{ background?: string }> = ({
 	background = Color.background
 }) => (
 	<View
+		className='flex-1 items-center justify-center'
 		style={{
 			backgroundColor: background
 		}}
-		className='flex-1 items-center justify-center'
 	>
 		<ActivityIndicator
 			size='large'
-			color={Color.secondary}
+			color={Color.primary}
 			className='h-[80px] w-[80px]'
 		/>
 	</View>

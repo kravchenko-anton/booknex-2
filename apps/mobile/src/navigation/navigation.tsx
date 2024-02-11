@@ -1,7 +1,8 @@
-import { useAuth } from '@/hooks'
+import { getRefreshToken } from '@/features/auth/action/auth-helper'
+import { useAction, useAuth } from '@/hooks'
 import { authRoutes } from '@/navigation/auth-routes'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
-import { authRequired, loginRoute } from '@/navigation/secure-route'
+import { modalRoutes } from '@/navigation/modal-routes'
 import type { TypeRootStackParameterListType } from '@/navigation/types'
 import { routes } from '@/navigation/user-routes'
 import { Loader } from '@/ui'
@@ -19,26 +20,40 @@ import {
 	initialWindowMetrics
 } from 'react-native-safe-area-context'
 
+const authRequiredRoutes = new Set(routes.map(route => route.name))
 const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
+
+const noBottomMenuRoutes = new Set(['Reader', 'Feedback', 'Search'])
 
 const Navigation: FC = () => {
 	const { user } = useAuth()
-	console.log('user', user)
+	const { logout } = useAction()
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)
+	const checkRefreshToken = async (
+		route: keyof TypeRootStackParameterListType
+	) => {
+		if (!route || !authRequiredRoutes.has(route)) return
+		console.log('checkRefreshToken', route, authRequiredRoutes.has(route))
+		const refreshToken = await getRefreshToken()
+		if (!refreshToken && user) logout()
+	}
 
 	const navReference = useNavigationContainerRef()
+
 	useEffect(() => {
 		const listener = navReference.addListener('state', () => {
-			setCurrentRoute(navReference.getCurrentRoute()?.name)
+			const route = navReference.getCurrentRoute()
+				?.name as keyof TypeRootStackParameterListType
+
+			setCurrentRoute(route)
+			checkRefreshToken(route)
 		})
-		return () => {
-			navReference.removeListener('state', listener)
-		}
+
+		return () => navReference.removeListener('state', listener)
 	}, [])
 
-	//TODO: добавить проверку роута и делать редирект на нужный роут если юзера разлогинело
 	return (
 		<SafeAreaProvider
 			initialMetrics={initialWindowMetrics}
@@ -57,34 +72,42 @@ const Navigation: FC = () => {
 						animation: 'fade',
 						presentation: 'transparentModal',
 						headerShown: false,
-						contentStyle: {
-							backgroundColor: Color.background
-						},
 						statusBarColor: Color.background
 					}}
 				>
 					{user
-						? routes.map(({ component, ...route }) => (
+						? routes.map(({ options, ...route }) => (
 								<Stack.Screen
-									component={authRequired(component)}
 									key={route.name}
+									options={{
+										contentStyle: {
+											backgroundColor: Color.background
+										},
+										...options
+									}}
 									{...route}
 								/>
 							))
-						: authRoutes.map(({ component, ...route }) => (
+						: authRoutes.map(({ options, ...route }) => (
 								<Stack.Screen
-									component={loginRoute(component)}
 									key={route.name}
+									options={{
+										contentStyle: {
+											backgroundColor: Color.background
+										},
+										...options
+									}}
 									{...route}
 								/>
 							))}
+					{modalRoutes.map(({ ...route }) => (
+						<Stack.Screen key={route.name} {...route} />
+					))}
 				</Stack.Navigator>
 			</NavigationContainer>
-			{user &&
-				currentRoute &&
-				!['Reader', 'Feedback', 'Search'].includes(currentRoute) && (
-					<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
-				)}
+			{user && currentRoute && !noBottomMenuRoutes.has(currentRoute) && (
+				<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
+			)}
 		</SafeAreaProvider>
 	)
 }

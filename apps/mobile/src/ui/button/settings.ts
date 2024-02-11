@@ -10,7 +10,6 @@ export const settings: {
 		foreground: 'bg-foreground border-[1px] border-muted',
 		muted: 'bg-muted border-[1px] border-foreground',
 		primary: 'bg-primary border-[1px] border-transparent',
-		secondary: 'bg-secondary border-[1px] border-transparent',
 		danger: 'bg-danger border-[1px] border-transparent',
 		background: 'bg-background border-[1px] border-transparent',
 		success: 'bg-success border-[1px] border-transparent',

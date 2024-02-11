@@ -17,7 +17,7 @@ const Index = () => {
 	}
 
 	const onGoogleLoginSuccess = async (tokenResponse: CredentialResponse) => {
-		console.log(tokenResponse)
+		if (!tokenResponse.credential) return
 		googleLogin({
 			socialId: tokenResponse.credential
 		})

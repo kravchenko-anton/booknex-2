@@ -44,7 +44,7 @@ export const themePack: ThemePackType[] = [
 		statusBar: statusBar.light,
 		colorPalette: {
 			primary: Color.primary,
-			secondary: Color.secondary,
+			secondary: '#rb8e6d',
 			background: {
 				normal: Color.white,
 				lighter: '#f9f9f9',

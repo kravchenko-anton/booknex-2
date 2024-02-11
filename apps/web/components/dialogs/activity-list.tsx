@@ -49,9 +49,7 @@ const ActivityList: FC<{
 				isOpen={!!selectActivity}
 				onClose={() => setSelectActivity(null)}
 			>
-				{!selectActivity ? (
-					<div>Nothing selected</div>
-				) : (
+				{selectActivity ? (
 					<>
 						<SheetHeader className='pb-2'>
 							<h1 className='text-3xl font-medium'>
@@ -78,6 +76,8 @@ const ActivityList: FC<{
 							))}
 						</div>
 					</>
+				) : (
+					<div>Nothing selected</div>
 				)}
 			</SheetComponent>
 		</>

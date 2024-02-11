@@ -32,9 +32,9 @@ type ActivitiesByDate = Record<
 >
 
 const timeFormat = (date: Date) =>
-	('0' + new Date(date).getHours()).substr(-2) +
+	('0' + new Date(date).getHours()).slice(-2) +
 	':' +
-	('0' + new Date(date).getMinutes()).substr(-2)
+	('0' + new Date(date).getMinutes()).slice(-2)
 
 export const transformActivity = (
 	activities: ActivitiesProperties[]
@@ -51,7 +51,7 @@ export const transformActivity = (
 				importance: activity.importance,
 				message:
 					activity.type +
-					` (${!!activity.bookId ? `book: ${activity.bookId}` : ''}${!!activity.genreId ? `genre: ${activity.genreId}` : ''}${!!activity.collectionId ? `collection: ${activity.collectionId}` : ''}${!!activity.userId ? `user: ${activity.userId}` : ''})`,
+					` (${activity.bookId ? `book: ${activity.bookId}; ` : ''}${activity.genreId ? `genre: ${activity.genreId}; ` : ''}${activity.collectionId ? `collection: ${activity.collectionId}; ` : ''}${activity.userId ? `user: ${activity.userId}` : ''})`,
 				time: timeFormat(activity.createdAt)
 			})
 			accumulator[date].count++
@@ -60,11 +60,12 @@ export const transformActivity = (
 		{}
 	)
 
-	return Object.values(activitiesByDate).map(({ activities, count, date }) => ({
-		date,
-		count,
-		level:
-			activities.reduce((acc, { importance }) => acc + importance, 0) / count,
-		activities
+	return Object.values(activitiesByDate).map(({ activities, ...rest }) => ({
+		level: activities.reduce(
+			(accumulator, { importance }) => Math.max(accumulator, importance),
+			0
+		),
+		activities,
+		...rest
 	}))
 }

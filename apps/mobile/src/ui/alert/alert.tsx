@@ -11,30 +11,21 @@ const Alert: FC<{
 	acceptText: string
 	type: VividPaletteType
 	onAccept: () => void
-	isVisible: boolean
-	setVisible: (visible: boolean) => void
-}> = ({
-	acceptText,
-	description,
-	isVisible = false,
-	setVisible,
-	icon: Icon,
-	onAccept,
-	type
-}) => (
+	onClose: () => void
+}> = ({ acceptText, description, onClose, icon: Icon, onAccept, type }) => (
 	<DefaultModal
 		transparent
 		statusBarTranslucent
-		visible={isVisible}
+		visible
 		animationType='fade'
-		onRequestClose={() => setVisible(false)}
+		onRequestClose={() => onClose()}
 	>
 		<View
 			className='flex-1 items-center justify-center'
 			style={{
 				backgroundColor: `${Color.background}99`
 			}}
-			onTouchStart={() => setVisible(false)}
+			onTouchStart={() => onClose()}
 		>
 			<View
 				className='bg-foreground z-50 w-9/12 items-center rounded-2xl p-4'
@@ -58,7 +49,7 @@ const Alert: FC<{
 					size='md'
 					onPress={() => {
 						onAccept()
-						setVisible(false)
+						onClose()
 					}}
 				>
 					{acceptText}
@@ -67,7 +58,7 @@ const Alert: FC<{
 					className='mt-2 w-full'
 					variant='foreground'
 					size='md'
-					onPress={() => setVisible(false)}
+					onPress={() => onClose()}
 				>
 					Cancel
 				</Button>
