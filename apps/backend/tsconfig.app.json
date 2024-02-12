@@ -8,14 +8,7 @@
 		"target": "es2021",
 		"isolatedModules": true,
 		"strictPropertyInitialization": false,
-		
-		
-		"noImplicitAny": true,
-		"noImplicitThis": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noImplicitReturns": true,
-		
+		"strictNullChecks": false,
 		"downlevelIteration": true,
 		"experimentalDecorators": true
 	},

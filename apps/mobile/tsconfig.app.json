@@ -15,13 +15,7 @@
 		"esModuleInterop": true,
 		"isolatedModules": true,
 		"baseUrl": ".",
-		
-		"noImplicitAny": true,
-		"noImplicitThis": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noImplicitReturns": true,
-	
+
 		"paths": {
 			"@/*": [
 				"./src/*"

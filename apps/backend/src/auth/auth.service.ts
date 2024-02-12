@@ -1,6 +1,5 @@
 import {
 	BadRequestException,
-	HttpException,
 	HttpStatus,
 	Injectable,
 	NotFoundException
@@ -12,6 +11,7 @@ import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
+import { serverError } from '../utils/call-error'
 import { ErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { AuthDto, SignDto } from './dto/auth.dto'
@@ -99,22 +99,12 @@ export class AuthService {
 		})
 
 		const data = ticket.getPayload()
-		if (!data.email) {
-			//TODO: пофиксить ошибку
-			throw new HttpException(
-				{
-					status: HttpStatus.UNPROCESSABLE_ENTITY,
-					errors: {
-						user: 'wrongToken'
-					}
-				},
-				HttpStatus.UNPROCESSABLE_ENTITY
-			)
-		}
+		if (!data?.sub)
+			return serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
 
 		const user = await this.prisma.user.findUnique({
 			where: {
-				socialId: data.sub
+				socialId: data?.sub
 			}
 		})
 		if (user) {
@@ -138,14 +128,25 @@ export class AuthService {
 			}
 		}
 
-		console.log('User does not exist and i just registered it')
+		if (!data?.email)
+			return serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
+		const oldUser = await this.prisma.user.findUnique({
+			where: {
+				email: data.email
+			}
+		})
+		if (oldUser)
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				`user ${ErrorsEnum.Already_Exist}`
+			)
+
 		const mostPopularGenres = await this.prisma.genre.findMany({
 			take: 3,
 			select: {
 				id: true
 			}
 		})
-
 		const newUser = await this.prisma.user.create({
 			data: {
 				email: data.email,
@@ -157,7 +158,7 @@ export class AuthService {
 				fullName:
 					data.given_name && data.family_name
 						? `${data.given_name} ${data.family_name}`
-						: data.email.split('@')[0],
+						: data?.email?.split('@')[0],
 				picture: data.picture || 'fallback.png',
 				location: data.locale || 'unknown'
 			}
@@ -167,7 +168,7 @@ export class AuthService {
 		await this.prisma.activity.create({
 			data: {
 				importance: 1,
-				type: ActivityEnum.Login_User,
+				type: ActivityEnum.Register_New_User,
 				user: {
 					connect: {
 						id: newUser.id
@@ -202,7 +203,8 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				expiresIn: '40s'
+				//TODO: когда перейдем на продакшн поменять на 15m
+				expiresIn: '10s'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'
@@ -215,7 +217,7 @@ export class AuthService {
 				email: dto.email
 			}
 		})
-		if (!user)
+		if (!user?.password)
 			throw new NotFoundException(
 				"Email or password doesn't work"
 			).getResponse()

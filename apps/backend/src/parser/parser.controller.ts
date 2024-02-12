@@ -54,7 +54,7 @@ export class ParserController {
 
 	@Get('admin/by-id/:id')
 	@ApiParam({ name: 'id', required: false, example: 1 })
-	byId(@Param('id') id: string): Promise<ByIdOutput> {
+	byId(@Param('id') id: string): Promise<ByIdOutput | null> {
 		return this.parserService.byId(+id)
 	}
 

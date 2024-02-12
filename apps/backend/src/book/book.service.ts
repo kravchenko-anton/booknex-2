@@ -354,7 +354,7 @@ export class BookService {
 			}
 		})
 		if (!book) new NotFoundException('Book not found').getResponse()
-		const genreIds = book.genres.map(g => g.id)
+		const genreIds = book?.genres.map(g => g.id) || []
 		const similarBooks = await this.prisma.book.findMany({
 			where: {
 				id: { not: +id },
@@ -386,8 +386,8 @@ export class BookService {
 			similarBooks: similarBooks
 				.sort(
 					(a, b) =>
-						b.genres.filter(g => genreIds.includes(g.id)).length -
-						a.genres.filter(g => genreIds.includes(g.id)).length
+						b.genres.filter(g => genreIds?.includes(g.id)).length -
+						a.genres.filter(g => genreIds?.includes(g.id)).length
 				)
 				.slice(0, 10)
 				.map(({ genres, ...rest }) => ({ ...rest }))

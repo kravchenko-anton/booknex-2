@@ -140,8 +140,8 @@ export class CatalogService {
 												}
 											})
 											.selectedGenres()
-											.then(initialGenres =>
-												initialGenres.map(genre => genre.name)
+											.then(selectedGenres =>
+												selectedGenres?.map(genre => genre.name)
 											)
 						}
 					}

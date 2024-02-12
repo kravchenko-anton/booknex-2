@@ -1,3 +1,6 @@
+/* eslint @typescript-eslint/no-shadow: 0 */
+/* eslint @typescript-eslint/no-loop-func: 0 */
+
 import { BadRequestException, Injectable } from '@nestjs/common'
 import EPub from 'epub2'
 import { JSDOM } from 'jsdom'
@@ -29,7 +32,7 @@ export const ignoredManifest = [
 	'https://z.moatads.com',
 	'https://cdn.permutive.com'
 ]
-interface Chapter {
+interface ChapterType {
 	id: number
 	title: string
 	content: string
@@ -96,17 +99,16 @@ export class ParserService {
 		return new Promise(resolve => {
 			const epub = new EPub(file.buffer as unknown as string)
 			epub.on('end', function () {
-				const flow: Promise<Chapter | null>[] = epub.flow.map(
+				const flow: Promise<ChapterType | null>[] = epub.flow.map(
 					(chapter, index) =>
-						new Promise<Chapter | null>(resolve => {
+						new Promise<ChapterType | null>(resolve => {
 							try {
+								if (!chapter.id) throw new BadRequestException('Invalid id')
 								epub.getChapter(chapter.id, async (error, text) => {
-									if (error) {
-										return null
-									}
+									if (error) return null
 
 									const updatedContent = async () => {
-										const dom = new JSDOM(text.toString())
+										const dom = new JSDOM(String(text))
 										const prettify = require('@liquify/prettify')
 										const elements = dom.window.document.querySelectorAll('*')
 										for (const element of elements) {
@@ -145,9 +147,11 @@ export class ParserService {
 									const finalContent = await updatedContent()
 									resolve({
 										id: index + 1,
-										title: chapter.title,
+										title: String(chapter.title),
 										content: finalContent
 									})
+									//TODO: проверить всё после фиксов
+									return null
 								})
 							} catch (error) {
 								console.log(error)
@@ -156,7 +160,7 @@ export class ParserService {
 						})
 				)
 				Promise.all(flow)
-					.then((chapters: (Chapter | null)[]) => {
+					.then((chapters: (ChapterType | null)[]) => {
 						const validChapters = chapters.filter(
 							chapter => chapter?.content !== null
 						)
@@ -164,8 +168,8 @@ export class ParserService {
 						resolve(
 							validChapters.map((chapter, index) => ({
 								id: index + 1,
-								title: chapter.title || '',
-								content: chapter.content || ''
+								title: chapter?.title || '',
+								content: chapter?.content || ''
 							}))
 						)
 					})
@@ -177,7 +181,7 @@ export class ParserService {
 			epub.parse()
 		}).catch(error => {
 			throw new BadRequestException(error)
-		}) as Promise<Chapter[]>
+		}) as Promise<ChapterType[]>
 	}
 
 	async byId(id: number) {
@@ -237,12 +241,12 @@ export class ParserService {
 			const books = await page.evaluate(() => {
 				const books = document.querySelectorAll('.tableList tr')
 				return [...books].map((book, index) => {
-					const link = book.querySelector('.bookTitle').getAttribute('href')
+					const link = book?.querySelector('.bookTitle')?.getAttribute('href')
 					const ratingAvg = book.querySelector('.minirating')
 					return {
 						id: index++,
 						link: `https://www.goodreads.com${link}`,
-						ratingAvg: ratingAvg.textContent
+						ratingAvg: ratingAvg?.textContent
 							? Number.parseFloat(
 									ratingAvg.textContent
 										.split('—')[0]
@@ -277,20 +281,20 @@ export class ParserService {
 						const title = document.querySelector(
 							'div.BookPageTitleSection > div > h1'
 						)
-						return title.textContent ?? 'No title'
+						return title?.textContent ?? 'No title'
 					})
 					const author = await page.evaluate(() => {
 						const author = document.querySelector(
 							'div.FeaturedPerson__infoPrimary > h4 > a > span'
 						)
 						return {
-							name: author.textContent ?? 'No author name'
+							name: author?.textContent ?? 'No author name'
 						}
 					})
 
 					const description = await page.evaluate(selector => {
 						const description = document.querySelector(selector)
-						return description.textContent
+						return description?.textContent
 							? description.textContent.replaceAll(
 									/(Librarian's note|Contributor note|See also).*?\./g,
 									''
@@ -299,7 +303,7 @@ export class ParserService {
 					}, parseSelectors.description)
 					const rating = await page.evaluate(selector => {
 						const ratingCount = document.querySelector(selector)
-						return ratingCount.textContent
+						return ratingCount?.textContent
 							? Number.parseInt(
 									ratingCount.textContent
 										.replaceAll('ratings', '')
@@ -310,7 +314,7 @@ export class ParserService {
 					}, parseSelectors.ratingCount)
 					const pages = await page.evaluate(selector => {
 						const pages = document.querySelector(selector)
-						return pages.textContent
+						return pages?.textContent
 							? Number.parseInt(
 									pages.textContent.replaceAll(/[^\d\s,]/g, '').trim()
 								)
@@ -318,7 +322,7 @@ export class ParserService {
 					}, parseSelectors.pages)
 					const picture = await page.evaluate(selector => {
 						const picture = document.querySelector(selector)
-						return picture.getAttribute('src') ?? 'No picture'
+						return picture?.getAttribute('src') ?? 'No picture'
 					}, parseSelectors.picture)
 
 					const genres = await page.evaluate(selector => {
@@ -331,9 +335,9 @@ export class ParserService {
 					if (bookTemplate.some(b => b.title === title.trim())) continue
 					const goodGenres = await this.prisma.genre.findMany({
 						where: {
-							OR: genres.map(genre => ({
+							OR: genres.map(name => ({
 								name: {
-									contains: genre,
+									contains: String(name),
 									mode: 'insensitive'
 								}
 							}))

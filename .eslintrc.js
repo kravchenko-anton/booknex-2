@@ -33,7 +33,11 @@ module.exports = {
 			'error',
 			{
 				selector: 'default',
-				format: ['camelCase', 'PascalCase']
+				format: ['camelCase', 'PascalCase'],
+				filter: {
+					regex: '^(_count|_sum)$',
+					match: false
+				}
 			},
 			{
 				selector: 'variable',

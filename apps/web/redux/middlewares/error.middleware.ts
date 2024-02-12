@@ -6,7 +6,6 @@ export const rtkQueryErrorLogger: Middleware =
 	(api: MiddlewareAPI) => next => action => {
 		if (isRejectedWithValue(action)) {
 			console.log(api)
-			console.error('RTK Query Error:', action)
 			errorToast(action.payload)
 		}
 

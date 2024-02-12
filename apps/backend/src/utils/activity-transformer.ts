@@ -5,10 +5,10 @@ export interface ActivitiesProperties {
 	id: number
 	createdAt: Date
 	type: string
-	genreId: number
-	bookId: number
-	userId: number
-	collectionId: number
+	genreId: number | null
+	bookId: number | null
+	userId: number | null
+	collectionId: number | null
 }
 
 export interface ActivitiesOutput {

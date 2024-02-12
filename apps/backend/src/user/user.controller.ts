@@ -50,10 +50,11 @@ export class UserController {
 	@Auth()
 	@Get('/recommendation-genres')
 	async recommendationsGenres(@CurrentUser('id') userId: number): Promise<
-		{
-			id: number
-			name: string
-		}[]
+		| {
+				id: number
+				name: string
+		  }[]
+		| null
 	> {
 		return this.usersService.recommendationGenres(+userId)
 	}

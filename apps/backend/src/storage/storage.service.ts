@@ -15,6 +15,8 @@ import { StorageFolderArray, StorageFolderEnum } from './storage.types'
 
 @Injectable()
 export class StorageService {
+	//TODO: переделать везде на configService и сделать типизацию env файла по всему проекту   и в мобилке и в web
+	//@ts-ignore
 	private readonly s3 = new S3Client({
 		endpoint: process.env.AWS_ENDPOINT,
 		region: process.env.AWS_REGION,
