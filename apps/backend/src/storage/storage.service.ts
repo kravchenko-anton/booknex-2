@@ -4,11 +4,12 @@ import {
 	PutObjectCommand,
 	S3Client
 } from '@aws-sdk/client-s3'
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import sharp from 'sharp'
 import { RoleEnum, type RoleType } from '../auth/auth.service'
-import { ErrorsEnum } from '../utils/errors'
+import { serverError } from '../utils/call-error'
+import { AdminErrors, GlobalErrorsEnum } from '../utils/errors'
 import { optimizeFilename } from '../utils/string.functions'
 import type { StorageFolderType } from './storage.types'
 import { StorageFolderArray, StorageFolderEnum } from './storage.types'
@@ -30,7 +31,7 @@ export class StorageService {
 
 	async delete(filename: string) {
 		if (!filename)
-			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
+			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
 		try {
 			await this.s3.send(
 				new GetObjectCommand({
@@ -39,7 +40,7 @@ export class StorageService {
 				})
 			)
 		} catch {
-			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
+			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
 		}
 		await this.s3
 			.send(
@@ -48,9 +49,9 @@ export class StorageService {
 					Key: filename
 				})
 			)
-			.catch(() => {
-				throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
-			})
+			.catch(() =>
+				serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
+			)
 	}
 
 	async upload({
@@ -65,11 +66,9 @@ export class StorageService {
 		role: RoleType
 	}) {
 		if (!(role === RoleEnum.ADMIN))
-			throw new BadRequestException(
-				'You are not allowed to upload files'
-			).getResponse()
+			return serverError(HttpStatus.FORBIDDEN, AdminErrors.notEnoughRights)
 		if (!StorageFolderArray.includes(folder)) {
-			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
+			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFolder)
 		}
 		console.log('file', file)
 		const finalFile =
@@ -92,9 +91,9 @@ export class StorageService {
 					ContentDisposition: 'inline'
 				})
 			)
-			.catch(() => {
-				throw new BadRequestException(ErrorsEnum.Unknow_Error).getResponse()
-			})
+			.catch(() =>
+				serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
+			)
 		return {
 			name: `${folder}/${optimizeFilename(filename)}`
 		}

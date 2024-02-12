@@ -1,11 +1,12 @@
 /* eslint @typescript-eslint/no-shadow: 0 */
 /* eslint @typescript-eslint/no-loop-func: 0 */
 
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import EPub from 'epub2'
 import { JSDOM } from 'jsdom'
 import puppeteer from 'puppeteer'
-import { ErrorsEnum } from '../utils/errors'
+import { serverError } from '../utils/call-error'
+import { AdminErrors, GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 import type { ParserDto } from './dto/parser.dto'
@@ -95,7 +96,7 @@ export class ParserService {
 
 	async unfold(file: Express.Multer.File) {
 		if (!file.buffer && file.mimetype !== 'application/epub+zip')
-			throw new BadRequestException(ErrorsEnum.INVALID_FILE)
+			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFile)
 		return new Promise(resolve => {
 			const epub = new EPub(file.buffer as unknown as string)
 			epub.on('end', function () {
@@ -103,12 +104,13 @@ export class ParserService {
 					(chapter, index) =>
 						new Promise<ChapterType | null>(resolve => {
 							try {
-								if (!chapter.id) throw new BadRequestException('Invalid id')
+								if (!chapter.id) return
 								epub.getChapter(chapter.id, async (error, text) => {
 									if (error) return null
 
 									const updatedContent = async () => {
 										const dom = new JSDOM(String(text))
+										// eslint-disable-next-line unicorn/prefer-module -- it doesn't work with esm
 										const prettify = require('@liquify/prettify')
 										const elements = dom.window.document.querySelectorAll('*')
 										for (const element of elements) {
@@ -153,9 +155,8 @@ export class ParserService {
 									//TODO: проверить всё после фиксов
 									return null
 								})
-							} catch (error) {
-								console.log(error)
-								new BadRequestException(ErrorsEnum.INVALID_FILE + ' chapter')
+							} catch {
+								serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidChapter)
 							}
 						})
 				)
@@ -173,15 +174,15 @@ export class ParserService {
 							}))
 						)
 					})
-					.catch(error => {
-						throw new BadRequestException(error)
-					})
+					.catch(() =>
+						serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+					)
 			})
 
 			epub.parse()
-		}).catch(error => {
-			throw new BadRequestException(error)
-		}) as Promise<ChapterType[]>
+		}).catch(() =>
+			serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidChapter)
+		) as Promise<ChapterType[]>
 	}
 
 	async byId(id: number) {
@@ -236,7 +237,7 @@ export class ParserService {
 				.goto(dto.url + '?page=' + dto.page, {
 					waitUntil: 'domcontentloaded'
 				})
-				.catch(() => {})
+				.catch(() => null)
 			await page.waitForSelector('.tableList')
 			const books = await page.evaluate(() => {
 				const books = document.querySelectorAll('.tableList tr')
@@ -263,7 +264,7 @@ export class ParserService {
 						.goto(book.link, {
 							waitUntil: 'domcontentloaded'
 						})
-						.catch(() => {})
+						.catch(() => null)
 
 					await page.waitForSelector(parseSelectors.title)
 					await page.waitForSelector(parseSelectors.author)

@@ -1,9 +1,3 @@
-import type { Prisma } from '@prisma/client'
-
-export type UserLibraryCategoryType = keyof Pick<
-	Prisma.UserSelect,
-	'finishedBooks' | 'readingBooks' | 'savedBooks'
->
 export enum UserLibraryFieldsEnum {
 	finishedBooks = 'finishedBooks',
 	readingBooks = 'readingBooks',

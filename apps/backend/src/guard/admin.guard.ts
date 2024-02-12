@@ -1,7 +1,12 @@
-import type { CanActivate, ExecutionContext } from '@nestjs/common'
-import { ForbiddenException, Injectable } from '@nestjs/common'
+import {
+	HttpStatus,
+	Injectable,
+	type CanActivate,
+	type ExecutionContext
+} from '@nestjs/common'
 import type { User } from '@prisma/client'
-import { ErrorsEnum } from '../utils/errors'
+import { serverError } from '../utils/call-error'
+import { AdminErrors } from '../utils/errors'
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -9,7 +14,7 @@ export class AdminGuard implements CanActivate {
 		const request = context.switchToHttp().getRequest<{ user: User }>()
 		const user = request.user
 		if (user.role !== 'ADMIN')
-			throw new ForbiddenException(ErrorsEnum.Not_Enough_Rights).getResponse()
+			return serverError(HttpStatus.FORBIDDEN, AdminErrors.notEnoughRights)
 		return true
 	}
 }

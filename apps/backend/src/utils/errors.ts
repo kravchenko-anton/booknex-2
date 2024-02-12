@@ -1,9 +1,25 @@
-export enum ErrorsEnum {
-	Not_Enough_Rights = 'Not enough rights',
-	Not_Found = 'Not found',
-	Already_Exist = 'Already exist',
-	INVALID_FILE = 'Invalid file',
-	Invalid_Value = 'Invalid value',
-	Unknow_Error = 'Unknow error, please try again later',
-	Something_Went_Wrong = 'Something went wrong, please try again later'
+export enum AuthErrors {
+	invalidGoogleToken = 'Invalid google token',
+	passwordOrEmailInvalid = 'Email or password invalid'
+}
+
+export enum GlobalErrorsEnum {
+	invalidValue = 'Invalid value provided',
+	somethingWrong = 'Something went wrong, please try again later'
+}
+
+export enum AdminErrors {
+	notEnoughRights = 'Not enough rights',
+
+	// parser
+	invalidChapter = 'Invalid chapter',
+
+	//file
+	invalidFile = 'Invalid file',
+	invalidFolder = 'Invalid folder',
+
+	// collection
+	collectionNotFound = 'Collection not found',
+	collectionAlreadyExist = 'Collection already exist',
+	someBooksNotFound = 'Some books not found'
 }

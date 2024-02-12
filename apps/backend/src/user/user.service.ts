@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { transformActivity } from '../utils/activity-transformer'
-import { ErrorsEnum } from '../utils/errors'
+import { serverError } from '../utils/call-error'
+import { GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { UserUpdateSelectedGenresDto } from './dto'
 import { returnUserObject } from './return.user.object'
@@ -22,7 +23,10 @@ export class UserService {
 			}
 		})
 		if (!user)
-			throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		return user
 	}
 
@@ -42,7 +46,10 @@ export class UserService {
 			}
 		})
 		if (!library)
-			throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`).getResponse()
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		return {
 			[UserLibraryFieldsEnum.readingBooks]: library.readingBooks,
 			[UserLibraryFieldsEnum.finishedBooks]: library.finishedBooks,
@@ -196,7 +203,7 @@ export class UserService {
 		})
 
 		if (!bookExist)
-			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect,
 			finishedBooks: idSelect
@@ -252,7 +259,7 @@ export class UserService {
 		})
 
 		if (!bookExist)
-			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect
 		})
@@ -312,7 +319,11 @@ export class UserService {
 				savedBooks: idSelect
 			}
 		})
-		if (!user) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`)
+		if (!user)
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		return user.savedBooks.some(book => book.id === id)
 	}
 
@@ -324,7 +335,11 @@ export class UserService {
 			}
 		})
 
-		if (!bookExist) throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`)
+		if (!bookExist)
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -332,7 +347,11 @@ export class UserService {
 				savedBooks: idSelect
 			}
 		})
-		if (!user) throw new NotFoundException(`User ${ErrorsEnum.Not_Found}`)
+		if (!user)
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		const isSavedExist = user.savedBooks.some(book => book.id === id)
 		await this.prisma.activity.create({
 			data: {

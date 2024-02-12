@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { returnBookObject } from '../book/return.book.object'
 import { ActivityEnum } from '../user/user.types'
-import { ErrorsEnum } from '../utils/errors'
+import { serverError } from '../utils/call-error'
+import { AdminErrors } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type {
 	CreateCollectionDto,
@@ -12,6 +13,7 @@ import { returnCollectionObject } from './return.collection.object'
 
 @Injectable()
 export class CollectionService {
+	//TODO: сделать по нормальному колекции
 	constructor(private readonly prisma: PrismaService) {}
 	async byId(id: number, selectObject: Prisma.CollectionSelect = {}) {
 		const collection = await this.prisma.collection.findUnique({
@@ -24,9 +26,7 @@ export class CollectionService {
 			}
 		})
 		if (!collection)
-			throw new NotFoundException(
-				`Collection ${ErrorsEnum.Not_Found}`
-			).getResponse()
+			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.collectionNotFound)
 		return collection
 	}
 
@@ -53,9 +53,7 @@ export class CollectionService {
 		})
 
 		if (!collection)
-			throw new NotFoundException(
-				`Collection ${ErrorsEnum.Not_Found}`
-			).getResponse()
+			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.collectionNotFound)
 		await this.prisma.activity.create({
 			data: {
 				type: ActivityEnum.Visit_Collection,
@@ -102,9 +100,10 @@ export class CollectionService {
 			}
 		})
 		if (collectionExists)
-			throw new NotFoundException(
-				`Collection ${ErrorsEnum.Already_Exist}`
-			).getResponse()
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				AdminErrors.collectionAlreadyExist
+			)
 		return this.prisma.collection.create({
 			data: {
 				title: dto.title,
@@ -135,9 +134,7 @@ export class CollectionService {
 			}
 		})
 		if (booksExists.length !== dto.books.length)
-			throw new NotFoundException(
-				`Some books ${ErrorsEnum.Not_Found}`
-			).getResponse()
+			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.someBooksNotFound)
 
 		return this.prisma.collection.update({
 			where: {

@@ -1,9 +1,4 @@
-import {
-	BadRequestException,
-	HttpStatus,
-	Injectable,
-	NotFoundException
-} from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import type { User } from '@prisma/client'
@@ -12,7 +7,7 @@ import { OAuth2Client } from 'google-auth-library'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
 import { serverError } from '../utils/call-error'
-import { ErrorsEnum } from '../utils/errors'
+import { AuthErrors, GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { AuthDto, SignDto } from './dto/auth.dto'
 
@@ -55,9 +50,10 @@ export class AuthService {
 			}
 		})
 		if (oldUser)
-			throw new BadRequestException(
-				`User ${ErrorsEnum.Already_Exist}`
-			).getResponse()
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				AuthErrors.passwordOrEmailInvalid
+			)
 
 		const mostPopularGenres = await this.prisma.genre.findMany({
 			take: 3,
@@ -100,7 +96,7 @@ export class AuthService {
 
 		const data = ticket.getPayload()
 		if (!data?.sub)
-			return serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
+			return serverError(HttpStatus.BAD_REQUEST, AuthErrors.invalidGoogleToken)
 
 		const user = await this.prisma.user.findUnique({
 			where: {
@@ -138,7 +134,7 @@ export class AuthService {
 		if (oldUser)
 			return serverError(
 				HttpStatus.BAD_REQUEST,
-				`user ${ErrorsEnum.Already_Exist}`
+				AuthErrors.passwordOrEmailInvalid
 			)
 
 		const mostPopularGenres = await this.prisma.genre.findMany({
@@ -186,7 +182,7 @@ export class AuthService {
 	async refresh(refreshToken: string) {
 		const result: { id: number } = await this.jwt.verifyAsync(refreshToken)
 		if (!result)
-			throw new BadRequestException(ErrorsEnum.Invalid_Value).getResponse()
+			return serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
 		const user = await this.usersService.getUserById(result.id, {
 			email: true,
 			id: true
@@ -218,14 +214,16 @@ export class AuthService {
 			}
 		})
 		if (!user?.password)
-			throw new NotFoundException(
-				"Email or password doesn't work"
-			).getResponse()
+			return serverError(
+				HttpStatus.NOT_FOUND,
+				AuthErrors.passwordOrEmailInvalid
+			)
 		const isPasswordValid = await verify(user.password, dto.password)
 		if (!isPasswordValid)
-			throw new BadRequestException(
-				"Email or password doesn't work"
-			).getResponse()
+			return serverError(
+				HttpStatus.NOT_FOUND,
+				AuthErrors.passwordOrEmailInvalid
+			)
 
 		return user
 	}

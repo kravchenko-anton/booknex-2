@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { ActivityEnum } from '../user/user.types'
-import { ErrorsEnum } from '../utils/errors'
+import { serverError } from '../utils/call-error'
+import { GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { ReturnGenreObject } from './return.genre.object'
 
@@ -49,7 +50,10 @@ export class GenreService {
 			}
 		})
 		if (!genre)
-			throw new NotFoundException(`Genre ${ErrorsEnum.Not_Found}`).getResponse()
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		return genre
 	}
 }

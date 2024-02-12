@@ -1,11 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { ActivityEnum } from '../user/user.types'
 import { transformActivity } from '../utils/activity-transformer'
-import { ErrorsEnum } from '../utils/errors'
+import { serverError } from '../utils/call-error'
+import { GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 import type { FeedbackBookDto } from './dto/feedback.book.dto'
@@ -28,7 +29,10 @@ export class BookService {
 			}
 		})
 		if (!book)
-			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		return book
 	}
 
@@ -97,7 +101,10 @@ export class BookService {
 			}
 		})
 		if (!book)
-			throw new NotFoundException(`Book ${ErrorsEnum.Not_Found}`).getResponse()
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		const ebook: {
 			name: string
 			content: {
@@ -126,6 +133,7 @@ export class BookService {
 			file: ebook.map(({ content }) =>
 				content
 					.map(
+						// eslint-disable-next-line @typescript-eslint/no-shadow //TODO: fix this
 						({ title, content }) => `<label id="${title}"></label> ${content}`
 					)
 					.join(' ')
@@ -256,7 +264,8 @@ export class BookService {
 				}
 			}
 		})
-		if (!book) throw new NotFoundException('Book not found').getResponse()
+		if (!book)
+			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const { genres: dtoGenres, ...other } = dto
 
 		const majorGenre = await this.prisma.genre.findMany({
@@ -353,7 +362,11 @@ export class BookService {
 				genres: { select: ReturnGenreObject }
 			}
 		})
-		if (!book) new NotFoundException('Book not found').getResponse()
+		if (!book)
+			return serverError(
+				HttpStatus.BAD_REQUEST,
+				GlobalErrorsEnum.somethingWrong
+			)
 		const genreIds = book?.genres.map(g => g.id) || []
 		const similarBooks = await this.prisma.book.findMany({
 			where: {
