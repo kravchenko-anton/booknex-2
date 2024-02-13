@@ -64,7 +64,7 @@ module.exports = {
 			{
 				selector: 'typeParameter',
 				format: ['PascalCase'],
-				prefix: ['T']
+				prefix: ['T', 'K', 'V']
 			},
 			{
 				selector: 'interface',
@@ -81,7 +81,7 @@ module.exports = {
 			'error',
 			{
 				case: 'kebabCase',
-				ignore: ['use']
+				ignore: ['use', 'App']
 			}
 		],
 		'unicorn/better-regex': 2,
@@ -95,7 +95,6 @@ module.exports = {
 		'unicorn/prefer-array-flat': 2,
 		'unicorn/prefer-includes': 2,
 		'unicorn/prefer-top-level-await': 2,
-		'unicorn/prefer-spread': 2,
 		'unicorn/no-useless-spread': 2,
 		'unicorn/no-useless-fallback-in-spread': 2,
 		'unicorn/no-for-loop': 2,
@@ -190,6 +189,7 @@ module.exports = {
 		'@typescript-eslint/default-param-last': 2,
 
 		// warning rules
+		'unicorn/prefer-spread': 1,
 		'unicorn/consistent-function-scoping': 1,
 		'@typescript-eslint/no-explicit-any': 1,
 		'@typescript-eslint/no-shadow': [

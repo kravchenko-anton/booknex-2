@@ -132,7 +132,7 @@ SheetDescription.displayName = SheetPrimitive.Description.displayName
 const SheetComponent: FC<PropsWithChildren<DialogProperties>> = ({
 	children,
 	isOpen = false,
-	onClose = () => {}
+	onClose = () => null
 }) => (
 	<Sheet open={isOpen} onOpenChange={onClose}>
 		<SheetPortal>

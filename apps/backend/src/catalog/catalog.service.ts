@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
+import { Activities } from '@prisma/client'
 import { returnBookObject } from '../book/return.book.object'
-import { ActivityEnum } from '../user/user.types'
 import { PrismaService } from '../utils/prisma.service'
 
 @Injectable()
@@ -10,7 +10,7 @@ export class CatalogService {
 	async featured(userId: number) {
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Check_Catalog,
+				type: Activities.checkCatalog,
 				importance: 1,
 				user: {
 					connect: {

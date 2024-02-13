@@ -1,7 +1,7 @@
+import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Text } from 'react-native'
-import { Color } from 'global/colors'
 import { fontSettings } from './settings'
 import type { TitleProperties } from './types'
 
@@ -17,6 +17,7 @@ const Title: FC<TitleProperties> = ({
 	if (!children) return null
 	return (
 		<Text
+			numberOfLines={numberOfLines}
 			style={[
 				{
 					fontFamily: fontSettings[weight],
@@ -26,7 +27,6 @@ const Title: FC<TitleProperties> = ({
 				},
 				style
 			]}
-			numberOfLines={numberOfLines}
 			{...properties}
 		>
 			{children}

@@ -1,11 +1,11 @@
 'use client'
 import { Button, Field } from '@/components/ui'
+import { loginRoute } from '@/features/auth/secure-route'
 import { useAction } from '@/hooks'
-import { loginRoute } from '@/providers/secure-route'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
+import type { AuthFieldsType } from 'global/services-types/auth-types'
 import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
-import type { AuthFieldsType } from '../../mobile/src/features/auth/action/auth-types'
 
 const Index = () => {
 	const { mailLogin, googleLogin } = useAction()

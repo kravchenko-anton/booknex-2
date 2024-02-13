@@ -2,12 +2,12 @@ import { useDebounce } from 'global/utils/useDebounce'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-export interface ISearchFormData {
+export interface SearchFormDataType {
 	searchTerm: string
 }
 
 export const useSearchForm = () => {
-	const { control, watch, reset } = useForm<ISearchFormData>({
+	const { control, watch, reset } = useForm<SearchFormDataType>({
 		mode: 'onChange',
 		defaultValues: {
 			searchTerm: ''

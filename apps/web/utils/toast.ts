@@ -9,3 +9,12 @@ export const errorToast = (error: unknown, data?: ExternalToast) => {
 export const successToast = (message: string, data?: ExternalToast) => {
 	toast.success(message, data)
 }
+
+export const acceptToast = (
+	message: string,
+	data?: ExternalToast | undefined
+) => {
+	toast(message, {
+		...data
+	})
+}

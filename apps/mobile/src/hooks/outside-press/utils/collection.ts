@@ -1,9 +1,10 @@
+import type { FunctionType } from 'global/types'
 import type { RefObject } from 'react'
 import type { GestureResponderEvent } from 'react-native'
 
 export type ComponentReference = RefObject<any> | null
 
-let collection: { ref: ComponentReference; cb: () => void }[] = []
+let collection: { ref: ComponentReference; cb: FunctionType }[] = []
 
 export let isTouch: boolean | null
 export const setIsTouch = (value: boolean) => (isTouch = value)
@@ -31,7 +32,7 @@ export const onTouch = (event: GestureResponderEvent) => {
 
 export const register: (
 	reference: ComponentReference,
-	callback: () => void
+	callback: FunctionType
 ) => void = (reference, callback) => {
 	if (collection.some(c => c.ref === reference)) return
 	collection.push({ ref: reference, cb: callback })

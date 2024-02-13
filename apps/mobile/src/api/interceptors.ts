@@ -4,11 +4,11 @@ import {
 	getNewTokens
 } from '@/features/auth/action/auth-helper'
 import axios from 'axios'
-import { EMULATOR_SERVER_URL } from 'global/api-config'
+import { emulatorServerURL } from 'global/api-config'
 import { errorCatch } from 'global/utils/catch-error'
 
 const instance = axios.create({
-	baseURL: EMULATOR_SERVER_URL,
+	baseURL: emulatorServerURL,
 	headers: {
 		'Content-Type': 'application/json'
 	}

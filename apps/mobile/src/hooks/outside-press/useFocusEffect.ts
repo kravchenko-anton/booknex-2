@@ -1,10 +1,11 @@
+import type { FunctionType } from 'global/types'
 import { useCallback, useEffect, useRef } from 'react'
 import type { AppStateStatus } from 'react-native'
 import { AppState } from 'react-native'
 
 export const useFocusEffect = (
-	activeCallback: () => void,
-	inactiveCallback: () => void
+	activeCallback: FunctionType,
+	inactiveCallback: FunctionType
 ) => {
 	const appState = useRef(AppState.currentState)
 	const handleAppStateChange = useCallback(

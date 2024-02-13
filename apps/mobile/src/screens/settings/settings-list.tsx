@@ -1,6 +1,6 @@
 import type {
-	ListCategoryItemTypes,
-	ListItemTypes
+	ListCategoryItemType,
+	ListItemType
 } from '@/screens/settings/types'
 import { Title } from '@/ui'
 import { cn } from '@/utils'
@@ -13,7 +13,7 @@ export const Category = ({
 	children,
 	className,
 	...properties
-}: PropsWithChildren<ListCategoryItemTypes>) => (
+}: PropsWithChildren<ListCategoryItemType>) => (
 	<View
 		key={title}
 		className={cn('bg-dust mb-2 w-full rounded-xl', className)}
@@ -33,7 +33,7 @@ export const Item = ({
 	onPress,
 	bordered,
 	...properties
-}: ListItemTypes) => (
+}: ListItemType) => (
 	<Pressable
 		key={title}
 		className={cn(

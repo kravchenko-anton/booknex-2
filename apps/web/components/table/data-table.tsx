@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/table'
 import type { useReactTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
+import type { FunctionType } from 'global/types'
 import type { FC } from 'react'
 import * as React from 'react'
 
@@ -17,8 +18,8 @@ export interface DataTableProperties {
 	table: ReturnType<typeof useReactTable<any>>
 	totalPages: number
 	currentPage: number
-	previous: () => void
-	next: () => void
+	previous: FunctionType
+	next: FunctionType
 	canLoadMore?: boolean
 }
 const DataTable: FC<DataTableProperties> = ({

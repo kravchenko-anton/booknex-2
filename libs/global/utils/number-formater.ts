@@ -1,12 +1,12 @@
-export function nFormatter(number_: number) {
-	if (number_ >= 1_000_000_000) {
-		return (number_ / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'G'
+export function nFormatter(number: number) {
+	if (number >= 1_000_000_000) {
+		return (number / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'G'
 	}
-	if (number_ >= 1_000_000) {
-		return (number_ / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M'
+	if (number >= 1_000_000) {
+		return (number / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M'
 	}
-	if (number_ >= 1000) {
-		return (number_ / 1000).toFixed(1).replace(/\.0$/, '') + 'K'
+	if (number >= 1000) {
+		return (number / 1000).toFixed(1).replace(/\.0$/, '') + 'K'
 	}
-	return number_
+	return number
 }

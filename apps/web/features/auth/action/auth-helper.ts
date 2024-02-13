@@ -1,7 +1,10 @@
 import axios from 'axios'
-import { getAuthUrl, SERVER_URL } from 'global/api-config'
+import { getAuthUrl, serverURL } from 'global/api-config'
+import type {
+	AuthResponseType,
+	TokensType
+} from 'global/services-types/auth-types'
 import Cookies from 'js-cookie'
-import type { AuthResponseType, TokensType } from './auth-types'
 
 export const getAccessToken = () => {
 	console.log('getAccessToken')
@@ -42,7 +45,7 @@ export const getNewTokens = async () => {
 		.post<
 			string,
 			{ data: AuthResponseType }
-		>(SERVER_URL + getAuthUrl('/refresh'), { refreshToken })
+		>(serverURL + getAuthUrl('/refresh'), { refreshToken })
 		.then(result => result.data)
 	console.log(
 		'response',

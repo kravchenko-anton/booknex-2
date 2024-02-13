@@ -34,7 +34,7 @@ model Activity {
   genreId       Int?
   bookId        Int?
   userId        Int?
-  type          String
+  type          Activities
   importance    Int
   user          User?     @relation(fields: [userId], references: [id])
 }
@@ -105,7 +105,7 @@ model User {
   picture         String       @default("fallback.png")
   fullName        String       @default("unknown")
   location        String       @default("unknown")
-  role            Role         @default(USER)
+  role            Role         @default(user)
   feedback        Feedback[]
   savedBooks      Book[]       @relation("SavedBooks")
   finishedBooks   Book[]       @relation("FinishedBooks")
@@ -125,8 +125,26 @@ model Collection {
 }
 
  enum Role {
-  USER
-  ADMIN
+  user
+  admin
 }
 
 
+
+enum Activities {
+  startedReading
+  finishedReading
+  savedBook
+  removeFromSaved
+  checkCatalog
+  feedbackBook
+  visitBook
+  createBook
+  updateBook
+  visitGenre
+  visitCollection
+  getEbook
+  updateRecommendations
+  registerNewUser
+  loginUser
+}

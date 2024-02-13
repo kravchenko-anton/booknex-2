@@ -1,4 +1,4 @@
-import * as authActions from '@/redux/auth/auth-action'
+import * as authActions from '@/features/auth/action/auth-action'
 
 export const rootAction = {
 	...authActions

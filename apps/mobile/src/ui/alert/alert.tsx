@@ -2,6 +2,7 @@ import type { IconType } from '@/types/global'
 import { Button, Title } from '@/ui'
 import type { VividPaletteType } from 'global/colors'
 import { Color } from 'global/colors'
+import type { FunctionType } from 'global/types'
 import type { FC } from 'react'
 import { Modal as DefaultModal, View } from 'react-native'
 
@@ -10,8 +11,8 @@ const Alert: FC<{
 	description: string
 	acceptText: string
 	type: VividPaletteType
-	onAccept: () => void
-	onClose: () => void
+	onAccept: FunctionType
+	onClose: FunctionType
 }> = ({ acceptText, description, onClose, icon: Icon, onAccept, type }) => (
 	<DefaultModal
 		transparent

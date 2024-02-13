@@ -45,10 +45,7 @@ export const useBook = () => {
 
 	const startReadingBook = async () => {
 		if (!book)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		await startReading(book.id)
 		await queryClient
 			.invalidateQueries({

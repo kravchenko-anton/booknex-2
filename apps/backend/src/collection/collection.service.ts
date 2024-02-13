@@ -1,7 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import type { Prisma } from '@prisma/client'
+import { Activities, type Prisma } from '@prisma/client'
 import { returnBookObject } from '../book/return.book.object'
-import { ActivityEnum } from '../user/user.types'
 import { serverError } from '../utils/call-error'
 import { AdminErrors } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
@@ -26,7 +25,7 @@ export class CollectionService {
 			}
 		})
 		if (!collection)
-			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.collectionNotFound)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.collectionNotFound)
 		return collection
 	}
 
@@ -53,10 +52,10 @@ export class CollectionService {
 		})
 
 		if (!collection)
-			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.collectionNotFound)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.collectionNotFound)
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Visit_Collection,
+				type: Activities.visitCollection,
 				importance: 1,
 				user: {
 					connect: {
@@ -100,7 +99,7 @@ export class CollectionService {
 			}
 		})
 		if (collectionExists)
-			return serverError(
+			throw serverError(
 				HttpStatus.BAD_REQUEST,
 				AdminErrors.collectionAlreadyExist
 			)
@@ -134,7 +133,7 @@ export class CollectionService {
 			}
 		})
 		if (booksExists.length !== dto.books.length)
-			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.someBooksNotFound)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.someBooksNotFound)
 
 		return this.prisma.collection.update({
 			where: {

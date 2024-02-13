@@ -1,12 +1,10 @@
 import ActivityList from '@/components/dialogs/activity-list'
+import { acceptToast } from '@/utils/toast'
 import type { Role } from '@prisma/client'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { ActivitiesOutput } from 'backend/src/utils/activity-transformer'
 import { getFileUrl } from 'global/api-config'
 import { timeAgo } from 'global/utils/time-format'
-import Image from 'next/image'
-import * as React from 'react'
-import { toast } from 'sonner'
 
 type ColumnType = ColumnDef<{
 	id: number
@@ -43,7 +41,7 @@ export const columns = ({
 		header: () => <p className='text-center text-xl'>Info</p>,
 		cell: ({ row }) => (
 			<div className=' gap-4'>
-				<Image
+				<img
 					alt={row.original.email}
 					src={getFileUrl(row.original.picture || 'fallback.png')}
 					width={100}
@@ -57,7 +55,7 @@ export const columns = ({
 				<button
 					className='bg-danger mt-1 rounded-md p-1 text-white'
 					onClick={() =>
-						toast('Are you sure you want to delete this user?', {
+						acceptToast('Are you sure you want to delete this user?', {
 							action: {
 								label: 'Delete',
 								onClick: () => remove(row.original.id)

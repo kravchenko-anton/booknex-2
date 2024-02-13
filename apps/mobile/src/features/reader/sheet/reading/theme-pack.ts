@@ -18,8 +18,8 @@ export interface ThemePackType {
 }
 
 const statusBar = {
-	light: 'light-content' as 'light-content',
-	dark: 'dark-content' as 'dark-content'
+	light: 'light-content' as const,
+	dark: 'dark-content' as const
 }
 
 export const themePack: ThemePackType[] = [

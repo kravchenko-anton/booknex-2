@@ -2,13 +2,13 @@ import {
 	deleteTokensStorage,
 	getAccessToken,
 	getNewTokens
-} from '@/redux/auth/auth-helper'
+} from '@/features/auth/action/auth-helper'
 import axios from 'axios'
-import { SERVER_URL } from 'global/api-config'
+import { serverURL } from 'global/api-config'
 import { errorCatch } from 'global/utils/catch-error'
 
 const instance = axios.create({
-	baseURL: SERVER_URL,
+	baseURL: serverURL,
 	headers: {
 		'Content-Type': 'application/json'
 	}

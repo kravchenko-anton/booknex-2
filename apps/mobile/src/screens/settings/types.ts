@@ -5,11 +5,11 @@ import type {
 import type { FC } from 'react'
 import type { SvgProps } from 'react-native-svg'
 
-export interface ListCategoryItemTypes extends ViewDefaultProperties {
+export interface ListCategoryItemType extends ViewDefaultProperties {
 	title: string
 }
 
-export interface ListItemTypes
+export interface ListItemType
 	extends Omit<PressableDefaultProperties, 'pointerEvents' | 'style'> {
 	title: string
 	bordered?: boolean

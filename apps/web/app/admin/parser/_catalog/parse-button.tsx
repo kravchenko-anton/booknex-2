@@ -2,14 +2,15 @@ import CallParserDialog from '@/app/admin/parser/_catalog/dialogs/call-parser'
 import { Button } from '@/components/ui'
 import type { DialogProperties } from '@/components/ui/base-components-types'
 import { parserService } from '@/services/parser/parser-services'
+import { successToast } from '@/utils/toast'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ParserDtoPayload } from 'global/services-types/parser-types'
+import type { FunctionType } from 'global/types'
 import type { FC } from 'react'
-import { toast } from 'sonner'
 
 interface ParseButtonProperties extends DialogProperties {
-	openParserDialog?: () => void
+	openParserDialog?: FunctionType
 }
 
 type LastParsedData = {
@@ -29,7 +30,7 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 		mutationKey: ['parse-templates'],
 		mutationFn: (dto: ParserDtoPayload) => parserService.parse(dto),
 		onSuccess: async () => {
-			toast.success('Books parsed')
+			successToast('Books parsed')
 			await queryClient.invalidateQueries({
 				queryKey: ['book-templates']
 			})

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { EMULATOR_SERVER_URL, getAuthUrl } from 'global/api-config'
+import { emulatorServerURL, getAuthUrl } from 'global/api-config'
 import EncryptedStorage from 'react-native-encrypted-storage'
 import type { AuthResponseType, TokensType } from './auth-types'
 
@@ -35,7 +35,7 @@ export const getNewTokens = async () => {
 		.post<
 			string,
 			{ data: AuthResponseType }
-		>(EMULATOR_SERVER_URL + getAuthUrl('/refresh'), { refreshToken })
+		>(emulatorServerURL + getAuthUrl('/refresh'), { refreshToken })
 		.then(result => result.data)
 	console.log(
 		'response',

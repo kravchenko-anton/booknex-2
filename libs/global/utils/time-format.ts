@@ -20,7 +20,7 @@ export function timeAgo(date: Date) {
 		seconds: 1
 	}
 	const secondsElapsed = (date.getTime() - Date.now()) / 1000
-	for (let key in ranges) {
+	for (const key in ranges) {
 		if (!(ranges[key] < Math.abs(secondsElapsed))) continue
 		const delta = secondsElapsed / ranges[key]
 		return formatter.format(

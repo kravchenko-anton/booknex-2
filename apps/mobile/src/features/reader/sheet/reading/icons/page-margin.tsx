@@ -19,9 +19,9 @@ const PageMarginIcon: FC<PageMarginIconProperties> = ({
 	>
 		{Array.from({ length: 4 })
 			.fill(0)
-			.map((_, index) => (
+			.map((_skip, index) => (
 				<View
-					key={`${index} margin`}
+					key={`${index} margin`} // eslint-disable-line react/no-array-index-key -- we don't have a unique key
 					className={lineStyle}
 					style={{
 						backgroundColor: backgroundColor

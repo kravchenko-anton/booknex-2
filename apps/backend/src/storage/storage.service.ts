@@ -10,6 +10,7 @@ import { Role } from '@prisma/client'
 import sharp from 'sharp'
 import type { RoleType } from '../auth/auth.service'
 import { serverError } from '../utils/call-error'
+import type { EnvironmentType } from '../utils/environment-types.ts'
 import { AdminErrors, GlobalErrorsEnum } from '../utils/errors'
 import { optimizeFilename } from '../utils/string.functions'
 import type { StorageFolderType } from './storage.types'
@@ -17,18 +18,15 @@ import { StorageFolderArray, StorageFolderEnum } from './storage.types'
 
 @Injectable()
 export class StorageService {
-	//TODO: переделать везде на configService и сделать типизацию env файла по всему проекту   и в мобилке и в web
-	//@ts-ignore
+	constructor(private readonly configService: ConfigService<EnvironmentType>) {}
 	private readonly s3 = new S3Client({
-		endpoint: process.env.AWS_ENDPOINT,
-		region: process.env.AWS_REGION,
+		endpoint: this.configService.get('AWS_ENDPOINT'),
+		region: this.configService.get('AWS_REGION'),
 		credentials: {
-			accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-			secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+			accessKeyId: this.configService.get('AWS_ACCESS_KEY_ID'),
+			secretAccessKey: this.configService.get('AWS_SECRET_ACCESS_KEY')
 		}
 	})
-
-	constructor(private readonly configService: ConfigService) {}
 
 	async delete(filename: string) {
 		if (!filename)
@@ -41,7 +39,7 @@ export class StorageService {
 				})
 			)
 		} catch {
-			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
 		}
 		await this.s3
 			.send(
@@ -66,10 +64,10 @@ export class StorageService {
 		folder: StorageFolderType
 		role: RoleType
 	}) {
-		if (!(role === Role.ADMIN))
-			return serverError(HttpStatus.FORBIDDEN, AdminErrors.notEnoughRights)
+		if (!(role === Role.admin))
+			throw serverError(HttpStatus.FORBIDDEN, AdminErrors.notEnoughRights)
 		if (!StorageFolderArray.includes(folder)) {
-			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFolder)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFolder)
 		}
 		console.log('file', file)
 		const finalFile =

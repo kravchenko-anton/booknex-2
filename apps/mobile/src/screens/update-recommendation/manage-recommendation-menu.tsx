@@ -2,11 +2,12 @@ import { userServices } from '@/api/services/user/user-service'
 import { Button, Title } from '@/ui'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
+import type { FunctionType } from 'global/types'
 import type { FC } from 'react'
 import { View } from 'react-native'
 
 interface ManageRecommendationProperties {
-	onManagePress: () => void
+	onManagePress: FunctionType
 }
 
 const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({

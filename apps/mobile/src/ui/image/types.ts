@@ -5,7 +5,7 @@ export interface DimensionsType {
 	height?: number
 }
 
-export interface Types
+export interface ImageProperties
 	extends Omit<ImageDefaultProperties, 'source'>,
 		DimensionsType {
 	fullSize?: boolean

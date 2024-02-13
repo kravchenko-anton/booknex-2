@@ -1,6 +1,7 @@
 import { useTypedNavigation } from '@/hooks'
 import { Title } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
+import type { FunctionType } from 'global/types'
 import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
 import { memo } from 'react'
@@ -12,8 +13,9 @@ const ReadingUi: FC<{
 	title: string
 	visible: boolean
 	progress: number
-	onChapterIconPress: () => void
-	onSelectThemeIconPress: () => void
+	onChapterIconPress: FunctionType
+	onSelectThemeIconPress: FunctionType
+	//TODO: типизировать
 	colorPalette: any
 }> = ({
 	visible = false,

@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
 	}
 })
 
-const asyncStoragePersister = createAsyncStoragePersister({
+const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
 
@@ -39,7 +39,7 @@ export default function app() {
 			>
 				<PersistQueryClientProvider
 					client={queryClient}
-					persistOptions={{ persister: asyncStoragePersister }}
+					persistOptions={{ persister: asyncStoragePersist }}
 				>
 					<ClickOutsideProvider>
 						<GestureHandlerRootView

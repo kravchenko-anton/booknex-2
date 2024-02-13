@@ -3,9 +3,9 @@ import { getFileUrl } from 'global/api-config'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Image as DefaultImage } from 'react-native'
-import type { Types } from './types'
+import type { ImageProperties } from './types'
 
-const Image: FC<Types> = ({
+const Image: FC<ImageProperties> = ({
 	height = 100,
 	width = 100,
 	borderRadius = 12,

@@ -1,14 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import type { Prisma } from '@prisma/client'
+import { Activities, type Prisma } from '@prisma/client'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { transformActivity } from '../utils/activity-transformer'
 import { serverError } from '../utils/call-error'
 import { GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
+import { idSelect } from '../utils/return.default.object'
 import type { UserUpdateSelectedGenresDto } from './dto'
 import { returnUserObject } from './return.user.object'
-import { ActivityEnum, UserLibraryFieldsEnum, idSelect } from './user.types'
 
 @Injectable()
 export class UserService {
@@ -23,10 +23,7 @@ export class UserService {
 			}
 		})
 		if (!user)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		return user
 	}
 
@@ -46,14 +43,12 @@ export class UserService {
 			}
 		})
 		if (!library)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		const { readingBooks, finishedBooks, savedBooks } = library
 		return {
-			[UserLibraryFieldsEnum.readingBooks]: library.readingBooks,
-			[UserLibraryFieldsEnum.finishedBooks]: library.finishedBooks,
-			[UserLibraryFieldsEnum.savedBooks]: library.savedBooks
+			readingBooks,
+			finishedBooks,
+			savedBooks
 		}
 	}
 
@@ -88,7 +83,7 @@ export class UserService {
 		})
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Update_Recommendations,
+				type: Activities.updateRecommendations,
 				importance: 5,
 				user: {
 					connect: {
@@ -203,7 +198,7 @@ export class UserService {
 		})
 
 		if (!bookExist)
-			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect,
 			finishedBooks: idSelect
@@ -214,7 +209,7 @@ export class UserService {
 
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Started_Reading,
+				type: Activities.startedReading,
 				importance: 2,
 				user: {
 					connect: {
@@ -259,7 +254,7 @@ export class UserService {
 		})
 
 		if (!bookExist)
-			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect
 		})
@@ -267,7 +262,7 @@ export class UserService {
 		if (!isReadingExist) return
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Finished_Reading,
+				type: Activities.finishedReading,
 				importance: 3,
 				user: {
 					connect: {
@@ -320,10 +315,7 @@ export class UserService {
 			}
 		})
 		if (!user)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		return user.savedBooks.some(book => book.id === id)
 	}
 
@@ -336,10 +328,7 @@ export class UserService {
 		})
 
 		if (!bookExist)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -348,16 +337,11 @@ export class UserService {
 			}
 		})
 		if (!user)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const isSavedExist = user.savedBooks.some(book => book.id === id)
 		await this.prisma.activity.create({
 			data: {
-				type: isSavedExist
-					? ActivityEnum.Remove_From_Saved
-					: ActivityEnum.Add_To_Saved,
+				type: isSavedExist ? Activities.removeFromSaved : Activities.savedBook,
 				importance: 1,
 				user: {
 					connect: {

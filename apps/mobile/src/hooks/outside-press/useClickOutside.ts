@@ -1,3 +1,4 @@
+import type { FunctionType } from 'global/types'
 import { useEffect, useRef, type RefObject } from 'react'
 import type { View } from 'react-native'
 import { useFocusEffect } from './useFocusEffect'
@@ -9,7 +10,7 @@ interface HookConfigType {
 }
 
 export const useClickOutside = <T = View>(
-	callback: () => void,
+	callback: FunctionType,
 	config?: HookConfigType
 ): RefObject<T> => {
 	const callbackReference = useRef(callback)

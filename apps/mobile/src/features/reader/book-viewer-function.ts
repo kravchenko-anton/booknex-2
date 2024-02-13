@@ -1,8 +1,9 @@
 import { Color } from 'global/colors'
+import type { FunctionType } from 'global/types'
 
 let lastTap: number | null
 let timer: NodeJS.Timeout
-export const handleDoublePress = (handleAction: () => void) => {
+export const handleDoublePress = (handleAction: FunctionType) => {
 	if (lastTap) {
 		handleAction()
 		clearTimeout(timer)

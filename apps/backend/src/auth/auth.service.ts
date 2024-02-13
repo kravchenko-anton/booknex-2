@@ -1,12 +1,10 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import type { User } from '@prisma/client'
-import { Role } from '@prisma/client'
+import { Activities, Role, type User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
 import { UserService } from '../user/user.service'
-import { ActivityEnum } from '../user/user.types'
 import { serverError } from '../utils/call-error'
 import { AuthErrors, GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
@@ -46,7 +44,7 @@ export class AuthService {
 			}
 		})
 		if (oldUser)
-			return serverError(
+			throw serverError(
 				HttpStatus.BAD_REQUEST,
 				AuthErrors.passwordOrEmailInvalid
 			)
@@ -68,7 +66,7 @@ export class AuthService {
 		})
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Register_New_User,
+				type: Activities.registerNewUser,
 				importance: 1,
 				user: {
 					connect: {
@@ -92,7 +90,7 @@ export class AuthService {
 
 		const data = ticket.getPayload()
 		if (!data?.sub)
-			return serverError(HttpStatus.BAD_REQUEST, AuthErrors.invalidGoogleToken)
+			throw serverError(HttpStatus.BAD_REQUEST, AuthErrors.invalidGoogleToken)
 
 		const user = await this.prisma.user.findUnique({
 			where: {
@@ -105,7 +103,7 @@ export class AuthService {
 			await this.prisma.activity.create({
 				data: {
 					importance: 1,
-					type: ActivityEnum.Login_User,
+					type: Activities.loginUser,
 					user: {
 						connect: {
 							id: user.id
@@ -121,14 +119,14 @@ export class AuthService {
 		}
 
 		if (!data?.email)
-			return serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
+			throw serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
 		const oldUser = await this.prisma.user.findUnique({
 			where: {
 				email: data.email
 			}
 		})
 		if (oldUser)
-			return serverError(
+			throw serverError(
 				HttpStatus.BAD_REQUEST,
 				AuthErrors.passwordOrEmailInvalid
 			)
@@ -146,7 +144,7 @@ export class AuthService {
 				selectedGenres: {
 					connect: mostPopularGenres
 				},
-				role: Role.USER,
+				role: Role.user,
 				fullName:
 					data.given_name && data.family_name
 						? `${data.given_name} ${data.family_name}`
@@ -160,7 +158,7 @@ export class AuthService {
 		await this.prisma.activity.create({
 			data: {
 				importance: 1,
-				type: ActivityEnum.Register_New_User,
+				type: Activities.registerNewUser,
 				user: {
 					connect: {
 						id: newUser.id
@@ -178,7 +176,7 @@ export class AuthService {
 	async refresh(refreshToken: string) {
 		const result: { id: number } = await this.jwt.verifyAsync(refreshToken)
 		if (!result)
-			return serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
 		const user = await this.usersService.getUserById(result.id, {
 			email: true,
 			id: true
@@ -210,16 +208,10 @@ export class AuthService {
 			}
 		})
 		if (!user?.password)
-			return serverError(
-				HttpStatus.NOT_FOUND,
-				AuthErrors.passwordOrEmailInvalid
-			)
+			throw serverError(HttpStatus.NOT_FOUND, AuthErrors.passwordOrEmailInvalid)
 		const isPasswordValid = await verify(user.password, dto.password)
 		if (!isPasswordValid)
-			return serverError(
-				HttpStatus.NOT_FOUND,
-				AuthErrors.passwordOrEmailInvalid
-			)
+			throw serverError(HttpStatus.NOT_FOUND, AuthErrors.passwordOrEmailInvalid)
 
 		return user
 	}

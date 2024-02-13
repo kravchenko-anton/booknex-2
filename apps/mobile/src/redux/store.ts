@@ -1,8 +1,8 @@
+import { rtkQueryErrorLogger } from '@/redux/middlewares/error.middleware'
 import { reducers } from '@/redux/root-reducer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { configureStore } from '@reduxjs/toolkit'
 import { persistReducer, persistStore } from 'redux-persist'
-import { rtkQueryErrorLogger } from '../../../web/redux/middlewares/error.middleware'
 
 const persistConfig = {
 	key: 'root',

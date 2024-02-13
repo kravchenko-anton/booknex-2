@@ -1,9 +1,8 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import type { Prisma } from '@prisma/client'
+import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
-import { ActivityEnum } from '../user/user.types'
 import { transformActivity } from '../utils/activity-transformer'
 import { serverError } from '../utils/call-error'
 import { GlobalErrorsEnum } from '../utils/errors'
@@ -29,10 +28,7 @@ export class BookService {
 			}
 		})
 		if (!book)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		return book
 	}
 
@@ -101,10 +97,7 @@ export class BookService {
 			}
 		})
 		if (!book)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const ebook: {
 			name: string
 			content: {
@@ -114,7 +107,7 @@ export class BookService {
 		}[] = await fetch(getFileUrl(book.ebook)).then(result => result.json())
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Get_Ebook,
+				type: Activities.getEbook,
 				importance: 1,
 				book: {
 					connect: {
@@ -138,17 +131,13 @@ export class BookService {
 					)
 					.join(' ')
 			),
-			chapters: ebook.map(({ name, content }) => {
-				return {
-					name,
-					children: content.map(({ title }) => {
-						return {
-							title,
-							link: `#${title}`
-						}
-					})
-				}
-			})
+			chapters: ebook.map(({ name, content }) => ({
+				name,
+				children: content.map(({ title }) => ({
+					title,
+					link: `#${title}`
+				}))
+			}))
 		}
 	}
 
@@ -217,7 +206,7 @@ export class BookService {
 				},
 				activities: {
 					create: {
-						type: ActivityEnum.Create_Book,
+						type: Activities.createBook,
 						importance: 9
 					}
 				},
@@ -230,9 +219,7 @@ export class BookService {
 				ebook: dto.ebook,
 				author: dto.author,
 				genres: {
-					connect: dto.genres.map(g => {
-						return { id: g }
-					})
+					connect: dto.genres.map(g => ({ id: g }))
 				}
 			}
 		})
@@ -271,7 +258,7 @@ export class BookService {
 			}
 		})
 		if (!book)
-			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const { genres: dtoGenres, ...other } = dto
 
 		const majorGenre = await this.prisma.genre.findMany({
@@ -298,9 +285,7 @@ export class BookService {
 				...other,
 				...(dtoGenres && {
 					genres: {
-						set: dtoGenres.map(g => {
-							return { id: g }
-						})
+						set: dtoGenres.map(g => ({ id: g }))
 					},
 					majorGenre: {
 						connect: {
@@ -313,7 +298,7 @@ export class BookService {
 
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Update_Book,
+				type: Activities.updateBook,
 				importance: 9,
 				book: {
 					connect: {
@@ -329,7 +314,7 @@ export class BookService {
 		await this.getBookById(bookId)
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Feedback_Book,
+				type: Activities.feedbackBook,
 				importance: 4,
 				user: {
 					connect: {
@@ -371,10 +356,7 @@ export class BookService {
 			}
 		})
 		if (!book)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const genreIds = book?.genres.map(g => g.id) || []
 		const similarBooks = await this.prisma.book.findMany({
 			where: {
@@ -388,7 +370,7 @@ export class BookService {
 		})
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Visit_Book,
+				type: Activities.visitBook,
 				importance: 1,
 				user: {
 					connect: {
@@ -411,9 +393,7 @@ export class BookService {
 						a.genres.filter(g => genreIds?.includes(g.id)).length
 				)
 				.slice(0, 10)
-				.map(({ genres, ...rest }) => {
-					return { ...rest }
-				})
+				.map(({ genres, ...rest }) => ({ ...rest }))
 		}
 	}
 }

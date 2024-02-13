@@ -15,8 +15,8 @@ const Dropzone = ({
 	style,
 	accept = 'image/*',
 	variant = 'foreground',
-	onChange = () => {},
-	onFileDelete = () => {},
+	onChange = () => null,
+	onFileDelete = () => null,
 	size = 'sm',
 	...properties
 }: DropzoneProperties) => {

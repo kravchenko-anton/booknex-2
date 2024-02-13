@@ -9,13 +9,12 @@ import Loader from '@/components/ui/loader/loader'
 import { bookService } from '@/services/book/book-service'
 import { cn } from '@/utils'
 import { useUploadFile } from '@/utils/files'
-import { successToast } from '@/utils/toast'
+import { acceptToast, successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
 import type { BookUpdatePayload } from 'global/services-types/book-types'
 import { useParams, useRouter } from 'next/navigation'
 import * as React from 'react'
-import { toast } from 'sonner'
 
 const Page = () => {
 	const { upload } = useUploadFile()
@@ -120,7 +119,7 @@ const Page = () => {
 							<button
 								className={cn('bg-danger mt-1 rounded-md px-2 py-1 text-white')}
 								onClick={() =>
-									toast('Are you sure you want to delete this book?', {
+									acceptToast('Are you sure you want to delete this book?', {
 										action: {
 											label: 'Delete',
 											onClick: () => remove(book.id)

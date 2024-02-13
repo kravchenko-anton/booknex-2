@@ -56,7 +56,7 @@ export class CreateBookDto implements BookPayload {
 	pages: number
 
 	@ApiProperty({
-		example: 800424,
+		example: 1_000_000,
 		description: 'Number of goodRead reviews',
 		required: true
 	})
@@ -135,7 +135,7 @@ export class EditBookDto implements Partial<BookUpdatePayload> {
 	pages: number
 
 	@ApiProperty({
-		example: 800424,
+		example: 800_424,
 		description: 'Number of goodRead reviews',
 		required: false
 	})

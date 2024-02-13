@@ -1,8 +1,9 @@
 export interface DialogProperties {
 	isOpen: boolean
-	onClose: () => void
+	onClose: FunctionType
 }
 
+import type { FunctionType } from 'global/types'
 import type {
 	ButtonHTMLAttributes,
 	DetailedHTMLProps,

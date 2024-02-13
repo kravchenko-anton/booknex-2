@@ -2,6 +2,7 @@ import { useAction } from '@/hooks'
 import { cn } from '@/utils'
 import { Book, Graph, Logout, Settings, User } from 'icons'
 import { usePathname } from 'next/navigation'
+import type { FC } from 'react'
 
 export const iconsList = [
 	{ icon: Graph, link: '/admin/dashboard', name: 'Dashboard' },
@@ -11,7 +12,7 @@ export const iconsList = [
 	// { icon: Library, link: '/admin/collections', name: 'Collections' }
 ]
 
-export default function Sidebar(): JSX.Element {
+export const Sidebar: FC = () => {
 	const { logout } = useAction()
 	const activePath = usePathname()
 	return (
@@ -57,3 +58,5 @@ export default function Sidebar(): JSX.Element {
 		</div>
 	)
 }
+
+export default Sidebar

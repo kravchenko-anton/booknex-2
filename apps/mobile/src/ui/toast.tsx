@@ -7,7 +7,7 @@ import RnToast, { BaseToast } from 'react-native-toast-message'
 const options = () => ({
 	style: {
 		backgroundColor: Color.foreground,
-		alignItems: 'center' as 'center',
+		alignItems: 'center' as const,
 		borderRadius: 12,
 		height: 45,
 		borderColor: Color.muted,
@@ -28,6 +28,7 @@ const Toast: FC = () => (
 		config={{
 			success: properties => (
 				<BaseToast
+					text1NumberOfLines={2}
 					renderLeadingIcon={() => (
 						<OkHandEmoji className='ml-2' width={30} height={30} />
 					)}
@@ -37,6 +38,7 @@ const Toast: FC = () => (
 			),
 			error: properties => (
 				<BaseToast
+					text1NumberOfLines={2}
 					renderLeadingIcon={() => (
 						<ThumbDownEmoji className='ml-2' width={30} height={30} />
 					)}

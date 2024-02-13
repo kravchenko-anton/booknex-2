@@ -1,7 +1,7 @@
 import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { EMULATOR_SERVER_URL, getAuthUrl } from 'global/api-config'
+import { emulatorServerURL, getAuthUrl } from 'global/api-config'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type {
 	AuthFieldsType,
@@ -20,7 +20,7 @@ export const googleLogin = createAsyncThunk<
 		console.log('socialId', socialId)
 		const loginResponse = await axios
 			.post<googleAuthResponseType>(
-				EMULATOR_SERVER_URL + getAuthUrl('/google-sign'),
+				emulatorServerURL + getAuthUrl('/google-sign'),
 				{
 					socialId
 				}
@@ -47,7 +47,7 @@ export const mailRegister = createAsyncThunk<
 	try {
 		const registerResponse = await axios
 			.post<AuthResponseType>(
-				EMULATOR_SERVER_URL + getAuthUrl('/mail-register'),
+				emulatorServerURL + getAuthUrl('/mail-register'),
 				{
 					...properties
 				}
@@ -68,13 +68,10 @@ export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const loginResponse = await axios
-				.post<AuthResponseType>(
-					EMULATOR_SERVER_URL + getAuthUrl('/mail-login'),
-					{
-						email,
-						password
-					}
-				)
+				.post<AuthResponseType>(emulatorServerURL + getAuthUrl('/mail-login'), {
+					email,
+					password
+				})
 				.then(response => response.data)
 			await saveTokensStorage({
 				accessToken: loginResponse.accessToken,

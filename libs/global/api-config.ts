@@ -1,5 +1,5 @@
-export const SERVER_URL = 'http://localhost:7777' + '/api'
-export const EMULATOR_SERVER_URL = 'http://10.0.2.2:7777' + '/api'
+export const serverURL = 'http://localhost:7777' + '/api'
+export const emulatorServerURL = 'http://10.0.2.2:7777' + '/api'
 export const getAuthUrl = (string: string) => `/auth${string}`
 export const getUsersUrl = (string: string) => `/user${string}`
 export const getAdminUrl = (string: string) => `/admin${string}`

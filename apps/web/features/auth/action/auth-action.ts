@@ -3,22 +3,24 @@ import { Role } from '@prisma/client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { GlobalErrorsEnum } from 'backend/src/utils/errors'
-import { SERVER_URL, getAuthUrl } from 'global/api-config'
-import type { AuthFieldsType } from '../../../mobile/src/features/auth/action/auth-types'
+import { getAuthUrl, serverURL } from 'global/api-config'
+import type {
+	AuthFieldsType,
+	AuthResponseType
+} from 'global/services-types/auth-types'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
-import type { AuthResponseType } from './auth-types'
 
 export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const loginResponse = await axios
-				.post<AuthResponseType>(SERVER_URL + getAuthUrl('/mail-login'), {
+				.post<AuthResponseType>(serverURL + getAuthUrl('/mail-login'), {
 					email,
 					password
 				})
 				.then(response => response.data)
-			if (loginResponse.user.role !== Role.ADMIN)
+			if (loginResponse.user.role !== Role.admin)
 				return thunkAPI.rejectWithValue('You are not admin')
 			saveTokensStorage({
 				accessToken: loginResponse.accessToken,
@@ -42,11 +44,11 @@ export const googleLogin = createAsyncThunk<
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
 		const loginResponse = await axios
-			.post<AuthResponseType>(SERVER_URL + getAuthUrl('/google-sign'), {
+			.post<AuthResponseType>(serverURL + getAuthUrl('/google-sign'), {
 				socialId
 			})
 			.then(response => response.data)
-		if (loginResponse.user.role !== 'ADMIN')
+		if (loginResponse.user.role !== Role.admin)
 			return thunkAPI.rejectWithValue(GlobalErrorsEnum.somethingWrong)
 		saveTokensStorage({
 			accessToken: loginResponse.accessToken,

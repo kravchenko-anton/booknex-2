@@ -16,11 +16,14 @@ const Providers = ({ children }: PropsWithChildren) => {
 		}
 	})
 
+	const clientId = process.env.CLIENT_ID
+	if (!clientId) throw new Error('Client id is not defined')
+
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
 				<QueryClientProvider client={queryClient}>
-					<GoogleOAuthProvider clientId={String(process.env.CLIENT_ID)}>
+					<GoogleOAuthProvider clientId={clientId}>
 						{children}
 						<Toaster />
 					</GoogleOAuthProvider>

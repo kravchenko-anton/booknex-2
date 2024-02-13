@@ -1,6 +1,7 @@
 /* eslint @typescript-eslint/no-shadow: 0 */
 /* eslint @typescript-eslint/no-loop-func: 0 */
 
+import prettify from '@liquify/prettify'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import EPub from 'epub2'
 import { JSDOM } from 'jsdom'
@@ -96,7 +97,7 @@ export class ParserService {
 
 	async unfold(file: Express.Multer.File) {
 		if (!file.buffer && file.mimetype !== 'application/epub+zip')
-			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFile)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFile)
 		return new Promise(resolve => {
 			const epub = new EPub(file.buffer as unknown as string)
 			epub.on('end', function () {
@@ -110,8 +111,8 @@ export class ParserService {
 
 									const updatedContent = async () => {
 										const dom = new JSDOM(String(text))
-										// eslint-disable-next-line unicorn/prefer-module -- it doesn't work with esm
-										const prettify = require('@liquify/prettify')
+
+										//TODO: проверить тут работу unfolda без require импорта
 										const elements = dom.window.document.querySelectorAll('*')
 										for (const element of elements) {
 											if (
@@ -156,7 +157,10 @@ export class ParserService {
 									return null
 								})
 							} catch {
-								serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidChapter)
+								throw serverError(
+									HttpStatus.BAD_REQUEST,
+									AdminErrors.invalidChapter
+								)
 							}
 						})
 				)

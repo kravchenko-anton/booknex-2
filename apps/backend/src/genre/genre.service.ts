@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { ActivityEnum } from '../user/user.types'
+import { Activities } from '@prisma/client'
 import { serverError } from '../utils/call-error'
 import { GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
@@ -20,7 +20,7 @@ export class GenreService {
 	async byId(id: number, userId: number) {
 		await this.prisma.activity.create({
 			data: {
-				type: ActivityEnum.Visit_Genre,
+				type: Activities.visitGenre,
 				importance: 1,
 				user: {
 					connect: {
@@ -50,10 +50,7 @@ export class GenreService {
 			}
 		})
 		if (!genre)
-			return serverError(
-				HttpStatus.BAD_REQUEST,
-				GlobalErrorsEnum.somethingWrong
-			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		return genre
 	}
 }

@@ -5,13 +5,13 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/utils/number-formater'
 import { MoreHorizontal } from 'icons'
 import * as React from 'react'
 import { useState } from 'react'
-import { toast } from 'sonner'
 
 type ColumnType = ColumnDef<{
 	id: number
@@ -125,7 +125,7 @@ export const columns = ({
 					<DropdownMenuSeparator />
 					<DropdownMenuItem
 						onClick={() =>
-							toast('Are you sure you want to delete this book?', {
+							acceptToast('Are you sure you want to delete this book?', {
 								action: {
 									label: 'Delete',
 									onClick: () => remove(row.original.id)
