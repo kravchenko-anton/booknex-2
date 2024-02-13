@@ -1,8 +1,8 @@
 import { SheetComponent, SheetHeader } from '@/components/ui/sheet'
 import { cn } from '@/utils'
 import type { ActivitiesOutput } from 'backend/src/utils/activity-transformer'
-import type { FC } from 'react'
 import * as React from 'react'
+import { useState, type FC } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 
 const activityPalette = [
@@ -23,11 +23,10 @@ const activityPalette = [
 const ActivityList: FC<{
 	data: ActivitiesOutput[]
 }> = ({ data = [] }) => {
-	const [selectActivity, setSelectActivity] =
-		React.useState<ActivitiesOutput | null>(null)
-	const onActivityClick = (active: any) => {
-		setSelectActivity(active)
-	}
+	const [selectActivity, setSelectActivity] = useState<ActivitiesOutput | null>(
+		null
+	)
+	const onActivityClick = (active: any) => setSelectActivity(active)
 	return (
 		<>
 			<h1 className='mb-2 mt-2 text-xl'>Activities</h1>

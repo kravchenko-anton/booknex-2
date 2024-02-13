@@ -1,7 +1,7 @@
 import type { ViewDefaultProperties } from '@/types/component-types'
 import { Title } from '@/ui/index'
 import { Color } from 'global/colors'
-import { NothingFound } from 'global/illustrations'
+import { NothingFound } from 'illustrations'
 import type { FC, PropsWithChildren } from 'react'
 import { View } from 'react-native'
 
@@ -12,9 +12,9 @@ interface NothingFountProperties extends ViewDefaultProperties {
 const NothingFount: FC<PropsWithChildren<NothingFountProperties>> = ({
 	children,
 	text = `Nothing found, try looking ${'\n'} for something else`,
-	...props
+	...properties
 }) => (
-	<View className='mt-4 flex-1 items-center justify-start' {...props}>
+	<View className='mt-4 flex-1 items-center justify-start' {...properties}>
 		<NothingFound width={200} height={180} />
 		<Title
 			center

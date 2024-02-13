@@ -6,8 +6,9 @@ import {
 } from '@aws-sdk/client-s3'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { Role } from '@prisma/client'
 import sharp from 'sharp'
-import { RoleEnum, type RoleType } from '../auth/auth.service'
+import type { RoleType } from '../auth/auth.service'
 import { serverError } from '../utils/call-error'
 import { AdminErrors, GlobalErrorsEnum } from '../utils/errors'
 import { optimizeFilename } from '../utils/string.functions'
@@ -65,7 +66,7 @@ export class StorageService {
 		folder: StorageFolderType
 		role: RoleType
 	}) {
-		if (!(role === RoleEnum.ADMIN))
+		if (!(role === Role.ADMIN))
 			return serverError(HttpStatus.FORBIDDEN, AdminErrors.notEnoughRights)
 		if (!StorageFolderArray.includes(folder)) {
 			return serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFolder)

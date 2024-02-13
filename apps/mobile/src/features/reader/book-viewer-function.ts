@@ -109,8 +109,7 @@ export const getStyleTag = ({
 	fontSize: number
 	lineHeight: number
 	padding: number
-}) => {
-	return `
+}) => `
 	span {
 		color: ${colorPalette.text} !important;
 	}
@@ -200,4 +199,3 @@ export const getStyleTag = ({
 		border-top: 2px solid ${colorPalette.secondary} !important;
 	}
 	`
-}

@@ -1,18 +1,18 @@
 export const Color = {
-	muted: '#303030' as '#303030',
+	muted: '#303030' as const,
 
-	background: '#111111' as '#111111',
-	foreground: '#202020' as '#202020',
-	primary: '#5e548e' as '#5e548e',
+	background: '#111111' as const,
+	foreground: '#202020' as const,
+	primary: '#5e548e' as const,
 
-	black: '#000000' as '#000000',
-	gray: '#9F9F9F' as '#9F9F9F',
-	white: '#ffffff' as '#ffffff',
+	black: '#000000' as const,
+	gray: '#9F9F9F' as const,
+	white: '#ffffff' as const,
 
-	danger: '#DC3F41' as '#DC3F41',
-	success: '#4CAF50' as '#4CAF50',
-	warning: '#FFBE0B' as '#FFBE0B',
-	transparent: 'transparent' as 'transparent'
+	danger: '#DC3F41' as const,
+	success: '#4CAF50' as const,
+	warning: '#FFBE0B' as const,
+	transparent: 'transparent' as const
 }
 
 export const InnerColor = {

@@ -12,6 +12,7 @@ module.exports = function (api) {
 						'ui/components': '../../libs/ui/react-native',
 						'ui/colors': '../../libs/ui/colors.ts',
 						icons: '../../libs/global/icons/react-native',
+						illustrations: '../../libs/global/illustrations/react-native',
 						global: '../../libs/global',
 						backend: '../backend'
 					}

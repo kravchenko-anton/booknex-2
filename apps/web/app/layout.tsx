@@ -10,12 +10,12 @@ export const metadata = {
 
 const font = Inter({ subsets: ['latin'] })
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-	return (
-		<html lang='en'>
-			<body style={{ ...font.style }}>
-				<Providers>{children}</Providers>
-			</body>
-		</html>
-	)
-}
+const RootLayout = ({ children }: { children: ReactNode }) => (
+	<html lang='en'>
+		<body style={{ ...font.style }}>
+			<Providers>{children}</Providers>
+		</body>
+	</html>
+)
+
+export default RootLayout

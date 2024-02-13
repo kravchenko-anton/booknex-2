@@ -36,10 +36,8 @@ export const Description = ({
 			{!expanded && sentences.length > defaultSentences && (
 				<Text
 					style={textStyle}
-					onPress={() => {
-						setExpanded(!expanded)
-					}}
 					className='text-primary underline'
+					onPress={() => setExpanded(!expanded)}
 				>
 					more
 				</Text>

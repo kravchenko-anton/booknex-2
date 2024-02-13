@@ -1,5 +1,7 @@
+import axios from 'axios'
+import { EMULATOR_SERVER_URL, getAuthUrl } from 'global/api-config'
 import EncryptedStorage from 'react-native-encrypted-storage'
-import type { TokensType } from './auth-types'
+import type { AuthResponseType, TokensType } from './auth-types'
 
 export const getAccessToken = async () => {
 	const accessToken = await EncryptedStorage.getItem('accessToken')
@@ -23,4 +25,30 @@ export const deleteTokensStorage = async () => {
 	await EncryptedStorage.removeItem('accessToken')
 	await EncryptedStorage.removeItem('refreshToken')
 	console.log('deleteTokensStorage')
+}
+
+export const getNewTokens = async () => {
+	const refreshToken = await getRefreshToken()
+	if (!refreshToken) throw new Error('No refresh token')
+	console.log('refreshToken', refreshToken)
+	const response = await axios
+		.post<
+			string,
+			{ data: AuthResponseType }
+		>(EMULATOR_SERVER_URL + getAuthUrl('/refresh'), { refreshToken })
+		.then(result => result.data)
+	console.log(
+		'response',
+		response,
+		'response.accessToken',
+		response.accessToken
+	)
+	if (response.accessToken)
+		await saveTokensStorage({
+			accessToken: response.accessToken,
+			refreshToken: response.refreshToken
+		})
+	if (!response.accessToken) throw new Error('No access token')
+
+	return response
 }

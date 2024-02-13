@@ -8,17 +8,17 @@ export const useTemplate = ({
 	setValue
 }: {
 	setValue: UseFormSetValue<{
-		title?: string
-		picture?: { name?: string; blob?: Blob }
-		pages?: number
-		description?: string
-		popularity?: number
-		author?: string
-		books?: {
-			name?: string
-			content?: { id?: number; title?: string; content?: string }[]
+		title: string
+		picture: { name: string; blob: Blob }
+		pages: number
+		description: string
+		popularity: number
+		author: string
+		books: {
+			name: string
+			content: { id: number; title: string; content: string }[]
 		}[]
-		genres?: number[]
+		genres: number[]
 	}>
 }) => {
 	const parameters = useSearchParams()

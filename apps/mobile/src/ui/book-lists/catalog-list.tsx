@@ -5,7 +5,7 @@ import { Color } from 'global/colors'
 const CatalogList = ({
 	data,
 	disabledScroll = false,
-	onElementPress = () => {}
+	onElementPress = () => null
 }: {
 	disabledScroll?: boolean
 	data: {

@@ -133,18 +133,22 @@ export class BookService {
 			file: ebook.map(({ content }) =>
 				content
 					.map(
-						// eslint-disable-next-line @typescript-eslint/no-shadow //TODO: fix this
+						// eslint-disable-next-line @typescript-eslint/no-shadow --  //TODO: пофиксить тут и сделать у книги норм отоюражение
 						({ title, content }) => `<label id="${title}"></label> ${content}`
 					)
 					.join(' ')
 			),
-			chapters: ebook.map(({ name, content }) => ({
-				name,
-				children: content.map(({ title }) => ({
-					title,
-					link: `#${title}`
-				}))
-			}))
+			chapters: ebook.map(({ name, content }) => {
+				return {
+					name,
+					children: content.map(({ title }) => {
+						return {
+							title,
+							link: `#${title}`
+						}
+					})
+				}
+			})
 		}
 	}
 
@@ -226,7 +230,9 @@ export class BookService {
 				ebook: dto.ebook,
 				author: dto.author,
 				genres: {
-					connect: dto.genres.map(g => ({ id: g }))
+					connect: dto.genres.map(g => {
+						return { id: g }
+					})
 				}
 			}
 		})
@@ -292,7 +298,9 @@ export class BookService {
 				...other,
 				...(dtoGenres && {
 					genres: {
-						set: dtoGenres.map(g => ({ id: g }))
+						set: dtoGenres.map(g => {
+							return { id: g }
+						})
 					},
 					majorGenre: {
 						connect: {
@@ -403,7 +411,9 @@ export class BookService {
 						a.genres.filter(g => genreIds?.includes(g.id)).length
 				)
 				.slice(0, 10)
-				.map(({ genres, ...rest }) => ({ ...rest }))
+				.map(({ genres, ...rest }) => {
+					return { ...rest }
+				})
 		}
 	}
 }

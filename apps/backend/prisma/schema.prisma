@@ -92,10 +92,6 @@ model BookTemplate {
 }
 
 
-enum AuthType {
-  email
-  google
-}
 
 model User {
   id              Int          @id @default(autoincrement())

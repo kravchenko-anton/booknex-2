@@ -1,8 +1,11 @@
-import { deleteTokensStorage, getAccessToken } from '@/redux/auth/auth-helper'
+import {
+	deleteTokensStorage,
+	getAccessToken,
+	getNewTokens
+} from '@/redux/auth/auth-helper'
 import axios from 'axios'
 import { SERVER_URL } from 'global/api-config'
 import { errorCatch } from 'global/utils/catch-error'
-import { getNewTokens } from './helper.auth'
 
 const instance = axios.create({
 	baseURL: SERVER_URL,
@@ -24,7 +27,7 @@ instance.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
-		if (!error.response) throw new Error('Network Error')
+		if (!error.response) return
 		if (error.response.status === 403) return deleteTokensStorage()
 		if (
 			(error.response.status === 401 ||

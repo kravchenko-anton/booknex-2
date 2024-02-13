@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import type { User } from '@prisma/client'
+import { Role } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
 import { UserService } from '../user/user.service'
@@ -11,12 +12,7 @@ import { AuthErrors, GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import type { AuthDto, SignDto } from './dto/auth.dto'
 
-export enum RoleEnum {
-	ADMIN = 'ADMIN',
-	USER = 'USER'
-}
-
-export type RoleType = keyof typeof RoleEnum
+export type RoleType = keyof typeof Role
 
 @Injectable()
 export class AuthService {
@@ -150,7 +146,7 @@ export class AuthService {
 				selectedGenres: {
 					connect: mostPopularGenres
 				},
-				role: 'USER',
+				role: Role.USER,
 				fullName:
 					data.given_name && data.family_name
 						? `${data.given_name} ${data.family_name}`

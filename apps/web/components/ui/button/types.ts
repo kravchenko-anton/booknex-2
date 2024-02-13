@@ -1,7 +1,7 @@
 import type { LineColorType, VividPaletteType } from 'global/colors'
 import type { SizeProperties } from 'global/types'
 import type { FC } from 'react'
-import type { DefaultButtonProperties } from '../components-props-types'
+import type { DefaultButtonProperties } from '../base-components-types'
 
 export interface ButtonProperties
 	extends DefaultButtonProperties,

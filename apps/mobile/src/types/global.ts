@@ -5,8 +5,3 @@ import type { SvgProps } from 'react-native-svg'
 export type IconType = FC<SvgProps>
 
 export type Style = ViewDefaultProperties['style']
-
-export type ModalProps = {
-	isVisible: boolean
-	setVisible: (value: boolean) => void
-}

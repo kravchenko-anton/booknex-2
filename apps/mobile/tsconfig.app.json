@@ -8,7 +8,6 @@
 		
 		"allowJs": true,
 		"strict": false,
-		"noEmit": true,
 		"incremental": true,
 		"resolveJsonModule": true,
 		"module": "esnext",
@@ -22,6 +21,9 @@
 			],
 			"icons": [
 				"../../libs/global/icons/react-native/index.ts"
+			],
+			"illustrations": [
+				"../../libs/global/illustrations/react-native/index.ts"
 			],
 			"global/*": [
 				"../../libs/global/*"

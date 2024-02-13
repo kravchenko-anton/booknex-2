@@ -12,7 +12,7 @@ import { useReading } from '@/features/reader/useReading'
 import { useTypedRoute } from '@/hooks'
 
 import { Loader } from '@/ui'
-import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/utils/dimensions'
+import { windowHeight, windowWidth } from '@/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { memo, useEffect, useRef, useState } from 'react'
@@ -75,8 +75,8 @@ const Reader = () => {
 						${scrollProgressDetect}
 						`}
 						style={{
-							width: WINDOW_WIDTH,
-							height: WINDOW_HEIGHT,
+							width: windowWidth,
+							height: windowHeight,
 							backgroundColor: Color.background
 						}}
 						onMessage={onMessage}

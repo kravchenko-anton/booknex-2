@@ -7,7 +7,7 @@ import { settings } from './settings'
 import type { DropzoneProperties } from './types'
 
 const Dropzone = ({
-	onDropFile = () => {},
+	onDropFile = () => null,
 	defaultFiles = [],
 	multiple = false,
 	disabled = false,

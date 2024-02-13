@@ -1,7 +1,8 @@
 import { errorToast, successToast } from '@/utils/toast'
+import { Role } from '@prisma/client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { ErrorsEnum } from 'backend/src/utils/errors'
+import { GlobalErrorsEnum } from 'backend/src/utils/errors'
 import { SERVER_URL, getAuthUrl } from 'global/api-config'
 import type { AuthFieldsType } from '../../../mobile/src/features/auth/action/auth-types'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
@@ -17,7 +18,7 @@ export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 					password
 				})
 				.then(response => response.data)
-			if (loginResponse.user.role !== 'ADMIN')
+			if (loginResponse.user.role !== Role.ADMIN)
 				return thunkAPI.rejectWithValue('You are not admin')
 			saveTokensStorage({
 				accessToken: loginResponse.accessToken,
@@ -46,7 +47,7 @@ export const googleLogin = createAsyncThunk<
 			})
 			.then(response => response.data)
 		if (loginResponse.user.role !== 'ADMIN')
-			return thunkAPI.rejectWithValue(ErrorsEnum.Something_Went_Wrong)
+			return thunkAPI.rejectWithValue(GlobalErrorsEnum.somethingWrong)
 		saveTokensStorage({
 			accessToken: loginResponse.accessToken,
 			refreshToken: loginResponse.refreshToken

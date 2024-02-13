@@ -1,7 +1,7 @@
-import type { Ref } from 'react'
+import type { RefObject } from 'react'
 import type { GestureResponderEvent } from 'react-native'
 
-export type ComponentReference = Ref<any>
+export type ComponentReference = RefObject<any> | null
 
 let collection: { ref: ComponentReference; cb: () => void }[] = []
 
@@ -12,11 +12,10 @@ export const onTouch = (event: GestureResponderEvent) => {
 	if (!isTouch) return
 	const { pageX, pageY } = event.nativeEvent
 	for (const item of collection) {
-		// @ts-expect-error
 		item.ref?.current?.measure(
 			(
-				_b: unknown,
-				_s: unknown,
+				_x: unknown, // eslint-disable-line @typescript-eslint/naming-convention
+				_y: unknown, // eslint-disable-line @typescript-eslint/naming-convention
 				width: number,
 				height: number,
 				x: number,

@@ -3,14 +3,14 @@ import type { View } from 'react-native'
 import { useFocusEffect } from './useFocusEffect'
 import { register, unregister } from './utils/collection'
 
-interface HookConfig {
+interface HookConfigType {
 	triggerOnUnmount?: boolean
 	triggerOnBlur?: boolean
 }
 
 export const useClickOutside = <T = View>(
 	callback: () => void,
-	config?: HookConfig
+	config?: HookConfigType
 ): RefObject<T> => {
 	const callbackReference = useRef(callback)
 	callbackReference.current = callback

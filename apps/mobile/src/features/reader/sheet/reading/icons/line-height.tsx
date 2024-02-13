@@ -16,7 +16,7 @@ const LineHeightIcon: FC<LineHeightIconProperties> = ({
 	...properties
 }) => (
 	<AnimatedPress className='m-0 h-[30px] justify-between p-0' {...properties}>
-		{Array.from({ length: lineCount }).map((_, index) => (
+		{Array.from({ length: lineCount }).map((_skip, index) => (
 			<View
 				key={`${index} line`}
 				className={lineStyle}

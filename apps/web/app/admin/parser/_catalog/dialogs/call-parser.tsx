@@ -1,5 +1,5 @@
 import { Button, Field } from '@/components/ui'
-import type { DialogProperties } from '@/components/ui/components-props-types'
+import type { DialogProperties } from '@/components/ui/base-components-types'
 import { SheetComponent, SheetHeader } from '@/components/ui/sheet'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'

@@ -9,11 +9,8 @@ const EbookComposer: FC<BookComposeReturnType> = books => {
 	if (!books.state) return null
 	return (
 		<>
-			{books.state.map((book, index) => (
-				<div
-					key={book.name + index}
-					className='bg-foreground mb-4 mr-1 rounded-xl p-3'
-				>
+			{books.state.map(book => (
+				<div key={book.name} className='bg-foreground mb-4 mr-1 rounded-xl p-3'>
 					<div className='mb-4 flex items-center  justify-between gap-2'>
 						<input
 							defaultValue={book.name}

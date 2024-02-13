@@ -11,7 +11,10 @@ module.exports = {
 		'react',
 		'jsx-expressions'
 	],
-	extends: ['plugin:unicorn/recommended'],
+	extends: [
+		'plugin:unicorn/recommended',
+		'plugin:@typescript-eslint/recommended'
+	],
 	root: true,
 	ignorePatterns: ['*.js'],
 	parserOptions: {
@@ -23,9 +26,6 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
-		'unicorn/no-array-reduce': 0,
-		'unicorn/no-null': 0,
-		'arrow-parens': 'off',
 		'react/prop-types': ['error', { ignore: ['navigation'] }],
 		'arrow-body-style': ['error', 'as-needed'],
 		'react/self-closing-comp': ['error', { component: true, html: true }],
@@ -35,7 +35,7 @@ module.exports = {
 				selector: 'default',
 				format: ['camelCase', 'PascalCase'],
 				filter: {
-					regex: '^(_count|_sum)$',
+					regex: '^(_count|__html|_skip|_sum)$',
 					match: false
 				}
 			},
@@ -86,7 +86,6 @@ module.exports = {
 		],
 		'unicorn/better-regex': 2,
 		'unicorn/explicit-length-check': 2,
-		'unicorn/consistent-function-scoping': 2,
 		'unicorn/prefer-default-parameters': 2,
 		'unicorn/no-array-push-push': 2,
 		'unicorn/prefer-array-index-of': 2,
@@ -122,7 +121,6 @@ module.exports = {
 		'unicorn/catch-error-name': 2,
 		'unicorn/consistent-destructuring': 2,
 
-		'react/no-unstable-nested-components': [2, { allowAsProps: false }],
 		'react/jsx-no-useless-fragment': [2, { allowExpressions: true }],
 		'react/function-component-definition': [
 			2,
@@ -137,9 +135,7 @@ module.exports = {
 				extensions: ['.jsx', '.tsx', '.mtsx', '.mjsx']
 			}
 		],
-		'react/no-multi-comp': 2,
 		'react/no-array-index-key': 2,
-		'react/jsx-props-no-spreading': 0,
 		'react/jsx-sort-props': [
 			2,
 			{
@@ -152,9 +148,10 @@ module.exports = {
 				reservedFirst: false
 			}
 		],
-		'@typescript-eslint/ban-ts-comment': 0,
-		'@typescript-eslint/no-unsafe-assignment': 0,
-		'@typescript-eslint/no-array-constructor': 0,
+		'@typescript-eslint/no-unused-vars': [
+			'error',
+			{ ignoreRestSiblings: true }
+		],
 		'@typescript-eslint/no-use-before-define': 2,
 		'@typescript-eslint/no-inferrable-types': 2,
 		'@typescript-eslint/no-loop-func': 2,
@@ -191,14 +188,27 @@ module.exports = {
 		'@typescript-eslint/dot-notation': 2,
 		'@typescript-eslint/no-import-type-side-effects': 2,
 		'@typescript-eslint/default-param-last': 2,
+
+		// warning rules
+		'unicorn/consistent-function-scoping': 1,
+		'@typescript-eslint/no-explicit-any': 1,
 		'@typescript-eslint/no-shadow': [
-			2,
+			1,
 			{
 				hoist: 'all',
 				allow: ['resolve', 'reject', 'done', 'next', 'err', 'error', 'id'],
 				ignoreTypeValueShadow: true,
 				ignoreFunctionTypeParameterNameValueShadow: true
 			}
-		]
+		],
+
+		// disabled rules
+		'@typescript-eslint/ban-ts-comment': 0,
+		'@typescript-eslint/no-unsafe-assignment': 0,
+		'@typescript-eslint/no-array-constructor': 0,
+		'react/jsx-props-no-spreading': 0,
+		'unicorn/no-array-reduce': 0,
+		'unicorn/no-null': 0,
+		'unicorn/no-nested-ternary': 'off'
 	}
 }

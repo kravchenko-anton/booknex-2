@@ -1,4 +1,5 @@
 import ActivityList from '@/components/dialogs/activity-list'
+import type { Role } from '@prisma/client'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { ActivitiesOutput } from 'backend/src/utils/activity-transformer'
 import { getFileUrl } from 'global/api-config'
@@ -18,11 +19,11 @@ type ColumnType = ColumnDef<{
 		readingBooks: number
 	}
 	activities: ActivitiesOutput[]
-	role: string
 	createdAt: Date
 	location: string
 	picture: string
-	socialId: string
+	role: Role
+	socialId: string | null
 }>[]
 export const columns = ({
 	remove

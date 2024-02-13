@@ -8,7 +8,6 @@
 		"allowSyntheticDefaultImports": true,
 		"allowJs": true,
 		"strict": false,
-		"noEmit": true,
 		"incremental": true,
 		"jsx": "react-native",
 		"lib": ["dom", "esnext"],
@@ -22,6 +21,9 @@
 			],
 			"icons": [
 				"../../libs/global/icons/react-native/index.ts"
+			],
+			"illustrations": [
+				"../../libs/global/illustrations/react-native/index.ts"
 			],
 			"global/*": [
 				"../../libs/global/*"

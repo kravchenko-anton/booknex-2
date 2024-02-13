@@ -1,4 +1,4 @@
-export type GenerateParametersType = Record<any, any>
+export type GenerateParametersType = Record<string, any>
 
 export const generateParameters = (
 	link: string,

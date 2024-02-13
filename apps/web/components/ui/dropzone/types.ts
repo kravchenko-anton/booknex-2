@@ -1,7 +1,7 @@
 import type { ClampPaletteType } from 'global/colors'
 import type { SizeProperties } from 'global/types'
 import type { Control, FieldPath, FieldValues } from 'react-hook-form'
-import type { DefaultInputProperties } from '../components-props-types'
+import type { DefaultInputProperties } from '../base-components-types'
 
 export interface DropzoneProperties
 	extends DefaultInputProperties,
