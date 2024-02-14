@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNumber, IsString } from 'class-validator'
-import type { ParserDtoPayload } from '../../../../../libs/global/services-types/parser-types'
+import type { ParserDtoPayload } from 'libs/global/services-types/parser-types'
 
 export class ParserDto implements ParserDtoPayload {
 	@ApiProperty({

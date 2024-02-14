@@ -39,7 +39,7 @@ const Reader = () => {
 		reference.current.injectJavaScript(injectStyle(styleTag))
 	}, [styleTag])
 
-	const [defaultTheme] = useState(styleTag)
+	const [defaultTheme] = useState(styleTag) // eslint-disable-line react/hook-use-state
 
 	if (!ebook || !styleTag) return <Loader />
 	return (

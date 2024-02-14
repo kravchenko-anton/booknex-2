@@ -1,8 +1,8 @@
+import { cn } from '@/utils'
 import { InnerColor } from 'global/colors'
 import type { FC } from 'react'
 import { memo } from 'react'
 import { Pressable } from 'react-native'
-import { cn } from '../../../../web/utils'
 import { settings } from './settings'
 import type { IconProperties } from './types'
 

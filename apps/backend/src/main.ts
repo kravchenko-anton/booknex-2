@@ -34,4 +34,4 @@ async function bootstrap() {
 	await app.listen(7777)
 }
 
-bootstrap()
+bootstrap() // eslint-disable-line unicorn/prefer-top-level-await

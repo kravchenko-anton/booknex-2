@@ -131,7 +131,7 @@ module.exports = {
 		'react/jsx-filename-extension': [
 			2,
 			{
-				extensions: ['.jsx', '.tsx', '.mtsx', '.mjsx']
+				extensions: ['.jsx', '.tsx']
 			}
 		],
 		'react/no-array-index-key': 2,

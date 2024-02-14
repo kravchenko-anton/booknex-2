@@ -21,7 +21,6 @@ import type {
 	EpubOutputType,
 	InfoByIdAdmin
 } from '../../../../libs/global/services-types/book-types'
-
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'

@@ -4,9 +4,9 @@ import type {
 	FeaturedOutput,
 	SearchOutput
 } from '../../../../libs/global/services-types/catalog.types'
-
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
+
 import { CatalogService } from './catalog.service'
 
 @Auth()

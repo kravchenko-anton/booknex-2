@@ -2,13 +2,12 @@ import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { emulatorServerURL, getAuthUrl } from 'global/api-config'
-import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 import type {
 	AuthFieldsType,
 	AuthResponseType,
-	RegisterFieldsType,
 	googleAuthResponseType
-} from './auth-types'
+} from 'global/services-types/auth-types'
+import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 
 export const googleLogin = createAsyncThunk<
 	googleAuthResponseType,
@@ -40,28 +39,28 @@ export const googleLogin = createAsyncThunk<
 	}
 })
 
-export const mailRegister = createAsyncThunk<
-	AuthResponseType,
-	RegisterFieldsType
->('auth/mailRegister', async (properties, thunkAPI) => {
-	try {
-		const registerResponse = await axios
-			.post<AuthResponseType>(
-				emulatorServerURL + getAuthUrl('/mail-register'),
-				{
-					...properties
-				}
-			)
-			.then(response => response.data)
-		await saveTokensStorage({
-			accessToken: registerResponse.accessToken,
-			refreshToken: registerResponse.refreshToken
-		})
-		return registerResponse
-	} catch (error) {
-		return thunkAPI.rejectWithValue(error)
+export const mailRegister = createAsyncThunk<AuthResponseType, AuthFieldsType>(
+	'auth/mailRegister',
+	async (properties, thunkAPI) => {
+		try {
+			const registerResponse = await axios
+				.post<AuthResponseType>(
+					emulatorServerURL + getAuthUrl('/mail-register'),
+					{
+						...properties
+					}
+				)
+				.then(response => response.data)
+			await saveTokensStorage({
+				accessToken: registerResponse.accessToken,
+				refreshToken: registerResponse.refreshToken
+			})
+			return registerResponse
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error)
+		}
 	}
-})
+)
 
 export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	'auth/mailLogin',

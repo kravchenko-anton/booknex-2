@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { emulatorServerURL, getAuthUrl } from 'global/api-config'
+import type {
+	AuthResponseType,
+	TokensType
+} from 'global/services-types/auth-types'
 import EncryptedStorage from 'react-native-encrypted-storage'
-import type { AuthResponseType, TokensType } from './auth-types'
 
 export const getAccessToken = async () => {
 	const accessToken = await EncryptedStorage.getItem('accessToken')

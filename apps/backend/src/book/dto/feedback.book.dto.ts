@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNumber, IsOptional, IsString } from 'class-validator'
 import type { FeedbackBookPayload } from '../../../../../libs/global/services-types/book-types'
-import { feedbackTags } from '../../../../mobile/src/screens/book-feedback/feedback-tags'
+import { feedbackTags } from '../feedback-tags'
 
 export class FeedbackBookDto implements FeedbackBookPayload {
 	@ApiProperty({

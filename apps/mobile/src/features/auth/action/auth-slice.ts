@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import type { IAuthState } from 'global/services-types/auth-types'
 import { googleLogin, logout, mailLogin, mailRegister } from './auth-action'
-import type { IAuthState } from './auth-types'
 
 const initialState = {
 	isLoading: false,
