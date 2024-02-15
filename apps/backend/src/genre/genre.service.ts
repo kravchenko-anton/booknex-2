@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities } from '@prisma/client'
+import { Activities, type Prisma } from '@prisma/client'
 import { ActivityService } from '../activity/activity.service'
 import { serverError } from '../utils/call-error'
 import { GlobalErrorsEnum } from '../utils/errors'
@@ -15,32 +15,17 @@ export class GenreService {
 
 	all() {
 		return this.prisma.genre.findMany({
-			select: {
-				...ReturnGenreObject
-			}
+			select: ReturnGenreObject
 		})
 	}
 
-	async getPopular() {
-		return this.prisma.genre.findMany({
-			take: 3,
-			select: {
-				id: true
-			},
-			orderBy: {
-				activities: {
-					_count: 'asc'
-				}
-			}
-		})
-	}
-
-	async byId(id: number, userId: number) {
+	async findOne(id: number, userId: number) {
 		await this.activityService.create({
 			type: Activities.visitGenre,
 			importance: 1,
 			userId
 		})
+
 		const genre = await this.prisma.genre.findUnique({
 			where: {
 				id: +id
@@ -59,5 +44,24 @@ export class GenreService {
 		if (!genre)
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		return genre
+	}
+
+	async findMany({
+		where,
+		select,
+		orderBy,
+		take = 20
+	}: {
+		where?: Prisma.GenreWhereInput
+		select?: Prisma.GenreSelect
+		orderBy?: Prisma.GenreOrderByWithRelationInput
+		take?: number
+	}) {
+		return this.prisma.genre.findMany({
+			where,
+			select: select || ReturnGenreObject,
+			orderBy,
+			take
+		})
 	}
 }

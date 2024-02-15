@@ -5,7 +5,7 @@ import { Activities, Role, type Prisma, type User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
 import { ActivityService } from '../activity/activity.service'
-import { GenreService } from '../genre/genre.service'
+import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { serverError } from '../utils/call-error'
 import { AuthErrors, GlobalErrorsEnum } from '../utils/errors'
@@ -23,8 +23,7 @@ export class AuthService {
 		private readonly jwt: JwtService,
 		private readonly usersService: UserService,
 		private readonly configService: ConfigService,
-		private readonly activityService: ActivityService,
-		private readonly genreService: GenreService
+		private readonly activityService: ActivityService
 	) {
 		this.google = new OAuth2Client(
 			configService.get('GOOGLE_CLIENT_ID'),
@@ -44,7 +43,7 @@ export class AuthService {
 
 	async register(dto: AuthDto) {
 		await this.checkOldUser({ email: dto.email })
-		const popularGenres = await this.genreService.getPopular()
+		const popularGenres = await this.getPopular()
 		const user = await this.prisma.user.create({
 			data: {
 				email: dto.email,
@@ -104,7 +103,7 @@ export class AuthService {
 			throw serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
 		await this.checkOldUser({ email: data.email })
 
-		const mostPopularGenres = await this.genreService.getPopular()
+		const mostPopularGenres = await this.getPopular()
 		const newUser = await this.prisma.user.create({
 			data: {
 				email: data.email,
@@ -185,6 +184,18 @@ export class AuthService {
 				HttpStatus.BAD_REQUEST,
 				AuthErrors.passwordOrEmailInvalid
 			)
+	}
+
+	async getPopular() {
+		return this.prisma.genre.findMany({
+			take: 3,
+			select: ReturnGenreObject,
+			orderBy: {
+				activities: {
+					_count: 'asc'
+				}
+			}
+		})
 	}
 
 	private userFields(user: User) {

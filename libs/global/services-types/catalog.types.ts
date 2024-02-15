@@ -1,6 +1,5 @@
 import type { Prisma } from '@prisma/client'
 import type { returnBookObject } from '../../../apps/backend/src/book/return.book.object'
-import type { ReturnGenreObject } from '../../../apps/backend/src/genre/return.genre.object'
 
 type BookWithAuthor = Prisma.BookGetPayload<{
 	select: typeof returnBookObject
@@ -12,7 +11,10 @@ type ColorBookWithAuthor = Prisma.BookGetPayload<{
 export interface FeaturedOutput {
 	recommendations: BookWithAuthor
 	relatedGenres: Prisma.GenreGetPayload<{
-		select: typeof ReturnGenreObject
+		select: {
+			id: true
+			name: true
+		}
 	}>[]
 	popularBooks: ColorBookWithAuthor
 	bestSellingBooks: BookWithAuthor

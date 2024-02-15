@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
 import { ActivityService } from '../activity/activity.service'
+import { BookService } from '../book/book.service'
 import { returnBookObject } from '../book/return.book.object'
+import { GenreService } from '../genre/genre.service'
 import { PrismaService } from '../utils/prisma.service'
 
 @Injectable()
 export class CatalogService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService
+		private readonly activityService: ActivityService,
+		private readonly bookService: BookService,
+		private readonly genreService: GenreService
 	) {}
 
 	async featured(userId: number) {
@@ -29,11 +33,7 @@ export class CatalogService {
 
 	// TODO: сделать тут поиск и сделать в поиске посмотреть больше
 	search(query: string) {
-		return this.prisma.book.findMany({
-			select: {
-				...returnBookObject,
-				pages: true
-			},
+		return this.bookService.findMany({
 			where: {
 				OR: [
 					{
@@ -54,36 +54,33 @@ export class CatalogService {
 	}
 
 	private async relatedGenres() {
-		return this.prisma.genre.findMany({})
+		return this.genreService.findMany({})
 	}
 
 	private popularBooks() {
-		return this.prisma.book.findMany({
+		return this.bookService.findMany({
 			take: 10,
 			orderBy: {
 				popularity: 'desc'
-			},
-			select: returnBookObject
+			}
 		})
 	}
 
 	private bestSellingBooks() {
-		return this.prisma.book.findMany({
+		return this.bookService.findMany({
 			take: 10,
 			orderBy: {
 				popularity: 'desc'
-			},
-			select: returnBookObject
+			}
 		})
 	}
 
 	private newReleases() {
-		return this.prisma.book.findMany({
+		return this.bookService.findMany({
 			take: 10,
 			orderBy: {
 				updatedAt: 'desc'
-			},
-			select: returnBookObject
+			}
 		})
 	}
 
@@ -113,7 +110,23 @@ export class CatalogService {
 			)
 			.slice(0, 5)
 			.map(genre => genre.name)
-		return this.prisma.book.findMany({
+
+		const selectedGenres = await this.prisma.user
+			.findUnique({
+				where: {
+					id: userId
+				},
+				select: {
+					selectedGenres: {
+						select: {
+							name: true
+						}
+					}
+				}
+			})
+			.selectedGenres()
+			.then(result => result.map(genre => genre.name))
+		return this.bookService.findMany({
 			take: 10,
 			orderBy: { popularity: 'desc' },
 			select: returnBookObject,
@@ -121,26 +134,7 @@ export class CatalogService {
 				genres: {
 					some: {
 						name: {
-							in:
-								genres.length > 0
-									? genres
-									: await this.prisma.user
-											.findUnique({
-												where: {
-													id: userId
-												},
-												select: {
-													selectedGenres: {
-														select: {
-															name: true
-														}
-													}
-												}
-											})
-											.selectedGenres()
-											.then(selectedGenres =>
-												selectedGenres?.map(genre => genre.name)
-											)
+							in: genres.length > 0 ? genres : selectedGenres
 						}
 					}
 				},

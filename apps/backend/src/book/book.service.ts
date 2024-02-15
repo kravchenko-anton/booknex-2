@@ -3,7 +3,6 @@ import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
 import { ActivityService } from '../activity/activity.service'
 import { ReturnGenreObject } from '../genre/return.genre.object'
-import { UserService } from '../user/user.service'
 import { transformActivity } from '../utils/activity-transformer'
 import { serverError } from '../utils/call-error'
 import { GlobalErrorsEnum } from '../utils/errors'
@@ -17,14 +16,19 @@ import type { EBookType } from './types'
 @Injectable()
 export class BookService {
 	constructor(
-		private readonly usersService: UserService,
 		private readonly prisma: PrismaService,
 		private readonly activityService: ActivityService
 	) {}
 
-	async getBookById(id: number, selectObject: Prisma.BookSelect = {}) {
+	async findOne(
+		where: Prisma.BookWhereUniqueInput,
+		selectObject: Prisma.BookSelect = {}
+	) {
 		const book = await this.prisma.book.findUnique({
-			where: { id },
+			where: {
+				visible: true,
+				...where
+			},
 			select: {
 				...returnBookObject,
 				...selectObject
@@ -35,10 +39,50 @@ export class BookService {
 		return book
 	}
 
+	async findMany({
+		where,
+		select,
+		orderBy,
+		take = 20
+	}: {
+		where?: Prisma.BookWhereInput
+		select?: Prisma.BookSelect
+		orderBy?: Prisma.BookOrderByWithRelationInput
+		take?: number
+	}) {
+		return this.prisma.book.findMany({
+			where: {
+				visible: true,
+				...where
+			},
+			take,
+			select: {
+				...returnBookObject,
+				...select
+			},
+			orderBy
+		})
+	}
+
+	async checkExist(id: number) {
+		const exist = await this.prisma.book.findUnique({
+			where: { id },
+			select: {
+				id: true
+			}
+		})
+
+		if (!exist)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+
+		return !!exist
+	}
+
 	async infoByIdAdmin(id: number) {
 		const author = await this.prisma.book.findUnique({
 			where: { id },
 			select: {
+				//TODO: сделать тут через include
 				...returnBookObject,
 				createdAt: true,
 				updatedAt: true,
@@ -92,15 +136,13 @@ export class BookService {
 	}
 
 	async ebookById(id: number, userId: number) {
-		const book = await this.prisma.book.findUnique({
-			where: { id },
-			select: {
+		const book = await this.findOne(
+			{ id },
+			{
 				title: true,
 				ebook: true
 			}
-		})
-		if (!book)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		)
 		const ebook: EBookType = await fetch(getFileUrl(book.ebook)).then(result =>
 			result.json()
 		)
@@ -133,9 +175,11 @@ export class BookService {
 		const perPage = 20
 		const count = await this.prisma.book.count()
 		return {
+			//TODO: переделать тут чтобы данные сохранились но я не юзал
 			data: await this.prisma.book.findMany({
 				take: perPage,
 				select: {
+					//TODO: сделать тут через include
 					...returnBookObject,
 					genres: { select: ReturnGenreObject },
 					pages: true,
@@ -196,22 +240,22 @@ export class BookService {
 	}
 
 	async delete(id: number) {
-		const book = await this.getBookById(id)
+		await this.checkExist(id)
 		await this.prisma.feedback.deleteMany({
 			where: {
 				bookId: id
 			}
 		})
-		await this.prisma.book.delete({ where: { id: book.id } })
+		await this.prisma.book.delete({ where: { id } })
 	}
 
 	//TODO: сделать запрос более гипким
 	async update(id: number, dto: EditBookDto) {
-		const book = await this.getBookById(id)
+		await this.checkExist(id)
 		const { genres: dtoGenres, ...other } = dto
 		const majorGenre = await this.getMajorGenres(dtoGenres)
 		await this.prisma.book.update({
-			where: { id: book.id },
+			where: { id: id },
 			data: {
 				...other,
 				...(dtoGenres && {
@@ -230,14 +274,13 @@ export class BookService {
 		await this.activityService.create({
 			type: Activities.updateBook,
 			importance: 9,
-			bookId: book.id
+			bookId: id
 		})
 	}
 
 	async feedback(userId: number, bookId: number, dto: FeedbackBookDto) {
-		await this.usersService.getUserById(userId)
-		await this.getBookById(bookId)
-
+		await this.checkExist(bookId)
+		await this.checkUserExist(userId)
 		await this.activityService.create({
 			type: Activities.feedbackBook,
 			importance: 4,
@@ -290,13 +333,12 @@ export class BookService {
 		}
 	}
 	async getSimilarBooks(genresIds: number[], id: number) {
-		const similarBooks = await this.prisma.book.findMany({
+		const similarBooks = await this.findMany({
 			where: {
 				id: { not: +id },
 				genres: { some: { id: { in: genresIds } } }
 			},
 			select: {
-				...returnBookObject,
 				genres: { select: ReturnGenreObject }
 			}
 		})
@@ -328,5 +370,17 @@ export class BookService {
 			},
 			take: 1
 		})
+	}
+
+	private async checkUserExist(id: number) {
+		const userExist = await this.prisma.user.findUnique({
+			where: { id: id },
+			select: {
+				id: true
+			}
+		})
+		if (!userExist)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		return !!userExist
 	}
 }

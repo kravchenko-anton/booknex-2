@@ -16,7 +16,12 @@ export type InfoByIdAdmin = Prisma.BookGetPayload<{
 		pages: true
 		createdAt: true
 		updatedAt: true
-		genres: { select: typeof ReturnGenreObject }
+		genres: {
+			select: {
+				id: true
+				name: true
+			}
+		}
 		popularity: true
 		ebook: true
 		description: true

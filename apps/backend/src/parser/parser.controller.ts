@@ -22,7 +22,6 @@ import {
 } from '@nestjs/swagger'
 import type {
 	AllGoodReadBookOutput,
-	ByIdOutput,
 	UnfoldOutput
 } from '../../../../libs/global/services-types/parser-types'
 import { Auth } from '../decorator/auth.decorator'
@@ -50,12 +49,6 @@ export class ParserController {
 	@ApiBody({ type: ParserDto })
 	async parse(@Body() dto: ParserDto) {
 		return this.parserService.parse(dto)
-	}
-
-	@Get('admin/by-id/:id')
-	@ApiParam({ name: 'id', required: false, example: 1 })
-	byId(@Param('id') id: string): Promise<ByIdOutput | null> {
-		return this.parserService.byId(+id)
 	}
 
 	@Post('admin/unfold')

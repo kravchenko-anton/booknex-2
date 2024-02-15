@@ -26,6 +26,6 @@ export class GenreController {
 		@Param('id') genreId: string,
 		@CurrentUser('id') userId: string
 	): Promise<GenreByIdOutput> {
-		return this.genreService.byId(+genreId, +userId)
+		return this.genreService.findOne(+genreId, +userId)
 	}
 }

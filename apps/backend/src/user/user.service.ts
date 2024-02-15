@@ -190,15 +190,7 @@ export class UserService {
 	}
 
 	async startReading(userId: number, id: number) {
-		const bookExist = await this.prisma.book.findUnique({
-			where: { id },
-			select: {
-				id: true
-			}
-		})
-
-		if (!bookExist)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		await this.checkBookExist(id)
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect,
 			finishedBooks: idSelect
@@ -236,15 +228,7 @@ export class UserService {
 	}
 
 	async finishReading(userId: number, id: number) {
-		const bookExist = await this.prisma.book.findUnique({
-			where: { id },
-			select: {
-				id: true
-			}
-		})
-
-		if (!bookExist)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		await this.checkBookExist(id)
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect
 		})
@@ -281,14 +265,7 @@ export class UserService {
 	}
 
 	async isSaved(userId: number, id: number) {
-		const bookExist = await this.prisma.book.findUnique({
-			where: { id },
-			select: {
-				id: true
-			}
-		})
-
-		if (!bookExist) return false
+		await this.checkBookExist(id)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -302,15 +279,7 @@ export class UserService {
 	}
 
 	async toggleSave(userId: number, id: number) {
-		const bookExist = await this.prisma.book.findUnique({
-			where: { id },
-			select: {
-				id: true
-			}
-		})
-
-		if (!bookExist)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		await this.checkBookExist(id)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -352,5 +321,17 @@ export class UserService {
 		})
 
 		return !isSavedExist
+	}
+
+	private async checkBookExist(id: number) {
+		const book = await this.prisma.book.findUnique({
+			where: { id },
+			select: {
+				id: true
+			}
+		})
+		if (!book)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		return !!book
 	}
 }

@@ -1,5 +1,4 @@
 import type { Prisma } from '@prisma/client'
-import type { returnBookObject } from '../book/return.book.object'
 import { defaultReturnObject } from '../utils/return.default.object'
 
 export const ReturnGenreObject: Pick<
@@ -9,11 +8,3 @@ export const ReturnGenreObject: Pick<
 	...defaultReturnObject,
 	name: true
 }
-
-export type ReturnGenreWithBooks = Prisma.GenreGetPayload<{
-	select: typeof ReturnGenreObject & {
-		books: {
-			select: typeof returnBookObject
-		}
-	}
-}>[]

@@ -71,24 +71,6 @@ export class ParserService {
 		return getEbook(file.buffer)
 	}
 
-	async byId(id: number) {
-		return this.prisma.bookTemplate.findUnique({
-			where: {
-				id
-			},
-			select: {
-				...defaultReturnObject,
-				title: true,
-				pages: true,
-				description: true,
-				author: true,
-				picture: true,
-				genres: true,
-				popularity: true
-			}
-		})
-	}
-
 	async parse(dto: ParserDto) {
 		try {
 			const bookTemplate = await this.prisma.bookTemplate.findMany({

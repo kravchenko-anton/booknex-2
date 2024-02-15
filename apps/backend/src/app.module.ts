@@ -2,30 +2,14 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ThrottlerModule } from '@nestjs/throttler'
-import { AdminModule } from './admin/admin.module'
+import { ActivityModule } from './activity/activity.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { AuthModule } from './auth/auth.module'
 import { BookModule } from './book/book.module'
-import { CatalogModule } from './catalog/catalog.module'
-import { CollectionModule } from './collection/collection.module'
-import { GenreModule } from './genre/genre.module'
-import { ParserModule } from './parser/parser.module'
-import { StorageModule } from './storage/storage.module'
-import { UserModule } from './user/user.module'
-import { ActivityModule } from './activity/activity.module';
 
 @Module({
 	imports: [
-		UserModule,
-		CatalogModule,
-		GenreModule,
 		BookModule,
-		AuthModule,
-		StorageModule,
-		CollectionModule,
-		ParserModule,
-		AdminModule,
 		ThrottlerModule.forRoot([
 			{
 				ttl: 60,
