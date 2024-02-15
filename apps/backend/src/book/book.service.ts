@@ -1,6 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
+import { ActivityService } from '../activity/activity.service'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { transformActivity } from '../utils/activity-transformer'
@@ -11,12 +12,14 @@ import { defaultReturnObject } from '../utils/return.default.object'
 import type { FeedbackBookDto } from './dto/feedback.book.dto'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
 import { returnBookObject } from './return.book.object'
+import type { EBookType } from './types'
 
 @Injectable()
 export class BookService {
 	constructor(
 		private readonly usersService: UserService,
-		private readonly prisma: PrismaService
+		private readonly prisma: PrismaService,
+		private readonly activityService: ActivityService
 	) {}
 
 	async getBookById(id: number, selectObject: Prisma.BookSelect = {}) {
@@ -98,44 +101,29 @@ export class BookService {
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
-		const ebook: {
-			name: string
-			content: {
-				title: string
-				content: string
-			}[]
-		}[] = await fetch(getFileUrl(book.ebook)).then(result => result.json())
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.getEbook,
-				importance: 1,
-				book: {
-					connect: {
-						id
-					}
-				},
-				user: {
-					connect: {
-						id: userId
-					}
-				}
-			}
+		const ebook: EBookType = await fetch(getFileUrl(book.ebook)).then(result =>
+			result.json()
+		)
+
+		await this.activityService.create({
+			type: Activities.getEbook,
+			importance: 1,
+			userId,
+			bookId: id
 		})
+
 		return {
 			...book,
-			file: ebook.map(({ content }) =>
-				content
-					.map(
-						// eslint-disable-next-line @typescript-eslint/no-shadow --  //TODO: пофиксить тут и сделать у книги норм отоюражение
-						({ title, content }) => `<label id="${title}"></label> ${content}`
-					)
+			file: ebook.map(({ chapters }) =>
+				chapters
+					.map(({ text, name }) => `<label id="${name}"></label> ${text}`)
 					.join(' ')
 			),
-			chapters: ebook.map(({ name, content }) => ({
-				name,
-				children: content.map(({ title }) => ({
-					title,
-					link: `#${title}`
+			chapters: ebook.map(({ title, chapters }) => ({
+				title,
+				children: chapters.map(({ name }) => ({
+					name,
+					link: `#${name}`
 				}))
 			}))
 		}
@@ -296,37 +284,22 @@ export class BookService {
 			}
 		})
 
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.updateBook,
-				importance: 9,
-				book: {
-					connect: {
-						id: book.id
-					}
-				}
-			}
+		await this.activityService.create({
+			type: Activities.updateBook,
+			importance: 9,
+			bookId: book.id
 		})
 	}
 
 	async feedback(userId: number, bookId: number, dto: FeedbackBookDto) {
 		await this.usersService.getUserById(userId)
 		await this.getBookById(bookId)
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.feedbackBook,
-				importance: 4,
-				user: {
-					connect: {
-						id: userId
-					}
-				},
-				book: {
-					connect: {
-						id: bookId
-					}
-				}
-			}
+
+		await this.activityService.create({
+			type: Activities.feedbackBook,
+			importance: 4,
+			userId,
+			bookId
 		})
 		await this.prisma.feedback.create({
 			data: {
@@ -368,22 +341,14 @@ export class BookService {
 				genres: { select: ReturnGenreObject }
 			}
 		})
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.visitBook,
-				importance: 1,
-				user: {
-					connect: {
-						id: userId
-					}
-				},
-				book: {
-					connect: {
-						id
-					}
-				}
-			}
+
+		await this.activityService.create({
+			type: Activities.visitBook,
+			importance: 1,
+			userId,
+			bookId: id
 		})
+
 		return {
 			...book,
 			similarBooks: similarBooks

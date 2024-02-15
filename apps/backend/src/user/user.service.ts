@@ -1,5 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
+import { ActivityService } from '../activity/activity.service'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { transformActivity } from '../utils/activity-transformer'
@@ -12,7 +13,10 @@ import { returnUserObject } from './return.user.object'
 
 @Injectable()
 export class UserService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(
+		private readonly prisma: PrismaService,
+		private readonly activityService: ActivityService
+	) {}
 
 	async getUserById(id: number, selectObject: Prisma.UserSelect = {}) {
 		const user = await this.prisma.user.findUnique({
@@ -81,17 +85,13 @@ export class UserService {
 				id: true
 			}
 		})
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.updateRecommendations,
-				importance: 5,
-				user: {
-					connect: {
-						id
-					}
-				}
-			}
+
+		await this.activityService.create({
+			type: Activities.updateRecommendations,
+			importance: 5,
+			userId: id
 		})
+
 		await this.prisma.user.update({
 			where: { id },
 			data: {
@@ -207,21 +207,11 @@ export class UserService {
 		const isReadingExist = user.readingBooks.some(book => book.id === id)
 		if (isReadingExist) return
 
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.startedReading,
-				importance: 2,
-				user: {
-					connect: {
-						id: userId
-					}
-				},
-				book: {
-					connect: {
-						id
-					}
-				}
-			}
+		await this.activityService.create({
+			type: Activities.startedReading,
+			importance: 2,
+			userId,
+			bookId: id
 		})
 		await this.prisma.user.update({
 			where: { id: user.id },
@@ -260,22 +250,14 @@ export class UserService {
 		})
 		const isReadingExist = user.readingBooks.some(book => book.id === id)
 		if (!isReadingExist) return
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.finishedReading,
-				importance: 3,
-				user: {
-					connect: {
-						id: userId
-					}
-				},
-				book: {
-					connect: {
-						id
-					}
-				}
-			}
+
+		await this.activityService.create({
+			type: Activities.finishedReading,
+			importance: 3,
+			userId,
+			bookId: id
 		})
+
 		await this.prisma.user.update({
 			where: { id: user.id },
 			data: {
@@ -339,21 +321,12 @@ export class UserService {
 		if (!user)
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const isSavedExist = user.savedBooks.some(book => book.id === id)
-		await this.prisma.activity.create({
-			data: {
-				type: isSavedExist ? Activities.removeFromSaved : Activities.savedBook,
-				importance: 1,
-				user: {
-					connect: {
-						id: user.id
-					}
-				},
-				book: {
-					connect: {
-						id
-					}
-				}
-			}
+
+		await this.activityService.create({
+			type: isSavedExist ? Activities.removeFromSaved : Activities.savedBook,
+			importance: 1,
+			userId,
+			bookId: id
 		})
 		await this.prisma.user.update({
 			where: { id: user.id },

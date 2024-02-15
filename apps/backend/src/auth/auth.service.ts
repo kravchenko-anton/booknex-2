@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt'
 import { Activities, Role, type User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
+import { ActivityService } from '../activity/activity.service'
 import { UserService } from '../user/user.service'
 import { serverError } from '../utils/call-error'
 import { AuthErrors, GlobalErrorsEnum } from '../utils/errors'
@@ -19,7 +20,8 @@ export class AuthService {
 		private readonly prisma: PrismaService,
 		private readonly jwt: JwtService,
 		private readonly usersService: UserService,
-		private readonly configService: ConfigService
+		private readonly configService: ConfigService,
+		private readonly activityService: ActivityService
 	) {
 		this.google = new OAuth2Client(
 			configService.get('GOOGLE_CLIENT_ID'),
@@ -64,17 +66,13 @@ export class AuthService {
 				}
 			}
 		})
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.registerNewUser,
-				importance: 1,
-				user: {
-					connect: {
-						id: user.id
-					}
-				}
-			}
+
+		await this.activityService.create({
+			type: Activities.registerNewUser,
+			importance: 1,
+			userId: user.id
 		})
+
 		const tokens = this.issueToken(user.id)
 		return {
 			user: this.userFields(user),
@@ -100,17 +98,13 @@ export class AuthService {
 		if (user) {
 			console.log('User exist and i just logged in')
 			const tokens = this.issueToken(user.id)
-			await this.prisma.activity.create({
-				data: {
-					importance: 1,
-					type: Activities.loginUser,
-					user: {
-						connect: {
-							id: user.id
-						}
-					}
-				}
+
+			await this.activityService.create({
+				type: Activities.loginUser,
+				importance: 1,
+				userId: user.id
 			})
+
 			return {
 				type: 'login',
 				user: this.userFields(user),
@@ -155,16 +149,10 @@ export class AuthService {
 		})
 
 		const newTokens = this.issueToken(newUser.id)
-		await this.prisma.activity.create({
-			data: {
-				importance: 1,
-				type: Activities.registerNewUser,
-				user: {
-					connect: {
-						id: newUser.id
-					}
-				}
-			}
+		await this.activityService.create({
+			type: Activities.registerNewUser,
+			importance: 1,
+			userId: newUser.id
 		})
 		return {
 			type: 'register',

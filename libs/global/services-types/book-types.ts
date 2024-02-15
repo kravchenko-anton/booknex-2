@@ -96,6 +96,6 @@ export interface EpubOutputType {
 }
 
 export type ChaptersType = {
-	name: string
-	children: { title: string; link: string }[]
+	title: string
+	children: { name: string; link: string }[]
 }[]

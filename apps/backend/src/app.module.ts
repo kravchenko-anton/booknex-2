@@ -13,6 +13,7 @@ import { GenreModule } from './genre/genre.module'
 import { ParserModule } from './parser/parser.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
 	imports: [
@@ -35,7 +36,8 @@ import { UserModule } from './user/user.module'
 			isGlobal: true,
 			ttl: 5000,
 			max: 1000
-		})
+		}),
+		ActivityModule
 	],
 	controllers: [AppController],
 	providers: [AppService, ConfigService]

@@ -1,23 +1,21 @@
 import { Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
+import { ActivityService } from '../activity/activity.service'
 import { returnBookObject } from '../book/return.book.object'
 import { PrismaService } from '../utils/prisma.service'
 
 @Injectable()
 export class CatalogService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(
+		private readonly prisma: PrismaService,
+		private readonly activityService: ActivityService
+	) {}
 
 	async featured(userId: number) {
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.checkCatalog,
-				importance: 1,
-				user: {
-					connect: {
-						id: userId
-					}
-				}
-			}
+		await this.activityService.create({
+			type: Activities.checkCatalog,
+			importance: 1,
+			userId: userId
 		})
 		return {
 			relatedGenres: await this.relatedGenres(),
