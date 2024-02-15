@@ -21,6 +21,20 @@ export class GenreService {
 		})
 	}
 
+	async getPopular() {
+		return this.prisma.genre.findMany({
+			take: 3,
+			select: {
+				id: true
+			},
+			orderBy: {
+				activities: {
+					_count: 'asc'
+				}
+			}
+		})
+	}
+
 	async byId(id: number, userId: number) {
 		await this.activityService.create({
 			type: Activities.visitGenre,

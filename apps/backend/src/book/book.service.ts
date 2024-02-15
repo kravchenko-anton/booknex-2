@@ -131,6 +131,7 @@ export class BookService {
 
 	async all(searchTerm: string, page: number) {
 		const perPage = 20
+		const count = await this.prisma.book.count()
 		return {
 			data: await this.prisma.book.findMany({
 				take: perPage,
@@ -159,37 +160,18 @@ export class BookService {
 					}
 				})
 			}),
-			canLoadMore:
-				page < Math.floor((await this.prisma.book.count()) / perPage),
-			totalPages: Math.floor((await this.prisma.book.count()) / perPage)
+			canLoadMore: page < Math.floor(count / perPage),
+			totalPages: Math.floor(count / perPage)
 		}
 	}
 
 	async create(dto: CreateBookDto) {
-		const majorGenre = await this.prisma.genre.findMany({
-			where: {
-				id: {
-					in: dto.genres
-				}
-			},
-			select: {
-				id: true
-			},
-			orderBy: {
-				majorBooks: {
-					_count: 'asc'
-				}
-			},
-			take: 1
-		})
-
-		console.log(majorGenre, 'it is major genres')
-
+		const majorGenres = await this.getMajorGenres(dto.genres)
 		await this.prisma.book.create({
 			data: {
 				majorGenre: {
 					connect: {
-						id: majorGenre[0].id
+						id: majorGenres[0].id
 					}
 				},
 				activities: {
@@ -225,48 +207,9 @@ export class BookService {
 
 	//TODO: сделать запрос более гипким
 	async update(id: number, dto: EditBookDto) {
-		console.log(dto, 'it is dto')
-
-		const book = await this.prisma.book.findUnique({
-			where: { id },
-			select: {
-				id: true,
-				title: true,
-				popularity: true,
-				pages: true,
-				description: true,
-				picture: true,
-				ebook: true,
-				author: true,
-				genres: {
-					select: {
-						id: true
-					}
-				}
-			}
-		})
-		if (!book)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		const book = await this.getBookById(id)
 		const { genres: dtoGenres, ...other } = dto
-
-		const majorGenre = await this.prisma.genre.findMany({
-			where: {
-				id: {
-					in: dtoGenres
-				}
-			},
-			select: {
-				id: true
-			},
-			orderBy: {
-				majorBooks: {
-					_count: 'asc'
-				}
-			},
-			take: 1
-		})
-
-		console.log(other, 'it is major genres')
+		const majorGenre = await this.getMajorGenres(dtoGenres)
 		await this.prisma.book.update({
 			where: { id: book.id },
 			data: {
@@ -331,16 +274,8 @@ export class BookService {
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		const genreIds = book?.genres.map(g => g.id) || []
-		const similarBooks = await this.prisma.book.findMany({
-			where: {
-				id: { not: +id },
-				genres: { some: { id: { in: genreIds } } }
-			},
-			select: {
-				...returnBookObject,
-				genres: { select: ReturnGenreObject }
-			}
-		})
+
+		const similarBooks = await this.getSimilarBooks(genreIds, id)
 
 		await this.activityService.create({
 			type: Activities.visitBook,
@@ -351,14 +286,47 @@ export class BookService {
 
 		return {
 			...book,
-			similarBooks: similarBooks
-				.sort(
-					(a, b) =>
-						b.genres.filter(g => genreIds?.includes(g.id)).length -
-						a.genres.filter(g => genreIds?.includes(g.id)).length
-				)
-				.slice(0, 10)
-				.map(({ genres, ...rest }) => ({ ...rest }))
+			similarBooks
 		}
+	}
+	async getSimilarBooks(genresIds: number[], id: number) {
+		const similarBooks = await this.prisma.book.findMany({
+			where: {
+				id: { not: +id },
+				genres: { some: { id: { in: genresIds } } }
+			},
+			select: {
+				...returnBookObject,
+				genres: { select: ReturnGenreObject }
+			}
+		})
+
+		return similarBooks
+			.sort(
+				(a, b) =>
+					b.genres.filter(g => genresIds?.includes(g.id)).length -
+					a.genres.filter(g => genresIds?.includes(g.id)).length
+			)
+			.slice(0, 10)
+			.map(({ genres, ...rest }) => ({ ...rest }))
+	}
+
+	async getMajorGenres(genres: number[]) {
+		return this.prisma.genre.findMany({
+			where: {
+				id: {
+					in: genres
+				}
+			},
+			select: {
+				id: true
+			},
+			orderBy: {
+				majorBooks: {
+					_count: 'asc'
+				}
+			},
+			take: 1
+		})
 	}
 }

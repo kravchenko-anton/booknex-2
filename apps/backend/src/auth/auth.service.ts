@@ -1,14 +1,16 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { Activities, Role, type User } from '@prisma/client'
+import { Activities, Role, type Prisma, type User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
 import { ActivityService } from '../activity/activity.service'
+import { GenreService } from '../genre/genre.service'
 import { UserService } from '../user/user.service'
 import { serverError } from '../utils/call-error'
 import { AuthErrors, GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
+
 import type { AuthDto, SignDto } from './dto/auth.dto'
 
 export type RoleType = keyof typeof Role
@@ -21,7 +23,8 @@ export class AuthService {
 		private readonly jwt: JwtService,
 		private readonly usersService: UserService,
 		private readonly configService: ConfigService,
-		private readonly activityService: ActivityService
+		private readonly activityService: ActivityService,
+		private readonly genreService: GenreService
 	) {
 		this.google = new OAuth2Client(
 			configService.get('GOOGLE_CLIENT_ID'),
@@ -40,29 +43,14 @@ export class AuthService {
 	}
 
 	async register(dto: AuthDto) {
-		const oldUser = await this.prisma.user.findUnique({
-			where: {
-				email: dto.email
-			}
-		})
-		if (oldUser)
-			throw serverError(
-				HttpStatus.BAD_REQUEST,
-				AuthErrors.passwordOrEmailInvalid
-			)
-
-		const mostPopularGenres = await this.prisma.genre.findMany({
-			take: 3,
-			select: {
-				id: true
-			}
-		})
+		await this.checkOldUser({ email: dto.email })
+		const popularGenres = await this.genreService.getPopular()
 		const user = await this.prisma.user.create({
 			data: {
 				email: dto.email,
 				password: await hash(dto.password),
 				selectedGenres: {
-					connect: mostPopularGenres
+					connect: popularGenres
 				}
 			}
 		})
@@ -114,23 +102,9 @@ export class AuthService {
 
 		if (!data?.email)
 			throw serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
-		const oldUser = await this.prisma.user.findUnique({
-			where: {
-				email: data.email
-			}
-		})
-		if (oldUser)
-			throw serverError(
-				HttpStatus.BAD_REQUEST,
-				AuthErrors.passwordOrEmailInvalid
-			)
+		await this.checkOldUser({ email: data.email })
 
-		const mostPopularGenres = await this.prisma.genre.findMany({
-			take: 3,
-			select: {
-				id: true
-			}
-		})
+		const mostPopularGenres = await this.genreService.getPopular()
 		const newUser = await this.prisma.user.create({
 			data: {
 				email: data.email,
@@ -202,6 +176,15 @@ export class AuthService {
 			throw serverError(HttpStatus.NOT_FOUND, AuthErrors.passwordOrEmailInvalid)
 
 		return user
+	}
+
+	private async checkOldUser(where: Prisma.UserWhereUniqueInput) {
+		const user = await this.prisma.user.findUnique({ where })
+		if (!user)
+			throw serverError(
+				HttpStatus.BAD_REQUEST,
+				AuthErrors.passwordOrEmailInvalid
+			)
 	}
 
 	private userFields(user: User) {

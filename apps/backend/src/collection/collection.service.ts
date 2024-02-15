@@ -1,5 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
+import { ActivityService } from '../activity/activity.service'
 import { returnBookObject } from '../book/return.book.object'
 import { serverError } from '../utils/call-error'
 import { AdminErrors } from '../utils/errors'
@@ -13,7 +14,10 @@ import { returnCollectionObject } from './return.collection.object'
 @Injectable()
 export class CollectionService {
 	//TODO: сделать по нормальному колекции
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(
+		private readonly prisma: PrismaService,
+		private readonly activityService: ActivityService
+	) {}
 	async byId(id: number, selectObject: Prisma.CollectionSelect = {}) {
 		const collection = await this.prisma.collection.findUnique({
 			where: {
@@ -53,22 +57,14 @@ export class CollectionService {
 
 		if (!collection)
 			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.collectionNotFound)
-		await this.prisma.activity.create({
-			data: {
-				type: Activities.visitCollection,
-				importance: 1,
-				user: {
-					connect: {
-						id
-					}
-				},
-				collection: {
-					connect: {
-						id: userId
-					}
-				}
-			}
+
+		await this.activityService.create({
+			type: Activities.visitCollection,
+			importance: 1,
+			userId,
+			collectionId: id
 		})
+
 		const { _count, ...rest } = collection
 		return {
 			...rest,

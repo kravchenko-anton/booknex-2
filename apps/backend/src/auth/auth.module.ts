@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { ActivityService } from '../activity/activity.service'
 import { getJwtConfig } from '../config/jwt.config'
+import { GenreService } from '../genre/genre.service'
 import { UserService } from '../user/user.service'
 import { PrismaService } from '../utils/prisma.service'
 import { AuthController } from './auth.controller'
@@ -16,6 +17,7 @@ import { JwtStrategy } from './strategy/jwt.stategy'
 		PrismaService,
 		JwtStrategy,
 		UserService,
+		GenreService,
 		ConfigService,
 		ActivityService
 	],

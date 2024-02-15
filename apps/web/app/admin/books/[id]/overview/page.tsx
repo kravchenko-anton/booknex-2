@@ -15,7 +15,7 @@ import { StorageFolderEnum } from 'backend/src/storage/storage.types'
 import type { BookUpdatePayload } from 'global/services-types/book-types'
 import { useParams, useRouter } from 'next/navigation'
 import * as React from 'react'
-
+//TODO: сделать во фронте при композиции книги типы которые в бекенде
 const Page = () => {
 	const { upload } = useUploadFile()
 	const parameters = useParams()
