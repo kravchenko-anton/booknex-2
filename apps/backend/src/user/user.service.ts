@@ -154,7 +154,7 @@ export class UserService {
 				_count: {
 					select: {
 						savedBooks: true,
-						feedback: true,
+						review: true,
 						finishedBooks: true,
 						readingBooks: true
 					}
@@ -325,7 +325,7 @@ export class UserService {
 
 	private async checkBookExist(id: number) {
 		const book = await this.prisma.book.findUnique({
-			where: { id },
+			where: { id, visible: true },
 			select: {
 				id: true
 			}

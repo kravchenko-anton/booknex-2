@@ -23,7 +23,7 @@ import {
 const authRequiredRoutes = new Set(routes.map(route => route.name))
 const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
 
-const noBottomMenuRoutes = new Set(['Reader', 'Feedback', 'Search'])
+const noBottomMenuRoutes = new Set(['Reader', 'BookReview', 'Search'])
 
 const Navigation: FC = () => {
 	const { user } = useAuth()

@@ -5,7 +5,7 @@ import type { ComponentType } from 'react'
 export type TypeRootStackParameterListType = {
 	Book: { id: number }
 	Featured: undefined
-	BookFeedback: { id: number }
+	BookReview: { id: number }
 	Genre: { id: number; name: string }
 	Library: undefined
 	Login: undefined

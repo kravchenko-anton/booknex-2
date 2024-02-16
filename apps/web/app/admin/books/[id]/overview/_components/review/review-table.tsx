@@ -1,4 +1,4 @@
-import { feedbackColumns } from '@/app/admin/books/[id]/overview/_components/feedback/feedback-columns'
+import { reviewColumns } from '@/app/admin/books/[id]/overview/_components/review/review-columns'
 import { columns } from '@/app/admin/books/_catalog/columns'
 import {
 	Table,
@@ -17,19 +17,19 @@ import type { InfoByIdAdmin } from 'global/services-types/book-types'
 import type { FC } from 'react'
 import * as React from 'react'
 
-interface FeedbackTableProperties {
-	feedback: InfoByIdAdmin['feedback']
+interface ReviewTableProperties {
+	review: InfoByIdAdmin['review']
 }
 
-const FeedbackTable: FC<FeedbackTableProperties> = ({ feedback }) => {
+const ReviewTable: FC<ReviewTableProperties> = ({ review }) => {
 	const table = useReactTable({
-		data: feedback ?? [],
-		columns: feedbackColumns(),
+		data: review ?? [],
+		columns: reviewColumns(),
 		getCoreRowModel: getCoreRowModel()
 	})
 	return (
 		<div className='mt-4 '>
-			<h1 className='mb-2 text-xl'>Feedback</h1>
+			<h1 className='mb-2 text-xl'>Review</h1>
 			<Table>
 				<TableHeader>
 					{table.getHeaderGroups().map(headerGroup => (
@@ -76,4 +76,4 @@ const FeedbackTable: FC<FeedbackTableProperties> = ({ feedback }) => {
 	)
 }
 
-export default FeedbackTable
+export default ReviewTable

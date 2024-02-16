@@ -1,4 +1,4 @@
-export const feedbackTags = {
+export const reviewTags = {
 	positive: [
 		{
 			id: 1,

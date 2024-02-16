@@ -13,7 +13,7 @@ type ColumnType = ColumnDef<{
 	text: string
 	tags: string[]
 }>[]
-export const feedbackColumns = (): ColumnType => [
+export const reviewColumns = (): ColumnType => [
 	{
 		id: 'id',
 		enableHiding: false,

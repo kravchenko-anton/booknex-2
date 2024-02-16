@@ -2,15 +2,15 @@ import { getBookUrl } from 'global/api-config'
 import type {
 	BookByIdOutput,
 	EpubOutputType,
-	FeedbackBookPayload
+	ReviewBookPayload
 } from 'global/services-types/book-types'
 import { request } from '../../request.api'
 
 export const bookService = {
-	feedback(bookId: number, dto: FeedbackBookPayload) {
+	review(bookId: number, dto: ReviewBookPayload) {
 		return request<null>({
 			method: 'POST',
-			url: getBookUrl(`/feedback/${bookId}`),
+			url: getBookUrl(`/review/${bookId}`),
 			data: dto
 		})
 	},

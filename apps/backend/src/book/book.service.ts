@@ -8,8 +8,8 @@ import { serverError } from '../utils/call-error'
 import { GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
-import type { FeedbackBookDto } from './dto/feedback.book.dto'
 import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
+import type { ReviewBookDto } from './dto/review.book.dto'
 import { returnBookObject } from './return.book.object'
 import type { EBookType } from './types'
 
@@ -66,7 +66,7 @@ export class BookService {
 
 	async checkExist(id: number) {
 		const exist = await this.prisma.book.findUnique({
-			where: { id },
+			where: { id, visible: true },
 			select: {
 				id: true
 			}
@@ -92,7 +92,7 @@ export class BookService {
 				ebook: true,
 				description: true,
 				visible: true,
-				feedback: {
+				review: {
 					select: {
 						...defaultReturnObject,
 						tags: true,
@@ -241,7 +241,7 @@ export class BookService {
 
 	async delete(id: number) {
 		await this.checkExist(id)
-		await this.prisma.feedback.deleteMany({
+		await this.prisma.review.deleteMany({
 			where: {
 				bookId: id
 			}
@@ -278,16 +278,16 @@ export class BookService {
 		})
 	}
 
-	async feedback(userId: number, bookId: number, dto: FeedbackBookDto) {
+	async review(userId: number, bookId: number, dto: ReviewBookDto) {
 		await this.checkExist(bookId)
 		await this.checkUserExist(userId)
 		await this.activityService.create({
-			type: Activities.feedbackBook,
+			type: Activities.reviewBook,
 			importance: 4,
 			userId,
 			bookId
 		})
-		await this.prisma.feedback.create({
+		await this.prisma.review.create({
 			data: {
 				rating: dto.rating,
 				tags: dto.tags,
@@ -308,7 +308,7 @@ export class BookService {
 
 	async infoById(id: number, userId: number) {
 		const book = await this.prisma.book.findUnique({
-			where: { id: +id },
+			where: { id: +id, visible: true },
 			include: {
 				majorGenre: false,
 				genres: { select: ReturnGenreObject }

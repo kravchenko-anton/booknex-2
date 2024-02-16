@@ -1,4 +1,4 @@
-import BookFeedback from '@/screens/book-feedback/book-feedback'
+import BookReview from '@/screens/book-review/book-review'
 import Book from '@/screens/book/book'
 import Featured from '@/screens/featured/featured'
 import Genre from '@/screens/genre/genre'
@@ -31,8 +31,8 @@ export const routes: IRouteType[] = [
 		}
 	},
 	{
-		name: 'BookFeedback',
-		component: BookFeedback,
+		name: 'BookReview',
+		component: BookReview,
 		options: {
 			headerShown: false
 		}

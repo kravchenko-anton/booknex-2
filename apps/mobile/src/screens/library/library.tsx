@@ -40,7 +40,7 @@ const Library = () => {
 				title='Continue reading'
 				data={library.readingBooks}
 				renderItem={({ item }) => (
-					//TODO: сделать спрогресс
+					//TODO: сделать с прогресс
 					<AnimatedPress onPress={() => navigate('Reader', { id: item.id })}>
 						<Image
 							width={settings.width.sm * 1.2}

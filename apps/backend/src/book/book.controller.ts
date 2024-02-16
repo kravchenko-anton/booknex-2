@@ -24,22 +24,22 @@ import type {
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'
-import { FeedbackBookDto } from './dto/feedback.book.dto'
 import { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
+import { ReviewBookDto } from './dto/review.book.dto'
 
 @ApiTags('book')
 @ApiBearerAuth()
 @Controller('book')
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
-	@Post('/feedback/:id')
+	@Post('/review/:id')
 	@Auth()
-	async feedback(
+	async review(
 		@CurrentUser('id') userId: number,
 		@Param('id') bookId: string,
-		@Body() dto: FeedbackBookDto
+		@Body() dto: ReviewBookDto
 	) {
-		return this.bookService.feedback(+userId, +bookId, dto)
+		return this.bookService.review(+userId, +bookId, dto)
 	}
 
 	@Auth()

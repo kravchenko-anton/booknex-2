@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNumber, IsOptional, IsString } from 'class-validator'
-import type { FeedbackBookPayload } from '../../../../../libs/global/services-types/book-types'
-import { feedbackTags } from '../feedback-tags'
+import type { ReviewBookPayload } from '../../../../../libs/global/services-types/book-types'
+import { reviewTags } from '../review-tags'
 
-export class FeedbackBookDto implements FeedbackBookPayload {
+export class ReviewBookDto implements ReviewBookPayload {
 	@ApiProperty({
 		example: 5,
 		description: 'Rating of the book',
@@ -13,7 +13,7 @@ export class FeedbackBookDto implements FeedbackBookPayload {
 	rating: number
 
 	@ApiProperty({
-		example: feedbackTags.positive.map(tag => tag.name),
+		example: reviewTags.positive.map(tag => tag.name),
 		description: 'Tags for the book',
 		required: false
 	})

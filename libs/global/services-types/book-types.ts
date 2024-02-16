@@ -5,7 +5,7 @@ import type { ActivitiesOutput } from '../../../apps/backend/src/utils/activity-
 import type { defaultReturnObject } from '../../../apps/backend/src/utils/return.default.object'
 import type { GetAllTypeOutput } from './utils'
 
-export interface FeedbackBookPayload {
+export interface ReviewBookPayload {
 	rating: number
 	tags: string[]
 	comment: string
@@ -25,7 +25,7 @@ export type InfoByIdAdmin = Prisma.BookGetPayload<{
 		popularity: true
 		ebook: true
 		description: true
-		feedback: {
+		review: {
 			select: typeof defaultReturnObject & {
 				tags: true
 				text: true

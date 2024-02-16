@@ -53,7 +53,7 @@ export const useReading = (id: number) => {
 						scrollTop: 0
 					})
 					successToast('Book successfully finished')
-					navigate('BookFeedback', {
+					navigate('BookReview', {
 						id
 					})
 				})

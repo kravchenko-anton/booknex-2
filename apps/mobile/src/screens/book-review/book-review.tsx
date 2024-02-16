@@ -1,24 +1,24 @@
 import { bookService } from '@/api/services'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
-import { feedbackTags } from '@/screens/book-feedback/feedback-tags'
-import type { SendFeedbackSchemaType } from '@/screens/book-feedback/validation'
+import type { SendReviewSchemaType } from '@/screens/book-review/validation'
 import { Button, Field, Icon, ScrollView, Title } from '@/ui'
 import { successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
+import { reviewTags } from 'backend/src/book/review-tags'
 import { Color } from 'global/colors'
-import type { FeedbackBookPayload } from 'global/services-types/book-types'
+import type { ReviewBookPayload } from 'global/services-types/book-types'
 import { Close, Star } from 'icons'
 import { FinishBook } from 'illustrations'
 import { useState, type FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
 
-const BookFeedback: FC = () => {
-	const { params } = useTypedRoute<'BookFeedback'>()
+const BookReview: FC = () => {
+	const { params } = useTypedRoute<'BookReview'>()
 	const [selectedStars, setSelectedStars] = useState(0)
 	const { navigate } = useTypedNavigation()
 	const { control, setValue, handleSubmit, watch } =
-		useForm<SendFeedbackSchemaType>()
+		useForm<SendReviewSchemaType>()
 
 	const selectedTags = watch('selectedTags') || []
 	const setSelectedTags = (tags: string[]) => setValue('selectedTags', tags)
@@ -48,13 +48,13 @@ const BookFeedback: FC = () => {
 			</Button>
 		))
 
-	const { mutateAsync: sendFeedback, isLoading } = useMutation({
-		mutationKey: ['feedback'],
-		mutationFn: ({ id, dto }: { id: number; dto: FeedbackBookPayload }) =>
-			bookService.feedback(id, dto)
+	const { mutateAsync: sendReview, isLoading } = useMutation({
+		mutationKey: ['review'],
+		mutationFn: ({ id, dto }: { id: number; dto: ReviewBookPayload }) =>
+			bookService.review(id, dto)
 	})
 
-	const submitFeedback = async (data: SendFeedbackSchemaType) => {
+	const submitReview = async (data: SendReviewSchemaType) => {
 		console.log({
 			id: params.id,
 			dto: {
@@ -63,7 +63,7 @@ const BookFeedback: FC = () => {
 				tags: selectedTags || []
 			}
 		})
-		await sendFeedback({
+		await sendReview({
 			id: params.id,
 			dto: {
 				rating: selectedStars,
@@ -71,7 +71,7 @@ const BookFeedback: FC = () => {
 				tags: selectedTags || []
 			}
 		}).then(() => {
-			successToast('thanks for feedback')
+			successToast('thanks for review')
 			navigate('Library')
 		})
 	}
@@ -112,8 +112,8 @@ const BookFeedback: FC = () => {
 					</Title>
 					<View className='mb-2 w-full flex-row flex-wrap items-center justify-center gap-2 pt-4'>
 						{selectedStars > 3
-							? mappedTags(feedbackTags.positive)
-							: mappedTags(feedbackTags.negative)}
+							? mappedTags(reviewTags.positive)
+							: mappedTags(reviewTags.negative)}
 					</View>
 
 					<Field
@@ -128,7 +128,7 @@ const BookFeedback: FC = () => {
 						isLoading={isLoading}
 						variant='primary'
 						className='mb-4 w-full'
-						onPress={handleSubmit(submitFeedback)}
+						onPress={handleSubmit(submitReview)}
 					>
 						Submit
 					</Button>
@@ -138,4 +138,4 @@ const BookFeedback: FC = () => {
 	)
 }
 
-export default BookFeedback
+export default BookReview

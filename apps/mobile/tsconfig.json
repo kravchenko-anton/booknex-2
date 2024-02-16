@@ -7,7 +7,6 @@
 		"baseUrl": ".",
 		"allowSyntheticDefaultImports": true,
 		"allowJs": true,
-		"strict": false,
 		"incremental": true,
 		"jsx": "react-native",
 		"lib": ["dom", "esnext"],

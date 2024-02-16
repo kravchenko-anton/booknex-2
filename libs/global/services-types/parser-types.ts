@@ -15,7 +15,17 @@ export type AllGoodReadBookOutput = GetAllTypeOutput<
 		}
 	}>[]
 >
-
+export type ByIdOutput = Prisma.BookTemplateGetPayload<{
+	select: typeof defaultReturnObject & {
+		title: true
+		pages: true
+		description: true
+		author: true
+		picture: true
+		genres: true
+		popularity: true
+	}
+}>
 export interface ParserDtoPayload {
 	url: string
 	page: number

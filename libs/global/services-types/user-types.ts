@@ -43,7 +43,7 @@ export type AllUsersOutput = GetAllTypeOutput<
 			_count: {
 				select: {
 					savedBooks: true
-					feedback: true
+					review: true
 					finishedBooks: true
 					readingBooks: true
 				}

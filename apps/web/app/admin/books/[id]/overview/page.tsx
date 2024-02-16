@@ -1,7 +1,7 @@
 'use client'
 
 import EbookInfo from '@/app/admin/books/[id]/overview/_components/ebook-info'
-import FeedbackTable from '@/app/admin/books/[id]/overview/_components/feedback/feedback-table'
+import ReviewTable from '@/app/admin/books/[id]/overview/_components/review/review-table'
 import UpdateBio from '@/app/admin/books/[id]/overview/_components/update-bio'
 import UpdatePicture from '@/app/admin/books/[id]/overview/_components/update-picture'
 import ActivityList from '@/components/dialogs/activity-list'
@@ -166,7 +166,7 @@ const Page = () => {
 							})
 						}}
 					/>
-					<FeedbackTable feedback={book.feedback} />
+					<ReviewTable review={book.review} />
 				</div>
 			</div>
 		</div>

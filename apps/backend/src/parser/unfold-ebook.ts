@@ -13,7 +13,6 @@ export interface ChapterType {
 export const updatedContent = async (text: string) => {
 	const dom = new JSDOM(String(text))
 
-	//TODO: проверить тут работу unfolda без require импорта
 	const elements = dom.window.document.querySelectorAll('*')
 	for (const element of elements) {
 		if (
@@ -66,7 +65,6 @@ export const getEbook = async (buffer: Buffer): Promise<ChapterType[]> =>
 									title: String(chapter.title),
 									content: finalContent
 								})
-								//TODO: проверить всё после фиксов
 								return null
 							})
 						} catch {

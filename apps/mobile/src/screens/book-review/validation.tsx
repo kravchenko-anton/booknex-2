@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-export const sendFeedbackSchema = z.object({
+export const sendReviewSchema = z.object({
 	AdditionalComments: z.string().optional(),
 	selectedTags: z.array(z.string()).optional()
 })
-export type SendFeedbackSchemaType = z.infer<typeof sendFeedbackSchema>
+export type SendReviewSchemaType = z.infer<typeof sendReviewSchema>

@@ -31,7 +31,6 @@ export class CatalogService {
 		}
 	}
 
-	// TODO: сделать тут поиск и сделать в поиске посмотреть больше
 	search(query: string) {
 		return this.bookService.findMany({
 			where: {
@@ -86,31 +85,6 @@ export class CatalogService {
 
 	//TODO: пофиксить этот пиздец
 	private async recommendations(userId: number) {
-		const likedGenres = await this.prisma.genre.findMany({
-			select: {
-				name: true
-			},
-			where: {
-				books: {
-					some: {
-						readingBy: {
-							some: {
-								id: userId
-							}
-						}
-					}
-				}
-			}
-		})
-		const genres = likedGenres
-			.sort(
-				(a, b) =>
-					likedGenres.filter(genre => genre.name === a.name).length -
-					likedGenres.filter(genre => genre.name === b.name).length
-			)
-			.slice(0, 5)
-			.map(genre => genre.name)
-
 		const selectedGenres = await this.prisma.user
 			.findUnique({
 				where: {
@@ -134,13 +108,23 @@ export class CatalogService {
 				genres: {
 					some: {
 						name: {
-							in: genres.length > 0 ? genres : selectedGenres
+							in: selectedGenres
 						}
 					}
 				},
 				AND: {
 					NOT: {
 						readingBy: {
+							some: {
+								id: userId
+							}
+						},
+						finishedBy: {
+							some: {
+								id: userId
+							}
+						},
+						savedBy: {
 							some: {
 								id: userId
 							}

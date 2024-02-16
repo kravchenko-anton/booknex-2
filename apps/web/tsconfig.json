@@ -9,7 +9,6 @@
     "baseUrl": ".",
     
     "allowJs": true,
-    "strict": false,
     "incremental": true,
     "resolveJsonModule": true,
     
