@@ -29,8 +29,6 @@ model Activity {
   createdAt     DateTime @default(now())
   book          Book?    @relation(fields: [bookId], references: [id])
   genre         Genre?   @relation(fields: [genreId], references: [id])
-  collection    Collection? @relation(fields: [collectionId], references: [id])
-  collectionId  Int?
   genreId       Int?
   bookId        Int?
   userId        Int?
@@ -69,7 +67,6 @@ model Book {
   majorGenre  Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres      Genre[]      @relation("BookGenre")
   review    Review[]
-  collections Collection[]
   finishedBy  User[]       @relation("FinishedBooks")
   savedBy     User[]       @relation("SavedBooks")
   readingBy   User[]       @relation("ReadingBooks")
@@ -113,16 +110,7 @@ model User {
   activity        Activity[]
 }
 
-model Collection {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String   @unique
-  description String?  @default("")
-  picture     String   @default("")
-  books       Book[]
-  activities  Activity[]
-}
+
 
  enum Role {
   user

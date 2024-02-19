@@ -17,7 +17,7 @@ const UpdateRecommendation = () => {
 		queryFn: () => genreService.all()
 	})
 
-	const { mutateAsync: update } = useMutation({
+	const { mutateAsync: update, isLoading } = useMutation({
 		mutationKey: ['update-recommendation'],
 		mutationFn: (dto: UserUpdateSelectedGenresDto) =>
 			userServices.updateRecommendations(dto)
@@ -74,6 +74,7 @@ const UpdateRecommendation = () => {
 			<Button
 				disabled={selectedGenres.length !== 3}
 				variant='primary'
+				isLoading={isLoading}
 				size='lg'
 				className={cn('mx-2 mb-4', selectedGenres.length === 0 && 'hidden')}
 				onPress={async () => {

@@ -20,7 +20,7 @@
 		"strictNullChecks": true,
 		"strictBindCallApply": true,
 		"useUnknownInCatchVariables": true,
-		
+		"strictPropertyInitialization": false,
 		"importHelpers": true,
 		"target": "es2021",
 		"module": "esnext",

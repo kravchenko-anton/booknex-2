@@ -1,3 +1,4 @@
+import type { Activity } from 'react-activity-calendar'
 import { formatYYYYMMDD } from '../../../../libs/global/utils/time-format'
 
 export interface ActivitiesProperties {
@@ -8,13 +9,9 @@ export interface ActivitiesProperties {
 	genreId: number | null
 	bookId: number | null
 	userId: number | null
-	collectionId: number | null
 }
 
-export interface ActivitiesOutput {
-	date: string
-	count: number
-	level: number
+export type ActivitiesOutput = Activity & {
 	activities: {
 		message: string
 		time: string
@@ -51,7 +48,7 @@ export const transformActivity = (
 				importance: activity.importance,
 				message:
 					activity.type +
-					` (${activity.bookId ? `book: ${activity.bookId}; ` : ''}${activity.genreId ? `genre: ${activity.genreId}; ` : ''}${activity.collectionId ? `collection: ${activity.collectionId}; ` : ''}${activity.userId ? `user: ${activity.userId}` : ''})`,
+					` (${activity.bookId ? `book: ${activity.bookId}; ` : ''}${activity.genreId ? `genre: ${activity.genreId}; ` : ''}${activity.userId ? `user: ${activity.userId}` : ''})`,
 				time: timeFormat(activity.createdAt)
 			})
 			accumulator[date].count++
@@ -60,12 +57,14 @@ export const transformActivity = (
 		{}
 	)
 
-	return Object.values(activitiesByDate).map(({ activities, ...rest }) => ({
-		level: activities.reduce(
-			(accumulator, { importance }) => Math.max(accumulator, importance),
-			0
-		),
-		activities,
-		...rest
-	}))
+	return (
+		Object.values(activitiesByDate).map(({ activities, ...rest }) => ({
+			level: activities.reduce(
+				(accumulator, { importance }) => Math.max(accumulator, importance),
+				0
+			),
+			activities,
+			...rest
+		})) || []
+	)
 }

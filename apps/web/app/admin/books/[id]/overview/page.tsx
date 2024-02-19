@@ -1,11 +1,11 @@
 'use client'
 
-import EbookInfo from '@/app/admin/books/[id]/overview/_components/ebook-info'
-import ReviewTable from '@/app/admin/books/[id]/overview/_components/review/review-table'
-import UpdateBio from '@/app/admin/books/[id]/overview/_components/update-bio'
-import UpdatePicture from '@/app/admin/books/[id]/overview/_components/update-picture'
 import ActivityList from '@/components/dialogs/activity-list'
 import Loader from '@/components/ui/loader/loader'
+import EbookInfo from '@/features/books/overview/ebook-info'
+import ReviewTable from '@/features/books/overview/review/review-table'
+import UpdateBio from '@/features/books/overview/update-bio'
+import UpdatePicture from '@/features/books/overview/update-picture'
 import { bookService } from '@/services/book/book-service'
 import { cn } from '@/utils'
 import { useUploadFile } from '@/utils/files'
@@ -16,12 +16,13 @@ import type { BookUpdatePayload } from 'global/services-types/book-types'
 import { useParams, useRouter } from 'next/navigation'
 import * as React from 'react'
 //TODO: сделать во фронте при композиции книги типы которые в бекенде
-const Page = () => {
+const Id = () => {
 	const { upload } = useUploadFile()
 	const parameters = useParams()
 	const queryClient = useQueryClient()
 	const router = useRouter()
 	const id = Number(parameters.id)
+	console.log(id, 'it is id')
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', id],
 		queryFn: () => bookService.infoById(id)
@@ -172,4 +173,4 @@ const Page = () => {
 		</div>
 	)
 }
-export default Page
+export default Id

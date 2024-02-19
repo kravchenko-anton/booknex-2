@@ -10,6 +10,10 @@ export const successToast = (message: string, data?: ExternalToast) => {
 	toast.success(message, data)
 }
 
+export const loadingToast = (message: string, data?: ExternalToast) => {
+	toast.loading(message, data)
+}
+
 export const acceptToast = (
 	message: string,
 	data?: ExternalToast | undefined

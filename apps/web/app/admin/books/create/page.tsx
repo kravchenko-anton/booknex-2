@@ -1,8 +1,4 @@
 'use client'
-import Editor from '@/app/admin/books/_shared/editor'
-import SelectGenres from '@/app/admin/books/_shared/select-genres'
-import { useBookCompose } from '@/app/admin/books/_shared/useBookCompose'
-import { useCreateForm } from '@/app/admin/books/create/_features/useCreateForm'
 import {
 	Button,
 	DropZone,
@@ -10,13 +6,14 @@ import {
 	Field,
 	FormTextArea
 } from '@/components/ui'
+import Editor from '@/features/books/book-compose/editor'
+import { useCreateForm } from '@/features/books/create/useCreateForm'
+import SelectGenres from '@/features/books/select-genres'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 
 const Page: FC = () => {
-	const { books } = useBookCompose()
 	const form = useCreateForm()
-	console.log(books)
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -75,21 +72,6 @@ const Page: FC = () => {
 
 				<div>
 					<div>
-						<h1 className='mt-2  text-xl'>Book file</h1>
-						<DropZone
-							multiple
-							size='sm'
-							accept='.epub'
-							onDropFile={books.upload}
-							onFileDelete={file =>
-								books.delete({
-									name: file.name
-								})
-							}
-						/>
-						<ErrorMessage name='books' errors={form.errors} />
-					</div>
-					<div>
 						<h1 className='mt-2  text-xl'>Cover</h1>
 						<DropZone
 							size='sm'
@@ -108,15 +90,13 @@ const Page: FC = () => {
 					<SelectGenres control={form.control} />
 				</div>
 			</div>
-			<Editor {...books} />
+			<Editor control={form.control} />
 
 			<Button
 				size='md'
 				className='mt-4'
 				variant='primary'
 				onClick={() => {
-					if (!books.state) return
-					form.setValue('books', books.state)
 					form.submit()
 				}}
 			>

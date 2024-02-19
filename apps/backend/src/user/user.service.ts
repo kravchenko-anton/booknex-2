@@ -147,8 +147,7 @@ export class UserService {
 						createdAt: true,
 						userId: true,
 						bookId: true,
-						genreId: true,
-						collectionId: true
+						genreId: true
 					}
 				},
 				_count: {

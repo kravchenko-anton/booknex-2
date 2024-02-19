@@ -18,7 +18,6 @@ const activityPalette = [
 	'#B31930',
 	'#A1172C'
 ]
-//TODO: сделать тут попап с обображением всех активностей в виде логов
 
 const ActivityList: FC<{
 	data: ActivitiesOutput[]
@@ -26,7 +25,10 @@ const ActivityList: FC<{
 	const [selectActivity, setSelectActivity] = useState<ActivitiesOutput | null>(
 		null
 	)
-	const onActivityClick = (active: any) => setSelectActivity(active)
+	const onActivityClick = (active: ActivitiesOutput) => {
+		if (active.level === 0) return
+		setSelectActivity(active)
+	}
 	return (
 		<>
 			<h1 className='mb-2 mt-2 text-xl'>Activities</h1>
@@ -41,6 +43,7 @@ const ActivityList: FC<{
 					dark: activityPalette
 				}}
 				eventHandlers={{
+					// @ts-ignore because by default it return Activity only but me need activities
 					onClick: () => onActivityClick
 				}}
 			/>
@@ -56,7 +59,7 @@ const ActivityList: FC<{
 							</h1>
 						</SheetHeader>
 						<div className='no-scrollbar h-[95%] w-full overflow-y-scroll'>
-							{selectActivity.activities.map(activity => (
+							{selectActivity.activities?.map(activity => (
 								<p
 									key={activity.time}
 									className={cn('text-success  font-mono text-lg')}

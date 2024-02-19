@@ -48,7 +48,7 @@ const BookReview: FC = () => {
 			</Button>
 		))
 
-	const { mutateAsync: sendReview, isLoading } = useMutation({
+	const { mutateAsync: sendReview, isLoading: reviewLoading } = useMutation({
 		mutationKey: ['review'],
 		mutationFn: ({ id, dto }: { id: number; dto: ReviewBookPayload }) =>
 			bookService.review(id, dto)
@@ -125,7 +125,7 @@ const BookReview: FC = () => {
 					/>
 					<Button
 						size='lg'
-						isLoading={isLoading}
+						isLoading={reviewLoading}
 						variant='primary'
 						className='mb-4 w-full'
 						onPress={handleSubmit(submitReview)}

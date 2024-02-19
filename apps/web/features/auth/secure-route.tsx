@@ -3,13 +3,13 @@
 import { getRefreshToken } from '@/features/auth/action/auth-helper'
 import { useAction, useAuth } from '@/hooks'
 import { redirect } from 'next/navigation'
-import { useEffect, type FC } from 'react'
+import { useLayoutEffect, type FC } from 'react'
 
 export const loginRoute = (Component: FC) =>
 	function (properties: NonNullable<unknown>) {
 		const { user, isLoading } = useAuth()
 
-		useEffect(() => {
+		useLayoutEffect(() => {
 			if (user) redirect('/admin/dashboard')
 		}, [user, isLoading])
 
@@ -21,7 +21,7 @@ export const adminRoute = (Component: FC) =>
 		const { user, isLoading } = useAuth()
 		console.log('user', user)
 		const { logout } = useAction()
-		useEffect(() => {
+		useLayoutEffect(() => {
 			const checkRefreshToken = async () => {
 				const refreshToken = getRefreshToken()
 				if (!refreshToken && user) {

@@ -1,5 +1,6 @@
 import { parserService } from '@/services/parser/parser-services'
 import { useQuery } from '@tanstack/react-query'
+import type { EBookType } from 'backend/src/book/types'
 import { useSearchParams } from 'next/navigation'
 import { useLayoutEffect } from 'react'
 import type { UseFormSetValue } from 'react-hook-form'
@@ -14,10 +15,7 @@ export const useTemplate = ({
 		description: string
 		popularity: number
 		author: string
-		books: {
-			name: string
-			content: { id: number; title: string; content: string }[]
-		}[]
+		books: EBookType
 		genres: number[]
 	}>
 }) => {

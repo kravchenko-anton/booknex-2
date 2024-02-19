@@ -121,8 +121,7 @@ export class BookService {
 						createdAt: true,
 						genreId: true,
 						bookId: true,
-						userId: true,
-						collectionId: true
+						userId: true
 					}
 				}
 			}

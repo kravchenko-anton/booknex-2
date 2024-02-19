@@ -36,6 +36,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 	})
 
 	return (
+		//TODO: сделать через filedArray
 		<Controller
 			control={control}
 			name='genres'

@@ -2,13 +2,14 @@
 /* eslint @typescript-eslint/no-loop-func: 0 */
 
 import { HttpStatus, Injectable } from '@nestjs/common'
+import type { UnfoldOutput } from '../../../../libs/global/services-types/parser-types'
 import { serverError } from '../utils/call-error'
 import { AdminErrors } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
 import type { ParserDto } from './dto/parser.dto'
 import { parseBookTable, parseCurrentBook, useParser } from './parse-ebook'
-import { getEbook, type ChapterType } from './unfold-ebook'
+import { getEbook } from './unfold-ebook'
 
 @Injectable()
 export class ParserService {
@@ -65,7 +66,7 @@ export class ParserService {
 		})
 	}
 
-	async unfold(file: Express.Multer.File): Promise<ChapterType[]> {
+	async unfold(file: Express.Multer.File): Promise<UnfoldOutput> {
 		if (!file.buffer && file.mimetype !== 'application/epub+zip')
 			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFile)
 		return getEbook(file.buffer)

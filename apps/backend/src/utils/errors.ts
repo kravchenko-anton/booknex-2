@@ -16,10 +16,5 @@ export enum AdminErrors {
 
 	//file
 	invalidFile = 'Invalid file',
-	invalidFolder = 'Invalid folder',
-
-	// collection
-	collectionNotFound = 'Collection not found',
-	collectionAlreadyExist = 'Collection already exist',
-	someBooksNotFound = 'Some books not found'
+	invalidFolder = 'Invalid folder'
 }

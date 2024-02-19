@@ -19,10 +19,6 @@ export class CreateActivityDto {
 	@IsOptional()
 	bookId?: number
 
-	@IsOptional()
-	@IsNumber()
-	collectionId?: number
-
 	@IsNumber()
 	@IsOptional()
 	genreId?: number
