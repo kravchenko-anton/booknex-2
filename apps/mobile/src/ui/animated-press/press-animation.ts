@@ -17,7 +17,7 @@ export const usePressAnimation = () => {
 	}))
 
 	const onPressIn = () => {
-		translateY.value = withTiming(5, userConfig)
+		translateY.value = withTiming(4, userConfig)
 	}
 	const onPressOut = () => {
 		translateY.value = withTiming(0, userConfig)

@@ -20,9 +20,9 @@ const ChaptersList: FC<
 	const sections = useMemo(
 		() =>
 			chapters.map(chapter => ({
-				title: chapter.name,
+				title: chapter.title,
 				data: chapter.children.map(child => ({
-					title: child.title,
+					title: child.name,
 					link: child.link
 				}))
 			})),
@@ -62,7 +62,7 @@ const ChaptersList: FC<
 						weight='bold'
 						numberOfLines={2}
 						className='  mt-[-1px] border-b-[1px] p-4'
-						size={22}
+						size={'xxl'}
 						color={colorScheme.colorPalette.text}
 						style={{
 							borderColor: colorScheme.colorPalette.background.lighter,
@@ -86,7 +86,7 @@ const ChaptersList: FC<
 					>
 						<Title
 							numberOfLines={2}
-							size={18}
+							size={'lg'}
 							weight='semiBold'
 							style={{
 								color: colorScheme.colorPalette.text

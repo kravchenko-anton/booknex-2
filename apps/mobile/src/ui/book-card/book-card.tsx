@@ -5,7 +5,6 @@ import { settings } from '@/ui/book-card/settings'
 import type { BookCardProperties } from '@/ui/book-card/types'
 import { Color } from 'global/colors'
 import type { FC } from 'react'
-import { memo } from 'react'
 
 const BookCard: FC<BookCardProperties> = ({
 	image,
@@ -29,14 +28,14 @@ const BookCard: FC<BookCardProperties> = ({
 			height={settings.height[size]}
 			width={settings.width[size]}
 		/>
-		<Title numberOfLines={2} color={Color.white} weight='medium' size={16}>
+		<Title numberOfLines={2} color={Color.white} weight='medium' size={'md'}>
 			{properties.title}
 		</Title>
 
-		<Title numberOfLines={1} weight='regular' size={15} color={Color.gray}>
+		<Title numberOfLines={1} weight='regular' size={'sm'} color={Color.gray}>
 			{properties.author}
 		</Title>
 	</AnimatedPress>
 )
 
-export default memo(BookCard)
+export default BookCard

@@ -1,13 +1,13 @@
 import { Color } from 'global/colors'
-import { memo, useState } from 'react'
+import { useState } from 'react'
 import { Text, View } from 'react-native'
 import { fontSettings } from '../title/settings'
 import type { DescriptionProperties } from './types'
 
 export const Description = ({
 	children,
-	color = Color.white,
-	weight = 'light',
+	color = Color.gray,
+	weight = 'regular',
 	size = 20,
 	defaultSentences = 3,
 	center = false,
@@ -46,4 +46,4 @@ export const Description = ({
 	)
 }
 
-export default memo(Description)
+export default Description

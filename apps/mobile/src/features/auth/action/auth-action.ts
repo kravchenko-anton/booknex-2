@@ -17,15 +17,15 @@ export const googleLogin = createAsyncThunk<
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
 		console.log('socialId', socialId)
-		const loginResponse = await axios
-			.post<googleAuthResponseType>(
-				emulatorServerURL + getAuthUrl('/google-sign'),
-				{
-					socialId
-				}
-			)
-			.then(response => response.data)
+		const { data: loginResponse } = await axios.post<googleAuthResponseType>(
+			emulatorServerURL + getAuthUrl('/google-sign'),
+			{
+				socialId
+			}
+		)
+
 		console.log('loginResponse', loginResponse)
+		if (!loginResponse) return thunkAPI.rejectWithValue('No response')
 		await saveTokensStorage({
 			accessToken: loginResponse.accessToken,
 			refreshToken: loginResponse.refreshToken
@@ -43,14 +43,13 @@ export const mailRegister = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	'auth/mailRegister',
 	async (properties, thunkAPI) => {
 		try {
-			const registerResponse = await axios
-				.post<AuthResponseType>(
-					emulatorServerURL + getAuthUrl('/mail-register'),
-					{
-						...properties
-					}
-				)
-				.then(response => response.data)
+			const { data: registerResponse } = await axios.post<AuthResponseType>(
+				emulatorServerURL + getAuthUrl('/mail-register'),
+				{
+					...properties
+				}
+			)
+			if (!registerResponse) return thunkAPI.rejectWithValue('No response')
 			await saveTokensStorage({
 				accessToken: registerResponse.accessToken,
 				refreshToken: registerResponse.refreshToken
@@ -66,12 +65,14 @@ export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
 		try {
-			const loginResponse = await axios
-				.post<AuthResponseType>(emulatorServerURL + getAuthUrl('/mail-login'), {
+			const { data: loginResponse } = await axios.post<AuthResponseType>(
+				emulatorServerURL + getAuthUrl('/mail-login'),
+				{
 					email,
 					password
-				})
-				.then(response => response.data)
+				}
+			)
+			if (!loginResponse) return thunkAPI.rejectWithValue('No response')
 			await saveTokensStorage({
 				accessToken: loginResponse.accessToken,
 				refreshToken: loginResponse.refreshToken

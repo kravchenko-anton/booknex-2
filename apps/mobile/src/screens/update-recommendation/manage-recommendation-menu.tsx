@@ -20,10 +20,10 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
 	if (!selectedGenres) return null
 	return (
 		<View className='bg-foreground border-muted m-3 rounded-xl border-2 p-3.5'>
-			<Title size={22} color={Color.white} weight='bold'>
+			<Title size={'xxl'} color={Color.white} weight='bold'>
 				Manage Recommendation
 			</Title>
-			<Title weight='light' className='mb-4' numberOfLines={2} size={16}>
+			<Title weight='light' className='mb-4' numberOfLines={2} size={'md'}>
 				To get new recommendations, you need to adjust your goals
 			</Title>
 			<View className='mb-4 flex flex-row flex-wrap gap-2'>

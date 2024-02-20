@@ -74,7 +74,9 @@ export class UserService {
 			.selectedGenres()
 	}
 	async updateRecommendations(id: number, dto: UserUpdateSelectedGenresDto) {
+		console.log(id)
 		await this.getUserById(id)
+		console.log(dto.selectedGenres)
 		const selectedGenres = await this.prisma.genre.findMany({
 			where: {
 				id: {

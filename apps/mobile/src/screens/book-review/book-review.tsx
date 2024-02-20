@@ -85,7 +85,7 @@ const BookReview: FC = () => {
 				onPress={() => navigate('Library')}
 			/>
 			<FinishBook className='mx-auto' height={200} width={250} />
-			<Title className='mt-8 text-center' size={26} weight='bold'>
+			<Title className='mt-8 text-center' size={'xxl'} weight='bold'>
 				Thanks for reading!
 			</Title>
 			<Title color={Color.gray} className='text-center' weight='regular'>
@@ -107,7 +107,7 @@ const BookReview: FC = () => {
 			</View>
 			{selectedStars > 0 && (
 				<View className='w-full items-center justify-center pt-4'>
-					<Title size={20} className='mb-2 mt-4 text-center' weight='bold'>
+					<Title size={'xl'} className='mb-2 mt-4 text-center' weight='bold'>
 						{`Thanks, Why ${selectedStars > 3 ? 'did' : "didn't"} you like the book?`}
 					</Title>
 					<View className='mb-2 w-full flex-row flex-wrap items-center justify-center gap-2 pt-4'>

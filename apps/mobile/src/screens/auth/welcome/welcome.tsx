@@ -47,17 +47,17 @@ const Welcome: FC = () => {
 						center
 						numberOfLines={2}
 						weight={'bold'}
-						size={30}
+						size={'xxl'}
 						className='text-left'
 					>
 						Dive into the world of unique{' '}
-						<Title weight={'bold'} size={30} color={Color.primary}>
+						<Title weight={'bold'} size='xxl' color={Color.primary}>
 							stories
 						</Title>
 					</Title>
 					<Title
 						center
-						size={18}
+						size={'md'}
 						weight='light'
 						className='text-left'
 						color={Color.gray}

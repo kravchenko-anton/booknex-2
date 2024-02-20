@@ -14,7 +14,7 @@ const Profile = () => {
 				center
 				className='mt-40 items-center justify-center'
 				weight='bold'
-				size={25}
+				size={'xxl'}
 				numberOfLines={6}
 			>
 				This section is not finished, later here will be your achievements and

@@ -35,7 +35,7 @@ const Alert: FC<{
 				<Icon className='mt-2' width={40} height={40} color={Color.gray} />
 				<Title
 					center
-					size={18}
+					size={'lg'}
 					color={Color.gray}
 					className='mb-1 mt-2 px-2'
 					weight='semiBold'

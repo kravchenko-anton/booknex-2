@@ -21,7 +21,7 @@ const NothingFount: FC<PropsWithChildren<NothingFountProperties>> = ({
 			weight='medium'
 			numberOfLines={2}
 			color={Color.gray}
-			size={16}
+			size={'md'}
 		>
 			{text}
 		</Title>

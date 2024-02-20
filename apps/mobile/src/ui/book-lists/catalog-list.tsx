@@ -22,7 +22,7 @@ const CatalogList = ({
 		numColumns={2}
 		data={data}
 		ListEmptyComponent={() => (
-			<Title className='mx-auto' size={16} color={Color.gray} weight='medium'>
+			<Title className='mx-auto' size={'md'} color={Color.gray} weight='medium'>
 				Nothing here
 			</Title>
 		)}
@@ -39,7 +39,7 @@ const CatalogList = ({
 					height={settings.height.md * 1.1}
 					url={book.picture}
 				/>
-				<Title color={Color.gray} size={16} weight='semiBold'>
+				<Title color={Color.gray} size={'md'} weight='semiBold'>
 					{book.title}
 				</Title>
 			</AnimatedPress>

@@ -48,7 +48,7 @@ export const BackButton: FC<PressableDefaultProperties> = ({
 export const BackWithTitle: FC<{ title: string }> = ({ title }) => (
 	<View className='flex-row items-center'>
 		<BackButton className='px-3' />
-		<Title className='py-2' size={20} weight='bold' color={Color.white}>
+		<Title className='py-2' size={'xl'} weight='bold' color={Color.white}>
 			{title}
 		</Title>
 	</View>
@@ -58,7 +58,7 @@ export const Logo: FC<Omit<TextDefaultProperties, 'onPress'>> = ({
 	...properties
 }) => (
 	<Title
-		size={22}
+		size={'xxl'}
 		weight='bold'
 		className={cn('py-2', className)}
 		color={Color.white}

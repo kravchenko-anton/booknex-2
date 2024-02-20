@@ -54,6 +54,7 @@
 		D1E502D99B6143B89A3DAFD6 /* SpaceGrotesk-Medium.ttf */ = {isa = PBXFileReference; name = "SpaceGrotesk-Medium.ttf"; path = "../assets/fonts/SpaceGrotesk-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1C99427D4F054316921066F8 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; name = "SpaceGrotesk-Regular.ttf"; path = "../assets/fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		0D0B3E83F6A343C8B2D2B01C /* SpaceGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; name = "SpaceGrotesk-SemiBold.ttf"; path = "../assets/fonts/SpaceGrotesk-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		966AE107FC444873BD950CBF /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "D:/projects/booknex-2/apps/mobile/ios/Mobile/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +103,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				966AE107FC444873BD950CBF /* BootSplash.storyboard */,
 			);
 			name = Mobile;
 			sourceTree = "<group>";
@@ -273,6 +275,7 @@
 				33BD1D3D909041A1A15B7D4A /* SpaceGrotesk-Medium.ttf in Resources */,
 				0A869048AA92414F9F3545E2 /* SpaceGrotesk-Regular.ttf in Resources */,
 				61BC7185F3D54BDB8C0A768E /* SpaceGrotesk-SemiBold.ttf in Resources */,
+				BA64A946C2834DD4963DAD2F /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

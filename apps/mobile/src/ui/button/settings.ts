@@ -1,8 +1,9 @@
+import type { TitleSizeType } from '@/ui/title/types'
 import type { ButtonProperties } from './types'
 
 export const settings: {
 	colors: Record<Required<ButtonProperties>['variant'], string>
-	titleSize: Record<ButtonProperties['size'], number>
+	titleSize: Record<ButtonProperties['size'], TitleSizeType>
 	padding: Record<ButtonProperties['size'], string>
 	iconSize: Record<ButtonProperties['size'], number>
 } = {
@@ -17,17 +18,17 @@ export const settings: {
 	},
 	iconSize: {
 		sm: 16,
-		md: 26,
+		md: 22,
 		lg: 36
 	},
 	titleSize: {
-		sm: 16,
-		md: 20,
-		lg: 24
+		sm: 'sm',
+		md: 'lg',
+		lg: 'xxl'
 	},
 	padding: {
 		sm: 'py-1 px-2.5',
-		md: 'py-2 px-4',
-		lg: 'py-2.5 px-5'
+		md: 'py-1.5 px-3',
+		lg: 'py-2 px-4'
 	}
 }

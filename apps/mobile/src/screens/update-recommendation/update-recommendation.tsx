@@ -3,14 +3,15 @@ import { userServices } from '@/api/services/user/user-service'
 import { useTypedNavigation } from '@/hooks'
 import { Button, Icon, Loader, ScrollLayout, Title } from '@/ui'
 import { cn } from '@/utils'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { UserUpdateSelectedGenresDto } from 'backend/src/user/dto'
 import { Color } from 'global/colors'
 import { Close } from 'icons'
 import { useState } from 'react'
 import { View } from 'react-native'
-
+//TODO: сделать тут отделный компонент для выбора жанров где будет отдельный запрос
 const UpdateRecommendation = () => {
+	const queryClient = useQueryClient()
 	const [selectedGenres, setSelectedGenres] = useState<number[]>([])
 	const { data: genres } = useQuery({
 		queryKey: ['genres'],
@@ -35,11 +36,11 @@ const UpdateRecommendation = () => {
 					onPress={() => navigate('Featured')}
 				/>
 				<View>
-					<Title size={32} weight='bold' className='mb-2' numberOfLines={2}>
+					<Title size={'xxl'} weight='bold' className='mb-2' numberOfLines={2}>
 						What you next goal?
 					</Title>
 					<Title
-						size={18}
+						size={'lg'}
 						numberOfLines={2}
 						weight='light'
 						color={Color.gray}
@@ -78,7 +79,12 @@ const UpdateRecommendation = () => {
 				size='lg'
 				className={cn('mx-2 mb-4', selectedGenres.length === 0 && 'hidden')}
 				onPress={async () => {
+					console.log({ selectedGenres })
 					await update({ selectedGenres })
+
+					await queryClient.invalidateQueries({
+						queryKey: ['featured']
+					})
 					navigate('Featured')
 				}}
 			>

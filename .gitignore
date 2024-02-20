@@ -5,6 +5,8 @@ dist
 tmp
 /out-tsc
 apps/backend/.env
+apps/web/.env.local
+apps/mobile/.env
 # dependencies
 node_modules
 

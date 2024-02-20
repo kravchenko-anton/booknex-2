@@ -23,7 +23,7 @@ const BannerList = <T,>({
 				<Title weight='bold' color={Color.white}>
 					{title}
 				</Title>
-				<Title weight='regular' className='mb-4' size={14} color={Color.gray}>
+				<Title weight='regular' className='mb-4' size={'sm'} color={Color.gray}>
 					{data.length.toString()} books
 				</Title>
 			</View>

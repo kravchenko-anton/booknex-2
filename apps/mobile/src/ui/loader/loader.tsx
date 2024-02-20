@@ -1,6 +1,5 @@
 import { Color } from 'global/colors'
 import type { FC } from 'react'
-import { memo } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 
 const Loader: FC<{ background?: string }> = ({
@@ -20,4 +19,4 @@ const Loader: FC<{ background?: string }> = ({
 	</View>
 )
 
-export default memo(Loader)
+export default Loader

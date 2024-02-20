@@ -21,7 +21,7 @@ const FlatList = <T,>({
 			<Title
 				className='mb-3'
 				color={Color.white}
-				size={20}
+				size='xl'
 				weight='semiBold'
 				style={{
 					marginTop: mt,

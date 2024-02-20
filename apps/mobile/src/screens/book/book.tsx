@@ -62,14 +62,19 @@ const Book: FC = () => {
 			</View>
 			<View className='flex-1 flex-row items-center justify-between px-2 pt-4'>
 				<View className='mr-4 flex-1'>
-					<Title numberOfLines={2} weight='semiBold' size={25} className='mt-2'>
+					<Title
+						numberOfLines={2}
+						weight='semiBold'
+						size={'xxl'}
+						className='mt-2'
+					>
 						{book.title}
 					</Title>
 					<Title
 						numberOfLines={1}
 						color={Color.gray}
 						weight='regular'
-						size={16}
+						size={'md'}
 						className='mt-1'
 					>
 						{book.author}
@@ -80,7 +85,7 @@ const Book: FC = () => {
 					isLoading={startReadingLoading}
 					className='rounded-xl'
 					variant='primary'
-					size='sm'
+					size='md'
 					onPress={startReadingBook}
 				>
 					Read

@@ -49,7 +49,7 @@ export class AuthService {
 				email: dto.email,
 				password: await hash(dto.password),
 				selectedGenres: {
-					connect: popularGenres
+					connect: popularGenres.map(genre => ({ id: genre.id }))
 				}
 			}
 		})
@@ -103,13 +103,13 @@ export class AuthService {
 			throw serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
 		await this.checkOldUser({ email: data.email })
 
-		const mostPopularGenres = await this.getPopular()
+		const popularGenres = await this.getPopular()
 		const newUser = await this.prisma.user.create({
 			data: {
 				email: data.email,
 				socialId: data.sub,
 				selectedGenres: {
-					connect: mostPopularGenres
+					connect: popularGenres.map(genre => ({ id: genre.id }))
 				},
 				role: Role.user,
 				fullName:

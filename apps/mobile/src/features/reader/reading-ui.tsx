@@ -4,7 +4,6 @@ import { AnimatedView } from '@/ui/animated-components'
 import type { FunctionType } from 'global/types'
 import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
-import { memo } from 'react'
 import { View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -54,7 +53,7 @@ const ReadingUi: FC<{
 						/>
 						<Title
 							center
-							size={20}
+							size={'xl'}
 							className='ml-2'
 							weight='bold'
 							color={colorPalette.text}
@@ -107,4 +106,4 @@ const ReadingUi: FC<{
 	)
 }
 
-export default memo(ReadingUi)
+export default ReadingUi

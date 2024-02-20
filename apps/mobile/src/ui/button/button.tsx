@@ -1,7 +1,6 @@
 import AnimatedPress from '@/ui/animated-press/animated-press'
 import { cn } from '@/utils'
 import { InnerColor } from 'global/colors'
-import { memo } from 'react'
 import { ActivityIndicator } from 'react-native'
 import Title from '../title/title'
 import { settings } from './settings'
@@ -28,7 +27,7 @@ const Button = ({
 		)}
 		{...properties}
 	>
-		{isLoading && (
+		{isLoading ? (
 			<ActivityIndicator
 				className='mr-2 mt-0.5'
 				color={InnerColor[variant]}
@@ -37,7 +36,7 @@ const Button = ({
 					height: settings.iconSize[size]
 				}}
 			/>
-		)}
+		) : null}
 		{!!Icon && !isLoading && (
 			<Icon
 				className='mr-2 mt-0.5'
@@ -56,4 +55,4 @@ const Button = ({
 	</AnimatedPress>
 )
 
-export default memo(Button)
+export default Button

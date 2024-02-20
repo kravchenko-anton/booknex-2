@@ -1,7 +1,6 @@
 import { cn } from '@/utils'
 import { InnerColor } from 'global/colors'
 import type { FC } from 'react'
-import { memo } from 'react'
 import { Pressable } from 'react-native'
 import { settings } from './settings'
 import type { IconProperties } from './types'
@@ -38,4 +37,4 @@ const Icon: FC<IconProperties> = ({
 	</Pressable>
 )
 
-export default memo(Icon)
+export default Icon

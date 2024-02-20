@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber, MinLength } from 'class-validator'
+import { ArrayMinSize, IsNumber } from 'class-validator'
 
 export class UserUpdateSelectedGenresDto {
 	@ApiProperty({
@@ -7,9 +7,9 @@ export class UserUpdateSelectedGenresDto {
 		description: 'Array of selected genres',
 		required: true
 	})
-	@IsNumber({}, { each: true })
-	@MinLength(1, {
-		message: 'At least one genre should be selected'
+	@ArrayMinSize(3, {
+		message: 'The array must contain at least  3 numbers'
 	})
+	@IsNumber({}, { each: true })
 	selectedGenres: number[]
 }

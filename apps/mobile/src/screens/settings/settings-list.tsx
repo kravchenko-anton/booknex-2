@@ -19,7 +19,7 @@ export const Category = ({
 		className={cn('bg-dust mb-2 w-full rounded-xl', className)}
 		{...properties}
 	>
-		<Title size={26} weight='bold' className='mb-2'>
+		<Title size={'xxl'} weight='bold' className='mb-2'>
 			{title}
 		</Title>
 		<View className='bg-foreground rounded-xl p-2'>{children}</View>
@@ -46,7 +46,7 @@ export const Item = ({
 	>
 		<View className='flex-row items-center justify-center'>
 			<Icon width={25} height={25} className='mr-4' color='#F0E8E6' />
-			<Title size={18} weight='regular' color='#F0E8E6'>
+			<Title size={'lg'} weight='regular' color='#F0E8E6'>
 				{title}
 			</Title>
 		</View>

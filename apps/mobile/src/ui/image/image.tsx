@@ -1,7 +1,6 @@
 import { cn } from '@/utils'
 import { getFileUrl } from 'global/api-config'
 import type { FC } from 'react'
-import { memo } from 'react'
 import { Image as DefaultImage } from 'react-native'
 import type { ImageProperties } from './types'
 
@@ -34,4 +33,4 @@ const Image: FC<ImageProperties> = ({
 	/>
 )
 
-export default memo(Image)
+export default Image

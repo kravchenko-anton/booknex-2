@@ -71,7 +71,7 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 						>
 							<Title
 								weight='semiBold'
-								size={18}
+								size={'lg'}
 								style={{ color: theme.colorPalette.text }}
 							>
 								{theme.title}
@@ -113,7 +113,7 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 								>
 									<Title
 										weight='semiBold'
-										size={18}
+										size={'lg'}
 										style={{
 											color: colorScheme.colorPalette.text
 										}}
@@ -126,7 +126,7 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 						<View className='my-1.5 flex-row items-center justify-between px-3'>
 							<Title
 								weight='semiBold'
-								size={22}
+								size={'xxl'}
 								color={colorScheme.colorPalette.text}
 							>
 								Font size

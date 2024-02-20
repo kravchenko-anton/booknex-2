@@ -105,9 +105,9 @@ const Navigation: FC = () => {
 					))}
 				</Stack.Navigator>
 			</NavigationContainer>
-			{user && currentRoute && !noBottomMenuRoutes.has(currentRoute) && (
+			{user && currentRoute && !noBottomMenuRoutes.has(currentRoute) ? (
 				<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
-			)}
+			) : null}
 		</SafeAreaProvider>
 	)
 }

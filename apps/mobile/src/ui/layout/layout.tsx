@@ -1,7 +1,6 @@
 import type { ViewDefaultProperties } from '@/types/component-types'
 import { cn } from '@/utils'
 import type { FC, PropsWithChildren } from 'react'
-import { memo } from 'react'
 import { View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -17,4 +16,4 @@ const Layout: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 	</SafeAreaView>
 )
 
-export default memo(Layout)
+export default Layout

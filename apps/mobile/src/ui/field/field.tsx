@@ -55,20 +55,20 @@ const Field = <T extends Record<string, any>>({
 						onChangeText={onChange}
 						{...properties}
 					/>
-					{Icon && (
+					{Icon ? (
 						<Icon
 							width={20}
 							color={Color.gray}
 							height={20}
 							className='absolute left-2.5'
 						/>
-					)}
+					) : null}
 				</View>
-				{error && (
-					<Title color={Color.danger} size={16}>
+				{error ? (
+					<Title color={Color.danger} size={'md'}>
 						{error.message ?? 'error!'}
 					</Title>
-				)}
+				) : null}
 			</>
 		)}
 	/>

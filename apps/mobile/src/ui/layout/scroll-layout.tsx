@@ -1,7 +1,6 @@
 import type { ScrollViewDefaultProperties } from '@/types/component-types'
 import { ScrollView } from '@/ui'
 import type { FC, PropsWithChildren } from 'react'
-import { memo } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const ScrollLayout: FC<PropsWithChildren<ScrollViewDefaultProperties>> = ({
@@ -15,4 +14,4 @@ const ScrollLayout: FC<PropsWithChildren<ScrollViewDefaultProperties>> = ({
 	</SafeAreaView>
 )
 
-export default memo(ScrollLayout)
+export default ScrollLayout
