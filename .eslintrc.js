@@ -26,6 +26,15 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'react/jsx-no-leaked-render': 2,
+		'react/jsx-no-bind': [
+			'error',
+			{
+				ignoreRefs: true,
+				allowArrowFunctions: true,
+				allowBind: false
+			}
+		],
 		'react/prop-types': ['error', { ignore: ['navigation'] }],
 		'arrow-body-style': ['error', 'as-needed'],
 		'react/self-closing-comp': ['error', { component: true, html: true }],

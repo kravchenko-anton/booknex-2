@@ -41,7 +41,10 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 			control={control}
 			name='genres'
 			defaultValue={defaultValue}
-			render={({ field: { value = [], onChange }, fieldState: { error } }) => (
+			render={({
+				field: { value = [], onChange: setGenre },
+				fieldState: { error }
+			}) => (
 				<>
 					<div>
 						<Popover>
@@ -68,7 +71,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 												key={genre.id}
 												value={genre.name}
 												onSelect={() =>
-													onChange(
+													setGenre(
 														value.includes(genre.id)
 															? value.filter(
 																	(selectedGenre: number) =>
@@ -82,7 +85,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 													color={Color.white}
 													className={cn(
 														'mr-2 h-4 w-4',
-														value.includes(genre.id)
+														Boolean(value.includes(genre.id))
 															? 'opacity-100'
 															: 'opacity-0'
 													)}

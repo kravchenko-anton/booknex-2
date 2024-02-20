@@ -10,7 +10,7 @@ export interface DropzoneProperties
 	variant?: ClampPaletteType
 	disabled?: boolean
 	multiple?: boolean
-	onFileDelete?: (file: File) => void
+	onFileDelete?: (file: File, index: number) => void
 	onDropFile: (files: File[]) => void
 	defaultFiles?: File[]
 }

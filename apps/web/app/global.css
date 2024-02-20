@@ -23,13 +23,30 @@ li {
 	@apply text-gray font-medium;
 }
 
+
+.no-scrollbar {
+	::-webkit-scrollbar {
+		display: none;
+		height: 0;
+		width: 0;
+	}
+	}
+
+.scrollBarVisible {
+	::-webkit-scrollbar {
+		display: block;
+		height: 0.3rem;
+		width: 0.3rem;
+	}
+}
+
 ::-webkit-scrollbar {
-	width: 0.5rem;
-	height: 0.5rem;
+	width: 0.3rem;
+	height: 0.3rem;
 }
 
 ::-webkit-scrollbar-thumb {
-	@apply bg-muted rounded-xl;
+	@apply bg-gray rounded-xl;
 }
 
 ::-webkit-scrollbar-track {

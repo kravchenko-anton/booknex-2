@@ -8,12 +8,14 @@ import {
 } from '@/components/ui'
 import Editor from '@/features/books/book-compose/editor'
 import { useCreateForm } from '@/features/books/create/useCreateForm'
+import type { EbookValidationType } from '@/features/books/ebook-validation'
 import SelectGenres from '@/features/books/select-genres'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 
 const Page: FC = () => {
 	const form = useCreateForm()
+	console.log(form.watch('books'), 'form')
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -90,15 +92,17 @@ const Page: FC = () => {
 					<SelectGenres control={form.control} />
 				</div>
 			</div>
-			<Editor control={form.control} />
+			<Editor
+				updateBooks={(books: EbookValidationType) =>
+					form.setValue('books', books)
+				}
+			/>
 
 			<Button
 				size='md'
 				className='mt-4'
 				variant='primary'
-				onClick={() => {
-					form.submit()
-				}}
+				onClick={form.submit}
 			>
 				Create
 			</Button>

@@ -22,6 +22,8 @@ const Id = () => {
 	const queryClient = useQueryClient()
 	const router = useRouter()
 	const id = Number(parameters.id)
+	//TODO: полностью переписать  чтобы было всё вынесенно в бекенд и не было багов, так-же всё было оптимизированно
+
 	console.log(id, 'it is id')
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', id],

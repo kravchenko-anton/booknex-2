@@ -22,8 +22,8 @@ export const Sidebar: FC = () => {
 					className='mb-12 flex cursor-pointer items-center text-2xl font-bold'
 					type='button'
 				>
-					<span className='bg-muted rounded-xl p-2  text-white '>
-						Booknex dev 😈
+					<span className='bg-muted w-full rounded-xl p-1 text-[21px] text-white '>
+						Booknex dev 📕
 					</span>
 				</button>
 				{iconsList.map(icon => (

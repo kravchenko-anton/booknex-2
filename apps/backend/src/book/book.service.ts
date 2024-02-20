@@ -5,10 +5,11 @@ import { ActivityService } from '../activity/activity.service'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { transformActivity } from '../utils/activity-transformer'
 import { serverError } from '../utils/call-error'
-import { GlobalErrorsEnum } from '../utils/errors'
+import { AdminErrors, GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { defaultReturnObject } from '../utils/return.default.object'
-import type { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
+import type { CreateBookDto } from './dto/manipulation.book.dto'
+import { EditBookDto } from './dto/manipulation.book.dto'
 import type { ReviewBookDto } from './dto/review.book.dto'
 import { returnBookObject } from './return.book.object'
 import type { EBookType } from './types'
@@ -62,20 +63,6 @@ export class BookService {
 			},
 			orderBy
 		})
-	}
-
-	async checkExist(id: number) {
-		const exist = await this.prisma.book.findUnique({
-			where: { id, visible: true },
-			select: {
-				id: true
-			}
-		})
-
-		if (!exist)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
-
-		return !!exist
 	}
 
 	async infoByIdAdmin(id: number) {
@@ -253,6 +240,7 @@ export class BookService {
 		await this.checkExist(id)
 		const { genres: dtoGenres, ...other } = dto
 		const majorGenre = await this.getMajorGenres(dtoGenres)
+		console.log('update', majorGenre, dtoGenres, id, EditBookDto)
 		await this.prisma.book.update({
 			where: { id: id },
 			data: {
@@ -278,7 +266,9 @@ export class BookService {
 	}
 
 	async review(userId: number, bookId: number, dto: ReviewBookDto) {
-		await this.checkExist(bookId)
+		await this.checkExist(bookId, {
+			visible: true
+		})
 		await this.checkUserExist(userId)
 		await this.activityService.create({
 			type: Activities.reviewBook,
@@ -371,6 +361,19 @@ export class BookService {
 		})
 	}
 
+	private async checkExist(id: number, options?: { visible?: boolean }) {
+		const exist = await this.prisma.book.findUnique({
+			where: { id, ...options },
+			select: {
+				id: true
+			}
+		})
+
+		if (!exist)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.bookNotFound)
+
+		return !!exist
+	}
 	private async checkUserExist(id: number) {
 		const userExist = await this.prisma.user.findUnique({
 			where: { id: id },
@@ -379,7 +382,7 @@ export class BookService {
 			}
 		})
 		if (!userExist)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.userNotFound)
 		return !!userExist
 	}
 }

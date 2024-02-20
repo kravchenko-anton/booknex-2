@@ -16,5 +16,13 @@ export enum AdminErrors {
 
 	//file
 	invalidFile = 'Invalid file',
-	invalidFolder = 'Invalid folder'
+	invalidFolder = 'Invalid folder',
+
+	//book
+
+	bookNotFound = 'Book not found',
+
+	//user
+
+	userNotFound = 'User not found'
 }

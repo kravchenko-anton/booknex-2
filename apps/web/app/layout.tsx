@@ -1,5 +1,5 @@
 import Providers from '@/providers/app-provider'
-import { Inter } from 'next/font/google'
+import { Space_Grotesk } from 'next/font/google'
 import type { ReactNode } from 'react'
 import './global.css'
 
@@ -8,7 +8,7 @@ export const metadata = {
 	description: 'Mobile app for reading books'
 }
 
-const font = Inter({ subsets: ['latin'] })
+const font = Space_Grotesk({ subsets: ['latin'] })
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
 	<html lang='en'>

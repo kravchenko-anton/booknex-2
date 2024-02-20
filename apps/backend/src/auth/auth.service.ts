@@ -155,7 +155,7 @@ export class AuthService {
 		return {
 			accessToken: this.jwt.sign(data, {
 				//TODO: когда перейдем на продакшн поменять на 15m
-				expiresIn: '10s'
+				expiresIn: '25m'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'

@@ -7,6 +7,7 @@ export const ebookValidation = z
 				title: z.string().refine(value => !value.includes('epub'), {
 					message: 'Book name can not include "epub"'
 				}),
+				id: z.number().positive(),
 				chapters: z
 					.array(
 						z.object({
@@ -22,3 +23,5 @@ export const ebookValidation = z
 			})
 	)
 	.min(1)
+
+export type EbookValidationType = z.infer<typeof ebookValidation>

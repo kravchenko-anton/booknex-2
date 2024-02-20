@@ -37,7 +37,7 @@ const Dropzone = ({
 		<div className={cn(settings.maxWidth[size], className)} style={style}>
 			<div
 				className={cn(
-					'flex gap-2 overflow-scroll',
+					'no-scrollbar flex gap-2 overflow-scroll',
 					files.length === 0 && 'hidden'
 				)}
 			>
@@ -45,7 +45,7 @@ const Dropzone = ({
 					file =>
 						file && (
 							<div key={file.name + file.type}>
-								<button
+								<div
 									color={variant}
 									className={cn(
 										'mb-2 max-w-[200px] items-center justify-center rounded-xl border-[1px] p-2 text-center',
@@ -53,7 +53,7 @@ const Dropzone = ({
 									)}
 									onClick={() => {
 										setFiles(files.filter(f => f.name !== file.name))
-										onFileDelete(file)
+										onFileDelete(file, files.indexOf(file))
 									}}
 								>
 									<File
@@ -62,8 +62,10 @@ const Dropzone = ({
 										height={45}
 										className='mx-auto mb-2'
 									/>
-									<span className='w-full'>{file.name}</span>
-								</button>
+									<span className='block overflow-hidden text-ellipsis '>
+										{file.name}
+									</span>
+								</div>
 							</div>
 						)
 				)}

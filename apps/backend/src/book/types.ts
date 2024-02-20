@@ -1,8 +1,3 @@
-export type EBookType = {
-	title: string
-	chapters: {
-		id: number
-		name: string
-		text: string
-	}[]
-}[]
+import type { EbookValidationType } from '../../../web/features/books/ebook-validation'
+
+export type EBookType = EbookValidationType

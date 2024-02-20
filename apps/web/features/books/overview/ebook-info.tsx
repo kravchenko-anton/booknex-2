@@ -1,14 +1,13 @@
-import { Button, DropZone } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useBookCompose } from '@/features/books/book-compose/useBookCompose'
+import Editor from '@/features/books/book-compose/editor'
 import { ebookValidation } from '@/features/books/ebook-validation'
-import { cn } from '@/utils'
 import { errorToast } from '@/utils/toast'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import type { EBookType } from 'backend/src/book/types'
 import { getFileUrl } from 'global/api-config'
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 
 interface EbookInfoProperties {
 	bookLink: string
@@ -24,7 +23,7 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 				.then(response => response.data),
 		enabled: !!bookLink
 	})
-	const { books } = useBookCompose(ebook)
+	const [books, setBooks] = useState<EBookType | null>(null)
 	if (!ebook) return null
 	return (
 		<Tabs defaultValue='preview' className=' mt-8 w-full '>
@@ -48,33 +47,17 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 					/>
 				</TabsContent>
 				<TabsContent value='edit'>
-					<DropZone
-						multiple
-						size='sm'
-						accept='.epub'
-						onDropFile={books.upload}
-						onFileDelete={file => books.delete(file.name)}
+					<Editor
+						defaultBooks={ebook}
+						updateBooks={(value: EBookType) => setBooks(value)}
 					/>
-					{books.state && (
-						<div
-							className={cn(
-								'mt-8 gap-2',
-								books.state.length > 1 && 'grid grid-cols-2'
-							)}
-						>
-							{
-								//TODO: переделать тут
-							}
-							{/* <Editor {...books} /> */}
-						</div>
-					)}
 					<Button
 						size='md'
 						variant='primary'
 						onClick={() => {
 							ebookValidation
-								.parseAsync(books.state)
-								.then(value => onEdit(value as any))
+								.parseAsync(books)
+								.then(value => onEdit(value))
 								.catch(error => {
 									errorToast(error)
 								})
