@@ -4,6 +4,9 @@
 		"outDir": "../dist/out-tsc",
 		"module": "commonjs",
 		"types": ["node","express",	"multer" ],
+		"lib": [
+			"es5", "es6", "dom", "dom.iterable"
+		],
 		"emitDecoratorMetadata": true,
 		"target": "es2021",
 		"isolatedModules": true,

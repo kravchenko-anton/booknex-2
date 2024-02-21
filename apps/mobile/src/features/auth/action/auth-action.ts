@@ -25,7 +25,8 @@ export const googleLogin = createAsyncThunk<
 		)
 
 		console.log('loginResponse', loginResponse)
-		if (!loginResponse) return thunkAPI.rejectWithValue('No response')
+		if (!loginResponse.accessToken)
+			return thunkAPI.rejectWithValue('No response')
 		await saveTokensStorage({
 			accessToken: loginResponse.accessToken,
 			refreshToken: loginResponse.refreshToken
@@ -42,53 +43,43 @@ export const googleLogin = createAsyncThunk<
 export const mailRegister = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	'auth/mailRegister',
 	async (properties, thunkAPI) => {
-		try {
-			const { data: registerResponse } = await axios.post<AuthResponseType>(
-				emulatorServerURL + getAuthUrl('/mail-register'),
-				{
-					...properties
-				}
-			)
-			if (!registerResponse) return thunkAPI.rejectWithValue('No response')
-			await saveTokensStorage({
-				accessToken: registerResponse.accessToken,
-				refreshToken: registerResponse.refreshToken
-			})
-			return registerResponse
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error)
-		}
+		const { data: registerResponse } = await axios.post<AuthResponseType>(
+			emulatorServerURL + getAuthUrl('/mail-register'),
+			{
+				...properties
+			}
+		)
+		if (!registerResponse.accessToken)
+			return thunkAPI.rejectWithValue('No response')
+		await saveTokensStorage({
+			accessToken: registerResponse.accessToken,
+			refreshToken: registerResponse.refreshToken
+		})
+		return registerResponse
 	}
 )
 
 export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
-		try {
-			const { data: loginResponse } = await axios.post<AuthResponseType>(
-				emulatorServerURL + getAuthUrl('/mail-login'),
-				{
-					email,
-					password
-				}
-			)
-			if (!loginResponse) return thunkAPI.rejectWithValue('No response')
-			await saveTokensStorage({
-				accessToken: loginResponse.accessToken,
-				refreshToken: loginResponse.refreshToken
-			})
-			return loginResponse
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error)
-		}
+		const { data: loginResponse } = await axios.post<AuthResponseType>(
+			emulatorServerURL + getAuthUrl('/mail-login'),
+			{
+				email,
+				password
+			}
+		)
+		if (!loginResponse.accessToken)
+			return thunkAPI.rejectWithValue('No response')
+		await saveTokensStorage({
+			accessToken: loginResponse.accessToken,
+			refreshToken: loginResponse.refreshToken
+		})
+		return loginResponse
 	}
 )
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-	try {
-		await deleteTokensStorage()
-	} catch {
-		/* empty */
-	}
+	await deleteTokensStorage()
 	return {}
 })

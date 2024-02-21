@@ -28,10 +28,11 @@ export const useReading = (id: number) => {
 		id,
 		readerState
 	})
-	const { mutateAsync: finishReading } = useMutation({
-		mutationKey: ['end-reading', id],
-		mutationFn: (id: number) => userServices.finishReading(id)
-	})
+	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
+		useMutation({
+			mutationKey: ['end-reading', id],
+			mutationFn: (id: number) => userServices.finishReading(id)
+		})
 
 	const onMessage = useCallback(
 		async (event: WebViewMessageEvent) => {
@@ -46,7 +47,7 @@ export const useReading = (id: number) => {
 					scrollTop: payload.scrollTop
 				})
 			}
-			if (type === 'finishBook') {
+			if (type === 'finishBook' && !finishReadingLoading) {
 				await finishReading(id).then(() => {
 					setReaderState({
 						progress: 0,

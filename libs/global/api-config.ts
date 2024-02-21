@@ -9,7 +9,6 @@ export const getCatalogUrl = (string: string) => `/catalog${string}`
 export const getStorageUrl = (string: string) => `/storage${string}`
 
 export const getBookUrl = (string: string) => `/book${string}`
-export const getCollectionUrl = (string: string) => `/collection${string}`
 
 export const getFileUrl = (path: string) => {
 	if (path?.startsWith('http')) return path

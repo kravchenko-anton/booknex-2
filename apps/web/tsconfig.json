@@ -41,7 +41,6 @@
       }
     ],
     "types": [
-      "jest",
       "node"
     ],
   },
@@ -57,7 +56,6 @@
   ],
   "exclude": [
     "node_modules",
-    "jest.config.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts"
   ]

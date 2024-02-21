@@ -4,6 +4,7 @@
 		"rootDir": ".",
 		"sourceMap": true,
 		"declaration": true,
+		"incremental": true,
 		"moduleResolution": "node",
 		"noEmit": true,
 		"emitDecoratorMetadata": true,

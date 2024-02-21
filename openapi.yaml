@@ -1,0 +1,812 @@
+openapi: 3.0.0
+paths:
+  /api/user/profile:
+    get:
+      operationId: profile
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  /api/user/update-recommendations:
+    post:
+      operationId: updateRecommendations
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateSelectedGenresDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  /api/user/recommendation-genres:
+    get:
+      operationId: recommendationsGenres
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  /api/user/library:
+    get:
+      operationId: library
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/start-reading/{id}":
+    patch:
+      operationId: toggle
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/finish-reading/{id}":
+    patch:
+      operationId: finishReading
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/toggle-save/{id}":
+    patch:
+      operationId: toggleSave
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/is-saved/{id}":
+    get:
+      operationId: isSaved
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  /api/user/admin/all:
+    get:
+      operationId: all
+      parameters:
+        - name: searchTerm
+          required: false
+          in: query
+          example: ""
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          example: 1
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/admin/delete/{id}":
+    delete:
+      operationId: delete
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/catalog/search/{query}":
+    get:
+      operationId: search
+      parameters:
+        - name: query
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - catalog
+      security:
+        - bearer: []
+  /api/catalog/featured:
+    get:
+      operationId: featured
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - catalog
+      security:
+        - bearer: []
+  /api/genre:
+    get:
+      operationId: all
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - genre
+      security:
+        - bearer: []
+  "/api/genre/by-id/{id}":
+    get:
+      operationId: byId
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - genre
+      security:
+        - bearer: []
+  "/api/book/review/{id}":
+    post:
+      operationId: review
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewBookDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/by-id/{id}":
+    get:
+      operationId: infoById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/ebook/{id}":
+    get:
+      operationId: ebookById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/admin/by-id/{id}":
+    get:
+      operationId: infoByIdAdmin
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  /api/book/admin/all:
+    get:
+      operationId: all
+      parameters:
+        - name: searchTerm
+          required: false
+          in: query
+          example: The Hobbit
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          example: 1
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  /api/book/admin/create:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/admin/update/{id}":
+    put:
+      operationId: update
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditBookDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/admin/delete/{id}":
+    delete:
+      operationId: delete
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  /api/auth/google-sign:
+    post:
+      operationId: googleSign
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - auth
+  /api/auth/mail-register:
+    post:
+      operationId: register
+      parameters: []
+      requestBody:
+        required: true
+        description: Register new user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - auth
+  /api/auth/mail-login:
+    post:
+      operationId: login
+      parameters: []
+      requestBody:
+        required: true
+        description: Login user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - auth
+  /api/auth/refresh:
+    post:
+      operationId: refreshToken
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - auth
+  /api/storage/delete:
+    post:
+      operationId: delete
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilenameDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - storage
+      security:
+        - bearer: []
+  /api/storage/replacement:
+    post:
+      operationId: replacement
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                deleteFilename:
+                  type: string
+      responses:
+        "201":
+          description: ""
+      tags:
+        - storage
+      security:
+        - bearer: []
+  "/api/storage/{folder}":
+    post:
+      operationId: upload
+      parameters:
+        - name: folder
+          required: true
+          in: path
+          schema:
+            enum:
+              - ebooks
+              - books-covers
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: ""
+      tags:
+        - storage
+      security:
+        - bearer: []
+  /api/parser/admin/all:
+    get:
+      operationId: all
+      parameters:
+        - name: searchTerm
+          required: false
+          in: query
+          example: The Hobbit
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          example: 1
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  "/api/parser/admin/by-id/{id}":
+    get:
+      operationId: byId
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  /api/parser/admin/parse:
+    post:
+      operationId: parse
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ParserDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  /api/parser/admin/unfold:
+    post:
+      operationId: unfold
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: epub
+      responses:
+        "201":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  "/api/parser/admin/delete/{id}":
+    delete:
+      operationId: delete
+      parameters:
+        - name: id
+          required: false
+          in: path
+          example: 1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  /api/admin/dashboard:
+    get:
+      operationId: dashboard
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - admin
+      security:
+        - bearer: []
+info:
+  title: Booknex
+  description: ""
+  version: "1.0"
+  contact:
+    name: Booknex
+    url: https://github.com/kravchenko-anton/booknex-2-monorepo
+    email: Github repository
+tags:
+  - name: user
+    description: user service
+  - name: auth
+    description: auth service
+  - name: admin
+    description: admin service
+  - name: book
+    description: book service
+  - name: collection
+    description: collection service
+  - name: catalog
+    description: catalog service
+  - name: genre
+    description: genre service
+  - name: storage
+    description: storage service
+  - name: parser
+    description: parser service
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    UserUpdateSelectedGenresDto:
+      type: object
+      properties:
+        selectedGenres:
+          example:
+            - 1
+            - 2
+            - 3
+          description: Array of selected genres
+          type: array
+          items:
+            type: string
+      required:
+        - selectedGenres
+    ReviewBookDto:
+      type: object
+      properties:
+        rating:
+          type: number
+          example: 5
+          description: Rating of the book
+        tags:
+          example:
+            - Informative
+            - Top grammar & style
+            - Easy to read
+            - Hot topic
+          description: Tags for the book
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+          example: Good book with a lot of useful information
+          description: Comment for the book
+      required:
+        - rating
+    CreateBookDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: The Great Gatsby
+          description: Title of the book
+        author:
+          type: string
+          example: F. Scott Fitzgerald
+          description: Author of the book
+        description:
+          type: string
+          example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
+            First published in 1925, it is set on Long Island's North Shore and
+            in New York City from spring to autumn of 1922.
+          description: Description of the book
+        picture:
+          type: string
+          description: Uploaded picture
+        ebook:
+          type: string
+          description: Uploaded ebook
+        pages:
+          type: number
+          example: 300
+          description: Number of pages in the book
+        popularity:
+          type: number
+          example: 1000000
+          description: Number of goodRead reviews
+        genres:
+          example:
+            - 1
+            - 2
+            - 3
+          description: Array of genres
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - author
+        - description
+        - picture
+        - ebook
+        - pages
+        - popularity
+        - genres
+    EditBookDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: The Great Gatsby
+          description: Title of the book
+        author:
+          type: string
+          example: F. Scott Fitzgerald
+          description: Author of the book
+        visible:
+          type: boolean
+          example: true
+          description: Visibility of the book
+        description:
+          type: string
+          example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
+            First published in 1925, it is set on Long Island's North Shore and
+            in New York City from spring to autumn of 1922.
+          description: Description of the book
+        picture:
+          type: string
+          description: Uploaded picture
+        ebook:
+          type: string
+          description: Uploaded ebook
+        pages:
+          type: number
+          example: 300
+          description: Number of pages in the book
+        popularity:
+          type: number
+          example: 800424
+          description: Number of goodRead reviews
+        genres:
+          example:
+            - 1
+            - 2
+            - 3
+          description: Array of genres
+          type: array
+          items:
+            type: string
+    SignDto:
+      type: object
+      properties:
+        socialId:
+          type: string
+          example: eyJhbGciOiJSUzI1NiIsImtpZCI6ImVkODA2ZjE4NDJiNTg4MDU0YjE4YjY2OWRkMWEwOWE0ZjM2N2FmYzQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzOTA5NDkzMTEyMTQtaHFmcXZpYzdwNDdwdDNlbHBuZTAwZXM1OGs5OW5vbmguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIzOTA5NDkzMTEyMTQtaHFmcXZpYzdwNDdwdDNlbHBuZTAwZXM1OGs5OW5vbmguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NjMyMzk0MjAwODcxNDc2MzUiLCJlbWFpbCI6ImFudG9ua3phdmNlbmNvMDVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTcwODA2ODUwOCwibmFtZSI6ItCQ0L3RgtC-0L0g0JrRgNCw0LLRh9C10L3QutC-IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0tObFpBdWVuQV9vMEhONDJ3M2k3YmMxaVRRcUZ2a0loZEYzRnFnS21qUng1Zz1zOTYtYyIsImdpdmVuX25hbWUiOiLQkNC90YLQvtC9IiwiZmFtaWx5X25hbWUiOiLQmtGA0LDQstGH0LXQvdC60L4iLCJsb2NhbGUiOiJydSIsImlhdCI6MTcwODA2ODgwOCwiZXhwIjoxNzA4MDcyNDA4LCJqdGkiOiJmNzJmZGMxNDlkNjg2ZmM2ODE2ZTFmMzVmMjNjODA1YTU4MTVmMTc2In0.i7oOu9fd0Z23tp5Efy9edPMlqzr6c-ZXU4JaYP_Vw4eXnjPBKe8A9wZKtrdrUKO0e8-jM80Hbkd659ZVBr_a_WcYqEpveIMBJtigcJZyPybRNrD9fbuaZYo9AmnU3_KXusuyyVq8tF5MBmdYuLkWSP37sO4772OWVqjJLalmmijIKpYAzG1uXU2FLSu3nGsCeU41yV-994kxlUtGAbJ55JR3p6RimG-1YYnqO14sD7-uP7A74JecUCipEOlZeMdH9ibUqUywzAmF1oViV4ZlFblWmcljC0BMhiFDDZAGst2zr0fbnRzrnFEWdxqy3Ii2JqO98kyHODlMH2udD1qMOQ
+          description: Social id
+      required:
+        - socialId
+    AuthDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@gmail.com
+          description: User's email
+          format: email
+      required:
+        - email
+    RefreshDto:
+      type: object
+      properties: {}
+    FilenameDto:
+      type: object
+      properties:
+        filename:
+          type: string
+          example: file.jpg
+          description: Filename to upload
+      required:
+        - filename
+    ParserDto:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://www.goodreads.com/list/show/1.Best_Books_Ever
+          description: URL to parse
+        page:
+          type: number
+          example: 1
+          description: Page number to parse
+      required:
+        - url
+        - page

@@ -11,6 +11,7 @@ import {
 import {
 	ApiBearerAuth,
 	ApiBody,
+	ApiOkResponse,
 	ApiParam,
 	ApiQuery,
 	ApiTags
@@ -18,9 +19,9 @@ import {
 import type {
 	AllBooksOutput,
 	BookByIdOutput,
-	EpubOutputType,
-	InfoByIdAdmin
+	EpubOutputType
 } from '../../../../libs/global/services-types/book-types'
+import { InfoByIdAdmin } from '../../../../libs/global/services-types/book-types'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'
@@ -65,6 +66,10 @@ export class BookController {
 	@Auth('admin')
 	@Get('admin/by-id/:id')
 	@ApiParam({ name: 'id', required: false, example: 1 })
+	@ApiOkResponse({
+		description: 'The user records',
+		type: InfoByIdAdmin
+	})
 	async infoByIdAdmin(@Param('id') id: string): Promise<InfoByIdAdmin> {
 		return this.bookService.infoByIdAdmin(+id)
 	}
