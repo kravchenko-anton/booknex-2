@@ -1,9 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common'
-import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger'
-import type {
-	AllGenreOutput,
-	GenreByIdOutput
-} from '../../../../libs/global/services-types/genre-types'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { GenreService } from './genre.service'
@@ -15,17 +12,13 @@ export class GenreController {
 	constructor(private readonly genreService: GenreService) {}
 
 	@Get()
-	async all(): Promise<AllGenreOutput> {
+	async all() {
 		return this.genreService.all()
 	}
 
 	@Auth()
 	@Get('/by-id/:id')
-	@ApiParam({ name: 'id' })
-	async byId(
-		@Param('id') genreId: string,
-		@CurrentUser('id') userId: string
-	): Promise<GenreByIdOutput> {
+	async byId(@Param('id') genreId: number, @CurrentUser('id') userId: number) {
 		return this.genreService.findOne(+genreId, +userId)
 	}
 }

@@ -1,12 +1,7 @@
 import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { emulatorServerURL, getAuthUrl } from 'global/api-config'
-import type {
-	AuthFieldsType,
-	AuthResponseType,
-	googleAuthResponseType
-} from 'global/services-types/auth-types'
+import { emulatorServerURL } from 'global/api-config'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 
 export const googleLogin = createAsyncThunk<

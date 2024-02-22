@@ -1,8 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common'
-import { ApiBody, ApiTags } from '@nestjs/swagger'
-import type { AuthPayload } from '../../../../libs/global/services-types/auth-types'
+import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { AuthService } from './auth.service'
-import { AuthDto, RefreshDto, SignDto } from './dto/auth.dto'
+import { AuthDto, AuthResponseDto, RefreshDto, SignDto } from './dto/auth.dto'
 
 @ApiTags('auth')
 @Controller('auth')
@@ -10,7 +9,15 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post('/google-sign')
-	async googleSign(@Body() dto: SignDto) {
+	@ApiOkResponse({
+		description: 'Return access and refresh token',
+		type: AuthResponseDto
+	})
+	@ApiBody({
+		type: SignDto,
+		description: 'Sign in with google account'
+	})
+	async googleSign(@Body() dto: SignDto): Promise<AuthResponseDto> {
 		return this.authService.googleSign(dto)
 	}
 
@@ -19,7 +26,11 @@ export class AuthController {
 		type: AuthDto,
 		description: 'Register new user'
 	})
-	async register(@Body() dto: AuthDto): Promise<AuthPayload> {
+	@ApiOkResponse({
+		description: 'Return access and refresh token',
+		type: AuthResponseDto
+	})
+	async register(@Body() dto: AuthDto): Promise<AuthResponseDto> {
 		return this.authService.register(dto)
 	}
 
@@ -28,12 +39,24 @@ export class AuthController {
 		type: AuthDto,
 		description: 'Login user'
 	})
-	async login(@Body() dto: AuthDto): Promise<AuthPayload> {
+	@ApiOkResponse({
+		description: 'Return access and refresh token',
+		type: AuthResponseDto
+	})
+	async login(@Body() dto: AuthDto): Promise<AuthResponseDto> {
 		return this.authService.login(dto)
 	}
 
 	@Post('/refresh')
-	async refreshToken(@Body() dto: RefreshDto): Promise<AuthPayload> {
+	@ApiBody({
+		type: RefreshDto,
+		description: 'Refresh access token'
+	})
+	@ApiOkResponse({
+		description: 'Return access token',
+		type: AuthResponseDto
+	})
+	async refreshToken(@Body() dto: RefreshDto): Promise<AuthResponseDto> {
 		return this.authService.refresh(dto.refreshToken)
 	}
 }

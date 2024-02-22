@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface ParserDto
+ * @interface UploadOutputDto
  */
-export interface ParserDto {
+export interface UploadOutputDto {
     /**
      * 
      * @type {string}
-     * @memberof ParserDto
+     * @memberof UploadOutputDto
      */
-    'url': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ParserDto
-     */
-    'page': number;
+    'name': string;
 }
 

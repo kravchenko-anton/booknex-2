@@ -1,4 +1,4 @@
-import { parserService } from '@/services/parser/parser-services'
+import api from '@/services'
 import { useQuery } from '@tanstack/react-query'
 import type { EBookType } from 'backend/src/book/types'
 import { useSearchParams } from 'next/navigation'
@@ -23,7 +23,7 @@ export const useTemplate = ({
 	const id = Number(parameters.get('template'))
 	const { data: template } = useQuery({
 		queryKey: ['book-template'],
-		queryFn: () => parserService.byId(id),
+		queryFn: () => api.parser.byId(id),
 		enabled: Boolean(id)
 	})
 	useLayoutEffect(() => {

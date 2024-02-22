@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { IAuthState } from 'global/services-types/auth-types'
+import type { AuthResponseDto } from 'global/api-client'
 import { googleLogin, logout, mailLogin } from './auth-action'
 
 const initialState = {
 	isLoading: false,
-	user: null as IAuthState | null
+	user: null as AuthResponseDto['user'] | null
 }
 
 export const authSlice = createSlice({

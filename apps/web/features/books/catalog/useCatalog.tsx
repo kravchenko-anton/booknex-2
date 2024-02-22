@@ -1,6 +1,6 @@
 import { columns } from '@/features/books/catalog/columns'
 import { useTableParameters } from '@/hooks/useTableParameters'
-import { bookService } from '@/services/book/book-service'
+import api from '@/services'
 import {
 	generateParameters,
 	type GenerateParametersType
@@ -15,11 +15,7 @@ export const useCatalog = () => {
 	const { page, searchTerm } = useTableParameters()
 	const { data: books } = useQuery({
 		queryKey: ['books', searchTerm, page],
-		queryFn: () =>
-			bookService.all({
-				searchTerm: searchTerm,
-				page: +page
-			})
+		queryFn: () => api.book.all(searchTerm, +page)
 	})
 	const table = useReactTable({
 		data: books?.data ?? [],

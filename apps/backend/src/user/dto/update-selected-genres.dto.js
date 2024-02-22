@@ -21,7 +21,7 @@ var __decorate =
 exports.__esModule = true
 exports.UserUpdateDto = void 0
 var class_validator_1 = require('class-validator')
-var Dto = /** @class */ (function () {
+var UpdateSelectedGenresDto = /** @class */ (function () {
 	function UserUpdateDto() {}
 	__decorate(
 		[(0, class_validator_1.IsEmail)()],
@@ -45,4 +45,4 @@ var Dto = /** @class */ (function () {
 	)
 	return UserUpdateDto
 })()
-exports.UserUpdateDto = Dto
+exports.UserUpdateDto = UpdateSelectedGenresDto

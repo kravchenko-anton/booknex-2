@@ -1,11 +1,10 @@
 import CallParserDialog from '@/app/admin/parser/_catalog/dialogs/call-parser'
 import { Button } from '@/components/ui'
 import type { DialogProperties } from '@/components/ui/base-components-types'
-import { parserService } from '@/services/parser/parser-services'
+import api from '@/services'
 import { successToast } from '@/utils/toast'
-
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { ParserDtoPayload } from 'global/services-types/parser-types'
+import type { ParserDto } from 'global/api-client'
 import type { FunctionType } from 'global/types'
 import type { FC } from 'react'
 
@@ -28,7 +27,7 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 
 	const { mutateAsync: parse, isLoading: parseLoading } = useMutation({
 		mutationKey: ['parse-templates'],
-		mutationFn: (dto: ParserDtoPayload) => parserService.parse(dto),
+		mutationFn: (dto: ParserDto) => api.parser.parse(dto),
 		onSuccess: async () => {
 			successToast('Books parsed')
 			await queryClient.invalidateQueries({

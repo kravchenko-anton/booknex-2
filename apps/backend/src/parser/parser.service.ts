@@ -2,7 +2,6 @@
 /* eslint @typescript-eslint/no-loop-func: 0 */
 
 import { HttpStatus, Injectable } from '@nestjs/common'
-import type { UnfoldOutput } from '../../../../libs/global/services-types/parser-types'
 import { serverError } from '../utils/call-error'
 import { AdminErrors } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
@@ -58,7 +57,7 @@ export class ParserService {
 		}
 	}
 
-	async delete(id: number) {
+	async remove(id: number) {
 		return this.prisma.bookTemplate.delete({
 			where: {
 				id
@@ -66,7 +65,7 @@ export class ParserService {
 		})
 	}
 
-	async unfold(file: Express.Multer.File): Promise<UnfoldOutput> {
+	async unfold(file: Express.Multer.File) {
 		if (!file.buffer && file.mimetype !== 'application/epub+zip')
 			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFile)
 		return getEbook(file.buffer)

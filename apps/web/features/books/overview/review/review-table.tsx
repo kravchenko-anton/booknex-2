@@ -13,7 +13,6 @@ import {
 	getCoreRowModel,
 	useReactTable
 } from '@tanstack/react-table'
-import type { InfoByIdAdmin } from 'global/services-types/book-types'
 import type { FC } from 'react'
 import * as React from 'react'
 

@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface ParserDto
+ * @interface RefreshDto
  */
-export interface ParserDto {
+export interface RefreshDto {
     /**
      * 
      * @type {string}
-     * @memberof ParserDto
+     * @memberof RefreshDto
      */
-    'url': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ParserDto
-     */
-    'page': number;
+    'refreshToken': string;
 }
 

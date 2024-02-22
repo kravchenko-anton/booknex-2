@@ -1,4 +1,4 @@
-import { errorCatch } from 'global/utils/catch-error'
+import { errorCatch } from 'global/helpers/catch-error'
 import type { ExternalToast } from 'sonner'
 import { toast } from 'sonner'
 

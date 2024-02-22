@@ -2,7 +2,6 @@ import prettify from '@liquify/prettify'
 import { HttpStatus } from '@nestjs/common'
 import EPub from 'epub2'
 import { JSDOM } from 'jsdom'
-import type { UnfoldOutput } from '../../../../libs/global/services-types/parser-types'
 import { serverError } from '../utils/call-error'
 import { AdminErrors, GlobalErrorsEnum } from '../utils/errors'
 
@@ -48,7 +47,7 @@ export const updatedContent = async (text: string) => {
 		.then((formatted: string) => formatted)
 }
 
-export const getEbook = async (buffer: Buffer): Promise<UnfoldOutput> =>
+export const getEbook = async (buffer: Buffer) =>
 	new Promise(resolve => {
 		const epub = new EPub(buffer as unknown as string)
 		epub.on('end', function () {

@@ -13,30 +13,39 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { AuthResponseDtoUser } from './auth-response-dto-user';
 
 /**
  * 
  * @export
- * @interface ReviewBookDto
+ * @interface AuthResponseDto
  */
-export interface ReviewBookDto {
-    /**
-     * 
-     * @type {number}
-     * @memberof ReviewBookDto
-     */
-    'rating': number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ReviewBookDto
-     */
-    'tags'?: Array<string>;
+export interface AuthResponseDto {
     /**
      * 
      * @type {string}
-     * @memberof ReviewBookDto
+     * @memberof AuthResponseDto
      */
-    'comment'?: string;
+    'accessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthResponseDto
+     */
+    'refreshToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthResponseDto
+     */
+    'type': string;
+    /**
+     * 
+     * @type {AuthResponseDtoUser}
+     * @memberof AuthResponseDto
+     */
+    'user': AuthResponseDtoUser;
 }
 

@@ -1,4 +1,4 @@
-import instance from '@/services/api/interceptors'
+import instance from '@/services/interceptors'
 import {
 	AdminApi,
 	AuthApi,

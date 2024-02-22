@@ -10,7 +10,7 @@ import {
 	PopoverContent,
 	PopoverTrigger
 } from '@/components/ui/popover'
-import { genreService } from '@/services/genre/genre-service'
+import api from '@/services'
 import { cn } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
@@ -32,7 +32,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 }) => {
 	const { data: genres = [] } = useQuery({
 		queryKey: ['genres'],
-		queryFn: () => genreService.all()
+		queryFn: () => api.genre.all()
 	})
 
 	return (

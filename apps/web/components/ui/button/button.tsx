@@ -1,6 +1,6 @@
+import { cn } from '@/utils'
 import { InnerColor } from 'global/colors'
 import type { FC } from 'react'
-import { cn } from '../../../../mobile/src/utils'
 import Loader from '../loader/loader'
 import { settings } from './settings'
 import type { ButtonProperties } from './types'
@@ -30,13 +30,13 @@ const Button: FC<ButtonProperties> = ({
 	>
 		{children}
 
-		{isLoading && (
+		{isLoading ? (
 			<Loader
 				width={settings.iconSize[size]}
 				height={settings.iconSize[size]}
 				color={InnerColor[variant]}
 			/>
-		)}
+		) : null}
 		{!!Icon && !isLoading && (
 			<Icon
 				color={InnerColor[variant]}

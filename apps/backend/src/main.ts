@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common'
+import { ZodValidationPipe } from '@anatine/zod-nestjs'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder } from '@nestjs/swagger'
 import helmet from 'helmet'
@@ -9,7 +9,7 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 	app.setGlobalPrefix('/api')
 	app.enableCors({})
-	app.useGlobalPipes(new ValidationPipe())
+	app.useGlobalPipes(new ZodValidationPipe())
 	app.use(helmet())
 	await OpenApiNestFactory.configure(
 		app,
@@ -46,7 +46,7 @@ async function bootstrap() {
 				outputFolderPath: './libs/global/api-client',
 				additionalProperties:
 					'apiPackage=clients,modelPackage=models,withoutPrefixEnums=true,withSeparateModelsAndApi=true',
-				openApiFilePath: './openapi.yaml' // or ./openapi.json
+				openApiFilePath: './openapi.yaml'
 			}
 		}
 	)

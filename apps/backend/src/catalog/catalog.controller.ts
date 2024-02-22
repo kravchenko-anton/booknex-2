@@ -1,9 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common'
-import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger'
-import type {
-	FeaturedOutput,
-	SearchOutput
-} from '../../../../libs/global/services-types/catalog.types'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 
@@ -17,13 +14,12 @@ export class CatalogController {
 	constructor(private readonly catalogService: CatalogService) {}
 
 	@Get('/search/:query')
-	@ApiParam({ name: 'query' })
-	async search(@Param('query') query: string): Promise<SearchOutput> {
+	async search(@Param('query') query: string) {
 		return this.catalogService.search(query)
 	}
 
 	@Get('/featured')
-	async featured(@CurrentUser('id') userId: number): Promise<FeaturedOutput> {
+	async featured(@CurrentUser('id') userId: number) {
 		return this.catalogService.featured(+userId)
 	}
 }

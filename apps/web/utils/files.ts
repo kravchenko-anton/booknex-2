@@ -1,11 +1,11 @@
-import { storageService } from '@/services/storage/storage-service'
+import api from '@/services'
 import { useMutation } from '@tanstack/react-query'
-import type { StorageFolderEnum } from 'backend/src/storage/storage.types'
+import type { UploadFolderEnum } from 'global/api-client'
 import { errorToast } from './toast'
 
 interface UploadFileProperties {
 	name: string
-	folder: StorageFolderEnum
+	folder: UploadFolderEnum
 	blob: Blob
 }
 
@@ -19,8 +19,9 @@ export const useUploadFile = () => {
 	const { mutateAsync: upload } = useMutation({
 		mutationKey: ['upload-file'],
 		mutationFn: ({ folder, blob, name }: UploadFileProperties) => {
-			const formData = blobFormData(blob, name)
-			return storageService.upload(formData, folder)
+			//TODO: чекнуть не сломалось ли
+			const formData = blobFormData(blob, name) as unknown as File
+			return api.storage.upload(folder, formData)
 		},
 		onError: () =>
 			errorToast({

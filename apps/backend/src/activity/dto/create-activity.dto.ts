@@ -1,25 +1,38 @@
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendApi } from '@anatine/zod-openapi'
 import { Activities } from '@prisma/client'
-import { IsEnum, IsNumber, IsOptional, Max } from 'class-validator'
+import { z } from 'zod'
 
-type allowedNumberType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+export const CreateActivityZ = extendApi(
+	z.object({
+		type: z.nativeEnum(Activities),
+		importance: z.number().int().min(1).max(10),
+		userId: z.number().positive().optional(),
+		bookId: z.number().positive().optional(),
+		genreId: z.number().positive().optional()
+	}),
+	{
+		type: {
+			description: 'Type of activity',
+			example: 'book' || 'genre'
+		},
+		importance: {
+			description: 'Importance of activity',
+			example: 5
+		},
+		userId: {
+			description: 'User id',
+			example: 1
+		},
+		bookId: {
+			description: 'Book id',
+			example: 1
+		},
+		genreId: {
+			description: 'Genre id',
+			example: 1
+		}
+	}
+)
 
-export class CreateActivityDto {
-	@IsEnum(Activities)
-	type: Activities
-
-	@IsNumber()
-	@Max(10)
-	importance: allowedNumberType
-
-	@IsNumber()
-	@IsOptional()
-	userId?: number
-
-	@IsNumber()
-	@IsOptional()
-	bookId?: number
-
-	@IsNumber()
-	@IsOptional()
-	genreId?: number
-}
+export class CreateActivityDto extends createZodDto(CreateActivityZ) {}

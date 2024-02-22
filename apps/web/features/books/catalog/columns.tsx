@@ -1,7 +1,7 @@
 import { cn } from '@/utils'
 import type { ColumnDef } from '@tanstack/react-table'
 import { getFileUrl } from 'global/api-config'
-import { nFormatter } from 'global/utils/number-formater'
+import { nFormatter } from 'global/helpers/number-formater'
 import Image from 'next/image'
 import { useState } from 'react'
 

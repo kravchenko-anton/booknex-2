@@ -17,20 +17,34 @@
 /**
  * 
  * @export
- * @interface ParserDto
+ * @interface AuthResponseDtoUser
  */
-export interface ParserDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ParserDto
-     */
-    'url': string;
+export interface AuthResponseDtoUser {
     /**
      * 
      * @type {number}
-     * @memberof ParserDto
+     * @memberof AuthResponseDtoUser
      */
-    'page': number;
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthResponseDtoUser
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthResponseDtoUser
+     */
+    'role'?: RoleEnum;
 }
+
+export const RoleEnum = {
+    Admin: 'admin',
+    User: 'user'
+} as const;
+
+export type RoleEnum = typeof RoleEnum[keyof typeof RoleEnum];
+
 

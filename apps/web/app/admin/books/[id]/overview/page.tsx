@@ -6,13 +6,13 @@ import EbookInfo from '@/features/books/overview/ebook-info'
 import ReviewTable from '@/features/books/overview/review/review-table'
 import UpdateBio from '@/features/books/overview/update-bio'
 import UpdatePicture from '@/features/books/overview/update-picture'
-import { bookService } from '@/services/book/book-service'
+import api from '@/services'
 import { cn } from '@/utils'
 import { useUploadFile } from '@/utils/files'
 import { acceptToast, successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
-import type { BookUpdatePayload } from 'global/services-types/book-types'
+import type { EditBookDto } from 'global/api-client'
 import { useParams, useRouter } from 'next/navigation'
 import * as React from 'react'
 //TODO: сделать во фронте при композиции книги типы которые в бекенде
@@ -27,12 +27,12 @@ const Id = () => {
 	console.log(id, 'it is id')
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', id],
-		queryFn: () => bookService.infoById(id)
+		queryFn: () => api.book.infoById(id)
 	})
 	const { mutateAsync: update } = useMutation({
 		mutationKey: ['update-book'],
-		mutationFn: ({ id, payload }: { id: number; payload: BookUpdatePayload }) =>
-			bookService.update(id, payload),
+		mutationFn: ({ id, payload }: { id: number; payload: EditBookDto }) =>
+			api.book.update(id, payload),
 		onSuccess: async () => {
 			successToast('Book updated')
 			await queryClient.invalidateQueries({
@@ -43,7 +43,7 @@ const Id = () => {
 
 	const { mutateAsync: remove } = useMutation({
 		mutationKey: ['remove-book'],
-		mutationFn: (id: number) => bookService.delete(id),
+		mutationFn: (id: number) => api.book._delete(id),
 		onSuccess: () => {
 			successToast('Book removed')
 			router.push('/admin/books')

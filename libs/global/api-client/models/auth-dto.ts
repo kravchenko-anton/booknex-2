@@ -21,10 +21,16 @@
  */
 export interface AuthDto {
     /**
-     * User\'s email
+     * 
      * @type {string}
      * @memberof AuthDto
      */
     'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthDto
+     */
+    'password': string;
 }
 

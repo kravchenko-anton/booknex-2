@@ -3,16 +3,16 @@ import { Button, Field } from '@/components/ui'
 import { loginRoute } from '@/features/auth/secure-route'
 import { useAction } from '@/hooks'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
-import type { AuthFieldsType } from 'global/services-types/auth-types'
 import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
 
 const Index = () => {
 	const { mailLogin, googleLogin } = useAction()
-	const { handleSubmit, control } = useForm<AuthFieldsType>({
+	//TODO: сделать валидацию
+	const { handleSubmit, control } = useForm({
 		mode: 'onSubmit'
 	})
-	const onSubmit = (data: AuthFieldsType) => {
+	const onSubmit = data => {
 		mailLogin(data)
 	}
 

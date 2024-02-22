@@ -55,11 +55,10 @@ paths:
       operationId: toggle
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -72,11 +71,10 @@ paths:
       operationId: finishReading
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -89,11 +87,10 @@ paths:
       operationId: toggleSave
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -106,11 +103,10 @@ paths:
       operationId: isSaved
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -123,15 +119,13 @@ paths:
       operationId: all
       parameters:
         - name: searchTerm
-          required: false
+          required: true
           in: query
-          example: ""
           schema:
             type: string
         - name: page
-          required: false
+          required: true
           in: query
-          example: 1
           schema:
             type: number
       responses:
@@ -141,16 +135,15 @@ paths:
         - user
       security:
         - bearer: []
-  "/api/user/admin/delete/{id}":
+  "/api/user/admin/remove/{id}":
     delete:
-      operationId: delete
+      operationId: remove
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -204,7 +197,7 @@ paths:
           required: true
           in: path
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -220,9 +213,10 @@ paths:
           required: true
           in: path
           schema:
-            type: string
+            type: number
       requestBody:
         required: true
+        description: Review book
         content:
           application/json:
             schema:
@@ -242,7 +236,7 @@ paths:
           required: true
           in: path
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -258,7 +252,7 @@ paths:
           required: true
           in: path
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -271,11 +265,10 @@ paths:
       operationId: infoByIdAdmin
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -288,15 +281,13 @@ paths:
       operationId: all
       parameters:
         - name: searchTerm
-          required: false
+          required: true
           in: query
-          example: The Hobbit
           schema:
             type: string
         - name: page
-          required: false
+          required: true
           in: query
-          example: 1
           schema:
             type: number
       responses:
@@ -328,11 +319,10 @@ paths:
       operationId: update
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       requestBody:
         required: true
         content:
@@ -351,11 +341,10 @@ paths:
       operationId: delete
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -369,13 +358,18 @@ paths:
       parameters: []
       requestBody:
         required: true
+        description: Sign in with google account
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/SignDto"
       responses:
-        "201":
-          description: ""
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponseDto"
       tags:
         - auth
   /api/auth/mail-register:
@@ -390,8 +384,12 @@ paths:
             schema:
               $ref: "#/components/schemas/AuthDto"
       responses:
-        "201":
-          description: ""
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponseDto"
       tags:
         - auth
   /api/auth/mail-login:
@@ -406,8 +404,12 @@ paths:
             schema:
               $ref: "#/components/schemas/AuthDto"
       responses:
-        "201":
-          description: ""
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponseDto"
       tags:
         - auth
   /api/auth/refresh:
@@ -416,13 +418,18 @@ paths:
       parameters: []
       requestBody:
         required: true
+        description: Refresh access token
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/RefreshDto"
       responses:
-        "201":
-          description: ""
+        "200":
+          description: Return access token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponseDto"
       tags:
         - auth
   /api/storage/delete:
@@ -436,8 +443,8 @@ paths:
             schema:
               $ref: "#/components/schemas/FilenameDto"
       responses:
-        "201":
-          description: ""
+        "200":
+          description: File deleted
       tags:
         - storage
       security:
@@ -459,8 +466,12 @@ paths:
                 deleteFilename:
                   type: string
       responses:
-        "201":
-          description: ""
+        "200":
+          description: File uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadOutputDto"
       tags:
         - storage
       security:
@@ -475,7 +486,7 @@ paths:
           schema:
             enum:
               - ebooks
-              - books-covers
+              - booksCovers
             type: string
       requestBody:
         required: true
@@ -488,8 +499,12 @@ paths:
                   type: string
                   format: binary
       responses:
-        "201":
-          description: ""
+        "200":
+          description: File uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadOutputDto"
       tags:
         - storage
       security:
@@ -522,11 +537,10 @@ paths:
       operationId: byId
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -572,16 +586,15 @@ paths:
         - parser
       security:
         - bearer: []
-  "/api/parser/admin/delete/{id}":
+  "/api/parser/admin/remove/{id}":
     delete:
-      operationId: delete
+      operationId: remove
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
-          example: 1
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: ""
@@ -596,6 +609,10 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardResponse"
       tags:
         - admin
       security:
@@ -639,37 +656,26 @@ components:
       type: object
       properties:
         selectedGenres:
-          example:
-            - 1
-            - 2
-            - 3
-          description: Array of selected genres
           type: array
           items:
-            type: string
+            type: number
+            minimum: 0
+            exclusiveMinimum: true
       required:
         - selectedGenres
     ReviewBookDto:
       type: object
       properties:
         rating:
-          type: number
-          example: 5
-          description: Rating of the book
+          type: integer
+          minimum: 1
+          maximum: 5
         tags:
-          example:
-            - Informative
-            - Top grammar & style
-            - Easy to read
-            - Hot topic
-          description: Tags for the book
           type: array
           items:
             type: string
         comment:
           type: string
-          example: Good book with a lot of useful information
-          description: Comment for the book
       required:
         - rating
     CreateBookDto:
@@ -677,41 +683,38 @@ components:
       properties:
         title:
           type: string
-          example: The Great Gatsby
-          description: Title of the book
+          minLength: 1
+          maxLength: 255
         author:
           type: string
-          example: F. Scott Fitzgerald
-          description: Author of the book
+          minLength: 1
+          maxLength: 255
         description:
           type: string
-          example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
-            First published in 1925, it is set on Long Island's North Shore and
-            in New York City from spring to autumn of 1922.
-          description: Description of the book
+          minLength: 1
+          maxLength: 255
         picture:
           type: string
-          description: Uploaded picture
+          minLength: 1
+          maxLength: 255
         ebook:
           type: string
-          description: Uploaded ebook
+          minLength: 1
+          maxLength: 255
         pages:
           type: number
-          example: 300
-          description: Number of pages in the book
+          minimum: 0
+          exclusiveMinimum: true
         popularity:
           type: number
-          example: 1000000
-          description: Number of goodRead reviews
+          minimum: 0
+          exclusiveMinimum: true
         genres:
-          example:
-            - 1
-            - 2
-            - 3
-          description: Array of genres
           type: array
           items:
-            type: string
+            type: number
+            minimum: 0
+            exclusiveMinimum: true
       required:
         - title
         - author
@@ -726,87 +729,154 @@ components:
       properties:
         title:
           type: string
-          example: The Great Gatsby
-          description: Title of the book
+          minLength: 1
+          maxLength: 255
         author:
           type: string
-          example: F. Scott Fitzgerald
-          description: Author of the book
-        visible:
-          type: boolean
-          example: true
-          description: Visibility of the book
+          minLength: 1
+          maxLength: 255
         description:
           type: string
-          example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
-            First published in 1925, it is set on Long Island's North Shore and
-            in New York City from spring to autumn of 1922.
-          description: Description of the book
+          minLength: 1
+          maxLength: 255
         picture:
           type: string
-          description: Uploaded picture
+          minLength: 1
+          maxLength: 255
         ebook:
           type: string
-          description: Uploaded ebook
+          minLength: 1
+          maxLength: 255
         pages:
           type: number
-          example: 300
-          description: Number of pages in the book
+          minimum: 0
+          exclusiveMinimum: true
         popularity:
           type: number
-          example: 800424
-          description: Number of goodRead reviews
+          minimum: 0
+          exclusiveMinimum: true
         genres:
-          example:
-            - 1
-            - 2
-            - 3
-          description: Array of genres
           type: array
           items:
-            type: string
+            type: number
+            minimum: 0
+            exclusiveMinimum: true
+      required:
+        - title
+        - author
+        - description
+        - picture
+        - ebook
+        - pages
+        - popularity
+        - genres
     SignDto:
       type: object
       properties:
         socialId:
           type: string
-          example: eyJhbGciOiJSUzI1NiIsImtpZCI6ImVkODA2ZjE4NDJiNTg4MDU0YjE4YjY2OWRkMWEwOWE0ZjM2N2FmYzQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzOTA5NDkzMTEyMTQtaHFmcXZpYzdwNDdwdDNlbHBuZTAwZXM1OGs5OW5vbmguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIzOTA5NDkzMTEyMTQtaHFmcXZpYzdwNDdwdDNlbHBuZTAwZXM1OGs5OW5vbmguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NjMyMzk0MjAwODcxNDc2MzUiLCJlbWFpbCI6ImFudG9ua3phdmNlbmNvMDVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTcwODA2ODUwOCwibmFtZSI6ItCQ0L3RgtC-0L0g0JrRgNCw0LLRh9C10L3QutC-IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0tObFpBdWVuQV9vMEhONDJ3M2k3YmMxaVRRcUZ2a0loZEYzRnFnS21qUng1Zz1zOTYtYyIsImdpdmVuX25hbWUiOiLQkNC90YLQvtC9IiwiZmFtaWx5X25hbWUiOiLQmtGA0LDQstGH0LXQvdC60L4iLCJsb2NhbGUiOiJydSIsImlhdCI6MTcwODA2ODgwOCwiZXhwIjoxNzA4MDcyNDA4LCJqdGkiOiJmNzJmZGMxNDlkNjg2ZmM2ODE2ZTFmMzVmMjNjODA1YTU4MTVmMTc2In0.i7oOu9fd0Z23tp5Efy9edPMlqzr6c-ZXU4JaYP_Vw4eXnjPBKe8A9wZKtrdrUKO0e8-jM80Hbkd659ZVBr_a_WcYqEpveIMBJtigcJZyPybRNrD9fbuaZYo9AmnU3_KXusuyyVq8tF5MBmdYuLkWSP37sO4772OWVqjJLalmmijIKpYAzG1uXU2FLSu3nGsCeU41yV-994kxlUtGAbJ55JR3p6RimG-1YYnqO14sD7-uP7A74JecUCipEOlZeMdH9ibUqUywzAmF1oViV4ZlFblWmcljC0BMhiFDDZAGst2zr0fbnRzrnFEWdxqy3Ii2JqO98kyHODlMH2udD1qMOQ
-          description: Social id
       required:
         - socialId
+    AuthResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        type:
+          type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: number
+              minimum: 0
+              exclusiveMinimum: true
+              required: true
+            email:
+              type: string
+              required: true
+            role:
+              type: string
+              enum:
+                - admin
+                - user
+              required: true
+      required:
+        - accessToken
+        - refreshToken
+        - type
+        - user
     AuthDto:
       type: object
       properties:
         email:
           type: string
-          example: test@gmail.com
-          description: User's email
           format: email
+        password:
+          type: string
+          minLength: 8
       required:
         - email
+        - password
     RefreshDto:
       type: object
-      properties: {}
+      properties:
+        refreshToken:
+          type: string
+      required:
+        - refreshToken
     FilenameDto:
       type: object
       properties:
         filename:
           type: string
-          example: file.jpg
-          description: Filename to upload
+          minLength: 1
+          maxLength: 255
       required:
         - filename
+    UploadOutputDto:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+        - name
     ParserDto:
       type: object
       properties:
         url:
           type: string
-          example: https://www.goodreads.com/list/show/1.Best_Books_Ever
-          description: URL to parse
+          minLength: 1
+          maxLength: 255
         page:
-          type: number
-          example: 1
-          description: Page number to parse
+          type: integer
       required:
         - url
         - page
+    statistics:
+      type: object
+      properties:
+        users:
+          type: number
+          description: Users count
+        books:
+          type: number
+          description: Books count
+        authors:
+          type: number
+          description: Authors count
+      required:
+        - users
+        - books
+        - authors
+    DashboardResponse:
+      type: object
+      properties:
+        statistics:
+          $ref: "#/components/schemas/statistics"
+      required:
+        - statistics

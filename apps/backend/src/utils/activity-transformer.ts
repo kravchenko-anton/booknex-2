@@ -1,5 +1,5 @@
 import type { Activity } from 'react-activity-calendar'
-import { formatYYYYMMDD } from '../../../../libs/global/utils/time-format'
+import { formatYYYYMMDD } from '../../../../libs/global/helpers/time-format'
 
 export interface ActivitiesProperties {
 	importance: number

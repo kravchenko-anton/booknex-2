@@ -3,14 +3,13 @@ import {
 	createBookValidationSchema,
 	type CreateBookValidationSchemaType
 } from '@/features/books/create/validation'
-import { bookService } from '@/services/book/book-service'
-import { parserService } from '@/services/parser/parser-services'
+import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
-import type { BookPayload } from 'global/services-types/book-types'
+import type { CreateBookDto } from 'global/api-client'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
@@ -30,13 +29,13 @@ export const useCreateForm = () => {
 
 	const { mutateAsync: create } = useMutation({
 		mutationKey: ['upload-book'],
-		mutationFn: (payload: BookPayload) => bookService.create(payload),
+		mutationFn: (payload: CreateBookDto) => api.book.create(payload),
 		onError: () => errorToast('Error while uploading book')
 	})
 
 	const { mutateAsync: deleteTemplate } = useMutation({
 		mutationKey: ['delete-template'],
-		mutationFn: (id: number) => parserService.delete(id),
+		mutationFn: (id: number) => api.parser.remove(id),
 		onError: () => errorToast('Error while uploading book')
 	})
 

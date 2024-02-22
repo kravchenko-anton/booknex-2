@@ -3,19 +3,17 @@ import { Role } from '@prisma/client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { GlobalErrorsEnum } from 'backend/src/utils/errors'
-import { getAuthUrl, serverURL } from 'global/api-config'
-import type {
-	AuthFieldsType,
-	AuthResponseType
-} from 'global/services-types/auth-types'
+import type { AuthDto, AuthResponseDto } from 'global/api-client'
+import { serverURL } from 'global/api-config'
+
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 
-export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
+export const mailLogin = createAsyncThunk<AuthResponseDto, AuthDto>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const loginResponse = await axios
-				.post<AuthResponseType>(serverURL + getAuthUrl('/mail-login'), {
+				.post<AuthResponseDto>(serverURL + 'auth/mail-login', {
 					email,
 					password
 				})
@@ -37,14 +35,14 @@ export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 )
 
 export const googleLogin = createAsyncThunk<
-	AuthResponseType,
+	AuthResponseDto,
 	{
 		socialId: string
 	}
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
 		const loginResponse = await axios
-			.post<AuthResponseType>(serverURL + getAuthUrl('/google-sign'), {
+			.post<AuthResponseDto>(serverURL + 'auth/google-sign', {
 				socialId
 			})
 			.then(response => response.data)

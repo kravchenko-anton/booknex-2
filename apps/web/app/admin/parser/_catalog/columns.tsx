@@ -8,7 +8,7 @@ import {
 import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import { getFileUrl } from 'global/api-config'
-import { nFormatter } from 'global/utils/number-formater'
+import { nFormatter } from 'global/helpers/number-formater'
 import { MoreHorizontal } from 'icons'
 import * as React from 'react'
 import { useState } from 'react'

@@ -8,7 +8,7 @@ import { serverError } from '../utils/call-error'
 import { GlobalErrorsEnum } from '../utils/errors'
 import { PrismaService } from '../utils/prisma.service'
 import { idSelect } from '../utils/return.default.object'
-import type { UserUpdateSelectedGenresDto } from './dto'
+import type { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
 import { returnUserObject } from './return.user.object'
 
 @Injectable()
@@ -74,7 +74,6 @@ export class UserService {
 			.selectedGenres()
 	}
 	async updateRecommendations(id: number, dto: UserUpdateSelectedGenresDto) {
-		console.log(id)
 		await this.getUserById(id)
 		console.log(dto.selectedGenres)
 		const selectedGenres = await this.prisma.genre.findMany({
@@ -183,7 +182,7 @@ export class UserService {
 		}
 	}
 
-	async delete(id: number) {
+	async remove(id: number) {
 		const user = await this.getUserById(id)
 		await this.prisma.user.delete({
 			where: { id: user.id }

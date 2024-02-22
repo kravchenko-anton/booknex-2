@@ -1,34 +1,48 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsString } from 'class-validator'
-import type {
-	FileUploadPayload,
-	ReplacementPayload
-} from '../../../../../libs/global/services-types/storage-types'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
 
-export class FilenameDto implements FileUploadPayload {
-	@ApiProperty({
-		example: 'file.jpg',
-		description: 'Filename to upload',
-		required: true
-	})
-	@IsString()
-	filename: string
-}
+export const FilenameZ = extendApi(
+	z.object({
+		filename: z.string().min(1).max(255)
+	}),
+	{
+		filename: {
+			description: 'Filename',
+			example: 'file.jpg'
+		}
+	}
+)
 
-export class ReplacementDto implements ReplacementPayload {
-	@ApiProperty({
-		example: 'file.jpg',
-		description: 'Filename to delete',
-		required: true
-	})
-	@IsString()
-	deleteFilename: string
+export const ReplacementZ = extendApi(
+	z.object({
+		deleteFilename: z.string().min(1).max(255),
+		folder: z.enum(['ebooks', 'booksCovers'])
+	}),
+	{
+		deleteFilename: {
+			description: 'Filename to delete',
+			example: 'file.jpg'
+		},
+		folder: {
+			description: 'Folder to upload',
+			example: 'ebooks' || 'books-covers'
+		}
+	}
+)
 
-	@ApiProperty({
-		example: 'ebooks' || 'books-covers',
-		description: 'Folder to upload',
-		required: true
-	})
-	@IsString()
-	folder: 'ebooks' | 'booksCovers'
-}
+export const UploadOutputZ = extendApi(
+	z.object({
+		name: z.string().min(1).max(255)
+	}),
+	{
+		name: {
+			description: 'Filename',
+			example: 'file.jpg'
+		}
+	}
+)
+
+export class ReplacementDto extends createZodDto(ReplacementZ) {}
+export class FilenameDto extends createZodDto(FilenameZ) {}
+export class UploadOutputDto extends createZodDto(UploadOutputZ) {}

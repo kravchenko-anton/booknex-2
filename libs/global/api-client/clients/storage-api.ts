@@ -23,6 +23,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import { FilenameDto } from '../models';
+// @ts-ignore
+import { UploadOutputDto } from '../models';
 /**
  * StorageApi - axios parameter creator
  * @export
@@ -190,7 +192,7 @@ export const StorageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async replacement(file?: File, deleteFilename?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async replacement(file?: File, deleteFilename?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadOutputDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.replacement(file, deleteFilename, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StorageApi.replacement']?.[localVarOperationServerIndex]?.url;
@@ -203,7 +205,7 @@ export const StorageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async upload(folder: UploadFolderEnum, file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async upload(folder: UploadFolderEnum, file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadOutputDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.upload(folder, file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StorageApi.upload']?.[localVarOperationServerIndex]?.url;
@@ -235,7 +237,7 @@ export const StorageApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        replacement(file?: File, deleteFilename?: string, options?: any): AxiosPromise<void> {
+        replacement(file?: File, deleteFilename?: string, options?: any): AxiosPromise<UploadOutputDto> {
             return localVarFp.replacement(file, deleteFilename, options).then((request) => request(axios, basePath));
         },
         /**
@@ -245,7 +247,7 @@ export const StorageApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        upload(folder: UploadFolderEnum, file?: File, options?: any): AxiosPromise<void> {
+        upload(folder: UploadFolderEnum, file?: File, options?: any): AxiosPromise<UploadOutputDto> {
             return localVarFp.upload(folder, file, options).then((request) => request(axios, basePath));
         },
     };
@@ -299,6 +301,6 @@ export class StorageApi extends BaseAPI {
  */
 export const UploadFolderEnum = {
     Ebooks: 'ebooks',
-    BooksCovers: 'books-covers'
+    BooksCovers: 'booksCovers'
 } as const;
 export type UploadFolderEnum = typeof UploadFolderEnum[keyof typeof UploadFolderEnum];

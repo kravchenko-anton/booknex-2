@@ -13,24 +13,21 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { Statistics } from './statistics';
 
 /**
  * 
  * @export
- * @interface ParserDto
+ * @interface DashboardResponse
  */
-export interface ParserDto {
+export interface DashboardResponse {
     /**
      * 
-     * @type {string}
-     * @memberof ParserDto
+     * @type {Statistics}
+     * @memberof DashboardResponse
      */
-    'url': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ParserDto
-     */
-    'page': number;
+    'statistics': Statistics;
 }
 

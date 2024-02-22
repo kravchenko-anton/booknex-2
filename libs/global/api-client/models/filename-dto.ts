@@ -21,7 +21,7 @@
  */
 export interface FilenameDto {
     /**
-     * Filename to upload
+     * 
      * @type {string}
      * @memberof FilenameDto
      */

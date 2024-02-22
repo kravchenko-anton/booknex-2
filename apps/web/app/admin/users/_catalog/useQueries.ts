@@ -1,5 +1,4 @@
-import api from '@/services/api/api'
-import { userServices } from '@/services/user/user-service'
+import api from '@/services'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -12,7 +11,7 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 
 	const { mutateAsync: deleteUser } = useMutation({
 		mutationKey: ['delete-user'],
-		mutationFn: (id: number) => userServices.delete(id),
+		mutationFn: (id: number) => api.user.remove(id),
 		onError(error: string) {
 			console.log('error', error)
 		},

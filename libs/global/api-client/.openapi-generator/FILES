@@ -15,11 +15,17 @@ configuration.ts
 git_push.sh
 index.ts
 models/auth-dto.ts
+models/auth-response-dto-user.ts
+models/auth-response-dto.ts
 models/create-book-dto.ts
+models/dashboard-response.ts
 models/edit-book-dto.ts
 models/filename-dto.ts
 models/index.ts
 models/parser-dto.ts
+models/refresh-dto.ts
 models/review-book-dto.ts
 models/sign-dto.ts
+models/statistics.ts
+models/upload-output-dto.ts
 models/user-update-selected-genres-dto.ts

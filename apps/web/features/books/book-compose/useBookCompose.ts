@@ -1,5 +1,5 @@
 import type { EbookValidationType } from '@/features/books/ebook-validation'
-import { parserService } from '@/services/parser/parser-services'
+import api from '@/services'
 import { blobFormData } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
@@ -14,7 +14,7 @@ export const useBookCompose = (defaultBooks?: EBookType) => {
 
 	const { mutateAsync: unfold } = useMutation({
 		mutationKey: ['unfold'],
-		mutationFn: (formData: FormData) => parserService.unfold(formData),
+		mutationFn: (formData: FormData) => api.parser.unfold(formData),
 		onSuccess: () => successToast('File uploaded'),
 		onError: () => errorToast('Error while uploading book')
 	})

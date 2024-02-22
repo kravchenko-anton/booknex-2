@@ -16,15 +16,10 @@ import {
 	ApiBearerAuth,
 	ApiBody,
 	ApiConsumes,
-	ApiParam,
 	ApiQuery,
 	ApiTags
 } from '@nestjs/swagger'
-import type {
-	AllGoodReadBookOutput,
-	ByIdOutput,
-	UnfoldOutput
-} from '../../../../libs/global/services-types/parser-types'
+
 import { Auth } from '../decorator/auth.decorator'
 import { ParserDto } from './dto/parser.dto'
 import { ParserService } from './parser.service'
@@ -42,13 +37,12 @@ export class ParserController {
 	async all(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
-	): Promise<AllGoodReadBookOutput> {
+	) {
 		return this.parserService.all(searchTerm, page || 1)
 	}
 
 	@Get('admin/by-id/:id')
-	@ApiParam({ name: 'id', required: false, example: 1 })
-	byId(@Param('id') id: string): Promise<ByIdOutput | null> {
+	byId(@Param('id') id: number) {
 		return this.parserService.byId(+id)
 	}
 
@@ -83,13 +77,12 @@ export class ParserController {
 			})
 		)
 		file: Express.Multer.File
-	): Promise<UnfoldOutput> {
+	) {
 		return this.parserService.unfold(file)
 	}
 
-	@Delete('admin/delete/:id')
-	@ApiParam({ name: 'id', required: false, example: 1 })
-	async delete(@Param('id') id: string) {
-		return this.parserService.delete(+id)
+	@Delete('admin/remove/:id')
+	async remove(@Param('id') id: number) {
+		return this.parserService.remove(+id)
 	}
 }

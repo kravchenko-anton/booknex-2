@@ -1,9 +1,6 @@
 import axios from 'axios'
-import { getAuthUrl, serverURL } from 'global/api-config'
-import type {
-	AuthResponseType,
-	TokensType
-} from 'global/services-types/auth-types'
+import type { AuthResponseDto } from 'global/api-client'
+import { serverURL } from 'global/api-config'
 import Cookies from 'js-cookie'
 
 export const getAccessToken = () => {
@@ -25,7 +22,10 @@ export const getTokensStorage = () => {
 	return { accessToken, refreshToken }
 }
 
-export const saveTokensStorage = (data: TokensType) => {
+export const saveTokensStorage = (data: {
+	accessToken: string
+	refreshToken: string
+}) => {
 	console.log('saveTokensStorage', data)
 	Cookies.set('accessToken', data.accessToken)
 	Cookies.set('refreshToken', data.refreshToken)
@@ -44,8 +44,8 @@ export const getNewTokens = async () => {
 	const response = await axios
 		.post<
 			string,
-			{ data: AuthResponseType }
-		>(serverURL + getAuthUrl('/refresh'), { refreshToken })
+			{ data: AuthResponseDto }
+		>(serverURL + 'auth/refresh', { refreshToken })
 		.then(result => result.data)
 	console.log(
 		'response',

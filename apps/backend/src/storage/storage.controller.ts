@@ -13,31 +13,31 @@ import {
 	ApiBearerAuth,
 	ApiBody,
 	ApiConsumes,
+	ApiOkResponse,
 	ApiParam,
 	ApiTags
 } from '@nestjs/swagger'
-import type { UploadOutput } from '../../../../libs/global/services-types/storage-types'
 import { RoleType } from '../auth/auth.service'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
-import { FilenameDto, ReplacementDto } from './dto/upload.dto'
+import { FilenameDto, ReplacementDto, UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
-import { StorageFolderEnum, StorageFolderType } from './storage.types'
+import { StorageFolderType } from './storage.types'
 
 @ApiTags('storage')
 @ApiBearerAuth()
 @Controller('storage')
+@Auth()
 export class StorageController {
 	constructor(private readonly uploadService: StorageService) {}
 
-	@Auth()
 	@Post('/delete')
 	@ApiBody({ type: FilenameDto })
+	@ApiOkResponse({ description: 'File deleted', type: null })
 	async delete(@Body() dto: FilenameDto) {
 		return this.uploadService.delete(dto.filename)
 	}
 
-	@Auth()
 	@Post('/replacement')
 	@ApiConsumes('multipart/form-data')
 	@ApiBody({
@@ -55,6 +55,7 @@ export class StorageController {
 		}
 	})
 	@UseInterceptors(FileInterceptor('file'))
+	@ApiOkResponse({ description: 'File uploaded', type: UploadOutputDto })
 	async replacement(
 		@UploadedFile(
 			new ParseFilePipe({
@@ -68,21 +69,33 @@ export class StorageController {
 		file: Express.Multer.File,
 		@CurrentUser('role') role: RoleType,
 		@Body() dto: ReplacementDto
-	) {
-		await this.uploadService.delete(dto.deleteFilename)
+	): Promise<UploadOutputDto> {
+		try {
+			await this.uploadService.delete(dto.deleteFilename)
 
-		return this.uploadService.upload({
-			file: file.buffer,
-			filename: file.originalname,
-			folder: dto.folder,
-			role
-		})
+			return await this.uploadService.upload({
+				file: file.buffer,
+				filename: file.originalname,
+				folder: dto.folder,
+				role
+			})
+		} catch {
+			return this.uploadService.upload({
+				file: file.buffer,
+				filename: file.originalname,
+				folder: dto.folder,
+				role
+			})
+		}
 	}
 
 	@Post('/:folder')
-	@Auth()
 	@UseInterceptors(FileInterceptor('file'))
 	@ApiConsumes('multipart/form-data')
+	@ApiParam({
+		name: 'folder',
+		enum: ['ebooks', 'booksCovers']
+	})
 	@ApiBody({
 		schema: {
 			type: 'object',
@@ -94,7 +107,7 @@ export class StorageController {
 			}
 		}
 	})
-	@ApiParam({ name: 'folder', enum: StorageFolderEnum })
+	@ApiOkResponse({ description: 'File uploaded', type: UploadOutputDto })
 	async upload(
 		@UploadedFile(
 			new ParseFilePipe({
@@ -108,7 +121,7 @@ export class StorageController {
 		file: Express.Multer.File,
 		@Param('folder') folder: StorageFolderType,
 		@CurrentUser('role') role: RoleType
-	): Promise<UploadOutput> {
+	): Promise<UploadOutputDto> {
 		return this.uploadService.upload({
 			file: file.buffer,
 			filename: file.originalname,

@@ -4,7 +4,7 @@ import type { Role } from '@prisma/client'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { ActivitiesOutput } from 'backend/src/utils/activity-transformer'
 import { getFileUrl } from 'global/api-config'
-import { timeAgo } from 'global/utils/time-format'
+import { timeAgo } from 'global/helpers/time-format'
 
 type ColumnType = ColumnDef<{
 	id: number

@@ -1,4 +1,4 @@
-import type { UserUpdateSelectedGenresDto } from 'backend/src/user/dto'
+import type { UserUpdateSelectedGenresDto } from 'backend/src/user/update-selected-genres.dto'
 import { getUsersUrl } from 'global/api-config'
 import type {
 	UserLibraryOutput,

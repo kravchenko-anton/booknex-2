@@ -8,7 +8,11 @@ export class ActivityService {
 
 	create(createActivityDto: CreateActivityDto) {
 		return this.prisma.activity.create({
-			data: createActivityDto
+			data: {
+				type: createActivityDto.type,
+				importance: createActivityDto.importance,
+				...createActivityDto
+			}
 		})
 	}
 }

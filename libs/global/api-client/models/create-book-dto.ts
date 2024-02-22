@@ -21,52 +21,52 @@
  */
 export interface CreateBookDto {
     /**
-     * Title of the book
+     * 
      * @type {string}
      * @memberof CreateBookDto
      */
     'title': string;
     /**
-     * Author of the book
+     * 
      * @type {string}
      * @memberof CreateBookDto
      */
     'author': string;
     /**
-     * Description of the book
+     * 
      * @type {string}
      * @memberof CreateBookDto
      */
     'description': string;
     /**
-     * Uploaded picture
+     * 
      * @type {string}
      * @memberof CreateBookDto
      */
     'picture': string;
     /**
-     * Uploaded ebook
+     * 
      * @type {string}
      * @memberof CreateBookDto
      */
     'ebook': string;
     /**
-     * Number of pages in the book
+     * 
      * @type {number}
      * @memberof CreateBookDto
      */
     'pages': number;
     /**
-     * Number of goodRead reviews
+     * 
      * @type {number}
      * @memberof CreateBookDto
      */
     'popularity': number;
     /**
-     * Array of genres
-     * @type {Array<string>}
+     * 
+     * @type {Array<number>}
      * @memberof CreateBookDto
      */
-    'genres': Array<string>;
+    'genres': Array<number>;
 }
 

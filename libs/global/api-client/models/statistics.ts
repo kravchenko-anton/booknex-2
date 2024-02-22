@@ -17,20 +17,26 @@
 /**
  * 
  * @export
- * @interface ParserDto
+ * @interface Statistics
  */
-export interface ParserDto {
+export interface Statistics {
     /**
-     * 
-     * @type {string}
-     * @memberof ParserDto
-     */
-    'url': string;
-    /**
-     * 
+     * Users count
      * @type {number}
-     * @memberof ParserDto
+     * @memberof Statistics
      */
-    'page': number;
+    'users': number;
+    /**
+     * Books count
+     * @type {number}
+     * @memberof Statistics
+     */
+    'books': number;
+    /**
+     * Authors count
+     * @type {number}
+     * @memberof Statistics
+     */
+    'authors': number;
 }
 

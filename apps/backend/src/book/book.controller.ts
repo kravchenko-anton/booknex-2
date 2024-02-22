@@ -8,20 +8,7 @@ import {
 	Put,
 	Query
 } from '@nestjs/common'
-import {
-	ApiBearerAuth,
-	ApiBody,
-	ApiOkResponse,
-	ApiParam,
-	ApiQuery,
-	ApiTags
-} from '@nestjs/swagger'
-import type {
-	AllBooksOutput,
-	BookByIdOutput,
-	EpubOutputType
-} from '../../../../libs/global/services-types/book-types'
-import { InfoByIdAdmin } from '../../../../libs/global/services-types/book-types'
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../decorator/auth.decorator'
 import { CurrentUser } from '../decorator/user.decorator'
 import { BookService } from './book.service'
@@ -35,9 +22,10 @@ export class BookController {
 	constructor(private readonly bookService: BookService) {}
 	@Post('/review/:id')
 	@Auth()
+	@ApiBody({ type: ReviewBookDto, required: true, description: 'Review book' })
 	async review(
 		@CurrentUser('id') userId: number,
-		@Param('id') bookId: string,
+		@Param('id') bookId: number,
 		@Body() dto: ReviewBookDto
 	) {
 		return this.bookService.review(+userId, +bookId, dto)
@@ -46,42 +34,34 @@ export class BookController {
 	@Auth()
 	@Get('/by-id/:id')
 	async infoById(
-		@Param('id') bookId: string,
+		@Param('id') bookId: number,
 		@CurrentUser('id') userId: string
-	): Promise<BookByIdOutput> {
+	) {
 		return this.bookService.infoById(+bookId, +userId)
 	}
 
 	@Auth()
 	@Get('/ebook/:id')
 	async ebookById(
-		@Param('id') bookId: string,
+		@Param('id') bookId: number,
 		@CurrentUser('id') userId: string
-	): Promise<EpubOutputType> {
+	) {
 		return this.bookService.ebookById(+bookId, +userId)
 	}
 
 	//  admin
-	// add under tag admin or just separate controller
 	@Auth('admin')
 	@Get('admin/by-id/:id')
-	@ApiParam({ name: 'id', required: false, example: 1 })
-	@ApiOkResponse({
-		description: 'The user records',
-		type: InfoByIdAdmin
-	})
-	async infoByIdAdmin(@Param('id') id: string): Promise<InfoByIdAdmin> {
+	async infoByIdAdmin(@Param('id') id: number) {
 		return this.bookService.infoByIdAdmin(+id)
 	}
 
 	@Auth('admin')
 	@Get('/admin/all')
-	@ApiQuery({ name: 'searchTerm', required: false, example: 'The Hobbit' })
-	@ApiQuery({ name: 'page', required: false, example: 1 })
 	async all(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
-	): Promise<AllBooksOutput> {
+	) {
 		return this.bookService.all(searchTerm, page || 1)
 	}
 
@@ -94,15 +74,13 @@ export class BookController {
 
 	@Auth('admin')
 	@Put('admin/update/:id')
-	@ApiParam({ name: 'id', required: false, example: 1 })
-	async update(@Param('id') bookId: string, @Body() dto: EditBookDto) {
+	async update(@Param('id') bookId: number, @Body() dto: EditBookDto) {
 		return this.bookService.update(+bookId, dto)
 	}
 
 	@Auth('admin')
 	@Delete('admin/delete/:id')
-	@ApiParam({ name: 'id', required: false, example: 1 })
-	async delete(@Param('id') bookId: string) {
+	async delete(@Param('id') bookId: number) {
 		return this.bookService.delete(+bookId)
 	}
 }

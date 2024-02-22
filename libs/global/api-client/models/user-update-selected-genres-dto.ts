@@ -21,10 +21,10 @@
  */
 export interface UserUpdateSelectedGenresDto {
     /**
-     * Array of selected genres
-     * @type {Array<string>}
+     * 
+     * @type {Array<number>}
      * @memberof UserUpdateSelectedGenresDto
      */
-    'selectedGenres': Array<string>;
+    'selectedGenres': Array<number>;
 }
 

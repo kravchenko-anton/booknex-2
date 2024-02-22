@@ -62,11 +62,11 @@ export const GenreApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {string} id 
+         * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        byId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        byId: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('byId', 'id', id)
             const localVarPath = `/api/genre/by-id/{id}`
@@ -120,11 +120,11 @@ export const GenreApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} id 
+         * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async byId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async byId(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.byId(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GenreApi.byId']?.[localVarOperationServerIndex]?.url;
@@ -150,11 +150,11 @@ export const GenreApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @param {string} id 
+         * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        byId(id: string, options?: any): AxiosPromise<void> {
+        byId(id: number, options?: any): AxiosPromise<void> {
             return localVarFp.byId(id, options).then((request) => request(axios, basePath));
         },
     };
@@ -179,12 +179,12 @@ export class GenreApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} id 
+     * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GenreApi
      */
-    public byId(id: string, options?: RawAxiosRequestConfig) {
+    public byId(id: number, options?: RawAxiosRequestConfig) {
         return GenreApiFp(this.configuration).byId(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
