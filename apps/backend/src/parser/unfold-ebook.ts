@@ -2,8 +2,8 @@ import prettify from '@liquify/prettify'
 import { HttpStatus } from '@nestjs/common'
 import EPub from 'epub2'
 import { JSDOM } from 'jsdom'
-import { serverError } from '../utils/call-error'
-import { AdminErrors, GlobalErrorsEnum } from '../utils/errors'
+import { AdminErrors, GlobalErrorsEnum } from '../utils/common/errors'
+import { serverError } from '../utils/helpers/call-error'
 
 export interface ChapterType {
 	id: number

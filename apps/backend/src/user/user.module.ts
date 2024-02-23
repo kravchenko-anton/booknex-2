@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { ActivityService } from '../activity/activity.service'
-import { PrismaService } from '../utils/prisma.service'
+import { ActivityService } from '../utils/services/activity/activity.service'
+import { PrismaService } from '../utils/services/prisma.service'
 import { UserController } from './user.controller'
 import { UserService } from './user.service'
 

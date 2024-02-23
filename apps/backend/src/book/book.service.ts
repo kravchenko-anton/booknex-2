@@ -1,13 +1,13 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
-import { ActivityService } from '../activity/activity.service'
 import { ReturnGenreObject } from '../genre/return.genre.object'
-import { transformActivity } from '../utils/activity-transformer'
-import { serverError } from '../utils/call-error'
-import { AdminErrors, GlobalErrorsEnum } from '../utils/errors'
-import { PrismaService } from '../utils/prisma.service'
-import { defaultReturnObject } from '../utils/return.default.object'
+import { AdminErrors, GlobalErrorsEnum } from '../utils/common/errors'
+import { defaultReturnObject } from '../utils/common/return.default.object'
+import { transformActivity } from '../utils/helpers/activity-transformer'
+import { serverError } from '../utils/helpers/call-error'
+import { ActivityService } from '../utils/services/activity/activity.service'
+import { PrismaService } from '../utils/services/prisma.service'
 import type { CreateBookDto } from './dto/manipulation.book.dto'
 import { EditBookDto } from './dto/manipulation.book.dto'
 import type { ReviewBookDto } from './dto/review.book.dto'
@@ -69,7 +69,6 @@ export class BookService {
 		const author = await this.prisma.book.findUnique({
 			where: { id },
 			select: {
-				//TODO: сделать тут через include
 				...returnBookObject,
 				createdAt: true,
 				updatedAt: true,
@@ -305,9 +304,6 @@ export class BookService {
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
-		const genreIds = book?.genres.map(g => g.id) || []
-
-		const similarBooks = await this.getSimilarBooks(genreIds, id)
 
 		await this.activityService.create({
 			type: Activities.visitBook,
@@ -316,30 +312,7 @@ export class BookService {
 			bookId: id
 		})
 
-		return {
-			...book,
-			similarBooks
-		}
-	}
-	async getSimilarBooks(genresIds: number[], id: number) {
-		const similarBooks = await this.findMany({
-			where: {
-				id: { not: +id },
-				genres: { some: { id: { in: genresIds } } }
-			},
-			select: {
-				genres: { select: ReturnGenreObject }
-			}
-		})
-
-		return similarBooks
-			.sort(
-				(a, b) =>
-					b.genres.filter(g => genresIds?.includes(g.id)).length -
-					a.genres.filter(g => genresIds?.includes(g.id)).length
-			)
-			.slice(0, 10)
-			.map(({ genres, ...rest }) => ({ ...rest }))
+		return book
 	}
 
 	async getMajorGenres(genres: number[]) {

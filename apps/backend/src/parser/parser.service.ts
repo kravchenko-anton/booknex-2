@@ -2,10 +2,10 @@
 /* eslint @typescript-eslint/no-loop-func: 0 */
 
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { serverError } from '../utils/call-error'
-import { AdminErrors } from '../utils/errors'
-import { PrismaService } from '../utils/prisma.service'
-import { defaultReturnObject } from '../utils/return.default.object'
+import { AdminErrors } from '../utils/common/errors'
+import { defaultReturnObject } from '../utils/common/return.default.object'
+import { serverError } from '../utils/helpers/call-error'
+import { PrismaService } from '../utils/services/prisma.service'
 import type { ParserDto } from './dto/parser.dto'
 import { parseBookTable, parseCurrentBook, useParser } from './parse-ebook'
 import { getEbook } from './unfold-ebook'

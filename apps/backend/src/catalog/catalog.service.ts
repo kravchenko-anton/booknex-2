@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
-import { ActivityService } from '../activity/activity.service'
 import { BookService } from '../book/book.service'
 import { returnBookObject } from '../book/return.book.object'
 import { GenreService } from '../genre/genre.service'
-import { PrismaService } from '../utils/prisma.service'
+import { ActivityService } from '../utils/services/activity/activity.service'
+import { PrismaService } from '../utils/services/prisma.service'
 
 @Injectable()
 export class CatalogService {

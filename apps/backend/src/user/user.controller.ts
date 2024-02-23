@@ -9,9 +9,9 @@ import {
 	Query
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 
-import { Auth } from '../decorator/auth.decorator'
-import { CurrentUser } from '../decorator/user.decorator'
 import { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
 import { UserService } from './user.service'
 

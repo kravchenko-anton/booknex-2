@@ -3,5 +3,7 @@ export const defaultReturnObject = {
 }
 
 export const idSelect = {
-	select: { id: true }
+	select: {
+		id: true
+	}
 }

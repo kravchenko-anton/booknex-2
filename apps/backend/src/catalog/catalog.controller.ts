@@ -1,8 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-
-import { Auth } from '../decorator/auth.decorator'
-import { CurrentUser } from '../decorator/user.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 
 import { CatalogService } from './catalog.service'
 

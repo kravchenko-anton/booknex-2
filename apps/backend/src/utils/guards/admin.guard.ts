@@ -5,8 +5,8 @@ import {
 	type ExecutionContext
 } from '@nestjs/common'
 import { Role, type User } from '@prisma/client'
-import { serverError } from '../utils/call-error'
-import { AdminErrors } from '../utils/errors'
+import { AdminErrors } from '../common/errors'
+import { serverError } from '../helpers/call-error'
 
 @Injectable()
 export class AdminGuard implements CanActivate {

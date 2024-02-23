@@ -3,8 +3,6 @@ import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { LoggerModule } from 'nestjs-pino'
-import { ActivityModule } from './activity/activity.module'
-import { AdminModule } from './admin/admin.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
@@ -14,6 +12,7 @@ import { GenreModule } from './genre/genre.module'
 import { ParserModule } from './parser/parser.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
+import { ActivityModule } from './utils/services/activity/activity.module'
 
 @Module({
 	imports: [
@@ -24,7 +23,6 @@ import { UserModule } from './user/user.module'
 		AuthModule,
 		StorageModule,
 		ParserModule,
-		AdminModule,
 		ActivityModule,
 		LoggerModule.forRoot({
 			pinoHttp: {

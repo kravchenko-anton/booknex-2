@@ -19,8 +19,8 @@ import {
 	ApiQuery,
 	ApiTags
 } from '@nestjs/swagger'
+import { Auth } from '../auth/decorators/auth.decorator'
 
-import { Auth } from '../decorator/auth.decorator'
 import { ParserDto } from './dto/parser.dto'
 import { ParserService } from './parser.service'
 

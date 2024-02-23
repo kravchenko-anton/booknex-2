@@ -18,8 +18,8 @@ import {
 	ApiTags
 } from '@nestjs/swagger'
 import { RoleType } from '../auth/auth.service'
-import { Auth } from '../decorator/auth.decorator'
-import { CurrentUser } from '../decorator/user.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 import { FilenameDto, ReplacementDto, UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
 import { StorageFolderType } from './storage.types'

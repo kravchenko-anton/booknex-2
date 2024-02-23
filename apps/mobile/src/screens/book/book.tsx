@@ -1,7 +1,6 @@
 import { useBook } from '@/screens/book/useBook'
 import {
 	AnimatedIcon,
-	BookCard,
 	Button,
 	Description,
 	Flatlist,
@@ -111,21 +110,21 @@ const Book: FC = () => {
 				{book.description}
 			</Description>
 
-			<Flatlist
-				horizontal
-				data={book.similarBooks}
-				px={8}
-				title='Similar books'
-				renderItem={({ item: similarBook }) => (
-					<BookCard
-						size='md'
-						image={{ uri: similarBook.picture }}
-						onPress={() => {
-							navigate('Book', { id: similarBook.id })
-						}}
-					/>
-				)}
-			/>
+			{/* <Flatlist */}
+			{/* 	horizontal */}
+			{/* 	data={book.similarBooks} */}
+			{/* 	px={8} */}
+			{/* 	title='Similar books' */}
+			{/* 	renderItem={({ item: similarBook }) => ( */}
+			{/* 		<BookCard */}
+			{/* 			size='md' */}
+			{/* 			image={{ uri: similarBook.picture }} */}
+			{/* 			onPress={() => { */}
+			{/* 				navigate('Book', { id: similarBook.id }) */}
+			{/* 			}} */}
+			{/* 		/> */}
+			{/* 	)} */}
+			{/* /> */}
 		</ScrollLayout>
 	)
 }
