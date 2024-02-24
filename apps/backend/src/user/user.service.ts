@@ -4,11 +4,10 @@ import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { GlobalErrorsEnum } from '../utils/common/errors'
 import { idSelect } from '../utils/common/return.default.object'
-import { transformActivity } from '../utils/helpers/activity-transformer'
 import { serverError } from '../utils/helpers/call-error'
+import { transformActivity } from '../utils/services/activity/activity-transformer'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
-import type { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
 import { returnUserObject } from './return.user.object'
 
 @Injectable()
@@ -56,53 +55,6 @@ export class UserService {
 		}
 	}
 
-	recommendationGenres(userId: number) {
-		return this.prisma.user
-			.findUnique({
-				where: {
-					id: userId
-				},
-				select: {
-					selectedGenres: {
-						select: {
-							id: true,
-							name: true
-						}
-					}
-				}
-			})
-			.selectedGenres()
-	}
-	async updateRecommendations(id: number, dto: UserUpdateSelectedGenresDto) {
-		await this.getUserById(id)
-		console.log(dto.selectedGenres)
-		const selectedGenres = await this.prisma.genre.findMany({
-			where: {
-				id: {
-					in: dto.selectedGenres
-				}
-			},
-			select: {
-				id: true
-			}
-		})
-
-		await this.activityService.create({
-			type: Activities.updateRecommendations,
-			importance: 5,
-			userId: id
-		})
-
-		await this.prisma.user.update({
-			where: { id },
-			data: {
-				selectedGenres: {
-					set: selectedGenres
-				}
-			}
-		})
-	}
-
 	async profile(id: number) {
 		const user = await this.getUserById(id, {
 			...returnUserObject
@@ -124,7 +76,7 @@ export class UserService {
 		}
 	}
 
-	async all(searchTerm: string, page: number) {
+	async adminCatalog(searchTerm: string, page: number) {
 		const perPage = 20
 		const data = await this.prisma.user.findMany({
 			take: perPage,

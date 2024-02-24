@@ -22,7 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { UserUpdateSelectedGenresDto } from '../models';
+import { UserAdminCatalog } from '../models';
+// @ts-ignore
+import { UserLibrary } from '../models';
+// @ts-ignore
+import { UserProfile } from '../models';
 /**
  * UserApi - axios parameter creator
  * @export
@@ -36,12 +40,12 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        all: async (searchTerm: string, page: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminCatalog: async (searchTerm: string, page: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchTerm' is not null or undefined
-            assertParamExists('all', 'searchTerm', searchTerm)
+            assertParamExists('adminCatalog', 'searchTerm', searchTerm)
             // verify required parameter 'page' is not null or undefined
-            assertParamExists('all', 'page', page)
-            const localVarPath = `/api/user/admin/all`;
+            assertParamExists('adminCatalog', 'page', page)
+            const localVarPath = `/api/user/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -218,39 +222,6 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        recommendationsGenres: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user/recommendation-genres`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -360,45 +331,6 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {UserUpdateSelectedGenresDto} userUpdateSelectedGenresDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateRecommendations: async (userUpdateSelectedGenresDto: UserUpdateSelectedGenresDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userUpdateSelectedGenresDto' is not null or undefined
-            assertParamExists('updateRecommendations', 'userUpdateSelectedGenresDto', userUpdateSelectedGenresDto)
-            const localVarPath = `/api/user/update-recommendations`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userUpdateSelectedGenresDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -416,10 +348,10 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async all(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.all(searchTerm, page, options);
+        async adminCatalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserAdminCatalog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCatalog(searchTerm, page, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserApi.all']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.adminCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -440,7 +372,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async isSaved(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async isSaved(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.isSaved(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.isSaved']?.[localVarOperationServerIndex]?.url;
@@ -451,7 +383,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async library(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async library(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserLibrary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.library(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.library']?.[localVarOperationServerIndex]?.url;
@@ -462,21 +394,10 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async profile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async profile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserProfile>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.profile(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.profile']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async recommendationsGenres(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.recommendationsGenres(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserApi.recommendationsGenres']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -515,18 +436,6 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['UserApi.toggleSave']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @param {UserUpdateSelectedGenresDto} userUpdateSelectedGenresDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateRecommendations(userUpdateSelectedGenresDto: UserUpdateSelectedGenresDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRecommendations(userUpdateSelectedGenresDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserApi.updateRecommendations']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -544,8 +453,8 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        all(searchTerm: string, page: number, options?: any): AxiosPromise<void> {
-            return localVarFp.all(searchTerm, page, options).then((request) => request(axios, basePath));
+        adminCatalog(searchTerm: string, page: number, options?: any): AxiosPromise<UserAdminCatalog> {
+            return localVarFp.adminCatalog(searchTerm, page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -562,7 +471,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        isSaved(id: number, options?: any): AxiosPromise<void> {
+        isSaved(id: number, options?: any): AxiosPromise<boolean> {
             return localVarFp.isSaved(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -570,7 +479,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        library(options?: any): AxiosPromise<void> {
+        library(options?: any): AxiosPromise<UserLibrary> {
             return localVarFp.library(options).then((request) => request(axios, basePath));
         },
         /**
@@ -578,16 +487,8 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        profile(options?: any): AxiosPromise<void> {
+        profile(options?: any): AxiosPromise<UserProfile> {
             return localVarFp.profile(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        recommendationsGenres(options?: any): AxiosPromise<void> {
-            return localVarFp.recommendationsGenres(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -616,15 +517,6 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         toggleSave(id: number, options?: any): AxiosPromise<void> {
             return localVarFp.toggleSave(id, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @param {UserUpdateSelectedGenresDto} userUpdateSelectedGenresDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateRecommendations(userUpdateSelectedGenresDto: UserUpdateSelectedGenresDto, options?: any): AxiosPromise<void> {
-            return localVarFp.updateRecommendations(userUpdateSelectedGenresDto, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -643,8 +535,8 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public all(searchTerm: string, page: number, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).all(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
+    public adminCatalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).adminCatalog(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -691,16 +583,6 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public recommendationsGenres(options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).recommendationsGenres(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -730,17 +612,6 @@ export class UserApi extends BaseAPI {
      */
     public toggleSave(id: number, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).toggleSave(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {UserUpdateSelectedGenresDto} userUpdateSelectedGenresDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApi
-     */
-    public updateRecommendations(userUpdateSelectedGenresDto: UserUpdateSelectedGenresDto, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).updateRecommendations(userUpdateSelectedGenresDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

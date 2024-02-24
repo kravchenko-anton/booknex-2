@@ -29,6 +29,8 @@ async function bootstrap() {
 			.addTag('catalog', 'catalog service')
 			.addTag('genre', 'genre service')
 			.addTag('storage', 'storage service')
+			.addTag('review', 'review service')
+			.addTag('recommendation', 'recommendation service')
 			.addTag('parser', 'parser service')
 			.addBearerAuth(),
 		{

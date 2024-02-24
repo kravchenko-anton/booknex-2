@@ -5,29 +5,15 @@ generator json {
   provider = "prisma-json-types-generator"
 }
 
-generator erd {
-  provider = "prisma-erd-generator"
-}
 
-generator nestjsDto {
-  provider                        = "prisma-generator-nestjs-dto"
-  output                          = "../src/utils/generated/nestjs-dto"
-  outputToNestJsResourceStructure = "false"
-  exportRelationModifierClasses   = "true"
-  reExport                        = "false"
-  createDtoPrefix                 = "Create"
-  updateDtoPrefix                 = "Update"
-  dtoSuffix                       = "Dto"
-  entityPrefix                    = ""
-  entitySuffix                    = ""
-  fileNamingStyle                 = "camel"
-}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Genre {
+
   id                 Int            @id @default(autoincrement())
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt

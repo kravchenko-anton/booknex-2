@@ -12,10 +12,11 @@
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"strictPropertyInitialization": false,
+		"strict": true,
 		"strictNullChecks": false,
 		"downlevelIteration": true,
 		"experimentalDecorators": true
 	},
-	"exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+	"exclude": ["jest.config.ts","src/**/*.spec.ts", "src/**/*.test.ts"],
 	"include": ["src/**/*.ts"]
 }

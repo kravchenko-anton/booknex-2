@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
 import { BookService } from '../book/book.service'
-import { returnBookObject } from '../book/return.book.object'
 import { GenreService } from '../genre/genre.service'
+import { RecommendationService } from '../recommendation/recommendation.service'
 import { ActivityService } from '../utils/services/activity/activity.service'
-import { PrismaService } from '../utils/services/prisma.service'
 
 @Injectable()
 export class CatalogService {
 	constructor(
-		private readonly prisma: PrismaService,
 		private readonly activityService: ActivityService,
 		private readonly bookService: BookService,
+		private readonly recommendationService: RecommendationService,
 		private readonly genreService: GenreService
 	) {}
 
@@ -23,7 +22,7 @@ export class CatalogService {
 		})
 		return {
 			relatedGenres: await this.relatedGenres(),
-			recommendations: await this.recommendations(userId),
+			recommendations: await this.recommendationService.recommendations(userId),
 			popularBooks: await this.popularBooks(),
 			bestSellingBooks: await this.bestSellingBooks(),
 			newReleases: await this.newReleases()
@@ -79,58 +78,6 @@ export class CatalogService {
 			take: 10,
 			orderBy: {
 				updatedAt: 'desc'
-			}
-		})
-	}
-
-	//TODO: пофиксить этот пиздец
-	private async recommendations(userId: number) {
-		const selectedGenres = await this.prisma.user
-			.findUnique({
-				where: {
-					id: userId
-				},
-				select: {
-					selectedGenres: {
-						select: {
-							name: true
-						}
-					}
-				}
-			})
-			.selectedGenres()
-			.then(result => result.map(genre => genre.name))
-		return this.bookService.findMany({
-			take: 10,
-			orderBy: { popularity: 'desc' },
-			select: returnBookObject,
-			where: {
-				genres: {
-					some: {
-						name: {
-							in: selectedGenres
-						}
-					}
-				},
-				AND: {
-					NOT: {
-						readingBy: {
-							some: {
-								id: userId
-							}
-						},
-						finishedBy: {
-							some: {
-								id: userId
-							}
-						},
-						savedBy: {
-							some: {
-								id: userId
-							}
-						}
-					}
-				}
 			}
 		})
 	}

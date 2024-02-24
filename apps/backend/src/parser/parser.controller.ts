@@ -16,12 +16,18 @@ import {
 	ApiBearerAuth,
 	ApiBody,
 	ApiConsumes,
+	ApiOkResponse,
 	ApiQuery,
 	ApiTags
 } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 
 import { ParserDto } from './dto/parser.dto'
+import {
+	BookTemplate,
+	BookTemplateCatalogOutput,
+	unfoldOutput
+} from './parser.model'
 import { ParserService } from './parser.service'
 
 @Auth('admin')
@@ -31,18 +37,20 @@ import { ParserService } from './parser.service'
 export class ParserController {
 	constructor(private readonly parserService: ParserService) {}
 
-	@Get('admin/all')
+	@Get('admin/catalog')
+	@ApiOkResponse({ type: BookTemplateCatalogOutput })
 	@ApiQuery({ name: 'searchTerm', required: false, example: 'The Hobbit' })
 	@ApiQuery({ name: 'page', required: false, example: 1 })
-	async all(
+	async adminCatalog(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
-	) {
-		return this.parserService.all(searchTerm, page || 1)
+	): Promise<BookTemplateCatalogOutput> {
+		return this.parserService.adminCatalog(searchTerm, page || 1)
 	}
 
 	@Get('admin/by-id/:id')
-	byId(@Param('id') id: number) {
+	@ApiOkResponse({ type: BookTemplate })
+	byId(@Param('id') id: number): Promise<BookTemplate> {
 		return this.parserService.byId(+id)
 	}
 
@@ -53,6 +61,11 @@ export class ParserController {
 	}
 
 	@Post('admin/unfold')
+	@ApiOkResponse({
+		type: unfoldOutput,
+		description: 'Unfolded book content',
+		isArray: true
+	})
 	@ApiConsumes('multipart/form-data')
 	@ApiBody({
 		schema: {
@@ -77,7 +90,7 @@ export class ParserController {
 			})
 		)
 		file: Express.Multer.File
-	) {
+	): Promise<unfoldOutput> {
 		return this.parserService.unfold(file)
 	}
 

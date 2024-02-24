@@ -1,0 +1,1316 @@
+openapi: 3.0.0
+paths:
+  /api/user/profile:
+    get:
+      operationId: profile
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  /api/user/library:
+    get:
+      operationId: library
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/start-reading/{id}":
+    patch:
+      operationId: toggle
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/finish-reading/{id}":
+    patch:
+      operationId: finishReading
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/toggle-save/{id}":
+    patch:
+      operationId: toggleSave
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/is-saved/{id}":
+    get:
+      operationId: isSaved
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  /api/user/admin/catalog:
+    get:
+      operationId: adminCatalog
+      parameters:
+        - name: searchTerm
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/user/admin/remove/{id}":
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - user
+      security:
+        - bearer: []
+  "/api/catalog/search/{query}":
+    get:
+      operationId: search
+      parameters:
+        - name: query
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShortBook"
+      tags:
+        - catalog
+      security:
+        - bearer: []
+  /api/catalog/featured:
+    get:
+      operationId: featured
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/featuredOutput"
+      tags:
+        - catalog
+      security:
+        - bearer: []
+  /api/genre:
+    get:
+      operationId: all
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/shortGenre"
+      tags:
+        - genre
+      security:
+        - bearer: []
+  "/api/genre/by-id/{id}":
+    get:
+      operationId: byId
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/byIdOutput"
+      tags:
+        - genre
+      security:
+        - bearer: []
+  "/api/book/by-id/{id}":
+    get:
+      operationId: infoById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InfoByIdOutput"
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/ebook/{id}":
+    get:
+      operationId: ebookById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EbookByIdOutput"
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/admin/by-id/{id}":
+    get:
+      operationId: infoByIdAdmin
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminInfoByIdOutput"
+      tags:
+        - book
+      security:
+        - bearer: []
+  /api/book/admin/catalog:
+    get:
+      operationId: adminCatalog
+      parameters:
+        - name: searchTerm
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCatalogOutput"
+      tags:
+        - book
+      security:
+        - bearer: []
+  /api/book/admin/create:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/admin/update/{id}":
+    put:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditBookDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/admin/delete/{id}":
+    delete:
+      operationId: delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  /api/auth/google-sign:
+    post:
+      operationId: googleSign
+      parameters: []
+      requestBody:
+        required: true
+        description: Sign in with google account
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignDto"
+      responses:
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponseDto"
+      tags:
+        - auth
+  /api/auth/mail-register:
+    post:
+      operationId: register
+      parameters: []
+      requestBody:
+        required: true
+        description: Register new user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthDto"
+      responses:
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponseDto"
+      tags:
+        - auth
+  /api/auth/mail-login:
+    post:
+      operationId: login
+      parameters: []
+      requestBody:
+        required: true
+        description: Login user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthDto"
+      responses:
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponseDto"
+      tags:
+        - auth
+  /api/auth/refresh:
+    post:
+      operationId: refreshToken
+      parameters: []
+      requestBody:
+        required: true
+        description: Refresh access token
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshDto"
+      responses:
+        "200":
+          description: Return access token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponseDto"
+      tags:
+        - auth
+  /api/storage/delete:
+    post:
+      operationId: delete
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilenameDto"
+      responses:
+        "200":
+          description: File deleted
+      tags:
+        - storage
+      security:
+        - bearer: []
+  /api/storage/replacement:
+    post:
+      operationId: replacement
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                deleteFilename:
+                  type: string
+      responses:
+        "200":
+          description: File uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadOutputDto"
+      tags:
+        - storage
+      security:
+        - bearer: []
+  "/api/storage/{folder}":
+    post:
+      operationId: upload
+      parameters:
+        - name: folder
+          required: true
+          in: path
+          schema:
+            enum:
+              - ebooks
+              - booksCovers
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: File uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadOutputDto"
+      tags:
+        - storage
+      security:
+        - bearer: []
+  /api/parser/admin/catalog:
+    get:
+      operationId: adminCatalog
+      parameters:
+        - name: searchTerm
+          required: false
+          in: query
+          example: The Hobbit
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          example: 1
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  "/api/parser/admin/by-id/{id}":
+    get:
+      operationId: byId
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  /api/parser/admin/parse:
+    post:
+      operationId: parse
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ParserDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  /api/parser/admin/unfold:
+    post:
+      operationId: unfold
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: epub
+      responses:
+        "201":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  "/api/parser/admin/remove/{id}":
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - parser
+      security:
+        - bearer: []
+  "/api/review/review/{id}":
+    post:
+      operationId: review
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        description: Review book
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewBookDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - review
+      security:
+        - bearer: []
+  /api/recommendation/update-recommendations:
+    post:
+      operationId: updateRecommendations
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateSelectedGenresDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - recommendation
+      security:
+        - bearer: []
+  /api/recommendation/recommendation-genres:
+    get:
+      operationId: recommendationsGenres
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - recommendation
+      security:
+        - bearer: []
+info:
+  title: Booknex
+  description: ""
+  version: "1.0"
+  contact:
+    name: Booknex
+    url: https://github.com/kravchenko-anton/booknex-2-monorepo
+    email: Github repository
+tags:
+  - name: user
+    description: user service
+  - name: auth
+    description: auth service
+  - name: admin
+    description: admin service
+  - name: book
+    description: book service
+  - name: collection
+    description: collection service
+  - name: catalog
+    description: catalog service
+  - name: genre
+    description: genre service
+  - name: storage
+    description: storage service
+  - name: review
+    description: review service
+  - name: recommendation
+    description: recommendation service
+  - name: parser
+    description: parser service
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    ShortBook:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        picture:
+          type: string
+        author:
+          type: string
+      required:
+        - id
+        - title
+        - picture
+        - author
+    featuredOutput:
+      type: object
+      properties:
+        relatedGenres:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              name:
+                type: string
+                required: true
+            required:
+              - id
+              - name
+        recommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              title:
+                type: string
+                required: true
+              picture:
+                type: string
+                required: true
+              author:
+                type: string
+                required: true
+            required:
+              - id
+              - title
+              - picture
+              - author
+        popularBooks:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              title:
+                type: string
+                required: true
+              picture:
+                type: string
+                required: true
+              author:
+                type: string
+                required: true
+            required:
+              - id
+              - title
+              - picture
+              - author
+        bestSellingBooks:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              title:
+                type: string
+                required: true
+              picture:
+                type: string
+                required: true
+              author:
+                type: string
+                required: true
+            required:
+              - id
+              - title
+              - picture
+              - author
+        newReleases:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              title:
+                type: string
+                required: true
+              picture:
+                type: string
+                required: true
+              author:
+                type: string
+                required: true
+            required:
+              - id
+              - title
+              - picture
+              - author
+      required:
+        - relatedGenres
+        - recommendations
+        - popularBooks
+        - bestSellingBooks
+        - newReleases
+    shortGenre:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+        - id
+        - name
+    byIdOutput:
+      type: object
+      properties:
+        majorBooks:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              title:
+                type: string
+                required: true
+              picture:
+                type: string
+                required: true
+              author:
+                type: string
+                required: true
+            required:
+              - id
+              - title
+              - picture
+              - author
+            id:
+              example: 1
+              description: book id
+            title:
+              example: title
+              description: book title
+            picture:
+              example: picture
+              description: book picture
+            author:
+              example: author
+              description: book author
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+        - majorBooks
+        - id
+        - name
+    InfoByIdOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        picture:
+          type: string
+        author:
+          type: string
+        genres:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              name:
+                type: string
+                required: true
+            required:
+              - id
+              - name
+      required:
+        - id
+        - title
+        - picture
+        - author
+        - genres
+    EbookByIdOutput:
+      type: object
+      properties:
+        file:
+          type: array
+          items:
+            type: string
+        chapters:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                required: true
+              children:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      required: true
+                    link:
+                      type: string
+                      required: true
+                  required:
+                    - name
+                    - link
+                required: true
+            required:
+              - title
+              - children
+        id:
+          type: integer
+        title:
+          type: string
+        picture:
+          type: string
+        author:
+          type: string
+      required:
+        - file
+        - chapters
+        - id
+        - title
+        - picture
+        - author
+    AdminInfoByIdOutput:
+      type: object
+      properties:
+        visible:
+          type: boolean
+        ebook:
+          type: string
+        description:
+          type: string
+        popularity:
+          type: integer
+        pages:
+          type: integer
+        _count:
+          type: object
+          properties:
+            finishedBy:
+              type: integer
+              required: true
+            readingBy:
+              type: integer
+              required: true
+            savedBy:
+              type: integer
+              required: true
+        review:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              tags:
+                type: array
+                items:
+                  type: string
+                required: true
+              text:
+                type: string
+                required: true
+              rating:
+                type: integer
+                required: true
+              user:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    required: true
+                  email:
+                    type: string
+                    required: true
+                required: true
+            required:
+              - id
+              - tags
+              - text
+              - rating
+              - user
+        id:
+          type: integer
+        title:
+          type: string
+        picture:
+          type: string
+        author:
+          type: string
+        genres:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: true
+              name:
+                type: string
+                required: true
+            required:
+              - id
+              - name
+      required:
+        - visible
+        - ebook
+        - description
+        - popularity
+        - pages
+        - _count
+        - review
+        - id
+        - title
+        - picture
+        - author
+        - genres
+    AdminCatalogOutput:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                required: true
+              pages:
+                type: integer
+                required: true
+              popularity:
+                type: integer
+                required: true
+              visible:
+                type: boolean
+                required: true
+              genres:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      required: true
+                    name:
+                      type: string
+                      required: true
+                  required:
+                    - id
+                    - name
+                required: true
+              majorGenre:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    required: true
+                  name:
+                    type: string
+                    required: true
+                required: true
+              id:
+                type: integer
+                required: true
+              title:
+                type: string
+                required: true
+              picture:
+                type: string
+                required: true
+              author:
+                type: string
+                required: true
+            required:
+              - description
+              - pages
+              - popularity
+              - visible
+              - genres
+              - majorGenre
+              - id
+              - title
+              - picture
+              - author
+        canLoadMore:
+          type: boolean
+        totalPages:
+          type: integer
+      required:
+        - data
+        - canLoadMore
+        - totalPages
+    CreateBookDto:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+        author:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 255
+        picture:
+          type: string
+          minLength: 1
+          maxLength: 255
+        ebook:
+          type: string
+          minLength: 1
+          maxLength: 255
+        pages:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+        popularity:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+        genres:
+          type: array
+          items:
+            type: number
+            minimum: 0
+            exclusiveMinimum: true
+      required:
+        - title
+        - author
+        - description
+        - picture
+        - ebook
+        - pages
+        - popularity
+        - genres
+    EditBookDto:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+        author:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 255
+        picture:
+          type: string
+          minLength: 1
+          maxLength: 255
+        ebook:
+          type: string
+          minLength: 1
+          maxLength: 255
+        pages:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+        popularity:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+        genres:
+          type: array
+          items:
+            type: number
+            minimum: 0
+            exclusiveMinimum: true
+      required:
+        - title
+        - author
+        - description
+        - picture
+        - ebook
+        - pages
+        - popularity
+        - genres
+    SignDto:
+      type: object
+      properties:
+        socialId:
+          type: string
+      required:
+        - socialId
+    AuthResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        type:
+          type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: number
+              minimum: 0
+              exclusiveMinimum: true
+              required: true
+            email:
+              type: string
+              required: true
+            role:
+              type: string
+              enum:
+                - admin
+                - user
+              required: true
+      required:
+        - accessToken
+        - refreshToken
+        - type
+        - user
+    AuthDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+      required:
+        - email
+        - password
+    RefreshDto:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+      required:
+        - refreshToken
+    FilenameDto:
+      type: object
+      properties:
+        filename:
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+        - filename
+    UploadOutputDto:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+        - name
+    ParserDto:
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+          maxLength: 255
+        page:
+          type: integer
+      required:
+        - url
+        - page
+    ReviewBookDto:
+      type: object
+      properties:
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        tags:
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+      required:
+        - rating
+    UserUpdateSelectedGenresDto:
+      type: object
+      properties:
+        selectedGenres:
+          type: array
+          items:
+            type: number
+            minimum: 0
+            exclusiveMinimum: true
+      required:
+        - selectedGenres

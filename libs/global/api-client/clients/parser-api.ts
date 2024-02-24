@@ -22,7 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import { BookTemplate } from '../models';
+// @ts-ignore
+import { BookTemplateCatalogOutput } from '../models';
+// @ts-ignore
 import { ParserDto } from '../models';
+// @ts-ignore
+import { UnfoldOutput } from '../models';
 /**
  * ParserApi - axios parameter creator
  * @export
@@ -36,8 +42,8 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        all: async (searchTerm?: string, page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/parser/admin/all`;
+        adminCatalog: async (searchTerm?: string, page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/parser/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -244,10 +250,10 @@ export const ParserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async all(searchTerm?: string, page?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.all(searchTerm, page, options);
+        async adminCatalog(searchTerm?: string, page?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookTemplateCatalogOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCatalog(searchTerm, page, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ParserApi.all']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ParserApi.adminCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -256,7 +262,7 @@ export const ParserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async byId(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async byId(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookTemplate>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.byId(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ParserApi.byId']?.[localVarOperationServerIndex]?.url;
@@ -292,7 +298,7 @@ export const ParserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async unfold(file?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async unfold(file?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UnfoldOutput>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unfold(file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ParserApi.unfold']?.[localVarOperationServerIndex]?.url;
@@ -315,8 +321,8 @@ export const ParserApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        all(searchTerm?: string, page?: number, options?: any): AxiosPromise<void> {
-            return localVarFp.all(searchTerm, page, options).then((request) => request(axios, basePath));
+        adminCatalog(searchTerm?: string, page?: number, options?: any): AxiosPromise<BookTemplateCatalogOutput> {
+            return localVarFp.adminCatalog(searchTerm, page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -324,7 +330,7 @@ export const ParserApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        byId(id: number, options?: any): AxiosPromise<void> {
+        byId(id: number, options?: any): AxiosPromise<BookTemplate> {
             return localVarFp.byId(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -351,7 +357,7 @@ export const ParserApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unfold(file?: string, options?: any): AxiosPromise<void> {
+        unfold(file?: string, options?: any): AxiosPromise<Array<UnfoldOutput>> {
             return localVarFp.unfold(file, options).then((request) => request(axios, basePath));
         },
     };
@@ -372,8 +378,8 @@ export class ParserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ParserApi
      */
-    public all(searchTerm?: string, page?: number, options?: RawAxiosRequestConfig) {
-        return ParserApiFp(this.configuration).all(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
+    public adminCatalog(searchTerm?: string, page?: number, options?: RawAxiosRequestConfig) {
+        return ParserApiFp(this.configuration).adminCatalog(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

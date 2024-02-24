@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { BookService } from '../book/book.service'
 import { GenreService } from '../genre/genre.service'
+import { RecommendationService } from '../recommendation/recommendation.service'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import { CatalogController } from './catalog.controller'
@@ -13,7 +14,8 @@ import { CatalogService } from './catalog.service'
 		PrismaService,
 		ActivityService,
 		BookService,
-		GenreService
+		GenreService,
+		RecommendationService
 	]
 })
 export class CatalogModule {}

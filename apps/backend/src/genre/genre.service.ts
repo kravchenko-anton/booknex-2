@@ -1,9 +1,10 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
-import { ActivityService } from '../activity/activity.service'
-import { serverError } from '../utils/call-error'
-import { GlobalErrorsEnum } from '../utils/errors'
-import { PrismaService } from '../utils/prisma.service'
+import { returnBookObject } from '../book/return.book.object'
+import { GlobalErrorsEnum } from '../utils/common/errors'
+import { serverError } from '../utils/helpers/call-error'
+import { ActivityService } from '../utils/services/activity/activity.service'
+import { PrismaService } from '../utils/services/prisma.service'
 import { ReturnGenreObject } from './return.genre.object'
 
 @Injectable()
@@ -33,11 +34,7 @@ export class GenreService {
 			select: {
 				...ReturnGenreObject,
 				majorBooks: {
-					select: {
-						id: true,
-						title: true,
-						picture: true
-					}
+					select: returnBookObject
 				}
 			}
 		})
@@ -63,5 +60,26 @@ export class GenreService {
 			orderBy,
 			take
 		})
+	}
+
+	async findMajorGenre(genres: number[]) {
+		const majorGenre = this.prisma.genre.findFirst({
+			where: {
+				id: {
+					in: genres
+				}
+			},
+			select: {
+				id: true
+			},
+			orderBy: {
+				majorBooks: {
+					_count: 'asc'
+				}
+			}
+		})
+		if (!majorGenre)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		return majorGenre
 	}
 }

@@ -1,16 +1,16 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
+import { GenreService } from '../genre/genre.service'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { AdminErrors, GlobalErrorsEnum } from '../utils/common/errors'
 import { defaultReturnObject } from '../utils/common/return.default.object'
-import { transformActivity } from '../utils/helpers/activity-transformer'
 import { serverError } from '../utils/helpers/call-error'
+import { transformActivity } from '../utils/services/activity/activity-transformer'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { CreateBookDto } from './dto/manipulation.book.dto'
 import { EditBookDto } from './dto/manipulation.book.dto'
-import type { ReviewBookDto } from './dto/review.book.dto'
 import { returnBookObject } from './return.book.object'
 import type { EBookType } from './types'
 
@@ -18,21 +18,27 @@ import type { EBookType } from './types'
 export class BookService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService
+		private readonly activityService: ActivityService,
+		private readonly genreService: GenreService
 	) {}
 
-	async findOne(
-		where: Prisma.BookWhereUniqueInput,
-		selectObject: Prisma.BookSelect = {}
-	) {
+	async findOne({
+		where,
+		select,
+		onlyVisible = true
+	}: {
+		where?: Prisma.BookWhereUniqueInput
+		select?: Prisma.BookSelect
+		onlyVisible?: boolean
+	}) {
 		const book = await this.prisma.book.findUnique({
 			where: {
-				visible: true,
+				...(onlyVisible && { visible: true }),
 				...where
 			},
 			select: {
 				...returnBookObject,
-				...selectObject
+				...select
 			}
 		})
 		if (!book)
@@ -44,16 +50,18 @@ export class BookService {
 		where,
 		select,
 		orderBy,
-		take = 20
+		take = 20,
+		onlyVisible = true
 	}: {
 		where?: Prisma.BookWhereInput
 		select?: Prisma.BookSelect
 		orderBy?: Prisma.BookOrderByWithRelationInput
 		take?: number
+		onlyVisible?: boolean
 	}) {
 		return this.prisma.book.findMany({
 			where: {
-				visible: true,
+				...(onlyVisible && { visible: true }),
 				...where
 			},
 			take,
@@ -65,11 +73,49 @@ export class BookService {
 		})
 	}
 
-	async infoByIdAdmin(id: number) {
-		const author = await this.prisma.book.findUnique({
-			where: { id },
+	async checkExist(
+		id: number,
+		options?: {
+			visible?: boolean
+		}
+	) {
+		const exist = await this.prisma.book.findUnique({
+			where: { id, ...options },
 			select: {
-				...returnBookObject,
+				id: true
+			}
+		})
+
+		if (!exist)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.bookNotFound)
+
+		return !!exist
+	}
+
+	async infoById(id: number, userId: number) {
+		const book = await this.findOne({
+			where: { id: +id, visible: true },
+			select: {
+				majorGenre: false,
+				genres: { select: ReturnGenreObject }
+			}
+		})
+
+		await this.activityService.create({
+			type: Activities.visitBook,
+			importance: 1,
+			userId,
+			bookId: id
+		})
+
+		return book
+	}
+
+	async infoByIdAdmin(id: number) {
+		const book = await this.findOne({
+			where: { id },
+			onlyVisible: false,
+			select: {
 				createdAt: true,
 				updatedAt: true,
 				pages: true,
@@ -112,7 +158,7 @@ export class BookService {
 				}
 			}
 		})
-		const { activities, ...rest } = author
+		const { activities, ...rest } = book
 
 		return {
 			...rest,
@@ -121,13 +167,12 @@ export class BookService {
 	}
 
 	async ebookById(id: number, userId: number) {
-		const book = await this.findOne(
-			{ id },
-			{
-				title: true,
+		const book = await this.findOne({
+			where: { id },
+			select: {
 				ebook: true
 			}
-		)
+		})
 		const ebook: EBookType = await fetch(getFileUrl(book.ebook)).then(result =>
 			result.json()
 		)
@@ -156,16 +201,16 @@ export class BookService {
 		}
 	}
 
-	async all(searchTerm: string, page: number) {
+	async adminCatalog(searchTerm: string, page: number) {
 		const perPage = 20
 		const count = await this.prisma.book.count()
 		return {
 			//TODO: переделать тут чтобы данные сохранились но я не юзал
-			data: await this.prisma.book.findMany({
+			data: await this.findMany({
 				take: perPage,
+				onlyVisible: false,
 				select: {
 					//TODO: сделать тут через include
-					...returnBookObject,
 					genres: { select: ReturnGenreObject },
 					pages: true,
 					popularity: true,
@@ -195,14 +240,9 @@ export class BookService {
 	}
 
 	async create(dto: CreateBookDto) {
-		const majorGenres = await this.getMajorGenres(dto.genres)
+		const majorGenre = await this.genreService.findMajorGenre(dto.genres)
 		await this.prisma.book.create({
 			data: {
-				majorGenre: {
-					connect: {
-						id: majorGenres[0].id
-					}
-				},
 				activities: {
 					create: {
 						type: Activities.createBook,
@@ -219,6 +259,11 @@ export class BookService {
 				author: dto.author,
 				genres: {
 					connect: dto.genres.map(g => ({ id: g }))
+				},
+				majorGenre: {
+					connect: {
+						id: majorGenre.id
+					}
 				}
 			}
 		})
@@ -238,7 +283,7 @@ export class BookService {
 	async update(id: number, dto: EditBookDto) {
 		await this.checkExist(id)
 		const { genres: dtoGenres, ...other } = dto
-		const majorGenre = await this.getMajorGenres(dtoGenres)
+		const majorGenre = await this.genreService.findMajorGenre(dtoGenres)
 		console.log('update', majorGenre, dtoGenres, id, EditBookDto)
 		await this.prisma.book.update({
 			where: { id: id },
@@ -250,7 +295,7 @@ export class BookService {
 					},
 					majorGenre: {
 						connect: {
-							id: majorGenre[0].id
+							id: majorGenre.id
 						}
 					}
 				})
@@ -262,100 +307,5 @@ export class BookService {
 			importance: 9,
 			bookId: id
 		})
-	}
-
-	async review(userId: number, bookId: number, dto: ReviewBookDto) {
-		await this.checkExist(bookId, {
-			visible: true
-		})
-		await this.checkUserExist(userId)
-		await this.activityService.create({
-			type: Activities.reviewBook,
-			importance: 4,
-			userId,
-			bookId
-		})
-		await this.prisma.review.create({
-			data: {
-				rating: dto.rating,
-				tags: dto.tags,
-				text: dto.comment,
-				user: {
-					connect: {
-						id: userId
-					}
-				},
-				book: {
-					connect: {
-						id: bookId
-					}
-				}
-			}
-		})
-	}
-
-	async infoById(id: number, userId: number) {
-		const book = await this.prisma.book.findUnique({
-			where: { id: +id, visible: true },
-			include: {
-				majorGenre: false,
-				genres: { select: ReturnGenreObject }
-			}
-		})
-		if (!book)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
-
-		await this.activityService.create({
-			type: Activities.visitBook,
-			importance: 1,
-			userId,
-			bookId: id
-		})
-
-		return book
-	}
-
-	async getMajorGenres(genres: number[]) {
-		return this.prisma.genre.findMany({
-			where: {
-				id: {
-					in: genres
-				}
-			},
-			select: {
-				id: true
-			},
-			orderBy: {
-				majorBooks: {
-					_count: 'asc'
-				}
-			},
-			take: 1
-		})
-	}
-
-	private async checkExist(id: number, options?: { visible?: boolean }) {
-		const exist = await this.prisma.book.findUnique({
-			where: { id, ...options },
-			select: {
-				id: true
-			}
-		})
-
-		if (!exist)
-			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.bookNotFound)
-
-		return !!exist
-	}
-	private async checkUserExist(id: number) {
-		const userExist = await this.prisma.user.findUnique({
-			where: { id: id },
-			select: {
-				id: true
-			}
-		})
-		if (!userExist)
-			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.userNotFound)
-		return !!userExist
 	}
 }

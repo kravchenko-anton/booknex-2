@@ -1,18 +1,9 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post,
-	Query
-} from '@nestjs/common'
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger'
+import { Controller, Delete, Get, Param, Patch, Query } from '@nestjs/common'
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-
-import { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
+import { UserAdminCatalog, UserLibrary, UserProfile } from './user.model'
+// import { UserLibrary, UserProfile } from './user.model'
 import { UserService } from './user.service'
 
 @ApiBearerAuth()
@@ -22,34 +13,14 @@ export class UserController {
 	constructor(private readonly usersService: UserService) {}
 	@Auth()
 	@Get('/profile')
+	@ApiOkResponse({ type: UserProfile })
 	async profile(@CurrentUser('id') id: number) {
 		return this.usersService.profile(+id)
 	}
 
 	@Auth()
-	@Post('/update-recommendations')
-	@ApiBody({ type: UserUpdateSelectedGenresDto })
-	async updateRecommendations(
-		@CurrentUser('id') id: number,
-		@Body() dto: UserUpdateSelectedGenresDto
-	) {
-		return this.usersService.updateRecommendations(+id, dto)
-	}
-
-	@Auth()
-	@Get('/recommendation-genres')
-	async recommendationsGenres(@CurrentUser('id') userId: number): Promise<
-		| {
-				id: number
-				name: string
-		  }[]
-		| null
-	> {
-		return this.usersService.recommendationGenres(+userId)
-	}
-
-	@Auth()
 	@Get('/library')
+	@ApiOkResponse({ type: UserLibrary })
 	async library(@CurrentUser('id') id: number) {
 		return this.usersService.library(+id)
 	}
@@ -77,18 +48,20 @@ export class UserController {
 
 	@Auth()
 	@Get('/is-saved/:id')
+	@ApiOkResponse({ type: Boolean })
 	async isSaved(@CurrentUser('id') userId: number, @Param('id') id: number) {
 		return this.usersService.isSaved(userId, +id)
 	}
 
 	// admin
 	@Auth('admin')
-	@Get('admin/all')
-	async all(
+	@Get('admin/catalog')
+	@ApiOkResponse({ type: UserAdminCatalog })
+	async adminCatalog(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
-	) {
-		return this.usersService.all(searchTerm || '', page || 1)
+	): Promise<UserAdminCatalog> {
+		return this.usersService.adminCatalog(searchTerm || '', page || 1)
 	}
 
 	@Auth('admin')

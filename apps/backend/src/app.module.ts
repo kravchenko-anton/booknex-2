@@ -13,6 +13,8 @@ import { ParserModule } from './parser/parser.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
 import { ActivityModule } from './utils/services/activity/activity.module'
+import { ReviewModule } from './review/review.module';
+import { RecommendationModule } from './recommendation/recommendation.module';
 
 @Module({
 	imports: [
@@ -48,7 +50,9 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 			isGlobal: true,
 			ttl: 5000,
 			max: 1000
-		})
+		}),
+		ReviewModule,
+		RecommendationModule
 	],
 	controllers: [AppController],
 	providers: [AppService, ConfigService]

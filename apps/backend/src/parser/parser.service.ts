@@ -1,20 +1,21 @@
-/* eslint @typescript-eslint/no-shadow: 0 */
-/* eslint @typescript-eslint/no-loop-func: 0 */
-
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { AdminErrors } from '../utils/common/errors'
 import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { ParserDto } from './dto/parser.dto'
-import { parseBookTable, parseCurrentBook, useParser } from './parse-ebook'
-import { getEbook } from './unfold-ebook'
+import {
+	parseBookTable,
+	parseCurrentBook,
+	useParser
+} from './helpers/parse-ebook'
+import { getEbook } from './helpers/unfold-ebook'
 
 @Injectable()
 export class ParserService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async all(searchTerm: string, page: number) {
+	async adminCatalog(searchTerm: string, page: number) {
 		const perPage = 20
 		return {
 			data: await this.prisma.bookTemplate.findMany({
