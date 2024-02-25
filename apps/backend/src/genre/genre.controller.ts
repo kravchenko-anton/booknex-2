@@ -13,7 +13,7 @@ export class GenreController {
 	constructor(private readonly genreService: GenreService) {}
 
 	@Get()
-	@ApiOkResponse({ type: [shortGenre] })
+	@ApiOkResponse({ type: shortGenre, isArray: true })
 	async all(): Promise<shortGenre[]> {
 		return this.genreService.all()
 	}

@@ -1,12 +1,12 @@
-import { bookService } from '@/api/services'
+import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import type { SendReviewSchemaType } from '@/screens/book-review/validation'
 import { Button, Field, Icon, ScrollView, Title } from '@/ui'
 import { successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import { reviewTags } from 'backend/src/book/review-tags'
+import { reviewTags } from 'backend/src/review/review-tags'
+import type { ReviewBookDto } from 'global/api-client'
 import { Color } from 'global/colors'
-import type { ReviewBookPayload } from 'global/services-types/book-types'
 import { Close, Star } from 'icons'
 import { FinishBook } from 'illustrations'
 import { useState, type FC } from 'react'
@@ -50,8 +50,8 @@ const BookReview: FC = () => {
 
 	const { mutateAsync: sendReview, isLoading: reviewLoading } = useMutation({
 		mutationKey: ['review'],
-		mutationFn: ({ id, dto }: { id: number; dto: ReviewBookPayload }) =>
-			bookService.review(id, dto)
+		mutationFn: ({ id, dto }: { id: number; dto: ReviewBookDto }) =>
+			api.review.review(id, dto)
 	})
 
 	const submitReview = async (data: SendReviewSchemaType) => {

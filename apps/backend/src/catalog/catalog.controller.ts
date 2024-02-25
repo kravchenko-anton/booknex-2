@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import { ShortBook } from '../book/book.model'
-import { featuredOutput } from './catalog.model'
+import { FeaturedOutput } from './catalog.model'
 
 import { CatalogService } from './catalog.service'
 
@@ -21,8 +21,8 @@ export class CatalogController {
 	}
 
 	@Get('/featured')
-	@ApiOkResponse({ type: featuredOutput })
-	async featured(@CurrentUser('id') userId: number): Promise<featuredOutput> {
+	@ApiOkResponse({ type: FeaturedOutput })
+	async featured(@CurrentUser('id') userId: number): Promise<FeaturedOutput> {
 		return this.catalogService.featured(+userId)
 	}
 }

@@ -24,7 +24,8 @@ export const useTemplate = ({
 	const { data: template } = useQuery({
 		queryKey: ['book-template'],
 		queryFn: () => api.parser.byId(id),
-		enabled: Boolean(id)
+		enabled: Boolean(id),
+		select: data => data.data
 	})
 	useLayoutEffect(() => {
 		if (template) {

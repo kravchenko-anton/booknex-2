@@ -1,27 +1,16 @@
 import { cn } from '@/utils'
 import type { ColumnDef } from '@tanstack/react-table'
+import type { Book } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/helpers/number-formater'
 import Image from 'next/image'
 import { useState } from 'react'
 
-type ColumnType = ColumnDef<{
-	id: number
-	title: string
-	author: string
-	picture: string
-	description: string
-	visible: boolean
-	pages: number
-	popularity: number
-	genres: { name: string }[]
-}>[]
-
 export const columns = ({
 	preview
 }: {
 	preview: (id: number) => void
-}): ColumnType => [
+}): ColumnDef<Book, any>[] => [
 	{
 		id: 'id',
 		enableHiding: false,

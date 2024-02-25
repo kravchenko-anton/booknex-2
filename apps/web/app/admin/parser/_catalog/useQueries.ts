@@ -6,7 +6,8 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
 	const { data: books } = useQuery({
 		queryKey: ['book-templates', searchTerm, page],
-		queryFn: () => api.parser.all(searchTerm, +page)
+		queryFn: () => api.parser.adminCatalog(searchTerm, +page),
+		select: data => data.data
 	})
 
 	const { mutateAsync: deleteFromParser } = useMutation({

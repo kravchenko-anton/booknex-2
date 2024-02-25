@@ -32,7 +32,8 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 }) => {
 	const { data: genres = [] } = useQuery({
 		queryKey: ['genres'],
-		queryFn: () => api.genre.all()
+		queryFn: () => api.genre.all(),
+		select: data => data.data
 	})
 
 	return (

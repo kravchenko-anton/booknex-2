@@ -1,48 +1,28 @@
-import { createZodDto } from '@anatine/zod-nestjs'
-import { extendApi } from '@anatine/zod-openapi'
-import { z } from 'zod'
+import { ApiProperty } from '@nestjs/swagger'
+import { IsEnum, IsString, MaxLength, MinLength } from 'class-validator'
+import { StorageFolderEnum, StorageFolderType } from '../storage.types'
 
-export const FilenameZ = extendApi(
-	z.object({
-		filename: z.string().min(1).max(255)
-	}),
-	{
-		filename: {
-			description: 'Filename',
-			example: 'file.jpg'
-		}
-	}
-)
+export class FilenameDto {
+	@IsString()
+	@MinLength(1)
+	@MaxLength(255)
+	@ApiProperty({ type: 'string' })
+	filename: string
+}
 
-export const ReplacementZ = extendApi(
-	z.object({
-		deleteFilename: z.string().min(1).max(255),
-		folder: z.enum(['ebooks', 'booksCovers'])
-	}),
-	{
-		deleteFilename: {
-			description: 'Filename to delete',
-			example: 'file.jpg'
-		},
-		folder: {
-			description: 'Folder to upload',
-			example: 'ebooks' || 'books-covers'
-		}
-	}
-)
+export class ReplacementDto {
+	@IsString()
+	@MinLength(1)
+	@ApiProperty({ type: 'string' })
+	@MaxLength(255)
+	deleteFilename: string
 
-export const UploadOutputZ = extendApi(
-	z.object({
-		name: z.string().min(1).max(255)
-	}),
-	{
-		name: {
-			description: 'Filename',
-			example: 'file.jpg'
-		}
-	}
-)
+	@IsEnum(StorageFolderEnum)
+	folder: StorageFolderType
+}
 
-export class ReplacementDto extends createZodDto(ReplacementZ) {}
-export class FilenameDto extends createZodDto(FilenameZ) {}
-export class UploadOutputDto extends createZodDto(UploadOutputZ) {}
+export class UploadOutputDto {
+	@ApiProperty({ type: 'string' })
+	@IsString()
+	name: string
+}

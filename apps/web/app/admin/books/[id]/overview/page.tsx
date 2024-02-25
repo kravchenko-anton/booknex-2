@@ -12,7 +12,7 @@ import { useUploadFile } from '@/utils/files'
 import { acceptToast, successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
-import type { EditBookDto } from 'global/api-client'
+import type { EditBookDto } from 'global/api-client/models/edit-book-dto'
 import { useParams, useRouter } from 'next/navigation'
 import * as React from 'react'
 //TODO: сделать во фронте при композиции книги типы которые в бекенде
@@ -27,7 +27,8 @@ const Id = () => {
 	console.log(id, 'it is id')
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', id],
-		queryFn: () => api.book.infoById(id)
+		queryFn: () => api.book.infoByIdAdmin(id),
+		select: data => data.data
 	})
 	const { mutateAsync: update } = useMutation({
 		mutationKey: ['update-book'],
@@ -43,7 +44,7 @@ const Id = () => {
 
 	const { mutateAsync: remove } = useMutation({
 		mutationKey: ['remove-book'],
-		mutationFn: (id: number) => api.book._delete(id),
+		mutationFn: (id: number) => api.book.remove(id),
 		onSuccess: () => {
 			successToast('Book removed')
 			router.push('/admin/books')
@@ -64,7 +65,7 @@ const Id = () => {
 								folder: StorageFolderEnum.ebooks,
 								name: book.title + '.png',
 								blob: new Blob([picture])
-							}).then(async url => {
+							}).then(async ({ data: url }) => {
 								await update({
 									id: book.id,
 									payload: {
@@ -159,7 +160,7 @@ const Id = () => {
 								name: book.title + '.json',
 								blob: new Blob([JSON.stringify(books)]),
 								folder: StorageFolderEnum.ebooks
-							}).then(async url => {
+							}).then(async ({ data: url }) => {
 								await update({
 									id: book.id,
 									payload: {

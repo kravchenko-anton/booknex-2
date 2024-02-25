@@ -21,52 +21,58 @@
  */
 export interface EditBookDto {
     /**
-     * 
+     * Title of the book
      * @type {string}
      * @memberof EditBookDto
      */
-    'title': string;
+    'title'?: string;
     /**
-     * 
+     * Author of the book
      * @type {string}
      * @memberof EditBookDto
      */
-    'author': string;
+    'author'?: string;
     /**
-     * 
+     * Uploaded picture
      * @type {string}
      * @memberof EditBookDto
      */
-    'description': string;
+    'description'?: string;
     /**
-     * 
+     * Description of the book
      * @type {string}
      * @memberof EditBookDto
      */
-    'picture': string;
+    'picture'?: string;
     /**
-     * 
+     * Uploaded ebook
      * @type {string}
      * @memberof EditBookDto
      */
-    'ebook': string;
+    'ebook'?: string;
     /**
-     * 
+     * Number of pages in the book
      * @type {number}
      * @memberof EditBookDto
      */
-    'pages': number;
+    'pages'?: number;
     /**
-     * 
+     * Is book visible
+     * @type {boolean}
+     * @memberof EditBookDto
+     */
+    'visible'?: boolean;
+    /**
+     * Number of goodRead reviews
      * @type {number}
      * @memberof EditBookDto
      */
-    'popularity': number;
+    'popularity'?: number;
     /**
-     * 
-     * @type {Array<number>}
+     * Array of genres
+     * @type {Array<string>}
      * @memberof EditBookDto
      */
-    'genres': Array<number>;
+    'genres'?: Array<string>;
 }
 

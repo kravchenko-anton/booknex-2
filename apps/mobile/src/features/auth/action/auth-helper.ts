@@ -1,9 +1,7 @@
 import axios from 'axios'
-import { emulatorServerURL, getAuthUrl } from 'global/api-config'
-import type {
-	AuthResponseType,
-	TokensType
-} from 'global/services-types/auth-types'
+import type { AuthResponseDto } from 'global/api-client'
+import { emulatorServerURL } from 'global/api-config'
+
 import EncryptedStorage from 'react-native-encrypted-storage'
 
 export const getAccessToken = async () => {
@@ -18,7 +16,10 @@ export const getRefreshToken = async () => {
 	return refreshToken || null
 }
 
-export const saveTokensStorage = async (data: TokensType) => {
+export const saveTokensStorage = async (data: {
+	accessToken: string
+	refreshToken: string
+}) => {
 	await EncryptedStorage.setItem('accessToken', data.accessToken)
 	await EncryptedStorage.setItem('refreshToken', data.refreshToken)
 	console.log('saveTokensStorage', data)
@@ -37,8 +38,8 @@ export const getNewTokens = async () => {
 	const response = await axios
 		.post<
 			string,
-			{ data: AuthResponseType }
-		>(emulatorServerURL + getAuthUrl('/refresh'), { refreshToken })
+			{ data: AuthResponseDto }
+		>(emulatorServerURL + 'auth/refresh', { refreshToken })
 		.then(result => result.data)
 	console.log(
 		'response',

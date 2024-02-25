@@ -1,33 +1,15 @@
 import ActivityList from '@/components/dialogs/activity-list'
 import { acceptToast } from '@/utils/toast'
-import type { Role } from '@prisma/client'
 import type { ColumnDef } from '@tanstack/react-table'
-import type { ActivitiesOutput } from 'backend/src/utils/activity-transformer'
+import type { CatalogUserOutput } from 'backend/src/user/user.model'
 import { getFileUrl } from 'global/api-config'
 import { timeAgo } from 'global/helpers/time-format'
 
-type ColumnType = ColumnDef<{
-	id: number
-	fullName: string
-	email: string
-	selectedGenres: { name: string }[]
-	_count: {
-		savedBooks: number
-		finishedBooks: number
-		readingBooks: number
-	}
-	activities: ActivitiesOutput[]
-	createdAt: Date
-	location: string
-	picture: string
-	role: Role
-	socialId: string | null
-}>[]
 export const columns = ({
 	remove
 }: {
 	remove: (id: number) => void
-}): ColumnType => [
+}): ColumnDef<CatalogUserOutput, any>[] => [
 	{
 		id: 'id',
 		enableHiding: false,

@@ -1,11 +1,12 @@
-import { userServices } from '@/api/services/user/user-service'
+import api from '@/api'
 import { Loader, ScrollLayout, Title } from '@/ui'
 import { useQuery } from '@tanstack/react-query'
 
 const Profile = () => {
 	const { data: profile } = useQuery({
 		queryKey: ['user-profile'],
-		queryFn: () => userServices.profile()
+		queryFn: () => api.user.profile(),
+		select: data => data.data
 	})
 	if (!profile) return <Loader />
 	return (

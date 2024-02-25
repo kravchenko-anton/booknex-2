@@ -21,7 +21,7 @@
  */
 export interface RefreshDto {
     /**
-     * 
+     * Refresh token
      * @type {string}
      * @memberof RefreshDto
      */

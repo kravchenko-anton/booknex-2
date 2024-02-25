@@ -1,4 +1,4 @@
-import { catalogService } from '@/api/services/catalog/catalog-service'
+import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import ManageRecommendationMenu from '@/screens/update-recommendation/manage-recommendation-menu'
 import { BookCard, Button, Flatlist, Loader, ScrollLayout } from '@/ui'
@@ -8,7 +8,8 @@ import { useQuery } from '@tanstack/react-query'
 const Featured = () => {
 	const { data: featured } = useQuery({
 		queryKey: ['featured'],
-		queryFn: () => catalogService.featured()
+		queryFn: () => api.catalog.featured(),
+		select: data => data.data
 	})
 	const { navigate } = useTypedNavigation()
 	if (!featured) return <Loader />

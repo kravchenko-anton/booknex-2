@@ -2,17 +2,25 @@
 import { Button, Field } from '@/components/ui'
 import { loginRoute } from '@/features/auth/secure-route'
 import { useAction } from '@/hooks'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
+import type { AuthDto } from 'global/api-client'
 import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 const Index = () => {
 	const { mailLogin, googleLogin } = useAction()
-	//TODO: сделать валидацию
-	const { handleSubmit, control } = useForm({
-		mode: 'onSubmit'
+	const { handleSubmit, control } = useForm<AuthDto>({
+		mode: 'onSubmit',
+		resolver: zodResolver(
+			z.object({
+				email: z.string().email(),
+				password: z.string().min(8)
+			})
+		)
 	})
-	const onSubmit = data => {
+	const onSubmit = (data: AuthDto) => {
 		mailLogin(data)
 	}
 

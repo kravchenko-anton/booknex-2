@@ -1,4 +1,4 @@
-import { userServices } from '@/api/services/user/user-service'
+import api from '@/api'
 import { getStyleTag } from '@/features/reader/book-viewer-function'
 import { useSaveProgress } from '@/features/reader/useSaveProgress'
 import { useTypedNavigation, useTypedSelector } from '@/hooks'
@@ -31,7 +31,7 @@ export const useReading = (id: number) => {
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
 		useMutation({
 			mutationKey: ['end-reading', id],
-			mutationFn: (id: number) => userServices.finishReading(id)
+			mutationFn: (id: number) => api.user.finishReading(id)
 		})
 
 	const onMessage = useCallback(

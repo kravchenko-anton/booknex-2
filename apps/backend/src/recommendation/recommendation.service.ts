@@ -1,10 +1,10 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
-import type { UserUpdateSelectedGenresDto } from '../user/dto/update-selected-genres.dto'
 import { AdminErrors } from '../utils/common/errors'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
+import type { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
 
 @Injectable()
 export class RecommendationService {

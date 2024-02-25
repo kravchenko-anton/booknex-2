@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
+import type { AxiosResponse } from 'axios'
 import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/helpers/number-formater'
 import { MoreHorizontal } from 'icons'
@@ -28,7 +29,7 @@ export const columns = ({
 	remove,
 	useAsTemplate
 }: {
-	remove: (id: number) => Promise<null>
+	remove: (id: number) => Promise<AxiosResponse<void, any>>
 	useAsTemplate: (id: number) => void
 }): ColumnType => [
 	{

@@ -1,4 +1,4 @@
-import { userServices } from '@/api/services/user/user-service'
+import api from '@/api'
 import { Button, Title } from '@/ui'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
@@ -15,7 +15,8 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
 }) => {
 	const { data: selectedGenres } = useQuery({
 		queryKey: ['recommendation-genres'],
-		queryFn: () => userServices.recommendationGenres()
+		queryFn: () => api.recommendation.recommendationsGenres(),
+		select: data => data.data
 	})
 	if (!selectedGenres) return null
 	return (

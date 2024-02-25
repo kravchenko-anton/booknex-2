@@ -1,22 +1,21 @@
-import { createZodDto } from '@anatine/zod-nestjs'
-import { extendApi } from '@anatine/zod-openapi'
-import { z } from 'zod'
+import { ApiProperty } from '@nestjs/swagger'
+import { IsNumber, IsString, MaxLength, Min, MinLength } from 'class-validator'
 
-export const ParserZ = extendApi(
-	z.object({
-		url: z.string().min(1).max(255),
-		page: z.number().int()
-	}),
-	{
-		url: {
-			description: 'URL to parse',
-			example: 'https://www.goodreads.com/list/show/1.Best_Books_Ever'
-		},
-		page: {
-			description: 'Page number to parse',
-			example: 1
-		}
-	}
-)
+export class ParserDto {
+	@ApiProperty({
+		type: String,
+		description: 'url of the parser'
+	})
+	@IsString()
+	@MinLength(1)
+	@MaxLength(255)
+	url: string
 
-export class ParserDto extends createZodDto(ParserZ) {}
+	@IsNumber()
+	@ApiProperty({
+		type: Number,
+		description: 'page of the parser'
+	})
+	@Min(0)
+	page: number
+}

@@ -41,12 +41,16 @@ export const useCreateForm = () => {
 
 	const submit = handleSubmit(async (data: CreateBookValidationSchemaType) => {
 		console.log(data, 'it is data')
-		const { name: uploadPicture } = await upload({
+		const {
+			data: { name: uploadPicture }
+		} = await upload({
 			name: data.picture.name,
 			blob: data.picture.blob,
-			folder: StorageFolderEnum.booksCovers
+			folder: 'booksCovers'
 		})
-		const { name: uploadHtml } = await upload({
+		const {
+			data: { name: uploadHtml }
+		} = await upload({
 			name: data.title + '.json',
 			blob: new Blob([JSON.stringify(data.books)]),
 			folder: StorageFolderEnum.ebooks

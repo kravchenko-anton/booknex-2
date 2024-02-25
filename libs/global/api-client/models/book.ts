@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { ShortGenre } from './short-genre';
 
 /**
  * 
@@ -21,112 +24,58 @@
  */
 export interface Book {
     /**
-     * Unique identifier for the book
+     * book id
      * @type {number}
      * @memberof Book
      */
     'id': number;
     /**
-     * Date when the book was created
-     * @type {string}
-     * @memberof Book
-     */
-    'createdAt': string;
-    /**
-     * Date when the book was last updated
-     * @type {string}
-     * @memberof Book
-     */
-    'updatedAt': string;
-    /**
-     * Title of the book
+     * book title
      * @type {string}
      * @memberof Book
      */
     'title': string;
     /**
-     * Author of the book
-     * @type {string}
-     * @memberof Book
-     */
-    'author': string;
-    /**
-     * URL of the picture of the book
+     * book picture
      * @type {string}
      * @memberof Book
      */
     'picture': string;
     /**
-     * Description of the book
+     * book author
+     * @type {string}
+     * @memberof Book
+     */
+    'author': string;
+    /**
+     * book description
      * @type {string}
      * @memberof Book
      */
     'description': string;
     /**
-     * URL of the book
-     * @type {string}
-     * @memberof Book
-     */
-    'ebook': string;
-    /**
-     * Number of pages of the book
+     * book pages
      * @type {number}
      * @memberof Book
      */
     'pages': number;
     /**
-     * Rating of the book
+     * book popularity
      * @type {number}
      * @memberof Book
      */
     'popularity': number;
     /**
-     * Visibility of the book
+     * book visibility
      * @type {boolean}
      * @memberof Book
      */
     'visible': boolean;
     /**
-     * Major genre of the book
-     * @type {object}
+     * 
+     * @type {Array<ShortGenre>}
      * @memberof Book
      */
-    'majorGenre': object;
-    /**
-     * Minor genres of the book
-     * @type {Array<object>}
-     * @memberof Book
-     */
-    'genres': Array<object>;
-    /**
-     * Reviews of the book
-     * @type {Array<object>}
-     * @memberof Book
-     */
-    'review': Array<object>;
-    /**
-     * Users who have read the book
-     * @type {Array<object>}
-     * @memberof Book
-     */
-    'finishedBy': Array<object>;
-    /**
-     * Users who have saved the book
-     * @type {Array<object>}
-     * @memberof Book
-     */
-    'savedBy': Array<object>;
-    /**
-     * Users who are currently reading the book
-     * @type {Array<object>}
-     * @memberof Book
-     */
-    'readingBy': Array<object>;
-    /**
-     * Activities related to the book
-     * @type {Array<object>}
-     * @memberof Book
-     */
-    'activities': Array<object>;
+    'genres': Array<ShortGenre>;
 }
 

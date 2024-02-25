@@ -193,11 +193,11 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
-         * @param {string} [file] 
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unfold: async (file?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        unfold: async (file?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/parser/admin/unfold`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -294,11 +294,11 @@ export const ParserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} [file] 
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async unfold(file?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UnfoldOutput>>> {
+        async unfold(file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UnfoldOutput>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unfold(file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ParserApi.unfold']?.[localVarOperationServerIndex]?.url;
@@ -353,11 +353,11 @@ export const ParserApiFactory = function (configuration?: Configuration, basePat
         },
         /**
          * 
-         * @param {string} [file] 
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unfold(file?: string, options?: any): AxiosPromise<Array<UnfoldOutput>> {
+        unfold(file?: File, options?: any): AxiosPromise<Array<UnfoldOutput>> {
             return localVarFp.unfold(file, options).then((request) => request(axios, basePath));
         },
     };
@@ -417,12 +417,12 @@ export class ParserApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} [file] 
+     * @param {File} [file] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ParserApi
      */
-    public unfold(file?: string, options?: RawAxiosRequestConfig) {
+    public unfold(file?: File, options?: RawAxiosRequestConfig) {
         return ParserApiFp(this.configuration).unfold(file, options).then((request) => request(this.axios, this.basePath));
     }
 }

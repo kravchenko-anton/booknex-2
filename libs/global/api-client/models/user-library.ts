@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserLibraryReadingBooksInner } from './user-library-reading-books-inner';
+import { ShortBook } from './short-book';
 
 /**
  * 
@@ -25,21 +25,21 @@ import { UserLibraryReadingBooksInner } from './user-library-reading-books-inner
 export interface UserLibrary {
     /**
      * 
-     * @type {Array<UserLibraryReadingBooksInner>}
+     * @type {Array<ShortBook>}
      * @memberof UserLibrary
      */
-    'readingBooks': Array<UserLibraryReadingBooksInner>;
+    'readingBooks': Array<ShortBook>;
     /**
      * 
-     * @type {Array<UserLibraryReadingBooksInner>}
+     * @type {Array<ShortBook>}
      * @memberof UserLibrary
      */
-    'finishedBooks': Array<UserLibraryReadingBooksInner>;
+    'finishedBooks': Array<ShortBook>;
     /**
      * 
-     * @type {Array<UserLibraryReadingBooksInner>}
+     * @type {Array<ShortBook>}
      * @memberof UserLibrary
      */
-    'savedBooks': Array<UserLibraryReadingBooksInner>;
+    'savedBooks': Array<ShortBook>;
 }
 

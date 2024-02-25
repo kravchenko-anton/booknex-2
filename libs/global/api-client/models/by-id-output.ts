@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { UserLibraryReadingBooksInner } from './user-library-reading-books-inner';
 
 /**
  * 
@@ -24,22 +21,22 @@ import { UserLibraryReadingBooksInner } from './user-library-reading-books-inner
  */
 export interface ByIdOutput {
     /**
-     * 
-     * @type {Array<UserLibraryReadingBooksInner>}
-     * @memberof ByIdOutput
-     */
-    'majorBooks': Array<UserLibraryReadingBooksInner>;
-    /**
-     * 
+     * genre id
      * @type {number}
      * @memberof ByIdOutput
      */
     'id': number;
     /**
-     * 
+     * genre name
      * @type {string}
      * @memberof ByIdOutput
      */
     'name': string;
+    /**
+     * 
+     * @type {Array<Array>}
+     * @memberof ByIdOutput
+     */
+    'majorBooks': Array<Array>;
 }
 

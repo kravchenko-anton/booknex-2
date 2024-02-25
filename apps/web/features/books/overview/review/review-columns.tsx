@@ -1,19 +1,11 @@
 import type { ColumnDef } from '@tanstack/react-table'
+import type { Review } from 'global/api-client'
 import { Color } from 'global/colors'
 import { Star } from 'icons'
 import * as React from 'react'
 import { useState } from 'react'
 
-type ColumnType = ColumnDef<{
-	id: number
-	user: {
-		email: string
-	}
-	rating: number
-	text: string
-	tags: string[]
-}>[]
-export const reviewColumns = (): ColumnType => [
+export const reviewColumns = (): ColumnDef<Review, any>[] => [
 	{
 		id: 'id',
 		enableHiding: false,
@@ -26,7 +18,13 @@ export const reviewColumns = (): ColumnType => [
 		header: () => <p className='text-center text-xl'>User</p>,
 		cell: ({ row }) => (
 			//TODO: добавить тут данные пользователя после того как я сделаю авторизацию через google
-			<h1 className='text-lg'>{row.original.user.email}</h1>
+			<h1 className='text-lg'>
+				{
+					row.original.id
+					//row.original.user.email
+				}
+				Сделать тут юзера
+			</h1>
 		)
 	},
 

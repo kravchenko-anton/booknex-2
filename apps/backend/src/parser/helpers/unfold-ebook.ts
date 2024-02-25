@@ -4,7 +4,7 @@ import EPub from 'epub2'
 import { JSDOM } from 'jsdom'
 import { AdminErrors, GlobalErrorsEnum } from '../../utils/common/errors'
 import { serverError } from '../../utils/helpers/call-error'
-import type { ChaptersOutput } from '../parser.model'
+import type { UnfoldOutput } from '../parser.model'
 
 export interface ChapterType {
 	id: number
@@ -95,4 +95,4 @@ export const getEbook = async (buffer: Buffer) =>
 				)
 		})
 		epub.parse()
-	}) as unknown as ChaptersOutput
+	}) as unknown as UnfoldOutput[]

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AdminCatalogOutputDataInner } from './admin-catalog-output-data-inner';
+import { Book } from './book';
 
 /**
  * 
@@ -25,10 +25,10 @@ import { AdminCatalogOutputDataInner } from './admin-catalog-output-data-inner';
 export interface AdminCatalogOutput {
     /**
      * 
-     * @type {Array<AdminCatalogOutputDataInner>}
+     * @type {Array<Book>}
      * @memberof AdminCatalogOutput
      */
-    'data': Array<AdminCatalogOutputDataInner>;
+    'data': Array<Book>;
     /**
      * 
      * @type {boolean}

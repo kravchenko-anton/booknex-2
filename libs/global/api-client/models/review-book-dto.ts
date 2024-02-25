@@ -21,19 +21,19 @@
  */
 export interface ReviewBookDto {
     /**
-     * 
+     * rating
      * @type {number}
      * @memberof ReviewBookDto
      */
     'rating': number;
     /**
-     * 
+     * tags
      * @type {Array<string>}
      * @memberof ReviewBookDto
      */
-    'tags'?: Array<string>;
+    'tags': Array<string>;
     /**
-     * 
+     * comment
      * @type {string}
      * @memberof ReviewBookDto
      */

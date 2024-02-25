@@ -14,7 +14,7 @@ export const useBookCompose = (defaultBooks?: EBookType) => {
 
 	const { mutateAsync: unfold } = useMutation({
 		mutationKey: ['unfold'],
-		mutationFn: (formData: FormData) => api.parser.unfold(formData),
+		mutationFn: (formData: FormData) => api.parser.unfold(formData as any),
 		onSuccess: () => successToast('File uploaded'),
 		onError: () => errorToast('Error while uploading book')
 	})
@@ -251,12 +251,14 @@ export const useBookCompose = (defaultBooks?: EBookType) => {
 
 	const unfoldWithUpload = (files: File[]) => {
 		for (const file of files) {
-			unfold(blobFormData(new Blob([file]), file.name)).then(data => {
-				upload({
-					title: file.name,
-					chapters: data
-				})
-			})
+			unfold(blobFormData(new Blob([file]), file.name)).then(
+				({ data: chapters }) => {
+					upload({
+						title: file.name,
+						chapters
+					})
+				}
+			)
 		}
 	}
 

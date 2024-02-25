@@ -1,4 +1,4 @@
-import { bookService } from '@/api/services'
+import api from '@/api'
 import {
 	beforeLoad,
 	finishBookButton,
@@ -25,7 +25,8 @@ const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()
 	const { data: ebook } = useQuery({
 		queryKey: ['e-books', +params.id],
-		queryFn: () => bookService.ebookById(+params.id)
+		queryFn: () => api.book.ebookById(+params.id),
+		select: data => data.data
 	})
 	const [readerUiVisible, setReaderUiVisible] = useState(true)
 	const reference = useRef<WebView>(null)

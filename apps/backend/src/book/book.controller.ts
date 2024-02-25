@@ -81,8 +81,8 @@ export class BookController {
 
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
-	@Delete('admin/delete/:id')
-	async delete(@Param('id') bookId: number) {
-		return this.bookService.delete(+bookId)
+	@Delete('admin/remove/:id')
+	async remove(@Param('id') bookId: number) {
+		return this.bookService.remove(+bookId)
 	}
 }

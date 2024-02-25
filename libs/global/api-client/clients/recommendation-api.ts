@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import { ShortGenre } from '../models';
+// @ts-ignore
 import { UserUpdateSelectedGenresDto } from '../models';
 /**
  * RecommendationApi - axios parameter creator
@@ -116,7 +118,7 @@ export const RecommendationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async recommendationsGenres(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+        async recommendationsGenres(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ShortGenre>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.recommendationsGenres(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RecommendationApi.recommendationsGenres']?.[localVarOperationServerIndex]?.url;
@@ -149,7 +151,7 @@ export const RecommendationApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recommendationsGenres(options?: any): AxiosPromise<Array<object>> {
+        recommendationsGenres(options?: any): AxiosPromise<Array<ShortGenre>> {
             return localVarFp.recommendationsGenres(options).then((request) => request(axios, basePath));
         },
         /**

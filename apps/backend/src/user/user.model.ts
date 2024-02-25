@@ -1,96 +1,154 @@
-import { createZodDto } from '@anatine/zod-nestjs'
-import { extendApi } from '@anatine/zod-openapi'
-import { z } from 'zod'
-import { shortBookZ } from '../book/book.model'
-import { shortGenreZ } from '../genre/genre.model'
+import { ApiProperty } from '@nestjs/swagger'
+import { Role } from '@prisma/client'
+import { Type } from 'class-transformer'
+import {
+	IsArray,
+	IsBoolean,
+	IsDate,
+	IsEmail,
+	IsEnum,
+	IsNumber,
+	IsOptional,
+	IsString,
+	ValidateNested
+} from 'class-validator'
+import { ShortBook } from '../book/book.model'
+import { shortGenre } from '../genre/genre.model'
+import { Activity } from '../utils/services/activity/activity.model'
 
-export const RoleSchema = z.enum(['user', 'admin'])
+export class User {
+	@IsEnum(Role)
+	@ApiProperty({ example: 'user', description: 'user role' })
+	role: Role
 
-export const UserZ = extendApi(
-	z.object({
-		role: RoleSchema,
-		id: z.number().int(),
-		createdAt: z.coerce.date(),
-		updatedAt: z.coerce.date(),
-		email: z.string(),
-		socialId: z.string().nullable(),
-		password: z.string().nullable(),
-		picture: z.string(),
-		fullName: z.string(),
-		location: z.string()
-	}),
-	{
-		role: { example: 'user', description: 'user role' },
-		id: { example: 1, description: 'user id' },
-		createdAt: {
-			example: '2021-09-10T12:00:00Z',
-			description: 'user creation date'
-		},
-		updatedAt: {
-			example: '2021-09-10T12:00:00Z',
-			description: 'user update date'
-		},
-		email: { example: 'email', description: 'user email' },
-		socialId: { example: 'socialId', description: 'user socialId' },
-		password: { example: 'password', description: 'user password' },
-		picture: { example: 'picture', description: 'user picture' },
-		fullName: { example: 'fullName', description: 'user fullName' },
-		location: { example: 'location', description: 'user location' }
-	}
-)
+	@ApiProperty({ example: 1, description: 'user id' })
+	@IsNumber()
+	id: number
 
-export const userLibraryZ = extendApi(
-	z.object({
-		readingBooks: z.object({}).merge(shortBookZ).array(),
-		finishedBooks: z.object({}).merge(shortBookZ).array(),
-		savedBooks: z.object({}).merge(shortBookZ).array()
-	}),
-	{
-		readingBooks: {
-			description: 'user reading books'
-		},
-		finishedBooks: {
-			description: 'user finished books'
-		},
-		savedBooks: {
-			description: 'user saved books'
-		}
-	}
-)
-export const userProfileZ = extendApi(
-	z.object({
-		id: z.number().int(),
-		email: z.string(),
-		bookCount: z.number().int(),
-		totalPageCount: z.number().int()
-	}),
-	{
-		id: { example: 1, description: 'user id' },
-		email: { example: 'email', description: 'user email' }
-	}
-)
+	@IsDate()
+	@ApiProperty({ example: '2021-07-01', description: 'user created at' })
+	createdAt: Date
 
-export const UserAdminCatalogZ = extendApi(
-	z.object({
-		data: z
-			.object({
-				_count: z.object({
-					savedBooks: z.number().int(),
-					review: z.number().int(),
-					finishedBooks: z.number().int(),
-					readingBooks: z.number().int()
-				}),
-				//TODO: сделать тут activityType
-				selectedGenres: z.object({}).merge(shortGenreZ).array()
-			})
-			.merge(UserZ)
-			.array(),
-		canLoadMore: z.boolean(),
-		totalPages: z.number().int()
+	@IsString()
+	@IsEmail()
+	@ApiProperty({ example: 'email', description: 'user email' })
+	email: string
+
+	@IsOptional()
+	@IsString()
+	@ApiProperty({ example: 'socialId', description: 'user social id' })
+	socialId?: string
+
+	@IsOptional()
+	@IsString()
+	@ApiProperty({ example: 'password', description: 'user password' })
+	password?: string
+
+	@IsString()
+	@ApiProperty({ example: 'picture', description: 'user picture' })
+	picture: string
+
+	@IsString()
+	@ApiProperty({ example: 'fullName', description: 'user full name' })
+	fullName: string
+	@IsString()
+	@ApiProperty({ example: 'location', description: 'user location' })
+	location: string
+}
+
+export class UserLibrary {
+	@IsArray()
+	@ValidateNested({ each: true })
+	@ApiProperty({ type: [ShortBook] })
+	@Type(() => ShortBook)
+	readingBooks: ShortBook[]
+
+	@IsArray()
+	@ApiProperty({ type: [ShortBook] })
+	@ValidateNested({ each: true })
+	@Type(() => ShortBook)
+	finishedBooks: ShortBook[]
+
+	@IsArray()
+	@ApiProperty({ type: [ShortBook] })
+	@ValidateNested({ each: true })
+	@Type(() => ShortBook)
+	savedBooks: ShortBook[]
+}
+
+export class UserProfile {
+	@IsNumber()
+	@ApiProperty({ example: 1, type: Number })
+	id: number
+
+	@IsString()
+	@ApiProperty({ example: 'email', type: String })
+	email: string
+
+	@IsNumber()
+	@ApiProperty({ example: 1, type: Number })
+	bookCount: number
+
+	@IsNumber()
+	@ApiProperty({ example: 1, type: Number })
+	totalPageCount: number
+}
+
+export class UserCountOutput {
+	@IsNumber()
+	@ApiProperty({ example: 1, type: Number })
+	savedBooks: number
+
+	@IsNumber()
+	@ApiProperty({ example: 1, type: Number })
+	finishedBooks: number
+
+	@IsNumber()
+	@ApiProperty({ example: 1, type: Number })
+	readingBooks: number
+}
+
+export class CatalogUserOutput extends User {
+	@ApiProperty({ type: [shortGenre] })
+	@IsArray()
+	@ValidateNested()
+	@Type(() => shortGenre)
+	selectedGenres: {
+		id: number
+		name: string
+	}[]
+
+	@IsArray()
+	@ApiProperty({ type: [Activity] })
+	@ValidateNested({ each: true })
+	@Type(() => Activity)
+	activities: Activity[]
+
+	@ApiProperty({
+		type: UserCountOutput,
+		description: 'Count of books finished, reading and saved by the user'
 	})
-)
+	@ValidateNested()
+	@Type(() => UserCountOutput)
+	_count: {
+		savedBooks: number
+		finishedBooks: number
+		readingBooks: number
+	}
+}
 
-export class UserLibrary extends createZodDto(userLibraryZ) {}
-export class UserProfile extends createZodDto(userProfileZ) {}
-export class UserAdminCatalog extends createZodDto(UserAdminCatalogZ) {}
-export class User extends createZodDto(UserZ) {}
+export class UserAdminCatalog {
+	@IsArray()
+	@ApiProperty({ type: [CatalogUserOutput] })
+	@ValidateNested({ each: true })
+	@Type(() => CatalogUserOutput)
+	data: CatalogUserOutput[]
+
+	@IsBoolean()
+	@ApiProperty({ example: true, type: Boolean })
+	canLoadMore: boolean
+
+	@IsNumber()
+	@ApiProperty({ example: 1, type: Number })
+	totalPages: number
+}

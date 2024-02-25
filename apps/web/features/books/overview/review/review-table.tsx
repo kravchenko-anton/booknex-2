@@ -13,11 +13,12 @@ import {
 	getCoreRowModel,
 	useReactTable
 } from '@tanstack/react-table'
+import type { AdminInfoByIdOutput } from 'backend/src/book/book.model'
 import type { FC } from 'react'
 import * as React from 'react'
 
 interface ReviewTableProperties {
-	review: InfoByIdAdmin['review']
+	review: AdminInfoByIdOutput['review']
 }
 
 const ReviewTable: FC<ReviewTableProperties> = ({ review }) => {

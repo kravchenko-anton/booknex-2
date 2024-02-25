@@ -1,19 +1,20 @@
 import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import type { AuthDto, AuthResponseDto } from 'global/api-client'
 import { emulatorServerURL } from 'global/api-config'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 
 export const googleLogin = createAsyncThunk<
-	googleAuthResponseType,
+	AuthResponseDto,
 	{
 		socialId: string
 	}
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
 		console.log('socialId', socialId)
-		const { data: loginResponse } = await axios.post<googleAuthResponseType>(
-			emulatorServerURL + getAuthUrl('/google-sign'),
+		const { data: loginResponse } = await axios.post<AuthResponseDto>(
+			emulatorServerURL + '/api/auth/google-sign',
 			{
 				socialId
 			}
@@ -35,11 +36,11 @@ export const googleLogin = createAsyncThunk<
 	}
 })
 
-export const mailRegister = createAsyncThunk<AuthResponseType, AuthFieldsType>(
+export const mailRegister = createAsyncThunk<AuthResponseDto, AuthDto>(
 	'auth/mailRegister',
 	async (properties, thunkAPI) => {
-		const { data: registerResponse } = await axios.post<AuthResponseType>(
-			emulatorServerURL + getAuthUrl('/mail-register'),
+		const { data: registerResponse } = await axios.post<AuthResponseDto>(
+			emulatorServerURL + '/api/auth/mail-register',
 			{
 				...properties
 			}
@@ -54,11 +55,11 @@ export const mailRegister = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	}
 )
 
-export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
+export const mailLogin = createAsyncThunk<AuthResponseDto, AuthDto>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
-		const { data: loginResponse } = await axios.post<AuthResponseType>(
-			emulatorServerURL + getAuthUrl('/mail-login'),
+		const { data: loginResponse } = await axios.post<AuthResponseDto>(
+			emulatorServerURL + '/api/auth/mail-login',
 			{
 				email,
 				password
@@ -74,7 +75,7 @@ export const mailLogin = createAsyncThunk<AuthResponseType, AuthFieldsType>(
 	}
 )
 
-export const logout = createAsyncThunk('auth/logout', async () => {
+export const logout = createAsyncThunk('/api/auth/logout', async () => {
 	await deleteTokensStorage()
 	return {}
 })

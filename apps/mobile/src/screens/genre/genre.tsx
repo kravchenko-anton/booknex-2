@@ -1,4 +1,4 @@
-import { genreService } from '@/api/services'
+import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { Loader, ScrollLayout } from '@/ui'
 import CatalogList from '@/ui/book-lists/catalog-list'
@@ -10,7 +10,8 @@ const Genre = () => {
 	const { params } = useTypedRoute<'Genre'>()
 	const { data: genre } = useQuery({
 		queryKey: ['genre', +params.id],
-		queryFn: () => genreService.byId(+params.id)
+		queryFn: () => api.genre.byId(+params.id),
+		select: data => data.data
 	})
 	const { setOptions, navigate } = useTypedNavigation()
 	useLayoutEffect(() => {

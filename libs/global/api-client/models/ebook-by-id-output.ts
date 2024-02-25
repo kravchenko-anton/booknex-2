@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { EbookByIdOutputChaptersInner } from './ebook-by-id-output-chapters-inner';
+import { Chapter } from './chapter';
 
 /**
  * 
@@ -24,40 +24,22 @@ import { EbookByIdOutputChaptersInner } from './ebook-by-id-output-chapters-inne
  */
 export interface EbookByIdOutput {
     /**
-     * 
-     * @type {Array<string>}
-     * @memberof EbookByIdOutput
-     */
-    'file': Array<string>;
-    /**
-     * 
-     * @type {Array<EbookByIdOutputChaptersInner>}
-     * @memberof EbookByIdOutput
-     */
-    'chapters': Array<EbookByIdOutputChaptersInner>;
-    /**
-     * 
-     * @type {number}
-     * @memberof EbookByIdOutput
-     */
-    'id': number;
-    /**
-     * 
+     * book title
      * @type {string}
      * @memberof EbookByIdOutput
      */
     'title': string;
     /**
-     * 
-     * @type {string}
+     * book file
+     * @type {Array<string>}
      * @memberof EbookByIdOutput
      */
-    'picture': string;
+    'file': Array<string>;
     /**
-     * 
-     * @type {string}
+     * book chapters
+     * @type {Array<Chapter>}
      * @memberof EbookByIdOutput
      */
-    'author': string;
+    'chapters': Array<Chapter>;
 }
 

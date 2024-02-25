@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AuthResponseDtoUser } from './auth-response-dto-user';
+import { AuthUserDto } from './auth-user-dto';
 
 /**
  * 
@@ -24,28 +24,28 @@ import { AuthResponseDtoUser } from './auth-response-dto-user';
  */
 export interface AuthResponseDto {
     /**
-     * 
+     * Access token
      * @type {string}
      * @memberof AuthResponseDto
      */
     'accessToken': string;
     /**
-     * 
+     * Refresh token
      * @type {string}
      * @memberof AuthResponseDto
      */
     'refreshToken': string;
     /**
-     * 
+     * type of auth
      * @type {string}
      * @memberof AuthResponseDto
      */
     'type': string;
     /**
-     * 
-     * @type {AuthResponseDtoUser}
+     * User data
+     * @type {AuthUserDto}
      * @memberof AuthResponseDto
      */
-    'user': AuthResponseDtoUser;
+    'user': AuthUserDto;
 }
 

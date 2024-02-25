@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { BookTemplateCatalogOutputDataInner } from './book-template-catalog-output-data-inner';
+import { BookTemplate } from './book-template';
 
 /**
  * 
@@ -24,19 +24,19 @@ import { BookTemplateCatalogOutputDataInner } from './book-template-catalog-outp
  */
 export interface BookTemplateCatalogOutput {
     /**
-     * 
-     * @type {Array<BookTemplateCatalogOutputDataInner>}
+     * book template
+     * @type {Array<BookTemplate>}
      * @memberof BookTemplateCatalogOutput
      */
-    'data': Array<BookTemplateCatalogOutputDataInner>;
+    'data': Array<BookTemplate>;
     /**
-     * 
+     * can load more
      * @type {boolean}
      * @memberof BookTemplateCatalogOutput
      */
     'canLoadMore': boolean;
     /**
-     * 
+     * total pages
      * @type {number}
      * @memberof BookTemplateCatalogOutput
      */

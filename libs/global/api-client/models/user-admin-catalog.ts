@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserAdminCatalogDataInner } from './user-admin-catalog-data-inner';
+import { CatalogUserOutput } from './catalog-user-output';
 
 /**
  * 
@@ -25,10 +25,10 @@ import { UserAdminCatalogDataInner } from './user-admin-catalog-data-inner';
 export interface UserAdminCatalog {
     /**
      * 
-     * @type {Array<UserAdminCatalogDataInner>}
+     * @type {Array<CatalogUserOutput>}
      * @memberof UserAdminCatalog
      */
-    'data': Array<UserAdminCatalogDataInner>;
+    'data': Array<CatalogUserOutput>;
     /**
      * 
      * @type {boolean}

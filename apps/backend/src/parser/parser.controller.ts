@@ -26,7 +26,7 @@ import { ParserDto } from './dto/parser.dto'
 import {
 	BookTemplate,
 	BookTemplateCatalogOutput,
-	unfoldOutput
+	UnfoldOutput
 } from './parser.model'
 import { ParserService } from './parser.service'
 
@@ -62,7 +62,7 @@ export class ParserController {
 
 	@Post('admin/unfold')
 	@ApiOkResponse({
-		type: unfoldOutput,
+		type: UnfoldOutput,
 		description: 'Unfolded book content',
 		isArray: true
 	})
@@ -73,7 +73,7 @@ export class ParserController {
 			properties: {
 				file: {
 					type: 'string',
-					format: 'epub'
+					format: 'binary'
 				}
 			}
 		}
@@ -90,7 +90,7 @@ export class ParserController {
 			})
 		)
 		file: Express.Multer.File
-	): Promise<unfoldOutput> {
+	): Promise<UnfoldOutput[]> {
 		return this.parserService.unfold(file)
 	}
 

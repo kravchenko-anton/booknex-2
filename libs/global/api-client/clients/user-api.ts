@@ -263,9 +263,9 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toggle: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        startReading: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('toggle', 'id', id)
+            assertParamExists('startReading', 'id', id)
             const localVarPath = `/api/user/start-reading/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -418,10 +418,10 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toggle(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.toggle(id, options);
+        async startReading(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startReading(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserApi.toggle']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.startReading']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -430,7 +430,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toggleSave(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async toggleSave(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.toggleSave(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.toggleSave']?.[localVarOperationServerIndex]?.url;
@@ -505,8 +505,8 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toggle(id: number, options?: any): AxiosPromise<void> {
-            return localVarFp.toggle(id, options).then((request) => request(axios, basePath));
+        startReading(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.startReading(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -514,7 +514,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toggleSave(id: number, options?: any): AxiosPromise<void> {
+        toggleSave(id: number, options?: any): AxiosPromise<boolean> {
             return localVarFp.toggleSave(id, options).then((request) => request(axios, basePath));
         },
     };
@@ -599,8 +599,8 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public toggle(id: number, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).toggle(id, options).then((request) => request(this.axios, this.basePath));
+    public startReading(id: number, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).startReading(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

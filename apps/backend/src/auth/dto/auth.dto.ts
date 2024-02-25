@@ -1,83 +1,96 @@
-import { createZodDto } from '@anatine/zod-nestjs'
-import { extendApi } from '@anatine/zod-openapi'
-import { z } from 'zod'
+import { ApiProperty } from '@nestjs/swagger'
+import { Role } from '@prisma/client'
+import { Type } from 'class-transformer'
+import {
+	IsEmail,
+	IsEnum,
+	IsObject,
+	IsString,
+	MinLength,
+	ValidateNested
+} from 'class-validator'
 
-export const SignZ = extendApi(
-	z.object({
-		socialId: z.string()
-	}),
-	{
-		socialId: {
-			description: 'Social id',
-			required: true
-		}
-	}
-)
+export class SignDto {
+	@ApiProperty({
+		description: 'Social id',
+		example: '1234567890'
+	})
+	@IsString()
+	socialId: string
+}
+export class AuthUserDto {
+	@ApiProperty({
+		description: 'User id',
+		example: 1
+	})
+	@IsString()
+	id: number
 
-export const RefreshZ = extendApi(
-	z.object({
-		refreshToken: z.string()
-	}),
-	{
-		refreshToken: {
-			description: 'Refresh token',
-			required: true
-		}
-	}
-)
+	@ApiProperty({
+		description: 'User email',
+		example: 'test@gmail.com'
+	})
+	@IsEmail()
+	email: string
+	@ApiProperty({
+		description: 'User role',
+		example: 'user'
+	})
+	@IsEnum(Role)
+	role: keyof typeof Role
+}
 
-export const AuthZ = extendApi(
-	z.object({
-		email: z.string().email(),
-		password: z.string().min(8)
-	}),
-	{
-		email: {
-			description: "User's email",
-			required: true
-		},
-		password: {
-			description: "User's password",
-			required: true
-		}
-	}
-)
+export class RefreshDto {
+	@ApiProperty({
+		description: 'Refresh token',
+		example: '1234567890'
+	})
+	@IsString()
+	refreshToken: string
+}
 
-export const AuthResponseZ = extendApi(
-	z.object({
-		accessToken: z.string(),
-		refreshToken: z.string(),
-		type: z.string(),
-		user: z
-			.object({
-				id: z.number().positive(),
-				email: z.string(),
-				role: z.enum(['admin', 'user'])
-			})
+export class AuthDto {
+	@ApiProperty({
+		description: 'User email',
+		example: 'test@gmail.com'
+	})
+	@IsEmail()
+	email: string
 
-			.required()
-	}),
-	{
-		accessToken: {
-			description: 'Access token',
-			required: true
-		},
-		refreshToken: {
-			description: 'Refresh token',
-			required: true
-		},
-		type: {
-			description: 'Token type',
-			required: true
-		},
-		user: {
-			description: 'User info',
-			required: true
-		}
-	}
-)
+	@ApiProperty({
+		description: 'User password',
+		example: 'password'
+	})
+	@MinLength(8)
+	password: string
+}
 
-export class AuthResponseDto extends createZodDto(AuthResponseZ) {}
-export class AuthDto extends createZodDto(AuthZ) {}
-export class RefreshDto extends createZodDto(RefreshZ) {}
-export class SignDto extends createZodDto(SignZ) {}
+export class AuthResponseDto {
+	@ApiProperty({
+		description: 'Access token',
+		example: '1234567890'
+	})
+	@IsString()
+	accessToken: string
+	@ApiProperty({
+		description: 'Refresh token',
+		example: '1234567890'
+	})
+	@IsString()
+	refreshToken: string
+	@ApiProperty({
+		description: 'type of auth',
+		example: 'login'
+	})
+	@IsString()
+	type?: string
+
+	@ApiProperty({
+		type: AuthUserDto,
+		description: 'User data'
+	})
+	@IsObject()
+	@ValidateNested()
+	@Type(() => AuthUserDto)
+	user: AuthUserDto
+}

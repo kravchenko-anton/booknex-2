@@ -15,7 +15,8 @@ export const useCatalog = () => {
 	const { page, searchTerm } = useTableParameters()
 	const { data: books } = useQuery({
 		queryKey: ['books', searchTerm, page],
-		queryFn: () => api.book.all(searchTerm, +page)
+		queryFn: () => api.book.adminCatalog(searchTerm, +page),
+		select: data => data.data
 	})
 	const table = useReactTable({
 		data: books?.data ?? [],

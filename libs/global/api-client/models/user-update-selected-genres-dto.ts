@@ -21,7 +21,7 @@
  */
 export interface UserUpdateSelectedGenresDto {
     /**
-     * 
+     * selected genres
      * @type {Array<number>}
      * @memberof UserUpdateSelectedGenresDto
      */

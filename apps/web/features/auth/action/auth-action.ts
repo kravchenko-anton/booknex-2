@@ -2,8 +2,8 @@ import { errorToast, successToast } from '@/utils/toast'
 import { Role } from '@prisma/client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { GlobalErrorsEnum } from 'backend/src/utils/errors'
-import type { AuthDto, AuthResponseDto } from 'global/api-client'
+import type { AuthDto, AuthResponseDto } from 'backend/src/auth/dto/auth.dto'
+import { GlobalErrorsEnum } from 'backend/src/utils/common/errors'
 import { serverURL } from 'global/api-config'
 
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
@@ -13,11 +13,12 @@ export const mailLogin = createAsyncThunk<AuthResponseDto, AuthDto>(
 	async ({ email, password }, thunkAPI) => {
 		try {
 			const loginResponse = await axios
-				.post<AuthResponseDto>(serverURL + 'auth/mail-login', {
+				.post<AuthResponseDto>(serverURL + '/api/auth/mail-login', {
 					email,
 					password
 				})
 				.then(response => response.data)
+			console.log(loginResponse)
 			if (loginResponse.user.role !== Role.admin)
 				return thunkAPI.rejectWithValue('You are not admin')
 			saveTokensStorage({
@@ -41,11 +42,14 @@ export const googleLogin = createAsyncThunk<
 	}
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
+		console.log('socialId', socialId)
 		const loginResponse = await axios
-			.post<AuthResponseDto>(serverURL + 'auth/google-sign', {
+			.post<AuthResponseDto>(serverURL + '/api/auth/google-sign', {
 				socialId
 			})
 			.then(response => response.data)
+		console.log(loginResponse)
+
 		if (loginResponse.user.role !== Role.admin)
 			return thunkAPI.rejectWithValue(GlobalErrorsEnum.somethingWrong)
 		saveTokensStorage({
@@ -61,7 +65,7 @@ export const googleLogin = createAsyncThunk<
 	}
 })
 
-export const logout = createAsyncThunk('auth/logout', () => {
+export const logout = createAsyncThunk('/api/auth/logout', () => {
 	try {
 		successToast('Logout successfully')
 		deleteTokensStorage()

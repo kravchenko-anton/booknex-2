@@ -1,62 +1,113 @@
-import { createZodDto } from '@anatine/zod-nestjs'
-import { extendApi } from '@anatine/zod-openapi'
-import { z } from 'zod'
+import { ApiProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import {
+	IsArray,
+	IsBoolean,
+	IsNumber,
+	IsString,
+	ValidateNested
+} from 'class-validator'
+import { shortGenre } from '../genre/genre.model'
 
-export const BookTemplateZ = extendApi(
-	z.object({
-		id: z.number().int(),
-		createdAt: z.coerce.date(),
-		updatedAt: z.coerce.date(),
-		title: z.string(),
-		author: z.string(),
-		description: z.string(),
-		picture: z.string(),
-		pages: z.number().int(),
-		popularity: z.number().int()
-	}),
-	{
-		id: { example: 1, description: 'book id' },
-		createdAt: {
-			example: '2021-09-10T12:00:00Z',
-			description: 'book creation date'
-		},
-		updatedAt: {
-			example: '2021-09-10T12:00:00Z',
-			description: 'book update date'
-		},
-		title: { example: 'title', description: 'book title' },
-		author: { example: 'author', description: 'book author' },
-		description: { example: 'description', description: 'book description' },
-		picture: { example: 'picture', description: 'book picture' },
-		pages: { example: 100, description: 'book pages' },
-		popularity: { example: 100, description: 'book popularity' }
-	}
-)
-
-export const unfoldZ = extendApi(
-	z.object({
-		id: z.number().int(),
-		name: z.string(),
-		text: z.string()
-	}),
-	{
-		id: { example: 1, description: 'chapter id' },
-		name: { example: 'name', description: 'chapter name' },
-		text: { example: 'text', description: 'chapter text' }
-	}
-)
-
-export const BookTemplateCatalogZ = extendApi(
-	z.object({
-		data: z.object({}).merge(BookTemplateZ).array(),
-		canLoadMore: z.boolean(),
-		totalPages: z.number().int()
+export class BookTemplate {
+	@ApiProperty({
+		type: Number,
+		description: 'id of the book'
 	})
-)
+	@IsNumber()
+	id: number
 
-export type ChaptersOutput = z.infer<typeof unfoldZ>
-export class BookTemplate extends createZodDto(BookTemplateZ) {}
-export class BookTemplateCatalogOutput extends createZodDto(
-	BookTemplateCatalogZ
-) {}
-export class unfoldOutput extends createZodDto(unfoldZ) {}
+	@ApiProperty({
+		type: String,
+		description: 'title of the book'
+	})
+	@IsString()
+	title: string
+	@ApiProperty({
+		type: String,
+		description: 'author of the book'
+	})
+	@IsString()
+	author: string
+	@ApiProperty({
+		type: String,
+		description: 'description of the book'
+	})
+	@IsString()
+	description: string
+	@ApiProperty({
+		type: String,
+		description: 'picture of the book'
+	})
+	@IsString()
+	picture: string
+	@ApiProperty({
+		type: Number,
+		description: 'pages of the book'
+	})
+	@IsNumber()
+	pages: number
+	@ApiProperty({
+		type: Number,
+		description: 'popularity of the book'
+	})
+	@IsNumber()
+	popularity: number
+
+	@ApiProperty({ type: [shortGenre] })
+	@IsArray()
+	@ValidateNested()
+	@Type(() => shortGenre)
+	genres: {
+		id: number
+		name: string
+	}[]
+}
+
+export class UnfoldOutput {
+	@ApiProperty({
+		type: Number,
+		description: 'id of the chapter'
+	})
+	@IsNumber()
+	id: number
+
+	@ApiProperty({
+		type: String,
+		description: 'name of the chapter'
+	})
+	@IsString()
+	name: string
+
+	@ApiProperty({
+		type: String,
+		description: 'text of the chapter'
+	})
+	@IsString()
+	text: string
+}
+
+export class BookTemplateCatalogOutput {
+	@IsArray()
+	@ApiProperty({
+		type: [BookTemplate],
+		description: 'book template'
+	})
+	@ValidateNested({ each: true })
+	@Type(() => BookTemplate)
+	data: BookTemplate[]
+
+	@IsBoolean()
+	@ApiProperty({
+		type: Boolean,
+		description: 'can load more'
+	})
+	canLoadMore: boolean
+
+	@IsNumber()
+	@ApiProperty({
+		type: Number,
+		description: 'total pages'
+	})
+	totalPages: number
+}

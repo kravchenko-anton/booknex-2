@@ -1,11 +1,10 @@
-import { bookService } from '@/api/services'
-import { userServices } from '@/api/services/user/user-service'
+import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { successToast } from '@/utils/toast'
 import { HttpStatus } from '@nestjs/common'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { serverError } from 'backend/src/utils/call-error'
-import { GlobalErrorsEnum } from 'backend/src/utils/errors'
+import { GlobalErrorsEnum } from 'backend/src/utils/common/errors'
+import { serverError } from 'backend/src/utils/helpers/call-error'
 
 export const useBook = () => {
 	const { params } = useTypedRoute<'Book'>()
@@ -13,22 +12,23 @@ export const useBook = () => {
 	const queryClient = useQueryClient()
 	const { data: book } = useQuery({
 		queryKey: ['book', params.id],
-		queryFn: () => bookService.infoById(+params.id)
+		queryFn: () => api.book.infoById(+params.id),
+		select: data => data.data
 	})
 	const { navigate, goBack } = useTypedNavigation()
 
 	const { mutateAsync: startReading, isLoading: startReadingLoading } =
 		useMutation({
 			mutationKey: ['start-reading', params.id],
-			mutationFn: (id: number) => userServices.startReading(id)
+			mutationFn: (id: number) => api.user.startReading(id)
 		})
 
 	const { mutateAsync: toggleSaved, isLoading: toggleSavedLoading } =
 		useMutation({
 			mutationKey: ['toggle-saved', params.id],
-			mutationFn: (id: number) => userServices.toggleSave(id),
-			onSuccess: async isSaved => {
-				successToast(`Book ${isSaved ? 'saved' : 'removed from saved'}`)
+			mutationFn: (id: number) => api.user.toggleSave(id),
+			onSuccess: async ({ data: isSave }) => {
+				successToast(`Book ${isSave ? 'saved' : 'removed from saved'}`)
 				await queryClient.invalidateQueries({
 					queryKey: ['is-saved', +params.id]
 				})
@@ -40,7 +40,8 @@ export const useBook = () => {
 
 	const { data: isSaved } = useQuery({
 		queryKey: ['is-saved', +params.id],
-		queryFn: () => userServices.isSaved(+params.id)
+		queryFn: () => api.user.isSaved(+params.id),
+		select: data => data.data
 	})
 
 	const startReadingBook = async () => {

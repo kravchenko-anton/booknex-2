@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserAdminCatalogDataInnerSelectedGenresInner } from './user-admin-catalog-data-inner-selected-genres-inner';
+import { ShortBook } from './short-book';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserLibraryReadingBooksInner } from './user-library-reading-books-inner';
+import { ShortGenre } from './short-genre';
 
 /**
  * 
@@ -28,33 +28,33 @@ import { UserLibraryReadingBooksInner } from './user-library-reading-books-inner
 export interface FeaturedOutput {
     /**
      * 
-     * @type {Array<UserAdminCatalogDataInnerSelectedGenresInner>}
+     * @type {Array<ShortGenre>}
      * @memberof FeaturedOutput
      */
-    'relatedGenres': Array<UserAdminCatalogDataInnerSelectedGenresInner>;
+    'relatedGenres': Array<ShortGenre>;
     /**
      * 
-     * @type {Array<UserLibraryReadingBooksInner>}
+     * @type {Array<ShortBook>}
      * @memberof FeaturedOutput
      */
-    'recommendations': Array<UserLibraryReadingBooksInner>;
+    'recommendations': Array<ShortBook>;
     /**
      * 
-     * @type {Array<UserLibraryReadingBooksInner>}
+     * @type {Array<ShortBook>}
      * @memberof FeaturedOutput
      */
-    'popularBooks': Array<UserLibraryReadingBooksInner>;
+    'popularBooks': Array<ShortBook>;
     /**
      * 
-     * @type {Array<UserLibraryReadingBooksInner>}
+     * @type {Array<ShortBook>}
      * @memberof FeaturedOutput
      */
-    'bestSellingBooks': Array<UserLibraryReadingBooksInner>;
+    'bestSellingBooks': Array<ShortBook>;
     /**
      * 
-     * @type {Array<UserLibraryReadingBooksInner>}
+     * @type {Array<ShortBook>}
      * @memberof FeaturedOutput
      */
-    'newReleases': Array<UserLibraryReadingBooksInner>;
+    'newReleases': Array<ShortBook>;
 }
 

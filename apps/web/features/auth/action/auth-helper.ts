@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AuthResponseDto } from 'global/api-client'
+import type { AuthResponseDto } from 'backend/src/auth/dto/auth.dto'
 import { serverURL } from 'global/api-config'
 import Cookies from 'js-cookie'
 
@@ -45,7 +45,7 @@ export const getNewTokens = async () => {
 		.post<
 			string,
 			{ data: AuthResponseDto }
-		>(serverURL + 'auth/refresh', { refreshToken })
+		>(serverURL + '/api/auth/refresh', { refreshToken })
 		.then(result => result.data)
 	console.log(
 		'response',

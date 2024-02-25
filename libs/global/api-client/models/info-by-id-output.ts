@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserAdminCatalogDataInnerSelectedGenresInner } from './user-admin-catalog-data-inner-selected-genres-inner';
+import { ShortGenre } from './short-genre';
 
 /**
  * 
@@ -24,34 +24,40 @@ import { UserAdminCatalogDataInnerSelectedGenresInner } from './user-admin-catal
  */
 export interface InfoByIdOutput {
     /**
-     * 
+     * book id
      * @type {number}
      * @memberof InfoByIdOutput
      */
     'id': number;
     /**
-     * 
+     * book title
      * @type {string}
      * @memberof InfoByIdOutput
      */
     'title': string;
     /**
-     * 
+     * book picture
      * @type {string}
      * @memberof InfoByIdOutput
      */
     'picture': string;
     /**
-     * 
+     * book author
      * @type {string}
      * @memberof InfoByIdOutput
      */
     'author': string;
     /**
-     * 
-     * @type {Array<UserAdminCatalogDataInnerSelectedGenresInner>}
+     * book description
+     * @type {string}
      * @memberof InfoByIdOutput
      */
-    'genres': Array<UserAdminCatalogDataInnerSelectedGenresInner>;
+    'description': string;
+    /**
+     * 
+     * @type {Array<ShortGenre>}
+     * @memberof InfoByIdOutput
+     */
+    'genres': Array<ShortGenre>;
 }
 

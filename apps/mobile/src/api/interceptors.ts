@@ -5,7 +5,7 @@ import {
 } from '@/features/auth/action/auth-helper'
 import axios from 'axios'
 import { emulatorServerURL } from 'global/api-config'
-import { errorCatch } from 'global/utils/catch-error'
+import { errorCatch } from 'global/helpers/catch-error'
 
 const instance = axios.create({
 	baseURL: emulatorServerURL,

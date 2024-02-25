@@ -26,6 +26,7 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'unicorn/no-abusive-eslint-disable': 'off',
 		'react/jsx-no-leaked-render': 2,
 		'react/jsx-no-bind': [
 			'error',

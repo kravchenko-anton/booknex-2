@@ -1,10 +1,10 @@
-import { genreService } from '@/api/services'
-import { userServices } from '@/api/services/user/user-service'
+import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { Button, Icon, Loader, ScrollLayout, Title } from '@/ui'
 import { cn } from '@/utils'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { UserUpdateSelectedGenresDto } from 'backend/src/user/update-selected-genres.dto'
+import type { UserUpdateSelectedGenresDto } from 'global/api-client/models'
+
 import { Color } from 'global/colors'
 import { Close } from 'icons'
 import { useState } from 'react'
@@ -15,13 +15,14 @@ const UpdateRecommendation = () => {
 	const [selectedGenres, setSelectedGenres] = useState<number[]>([])
 	const { data: genres } = useQuery({
 		queryKey: ['genres'],
-		queryFn: () => genreService.all()
+		queryFn: () => api.genre.all(),
+		select: data => data.data
 	})
 
 	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
 		mutationKey: ['update-recommendation'],
 		mutationFn: (dto: UserUpdateSelectedGenresDto) =>
-			userServices.updateRecommendations(dto)
+			api.recommendation.updateRecommendations(dto)
 	})
 	const { navigate } = useTypedNavigation()
 	if (!genres) return <Loader />

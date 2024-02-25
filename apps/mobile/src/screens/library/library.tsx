@@ -1,4 +1,4 @@
-import { userServices } from '@/api/services/user/user-service'
+import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import {
 	AnimatedPress,
@@ -16,7 +16,8 @@ import { useQuery } from '@tanstack/react-query'
 const Library = () => {
 	const { data: library } = useQuery({
 		queryKey: ['user-library'],
-		queryFn: () => userServices.library()
+		queryFn: () => api.user.library(),
+		select: data => data.data
 	})
 	const { navigate } = useTypedNavigation()
 	console.log('library', library)

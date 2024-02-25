@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { AuthResponseDto } from 'global/api-client'
+import type { AuthResponseDto } from 'backend/src/auth/dto/auth.dto'
 import { googleLogin, logout, mailLogin } from './auth-action'
 
 const initialState = {

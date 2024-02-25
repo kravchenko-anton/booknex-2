@@ -21,13 +21,13 @@
  */
 export interface ShortGenre {
     /**
-     * 
+     * genre id
      * @type {number}
      * @memberof ShortGenre
      */
     'id': number;
     /**
-     * 
+     * genre name
      * @type {string}
      * @memberof ShortGenre
      */

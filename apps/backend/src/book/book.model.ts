@@ -1,174 +1,193 @@
-import { createZodDto } from '@anatine/zod-nestjs'
-import { extendApi } from '@anatine/zod-openapi'
-import { z } from 'zod'
+import { ApiProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import {
+	IsArray,
+	IsBoolean,
+	IsNumber,
+	IsString,
+	ValidateNested
+} from 'class-validator'
+import { shortGenre } from '../genre/genre.model'
+import { Review } from '../review/review.model'
+import { Activity } from '../utils/services/activity/activity.model'
 
-export const shortBookZ = extendApi(
-	z.object({
-		id: z.number().int(),
-		title: z.string(),
-		picture: z.string(),
-		author: z.string()
-	}),
-	{
-		id: { example: 1, description: 'book id' },
-		title: { example: 'title', description: 'book title' },
-		picture: { example: 'picture', description: 'book picture' },
-		author: { example: 'author', description: 'book author' }
-	}
-)
+export class ShortBook {
+	@IsNumber()
+	@ApiProperty({ example: 1, description: 'book id' })
+	id: number
+	@IsString()
+	@ApiProperty({ example: 'title', description: 'book title' })
+	title: string
+	@IsString()
+	@ApiProperty({ example: 'picture', description: 'book picture' })
+	picture: string
 
-export const adminCatalogZ = extendApi(
-	z.object({
-		data: z
-			.object({
-				description: z.string(),
-				pages: z.number().int(),
-				popularity: z.number().int(),
-				visible: z.boolean(),
-				genres: z
-					.object({
-						id: z.number().int(),
-						name: z.string()
-					})
-					.array(),
-				majorGenre: z.object({
-					id: z.number().int(),
-					name: z.string()
-				})
-			})
-			.merge(shortBookZ)
-			.array(),
-		canLoadMore: z.boolean(),
-		totalPages: z.number().int()
+	@IsString()
+	@ApiProperty({ example: 'author', description: 'book author' })
+	author: string
+}
+
+export class Book extends ShortBook {
+	@IsString()
+	@ApiProperty({ example: 'description', description: 'book description' })
+	description: string
+	@IsString()
+	@ApiProperty({ example: 'picture', description: 'book picture' })
+	picture: string
+	@IsString()
+	@IsNumber()
+	@ApiProperty({ example: 100, description: 'book pages' })
+	pages: number
+	@IsNumber()
+	@ApiProperty({ example: 100, description: 'book popularity' })
+	popularity: number
+	@IsBoolean()
+	@ApiProperty({ example: true, description: 'book visibility' })
+	visible: boolean
+
+	@ApiProperty({ type: [shortGenre] })
+	@IsArray()
+	@ValidateNested()
+	@Type(() => shortGenre)
+	genres: {
+		id: number
+		name: string
+	}[]
+}
+
+export class AdminCatalogOutput {
+	@ApiProperty({ type: [Book] })
+	@IsArray()
+	@ValidateNested()
+	@Type(() => Book)
+	data: Book[]
+	@ApiProperty({ example: true })
+	@IsBoolean()
+	canLoadMore: boolean
+	@ApiProperty({ example: 1 })
+	@IsNumber()
+	totalPages: number
+}
+
+export class InfoByIdOutput extends ShortBook {
+	@ApiProperty({ example: 'description', description: 'book description' })
+	@IsString()
+	description: string
+	@ApiProperty({ type: [shortGenre] })
+	@IsArray()
+	@ValidateNested()
+	@Type(() => shortGenre)
+	genres: {
+		id: number
+		name: string
+	}[]
+}
+
+export class CountOutput {
+	@ApiProperty({ example: 1, description: 'FinishedBy' })
+	@IsNumber()
+	finishedBy: number
+
+	@ApiProperty({ example: 1, description: 'ReadingBy' })
+	@IsNumber()
+	readingBy: number
+
+	@ApiProperty({ example: 1, description: 'SavedBy' })
+	@IsNumber()
+	savedBy: number
+}
+
+export class AdminInfoByIdOutput extends ShortBook {
+	@ApiProperty({ example: '2021-07-01', description: 'book created at' })
+	@IsString()
+	createdAt: Date
+
+	@ApiProperty({ example: '2021-07-01', description: 'book updated at' })
+	@IsString()
+	updatedAt: Date
+
+	@ApiProperty({ example: true, description: 'book visibility' })
+	@IsBoolean()
+	visible: boolean
+	@ApiProperty({ example: 'ebook', description: 'book ebook' })
+	@IsString()
+	ebook: string
+	@ApiProperty({ example: 'description', description: 'book description' })
+	@IsString()
+	description: string
+	@ApiProperty({ example: 100, description: 'book popularity' })
+	@IsNumber()
+	popularity: number
+	@ApiProperty({ example: 100, description: 'book pages' })
+	@IsNumber()
+	pages: number
+	@ApiProperty({
+		type: [Activity],
+		description: 'book activities'
 	})
-)
-export const genreZ = extendApi(
-	z.object({
-		genres: z
-			.object({
-				id: z.number().int(),
-				name: z.string()
-			})
-			.array()
-	}),
-	{
-		genres: { example: [{ id: 1, name: 'genre' }], description: 'book genres' }
+	@IsArray()
+	@ValidateNested({ each: true })
+	@Type(() => Activity)
+	activities: Activity[]
+	@ApiProperty({
+		type: CountOutput,
+		description: 'book count'
+	})
+	@ValidateNested()
+	@Type(() => CountOutput)
+	_count: {
+		finishedBy: number
+		readingBy: number
+		savedBy: number
 	}
-)
+	@ApiProperty({
+		type: [Review],
+		description: 'book review'
+	})
+	@IsArray()
+	@ValidateNested({ each: true })
+	@Type(() => Review)
+	review: Review[]
 
-export const BookZ = extendApi(
-	z
-		.object({
-			description: z.string(),
-			picture: z.string(),
-			ebook: z.string(),
-			pages: z.number().int(),
-			popularity: z.number().int(),
-			visible: z.boolean()
-		})
-		.merge(shortBookZ)
-		.merge(genreZ),
-	{
-		description: { example: 'description', description: 'book description' },
-		picture: { example: 'picture', description: 'book picture' },
-		ebook: { example: 'ebook', description: 'book ebook' },
-		pages: { example: 100, description: 'book pages' },
-		popularity: { example: 100, description: 'book popularity' },
-		visible: { example: true, description: 'book visibility' }
-	}
-)
+	@ApiProperty({ type: [shortGenre] })
+	@IsArray()
+	@ValidateNested()
+	@Type(() => shortGenre)
+	genres: {
+		id: number
+		name: string
+	}[]
+}
 
-export const infoByIdZ = extendApi(
-	z.object({}).merge(shortBookZ).merge(genreZ),
-	{}
-)
+class ChapterChild {
+	@ApiProperty({ example: 'name', description: 'chapter child name' })
+	@IsString()
+	name: string
+	@ApiProperty({ example: 'link', description: 'chapter child link' })
+	@IsString()
+	link: string
+}
 
-export const adminInfoByIdZ = extendApi(
-	z
-		.object({
-			visible: z.boolean(),
-			ebook: z.string(),
-			description: z.string(),
-			popularity: z.number().int(),
-			pages: z.number().int(),
-			_count: z.object({
-				finishedBy: z.number().int(),
-				readingBy: z.number().int(),
-				savedBy: z.number().int()
-			}),
-			review: z
-				.object({
-					id: z.number().int(),
-					tags: z.string().array(),
-					text: z.string(),
-					rating: z.number().int(),
-					user: z.object({
-						id: z.number().int(),
-						email: z.string()
-					})
-				})
-				.array()
-		})
-		.merge(shortBookZ)
-		.merge(genreZ),
-	{
-		visible: { example: true, description: 'book visibility' },
-		ebook: { example: 'ebook', description: 'book ebook' },
-		description: { example: 'description', description: 'book description' },
-		popularity: { example: 100, description: 'book popularity' },
-		pages: { example: 100, description: 'book pages' },
-		_count: {
-			example: { finishedBy: 1, readingBy: 1, savedBy: 1 },
-			description: 'book count'
-		},
-		review: {
-			example: [
-				{
-					id: 1,
-					tags: 'tags',
-					text: 'text',
-					rating: 1,
-					user: { id: 1, email: 'email' }
-				}
-			],
-			description: 'book review'
-		}
-	}
-)
+class Chapter {
+	@ApiProperty({ example: 'title', description: 'chapter title' })
+	@IsString()
+	title: string
+	@ApiProperty({ type: [ChapterChild], description: 'chapter children' })
+	@ValidateNested({ each: true })
+	@Type(() => ChapterChild)
+	children: ChapterChild[]
+}
 
-export const ebookByIdOutput = extendApi(
-	z
-		.object({
-			file: z.string().array(),
-			chapters: z
-				.object({
-					title: z.string(),
-					children: z
-						.object({
-							name: z.string(),
-							link: z.string()
-						})
-						.array()
-				})
-				.array()
-		})
-		.merge(shortBookZ),
-	{
-		file: { example: ['file'], description: 'book file' },
-		chapters: {
-			example: [
-				{
-					title: 'title',
-					children: [{ name: 'name', link: 'link' }]
-				}
-			],
-			description: 'book chapters'
-		}
-	}
-)
-export class Book extends createZodDto(BookZ) {}
-export class ShortBook extends createZodDto(shortBookZ) {}
-export class AdminCatalogOutput extends createZodDto(adminCatalogZ) {}
-export class EbookByIdOutput extends createZodDto(ebookByIdOutput) {}
-export class InfoByIdOutput extends createZodDto(infoByIdZ) {}
-export class AdminInfoByIdOutput extends createZodDto(adminInfoByIdZ) {}
+export class EbookByIdOutput {
+	@IsString()
+	@ApiProperty({ example: 'title', description: 'book title' })
+	title: string
+	@ApiProperty({ type: [String], description: 'book file' })
+	@IsArray()
+	@IsString({ each: true })
+	file: string[]
+	@ApiProperty({ type: [Chapter], description: 'book chapters' })
+	@ValidateNested({ each: true })
+	@Type(() => Chapter)
+	chapters: Chapter[]
+}

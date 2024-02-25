@@ -6,7 +6,8 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
 	const { data: users } = useQuery({
 		queryKey: ['users', searchTerm, page],
-		queryFn: () => api.user.all(searchTerm, +page)
+		queryFn: () => api.user.adminCatalog(searchTerm, +page),
+		select: data => data.data
 	})
 
 	const { mutateAsync: deleteUser } = useMutation({

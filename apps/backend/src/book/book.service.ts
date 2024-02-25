@@ -9,8 +9,7 @@ import { serverError } from '../utils/helpers/call-error'
 import { transformActivity } from '../utils/services/activity/activity-transformer'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
-import type { CreateBookDto } from './dto/manipulation.book.dto'
-import { EditBookDto } from './dto/manipulation.book.dto'
+import { EditBookDto, type CreateBookDto } from './dto/manipulation.book.dto'
 import { returnBookObject } from './return.book.object'
 import type { EBookType } from './types'
 
@@ -269,7 +268,7 @@ export class BookService {
 		})
 	}
 
-	async delete(id: number) {
+	async remove(id: number) {
 		await this.checkExist(id)
 		await this.prisma.review.deleteMany({
 			where: {

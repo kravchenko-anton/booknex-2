@@ -27,7 +27,10 @@ export class UserController {
 
 	@Auth()
 	@Patch('/start-reading/:id')
-	async toggle(@CurrentUser('id') userId: number, @Param('id') id: number) {
+	async startReading(
+		@CurrentUser('id') userId: number,
+		@Param('id') id: number
+	) {
 		return this.usersService.startReading(userId, +id)
 	}
 
@@ -42,6 +45,7 @@ export class UserController {
 
 	@Auth()
 	@Patch('/toggle-save/:id')
+	@ApiOkResponse({ type: Boolean })
 	async toggleSave(@CurrentUser('id') userId: number, @Param('id') id: number) {
 		return this.usersService.toggleSave(userId, +id)
 	}

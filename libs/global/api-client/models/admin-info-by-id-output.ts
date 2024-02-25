@@ -15,13 +15,16 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AdminInfoByIdOutputCount } from './admin-info-by-id-output-count';
+import { Activity } from './activity';
 // May contain unused imports in some cases
 // @ts-ignore
-import { AdminInfoByIdOutputReviewInner } from './admin-info-by-id-output-review-inner';
+import { CountOutput } from './count-output';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserAdminCatalogDataInnerSelectedGenresInner } from './user-admin-catalog-data-inner-selected-genres-inner';
+import { Review } from './review';
+// May contain unused imports in some cases
+// @ts-ignore
+import { ShortGenre } from './short-genre';
 
 /**
  * 
@@ -30,76 +33,94 @@ import { UserAdminCatalogDataInnerSelectedGenresInner } from './user-admin-catal
  */
 export interface AdminInfoByIdOutput {
     /**
-     * 
-     * @type {boolean}
-     * @memberof AdminInfoByIdOutput
-     */
-    'visible': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof AdminInfoByIdOutput
-     */
-    'ebook': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AdminInfoByIdOutput
-     */
-    'description': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof AdminInfoByIdOutput
-     */
-    'popularity': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AdminInfoByIdOutput
-     */
-    'pages': number;
-    /**
-     * 
-     * @type {AdminInfoByIdOutputCount}
-     * @memberof AdminInfoByIdOutput
-     */
-    '_count': AdminInfoByIdOutputCount;
-    /**
-     * 
-     * @type {Array<AdminInfoByIdOutputReviewInner>}
-     * @memberof AdminInfoByIdOutput
-     */
-    'review': Array<AdminInfoByIdOutputReviewInner>;
-    /**
-     * 
+     * book id
      * @type {number}
      * @memberof AdminInfoByIdOutput
      */
     'id': number;
     /**
-     * 
+     * book title
      * @type {string}
      * @memberof AdminInfoByIdOutput
      */
     'title': string;
     /**
-     * 
+     * book picture
      * @type {string}
      * @memberof AdminInfoByIdOutput
      */
     'picture': string;
     /**
-     * 
+     * book author
      * @type {string}
      * @memberof AdminInfoByIdOutput
      */
     'author': string;
     /**
-     * 
-     * @type {Array<UserAdminCatalogDataInnerSelectedGenresInner>}
+     * book created at
+     * @type {string}
      * @memberof AdminInfoByIdOutput
      */
-    'genres': Array<UserAdminCatalogDataInnerSelectedGenresInner>;
+    'createdAt': string;
+    /**
+     * book updated at
+     * @type {string}
+     * @memberof AdminInfoByIdOutput
+     */
+    'updatedAt': string;
+    /**
+     * book visibility
+     * @type {boolean}
+     * @memberof AdminInfoByIdOutput
+     */
+    'visible': boolean;
+    /**
+     * book ebook
+     * @type {string}
+     * @memberof AdminInfoByIdOutput
+     */
+    'ebook': string;
+    /**
+     * book description
+     * @type {string}
+     * @memberof AdminInfoByIdOutput
+     */
+    'description': string;
+    /**
+     * book popularity
+     * @type {number}
+     * @memberof AdminInfoByIdOutput
+     */
+    'popularity': number;
+    /**
+     * book pages
+     * @type {number}
+     * @memberof AdminInfoByIdOutput
+     */
+    'pages': number;
+    /**
+     * book activities
+     * @type {Array<Activity>}
+     * @memberof AdminInfoByIdOutput
+     */
+    'activities': Array<Activity>;
+    /**
+     * book count
+     * @type {CountOutput}
+     * @memberof AdminInfoByIdOutput
+     */
+    '_count': CountOutput;
+    /**
+     * book review
+     * @type {Array<Review>}
+     * @memberof AdminInfoByIdOutput
+     */
+    'review': Array<Review>;
+    /**
+     * 
+     * @type {Array<ShortGenre>}
+     * @memberof AdminInfoByIdOutput
+     */
+    'genres': Array<ShortGenre>;
 }
 

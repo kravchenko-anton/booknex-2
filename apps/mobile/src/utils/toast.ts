@@ -1,4 +1,4 @@
-import { errorCatch } from 'global/utils/catch-error'
+import { errorCatch } from 'global/helpers/catch-error'
 import Toast from 'react-native-toast-message'
 
 export const errorToast = (error: unknown) => {

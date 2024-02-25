@@ -32,7 +32,7 @@ paths:
         - bearer: []
   "/api/user/start-reading/{id}":
     patch:
-      operationId: toggle
+      operationId: startReading
       parameters:
         - name: id
           required: true
@@ -74,6 +74,10 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: boolean
       tags:
         - user
       security:
@@ -171,7 +175,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/featuredOutput"
+                $ref: "#/components/schemas/FeaturedOutput"
       tags:
         - catalog
       security:
@@ -337,9 +341,9 @@ paths:
         - book
       security:
         - bearer: []
-  "/api/book/admin/delete/{id}":
+  "/api/book/admin/remove/{id}":
     delete:
-      operationId: delete
+      operationId: remove
       parameters:
         - name: id
           required: true
@@ -587,7 +591,7 @@ paths:
               properties:
                 file:
                   type: string
-                  format: epub
+                  format: binary
       responses:
         "200":
           description: Unfolded book content
@@ -596,7 +600,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/unfoldOutput"
+                  $ref: "#/components/schemas/UnfoldOutput"
       tags:
         - parser
       security:
@@ -669,7 +673,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/"
+                  $ref: "#/components/schemas/shortGenre"
       tags:
         - recommendation
       security:
@@ -717,543 +721,529 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: number
+          example: 1
         email:
           type: string
+          example: email
         bookCount:
-          type: integer
+          type: number
+          example: 1
         totalPageCount:
-          type: integer
+          type: number
+          example: 1
       required:
         - id
         - email
         - bookCount
         - totalPageCount
+    ShortBook:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: book id
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+      required:
+        - id
+        - title
+        - picture
+        - author
     UserLibrary:
       type: object
       properties:
         readingBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
         finishedBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
         savedBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
       required:
         - readingBooks
         - finishedBooks
         - savedBooks
+    shortGenre:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: genre id
+        name:
+          type: string
+          example: name
+          description: genre name
+      required:
+        - id
+        - name
+    ActivityItem:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Activity message
+          example: startedReading
+        time:
+          type: string
+          description: Active time
+          example: 2021-07-01T10:00:00
+        importance:
+          type: number
+          description: Activity importance
+          example: 1
+      required:
+        - message
+        - time
+        - importance
+    Activity:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Active date
+          example: 2021-07-01
+        count:
+          type: number
+          description: Active count
+          example: 10
+        level:
+          type: number
+          description: Active level
+          example: 10
+        activities:
+          description: List of activities
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivityItem"
+      required:
+        - date
+        - count
+        - level
+        - activities
+    UserCountOutput:
+      type: object
+      properties:
+        savedBooks:
+          type: number
+          example: 1
+        finishedBooks:
+          type: number
+          example: 1
+        readingBooks:
+          type: number
+          example: 1
+      required:
+        - savedBooks
+        - finishedBooks
+        - readingBooks
+    CatalogUserOutput:
+      type: object
+      properties:
+        role:
+          type: object
+          example: user
+          description: user role
+        id:
+          type: number
+          example: 1
+          description: user id
+        createdAt:
+          format: date-time
+          type: string
+          example: 2021-07-01
+          description: user created at
+        email:
+          type: string
+          example: email
+          description: user email
+        socialId:
+          type: string
+          example: socialId
+          description: user social id
+        password:
+          type: string
+          example: password
+          description: user password
+        picture:
+          type: string
+          example: picture
+          description: user picture
+        fullName:
+          type: string
+          example: fullName
+          description: user full name
+        location:
+          type: string
+          example: location
+          description: user location
+        selectedGenres:
+          type: array
+          items:
+            $ref: "#/components/schemas/shortGenre"
+        activities:
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+        _count:
+          description: Count of books finished, reading and saved by the user
+          allOf:
+            - $ref: "#/components/schemas/UserCountOutput"
+      required:
+        - role
+        - id
+        - createdAt
+        - email
+        - socialId
+        - password
+        - picture
+        - fullName
+        - location
+        - selectedGenres
+        - activities
+        - _count
     UserAdminCatalog:
       type: object
       properties:
         data:
           type: array
           items:
-            type: object
-            properties:
-              _count:
-                type: object
-                properties:
-                  savedBooks:
-                    type: integer
-                    required: true
-                  review:
-                    type: integer
-                    required: true
-                  finishedBooks:
-                    type: integer
-                    required: true
-                  readingBooks:
-                    type: integer
-                    required: true
-                required: true
-              selectedGenres:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      required: true
-                    name:
-                      type: string
-                      required: true
-                  required:
-                    - id
-                    - name
-                required: true
-              role:
-                type: string
-                enum:
-                  - user
-                  - admin
-                required: true
-              id:
-                type: integer
-                required: true
-              createdAt:
-                type: string
-                format: date-time
-                required: true
-              updatedAt:
-                type: string
-                format: date-time
-                required: true
-              email:
-                type: string
-                required: true
-              socialId:
-                type: string
-                required: true
-                nullable: true
-              password:
-                type: string
-                required: true
-                nullable: true
-              picture:
-                type: string
-                required: true
-              fullName:
-                type: string
-                required: true
-              location:
-                type: string
-                required: true
-            required:
-              - _count
-              - selectedGenres
-              - role
-              - id
-              - createdAt
-              - updatedAt
-              - email
-              - socialId
-              - password
-              - picture
-              - fullName
-              - location
+            $ref: "#/components/schemas/CatalogUserOutput"
         canLoadMore:
           type: boolean
+          example: true
         totalPages:
-          type: integer
+          type: number
+          example: 1
       required:
         - data
         - canLoadMore
         - totalPages
-    ShortBook:
-      type: object
-      properties:
-        id:
-          type: integer
-        title:
-          type: string
-        picture:
-          type: string
-        author:
-          type: string
-      required:
-        - id
-        - title
-        - picture
-        - author
-    featuredOutput:
+    FeaturedOutput:
       type: object
       properties:
         relatedGenres:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              name:
-                type: string
-                required: true
-            required:
-              - id
-              - name
+            $ref: "#/components/schemas/shortGenre"
         recommendations:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
         popularBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
         bestSellingBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
         newReleases:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
       required:
         - relatedGenres
         - recommendations
         - popularBooks
         - bestSellingBooks
         - newReleases
-    shortGenre:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      required:
-        - id
-        - name
     byIdOutput:
       type: object
       properties:
+        id:
+          type: number
+          example: 1
+          description: genre id
+        name:
+          type: string
+          example: name
+          description: genre name
         majorBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
-            id:
-              example: 1
-              description: book id
-            title:
-              example: title
-              description: book title
-            picture:
-              example: picture
-              description: book picture
-            author:
-              example: author
-              description: book author
-        id:
-          type: integer
-        name:
-          type: string
+            type: array
       required:
-        - majorBooks
         - id
         - name
+        - majorBooks
     InfoByIdOutput:
       type: object
       properties:
         id:
-          type: integer
+          type: number
+          example: 1
+          description: book id
         title:
           type: string
+          example: title
+          description: book title
         picture:
           type: string
+          example: picture
+          description: book picture
         author:
           type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
         genres:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              name:
-                type: string
-                required: true
-            required:
-              - id
-              - name
+            $ref: "#/components/schemas/shortGenre"
       required:
         - id
         - title
         - picture
         - author
+        - description
         - genres
+    ChapterChild:
+      type: object
+      properties:
+        name:
+          type: string
+          example: name
+          description: chapter child name
+        link:
+          type: string
+          example: link
+          description: chapter child link
+      required:
+        - name
+        - link
+    Chapter:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+          description: chapter title
+        children:
+          description: chapter children
+          type: array
+          items:
+            $ref: "#/components/schemas/ChapterChild"
+      required:
+        - title
+        - children
     EbookByIdOutput:
       type: object
       properties:
+        title:
+          type: string
+          example: title
+          description: book title
         file:
+          description: book file
           type: array
           items:
             type: string
         chapters:
+          description: book chapters
           type: array
           items:
-            type: object
-            properties:
-              title:
-                type: string
-                required: true
-              children:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      required: true
-                    link:
-                      type: string
-                      required: true
-                  required:
-                    - name
-                    - link
-                required: true
-            required:
-              - title
-              - children
-        id:
-          type: integer
-        title:
-          type: string
-        picture:
-          type: string
-        author:
-          type: string
+            $ref: "#/components/schemas/Chapter"
       required:
+        - title
         - file
         - chapters
+    CountOutput:
+      type: object
+      properties:
+        finishedBy:
+          type: number
+          example: 1
+          description: FinishedBy
+        readingBy:
+          type: number
+          example: 1
+          description: ReadingBy
+        savedBy:
+          type: number
+          example: 1
+          description: SavedBy
+      required:
+        - finishedBy
+        - readingBy
+        - savedBy
+    Review:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: review id
+        tags:
+          example: tags
+          description: review tags
+          type: array
+          items:
+            type: string
+        text:
+          type: string
+          example: text
+          description: review text
+        rating:
+          type: number
+          example: 1
+          description: review rating
+      required:
+        - id
+        - tags
+        - text
+        - rating
+    AdminInfoByIdOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: book id
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+        createdAt:
+          format: date-time
+          type: string
+          example: 2021-07-01
+          description: book created at
+        updatedAt:
+          format: date-time
+          type: string
+          example: 2021-07-01
+          description: book updated at
+        visible:
+          type: boolean
+          example: true
+          description: book visibility
+        ebook:
+          type: string
+          example: ebook
+          description: book ebook
+        description:
+          type: string
+          example: description
+          description: book description
+        popularity:
+          type: number
+          example: 100
+          description: book popularity
+        pages:
+          type: number
+          example: 100
+          description: book pages
+        activities:
+          description: book activities
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+        _count:
+          description: book count
+          allOf:
+            - $ref: "#/components/schemas/CountOutput"
+        review:
+          description: book review
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/shortGenre"
+      required:
         - id
         - title
         - picture
         - author
-    AdminInfoByIdOutput:
-      type: object
-      properties:
-        visible:
-          type: boolean
-        ebook:
-          type: string
-        description:
-          type: string
-        popularity:
-          type: integer
-        pages:
-          type: integer
-        _count:
-          type: object
-          properties:
-            finishedBy:
-              type: integer
-              required: true
-            readingBy:
-              type: integer
-              required: true
-            savedBy:
-              type: integer
-              required: true
-        review:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              tags:
-                type: array
-                items:
-                  type: string
-                required: true
-              text:
-                type: string
-                required: true
-              rating:
-                type: integer
-                required: true
-              user:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    required: true
-                  email:
-                    type: string
-                    required: true
-                required: true
-            required:
-              - id
-              - tags
-              - text
-              - rating
-              - user
-        id:
-          type: integer
-        title:
-          type: string
-        picture:
-          type: string
-        author:
-          type: string
-        genres:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              name:
-                type: string
-                required: true
-            required:
-              - id
-              - name
-      required:
+        - createdAt
+        - updatedAt
         - visible
         - ebook
         - description
         - popularity
         - pages
+        - activities
         - _count
         - review
+        - genres
+    Book:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: book id
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        pages:
+          type: number
+          example: 100
+          description: book pages
+        popularity:
+          type: number
+          example: 100
+          description: book popularity
+        visible:
+          type: boolean
+          example: true
+          description: book visibility
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/shortGenre"
+      required:
         - id
         - title
         - picture
         - author
+        - description
+        - pages
+        - popularity
+        - visible
         - genres
     AdminCatalogOutput:
       type: object
@@ -1261,72 +1251,13 @@ components:
         data:
           type: array
           items:
-            type: object
-            properties:
-              description:
-                type: string
-                required: true
-              pages:
-                type: integer
-                required: true
-              popularity:
-                type: integer
-                required: true
-              visible:
-                type: boolean
-                required: true
-              genres:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      required: true
-                    name:
-                      type: string
-                      required: true
-                  required:
-                    - id
-                    - name
-                required: true
-              majorGenre:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    required: true
-                  name:
-                    type: string
-                    required: true
-                required: true
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - description
-              - pages
-              - popularity
-              - visible
-              - genres
-              - majorGenre
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/Book"
         canLoadMore:
           type: boolean
+          example: true
         totalPages:
-          type: integer
+          type: number
+          example: 1
       required:
         - data
         - canLoadMore
@@ -1336,126 +1267,136 @@ components:
       properties:
         title:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Title of the book
+          example: The Great Gatsby
         author:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Author of the book
+          example: F. Scott Fitzgerald
         description:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Uploaded picture
+          example: picture.jpg
         picture:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Description of the book
+          example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
+            First published in 1925, it is set on Long Island's North Shore and
+            in New York City from spring to autumn of 1922.
         ebook:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Uploaded ebook
+          example: ebook.pdf
         pages:
           type: number
-          minimum: 0
-          exclusiveMinimum: true
+          description: Number of pages in the book
+          example: 300
         popularity:
           type: number
-          minimum: 0
-          exclusiveMinimum: true
+          description: Number of goodRead reviews
+          example: 1000000
         genres:
+          description: Array of genres
+          example:
+            - 1
+            - 2
+            - 3
           type: array
           items:
             type: number
-            minimum: 0
-            exclusiveMinimum: true
-      required:
-        - title
-        - author
-        - description
-        - picture
-        - ebook
-        - pages
-        - popularity
-        - genres
     EditBookDto:
       type: object
       properties:
         title:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Title of the book
+          example: The Great Gatsby
         author:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Author of the book
+          example: F. Scott Fitzgerald
         description:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Uploaded picture
+          example: picture.jpg
         picture:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Description of the book
+          example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
+            First published in 1925, it is set on Long Island's North Shore and
+            in New York City from spring to autumn of 1922.
         ebook:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: Uploaded ebook
+          example: ebook.pdf
         pages:
           type: number
-          minimum: 0
-          exclusiveMinimum: true
+          description: Number of pages in the book
+          example: 300
+        visible:
+          type: boolean
+          description: Is book visible
+          example: true
         popularity:
           type: number
-          minimum: 0
-          exclusiveMinimum: true
+          description: Number of goodRead reviews
+          example: 1000000
         genres:
+          description: Array of genres
+          example:
+            - 1
+            - 2
+            - 3
           type: array
           items:
-            type: number
-            minimum: 0
-            exclusiveMinimum: true
-      required:
-        - title
-        - author
-        - description
-        - picture
-        - ebook
-        - pages
-        - popularity
-        - genres
+            type: string
     SignDto:
       type: object
       properties:
         socialId:
           type: string
+          description: Social id
+          example: "1234567890"
       required:
         - socialId
+    AuthUserDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: User id
+          example: 1
+        email:
+          type: string
+          description: User email
+          example: test@gmail.com
+        role:
+          type: object
+          description: User role
+          example: user
+      required:
+        - id
+        - email
+        - role
     AuthResponseDto:
       type: object
       properties:
         accessToken:
           type: string
+          description: Access token
+          example: "1234567890"
         refreshToken:
           type: string
+          description: Refresh token
+          example: "1234567890"
         type:
           type: string
+          description: type of auth
+          example: login
         user:
-          type: object
-          properties:
-            id:
-              type: number
-              minimum: 0
-              exclusiveMinimum: true
-              required: true
-            email:
-              type: string
-              required: true
-            role:
-              type: string
-              enum:
-                - admin
-                - user
-              required: true
+          description: User data
+          allOf:
+            - $ref: "#/components/schemas/AuthUserDto"
       required:
         - accessToken
         - refreshToken
@@ -1466,10 +1407,12 @@ components:
       properties:
         email:
           type: string
-          format: email
+          description: User email
+          example: test@gmail.com
         password:
           type: string
-          minLength: 8
+          description: User password
+          example: password
       required:
         - email
         - password
@@ -1478,6 +1421,8 @@ components:
       properties:
         refreshToken:
           type: string
+          description: Refresh token
+          example: "1234567890"
       required:
         - refreshToken
     FilenameDto:
@@ -1485,8 +1430,6 @@ components:
       properties:
         filename:
           type: string
-          minLength: 1
-          maxLength: 255
       required:
         - filename
     UploadOutputDto:
@@ -1494,119 +1437,87 @@ components:
       properties:
         name:
           type: string
-          minLength: 1
-          maxLength: 255
       required:
         - name
-    BookTemplateCatalogOutput:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              createdAt:
-                type: string
-                format: date-time
-                required: true
-              updatedAt:
-                type: string
-                format: date-time
-                required: true
-              title:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-              description:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              pages:
-                type: integer
-                required: true
-              popularity:
-                type: integer
-                required: true
-            required:
-              - id
-              - createdAt
-              - updatedAt
-              - title
-              - author
-              - description
-              - picture
-              - pages
-              - popularity
-        canLoadMore:
-          type: boolean
-        totalPages:
-          type: integer
-      required:
-        - data
-        - canLoadMore
-        - totalPages
     BookTemplate:
       type: object
       properties:
         id:
-          type: integer
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
+          type: number
+          description: id of the book
         title:
           type: string
+          description: title of the book
         author:
           type: string
+          description: author of the book
         description:
           type: string
+          description: description of the book
         picture:
           type: string
+          description: picture of the book
         pages:
-          type: integer
+          type: number
+          description: pages of the book
         popularity:
-          type: integer
+          type: number
+          description: popularity of the book
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/shortGenre"
       required:
         - id
-        - createdAt
-        - updatedAt
         - title
         - author
         - description
         - picture
         - pages
         - popularity
+        - genres
+    BookTemplateCatalogOutput:
+      type: object
+      properties:
+        data:
+          description: book template
+          type: array
+          items:
+            $ref: "#/components/schemas/BookTemplate"
+        canLoadMore:
+          type: boolean
+          description: can load more
+        totalPages:
+          type: number
+          description: total pages
+      required:
+        - data
+        - canLoadMore
+        - totalPages
     ParserDto:
       type: object
       properties:
         url:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: url of the parser
         page:
-          type: integer
+          type: number
+          description: page of the parser
       required:
         - url
         - page
-    unfoldOutput:
+    UnfoldOutput:
       type: object
       properties:
         id:
-          type: integer
+          type: number
+          description: id of the chapter
         name:
           type: string
+          description: name of the chapter
         text:
           type: string
+          description: text of the chapter
       required:
         - id
         - name
@@ -1615,25 +1526,28 @@ components:
       type: object
       properties:
         rating:
-          type: integer
-          minimum: 1
-          maximum: 5
+          type: number
+          example: 5
+          description: rating
         tags:
+          description: tags
           type: array
           items:
             type: string
         comment:
           type: string
+          example: comment
+          description: comment
       required:
         - rating
+        - tags
     UserUpdateSelectedGenresDto:
       type: object
       properties:
         selectedGenres:
+          description: selected genres
           type: array
           items:
             type: number
-            minimum: 0
-            exclusiveMinimum: true
       required:
         - selectedGenres

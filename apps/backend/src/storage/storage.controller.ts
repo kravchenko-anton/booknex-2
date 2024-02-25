@@ -96,6 +96,7 @@ export class StorageController {
 		name: 'folder',
 		enum: ['ebooks', 'booksCovers']
 	})
+	@ApiConsumes('multipart/form-data')
 	@ApiBody({
 		schema: {
 			type: 'object',

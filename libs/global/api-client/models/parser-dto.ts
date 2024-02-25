@@ -21,13 +21,13 @@
  */
 export interface ParserDto {
     /**
-     * 
+     * url of the parser
      * @type {string}
      * @memberof ParserDto
      */
     'url': string;
     /**
-     * 
+     * page of the parser
      * @type {number}
      * @memberof ParserDto
      */

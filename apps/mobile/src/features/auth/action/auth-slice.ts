@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { IAuthState } from 'global/services-types/auth-types'
+import type { AuthResponseDto } from 'global/api-client'
 import { googleLogin, logout, mailLogin, mailRegister } from './auth-action'
 
 const initialState = {
 	isLoading: false,
 	authType: null as 'register' | 'login' | null,
-	user: null as IAuthState | null
+	user: null as AuthResponseDto['user'] | null
 }
 
 export const authSlice = createSlice({
@@ -20,7 +20,7 @@ export const authSlice = createSlice({
 			.addCase(googleLogin.fulfilled, (state, { payload }) => {
 				state.isLoading = false
 				state.user = payload.user
-				state.authType = payload.type
+				state.authType = payload.type as 'register' | 'login'
 			})
 			.addCase(googleLogin.rejected, state => {
 				state.isLoading = false

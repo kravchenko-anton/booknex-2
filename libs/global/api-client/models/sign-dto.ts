@@ -21,7 +21,7 @@
  */
 export interface SignDto {
     /**
-     * 
+     * Social id
      * @type {string}
      * @memberof SignDto
      */

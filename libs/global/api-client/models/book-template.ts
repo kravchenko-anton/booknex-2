@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { ShortGenre } from './short-genre';
 
 /**
  * 
@@ -21,58 +24,52 @@
  */
 export interface BookTemplate {
     /**
-     * 
+     * id of the book
      * @type {number}
      * @memberof BookTemplate
      */
     'id': number;
     /**
-     * 
-     * @type {string}
-     * @memberof BookTemplate
-     */
-    'createdAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BookTemplate
-     */
-    'updatedAt': string;
-    /**
-     * 
+     * title of the book
      * @type {string}
      * @memberof BookTemplate
      */
     'title': string;
     /**
-     * 
+     * author of the book
      * @type {string}
      * @memberof BookTemplate
      */
     'author': string;
     /**
-     * 
+     * description of the book
      * @type {string}
      * @memberof BookTemplate
      */
     'description': string;
     /**
-     * 
+     * picture of the book
      * @type {string}
      * @memberof BookTemplate
      */
     'picture': string;
     /**
-     * 
+     * pages of the book
      * @type {number}
      * @memberof BookTemplate
      */
     'pages': number;
     /**
-     * 
+     * popularity of the book
      * @type {number}
      * @memberof BookTemplate
      */
     'popularity': number;
+    /**
+     * 
+     * @type {Array<ShortGenre>}
+     * @memberof BookTemplate
+     */
+    'genres': Array<ShortGenre>;
 }
 
