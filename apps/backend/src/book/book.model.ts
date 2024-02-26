@@ -180,6 +180,9 @@ class Chapter {
 
 export class EbookByIdOutput {
 	@IsString()
+	@ApiProperty({ example: 'image.png', description: 'book cover' })
+	picture: string
+	@IsString()
 	@ApiProperty({ example: 'title', description: 'book title' })
 	title: string
 	@ApiProperty({ type: [String], description: 'book file' })

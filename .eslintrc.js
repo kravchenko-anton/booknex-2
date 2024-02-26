@@ -9,6 +9,7 @@ module.exports = {
 		'destructuring',
 		'jsx-a11y',
 		'react',
+		'@nx',
 		'jsx-expressions'
 	],
 	extends: [

@@ -1,7 +1,7 @@
 'use client'
 import { Button, Field } from '@/components/ui'
-import { loginRoute } from '@/features/auth/secure-route'
 import { useAction } from '@/hooks'
+import { loginRoute } from '@/providers/secure-route'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
 import type { AuthDto } from 'global/api-client'

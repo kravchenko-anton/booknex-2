@@ -33,15 +33,15 @@ async function bootstrap() {
 			.addBearerAuth(),
 		{
 			webServerOptions: {
-				enabled: true,
+				enabled: process.env.NODE_ENV === 'development',
 				path: 'api-docs'
 			},
 			fileGeneratorOptions: {
-				enabled: true,
+				enabled: process.env.NODE_ENV === 'development',
 				outputFilePath: './openapi.yaml' // or ./openapi.json
 			},
 			clientGeneratorOptions: {
-				enabled: true,
+				enabled: process.env.NODE_ENV === 'development',
 				type: 'typescript-axios',
 				outputFolderPath: './libs/global/api-client',
 				additionalProperties:

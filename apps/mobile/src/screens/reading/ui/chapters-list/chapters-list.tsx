@@ -1,21 +1,20 @@
-import type { DefaultBottomSheetProperties } from '@/features/reader/types'
 import { useTypedSelector } from '@/hooks'
 import { Title } from '@/ui'
-import BottomSheet, {
+import {
 	BottomSheetBackdrop,
+	BottomSheetModal,
 	BottomSheetSectionList
 } from '@gorhom/bottom-sheet'
-import type { ChaptersType } from 'global/services-types/book-types'
+import type { Chapter } from 'global/api-client'
 import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Pressable } from 'react-native'
 
-const ChaptersList: FC<
-	{
-		chapters: ChaptersType
-		openChapter: (chapterId: string) => void
-	} & DefaultBottomSheetProperties
-> = ({ chapters, close, openChapter }) => {
+const ChaptersList: FC<{
+	SheetRef: any
+	chapters: Chapter[]
+	openChapter: (chapterId: string) => void
+}> = ({ SheetRef, chapters, openChapter }) => {
 	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	const sections = useMemo(
 		() =>
@@ -30,22 +29,19 @@ const ChaptersList: FC<
 	)
 
 	return (
-		<BottomSheet
+		<BottomSheetModal
 			enableContentPanningGesture
 			enableHandlePanningGesture
 			enablePanDownToClose
 			enableOverDrag
+			ref={SheetRef}
 			snapPoints={['40%', '50%']}
 			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
 			backgroundStyle={{
 				backgroundColor: colorScheme.colorPalette.background.darker
 			}}
 			backdropComponent={backdropProperties => (
-				<BottomSheetBackdrop
-					onPress={close}
-					{...backdropProperties}
-					enableTouchThrough
-				/>
+				<BottomSheetBackdrop {...backdropProperties} enableTouchThrough />
 			)}
 		>
 			<BottomSheetSectionList
@@ -97,7 +93,7 @@ const ChaptersList: FC<
 					</Pressable>
 				)}
 			/>
-		</BottomSheet>
+		</BottomSheetModal>
 	)
 }
 

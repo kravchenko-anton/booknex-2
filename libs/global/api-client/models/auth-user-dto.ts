@@ -34,9 +34,17 @@ export interface AuthUserDto {
     'email': string;
     /**
      * User role
-     * @type {object}
+     * @type {string}
      * @memberof AuthUserDto
      */
-    'role': object;
+    'role': RoleEnum;
 }
+
+export const RoleEnum = {
+    User: 'user',
+    Admin: 'admin'
+} as const;
+
+export type RoleEnum = typeof RoleEnum[keyof typeof RoleEnum];
+
 

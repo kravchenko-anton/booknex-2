@@ -4,9 +4,10 @@ import { JwtService } from '@nestjs/jwt'
 import { Activities, Role, type Prisma, type User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
+import * as process from 'node:process'
+import { AuthErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
-import { AuthErrors, GlobalErrorsEnum } from '../utils/common/errors'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -154,8 +155,7 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				//TODO: когда перейдем на продакшн поменять на 15m
-				expiresIn: '25m'
+				expiresIn: process.env.NODE_ENV === 'development' ? '10s' : '15m'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'

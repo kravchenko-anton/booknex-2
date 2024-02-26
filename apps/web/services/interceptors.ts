@@ -2,7 +2,7 @@ import {
 	deleteTokensStorage,
 	getAccessToken,
 	getNewTokens
-} from '@/features/auth/action/auth-helper'
+} from '@/redux/auth/auth-helper'
 import axios from 'axios'
 import { serverURL } from 'global/api-config'
 import { errorCatch } from 'global/helpers/catch-error'

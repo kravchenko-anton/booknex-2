@@ -1,6 +1,6 @@
 'use client'
 import Sidebar from '@/components/sidebar/sidebar'
-import { adminRoute } from '@/features/auth/secure-route'
+import { adminRoute } from '@/providers/secure-route'
 import type { FC, PropsWithChildren } from 'react'
 
 const AdminLayout: FC<PropsWithChildren> = ({ children }) => (

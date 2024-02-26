@@ -71,6 +71,9 @@ window.addEventListener('scroll', function() {
 
  timerId = setTimeout(() => {
    let currentScrollPosition = document.body.scrollTop;
+		if  (currentScrollPosition === 100) {
+			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finishBook' }))
+		};
    window.ReactNativeWebView.postMessage(JSON.stringify({
      type: "scroll",
      payload: {
@@ -197,6 +200,5 @@ export const getStyleTag = ({
 	}
 	.finish-book-button-container {
 		background: ${colorPalette.background.darker} !important;
-		border-top: 2px solid ${colorPalette.secondary} !important;
 	}
 	`

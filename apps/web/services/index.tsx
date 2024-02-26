@@ -19,7 +19,7 @@ export default {
 			isJsonMime: () => false
 		},
 		undefined,
-		instance
+		undefined
 	),
 	book: new BookApi(
 		{

@@ -1,23 +1,24 @@
-import {
-	fontSizeSettings,
-	ReaderFont,
-	type ReaderFontsEnum
-} from '@/features/reader/action/reading-settings-slice'
-import LineHeightIcon from '@/features/reader/sheet/reading/icons/line-height'
-import PageMarginIcon from '@/features/reader/sheet/reading/icons/page-margin'
-import { themePack } from '@/features/reader/sheet/reading/theme-pack'
-import type { DefaultBottomSheetProperties } from '@/features/reader/types'
 import { useAction, useTypedSelector } from '@/hooks'
+import {
+	ReaderFont,
+	fontSizeSettings,
+	type ReaderFontsEnum
+} from '@/redux/reader/reading-settings-slice'
+import LineHeightIcon from '@/screens/reading/ui/reading/icons/line-height'
+import PageMarginIcon from '@/screens/reading/ui/reading/icons/page-margin'
+import { themePack } from '@/screens/reading/ui/reading/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
 import { cn } from '@/utils'
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import { Color } from 'global/colors'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { Pressable, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 
-const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
+const ReadingSettings: FC<{
+	sheetRef: any
+}> = ({ sheetRef }) => {
 	const {
 		changePadding,
 		changeTheme,
@@ -29,22 +30,19 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 		state => state.readingSettings
 	)
 	return (
-		<BottomSheet
+		<BottomSheetModal
 			enableContentPanningGesture
 			enableHandlePanningGesture
 			enablePanDownToClose
 			enableOverDrag
 			snapPoints={[290, 290]}
 			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
+			ref={sheetRef}
 			backgroundStyle={{
 				backgroundColor: colorScheme.colorPalette.background.darker
 			}}
 			backdropComponent={backdropProperties => (
-				<BottomSheetBackdrop
-					onPress={close}
-					{...backdropProperties}
-					enableTouchThrough
-				/>
+				<BottomSheetBackdrop {...backdropProperties} enableTouchThrough />
 			)}
 		>
 			<Pressable>
@@ -236,7 +234,7 @@ const ReadingSettings: FC<DefaultBottomSheetProperties> = ({ close }) => {
 					</View>
 				</View>
 			</Pressable>
-		</BottomSheet>
+		</BottomSheetModal>
 	)
 }
 

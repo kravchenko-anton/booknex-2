@@ -2,7 +2,10 @@ import prettify from '@liquify/prettify'
 import { HttpStatus } from '@nestjs/common'
 import EPub from 'epub2'
 import { JSDOM } from 'jsdom'
-import { AdminErrors, GlobalErrorsEnum } from '../../utils/common/errors'
+import {
+	AdminErrors,
+	GlobalErrorsEnum
+} from '../../../../../libs/global/errors'
 import { serverError } from '../../utils/helpers/call-error'
 import type { UnfoldOutput } from '../parser.model'
 

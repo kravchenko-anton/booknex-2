@@ -22,7 +22,12 @@ const UpdateRecommendation = () => {
 	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
 		mutationKey: ['update-recommendation'],
 		mutationFn: (dto: UserUpdateSelectedGenresDto) =>
-			api.recommendation.updateRecommendations(dto)
+			api.recommendation.updateRecommendations(dto),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['recommendation-genres']
+			})
+		}
 	})
 	const { navigate } = useTypedNavigation()
 	if (!genres) return <Loader />

@@ -1,4 +1,4 @@
-import { GlobalErrorsEnum } from '../../../apps/backend/src/utils/common/errors'
+import { GlobalErrorsEnum } from '../errors'
 
 export const errorCatch = (error: any): string => {
 	if (typeof error === 'string') return error

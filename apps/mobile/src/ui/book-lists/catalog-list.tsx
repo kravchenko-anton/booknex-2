@@ -31,7 +31,7 @@ const CatalogList = ({
 		}}
 		renderItem={({ item: book }) => (
 			<AnimatedPress
-				className='mb-4 w-[48%]'
+				className='mb-4 w-[43%]'
 				onPress={() => onElementPress(book.id)}
 			>
 				<Image

@@ -3,6 +3,7 @@ import Navigation from '@/navigation/navigation'
 import { persistor, store } from '@/redux/store'
 import Loader from '@/ui/loader/loader'
 import Toast from '@/ui/toast'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
@@ -47,7 +48,9 @@ export default function app() {
 								flex: 1
 							}}
 						>
-							<Navigation />
+							<BottomSheetModalProvider>
+								<Navigation />
+							</BottomSheetModalProvider>
 						</GestureHandlerRootView>
 						<Toast />
 					</ClickOutsideProvider>

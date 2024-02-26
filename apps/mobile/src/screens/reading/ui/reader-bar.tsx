@@ -1,4 +1,5 @@
 import { useTypedNavigation } from '@/hooks'
+import type { ThemePackType } from '@/screens/reading/ui/reading/theme-pack'
 import { Title } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import type { FunctionType } from 'global/types'
@@ -8,14 +9,13 @@ import { View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const ReadingUi: FC<{
+const ReaderBar: FC<{
 	title: string
 	visible: boolean
 	progress: number
 	onChapterIconPress: FunctionType
 	onSelectThemeIconPress: FunctionType
-	//TODO: типизировать
-	colorPalette: any
+	colorPalette: ThemePackType['colorPalette']
 }> = ({
 	visible = false,
 	colorPalette = {},
@@ -38,8 +38,8 @@ const ReadingUi: FC<{
 					opacityAnimation,
 					{
 						top,
-						backgroundColor: colorPalette.background.darker,
-						borderBottomColor: colorPalette.background.lighter
+						backgroundColor: colorPalette?.background?.darker,
+						borderBottomColor: colorPalette?.background?.lighter
 					}
 				]}
 			>
@@ -88,16 +88,14 @@ const ReadingUi: FC<{
 				<View
 					className='relative w-full'
 					style={{
-						backgroundColor: colorPalette.background.lighter
+						backgroundColor: colorPalette?.background?.lighter
 					}}
 				>
 					<View
-						className=' absolute bottom-0 left-0 h-1'
+						className=' absolute bottom-0 left-0 h-0.5'
 						style={{
 							backgroundColor: colorPalette.primary,
-							width: `${progress}%`,
-							borderBottomRightRadius: 100,
-							borderTopRightRadius: 100
+							width: `${progress}%`
 						}}
 					/>
 				</View>
@@ -106,4 +104,4 @@ const ReadingUi: FC<{
 	)
 }
 
-export default ReadingUi
+export default ReaderBar

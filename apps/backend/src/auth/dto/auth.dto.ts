@@ -34,7 +34,8 @@ export class AuthUserDto {
 	email: string
 	@ApiProperty({
 		description: 'User role',
-		example: 'user'
+		example: 'user',
+		enum: Role
 	})
 	@IsEnum(Role)
 	role: keyof typeof Role

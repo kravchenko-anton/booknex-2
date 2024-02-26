@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { AdminErrors } from '../utils/common/errors'
+import { AdminErrors } from '../../../../libs/global/errors'
 import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { PrismaService } from '../utils/services/prisma.service'

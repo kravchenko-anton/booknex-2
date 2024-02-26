@@ -28,9 +28,9 @@ export class Genre extends shortGenre {
 }
 
 export class byIdOutput extends shortGenre {
+	@ApiProperty({ type: [ShortBook] })
 	@IsArray()
 	@ValidateNested()
 	@Type(() => ShortBook)
-	@ApiProperty({ type: [ShortBook] })
 	majorBooks: ShortBook[]
 }

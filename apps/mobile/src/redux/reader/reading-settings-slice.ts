@@ -1,7 +1,7 @@
 import {
 	themePack,
 	type ThemePackType
-} from '@/features/reader/sheet/reading/theme-pack'
+} from '@/screens/reading/ui/reading/theme-pack'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 

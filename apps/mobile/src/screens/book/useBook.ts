@@ -1,10 +1,8 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { successToast } from '@/utils/toast'
-import { HttpStatus } from '@nestjs/common'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { GlobalErrorsEnum } from 'backend/src/utils/common/errors'
-import { serverError } from 'backend/src/utils/helpers/call-error'
+import { GlobalErrorsEnum } from 'global/errors'
 
 export const useBook = () => {
 	const { params } = useTypedRoute<'Book'>()
@@ -45,8 +43,7 @@ export const useBook = () => {
 	})
 
 	const startReadingBook = async () => {
-		if (!book)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		if (!book) throw new Error(GlobalErrorsEnum.somethingWrong)
 		await startReading(book.id)
 		await queryClient
 			.invalidateQueries({

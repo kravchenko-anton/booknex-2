@@ -10,15 +10,80 @@ import {
 	StorageApi,
 	UserApi
 } from 'global/api-client'
+import { emulatorServerURL } from 'global/api-config'
+import 'react-native-url-polyfill/auto'
 
 export default {
-	auth: new AuthApi(undefined, undefined, instance),
-	book: new BookApi(undefined, undefined, instance),
-	genre: new GenreApi(undefined, undefined, instance),
-	parser: new ParserApi(undefined, undefined, instance),
-	catalog: new CatalogApi(undefined, undefined, instance),
-	storage: new StorageApi(undefined, undefined, instance),
-	user: new UserApi(undefined, undefined, instance),
-	review: new ReviewApi(undefined, undefined, instance),
-	recommendation: new RecommendationApi(undefined, undefined, instance)
+	auth: new AuthApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		undefined
+	),
+	book: new BookApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
+	),
+	genre: new GenreApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
+	),
+	parser: new ParserApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
+	),
+	catalog: new CatalogApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
+	),
+	storage: new StorageApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
+	),
+	user: new UserApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
+	),
+	review: new ReviewApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
+	),
+	recommendation: new RecommendationApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
+	)
 }

@@ -1,7 +1,7 @@
 'use client'
 
-import { getRefreshToken } from '@/features/auth/action/auth-helper'
 import { useAction, useAuth } from '@/hooks'
+import { getRefreshToken } from '@/redux/auth/auth-helper'
 import { redirect } from 'next/navigation'
 import { useLayoutEffect, type FC } from 'react'
 

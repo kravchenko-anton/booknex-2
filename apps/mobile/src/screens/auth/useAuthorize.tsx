@@ -1,5 +1,4 @@
-import { useAuth } from '@/features/auth/useAuth'
-import { useTypedNavigation } from '@/hooks'
+import { useAuth, useTypedNavigation } from '@/hooks'
 import { useEffect } from 'react'
 
 export const useAuthorize = () => {

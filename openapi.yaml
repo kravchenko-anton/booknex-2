@@ -1050,6 +1050,10 @@ components:
     EbookByIdOutput:
       type: object
       properties:
+        picture:
+          type: string
+          example: image.png
+          description: book cover
         title:
           type: string
           example: title
@@ -1065,6 +1069,7 @@ components:
           items:
             $ref: "#/components/schemas/Chapter"
       required:
+        - picture
         - title
         - file
         - chapters
@@ -1371,9 +1376,12 @@ components:
           description: User email
           example: test@gmail.com
         role:
-          type: object
+          type: string
           description: User role
           example: user
+          enum:
+            - user
+            - admin
       required:
         - id
         - email

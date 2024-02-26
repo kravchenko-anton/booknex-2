@@ -1,9 +1,9 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
+import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
 import { GenreService } from '../genre/genre.service'
 import { ReturnGenreObject } from '../genre/return.genre.object'
-import { AdminErrors, GlobalErrorsEnum } from '../utils/common/errors'
 import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { transformActivity } from '../utils/services/activity/activity-transformer'
@@ -95,6 +95,7 @@ export class BookService {
 		const book = await this.findOne({
 			where: { id: +id, visible: true },
 			select: {
+				description: true,
 				majorGenre: false,
 				genres: { select: ReturnGenreObject }
 			}
@@ -169,7 +170,8 @@ export class BookService {
 		const book = await this.findOne({
 			where: { id },
 			select: {
-				ebook: true
+				ebook: true,
+				picture: true
 			}
 		})
 		const ebook: EBookType = await fetch(getFileUrl(book.ebook)).then(result =>
@@ -204,12 +206,10 @@ export class BookService {
 		const perPage = 20
 		const count = await this.prisma.book.count()
 		return {
-			//TODO: переделать тут чтобы данные сохранились но я не юзал
 			data: await this.findMany({
 				take: perPage,
 				onlyVisible: false,
 				select: {
-					//TODO: сделать тут через include
 					genres: { select: ReturnGenreObject },
 					pages: true,
 					popularity: true,

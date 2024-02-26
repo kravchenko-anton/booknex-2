@@ -24,6 +24,12 @@ import { Chapter } from './chapter';
  */
 export interface EbookByIdOutput {
     /**
+     * book cover
+     * @type {string}
+     * @memberof EbookByIdOutput
+     */
+    'picture': string;
+    /**
      * book title
      * @type {string}
      * @memberof EbookByIdOutput

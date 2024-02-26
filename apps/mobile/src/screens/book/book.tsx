@@ -106,7 +106,7 @@ const Book: FC = () => {
 					</Button>
 				)}
 			/>
-			<Description size={18} className='mt-2 px-2' weight='light'>
+			<Description size={18} className='mt-2 px-2 pb-8' weight='light'>
 				{book.description}
 			</Description>
 

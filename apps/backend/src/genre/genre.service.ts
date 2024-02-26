@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
+import { GlobalErrorsEnum } from '../../../../libs/global/errors'
 import { returnBookObject } from '../book/return.book.object'
-import { GlobalErrorsEnum } from '../utils/common/errors'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'

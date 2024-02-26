@@ -10,7 +10,7 @@ export const settings: {
 		lg: 190
 	},
 	height: {
-		sm: 160,
+		sm: 170,
 		md: 220,
 		lg: 260
 	}

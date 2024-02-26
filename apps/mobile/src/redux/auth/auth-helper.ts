@@ -1,6 +1,4 @@
-import axios from 'axios'
-import type { AuthResponseDto } from 'global/api-client'
-import { emulatorServerURL } from 'global/api-config'
+import api from '@/api'
 
 import EncryptedStorage from 'react-native-encrypted-storage'
 
@@ -35,12 +33,7 @@ export const getNewTokens = async () => {
 	const refreshToken = await getRefreshToken()
 	if (!refreshToken) throw new Error('No refresh token')
 	console.log('refreshToken', refreshToken)
-	const response = await axios
-		.post<
-			string,
-			{ data: AuthResponseDto }
-		>(emulatorServerURL + 'auth/refresh', { refreshToken })
-		.then(result => result.data)
+	const { data: response } = await api.auth.refreshToken({ refreshToken })
 	console.log(
 		'response',
 		response,

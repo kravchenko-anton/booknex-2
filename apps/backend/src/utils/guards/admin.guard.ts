@@ -5,7 +5,7 @@ import {
 	type ExecutionContext
 } from '@nestjs/common'
 import { Role, type User } from '@prisma/client'
-import { AdminErrors } from '../common/errors'
+import { AdminErrors } from '../../../../../libs/global/errors'
 import { serverError } from '../helpers/call-error'
 
 @Injectable()

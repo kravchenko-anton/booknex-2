@@ -1,10 +1,10 @@
-import { getRefreshToken } from '@/features/auth/action/auth-helper'
 import { useAction, useAuth } from '@/hooks'
 import { authRoutes } from '@/navigation/auth-routes'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
 import { modalRoutes } from '@/navigation/modal-routes'
 import type { TypeRootStackParameterListType } from '@/navigation/types'
 import { routes } from '@/navigation/user-routes'
+import { getRefreshToken } from '@/redux/auth/auth-helper'
 import { Loader } from '@/ui'
 import {
 	NavigationContainer,

@@ -1,46 +1,35 @@
-import api from '@/api'
 import {
 	beforeLoad,
 	finishBookButton,
 	handleDoublePress,
-	injectStyle,
 	scrollProgressDetect
-} from '@/features/reader/book-viewer-function'
-import ReadingUi from '@/features/reader/reading-ui'
-import { useReadingSheets } from '@/features/reader/sheet/useReadingSheets'
-import { useReading } from '@/features/reader/useReading'
-import { useTypedRoute } from '@/hooks'
+} from '@/screens/reading/helpers/book-viewer-function'
+import ReaderUi from '@/screens/reading/ui/reader-ui'
+import { useReading } from '@/screens/reading/useReading'
 
 import { Loader } from '@/ui'
 import { windowHeight, windowWidth } from '@/utils/dimensions'
-import { useQuery } from '@tanstack/react-query'
+import { getFileUrl } from 'global/api-config'
 import { Color } from 'global/colors'
-import { memo, useEffect, useRef, useState } from 'react'
+import { memo } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import WebView from 'react-native-webview'
 
-//TODO: оптимизировать тут всё
+//TODO: переделать реадер на контекст и сделать его в 100 раз красивее
 const Reader = () => {
-	const { params } = useTypedRoute<'Reader'>()
-	const { data: ebook } = useQuery({
-		queryKey: ['e-books', +params.id],
-		queryFn: () => api.book.ebookById(+params.id),
-		select: data => data.data
-	})
-	const [readerUiVisible, setReaderUiVisible] = useState(true)
-	const reference = useRef<WebView>(null)
-
-	const { openReadingSettings, openChapterList } = useReadingSheets()
-	const { colorScheme, onMessage, styleTag, progress, initialScroll } =
-		useReading(+params.id)
-
-	useEffect(() => {
-		if (!reference.current) return
-		reference.current.injectJavaScript(injectStyle(styleTag))
-	}, [styleTag])
-
-	const [defaultTheme] = useState(styleTag) // eslint-disable-line react/hook-use-state
+	const {
+		colorScheme,
+		onMessage,
+		styleTag,
+		progress,
+		initialScroll,
+		readerUiVisible,
+		reference,
+		defaultTheme,
+		ebook,
+		setReaderUiVisible
+	} = useReading()
 
 	if (!ebook || !styleTag) return <Loader />
 	return (
@@ -60,16 +49,22 @@ const Reader = () => {
 						originWhitelist={['*']}
 						renderLoading={() => <View className='h-screen w-screen' />}
 						showsVerticalScrollIndicator={false}
-						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
+						className='bottom-0 left-0 right-0 top-0  z-10 m-0 p-0'
 						source={{
-							html: `<head>
-							<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-							<title>${ebook.title}</title>
-							</head>
-							<style>${defaultTheme}</style>
-							${ebook.file}
-							${finishBookButton}
-							`
+							html: `
+									<head>
+										<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+										<title>${ebook.title}</title>
+									</head>
+									<style>${defaultTheme}</style>
+									<div>
+										<img style='width:100%; height: 300px; object-fit: contain; object-position: center; padding-top: 40px'
+											 src="${getFileUrl(ebook.picture)}" alt="${ebook.title}" />
+										<h1>${ebook.title}</h1>
+									</div>
+									${ebook.file}
+									${finishBookButton}
+								`
 						}}
 						injectedJavaScriptBeforeContentLoaded={`
 						${beforeLoad(Number(initialScroll))}
@@ -84,20 +79,16 @@ const Reader = () => {
 					/>
 				</TouchableWithoutFeedback>
 			</View>
-			<ReadingUi
-				colorPalette={colorScheme.colorPalette}
+			<ReaderUi
 				visible={readerUiVisible}
+				chapters={ebook.chapters}
 				progress={progress}
 				title={ebook.title}
-				onSelectThemeIconPress={() => openReadingSettings()}
-				onChapterIconPress={() =>
-					openChapterList({
-						chapters: ebook.chapters,
-						openChapter: (chapterId: string) =>
-							reference.current?.injectJavaScript(
-								`window.location.hash = '${chapterId}'`
-							)
-					})
+				colorPalette={colorScheme.colorPalette}
+				onChapterPress={chapterId =>
+					reference.current?.injectJavaScript(
+						`window.location.hash = '${chapterId}'`
+					)
 				}
 			/>
 		</SafeAreaView>
