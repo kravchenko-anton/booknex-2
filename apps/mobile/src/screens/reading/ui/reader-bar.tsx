@@ -1,5 +1,4 @@
-import { useTypedNavigation } from '@/hooks'
-import type { ThemePackType } from '@/screens/reading/ui/reading/theme-pack'
+import { useTypedNavigation, useTypedSelector } from '@/hooks'
 import { Title } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import type { FunctionType } from 'global/types'
@@ -15,15 +14,14 @@ const ReaderBar: FC<{
 	progress: number
 	onChapterIconPress: FunctionType
 	onSelectThemeIconPress: FunctionType
-	colorPalette: ThemePackType['colorPalette']
 }> = ({
 	visible = false,
-	colorPalette = {},
 	onChapterIconPress,
 	onSelectThemeIconPress,
 	title = '',
 	progress = 0
 }) => {
+	const { colorScheme } = useTypedSelector(state => state.readingSettings)
 	const { goBack } = useTypedNavigation()
 	const { top, bottom } = useSafeAreaInsets()
 	const opacityAnimation = useAnimatedStyle(() => ({
@@ -38,8 +36,8 @@ const ReaderBar: FC<{
 					opacityAnimation,
 					{
 						top,
-						backgroundColor: colorPalette?.background?.darker,
-						borderBottomColor: colorPalette?.background?.lighter
+						backgroundColor: colorScheme.colorPalette?.background?.darker,
+						borderBottomColor: colorScheme.colorPalette?.background?.lighter
 					}
 				]}
 			>
@@ -48,7 +46,7 @@ const ReaderBar: FC<{
 						<ArrowLeft
 							width={28}
 							height={28}
-							color={colorPalette.text}
+							color={colorScheme.colorPalette.text}
 							onPress={() => goBack()}
 						/>
 						<Title
@@ -56,7 +54,7 @@ const ReaderBar: FC<{
 							size={'xl'}
 							className='ml-2'
 							weight='bold'
-							color={colorPalette.text}
+							color={colorScheme.colorPalette.text}
 						>
 							{title}
 						</Title>
@@ -64,13 +62,13 @@ const ReaderBar: FC<{
 					<ListOrdered
 						width={28}
 						height={28}
-						color={colorPalette.text}
+						color={colorScheme.colorPalette.text}
 						onPress={onChapterIconPress}
 					/>
 					<CaseSenSitive
 						width={28}
 						height={28}
-						color={colorPalette.text}
+						color={colorScheme.colorPalette.text}
 						onPress={onSelectThemeIconPress}
 					/>
 				</View>
@@ -88,13 +86,13 @@ const ReaderBar: FC<{
 				<View
 					className='relative w-full'
 					style={{
-						backgroundColor: colorPalette?.background?.lighter
+						backgroundColor: colorScheme.colorPalette?.background?.lighter
 					}}
 				>
 					<View
 						className=' absolute bottom-0 left-0 h-0.5'
 						style={{
-							backgroundColor: colorPalette.primary,
+							backgroundColor: colorScheme.colorPalette.primary,
 							width: `${progress}%`
 						}}
 					/>

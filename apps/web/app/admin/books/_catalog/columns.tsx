@@ -52,13 +52,11 @@ export const columns = ({
 		cell: ({ row }) => {
 			const [showMore, setShowMore] = useState(false)
 			return (
-				<button
-					className='mb-2 text-justify'
-					onClick={() => setShowMore(!showMore)}
-				>
-					{showMore
-						? row.original.description
-						: row.original.description.slice(0, 400) + '...'}
+				<button className='mb-2 text-justify'>
+					<p className='line-clamp-5' onClick={() => setShowMore(!showMore)}>
+						{' '}
+						{row.original.description}
+					</p>
 				</button>
 			)
 		}

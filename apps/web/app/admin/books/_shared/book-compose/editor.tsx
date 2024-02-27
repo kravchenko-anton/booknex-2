@@ -1,6 +1,6 @@
+import { useBookCompose } from '@/app/admin/books/_shared/book-compose/useBookCompose'
+import type { EbookValidationType } from '@/app/admin/books/_shared/ebook-validation'
 import { DropZone, TextArea } from '@/components/ui'
-import { useBookCompose } from '@/features/books/book-compose/useBookCompose'
-import type { EbookValidationType } from '@/features/books/ebook-validation'
 import { errorToast } from '@/utils/toast'
 import { CaseSensitive, ChevronDown, ChevronUp, Close } from 'icons'
 import { useEffect, type FC } from 'react'

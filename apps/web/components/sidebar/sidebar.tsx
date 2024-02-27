@@ -16,14 +16,14 @@ export const Sidebar: FC = () => {
 	const { logout } = useAction()
 	const activePath = usePathname()
 	return (
-		<div className='fixed z-0 h-full w-[220px] justify-center duration-100 ease-linear md:flex-col'>
-			<ul className='bg-foreground border-muted flex h-full w-full flex-col justify-between border-r-2 p-5 text-sm'>
+		<div className='z-0 h-full w-full justify-center duration-100 ease-linear md:fixed md:w-[190px] md:flex-col'>
+			<ul className='bg-foreground border-muted flex w-full justify-between border-b-2 p-5 text-sm md:h-full md:flex-col md:border-r-2'>
 				<button
-					className='mb-12 flex cursor-pointer items-center text-2xl font-bold'
+					className='flex cursor-pointer items-center text-2xl font-bold md:mb-12'
 					type='button'
 				>
-					<span className='bg-muted w-full rounded-xl p-1 text-[21px] text-white '>
-						Booknex dev 📕
+					<span className='bg-muted hidden rounded-xl p-1 text-[21px] text-white md:block md:w-full '>
+						Booknex 🧑‍💻
 					</span>
 				</button>
 				{iconsList.map(icon => (
@@ -31,13 +31,19 @@ export const Sidebar: FC = () => {
 						<a
 							href={icon.link}
 							className={cn(
-								'my-2 flex items-center gap-3 p-2  duration-100 ease-linear',
-								activePath === icon.link ? 'bg-muted rounded-lg text-white' : ''
+								'my-2 flex items-center p-2 duration-100  ease-linear md:gap-3'
 							)}
 						>
-							<icon.icon width={27} height={27} />
+							<icon.icon
+								width={22}
+								height={22}
+								className='hidden  md:block'
+								style={{
+									color: activePath === icon.link ? '#fff' : '#9ca3af'
+								}}
+							/>
 							<span
-								className='hidden text-lg md:block'
+								className='block text-sm md:text-[16px]'
 								style={{
 									color: activePath === icon.link ? '#fff' : '#9ca3af'
 								}}
@@ -48,11 +54,11 @@ export const Sidebar: FC = () => {
 					</li>
 				))}
 				<div
-					className='text-danger mt-auto flex cursor-pointer gap-3 p-2  duration-100 ease-linear'
+					className='text-danger flex cursor-pointer items-center duration-100 ease-linear md:mt-auto  md:gap-3 md:p-2'
 					onClick={() => logout()}
 				>
-					<Logout width={27} height={27} />
-					<span className='hidden text-lg md:block'>Logout</span>
+					<Logout className='hidden md:block' width={22} height={22} />
+					<span className='block text-sm md:text-[16px]'>Logout</span>
 				</div>
 			</ul>
 		</div>

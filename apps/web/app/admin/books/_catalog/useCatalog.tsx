@@ -1,4 +1,4 @@
-import { columns } from '@/features/books/catalog/columns'
+import { columns } from '@/app/admin/books/_catalog/columns'
 import { useTableParameters } from '@/hooks/useTableParameters'
 import api from '@/services'
 import {

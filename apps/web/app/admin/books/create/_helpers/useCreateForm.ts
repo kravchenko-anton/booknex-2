@@ -1,8 +1,8 @@
-import { useTemplate } from '@/features/books/create/useTemplate'
+import { useTemplate } from '@/app/admin/books/create/_helpers/useTemplate'
 import {
 	createBookValidationSchema,
 	type CreateBookValidationSchemaType
-} from '@/features/books/create/validation'
+} from '@/app/admin/books/create/_helpers/validation'
 import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'

@@ -2,6 +2,7 @@ import api from '@/api'
 
 import { useTypedNavigation, useTypedRoute, useTypedSelector } from '@/hooks'
 import {
+	beforeLoad,
 	getStyleTag,
 	injectStyle
 } from '@/screens/reading/helpers/book-viewer-function'
@@ -93,9 +94,11 @@ export const useReading = () => {
 	})
 
 	useEffect(() => {
-		if (!reference.current) return
-		reference.current.injectJavaScript(injectStyle(styleTag))
-	}, [styleTag])
+		reference.current?.injectJavaScript(`
+		${injectStyle(styleTag)}
+		${beforeLoad(Number(readerState.scrollTop))}
+		`)
+	}, [])
 
 	const [defaultTheme] = useState(styleTag) // eslint-disable-line react/hook-use-state
 

@@ -202,7 +202,7 @@ module.exports = {
 		// warning rules
 		'unicorn/prefer-spread': 1,
 		'unicorn/consistent-function-scoping': 1,
-		'@typescript-eslint/no-explicit-any': 1,
+		'@typescript-eslint/no-explicit-any': 2,
 		'@typescript-eslint/no-shadow': [
 			1,
 			{

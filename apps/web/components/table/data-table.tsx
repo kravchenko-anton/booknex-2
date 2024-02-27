@@ -1,5 +1,6 @@
 import { columns } from '@/app/admin/parser/_catalog/columns'
 import { Button } from '@/components/ui'
+import Loader from '@/components/ui/loader/loader'
 import {
 	Table,
 	TableBody,
@@ -66,8 +67,11 @@ const DataTable: FC<DataTableProperties> = ({
 					))
 				) : (
 					<TableRow>
-						<TableCell colSpan={columns.length} className='h-24 text-center'>
-							No results
+						<TableCell
+							colSpan={columns.length}
+							className='flex h-24 items-center gap-5 text-center'
+						>
+							<Loader width={30} height={30} />
 						</TableCell>
 					</TableRow>
 				)}
@@ -81,7 +85,7 @@ const DataTable: FC<DataTableProperties> = ({
 				<Button
 					size='sm'
 					variant='primary'
-					disabled={!!(typeof currentPage !== 'number' || currentPage < 1)}
+					disabled={currentPage < 1}
 					onClick={previous}
 				>
 					Previous

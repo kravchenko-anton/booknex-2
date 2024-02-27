@@ -1,4 +1,8 @@
 'use client'
+import Editor from '@/app/admin/books/_shared/book-compose/editor'
+import type { EbookValidationType } from '@/app/admin/books/_shared/ebook-validation'
+import SelectGenres from '@/app/admin/books/_shared/select-genres'
+import { useCreateForm } from '@/app/admin/books/create/_helpers/useCreateForm'
 import {
 	Button,
 	DropZone,
@@ -6,10 +10,6 @@ import {
 	Field,
 	FormTextArea
 } from '@/components/ui'
-import Editor from '@/features/books/book-compose/editor'
-import { useCreateForm } from '@/features/books/create/useCreateForm'
-import type { EbookValidationType } from '@/features/books/ebook-validation'
-import SelectGenres from '@/features/books/select-genres'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 

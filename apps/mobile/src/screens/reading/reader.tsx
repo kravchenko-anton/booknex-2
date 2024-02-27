@@ -30,7 +30,7 @@ const Reader = () => {
 		ebook,
 		setReaderUiVisible
 	} = useReading()
-
+	console.log(initialScroll)
 	if (!ebook || !styleTag) return <Loader />
 	return (
 		<SafeAreaView className='flex-1'>

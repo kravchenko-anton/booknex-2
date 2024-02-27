@@ -3,12 +3,13 @@ import ReaderBar from '@/screens/reading/ui/reader-bar'
 import ReadingSettings from '@/screens/reading/ui/reading/reading-settings'
 import type { ThemePackType } from '@/screens/reading/ui/reading/theme-pack'
 import type { BottomSheetModal } from '@gorhom/bottom-sheet'
+import type { Chapter } from 'global/api-client'
 import { useRef, type FC } from 'react'
 
 const ReaderUi: FC<{
 	title: string
 	visible: boolean
-	chapters: any
+	chapters: Chapter[]
 	onChapterPress: (id: string) => void
 	progress: number
 	colorPalette: ThemePackType['colorPalette']
@@ -16,7 +17,6 @@ const ReaderUi: FC<{
 	chapters,
 	onChapterPress,
 	visible = false,
-	colorPalette,
 	title = '',
 	progress = 0
 }) => {
@@ -25,7 +25,6 @@ const ReaderUi: FC<{
 	return (
 		<>
 			<ReaderBar
-				colorPalette={colorPalette}
 				visible={visible}
 				progress={progress}
 				title={title}

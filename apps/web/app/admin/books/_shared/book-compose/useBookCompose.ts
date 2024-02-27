@@ -1,4 +1,4 @@
-import type { EbookValidationType } from '@/features/books/ebook-validation'
+import type { EbookValidationType } from '@/app/admin/books/_shared/ebook-validation'
 import api from '@/services'
 import { blobFormData } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'

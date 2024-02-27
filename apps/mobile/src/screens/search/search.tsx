@@ -13,6 +13,7 @@ import { TextInput, View } from 'react-native'
 const Search = () => {
 	const { searchTerm, books, booksLoading, control, clearSearch } = useSearch()
 	const { navigate, goBack } = useTypedNavigation()
+	console.log('books', books)
 	return (
 		<Layout className='h-full p-0'>
 			<Controller
@@ -63,7 +64,7 @@ const Search = () => {
 				<View className='flex-1'>
 					{booksLoading ? (
 						<Loader />
-					) : books && books.length >= 2 ? (
+					) : books ? (
 						<CatalogList
 							data={books}
 							onElementPress={id => navigate('Book', { id })}
