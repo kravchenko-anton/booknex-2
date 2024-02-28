@@ -46,8 +46,8 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 	})
 	return (
 		<div>
-			<div className='mb-4 flex gap-2'>
-				<div className='w-3/4'>
+			<div className='mb-4 flex flex-wrap gap-2 md:flex-nowrap'>
+				<div className='md:w-4/5'>
 					<h1 className='mb-2 text-xl'>Title</h1>
 					<Field
 						control={control}
@@ -56,7 +56,7 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						onClick={() => setIsEditing(true)}
 					/>
 				</div>
-				<div className='w-4/5'>
+				<div className='md:w-4/5'>
 					<h1 className='mb-2 text-xl'>Author</h1>
 					<Field
 						control={control}
@@ -67,7 +67,7 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 					/>
 				</div>
 
-				<div className='w-4/12'>
+				<div className='md:w-4/12'>
 					<h1 className='mb-2 text-xl'>Pages</h1>
 					<Field
 						control={control}
@@ -78,7 +78,7 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						onClick={() => setIsEditing(true)}
 					/>
 				</div>
-				<div className='w-5/12'>
+				<div className='md:w-5/12'>
 					<h1 className='mb-2 text-xl'>Popularity</h1>
 
 					<Field
@@ -90,11 +90,11 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						onClick={() => setIsEditing(true)}
 					/>
 				</div>
-				<button className='w-5/6 text-left' onClick={() => setIsEditing(true)}>
-					<h1 className='mb-2 text-xl'>Genres</h1>
-					<SelectGenres control={control} defaultValue={properties.genres} />
-				</button>
 			</div>
+			<button className='text-left md:w-5/6'>
+				<h1 className='mb-2 text-xl'>Genres</h1>
+				<SelectGenres control={control} defaultValue={properties.genres} />
+			</button>
 			<div className='w-full'>
 				<h1 className='mb-2 text-xl'>Description</h1>
 				<FormTextArea

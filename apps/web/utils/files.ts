@@ -30,7 +30,6 @@ export const useUploadFile = () => {
 				type: 'error'
 			})
 	})
-	//TODO: возможно фиксонуть
 
 	return {
 		upload

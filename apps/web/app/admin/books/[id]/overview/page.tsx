@@ -4,59 +4,22 @@ import EbookInfo from '@/app/admin/books/[id]/overview/_ui/ebook-info'
 import ReviewTable from '@/app/admin/books/[id]/overview/_ui/review/review-table'
 import UpdateBio from '@/app/admin/books/[id]/overview/_ui/update-bio'
 import UpdatePicture from '@/app/admin/books/[id]/overview/_ui/update-picture'
-import ActivityList from '@/components/dialogs/activity-list'
+import { useOverview } from '@/app/admin/books/[id]/overview/useOverview'
+import ActivityList from '@/components/activity-list'
 import Loader from '@/components/ui/loader/loader'
-import api from '@/services'
 import { cn } from '@/utils'
-import { useUploadFile } from '@/utils/files'
-import { acceptToast, successToast } from '@/utils/toast'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { acceptToast } from '@/utils/toast'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
-import type { EditBookDto } from 'global/api-client/models/edit-book-dto'
-import { useParams, useRouter } from 'next/navigation'
 import * as React from 'react'
 //TODO: сделать во фронте при композиции книги типы которые в бекенде
-const Id = () => {
-	const { upload } = useUploadFile()
-	const parameters = useParams()
-	const queryClient = useQueryClient()
-	const router = useRouter()
-	const id = Number(parameters.id)
-	//TODO: полностью переписать  чтобы было всё вынесенно в бекенд и не было багов, так-же всё было оптимизированно
-
-	console.log(id, 'it is id')
-	const { data: book } = useQuery({
-		queryKey: ['book-overview', id],
-		queryFn: () => api.book.infoByIdAdmin(id),
-		select: data => data.data
-	})
-	const { mutateAsync: update } = useMutation({
-		mutationKey: ['update-book'],
-		mutationFn: ({ id, payload }: { id: number; payload: EditBookDto }) =>
-			api.book.update(id, payload),
-		onSuccess: async () => {
-			successToast('Book updated')
-			await queryClient.invalidateQueries({
-				queryKey: ['book-overview', id]
-			})
-		}
-	})
-
-	const { mutateAsync: remove } = useMutation({
-		mutationKey: ['remove-book'],
-		mutationFn: (id: number) => api.book.remove(id),
-		onSuccess: () => {
-			successToast('Book removed')
-			router.push('/admin/books')
-		}
-	})
-
+const Page = () => {
+	const { book, remove, update, upload } = useOverview()
 	if (!book) return <Loader />
 
 	return (
 		<div>
 			<h1 className='text-3xl'>Book overview</h1>
-			<div className='mt-4 flex gap-5 px-2'>
+			<div className='mt-4  gap-5 px-2 md:flex'>
 				<div>
 					<UpdatePicture
 						picture={book.picture}
@@ -103,7 +66,7 @@ const Id = () => {
 								</b>
 							</p>
 						</div>
-						<div className='flex gap-2'>
+						<div className='mb-4 flex gap-2 md:mt-0'>
 							<button
 								className={cn(
 									'mt-1 rounded-md px-2 py-1 text-white',
@@ -136,7 +99,7 @@ const Id = () => {
 						</div>
 					</div>
 				</div>
-				<div className='w-5/6'>
+				<div className='md:w-5/6'>
 					<UpdateBio
 						genres={book.genres.map(genre => genre.id)}
 						author={book.author}
@@ -176,4 +139,4 @@ const Id = () => {
 		</div>
 	)
 }
-export default Id
+export default Page

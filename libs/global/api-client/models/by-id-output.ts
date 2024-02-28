@@ -15,7 +15,7 @@
 
 
 /**
- *
+ * 
  * @export
  * @interface ByIdOutput
  */
@@ -33,11 +33,10 @@ export interface ByIdOutput {
      */
     'name': string;
     /**
-     *
+     * 
      * @type {Array<Array>}
      * @memberof ByIdOutput
      */
-    // @ts-ignore
     'majorBooks': Array<Array>;
 }
 

@@ -1,8 +1,8 @@
 export const Color = {
-	muted: '#303030' as const,
-
-	background: '#111111' as const,
-	foreground: '#202020' as const,
+	muted: '#1f2123' as const,
+	bordered: '#2d2e30' as const,
+	background: '#111113' as const,
+	foreground: '#18191b' as const,
 	primary: '#477160' as const,
 
 	black: '#000000' as const,

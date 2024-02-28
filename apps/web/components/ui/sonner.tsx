@@ -10,9 +10,9 @@ const Toaster = ({ ...properties }: ToasterProperties) => (
 		toastOptions={{
 			classNames: {
 				toast:
-					'group toast group-[.toaster]:bg-background group-[.toaster]:text-white group-[.toaster]:border-white group-[.toaster]:shadow-lg',
+					'group toast group-[.toaster]:bg-foreground group-[.toaster]:text-white group-[.toaster]:border-bordered group-[.toaster]:shadow-lg',
 				description: 'group-[.toast]:text-gray',
-				actionButton: 'group-[.toast]:bg-primary group-[.toast]:text-white',
+				actionButton: 'group-[.toast]:bg-muted group-[.toast]:text-white',
 				cancelButton: 'group-[.toast]:bg-danger group-[.toast]:text-white'
 			}
 		}}

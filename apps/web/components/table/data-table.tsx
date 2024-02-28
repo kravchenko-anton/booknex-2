@@ -1,6 +1,4 @@
-import { columns } from '@/app/admin/parser/_catalog/columns'
 import { Button } from '@/components/ui'
-import Loader from '@/components/ui/loader/loader'
 import {
 	Table,
 	TableBody,
@@ -31,7 +29,7 @@ const DataTable: FC<DataTableProperties> = ({
 	canLoadMore,
 	totalPages
 }) => (
-	<div>
+	<>
 		<Table>
 			<TableHeader>
 				{table.getHeaderGroups().map(headerGroup => (
@@ -49,9 +47,9 @@ const DataTable: FC<DataTableProperties> = ({
 					</TableRow>
 				))}
 			</TableHeader>
-			<TableBody>
-				{table.getRowModel().rows?.length ? (
-					table.getRowModel().rows.map(row => (
+			{table.getRowModel().rows?.length ? (
+				<TableBody>
+					{table.getRowModel().rows.map(row => (
 						<TableRow
 							key={row.id}
 							data-state={row.getIsSelected() && 'selected'}
@@ -64,18 +62,9 @@ const DataTable: FC<DataTableProperties> = ({
 								</TableCell>
 							))}
 						</TableRow>
-					))
-				) : (
-					<TableRow>
-						<TableCell
-							colSpan={columns.length}
-							className='flex h-24 items-center gap-5 text-center'
-						>
-							<Loader width={30} height={30} />
-						</TableCell>
-					</TableRow>
-				)}
-			</TableBody>
+					))}
+				</TableBody>
+			) : null}
 		</Table>
 		<div className='flex items-center justify-end space-x-2 py-4'>
 			<div className='text-muted-foreground flex-1 text-sm'>
@@ -95,7 +84,7 @@ const DataTable: FC<DataTableProperties> = ({
 				</Button>
 			</div>
 		</div>
-	</div>
+	</>
 )
 
 export default DataTable

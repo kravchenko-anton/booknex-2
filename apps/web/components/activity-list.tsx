@@ -31,13 +31,11 @@ const ActivityList: FC<{
 	}
 	return (
 		<>
-			<h1 className='mb-2 mt-2 text-xl'>Activities</h1>
 			<ActivityCalendar
 				maxLevel={10}
 				data={data}
 				style={{
-					width: '100%',
-					minWidth: '600px'
+					width: '100%'
 				}}
 				theme={{
 					dark: activityPalette

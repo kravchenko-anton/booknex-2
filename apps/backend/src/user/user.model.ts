@@ -18,8 +18,8 @@ import { Activity } from '../utils/services/activity/activity.model'
 
 export class User {
 	@IsEnum(Role)
-	@ApiProperty({ example: 'user', description: 'user role' })
-	role: Role
+	@ApiProperty({ example: 'user', description: 'user role', enum: Role })
+	role: keyof typeof Role
 
 	@ApiProperty({ example: 1, description: 'user id' })
 	@IsNumber()

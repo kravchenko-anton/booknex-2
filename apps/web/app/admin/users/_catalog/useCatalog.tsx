@@ -17,7 +17,6 @@ export const useCatalog = () => {
 
 	const table = useReactTable({
 		data: users?.data ?? [],
-		// @ts-ignore TODO: пофиксить тут типизацию
 		columns: columns({
 			remove: deleteUser
 		}),

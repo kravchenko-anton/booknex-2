@@ -858,9 +858,12 @@ components:
       type: object
       properties:
         role:
-          type: object
+          type: string
           example: user
           description: user role
+          enum:
+            - user
+            - admin
         id:
           type: number
           example: 1

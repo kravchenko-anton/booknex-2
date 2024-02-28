@@ -15,7 +15,10 @@ h5,
 h6 {
 	@apply font-semibold text-white;
 }
-
+.rounded-table {
+	outline: 1px solid;
+	@apply rounded-lg outline-1 outline-bordered
+}
 p,
 span,
 a,

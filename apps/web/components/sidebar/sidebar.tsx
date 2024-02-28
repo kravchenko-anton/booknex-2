@@ -1,7 +1,14 @@
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import { useAction } from '@/hooks'
 import { cn } from '@/utils'
-import { Book, Graph, Logout, Settings, User } from 'icons'
-import { usePathname } from 'next/navigation'
+import { Book, Graph, Logout, MoreHorizontal, Settings, User } from 'icons'
+import { usePathname, useRouter } from 'next/navigation'
 import type { FC } from 'react'
 
 export const iconsList = [
@@ -15,52 +22,86 @@ export const iconsList = [
 export const Sidebar: FC = () => {
 	const { logout } = useAction()
 	const activePath = usePathname()
+	const router = useRouter()
 	return (
 		<div className='z-0 h-full w-full justify-center duration-100 ease-linear md:fixed md:w-[190px] md:flex-col'>
-			<ul className='bg-foreground border-muted flex w-full justify-between border-b-2 p-5 text-sm md:h-full md:flex-col md:border-r-2'>
+			<div className='bg-foreground border-muted flex w-full justify-between border-b-2 p-5 text-sm md:h-full md:flex-col md:border-r-2'>
 				<button
 					className='flex cursor-pointer items-center text-2xl font-bold md:mb-12'
 					type='button'
+					onClick={() => router.push('/admin/dashboard')}
 				>
-					<span className='bg-muted hidden rounded-xl p-1 text-[21px] text-white md:block md:w-full '>
+					<span className='bg-muted rounded-xl p-1 text-[21px] text-white  md:w-full '>
 						Booknex 🧑‍💻
 					</span>
 				</button>
-				{iconsList.map(icon => (
-					<li className='w-full' key={icon.link}>
-						<a
-							href={icon.link}
-							className={cn(
-								'my-2 flex items-center p-2 duration-100  ease-linear md:gap-3'
-							)}
-						>
-							<icon.icon
-								width={22}
-								height={22}
-								className='hidden  md:block'
-								style={{
-									color: activePath === icon.link ? '#fff' : '#9ca3af'
-								}}
-							/>
-							<span
-								className='block text-sm md:text-[16px]'
-								style={{
-									color: activePath === icon.link ? '#fff' : '#9ca3af'
-								}}
+				<ul className='hidden md:block'>
+					{iconsList.map(icon => (
+						<li className='w-full' key={icon.link}>
+							<a
+								href={icon.link}
+								className={cn(
+									'my-2 flex items-center p-2 duration-100  ease-linear md:gap-3'
+								)}
 							>
-								{icon.name}
-							</span>
-						</a>
-					</li>
-				))}
+								<icon.icon
+									width={22}
+									height={22}
+									className='hidden  md:block'
+									style={{
+										color: activePath === icon.link ? '#fff' : '#9ca3af'
+									}}
+								/>
+								<span
+									className='block text-sm md:text-[16px]'
+									style={{
+										color: activePath === icon.link ? '#fff' : '#9ca3af'
+									}}
+								>
+									{icon.name}
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
 				<div
-					className='text-danger flex cursor-pointer items-center duration-100 ease-linear md:mt-auto  md:gap-3 md:p-2'
+					className='text-danger hidden cursor-pointer  items-center duration-100 ease-linear md:mt-auto md:flex  md:gap-3 md:p-2'
 					onClick={() => logout()}
 				>
-					<Logout className='hidden md:block' width={22} height={22} />
+					<Logout width={22} height={22} />
 					<span className='block text-sm md:text-[16px]'>Logout</span>
 				</div>
-			</ul>
+
+				<div className='flex items-center justify-center  md:hidden'>
+					<DropdownMenu>
+						<DropdownMenuTrigger className='focus-visible:outline-0'>
+							<MoreHorizontal
+								height={40}
+								width={40}
+								className='bg-muted border-bordered rounded-xl border-2 p-2'
+							/>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align='end'>
+							{iconsList.map(icon => (
+								<DropdownMenuItem
+									key={icon.link}
+									onClick={() => {
+										router.push(icon.link)
+									}}
+								>
+									<icon.icon width={22} height={22} className='mr-2' />
+									{icon.name}
+								</DropdownMenuItem>
+							))}
+							<DropdownMenuSeparator />
+							<DropdownMenuItem onClick={logout}>
+								<Logout width={22} height={22} className='mr-2' />
+								Logout
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				</div>
+			</div>
 		</div>
 	)
 }

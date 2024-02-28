@@ -31,7 +31,7 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 				<TabsTrigger value='preview'>Preview Ebook</TabsTrigger>
 				<TabsTrigger value='edit'>Edit</TabsTrigger>
 			</TabsList>
-			<div className=' border-muted mt-4 border-[1px] p-2'>
+			<div className=' border-bordered mt-4 border-[1px] p-2'>
 				<TabsContent value='preview'>
 					<p
 						className='mb-4 h-[700px] w-full overflow-y-scroll'

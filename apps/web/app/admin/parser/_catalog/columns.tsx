@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui'
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,7 +14,6 @@ import { getFileUrl } from 'global/api-config'
 import { nFormatter } from 'global/helpers/number-formater'
 import { MoreHorizontal } from 'icons'
 import * as React from 'react'
-import { useState } from 'react'
 
 type ColumnType = ColumnDef<{
 	id: number
@@ -74,19 +75,18 @@ export const columns = ({
 	{
 		id: 'description',
 		header: () => <p className='text-center text-xl'>Description</p>,
-		cell: ({ row }) => {
-			const [showMore, setShowMore] = useState(false)
-			return (
-				<button
-					className='mb-2 text-justify text-sm'
-					onClick={() => setShowMore(!showMore)}
-				>
-					{showMore
-						? row.original.description
-						: row.original.description.slice(0, 250) + '...'}
-				</button>
-			)
-		}
+		cell: ({ row }) => (
+			<Drawer>
+				<DrawerTrigger asChild>
+					<p className='line-clamp-3'>{row.original.description}</p>
+				</DrawerTrigger>
+				<DrawerContent>
+					<span className='p-6 pb-10 text-justify text-xl'>
+						{row.original.description}
+					</span>
+				</DrawerContent>
+			</Drawer>
+		)
 	},
 	{
 		id: 'genres',
@@ -94,12 +94,9 @@ export const columns = ({
 		cell: ({ row }) => (
 			<div className='flex flex-wrap items-center justify-center'>
 				{row.original.genres.map(genre => (
-					<p
-						className='bg-foreground border-muted m-1 rounded-xl border-2 p-2  text-sm text-white'
-						key={genre.name}
-					>
+					<Button variant='muted' className='m-0.5' size='sm' key={genre.name}>
 						{genre.name}
-					</p>
+					</Button>
 				))}
 			</div>
 		)
@@ -112,7 +109,7 @@ export const columns = ({
 					<MoreHorizontal
 						height={40}
 						width={40}
-						className='bg-foreground border-muted rounded-xl border-2 p-2'
+						className='bg-muted border-bordered rounded-xl border-2 p-2'
 					/>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align='end'>

@@ -4,13 +4,14 @@ import { forwardRef } from 'react'
 
 const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
 	({ className, ...properties }, reference) => (
-		<div className='relative w-full overflow-auto'>
-			<table
-				ref={reference}
-				className={cn('w-full caption-bottom text-sm', className)}
-				{...properties}
-			/>
-		</div>
+		<table
+			ref={reference}
+			className={cn(
+				'rounded-table relative w-full caption-bottom  border-collapse overflow-hidden  rounded-lg text-sm',
+				className
+			)}
+			{...properties}
+		/>
 	)
 )
 Table.displayName = 'Table'
@@ -21,7 +22,7 @@ const TableHeader = forwardRef<
 >(({ className, ...properties }, reference) => (
 	<thead
 		ref={reference}
-		className={cn('border-foreground [&_tr]:border-b', className)}
+		className={cn('[&_tr]:border-b', className)}
 		{...properties}
 	/>
 ))
@@ -31,11 +32,7 @@ const TableBody = forwardRef<
 	HTMLTableSectionElement,
 	HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...properties }, reference) => (
-	<tbody
-		ref={reference}
-		className={cn('[&_tr:last-child]:border-0', className)}
-		{...properties}
-	/>
+	<tbody ref={reference} className={cn('', className)} {...properties} />
 ))
 TableBody.displayName = 'TableBody'
 
@@ -46,7 +43,7 @@ const TableFooter = forwardRef<
 	<tfoot
 		ref={reference}
 		className={cn(
-			'bg-muted border-t font-medium [&>tr]:last:border-b-0',
+			' border-2 border-t font-medium [&>tr]:last:border-b-0',
 			className
 		)}
 		{...properties}
@@ -61,7 +58,7 @@ const TableRow = forwardRef<
 	<tr
 		ref={reference}
 		className={cn(
-			'hover:bg-muted  data-[state=selected]:bg-foreground  border-foreground border-b  transition-colors',
+			' border-bordered bg-foreground  border-2  border-x border-b  transition-colors',
 			className
 		)}
 		{...properties}
@@ -76,7 +73,7 @@ const TableHead = forwardRef<
 	<th
 		ref={reference}
 		className={cn(
-			'text-gray h-10 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+			'border-bordered  bg-muted  h-10 overflow-hidden border-b-2 px-3 py-3 text-center align-middle  text-white  [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
 			className
 		)}
 		{...properties}
