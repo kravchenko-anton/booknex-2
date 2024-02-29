@@ -1,19 +1,18 @@
 'use client'
 
-import EbookInfo from '@/app/admin/books/[id]/overview/_ui/ebook-info'
 import ReviewTable from '@/app/admin/books/[id]/overview/_ui/review/review-table'
 import UpdateBio from '@/app/admin/books/[id]/overview/_ui/update-bio'
+import UpdateGenres from '@/app/admin/books/[id]/overview/_ui/update-genres'
 import UpdatePicture from '@/app/admin/books/[id]/overview/_ui/update-picture'
 import { useOverview } from '@/app/admin/books/[id]/overview/useOverview'
 import ActivityList from '@/components/activity-list'
 import Loader from '@/components/ui/loader/loader'
 import { cn } from '@/utils'
 import { acceptToast } from '@/utils/toast'
-import { StorageFolderEnum } from 'backend/src/storage/storage.types'
 import * as React from 'react'
 //TODO: сделать во фронте при композиции книги типы которые в бекенде
 const Page = () => {
-	const { book, remove, update, upload } = useOverview()
+	const { book, remove, update, uploadPicture } = useOverview()
 	if (!book) return <Loader />
 
 	return (
@@ -24,18 +23,7 @@ const Page = () => {
 					<UpdatePicture
 						picture={book.picture}
 						updatePicture={async picture => {
-							await upload({
-								folder: StorageFolderEnum.ebooks,
-								name: book.title + '.png',
-								blob: new Blob([picture])
-							}).then(async ({ data: url }) => {
-								await update({
-									id: book.id,
-									payload: {
-										picture: url.name
-									}
-								})
-							})
+							await uploadPicture(picture)
 						}}
 					/>
 					<div className='mt-4 px-0.5'>
@@ -101,7 +89,6 @@ const Page = () => {
 				</div>
 				<div className='md:w-5/6'>
 					<UpdateBio
-						genres={book.genres.map(genre => genre.id)}
 						author={book.author}
 						title={book.title}
 						description={book.description}
@@ -114,25 +101,29 @@ const Page = () => {
 							})
 						}}
 					/>
-					<ActivityList data={book.activities} />
-
-					<EbookInfo
-						bookLink={book.ebook}
-						onEdit={async books => {
-							await upload({
-								name: book.title + '.json',
-								blob: new Blob([JSON.stringify(books)]),
-								folder: StorageFolderEnum.ebooks
-							}).then(async ({ data: url }) => {
-								await update({
-									id: book.id,
-									payload: {
-										ebook: url.name
-									}
-								})
-							})
-						}}
+					<UpdateGenres
+						bookId={book.id}
+						defaultGenres={book.genres.map(genre => genre.id)}
 					/>
+					<ActivityList data={book.activities} />
+					//TODO: пофиксить тут всё чтобы было через бекенд
+					{/* <EbookInfo */}
+					{/* 	bookLink={book.ebook} */}
+					{/* 	onEdit={async books => { */}
+					{/* 		await upload({ */}
+					{/* 			name: book.title + '.json', */}
+					{/* 			blob: new Blob([JSON.stringify(books)]), */}
+					{/* 			folder: StorageFolderEnum.ebooks */}
+					{/* 		}).then(async ({ data: url }) => { */}
+					{/* 			await update({ */}
+					{/* 				id: book.id, */}
+					{/* 				payload: { */}
+					{/* 					ebook: url.name */}
+					{/* 				} */}
+					{/* 			}) */}
+					{/* 		}) */}
+					{/* 	}} */}
+					{/* /> */}
 					<ReviewTable review={book.review} />
 				</div>
 			</div>

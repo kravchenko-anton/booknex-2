@@ -20,7 +20,7 @@ import {
 import { RoleType } from '../auth/auth.service'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { FilenameDto, ReplacementDto, UploadOutputDto } from './dto/upload.dto'
+import { FilenameDto, UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
 import { StorageFolderType } from './storage.types'
 
@@ -36,57 +36,6 @@ export class StorageController {
 	@ApiOkResponse({ description: 'File deleted', type: null })
 	async delete(@Body() dto: FilenameDto) {
 		return this.uploadService.delete(dto.filename)
-	}
-
-	@Post('/replacement')
-	@ApiConsumes('multipart/form-data')
-	@ApiBody({
-		schema: {
-			type: 'object',
-			properties: {
-				file: {
-					type: 'string',
-					format: 'binary'
-				},
-				deleteFilename: {
-					type: 'string'
-				}
-			}
-		}
-	})
-	@UseInterceptors(FileInterceptor('file'))
-	@ApiOkResponse({ description: 'File uploaded', type: UploadOutputDto })
-	async replacement(
-		@UploadedFile(
-			new ParseFilePipe({
-				validators: [
-					new MaxFileSizeValidator({
-						maxSize: 10_000_000
-					})
-				]
-			})
-		)
-		file: Express.Multer.File,
-		@CurrentUser('role') role: RoleType,
-		@Body() dto: ReplacementDto
-	): Promise<UploadOutputDto> {
-		try {
-			await this.uploadService.delete(dto.deleteFilename)
-
-			return await this.uploadService.upload({
-				file: file.buffer,
-				filename: file.originalname,
-				folder: dto.folder,
-				role
-			})
-		} catch {
-			return this.uploadService.upload({
-				file: file.buffer,
-				filename: file.originalname,
-				folder: dto.folder,
-				role
-			})
-		}
 	}
 
 	@Post('/:folder')
@@ -123,6 +72,7 @@ export class StorageController {
 		@Param('folder') folder: StorageFolderType,
 		@CurrentUser('role') role: RoleType
 	): Promise<UploadOutputDto> {
+		console.log('here')
 		return this.uploadService.upload({
 			file: file.buffer,
 			filename: file.originalname,

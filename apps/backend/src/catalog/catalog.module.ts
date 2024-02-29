@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common'
-import { BookService } from '../book/book.service'
 import { GenreService } from '../genre/genre.service'
 import { RecommendationService } from '../recommendation/recommendation.service'
 import { ActivityService } from '../utils/services/activity/activity.service'
@@ -13,7 +12,6 @@ import { CatalogService } from './catalog.service'
 		CatalogService,
 		PrismaService,
 		ActivityService,
-		BookService,
 		GenreService,
 		RecommendationService
 	]

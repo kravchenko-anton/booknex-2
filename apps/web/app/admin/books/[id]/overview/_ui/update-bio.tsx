@@ -1,4 +1,3 @@
-import SelectGenres from '@/app/admin/books/_shared/select-genres'
 import { Button, Field, FormTextArea } from '@/components/ui'
 import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/form'
@@ -16,7 +15,6 @@ interface UpdateBioProperties {
 	pages: number
 	popularity: number
 	description: string
-	genres: number[]
 	onSaveEdit: (data: object) => void
 }
 
@@ -25,8 +23,7 @@ const UpdateBioValidationSchema = z.object({
 	author: z.string(),
 	pages: z.coerce.number(),
 	popularity: z.coerce.number(),
-	description: z.string(),
-	genres: z.array(z.number())
+	description: z.string()
 })
 
 export type UpdateBioValidationSchemaType = z.infer<
@@ -34,7 +31,6 @@ export type UpdateBioValidationSchemaType = z.infer<
 >
 
 const UpdateBio: FC<UpdateBioProperties> = properties => {
-	const [isEditing, setIsEditing] = useState(false)
 	const {
 		handleSubmit,
 		control,
@@ -44,6 +40,9 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 		mode: 'onSubmit',
 		resolver: zodResolver(UpdateBioValidationSchema)
 	})
+	//set isEditing if something change
+	const [isEditing, setIsEditing] = useState(false)
+
 	return (
 		<div>
 			<div className='mb-4 flex flex-wrap gap-2 md:flex-nowrap'>
@@ -91,10 +90,7 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 					/>
 				</div>
 			</div>
-			<button className='text-left md:w-5/6'>
-				<h1 className='mb-2 text-xl'>Genres</h1>
-				<SelectGenres control={control} defaultValue={properties.genres} />
-			</button>
+
 			<div className='w-full'>
 				<h1 className='mb-2 text-xl'>Description</h1>
 				<FormTextArea

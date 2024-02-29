@@ -10,7 +10,7 @@ export const useTemplate = ({
 }: {
 	setValue: UseFormSetValue<{
 		title: string
-		picture: { name: string; blob: Blob }
+		picture: File
 		pages: number
 		description: string
 		popularity: number

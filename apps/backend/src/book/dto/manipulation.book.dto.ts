@@ -17,23 +17,24 @@ export class CreateBookDto {
 	@IsString()
 	author?: string
 	@ApiProperty({
-		description: 'Uploaded picture',
-		example: 'picture.jpg',
-		required: false
-	})
-	@IsString()
-	description?: string
-	@ApiProperty({
 		description: 'Description of the book',
 		example:
 			"The Great Gatsby is a novel by the American author F. Scott Fitzgerald. First published in 1925, it is set on Long Island's North Shore and in New York City from spring to autumn of 1922.",
 		required: false
 	})
 	@IsString()
+	description?: string
+
+	@ApiProperty({
+		description: 'Uploaded picture',
+		example: 'picture.jpg',
+		required: false
+	})
+	@IsString()
 	picture?: string
 	@ApiProperty({
 		description: 'Uploaded ebook',
-		example: 'ebook.pdf',
+		example: 'ebook.json',
 		required: false
 	})
 	@IsString()
@@ -128,12 +129,15 @@ export class EditBookDto {
 	@IsOptional()
 	@IsString()
 	popularity?: number
+}
+
+export class UpdateGenreDto {
 	@ApiProperty({
 		description: 'Array of genres',
 		example: [1, 2, 3],
+		type: [Number],
 		required: false
 	})
-	@IsOptional()
 	@IsNumber({}, { each: true })
-	genres?: number[]
+	genres: number[]
 }

@@ -3,12 +3,23 @@ import {
 	Controller,
 	Delete,
 	Get,
+	MaxFileSizeValidator,
 	Param,
+	ParseFilePipe,
 	Post,
 	Put,
-	Query
+	Query,
+	UploadedFile,
+	UseInterceptors
 } from '@nestjs/common'
-import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { FileInterceptor } from '@nestjs/platform-express'
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiConsumes,
+	ApiOkResponse,
+	ApiTags
+} from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import {
@@ -18,7 +29,11 @@ import {
 	InfoByIdOutput
 } from './book.model'
 import { BookService } from './book.service'
-import { CreateBookDto, EditBookDto } from './dto/manipulation.book.dto'
+import {
+	CreateBookDto,
+	EditBookDto,
+	UpdateGenreDto
+} from './dto/manipulation.book.dto'
 
 @ApiTags('book')
 @ApiBearerAuth()
@@ -67,16 +82,58 @@ export class BookController {
 	@Auth('admin')
 	@Post('admin/create')
 	@ApiOkResponse({ type: null })
-	@ApiBody({ type: CreateBookDto })
+	@ApiBody({
+		type: CreateBookDto,
+		required: true
+	})
 	async create(@Body() dto: CreateBookDto) {
 		return this.bookService.create(dto)
 	}
 
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
-	@Put('admin/update/:id')
+	@Put('admin/update-bio/:id')
 	async update(@Param('id') bookId: number, @Body() dto: EditBookDto) {
-		return this.bookService.update(+bookId, dto)
+		return this.bookService.updateBio(+bookId, dto)
+	}
+
+	@Auth('admin')
+	@ApiOkResponse({ type: null })
+	@Put('admin/update-genre/:id')
+	async updateGenre(@Param('id') bookId: number, @Body() dto: UpdateGenreDto) {
+		return this.bookService.updateGenre(+bookId, dto)
+	}
+
+	@Auth('admin')
+	@ApiOkResponse({ type: null })
+	@UseInterceptors(FileInterceptor('file'))
+	@ApiConsumes('multipart/form-data')
+	@Put('admin/update-picture/:id')
+	@ApiBody({
+		schema: {
+			type: 'object',
+			properties: {
+				file: {
+					type: 'string',
+					format: 'binary'
+				}
+			}
+		}
+	})
+	async updatePicture(
+		@UploadedFile(
+			new ParseFilePipe({
+				validators: [
+					new MaxFileSizeValidator({
+						maxSize: 10_000_000
+					})
+				]
+			})
+		)
+		file: Buffer,
+		@Param('id') bookId: number
+	) {
+		return this.bookService.updatePicture(+bookId, file)
 	}
 
 	@Auth('admin')

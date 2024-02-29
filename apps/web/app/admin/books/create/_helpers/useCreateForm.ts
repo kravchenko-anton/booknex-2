@@ -9,7 +9,7 @@ import { errorToast, successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { StorageFolderEnum } from 'backend/src/storage/storage.types'
-import type { CreateBookDto } from 'global/api-client'
+import type { CreateBookDto } from 'global/api-client/models/create-book-dto'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
@@ -44,15 +44,13 @@ export const useCreateForm = () => {
 		const {
 			data: { name: uploadPicture }
 		} = await upload({
-			name: data.picture.name,
-			blob: data.picture.blob,
+			file: data.picture,
 			folder: 'booksCovers'
 		})
 		const {
 			data: { name: uploadHtml }
 		} = await upload({
-			name: data.title + '.json',
-			blob: new Blob([JSON.stringify(data.books)]),
+			file: new File([JSON.stringify(data.books)], data.title + '.json'),
 			folder: StorageFolderEnum.ebooks
 		})
 

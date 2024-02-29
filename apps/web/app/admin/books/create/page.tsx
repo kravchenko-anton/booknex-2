@@ -1,8 +1,8 @@
 'use client'
 import Editor from '@/app/admin/books/_shared/book-compose/editor'
 import type { EbookValidationType } from '@/app/admin/books/_shared/ebook-validation'
-import SelectGenres from '@/app/admin/books/_shared/select-genres'
 import { useCreateForm } from '@/app/admin/books/create/_helpers/useCreateForm'
+import SelectGenres from '@/app/admin/books/create/_ui/select-genres'
 import {
 	Button,
 	DropZone,
@@ -80,10 +80,10 @@ const Page: FC = () => {
 							multiple={false}
 							accept='image/*'
 							onDropFile={acceptedFiles => {
-								form.setValue('picture', {
-									name: acceptedFiles[0].name,
-									blob: new Blob([acceptedFiles[0]])
-								})
+								form.setValue(
+									'picture',
+									new File([acceptedFiles[0]], acceptedFiles[0].name)
+								)
 							}}
 						/>
 						<ErrorMessage name='picture' errors={form.errors} />

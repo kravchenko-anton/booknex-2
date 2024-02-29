@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { Check } from 'icons'
 import type { FC } from 'react'
+import * as React from 'react'
 import { Controller } from 'react-hook-form'
 
 interface SelectGenresProperties {
@@ -37,7 +38,6 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 	})
 
 	return (
-		//TODO: сделать через filedArray
 		<Controller
 			control={control}
 			name='genres'

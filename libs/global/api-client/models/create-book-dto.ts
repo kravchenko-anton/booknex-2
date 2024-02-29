@@ -33,13 +33,13 @@ export interface CreateBookDto {
      */
     'author'?: string;
     /**
-     * Uploaded picture
+     * Description of the book
      * @type {string}
      * @memberof CreateBookDto
      */
     'description'?: string;
     /**
-     * Description of the book
+     * Uploaded picture
      * @type {string}
      * @memberof CreateBookDto
      */

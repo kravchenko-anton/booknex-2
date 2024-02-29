@@ -4,9 +4,8 @@ import type { UploadFolderEnum } from 'global/api-client'
 import { errorToast } from './toast'
 
 interface UploadFileProperties {
-	name: string
 	folder: UploadFolderEnum
-	blob: Blob
+	file: File
 }
 
 export const blobFormData = (blob: Blob, fileName: string) => {
@@ -18,11 +17,8 @@ export const blobFormData = (blob: Blob, fileName: string) => {
 export const useUploadFile = () => {
 	const { mutateAsync: upload } = useMutation({
 		mutationKey: ['upload-file'],
-		mutationFn: ({ folder, blob, name }: UploadFileProperties) => {
-			//TODO: чекнуть не сломалось ли
-			const formData = blobFormData(blob, name) as unknown as File
-			return api.storage.upload(folder, formData)
-		},
+		mutationFn: ({ folder, file }: UploadFileProperties) =>
+			api.storage.upload(folder, file),
 		onError: () =>
 			errorToast({
 				text1: 'Upload file',

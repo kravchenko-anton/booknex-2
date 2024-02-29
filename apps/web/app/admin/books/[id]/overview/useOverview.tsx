@@ -1,8 +1,9 @@
 import api from '@/services'
 import { useUploadFile } from '@/utils/files'
-import { successToast } from '@/utils/toast'
+import { errorToast, successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { EditBookDto } from 'global/api-client'
+import { GlobalErrorsEnum } from 'global/errors'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useOverview = () => {
@@ -12,7 +13,7 @@ export const useOverview = () => {
 	const router = useRouter()
 	const id = Number(parameters.id)
 	//TODO: полностью переписать  чтобы было всё вынесенно в бекенд и не было багов, так-же всё было оптимизированно
-	
+
 	console.log(id, 'it is id')
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', id],
@@ -30,7 +31,7 @@ export const useOverview = () => {
 			})
 		}
 	})
-	
+
 	const { mutateAsync: remove } = useMutation({
 		mutationKey: ['remove-book'],
 		mutationFn: (id: number) => api.book.remove(id),
@@ -39,11 +40,27 @@ export const useOverview = () => {
 			router.push('/admin/books')
 		}
 	})
-	
+
+	const uploadPicture = async (file: File) => {
+		console.log(file, 'it is file')
+		if (!book) return errorToast(GlobalErrorsEnum.somethingWrong)
+		await upload({
+			folder: 'booksCovers',
+			file: file
+		}).then(async ({ data }) => {
+			await update({
+				id: book.id,
+				payload: {
+					picture: data.name
+				}
+			})
+		})
+	}
+
 	return {
 		book,
 		update,
 		remove,
-		upload
+		uploadPicture
 	}
 }

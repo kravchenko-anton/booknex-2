@@ -68,11 +68,5 @@ export interface EditBookDto {
      * @memberof EditBookDto
      */
     'popularity'?: number;
-    /**
-     * Array of genres
-     * @type {Array<string>}
-     * @memberof EditBookDto
-     */
-    'genres'?: Array<string>;
 }
 

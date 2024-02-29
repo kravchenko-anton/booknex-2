@@ -72,53 +72,6 @@ export const StorageApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {File} [file] 
-         * @param {string} [deleteFilename] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        replacement: async (file?: File, deleteFilename?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/storage/replacement`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-            if (file !== undefined) { 
-                localVarFormParams.append('file', file as any);
-            }
-    
-            if (deleteFilename !== undefined) { 
-                localVarFormParams.append('deleteFilename', deleteFilename as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {UploadFolderEnum} folder 
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
@@ -187,19 +140,6 @@ export const StorageApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {File} [file] 
-         * @param {string} [deleteFilename] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async replacement(file?: File, deleteFilename?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadOutputDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.replacement(file, deleteFilename, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StorageApi.replacement']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @param {UploadFolderEnum} folder 
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
@@ -232,16 +172,6 @@ export const StorageApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @param {File} [file] 
-         * @param {string} [deleteFilename] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        replacement(file?: File, deleteFilename?: string, options?: any): AxiosPromise<UploadOutputDto> {
-            return localVarFp.replacement(file, deleteFilename, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {UploadFolderEnum} folder 
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
@@ -269,18 +199,6 @@ export class StorageApi extends BaseAPI {
      */
     public _delete(filenameDto: FilenameDto, options?: RawAxiosRequestConfig) {
         return StorageApiFp(this.configuration)._delete(filenameDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {File} [file] 
-     * @param {string} [deleteFilename] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StorageApi
-     */
-    public replacement(file?: File, deleteFilename?: string, options?: RawAxiosRequestConfig) {
-        return StorageApiFp(this.configuration).replacement(file, deleteFilename, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

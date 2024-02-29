@@ -13,8 +13,11 @@ import type { RoleType } from '../auth/auth.service'
 import { serverError } from '../utils/helpers/call-error'
 import type { EnvironmentType } from '../utils/helpers/environment-types.ts'
 import { optimizeFilename } from '../utils/helpers/string.functions'
-import type { StorageFolderType } from './storage.types'
-import { StorageFolderArray, StorageFolderEnum } from './storage.types'
+import {
+	StorageFolderArray,
+	StorageFolderEnum,
+	type StorageFolderType
+} from './storage.types'
 
 @Injectable()
 export class StorageService {
@@ -39,7 +42,7 @@ export class StorageService {
 				})
 			)
 		} catch {
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
+			return
 		}
 		await this.s3
 			.send(
@@ -51,6 +54,7 @@ export class StorageService {
 			.catch(() =>
 				serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
 			)
+		console.log(filename, 'delete')
 	}
 
 	async upload({
@@ -69,7 +73,7 @@ export class StorageService {
 		if (!StorageFolderArray.includes(folder)) {
 			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFolder)
 		}
-		console.log('file', file)
+		await this.delete(`${folder}/${optimizeFilename(filename)}`)
 		const finalFile =
 			folder === StorageFolderEnum.ebooks
 				? file
@@ -93,6 +97,7 @@ export class StorageService {
 			.catch(() =>
 				serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
 			)
+		console.log('success upload picture')
 		return {
 			name: `${folder}/${optimizeFilename(filename)}`
 		}

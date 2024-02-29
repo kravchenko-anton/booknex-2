@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
-import { BookService } from '../book/book.service'
 import { GenreService } from '../genre/genre.service'
 import { RecommendationService } from '../recommendation/recommendation.service'
 import { ActivityService } from '../utils/services/activity/activity.service'
+import { PrismaService } from '../utils/services/prisma.service'
 
 @Injectable()
 export class CatalogService {
 	constructor(
 		private readonly activityService: ActivityService,
-		private readonly bookService: BookService,
+		private readonly prisma: PrismaService,
 		private readonly recommendationService: RecommendationService,
 		private readonly genreService: GenreService
 	) {}
@@ -31,8 +31,9 @@ export class CatalogService {
 	}
 
 	search(query: string) {
-		return this.bookService.findMany({
+		return this.prisma.book.findMany({
 			where: {
+				visible: true,
 				OR: [
 					{
 						title: {
@@ -56,8 +57,11 @@ export class CatalogService {
 	}
 
 	private popularBooks() {
-		return this.bookService.findMany({
+		return this.prisma.book.findMany({
 			take: 10,
+			where: {
+				visible: true
+			},
 			orderBy: {
 				popularity: 'desc'
 			}
@@ -65,8 +69,11 @@ export class CatalogService {
 	}
 
 	private bestSellingBooks() {
-		return this.bookService.findMany({
+		return this.prisma.book.findMany({
 			take: 10,
+			where: {
+				visible: true
+			},
 			orderBy: {
 				popularity: 'desc'
 			}
@@ -74,8 +81,11 @@ export class CatalogService {
 	}
 
 	private newReleases() {
-		return this.bookService.findMany({
+		return this.prisma.book.findMany({
 			take: 10,
+			where: {
+				visible: true
+			},
 			orderBy: {
 				updatedAt: 'desc'
 			}

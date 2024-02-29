@@ -69,10 +69,15 @@ export class AuthService {
 	}
 
 	async googleSign(dto: SignDto) {
-		const ticket = await this.google.verifyIdToken({
-			idToken: dto.socialId,
-			audience: [this.configService.getOrThrow('GOOGLE_CLIENT_ID')]
-		})
+		const ticket = await this.google
+			.verifyIdToken({
+				idToken: dto.socialId,
+				audience: [this.configService.getOrThrow('GOOGLE_CLIENT_ID')]
+			})
+			.catch(error => {
+				console.error(error)
+				throw serverError(HttpStatus.BAD_REQUEST, AuthErrors.invalidGoogleToken)
+			})
 
 		const data = ticket.getPayload()
 		if (!data?.sub)
@@ -155,7 +160,7 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				expiresIn: process.env.NODE_ENV === 'development' ? '10s' : '15m'
+				expiresIn: process.env.NODE_ENV === 'development' ? '10m' : '15m'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'

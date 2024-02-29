@@ -1,6 +1,6 @@
 export enum StorageFolderEnum {
 	ebooks = 'ebooks',
-	booksCovers = 'books-covers'
+	booksCovers = 'booksCovers'
 }
 
 export type StorageFolderType = keyof typeof StorageFolderEnum

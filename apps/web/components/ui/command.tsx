@@ -20,7 +20,7 @@ const Command = forwardRef<
 	<CommandPrimitive
 		ref={reference}
 		className={cn(
-			'bg-background  text-gray flex h-full w-full flex-col overflow-hidden rounded-md',
+			'bg-foreground text-gray flex h-full w-full flex-col overflow-hidden rounded-lg',
 			className
 		)}
 		{...properties}
@@ -110,7 +110,7 @@ const CommandSeparator = forwardRef<
 >(({ className, ...properties }, reference) => (
 	<CommandPrimitive.Separator
 		ref={reference}
-		className={cn('bg-muted -mx-1 h-px', className)}
+		className={cn('bg-bordered -mx-1 h-px', className)}
 		{...properties}
 	/>
 ))
@@ -123,7 +123,7 @@ const CommandItem = forwardRef<
 	<CommandPrimitive.Item
 		ref={reference}
 		className={cn(
-			'aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+			'aria-selected:bg-muted aria-selected:text-gray relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
 			className
 		)}
 		{...properties}
@@ -137,10 +137,7 @@ const CommandShortcut = ({
 	...properties
 }: HTMLAttributes<HTMLSpanElement>) => (
 	<span
-		className={cn(
-			'text-muted-foreground ml-auto text-xs tracking-widest',
-			className
-		)}
+		className={cn('text-gray ml-auto text-xs tracking-widest', className)}
 		{...properties}
 	/>
 )

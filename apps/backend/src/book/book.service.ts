@@ -4,12 +4,18 @@ import { getFileUrl } from '../../../../libs/global/api-config'
 import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
 import { GenreService } from '../genre/genre.service'
 import { ReturnGenreObject } from '../genre/return.genre.object'
+import { StorageService } from '../storage/storage.service'
+import { StorageFolderEnum } from '../storage/storage.types'
 import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { transformActivity } from '../utils/services/activity/activity-transformer'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
-import { EditBookDto, type CreateBookDto } from './dto/manipulation.book.dto'
+import type {
+	CreateBookDto,
+	EditBookDto,
+	UpdateGenreDto
+} from './dto/manipulation.book.dto'
 import { returnBookObject } from './return.book.object'
 import type { EBookType } from './types'
 
@@ -18,7 +24,8 @@ export class BookService {
 	constructor(
 		private readonly prisma: PrismaService,
 		private readonly activityService: ActivityService,
-		private readonly genreService: GenreService
+		private readonly genreService: GenreService,
+		private storageService: StorageService
 	) {}
 
 	async findOne({
@@ -278,27 +285,43 @@ export class BookService {
 		await this.prisma.book.delete({ where: { id } })
 	}
 
-	//TODO: сделать запрос более гипким
-	async update(id: number, dto: EditBookDto) {
+	async updatePicture(id: number, picture: Buffer) {
+		const bookPicture = await this.findOne({
+			where: { id },
+			select: {
+				picture: true
+			}
+		})
+		await this.storageService.upload({
+			folder: StorageFolderEnum.booksCovers,
+			file: picture,
+			role: 'admin',
+			filename: bookPicture.picture
+		})
+	}
+
+	async updateGenre(id: number, dto: UpdateGenreDto) {
 		await this.checkExist(id)
-		const { genres: dtoGenres, ...other } = dto
-		const majorGenre = await this.genreService.findMajorGenre(dtoGenres)
-		console.log('update', majorGenre, dtoGenres, id, EditBookDto)
+		const majorGenre = await this.genreService.findMajorGenre(dto.genres)
+		await this.prisma.book.update({
+			where: { id },
+			data: {
+				genres: {
+					set: dto.genres.map(g => ({ id: g }))
+				},
+				majorGenre: {
+					connect: {
+						id: majorGenre.id
+					}
+				}
+			}
+		})
+	}
+	async updateBio(id: number, dto: EditBookDto) {
+		await this.checkExist(id)
 		await this.prisma.book.update({
 			where: { id: id },
-			data: {
-				...other,
-				...(dtoGenres && {
-					genres: {
-						set: dtoGenres.map(g => ({ id: g }))
-					},
-					majorGenre: {
-						connect: {
-							id: majorGenre.id
-						}
-					}
-				})
-			}
+			data: dto
 		})
 
 		await this.activityService.create({

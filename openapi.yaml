@@ -319,7 +319,7 @@ paths:
         - book
       security:
         - bearer: []
-  "/api/book/admin/update/{id}":
+  "/api/book/admin/update-bio/{id}":
     put:
       operationId: update
       parameters:
@@ -334,6 +334,54 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/EditBookDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/admin/update-genre/{id}":
+    put:
+      operationId: updateGenre
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGenreDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
+  "/api/book/admin/update-picture/{id}":
+    put:
+      operationId: updatePicture
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
       responses:
         "200":
           description: ""
@@ -450,33 +498,6 @@ paths:
       responses:
         "200":
           description: File deleted
-      tags:
-        - storage
-      security:
-        - bearer: []
-  /api/storage/replacement:
-    post:
-      operationId: replacement
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-                deleteFilename:
-                  type: string
-      responses:
-        "200":
-          description: File uploaded
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UploadOutputDto"
       tags:
         - storage
       security:
@@ -1283,18 +1304,18 @@ components:
           example: F. Scott Fitzgerald
         description:
           type: string
-          description: Uploaded picture
-          example: picture.jpg
-        picture:
-          type: string
           description: Description of the book
           example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
             First published in 1925, it is set on Long Island's North Shore and
             in New York City from spring to autumn of 1922.
+        picture:
+          type: string
+          description: Uploaded picture
+          example: picture.jpg
         ebook:
           type: string
           description: Uploaded ebook
-          example: ebook.pdf
+          example: ebook.json
         pages:
           type: number
           description: Number of pages in the book
@@ -1349,6 +1370,9 @@ components:
           type: number
           description: Number of goodRead reviews
           example: 1000000
+    UpdateGenreDto:
+      type: object
+      properties:
         genres:
           description: Array of genres
           example:
@@ -1357,7 +1381,7 @@ components:
             - 3
           type: array
           items:
-            type: string
+            type: number
     SignDto:
       type: object
       properties:

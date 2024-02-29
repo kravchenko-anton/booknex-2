@@ -45,6 +45,7 @@ models/short-book.ts
 models/short-genre.ts
 models/sign-dto.ts
 models/unfold-output.ts
+models/update-genre-dto.ts
 models/upload-output-dto.ts
 models/user-admin-catalog.ts
 models/user-count-output.ts

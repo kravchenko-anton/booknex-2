@@ -3,10 +3,7 @@ import { z } from 'zod'
 
 export const createBookValidationSchema = z.object({
 	title: z.string(),
-	picture: z.object({
-		name: z.string(),
-		blob: z.instanceof(Blob)
-	}),
+	picture: z.instanceof(File),
 	pages: z.coerce.number().positive(),
 	description: z.string(),
 	popularity: z.coerce.number().positive(),
