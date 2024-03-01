@@ -13,33 +13,30 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { Book } from './book';
 
 /**
  * 
  * @export
- * @interface AdminCatalogOutput
+ * @interface ChapterDTO
  */
-export interface AdminCatalogOutput {
+export interface ChapterDTO {
     /**
      * 
-     * @type {Array<Book>}
-     * @memberof AdminCatalogOutput
-     */
-    'data': Array<Book>;
-    /**
-     * can load more
-     * @type {boolean}
-     * @memberof AdminCatalogOutput
-     */
-    'canLoadMore': boolean;
-    /**
-     * total pages
      * @type {number}
-     * @memberof AdminCatalogOutput
+     * @memberof ChapterDTO
      */
-    'totalPages': number;
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChapterDTO
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChapterDTO
+     */
+    'text': string;
 }
 

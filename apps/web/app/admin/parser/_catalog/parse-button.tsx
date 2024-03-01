@@ -1,4 +1,4 @@
-import CallParserDialog from '@/app/admin/parser/_catalog/dialogs/call-parser'
+import CallParserDialog from '@/app/admin/parser/_catalog/call-parser'
 import { Button } from '@/components/ui'
 import type { DialogProperties } from '@/components/ui/base-components-types'
 import api from '@/services'
@@ -12,18 +12,8 @@ interface ParseButtonProperties extends DialogProperties {
 	openParserDialog?: FunctionType
 }
 
-type LastParsedData = {
-	url: string
-	page: number
-} | null
-
 const ParseButton: FC<ParseButtonProperties> = properties => {
 	const queryClient = useQueryClient()
-	const lastParsedData: LastParsedData = window.localStorage.getItem(
-		'lastParsedData'
-	)
-		? JSON.parse(window.localStorage.getItem('lastParsedData') ?? '')
-		: null
 
 	const { mutateAsync: parse, isLoading: parseLoading } = useMutation({
 		mutationKey: ['parse-templates'],
@@ -48,10 +38,6 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 
 			<CallParserDialog
 				isOpen={properties.isOpen}
-				defaultValues={{
-					link: lastParsedData?.url ?? '',
-					page: (lastParsedData && lastParsedData.page + 1) ?? 0
-				}}
 				onClose={properties.onClose}
 				onSubmit={async data => {
 					await parse({

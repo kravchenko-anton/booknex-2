@@ -34,6 +34,7 @@ import {
 	EditBookDto,
 	UpdateGenreDto
 } from './dto/manipulation.book.dto'
+import { EBookType } from './dto/update.ebook.dto'
 
 @ApiTags('book')
 @ApiBearerAuth()
@@ -92,9 +93,9 @@ export class BookController {
 
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
-	@Put('admin/update-bio/:id')
+	@Put('admin/update/:id')
 	async update(@Param('id') bookId: number, @Body() dto: EditBookDto) {
-		return this.bookService.updateBio(+bookId, dto)
+		return this.bookService.update(+bookId, dto)
 	}
 
 	@Auth('admin')
@@ -106,9 +107,17 @@ export class BookController {
 
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
+	@Post('admin/update-ebook/:id')
+	@ApiBody({ type: [EBookType] })
+	async updateEbook(@Param('id') bookId: number, @Body() dto: EBookType[]) {
+		return this.bookService.updateEbook(+bookId, dto)
+	}
+
+	@Auth('admin')
+	@ApiOkResponse({ type: null })
 	@UseInterceptors(FileInterceptor('file'))
 	@ApiConsumes('multipart/form-data')
-	@Put('admin/update-picture/:id')
+	@Post('admin/update-picture/:id')
 	@ApiBody({
 		schema: {
 			type: 'object',
@@ -130,7 +139,7 @@ export class BookController {
 				]
 			})
 		)
-		file: Buffer,
+		file: Express.Multer.File,
 		@Param('id') bookId: number
 	) {
 		return this.bookService.updatePicture(+bookId, file)

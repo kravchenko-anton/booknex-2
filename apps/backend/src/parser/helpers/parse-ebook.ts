@@ -12,7 +12,8 @@ export const ignoredManifest = [
 ]
 const parseSelectors = {
 	title: 'div.BookPageTitleSection > div > h1',
-	author: 'div.FeaturedPerson__infoPrimary > h4 > a > span',
+	author:
+		'div.BookPageMetadataSection > div.BookPageMetadataSection__contributor > h3 > div > span:nth-child(1) > a > span',
 	description:
 		'div.BookPageMetadataSection > div.BookPageMetadataSection__description > div > div.TruncatedContent__text.TruncatedContent__text--large > div > div > span',
 	ratingCount: '[data-testid="ratingsCount"]',
@@ -85,19 +86,18 @@ export const parseCurrentBook = async (page: Page, url: string) => {
 			waitUntil: 'domcontentloaded'
 		})
 		.catch(() => null)
-
+	console.log('go to', url)
 	await page.waitForSelector(parseSelectors.title)
 	await page.waitForSelector(parseSelectors.author)
 	await page.waitForSelector(parseSelectors.description)
 	await page.waitForSelector(parseSelectors.ratingCount)
 	await page.waitForSelector(parseSelectors.pages)
 	await page.waitForSelector(parseSelectors.picture)
-
 	await page.waitForSelector(
 		parseSelectors.genres +
 			' > span:nth-child(1) > span > a > .Button__labelItem'
 	)
-
+	console.log('all waits done')
 	const title = await page.evaluate(() => {
 		const title = document.querySelector('div.BookPageTitleSection > div > h1')
 		return title?.textContent ?? 'No title'
@@ -120,6 +120,7 @@ export const parseCurrentBook = async (page: Page, url: string) => {
 				)
 			: 'No description'
 	}, parseSelectors.description)
+
 	const rating = await page.evaluate(selector => {
 		const ratingCount = document.querySelector(selector)
 		return ratingCount?.textContent
@@ -131,12 +132,14 @@ export const parseCurrentBook = async (page: Page, url: string) => {
 				)
 			: 0
 	}, parseSelectors.ratingCount)
+
 	const pages = await page.evaluate(selector => {
 		const pages = document.querySelector(selector)
 		return pages?.textContent
 			? Number.parseInt(pages.textContent.replaceAll(/[^\d\s,]/g, '').trim())
 			: 0
 	}, parseSelectors.pages)
+
 	const picture = await page.evaluate(selector => {
 		const picture = document.querySelector(selector)
 		return picture?.getAttribute('src') ?? 'No picture'

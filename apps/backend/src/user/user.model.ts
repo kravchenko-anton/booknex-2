@@ -17,8 +17,12 @@ import { shortGenre } from '../genre/genre.model'
 import { Activity } from '../utils/services/activity/activity.model'
 
 export class User {
+	@ApiProperty({
+		example: 'user',
+		description: 'user role',
+		enum: Role
+	})
 	@IsEnum(Role)
-	@ApiProperty({ example: 'user', description: 'user role', enum: Role })
 	role: keyof typeof Role
 
 	@ApiProperty({ example: 1, description: 'user id' })

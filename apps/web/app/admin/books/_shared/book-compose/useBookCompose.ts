@@ -1,6 +1,5 @@
 import type { EbookValidationType } from '@/app/admin/books/_shared/ebook-validation'
 import api from '@/services'
-import { blobFormData } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import type { EBookType } from 'backend/src/book/types'
@@ -14,7 +13,7 @@ export const useBookCompose = (defaultBooks?: EBookType) => {
 
 	const { mutateAsync: unfold } = useMutation({
 		mutationKey: ['unfold'],
-		mutationFn: (formData: FormData) => api.parser.unfold(formData as any),
+		mutationFn: (file: File) => api.parser.unfold(file),
 		onSuccess: () => successToast('File uploaded'),
 		onError: () => errorToast('Error while uploading book')
 	})
@@ -251,14 +250,12 @@ export const useBookCompose = (defaultBooks?: EBookType) => {
 
 	const unfoldWithUpload = (files: File[]) => {
 		for (const file of files) {
-			unfold(blobFormData(new Blob([file]), file.name)).then(
-				({ data: chapters }) => {
-					upload({
-						title: file.name,
-						chapters
-					})
-				}
-			)
+			unfold(new File([file], file.name)).then(({ data: chapters }) => {
+				upload({
+					title: file.name,
+					chapters
+				})
+			})
 		}
 	}
 

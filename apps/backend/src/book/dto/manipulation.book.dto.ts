@@ -1,67 +1,78 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { Type } from 'class-transformer'
+import {
+	IsArray,
+	IsNumber,
+	IsOptional,
+	IsString,
+	ValidateNested
+} from 'class-validator'
+import 'multer'
+import { IsFile } from '../../utils/common/isFileDto'
+import { EBookType } from './update.ebook.dto'
 
 export class CreateBookDto {
 	@ApiProperty({
 		description: 'Title of the book',
 		example: 'The Great Gatsby',
-		required: false
+		required: true
 	})
 	@IsString()
-	title?: string
+	title: string
 	@ApiProperty({
 		description: 'Author of the book',
 		example: 'F. Scott Fitzgerald',
-		required: false
+		required: true
 	})
 	@IsString()
-	author?: string
+	author: string
 	@ApiProperty({
 		description: 'Description of the book',
 		example:
 			"The Great Gatsby is a novel by the American author F. Scott Fitzgerald. First published in 1925, it is set on Long Island's North Shore and in New York City from spring to autumn of 1922.",
-		required: false
+		required: true
 	})
 	@IsString()
-	description?: string
+	description: string
 
+	@IsFile({ mime: ['image/jpg', 'image/png'] })
 	@ApiProperty({
+		type: 'string',
+		format: 'binary',
 		description: 'Uploaded picture',
 		example: 'picture.jpg',
-		required: false
+		required: true
 	})
-	@IsString()
-	picture?: string
-	@ApiProperty({
-		description: 'Uploaded ebook',
-		example: 'ebook.json',
-		required: false
-	})
-	@IsString()
-	ebook?: string
+	picture: Express.Multer.File
+
+	@ApiProperty({ type: [EBookType] })
+	@IsArray()
+	@ValidateNested()
+	@Type(() => EBookType)
+	ebook: EBookType[]
 	@ApiProperty({
 		description: 'Number of pages in the book',
 		example: 300,
-		required: false
+		required: true
 	})
 	@IsString()
-	pages?: number
+	pages: number
 
 	@ApiProperty({
 		description: 'Number of goodRead reviews',
 		example: 1_000_000,
-		required: false
+		required: true
 	})
 	@IsString()
-	popularity?: number
+	popularity: number
 	@ApiProperty({
 		description: 'Array of genres',
 		example: [1, 2, 3],
 		type: [Number],
-		required: false
+		required: true
 	})
 	@IsNumber({}, { each: true })
-	genres?: number[]
+	genres: number[]
 }
 
 export class EditBookDto {

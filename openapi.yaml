@@ -319,7 +319,7 @@ paths:
         - book
       security:
         - bearer: []
-  "/api/book/admin/update-bio/{id}":
+  "/api/book/admin/update/{id}":
     put:
       operationId: update
       parameters:
@@ -363,8 +363,32 @@ paths:
         - book
       security:
         - bearer: []
+  "/api/book/admin/update-ebook/{id}":
+    post:
+      operationId: updateEbook
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/EBookType"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - book
+      security:
+        - bearer: []
   "/api/book/admin/update-picture/{id}":
-    put:
+    post:
       operationId: updatePicture
       parameters:
         - name: id
@@ -1162,12 +1186,10 @@ components:
           example: author
           description: book author
         createdAt:
-          format: date-time
           type: string
           example: 2021-07-01
           description: book created at
         updatedAt:
-          format: date-time
           type: string
           example: 2021-07-01
           description: book updated at
@@ -1284,13 +1306,43 @@ components:
         canLoadMore:
           type: boolean
           example: true
+          description: can load more
         totalPages:
           type: number
           example: 1
+          description: total pages
       required:
         - data
         - canLoadMore
         - totalPages
+    EbookChapter:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        text:
+          type: string
+      required:
+        - id
+        - name
+        - text
+    EBookType:
+      type: object
+      properties:
+        title:
+          type: string
+        id:
+          type: number
+        chapters:
+          type: array
+          items:
+            $ref: "#/components/schemas/EbookChapter"
+      required:
+        - title
+        - id
+        - chapters
     CreateBookDto:
       type: object
       properties:
@@ -1310,12 +1362,13 @@ components:
             in New York City from spring to autumn of 1922.
         picture:
           type: string
+          format: binary
           description: Uploaded picture
           example: picture.jpg
         ebook:
-          type: string
-          description: Uploaded ebook
-          example: ebook.json
+          type: array
+          items:
+            $ref: "#/components/schemas/EBookType"
         pages:
           type: number
           description: Number of pages in the book
@@ -1333,6 +1386,15 @@ components:
           type: array
           items:
             type: number
+      required:
+        - title
+        - author
+        - description
+        - picture
+        - ebook
+        - pages
+        - popularity
+        - genres
     EditBookDto:
       type: object
       properties:

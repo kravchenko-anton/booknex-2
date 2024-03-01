@@ -12,37 +12,48 @@ import { Review } from '../review/review.model'
 import { Activity } from '../utils/services/activity/activity.model'
 
 export class ShortBook {
+	@ApiProperty({ example: 1, description: 'book id', type: Number })
 	@IsNumber()
-	@ApiProperty({ example: 1, description: 'book id' })
 	id: number
+	@ApiProperty({ example: 'title', description: 'book title', type: String })
 	@IsString()
-	@ApiProperty({ example: 'title', description: 'book title' })
 	title: string
+	@ApiProperty({
+		example: 'picture',
+		description: 'book picture',
+		type: String
+	})
 	@IsString()
-	@ApiProperty({ example: 'picture', description: 'book picture' })
 	picture: string
 
+	@ApiProperty({ example: 'author', description: 'book author', type: String })
 	@IsString()
-	@ApiProperty({ example: 'author', description: 'book author' })
 	author: string
 }
 
 export class Book extends ShortBook {
+	@ApiProperty({
+		example: 'description',
+		description: 'book description',
+		type: String
+	})
 	@IsString()
-	@ApiProperty({ example: 'description', description: 'book description' })
 	description: string
+	@ApiProperty({
+		example: 'picture',
+		description: 'book picture',
+		type: String
+	})
 	@IsString()
-	@ApiProperty({ example: 'picture', description: 'book picture' })
 	picture: string
-	@IsString()
+	@ApiProperty({ example: 100, description: 'book pages', type: Number })
 	@IsNumber()
-	@ApiProperty({ example: 100, description: 'book pages' })
 	pages: number
+	@ApiProperty({ example: 100, description: 'book popularity', type: Number })
 	@IsNumber()
-	@ApiProperty({ example: 100, description: 'book popularity' })
 	popularity: number
+	@ApiProperty({ example: true, description: 'book visibility', type: Boolean })
 	@IsBoolean()
-	@ApiProperty({ example: true, description: 'book visibility' })
 	visible: boolean
 
 	@ApiProperty({ type: [shortGenre] })
@@ -61,16 +72,20 @@ export class AdminCatalogOutput {
 	@ValidateNested()
 	@Type(() => Book)
 	data: Book[]
-	@ApiProperty({ example: true })
+	@ApiProperty({ example: true, description: 'can load more', type: Boolean })
 	@IsBoolean()
 	canLoadMore: boolean
-	@ApiProperty({ example: 1 })
+	@ApiProperty({ example: 1, description: 'total pages', type: Number })
 	@IsNumber()
 	totalPages: number
 }
 
 export class InfoByIdOutput extends ShortBook {
-	@ApiProperty({ example: 'description', description: 'book description' })
+	@ApiProperty({
+		example: 'description',
+		description: 'book description',
+		type: String
+	})
 	@IsString()
 	description: string
 	@ApiProperty({ type: [shortGenre] })
@@ -84,41 +99,53 @@ export class InfoByIdOutput extends ShortBook {
 }
 
 export class CountOutput {
-	@ApiProperty({ example: 1, description: 'FinishedBy' })
+	@ApiProperty({ example: 1, description: 'FinishedBy', type: Number })
 	@IsNumber()
 	finishedBy: number
 
-	@ApiProperty({ example: 1, description: 'ReadingBy' })
+	@ApiProperty({ example: 1, description: 'ReadingBy', type: Number })
 	@IsNumber()
 	readingBy: number
 
-	@ApiProperty({ example: 1, description: 'SavedBy' })
+	@ApiProperty({ example: 1, description: 'SavedBy', type: Number })
 	@IsNumber()
 	savedBy: number
 }
 
 export class AdminInfoByIdOutput extends ShortBook {
-	@ApiProperty({ example: '2021-07-01', description: 'book created at' })
+	@ApiProperty({
+		example: '2021-07-01',
+		description: 'book created at',
+		type: String
+	})
 	@IsString()
 	createdAt: Date
 
-	@ApiProperty({ example: '2021-07-01', description: 'book updated at' })
+	@ApiProperty({
+		example: '2021-07-01',
+		description: 'book updated at',
+		type: String
+	})
 	@IsString()
 	updatedAt: Date
 
-	@ApiProperty({ example: true, description: 'book visibility' })
+	@ApiProperty({ example: true, description: 'book visibility', type: Boolean })
 	@IsBoolean()
 	visible: boolean
-	@ApiProperty({ example: 'ebook', description: 'book ebook' })
+	@ApiProperty({ example: 'ebook', description: 'book ebook', type: String })
 	@IsString()
 	ebook: string
-	@ApiProperty({ example: 'description', description: 'book description' })
+	@ApiProperty({
+		example: 'description',
+		description: 'book description',
+		type: String
+	})
 	@IsString()
 	description: string
-	@ApiProperty({ example: 100, description: 'book popularity' })
+	@ApiProperty({ example: 100, description: 'book popularity', type: Number })
 	@IsNumber()
 	popularity: number
-	@ApiProperty({ example: 100, description: 'book pages' })
+	@ApiProperty({ example: 100, description: 'book pages', type: Number })
 	@IsNumber()
 	pages: number
 	@ApiProperty({

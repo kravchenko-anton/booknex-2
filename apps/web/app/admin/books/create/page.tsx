@@ -15,7 +15,6 @@ import type { FC } from 'react'
 
 const Page: FC = () => {
 	const form = useCreateForm()
-	console.log(form.watch('books'), 'form')
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -80,10 +79,7 @@ const Page: FC = () => {
 							multiple={false}
 							accept='image/*'
 							onDropFile={acceptedFiles => {
-								form.setValue(
-									'picture',
-									new File([acceptedFiles[0]], acceptedFiles[0].name)
-								)
+								form.setValue('picture', acceptedFiles[0])
 							}}
 						/>
 						<ErrorMessage name='picture' errors={form.errors} />

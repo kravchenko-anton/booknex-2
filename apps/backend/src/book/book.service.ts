@@ -2,7 +2,6 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
 import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
-import { GenreService } from '../genre/genre.service'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
 import { StorageFolderEnum } from '../storage/storage.types'
@@ -16,15 +15,14 @@ import type {
 	EditBookDto,
 	UpdateGenreDto
 } from './dto/manipulation.book.dto'
+import type { EBookType } from './dto/update.ebook.dto'
 import { returnBookObject } from './return.book.object'
-import type { EBookType } from './types'
 
 @Injectable()
 export class BookService {
 	constructor(
 		private readonly prisma: PrismaService,
 		private readonly activityService: ActivityService,
-		private readonly genreService: GenreService,
 		private storageService: StorageService
 	) {}
 
@@ -181,8 +179,8 @@ export class BookService {
 				picture: true
 			}
 		})
-		const ebook: EBookType = await fetch(getFileUrl(book.ebook)).then(result =>
-			result.json()
+		const ebook: EBookType[] = await fetch(getFileUrl(book.ebook)).then(
+			result => result.json()
 		)
 
 		await this.activityService.create({
@@ -246,7 +244,21 @@ export class BookService {
 	}
 
 	async create(dto: CreateBookDto) {
-		const majorGenre = await this.genreService.findMajorGenre(dto.genres)
+		const { selectedGenres, mainGenreId } = await this.getGenres(dto.genres)
+		const { name: pictureName } = await this.storageService.upload({
+			folder: StorageFolderEnum.booksCovers,
+			file: dto.picture.buffer,
+			role: 'admin',
+			filename: dto.title
+		})
+		const { name: ebookName } = await this.storageService.upload({
+			folder: StorageFolderEnum.ebooks,
+			//TODO: пофиксить тут
+			file: new Buffer(JSON.stringify(dto)),
+			role: 'admin',
+			filename: dto.title
+		})
+
 		await this.prisma.book.create({
 			data: {
 				activities: {
@@ -260,15 +272,15 @@ export class BookService {
 				popularity: dto.popularity,
 				pages: dto.pages,
 				description: dto.description,
-				picture: dto.picture,
-				ebook: dto.ebook,
+				picture: pictureName,
+				ebook: ebookName,
 				author: dto.author,
 				genres: {
-					connect: dto.genres.map(g => ({ id: g }))
+					connect: selectedGenres
 				},
 				majorGenre: {
 					connect: {
-						id: majorGenre.id
+						id: mainGenreId
 					}
 				}
 			}
@@ -285,39 +297,66 @@ export class BookService {
 		await this.prisma.book.delete({ where: { id } })
 	}
 
-	async updatePicture(id: number, picture: Buffer) {
+	async updatePicture(id: number, picture: Express.Multer.File) {
 		const bookPicture = await this.findOne({
 			where: { id },
 			select: {
 				picture: true
 			}
 		})
-		await this.storageService.upload({
+		const { name: fileName } = await this.storageService.upload({
 			folder: StorageFolderEnum.booksCovers,
-			file: picture,
+			file: picture.buffer,
 			role: 'admin',
 			filename: bookPicture.picture
+		})
+		await this.prisma.book.update({
+			where: { id },
+			data: {
+				picture: fileName
+			}
+		})
+	}
+
+	async updateEbook(id: number, dto: EBookType[]) {
+		const book = await this.findOne({
+			where: { id },
+			select: {
+				title: true
+			}
+		})
+		const { name: ebookName } = await this.storageService.upload({
+			folder: StorageFolderEnum.ebooks,
+			file: Buffer.from(JSON.stringify(dto)),
+			role: 'admin',
+			filename: `${book.title}.json`
+		})
+		await this.prisma.book.update({
+			where: { id },
+			data: {
+				ebook: ebookName
+			}
 		})
 	}
 
 	async updateGenre(id: number, dto: UpdateGenreDto) {
 		await this.checkExist(id)
-		const majorGenre = await this.genreService.findMajorGenre(dto.genres)
+		const { selectedGenres, mainGenreId } = await this.getGenres(dto.genres)
 		await this.prisma.book.update({
 			where: { id },
 			data: {
 				genres: {
-					set: dto.genres.map(g => ({ id: g }))
+					set: selectedGenres
 				},
 				majorGenre: {
 					connect: {
-						id: majorGenre.id
+						id: mainGenreId
 					}
 				}
 			}
 		})
 	}
-	async updateBio(id: number, dto: EditBookDto) {
+	async update(id: number, dto: EditBookDto) {
 		await this.checkExist(id)
 		await this.prisma.book.update({
 			where: { id: id },
@@ -329,5 +368,29 @@ export class BookService {
 			importance: 9,
 			bookId: id
 		})
+	}
+	//TODO: сделать тут нормальные названия переменных
+	async getGenres(genres: number[]) {
+		const majorGenre = await this.prisma.genre.findFirst({
+			where: {
+				id: {
+					in: genres
+				}
+			},
+			select: {
+				id: true
+			},
+			orderBy: {
+				majorBooks: {
+					_count: 'asc'
+				}
+			}
+		})
+		if (!majorGenre)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		return {
+			mainGenreId: majorGenre.id,
+			selectedGenres: genres.map(id => ({ id }))
+		}
 	}
 }

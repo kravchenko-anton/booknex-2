@@ -98,12 +98,13 @@ export class ParserService {
 			const { browser, page } = await useParser()
 
 			const books = await parseBookTable(page, dto.url, dto.page)
+			console.log(books.length, 'books')
 			for (const book of books) {
 				try {
 					const { title, author, description, picture, pages, genres, rating } =
 						await parseCurrentBook(page, book.link)
-					if (rating < 40_000) return
-					if (bookTemplate.some(b => b.title === title.trim())) return
+					if (rating < 100_000) continue
+					if (bookTemplate.some(b => b.title === title.trim())) continue
 					const goodGenres = await this.prisma.genre.findMany({
 						where: {
 							OR: genres.map(name => ({
@@ -129,10 +130,14 @@ export class ParserService {
 							popularity: rating
 						}
 					})
-				} catch {}
+				} catch (error) {
+					console.error(error)
+				}
 			}
 			await page.close()
 			await browser.close()
-		} catch {}
+		} catch (error) {
+			console.error(error)
+		}
 	}
 }

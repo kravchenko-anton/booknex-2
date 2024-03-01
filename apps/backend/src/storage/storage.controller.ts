@@ -72,7 +72,6 @@ export class StorageController {
 		@Param('folder') folder: StorageFolderType,
 		@CurrentUser('role') role: RoleType
 	): Promise<UploadOutputDto> {
-		console.log('here')
 		return this.uploadService.upload({
 			file: file.buffer,
 			filename: file.originalname,

@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder } from '@nestjs/swagger'
+import { json } from 'express'
 import helmet from 'helmet'
 import { OpenApiNestFactory } from 'nest-openapi-tools'
 import { AppModule } from './app.module'
@@ -9,6 +10,7 @@ async function bootstrap() {
 	app.setGlobalPrefix('/api')
 	app.enableCors({})
 	app.use(helmet())
+	app.use(json({ limit: '10mb' }))
 	await OpenApiNestFactory.configure(
 		app,
 		new DocumentBuilder()

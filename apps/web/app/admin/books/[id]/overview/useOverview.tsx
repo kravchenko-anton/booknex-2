@@ -1,13 +1,10 @@
 import api from '@/services'
-import { useUploadFile } from '@/utils/files'
-import { errorToast, successToast } from '@/utils/toast'
+import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { EditBookDto } from 'global/api-client'
-import { GlobalErrorsEnum } from 'global/errors'
+import type { EBookType, EditBookDto } from 'global/api-client'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useOverview = () => {
-	const { upload } = useUploadFile()
 	const parameters = useParams()
 	const queryClient = useQueryClient()
 	const router = useRouter()
@@ -20,10 +17,34 @@ export const useOverview = () => {
 		queryFn: () => api.book.infoByIdAdmin(id),
 		select: data => data.data
 	})
-	const { mutateAsync: update } = useMutation({
+	const { mutateAsync: updateBio } = useMutation({
 		mutationKey: ['update-book'],
 		mutationFn: ({ id, payload }: { id: number; payload: EditBookDto }) =>
 			api.book.update(id, payload),
+		onSuccess: async () => {
+			successToast('Book updated')
+			await queryClient.invalidateQueries({
+				queryKey: ['book-overview', id]
+			})
+		}
+	})
+
+	const { mutateAsync: updatePicture } = useMutation({
+		mutationKey: ['update-picture'],
+		mutationFn: ({ id, payload }: { id: number; payload: File }) =>
+			api.book.updatePicture(id, payload),
+		onSuccess: async () => {
+			successToast('Book updated')
+			await queryClient.invalidateQueries({
+				queryKey: ['book-overview', id]
+			})
+		}
+	})
+
+	const { mutateAsync: updateEbook } = useMutation({
+		mutationKey: ['update-picture'],
+		mutationFn: ({ id, payload }: { id: number; payload: EBookType[] }) =>
+			api.book.updateEbook(id, payload),
 		onSuccess: async () => {
 			successToast('Book updated')
 			await queryClient.invalidateQueries({
@@ -41,26 +62,11 @@ export const useOverview = () => {
 		}
 	})
 
-	const uploadPicture = async (file: File) => {
-		console.log(file, 'it is file')
-		if (!book) return errorToast(GlobalErrorsEnum.somethingWrong)
-		await upload({
-			folder: 'booksCovers',
-			file: file
-		}).then(async ({ data }) => {
-			await update({
-				id: book.id,
-				payload: {
-					picture: data.name
-				}
-			})
-		})
-	}
-
 	return {
 		book,
-		update,
+		updateBio,
 		remove,
-		uploadPicture
+		updateEbook,
+		updatePicture
 	}
 }

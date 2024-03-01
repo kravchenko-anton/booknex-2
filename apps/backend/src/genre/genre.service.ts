@@ -61,25 +61,4 @@ export class GenreService {
 			take
 		})
 	}
-
-	async findMajorGenre(genres: number[]) {
-		const majorGenre = this.prisma.genre.findFirst({
-			where: {
-				id: {
-					in: genres
-				}
-			},
-			select: {
-				id: true
-			},
-			orderBy: {
-				majorBooks: {
-					_count: 'asc'
-				}
-			}
-		})
-		if (!majorGenre)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
-		return majorGenre
-	}
 }

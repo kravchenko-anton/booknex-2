@@ -1,6 +1,7 @@
 import api from '@/services'
 import { useQuery } from '@tanstack/react-query'
-import type { EBookType } from 'backend/src/book/types'
+import type { EBookType } from 'global/api-client'
+
 import { useSearchParams } from 'next/navigation'
 import { useLayoutEffect } from 'react'
 import type { UseFormSetValue } from 'react-hook-form'
@@ -15,7 +16,7 @@ export const useTemplate = ({
 		description: string
 		popularity: number
 		author: string
-		books: EBookType
+		books: EBookType[]
 		genres: number[]
 	}>
 }) => {

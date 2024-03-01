@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { EBookType } from './ebook-type';
 
 /**
  * 
@@ -25,48 +28,48 @@ export interface CreateBookDto {
      * @type {string}
      * @memberof CreateBookDto
      */
-    'title'?: string;
+    'title': string;
     /**
      * Author of the book
      * @type {string}
      * @memberof CreateBookDto
      */
-    'author'?: string;
+    'author': string;
     /**
      * Description of the book
      * @type {string}
      * @memberof CreateBookDto
      */
-    'description'?: string;
+    'description': string;
     /**
      * Uploaded picture
-     * @type {string}
+     * @type {File}
      * @memberof CreateBookDto
      */
-    'picture'?: string;
+    'picture': File;
     /**
-     * Uploaded ebook
-     * @type {string}
+     * 
+     * @type {Array<EBookType>}
      * @memberof CreateBookDto
      */
-    'ebook'?: string;
+    'ebook': Array<EBookType>;
     /**
      * Number of pages in the book
      * @type {number}
      * @memberof CreateBookDto
      */
-    'pages'?: number;
+    'pages': number;
     /**
      * Number of goodRead reviews
      * @type {number}
      * @memberof CreateBookDto
      */
-    'popularity'?: number;
+    'popularity': number;
     /**
      * Array of genres
      * @type {Array<number>}
      * @memberof CreateBookDto
      */
-    'genres'?: Array<number>;
+    'genres': Array<number>;
 }
 
