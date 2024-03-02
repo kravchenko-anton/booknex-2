@@ -23,5 +23,3 @@ export const ebookValidation = z
 			})
 	)
 	.min(1)
-
-export type EbookValidationType = z.infer<typeof ebookValidation>

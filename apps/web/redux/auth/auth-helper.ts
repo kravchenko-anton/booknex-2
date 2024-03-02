@@ -1,4 +1,4 @@
-import api from '@/services/index'
+import api from '@/services'
 import Cookies from 'js-cookie'
 
 export const getAccessToken = () => {

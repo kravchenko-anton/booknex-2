@@ -13,7 +13,6 @@ const instance = axios.create({
 		'Content-Type': 'application/json'
 	}
 })
-
 instance.interceptors.request.use(async config => {
 	const accessToken = getAccessToken()
 
@@ -51,8 +50,9 @@ instance.interceptors.response.use(
 				}
 			}
 		}
-
+		// errorToast(errorCatch(error))
 		throw error
 	}
 )
+
 export default instance

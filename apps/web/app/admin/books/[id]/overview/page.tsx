@@ -1,19 +1,20 @@
 'use client'
 
-import EbookInfo from '@/app/admin/books/[id]/overview/_ui/ebook-info'
-import ReviewTable from '@/app/admin/books/[id]/overview/_ui/review/review-table'
-import UpdateBio from '@/app/admin/books/[id]/overview/_ui/update-bio'
-import UpdateGenres from '@/app/admin/books/[id]/overview/_ui/update-genres'
-import UpdatePicture from '@/app/admin/books/[id]/overview/_ui/update-picture'
 import { useOverview } from '@/app/admin/books/[id]/overview/useOverview'
 import ActivityList from '@/components/activity-list'
 import Loader from '@/components/ui/loader/loader'
+import EbookInfo from '@/features/books/shared/ui/ebook-info'
+import ReviewTable from '@/features/books/shared/ui/review/review-table'
+import UpdateBio from '@/features/books/update/update-bio'
+import UpdateGenres from '@/features/books/update/update-genres'
+import UpdatePicture from '@/features/books/update/update-picture'
 import { cn } from '@/utils'
 import { acceptToast } from '@/utils/toast'
 import * as React from 'react'
 //TODO: сделать во фронте при композиции книги типы которые в бекенде
 const Page = () => {
-	const { book, remove, updateBio, updateEbook, updatePicture } = useOverview()
+	const { book, remove, update, updateEbook, toggleVisibility, updatePicture } =
+		useOverview()
 	if (!book) return <Loader />
 
 	return (
@@ -24,10 +25,7 @@ const Page = () => {
 					<UpdatePicture
 						picture={book.picture}
 						updatePicture={async picture => {
-							await updatePicture({
-								id: book.id,
-								payload: picture
-							})
+							await updatePicture(picture)
 						}}
 					/>
 					<div className='mt-4 px-0.5'>
@@ -64,14 +62,7 @@ const Page = () => {
 									'mt-1 rounded-md px-2 py-1 text-white',
 									book.visible ? 'bg-success' : 'bg-warning'
 								)}
-								onClick={() =>
-									updateBio({
-										id: book.id,
-										payload: {
-											visible: !book.visible
-										}
-									})
-								}
+								onClick={toggleVisibility}
 							>
 								{book.visible ? 'Hide' : 'Show'}
 							</button>
@@ -100,7 +91,7 @@ const Page = () => {
 						pages={book.pages}
 						popularity={book.popularity}
 						onSaveEdit={async data => {
-							await updateBio({
+							await update({
 								id: book.id,
 								payload: data
 							})

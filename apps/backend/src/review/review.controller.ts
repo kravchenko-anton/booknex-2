@@ -6,7 +6,7 @@ import { ReviewBookDto } from './dto/review.book.dto'
 import { ReviewService } from './review.service'
 
 @Controller('review')
-@ApiTags('review')
+@ApiTags('⭐ review')
 @ApiBearerAuth()
 export class ReviewController {
 	constructor(private readonly reviewService: ReviewService) {}

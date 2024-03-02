@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder } from '@nestjs/swagger'
 import { json } from 'express'
@@ -10,6 +11,8 @@ async function bootstrap() {
 	app.setGlobalPrefix('/api')
 	app.enableCors({})
 	app.use(helmet())
+	app.useGlobalPipes(new ValidationPipe())
+
 	app.use(json({ limit: '10mb' }))
 	await OpenApiNestFactory.configure(
 		app,
@@ -21,17 +24,15 @@ async function bootstrap() {
 				'Github repository'
 			)
 			.setVersion('1.0')
-			.addTag('user', 'user service')
-			.addTag('auth', 'auth service')
-			.addTag('admin', 'admin service')
-			.addTag('book', 'book service')
-			.addTag('collection', 'collection service')
-			.addTag('catalog', 'catalog service')
-			.addTag('genre', 'genre service')
-			.addTag('storage', 'storage service')
-			.addTag('review', 'review service')
-			.addTag('recommendation', 'recommendation service')
-			.addTag('parser', 'parser service')
+			.addTag('👤 user', 'user service')
+			.addTag('🔐 auth', 'auth service')
+			.addTag('📙 book', 'book service')
+			.addTag('📚 catalog', 'catalog service')
+			.addTag('🔖 genre', 'genre service')
+			.addTag('📁 storage', 'storage service')
+			.addTag('⭐ review', 'review service')
+			.addTag('📨 recommendation', 'recommendation service')
+			.addTag('📦 parser', 'parser service')
 			.addBearerAuth(),
 		{
 			webServerOptions: {

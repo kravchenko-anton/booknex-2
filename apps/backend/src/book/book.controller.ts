@@ -3,23 +3,12 @@ import {
 	Controller,
 	Delete,
 	Get,
-	MaxFileSizeValidator,
 	Param,
-	ParseFilePipe,
 	Post,
 	Put,
-	Query,
-	UploadedFile,
-	UseInterceptors
+	Query
 } from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
-import {
-	ApiBearerAuth,
-	ApiBody,
-	ApiConsumes,
-	ApiOkResponse,
-	ApiTags
-} from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import {
@@ -36,7 +25,7 @@ import {
 } from './dto/manipulation.book.dto'
 import { EBookType } from './dto/update.ebook.dto'
 
-@ApiTags('book')
+@ApiTags('📙 book')
 @ApiBearerAuth()
 @Controller('book')
 export class BookController {
@@ -85,9 +74,10 @@ export class BookController {
 	@ApiOkResponse({ type: null })
 	@ApiBody({
 		type: CreateBookDto,
-		required: true
+		description: 'Create book'
 	})
 	async create(@Body() dto: CreateBookDto) {
+		console.log(dto)
 		return this.bookService.create(dto)
 	}
 
@@ -111,38 +101,6 @@ export class BookController {
 	@ApiBody({ type: [EBookType] })
 	async updateEbook(@Param('id') bookId: number, @Body() dto: EBookType[]) {
 		return this.bookService.updateEbook(+bookId, dto)
-	}
-
-	@Auth('admin')
-	@ApiOkResponse({ type: null })
-	@UseInterceptors(FileInterceptor('file'))
-	@ApiConsumes('multipart/form-data')
-	@Post('admin/update-picture/:id')
-	@ApiBody({
-		schema: {
-			type: 'object',
-			properties: {
-				file: {
-					type: 'string',
-					format: 'binary'
-				}
-			}
-		}
-	})
-	async updatePicture(
-		@UploadedFile(
-			new ParseFilePipe({
-				validators: [
-					new MaxFileSizeValidator({
-						maxSize: 10_000_000
-					})
-				]
-			})
-		)
-		file: Express.Multer.File,
-		@Param('id') bookId: number
-	) {
-		return this.bookService.updatePicture(+bookId, file)
 	}
 
 	@Auth('admin')

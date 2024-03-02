@@ -1,9 +1,9 @@
 'use client'
 
-import ParseButton from '@/app/admin/parser/_catalog/parse-button'
-import { useCatalog } from '@/app/admin/parser/_catalog/useCatalog'
 import DataTable from '@/components/table/data-table'
 import DataTableHeader from '@/components/table/table-search'
+import ParseButton from '@/features/parser/catalog/parse-button'
+import { useCatalog } from '@/features/parser/catalog/useCatalog'
 
 import type { FC } from 'react'
 

@@ -1,30 +1,33 @@
-import { columns } from '@/app/admin/users/_catalog/columns'
-import { useQueries } from '@/app/admin/users/_catalog/useQueries'
+import { columns } from '@/features/books/catalog/columns'
 import { useTableParameters } from '@/hooks/useTableParameters'
+import api from '@/services'
 import {
 	generateParameters,
 	type GenerateParametersType
 } from '@/utils/generate-parameters'
-
+import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
-export const userRoute = '/admin/users'
+export const bookRoute = '/admin/books'
 export const useCatalog = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
-	const { users, deleteUser } = useQueries({ page, searchTerm })
-
+	const { data: books } = useQuery({
+		queryKey: ['books', searchTerm, page],
+		queryFn: () => api.book.adminCatalog(searchTerm, +page),
+		select: data => data.data
+	})
 	const table = useReactTable({
-		data: users?.data ?? [],
+		data: books?.data ?? [],
 		columns: columns({
-			remove: deleteUser
+			preview: id => router.push(`/admin/books/${id}/overview`)
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})
 
 	const pushParameters = (parameters: GenerateParametersType) =>
-		router.replace(generateParameters(userRoute, parameters))
+		router.replace(generateParameters(bookRoute, parameters))
 
 	const headerProperties = {
 		defaultTerm: searchTerm,
@@ -32,15 +35,18 @@ export const useCatalog = () => {
 			pushParameters({ searchTerm: data.searchTerm })
 	}
 
+	const onCreateButtonClick = () => router.push('/admin/books/create')
+
 	const tableProperties = {
 		table,
-		totalPages: users?.totalPages ?? 0,
+		totalPages: books?.totalPages ?? 0,
 		currentPage: page,
+		canLoadMore: !books?.canLoadMore,
 		previous: () => pushParameters({ page: page - 1 }),
-		next: () => pushParameters({ page: page + 1 }),
-		canLoadMore: !users?.canLoadMore
+		next: () => pushParameters({ page: page + 1 })
 	}
 	return {
+		onCreateButtonClick,
 		headerProperties,
 		tableProperties
 	}

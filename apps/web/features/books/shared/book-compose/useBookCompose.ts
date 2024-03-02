@@ -1,15 +1,12 @@
-import type { EbookValidationType } from '@/app/admin/books/_shared/ebook-validation'
 import api from '@/services'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import type { EBookType } from 'backend/src/book/types'
+import type { EBookType } from 'global/api-client'
 import { useLayoutEffect, useState } from 'react'
 
-export const useBookCompose = (defaultBooks?: EBookType) => {
-	const [books, setBooks] = useState<EbookValidationType | null>([])
-	useLayoutEffect(() => {
-		setBooks(defaultBooks || [])
-	}, [defaultBooks])
+export const useBookCompose = (defaultBooks?: EBookType[]) => {
+	const [books, setBooks] = useState<EBookType[] | null>([])
+	useLayoutEffect(() => setBooks(defaultBooks || []), [defaultBooks])
 
 	const { mutateAsync: unfold } = useMutation({
 		mutationKey: ['unfold'],

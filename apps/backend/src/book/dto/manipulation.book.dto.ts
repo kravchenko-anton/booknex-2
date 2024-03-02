@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
+	ArrayMinSize,
 	IsArray,
+	IsBoolean,
 	IsNumber,
 	IsOptional,
 	IsString,
 	ValidateNested
 } from 'class-validator'
 import 'multer'
-import { IsFile } from '../../utils/common/isFileDto'
 import { EBookType } from './update.ebook.dto'
 
 export class CreateBookDto {
@@ -35,16 +36,6 @@ export class CreateBookDto {
 	@IsString()
 	description: string
 
-	@IsFile({ mime: ['image/jpg', 'image/png'] })
-	@ApiProperty({
-		type: 'string',
-		format: 'binary',
-		description: 'Uploaded picture',
-		example: 'picture.jpg',
-		required: true
-	})
-	picture: Express.Multer.File
-
 	@ApiProperty({ type: [EBookType] })
 	@IsArray()
 	@ValidateNested()
@@ -65,6 +56,9 @@ export class CreateBookDto {
 	})
 	@IsString()
 	popularity: number
+
+	@IsArray()
+	@ArrayMinSize(1)
 	@ApiProperty({
 		description: 'Array of genres',
 		example: [1, 2, 3],
@@ -73,9 +67,17 @@ export class CreateBookDto {
 	})
 	@IsNumber({}, { each: true })
 	genres: number[]
+
+	@ApiProperty({ type: String })
+	@IsString()
+	picture: string
 }
 
 export class EditBookDto {
+	@ApiProperty({ type: String, required: false })
+	@IsString()
+	@IsOptional()
+	picture?: string
 	@ApiProperty({
 		description: 'Title of the book',
 		example: 'The Great Gatsby',
@@ -101,36 +103,21 @@ export class EditBookDto {
 	@IsOptional()
 	description?: string
 	@ApiProperty({
-		description: 'Description of the book',
-		example:
-			"The Great Gatsby is a novel by the American author F. Scott Fitzgerald. First published in 1925, it is set on Long Island's North Shore and in New York City from spring to autumn of 1922.",
-		required: false
-	})
-	@IsString()
-	@IsOptional()
-	picture?: string
-	@ApiProperty({
-		description: 'Uploaded ebook',
-		example: 'ebook.pdf',
-		required: false
-	})
-	@IsString()
-	ebook?: string
-	@ApiProperty({
 		description: 'Number of pages in the book',
 		example: 300,
 		required: false
 	})
 	@IsOptional()
-	@IsString()
+	@IsNumber()
 	pages?: number
+
 	@ApiProperty({
 		description: 'Is book visible',
 		example: true,
 		required: false
 	})
 	@IsOptional()
-	@IsString()
+	@IsBoolean()
 	visible?: boolean
 	@ApiProperty({
 		description: 'Number of goodRead reviews',
@@ -138,7 +125,7 @@ export class EditBookDto {
 		required: false
 	})
 	@IsOptional()
-	@IsString()
+	@IsNumber()
 	popularity?: number
 }
 

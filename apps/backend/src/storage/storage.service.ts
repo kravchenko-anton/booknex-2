@@ -74,6 +74,8 @@ export class StorageService {
 			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFolder)
 		}
 		await this.delete(`${folder}/${optimizeFilename(filename)}`)
+		console.log(folder === StorageFolderEnum.ebooks)
+		console.log(folder)
 		const finalFile =
 			folder === StorageFolderEnum.ebooks
 				? file
@@ -82,6 +84,7 @@ export class StorageService {
 							height: 1200,
 							width: 800
 						})
+
 						.toFormat('jpeg', { progressive: true, quality: 50 })
 						.toBuffer()
 		await this.s3

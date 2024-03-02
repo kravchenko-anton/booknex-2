@@ -13,7 +13,6 @@
 		"@nestjs/common": "^10.0.2",
 		"@nestjs/config": "^3.0.0",
 		"@nestjs/core": "^10.0.2",
-		"vaul": "^0.9.0",
 		"@nestjs/jwt": "^10.2.0",
 		"@nestjs/mapped-types": "*",
 		"@nestjs/passport": "^10.0.0",
@@ -54,6 +53,7 @@
 		"jsdom": "^23.0.1",
 		"nativewind": "^2.0.11",
 		"nest-openapi-tools": "^6.0.2",
+		"nestjs-form-data": "^1.9.6",
 		"nestjs-pino": "^4.0.0",
 		"next": "14.1.0",
 		"passport": "^0.6.0",
@@ -84,6 +84,7 @@
 		"stream": "^0.0.2",
 		"tailwind-merge": "^2.2.0",
 		"util": "^0.12.5",
+		"vaul": "^0.9.0",
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {

@@ -1,10 +1,12 @@
 import api from '@/services'
-import { successToast } from '@/utils/toast'
+import { useUploadFile } from '@/utils/files'
+import { errorToast, successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { EBookType, EditBookDto } from 'global/api-client'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useOverview = () => {
+	const { upload } = useUploadFile()
 	const parameters = useParams()
 	const queryClient = useQueryClient()
 	const router = useRouter()
@@ -17,7 +19,7 @@ export const useOverview = () => {
 		queryFn: () => api.book.infoByIdAdmin(id),
 		select: data => data.data
 	})
-	const { mutateAsync: updateBio } = useMutation({
+	const { mutateAsync: update } = useMutation({
 		mutationKey: ['update-book'],
 		mutationFn: ({ id, payload }: { id: number; payload: EditBookDto }) =>
 			api.book.update(id, payload),
@@ -29,17 +31,24 @@ export const useOverview = () => {
 		}
 	})
 
-	const { mutateAsync: updatePicture } = useMutation({
-		mutationKey: ['update-picture'],
-		mutationFn: ({ id, payload }: { id: number; payload: File }) =>
-			api.book.updatePicture(id, payload),
-		onSuccess: async () => {
-			successToast('Book updated')
-			await queryClient.invalidateQueries({
-				queryKey: ['book-overview', id]
-			})
-		}
-	})
+	const updatePicture = async (file: File) => {
+		if (!book) return errorToast('Book not found')
+		const { data: picture } = await upload({
+			blob: file,
+			name: book.title,
+			folder: 'ebooks'
+		})
+		if (!picture) return errorToast('Picture not uploaded')
+		await update({
+			id,
+			payload: {
+				picture: picture.name
+			}
+		})
+		await queryClient.invalidateQueries({
+			queryKey: ['book-overview', id]
+		})
+	}
 
 	const { mutateAsync: updateEbook } = useMutation({
 		mutationKey: ['update-picture'],
@@ -62,11 +71,24 @@ export const useOverview = () => {
 		}
 	})
 
+	const toggleVisibility = async () => {
+		if (!book) return errorToast('Book not found')
+		await update({
+			id,
+			payload: {
+				visible: !book.visible
+			}
+		})
+		await queryClient.invalidateQueries({
+			queryKey: ['book-overview', id]
+		})
+	}
 	return {
 		book,
-		updateBio,
+		update,
 		remove,
 		updateEbook,
-		updatePicture
+		updatePicture,
+		toggleVisibility
 	}
 }

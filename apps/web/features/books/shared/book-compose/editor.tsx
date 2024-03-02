@@ -1,15 +1,15 @@
-import { useBookCompose } from '@/app/admin/books/_shared/book-compose/useBookCompose'
-import type { EbookValidationType } from '@/app/admin/books/_shared/ebook-validation'
 import { DropZone, TextArea } from '@/components/ui'
+import { useBookCompose } from '@/features/books/shared/book-compose/useBookCompose'
 import { errorToast } from '@/utils/toast'
+import type { EBookType } from 'global/api-client'
 import { CaseSensitive, ChevronDown, ChevronUp, Close } from 'icons'
 import { useEffect, type FC } from 'react'
 
 //TODO: сделать тут типизацию
 
 const EbookComposer: FC<{
-	defaultBooks?: EbookValidationType
-	updateBooks: (books: EbookValidationType) => void
+	defaultBooks?: EBookType[]
+	updateBooks: (books: EBookType[]) => void
 }> = ({ updateBooks, defaultBooks }) => {
 	const { books } = useBookCompose(defaultBooks)
 	useEffect(() => updateBooks(books.state), [books.state])

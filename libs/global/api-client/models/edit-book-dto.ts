@@ -21,6 +21,12 @@
  */
 export interface EditBookDto {
     /**
+     * 
+     * @type {string}
+     * @memberof EditBookDto
+     */
+    'picture'?: string;
+    /**
      * Title of the book
      * @type {string}
      * @memberof EditBookDto
@@ -38,18 +44,6 @@ export interface EditBookDto {
      * @memberof EditBookDto
      */
     'description'?: string;
-    /**
-     * Description of the book
-     * @type {string}
-     * @memberof EditBookDto
-     */
-    'picture'?: string;
-    /**
-     * Uploaded ebook
-     * @type {string}
-     * @memberof EditBookDto
-     */
-    'ebook'?: string;
     /**
      * Number of pages in the book
      * @type {number}

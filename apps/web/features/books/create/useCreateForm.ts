@@ -1,9 +1,10 @@
-import { useTemplate } from '@/app/admin/books/create/_helpers/useTemplate'
+import { useTemplate } from '@/features/books/create/useTemplate'
 import {
 	createBookValidationSchema,
 	type CreateBookValidationSchemaType
-} from '@/app/admin/books/create/_helpers/validation'
+} from '@/features/books/create/validation'
 import api from '@/services'
+import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -13,6 +14,7 @@ import { useForm } from 'react-hook-form'
 
 export const useCreateForm = () => {
 	const router = useRouter()
+	const { upload } = useUploadFile()
 	const {
 		control,
 		watch,
@@ -26,7 +28,17 @@ export const useCreateForm = () => {
 
 	const { mutateAsync: create } = useMutation({
 		mutationKey: ['upload-book'],
-		mutationFn: (payload: CreateBookDto) => api.book.create(payload),
+		mutationFn: (payload: CreateBookDto) =>
+			api.book.create({
+				title: payload.title,
+				description: payload.description,
+				picture: payload.picture,
+				ebook: payload.ebook,
+				genres: payload.genres,
+				pages: payload.pages,
+				popularity: payload.popularity,
+				author: payload.author
+			}),
 		onError: () => errorToast('Error while uploading book')
 	})
 
@@ -37,11 +49,16 @@ export const useCreateForm = () => {
 	})
 
 	const submit = handleSubmit(async (data: CreateBookValidationSchemaType) => {
-		console.log(data.picture)
+		const { data: pictureFile } = await upload({
+			name: data.title,
+			folder: 'booksCovers',
+			blob: data.picture
+		})
+		if (!pictureFile.name) return
 		await create({
 			title: data.title,
 			description: data.description,
-			picture: data.picture,
+			picture: pictureFile.name,
 			ebook: data.books,
 			author: data.author,
 			genres: data.genres,

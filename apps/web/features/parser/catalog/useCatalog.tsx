@@ -1,6 +1,6 @@
-import { bookRoute } from '@/app/admin/books/_catalog/useCatalog'
-import { columns } from '@/app/admin/parser/_catalog/columns'
-import { useQueries } from '@/app/admin/parser/_catalog/useQueries'
+import { bookRoute } from '@/features/books/catalog/useCatalog'
+import { columns } from '@/features/parser/catalog/columns'
+import { useQueries } from '@/features/parser/catalog/useQueries'
 import { useTableParameters } from '@/hooks/useTableParameters'
 import {
 	generateParameters,

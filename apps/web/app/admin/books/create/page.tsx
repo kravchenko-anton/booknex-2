@@ -1,8 +1,5 @@
 'use client'
-import Editor from '@/app/admin/books/_shared/book-compose/editor'
-import type { EbookValidationType } from '@/app/admin/books/_shared/ebook-validation'
-import { useCreateForm } from '@/app/admin/books/create/_helpers/useCreateForm'
-import SelectGenres from '@/app/admin/books/create/_ui/select-genres'
+
 import {
 	Button,
 	DropZone,
@@ -10,6 +7,10 @@ import {
 	Field,
 	FormTextArea
 } from '@/components/ui'
+import { useCreateForm } from '@/features/books/create/useCreateForm'
+import Editor from '@/features/books/shared/book-compose/editor'
+import SelectGenres from '@/features/books/shared/ui/select-genres'
+import type { EBookType } from 'global/api-client'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 
@@ -89,9 +90,7 @@ const Page: FC = () => {
 				</div>
 			</div>
 			<Editor
-				updateBooks={(books: EbookValidationType) =>
-					form.setValue('books', books)
-				}
+				updateBooks={(books: EBookType[]) => form.setValue('books', books)}
 			/>
 
 			<Button

@@ -1,5 +1,3 @@
-import { reviewColumns } from '@/app/admin/books/[id]/overview/_ui/review/review-columns'
-import { columns } from '@/app/admin/books/_catalog/columns'
 import {
 	Table,
 	TableBody,
@@ -8,6 +6,8 @@ import {
 	TableHeader,
 	TableRow
 } from '@/components/ui/table'
+import { columns } from '@/features/books/catalog/columns'
+import { reviewColumns } from '@/features/books/shared/ui/review/review-columns'
 import {
 	flexRender,
 	getCoreRowModel,

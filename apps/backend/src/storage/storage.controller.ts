@@ -24,7 +24,7 @@ import { FilenameDto, UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
 import { StorageFolderType } from './storage.types'
 
-@ApiTags('storage')
+@ApiTags('📁 storage')
 @ApiBearerAuth()
 @Controller('storage')
 @Auth()

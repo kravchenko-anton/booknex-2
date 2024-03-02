@@ -12,7 +12,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserProfile"
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   /api/user/library:
@@ -27,7 +27,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserLibrary"
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/start-reading/{id}":
@@ -43,7 +43,7 @@ paths:
         "200":
           description: ""
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/finish-reading/{id}":
@@ -59,7 +59,7 @@ paths:
         "200":
           description: ""
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/toggle-save/{id}":
@@ -79,7 +79,7 @@ paths:
               schema:
                 type: boolean
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/is-saved/{id}":
@@ -99,7 +99,7 @@ paths:
               schema:
                 type: boolean
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   /api/user/admin/catalog:
@@ -124,7 +124,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserAdminCatalog"
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/admin/remove/{id}":
@@ -140,7 +140,7 @@ paths:
         "200":
           description: ""
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/catalog/search/{query}":
@@ -162,7 +162,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/ShortBook"
       tags:
-        - catalog
+        - 📚 catalog
       security:
         - bearer: []
   /api/catalog/featured:
@@ -177,7 +177,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/FeaturedOutput"
       tags:
-        - catalog
+        - 📚 catalog
       security:
         - bearer: []
   /api/genre:
@@ -194,7 +194,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/shortGenre"
       tags:
-        - genre
+        - 🔖 genre
       security:
         - bearer: []
   "/api/genre/by-id/{id}":
@@ -214,7 +214,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/byIdOutput"
       tags:
-        - genre
+        - 🔖 genre
       security:
         - bearer: []
   "/api/book/by-id/{id}":
@@ -234,7 +234,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/InfoByIdOutput"
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/ebook/{id}":
@@ -254,7 +254,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/EbookByIdOutput"
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/admin/by-id/{id}":
@@ -274,7 +274,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminInfoByIdOutput"
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   /api/book/admin/catalog:
@@ -299,7 +299,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminCatalogOutput"
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   /api/book/admin/create:
@@ -308,6 +308,7 @@ paths:
       parameters: []
       requestBody:
         required: true
+        description: Create book
         content:
           application/json:
             schema:
@@ -316,7 +317,7 @@ paths:
         "200":
           description: ""
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/admin/update/{id}":
@@ -338,7 +339,7 @@ paths:
         "200":
           description: ""
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/admin/update-genre/{id}":
@@ -360,7 +361,7 @@ paths:
         "200":
           description: ""
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/admin/update-ebook/{id}":
@@ -384,33 +385,7 @@ paths:
         "200":
           description: ""
       tags:
-        - book
-      security:
-        - bearer: []
-  "/api/book/admin/update-picture/{id}":
-    post:
-      operationId: updatePicture
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-      responses:
-        "200":
-          description: ""
-      tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/admin/remove/{id}":
@@ -426,7 +401,7 @@ paths:
         "200":
           description: ""
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   /api/auth/google-sign:
@@ -448,7 +423,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AuthResponseDto"
       tags:
-        - auth
+        - 🔐 auth
   /api/auth/mail-register:
     post:
       operationId: register
@@ -468,7 +443,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AuthResponseDto"
       tags:
-        - auth
+        - 🔐 auth
   /api/auth/mail-login:
     post:
       operationId: login
@@ -488,7 +463,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AuthResponseDto"
       tags:
-        - auth
+        - 🔐 auth
   /api/auth/refresh:
     post:
       operationId: refreshToken
@@ -508,7 +483,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AuthResponseDto"
       tags:
-        - auth
+        - 🔐 auth
   /api/storage/delete:
     post:
       operationId: delete
@@ -523,7 +498,7 @@ paths:
         "200":
           description: File deleted
       tags:
-        - storage
+        - 📁 storage
       security:
         - bearer: []
   "/api/storage/{folder}":
@@ -556,7 +531,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UploadOutputDto"
       tags:
-        - storage
+        - 📁 storage
       security:
         - bearer: []
   /api/parser/admin/catalog:
@@ -583,7 +558,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BookTemplateCatalogOutput"
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   "/api/parser/admin/by-id/{id}":
@@ -603,7 +578,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BookTemplate"
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   /api/parser/admin/parse:
@@ -620,7 +595,7 @@ paths:
         "201":
           description: ""
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   /api/parser/admin/unfold:
@@ -647,7 +622,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/UnfoldOutput"
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   "/api/parser/admin/remove/{id}":
@@ -663,7 +638,7 @@ paths:
         "200":
           description: ""
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   "/api/review/review/{id}":
@@ -686,7 +661,7 @@ paths:
         "200":
           description: Review book
       tags:
-        - review
+        - ⭐ review
       security:
         - bearer: []
   /api/recommendation/update-recommendations:
@@ -703,7 +678,7 @@ paths:
         "200":
           description: Recommendations updated
       tags:
-        - recommendation
+        - 📨 recommendation
       security:
         - bearer: []
   /api/recommendation/recommendation-genres:
@@ -720,7 +695,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/shortGenre"
       tags:
-        - recommendation
+        - 📨 recommendation
       security:
         - bearer: []
 info:
@@ -732,27 +707,23 @@ info:
     url: https://github.com/kravchenko-anton/booknex-2-monorepo
     email: Github repository
 tags:
-  - name: user
+  - name: 👤 user
     description: user service
-  - name: auth
+  - name: 🔐 auth
     description: auth service
-  - name: admin
-    description: admin service
-  - name: book
+  - name: 📙 book
     description: book service
-  - name: collection
-    description: collection service
-  - name: catalog
+  - name: 📚 catalog
     description: catalog service
-  - name: genre
+  - name: 🔖 genre
     description: genre service
-  - name: storage
+  - name: 📁 storage
     description: storage service
-  - name: review
+  - name: ⭐ review
     description: review service
-  - name: recommendation
+  - name: 📨 recommendation
     description: recommendation service
-  - name: parser
+  - name: 📦 parser
     description: parser service
 servers: []
 components:
@@ -1360,11 +1331,6 @@ components:
           example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
             First published in 1925, it is set on Long Island's North Shore and
             in New York City from spring to autumn of 1922.
-        picture:
-          type: string
-          format: binary
-          description: Uploaded picture
-          example: picture.jpg
         ebook:
           type: array
           items:
@@ -1386,18 +1352,22 @@ components:
           type: array
           items:
             type: number
+        picture:
+          type: string
       required:
         - title
         - author
         - description
-        - picture
         - ebook
         - pages
         - popularity
         - genres
+        - picture
     EditBookDto:
       type: object
       properties:
+        picture:
+          type: string
         title:
           type: string
           description: Title of the book
@@ -1410,16 +1380,6 @@ components:
           type: string
           description: Uploaded picture
           example: picture.jpg
-        picture:
-          type: string
-          description: Description of the book
-          example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
-            First published in 1925, it is set on Long Island's North Shore and
-            in New York City from spring to autumn of 1922.
-        ebook:
-          type: string
-          description: Uploaded ebook
-          example: ebook.pdf
         pages:
           type: number
           description: Number of pages in the book

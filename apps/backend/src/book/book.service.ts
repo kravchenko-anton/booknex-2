@@ -244,17 +244,12 @@ export class BookService {
 	}
 
 	async create(dto: CreateBookDto) {
+		console.log(dto.genres, 'it is genres', typeof dto.genres)
 		const { selectedGenres, mainGenreId } = await this.getGenres(dto.genres)
-		const { name: pictureName } = await this.storageService.upload({
-			folder: StorageFolderEnum.booksCovers,
-			file: dto.picture.buffer,
-			role: 'admin',
-			filename: dto.title
-		})
+
 		const { name: ebookName } = await this.storageService.upload({
-			folder: StorageFolderEnum.ebooks,
-			//TODO: пофиксить тут
-			file: new Buffer(JSON.stringify(dto)),
+			folder: 'ebooks',
+			file: Buffer.from(JSON.stringify(dto.ebook)),
 			role: 'admin',
 			filename: dto.title
 		})
@@ -272,7 +267,7 @@ export class BookService {
 				popularity: dto.popularity,
 				pages: dto.pages,
 				description: dto.description,
-				picture: pictureName,
+				picture: dto.picture,
 				ebook: ebookName,
 				author: dto.author,
 				genres: {
@@ -295,27 +290,6 @@ export class BookService {
 			}
 		})
 		await this.prisma.book.delete({ where: { id } })
-	}
-
-	async updatePicture(id: number, picture: Express.Multer.File) {
-		const bookPicture = await this.findOne({
-			where: { id },
-			select: {
-				picture: true
-			}
-		})
-		const { name: fileName } = await this.storageService.upload({
-			folder: StorageFolderEnum.booksCovers,
-			file: picture.buffer,
-			role: 'admin',
-			filename: bookPicture.picture
-		})
-		await this.prisma.book.update({
-			where: { id },
-			data: {
-				picture: fileName
-			}
-		})
 	}
 
 	async updateEbook(id: number, dto: EBookType[]) {
@@ -371,6 +345,7 @@ export class BookService {
 	}
 	//TODO: сделать тут нормальные названия переменных
 	async getGenres(genres: number[]) {
+		console.log(genres)
 		const majorGenre = await this.prisma.genre.findFirst({
 			where: {
 				id: {

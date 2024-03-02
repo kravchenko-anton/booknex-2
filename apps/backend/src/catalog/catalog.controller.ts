@@ -8,7 +8,7 @@ import { FeaturedOutput } from './catalog.model'
 import { CatalogService } from './catalog.service'
 
 @Auth()
-@ApiTags('catalog')
+@ApiTags('📚 catalog')
 @ApiBearerAuth()
 @Controller('catalog')
 export class CatalogController {

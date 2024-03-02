@@ -160,7 +160,7 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				expiresIn: process.env.NODE_ENV === 'development' ? '10m' : '15m'
+				expiresIn: process.env.NODE_ENV === 'development' ? '10s' : '15m'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'

@@ -1,4 +1,4 @@
-import { ebookValidation } from '@/app/admin/books/_shared/ebook-validation'
+import { ebookValidation } from '@/features/books/shared/book-compose/ebook-validation'
 import { z } from 'zod'
 
 export const createBookValidationSchema = z.object({

@@ -7,7 +7,7 @@ import { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
 import { RecommendationService } from './recommendation.service'
 
 @Controller('recommendation')
-@ApiTags('recommendation')
+@ApiTags('📨 recommendation')
 @ApiBearerAuth()
 export class RecommendationController {
 	constructor(private readonly recommendationService: RecommendationService) {}

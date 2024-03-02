@@ -6,7 +6,7 @@ import { byIdOutput, shortGenre } from './genre.model'
 
 import { GenreService } from './genre.service'
 
-@ApiTags('genre')
+@ApiTags('🔖 genre')
 @ApiBearerAuth()
 @Controller('genre')
 export class GenreController {

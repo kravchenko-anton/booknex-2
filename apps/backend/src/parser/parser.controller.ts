@@ -31,7 +31,7 @@ import {
 import { ParserService } from './parser.service'
 
 @Auth('admin')
-@ApiTags('parser')
+@ApiTags('📦 parser')
 @ApiBearerAuth()
 @Controller('parser')
 export class ParserController {

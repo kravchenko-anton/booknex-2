@@ -42,12 +42,6 @@ export interface CreateBookDto {
      */
     'description': string;
     /**
-     * Uploaded picture
-     * @type {File}
-     * @memberof CreateBookDto
-     */
-    'picture': File;
-    /**
      * 
      * @type {Array<EBookType>}
      * @memberof CreateBookDto
@@ -71,5 +65,11 @@ export interface CreateBookDto {
      * @memberof CreateBookDto
      */
     'genres': Array<number>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBookDto
+     */
+    'picture': string;
 }
 
