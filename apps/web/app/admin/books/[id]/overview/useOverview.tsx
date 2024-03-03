@@ -2,7 +2,7 @@ import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { EBookType, EditBookDto } from 'global/api-client'
+import type { EBookType, UpdateBookDto } from 'global/api-client'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useOverview = () => {
@@ -21,7 +21,7 @@ export const useOverview = () => {
 	})
 	const { mutateAsync: update } = useMutation({
 		mutationKey: ['update-book'],
-		mutationFn: ({ id, payload }: { id: number; payload: EditBookDto }) =>
+		mutationFn: ({ id, payload }: { id: number; payload: UpdateBookDto }) =>
 			api.book.update(id, payload),
 		onSuccess: async () => {
 			successToast('Book updated')

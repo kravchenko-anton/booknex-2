@@ -334,7 +334,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EditBookDto"
+              $ref: "#/components/schemas/UpdateBookDto"
       responses:
         "200":
           description: ""
@@ -1355,7 +1355,7 @@ components:
         - popularity
         - genres
         - picture
-    EditBookDto:
+    UpdateBookDto:
       type: object
       properties:
         picture:

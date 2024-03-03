@@ -46,8 +46,11 @@ export const columns = ({
 		cell: ({ row }) => (
 			<img
 				alt={row.original.title}
-				className=' mx-auto w-[100px] rounded-xl'
+				className='mx-auto w-[100px] cursor-pointer rounded-xl'
 				src={getFileUrl(row.original.picture)}
+				onClick={() => {
+					useAsTemplate(row.original.id)
+				}}
 			/>
 		)
 	},

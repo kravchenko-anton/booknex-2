@@ -4,7 +4,7 @@ import { useAction } from '@/hooks'
 import { loginRoute } from '@/providers/secure-route'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
-import { AuthDto } from 'backend/src/auth/dto/auth.dto'
+import { AuthDto } from 'global/api-dto/auth/auth.dto'
 import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
 

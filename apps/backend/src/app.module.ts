@@ -2,7 +2,6 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ThrottlerModule } from '@nestjs/throttler'
-import { NestjsFormDataModule } from 'nestjs-form-data'
 import { LoggerModule } from 'nestjs-pino'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -21,9 +20,6 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 	imports: [
 		UserModule,
 		CatalogModule,
-		NestjsFormDataModule.config({
-			isGlobal: true
-		}),
 		GenreModule,
 		BookModule,
 		AuthModule,

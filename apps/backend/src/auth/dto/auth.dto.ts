@@ -7,7 +7,9 @@ export class GoogleAuthDto {
 		description: 'Social id',
 		example: '1234567890'
 	})
-	@IsString()
+	@IsString({
+		message: 'Social id must be a string'
+	})
 	socialId: string
 }
 export class AuthUser {
@@ -15,7 +17,9 @@ export class AuthUser {
 		description: 'User id',
 		example: 1
 	})
-	@IsString()
+	@IsString({
+		message: 'User id must be a number'
+	})
 	id: number
 
 	@ApiProperty({
@@ -38,7 +42,9 @@ export class RefreshDto {
 		description: 'Refresh token',
 		example: '1234567890'
 	})
-	@IsString()
+	@IsString({
+		message: 'Refresh token must be a string'
+	})
 	refreshToken: string
 }
 

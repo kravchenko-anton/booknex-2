@@ -11,6 +11,7 @@ import {
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
+import { EBookType } from './book.entity'
 import {
 	AdminCatalogOutput,
 	AdminInfoByIdOutput,
@@ -18,12 +19,9 @@ import {
 	InfoByIdOutput
 } from './book.model'
 import { BookService } from './book.service'
-import {
-	CreateBookDto,
-	EditBookDto,
-	UpdateGenreDto
-} from './dto/manipulation.book.dto'
-import { EBookType } from './dto/update.ebook.dto'
+import { CreateBookDto } from './dto/create.book.dto'
+import { UpdateBookDto } from './dto/update.book.dto'
+import { UpdateGenreDto } from './dto/update.genre.dto'
 
 @ApiTags('📙 book')
 @ApiBearerAuth()
@@ -84,7 +82,7 @@ export class BookController {
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
 	@Put('admin/update/:id')
-	async update(@Param('id') bookId: number, @Body() dto: EditBookDto) {
+	async update(@Param('id') bookId: number, @Body() dto: UpdateBookDto) {
 		return this.bookService.update(+bookId, dto)
 	}
 

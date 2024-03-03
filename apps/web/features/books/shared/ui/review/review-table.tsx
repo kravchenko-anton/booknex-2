@@ -13,7 +13,7 @@ import {
 	getCoreRowModel,
 	useReactTable
 } from '@tanstack/react-table'
-import type { AdminInfoByIdOutput } from 'backend/src/book/book.model'
+import type { AdminInfoByIdOutput } from 'global/api-client'
 import type { FC } from 'react'
 import * as React from 'react'
 

@@ -1,11 +1,11 @@
-import type { CreateBookType } from '@/features/books/create/types'
 import { useTemplate } from '@/features/books/create/useTemplate'
 import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { useMutation } from '@tanstack/react-query'
-import { CreateBookDto } from 'backend/src/book/dto/manipulation.book.dto'
+import type { CreateBookDto as CreateBookPayload } from 'global/api-client'
+import { CreateBookDto } from 'global/api-dto/book/create.book.dto'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
@@ -18,14 +18,14 @@ export const useCreateForm = () => {
 		handleSubmit,
 		setValue,
 		formState: { errors }
-	} = useForm<CreateBookType>({
+	} = useForm<CreateBookDto>({
 		resolver: classValidatorResolver(CreateBookDto)
 	})
 	const template = useTemplate({ setValue })
 
 	const { mutateAsync: create } = useMutation({
 		mutationKey: ['upload-book'],
-		mutationFn: (payload: CreateBookDto) =>
+		mutationFn: (payload: CreateBookPayload) =>
 			api.book.create({
 				title: payload.title,
 				description: payload.description,
@@ -45,7 +45,7 @@ export const useCreateForm = () => {
 		onError: () => errorToast('Error while uploading book')
 	})
 
-	const submit = handleSubmit(async (data: CreateBookType) => {
+	const submit = handleSubmit(async (data: CreateBookDto) => {
 		const { data: pictureFile } = await upload({
 			name: data.title,
 			folder: 'booksCovers',

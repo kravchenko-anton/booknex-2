@@ -1,4 +1,4 @@
-import { formatYYYYMMDD } from '../../../../../../libs/global/helpers/time-format'
+import { formatYYYYMMDD } from '../helpers/time-format'
 
 export interface ActivitiesProperties {
 	importance: number

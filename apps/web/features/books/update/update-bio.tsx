@@ -2,7 +2,7 @@ import { Button, Field, FormTextArea } from '@/components/ui'
 import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/form'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
-import { EditBookDto } from 'backend/src/book/dto/manipulation.book.dto'
+import { UpdateBookDto } from 'global/api-dto/book/update.book.dto'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 import * as React from 'react'
@@ -24,9 +24,9 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 		control,
 		reset,
 		formState: { dirtyFields }
-	} = useForm<EditBookDto>({
+	} = useForm<UpdateBookDto>({
 		mode: 'onSubmit',
-		resolver: classValidatorResolver(EditBookDto)
+		resolver: classValidatorResolver(UpdateBookDto)
 	})
 	//set isEditing if something change
 	const [isEditing, setIsEditing] = useState(false)

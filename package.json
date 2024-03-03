@@ -53,7 +53,6 @@
 		"jsdom": "^23.0.1",
 		"nativewind": "^2.0.11",
 		"nest-openapi-tools": "^6.0.2",
-		"nestjs-form-data": "^1.9.6",
 		"nestjs-pino": "^4.0.0",
 		"next": "14.1.0",
 		"passport": "^0.6.0",
@@ -88,6 +87,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.0",
+		"@babel/plugin-proposal-decorators": "^7.24.0",
 		"@babel/runtime": "^7.20.0",
 		"@eslint/eslintrc": "^2.1.1",
 		"@nestjs/cli": "^10.0.0",

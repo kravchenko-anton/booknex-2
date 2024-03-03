@@ -2,8 +2,10 @@ module.exports = function (api) {
 	api.cache(true)
 	return {
 		presets: ['module:metro-react-native-babel-preset'],
+
 		plugins: [
 			['nativewind/babel'],
+			['@babel/plugin-proposal-decorators', { legacy: true }],
 			[
 				'module-resolver',
 				{
@@ -12,8 +14,7 @@ module.exports = function (api) {
 						'ui/colors': '../../libs/ui/colors.ts',
 						icons: '../../libs/global/icons/react-native',
 						illustrations: '../../libs/global/illustrations/react-native',
-						global: '../../libs/global',
-						backend: '../backend'
+						global: '../../libs/global'
 					}
 				}
 			],

@@ -5,6 +5,8 @@ import {
 	IsBoolean,
 	IsNumber,
 	IsString,
+	Min,
+	Validate,
 	ValidateNested
 } from 'class-validator'
 import { shortGenre } from '../genre/genre.entity'
@@ -62,4 +64,39 @@ export class Book extends ShortBook {
 		id: number
 		name: string
 	}[]
+}
+
+// ebook
+
+export class EbookChapter {
+	@ApiProperty({ type: Number })
+	@IsNumber()
+	@Min(1)
+	id: number
+
+	@ApiProperty({ type: String })
+	@IsString()
+	name: string
+
+	@ApiProperty({ type: String })
+	@IsString()
+	text: string
+}
+
+export class EBookType {
+	@ApiProperty({ type: String })
+	@IsString()
+	@Validate((value: string) => !value.includes('epub'), {
+		message: 'Ebook cannot be an epub'
+	})
+	title: string
+
+	@ApiProperty({ type: Number })
+	@IsNumber()
+	@Min(1)
+	id: number
+	@ApiProperty({ type: [EbookChapter] })
+	@ValidateNested({ each: true })
+	@Type(() => EbookChapter)
+	chapters: EbookChapter[]
 }

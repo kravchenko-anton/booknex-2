@@ -3,6 +3,7 @@ import {
 	getAccessToken,
 	getNewTokens
 } from '@/redux/auth/auth-helper'
+import { errorToast } from '@/utils/toast'
 import axios from 'axios'
 import { serverURL } from 'global/api-config'
 import { errorCatch } from 'global/helpers/catch-error'
@@ -50,7 +51,7 @@ instance.interceptors.response.use(
 				}
 			}
 		}
-		// errorToast(errorCatch(error))
+		errorToast(errorCatch(error))
 		throw error
 	}
 )

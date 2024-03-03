@@ -17,9 +17,9 @@
 			"global/*": [
 				"../../libs/global/*"
 			],
-			"backend/*": [
-				"../backend/*"
-			]
+//			"backend/*": [
+//				"../backend/*"
+//			]
 		}
 	},
 	"include": [

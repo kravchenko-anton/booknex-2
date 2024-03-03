@@ -12,7 +12,8 @@
 		"esModuleInterop": true,
 		"isolatedModules": true,
 		"baseUrl": ".",
-
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
 		"paths": {
 			"@/*": [
 				"./src/*"
@@ -25,10 +26,8 @@
 			],
 			"global/*": [
 				"../../libs/global/*"
-			],
-			"backend/*": [
-				"../backend/*"
 			]
+		
 		}
 	},
 	"exclude": [
@@ -47,7 +46,6 @@
 		"src/**/*.tsx",
 		"src/**/*.js",
 		"src/**/*.jsx",
-		"../../libs/*",
-		"../backend/*"
+		"../../libs/*"
 	]
 }

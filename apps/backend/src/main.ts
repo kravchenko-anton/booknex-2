@@ -11,7 +11,7 @@ async function bootstrap() {
 	app.setGlobalPrefix('/api')
 	app.enableCors({})
 	app.use(helmet())
-	app.useGlobalPipes(new ValidationPipe())
+	app.useGlobalPipes(new ValidationPipe({ stopAtFirstError: true }))
 
 	app.use(json({ limit: '10mb' }))
 	await OpenApiNestFactory.configure(

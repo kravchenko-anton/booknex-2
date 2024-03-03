@@ -33,7 +33,6 @@ models/create-book-dto.ts
 models/ebook-by-id-output.ts
 models/ebook-chapter.ts
 models/ebook-type.ts
-models/edit-book-dto.ts
 models/featured-output.ts
 models/filename-dto.ts
 models/genre-by-id-output.ts
@@ -47,6 +46,7 @@ models/review.ts
 models/short-book.ts
 models/short-genre.ts
 models/unfold-output.ts
+models/update-book-dto.ts
 models/update-genre-dto.ts
 models/upload-output-dto.ts
 models/user-admin-catalog-output.ts

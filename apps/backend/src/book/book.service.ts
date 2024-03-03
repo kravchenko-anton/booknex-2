@@ -2,20 +2,18 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
 import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
+import { transformActivity } from '../../../../libs/global/utils/activity-transformer'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
 import { StorageFolderEnum } from '../storage/storage.types'
 import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
-import { transformActivity } from '../utils/services/activity/activity-transformer'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
-import type {
-	CreateBookDto,
-	EditBookDto,
-	UpdateGenreDto
-} from './dto/manipulation.book.dto'
-import type { EBookType } from './dto/update.ebook.dto'
+import type { EBookType } from './book.entity'
+import type { CreateBookDto } from './dto/create.book.dto'
+import type { UpdateBookDto } from './dto/update.book.dto'
+import type { UpdateGenreDto } from './dto/update.genre.dto'
 import { returnBookObject } from './return.book.object'
 
 @Injectable()
@@ -330,7 +328,7 @@ export class BookService {
 			}
 		})
 	}
-	async update(id: number, dto: EditBookDto) {
+	async update(id: number, dto: UpdateBookDto) {
 		await this.checkExist(id)
 		await this.prisma.book.update({
 			where: { id: id },

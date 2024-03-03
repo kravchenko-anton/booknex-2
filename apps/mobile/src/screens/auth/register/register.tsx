@@ -3,7 +3,7 @@ import { useAuthorize } from '@/screens/auth/useAuthorize'
 
 import { Button, Field, ScrollLayout } from '@/ui'
 import { classValidatorResolver } from '@hookform/resolvers/class-validator'
-import { AuthDto } from 'backend/src/auth/dto/auth.dto'
+import { AuthDto } from 'global/api-dto/auth/auth.dto'
 import { Mail, Password } from 'icons'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
