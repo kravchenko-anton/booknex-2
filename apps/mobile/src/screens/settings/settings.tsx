@@ -1,6 +1,6 @@
 import { useTypedNavigation } from '@/hooks'
 import { ScrollLayout } from '@/ui'
-import { Bug, Logout, MessageCircleQuestion } from 'icons'
+import { Logout, MessageCircleQuestion } from 'icons'
 import { Linking } from 'react-native'
 import * as List from './settings-list'
 //TODO: после обновления проложения добавить тут больше разнообразия и пофиксить консоль логи
@@ -10,14 +10,8 @@ const Settings = () => {
 		<ScrollLayout className='px-2'>
 			<List.Category title='Support' className='mt-4'>
 				<List.Item
-					bordered
-					title='Give feedback'
+					title='Contact us'
 					icon={MessageCircleQuestion}
-					onPress={() => Linking.openURL('mailto:booknex.company@gmail.com')}
-				/>
-				<List.Item
-					title='Report a bug'
-					icon={Bug}
 					onPress={() => Linking.openURL('mailto:booknex.company@gmail.com')}
 				/>
 			</List.Category>

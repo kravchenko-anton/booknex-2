@@ -36,7 +36,7 @@ export const useOverview = () => {
 		const { data: picture } = await upload({
 			blob: file,
 			name: book.title,
-			folder: 'ebooks'
+			folder: 'booksCovers'
 		})
 		if (!picture) return errorToast('Picture not uploaded')
 		await update({

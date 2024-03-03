@@ -24,11 +24,11 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, ope
 // @ts-ignore
 import { AuthDto } from '../models';
 // @ts-ignore
-import { AuthResponseDto } from '../models';
+import { AuthOutput } from '../models';
+// @ts-ignore
+import { GoogleAuthDto } from '../models';
 // @ts-ignore
 import { RefreshDto } from '../models';
-// @ts-ignore
-import { SignDto } from '../models';
 /**
  * AuthApi - axios parameter creator
  * @export
@@ -37,13 +37,13 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
-         * @param {SignDto} signDto Sign in with google account
+         * @param {GoogleAuthDto} googleAuthDto Sign in with google account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        googleSign: async (signDto: SignDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'signDto' is not null or undefined
-            assertParamExists('googleSign', 'signDto', signDto)
+        googleSign: async (googleAuthDto: GoogleAuthDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'googleAuthDto' is not null or undefined
+            assertParamExists('googleSign', 'googleAuthDto', googleAuthDto)
             const localVarPath = `/api/auth/google-sign`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(signDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(googleAuthDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -187,12 +187,12 @@ export const AuthApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {SignDto} signDto Sign in with google account
+         * @param {GoogleAuthDto} googleAuthDto Sign in with google account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async googleSign(signDto: SignDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.googleSign(signDto, options);
+        async googleSign(googleAuthDto: GoogleAuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.googleSign(googleAuthDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.googleSign']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -203,7 +203,7 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async login(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthResponseDto>> {
+        async login(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.login(authDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.login']?.[localVarOperationServerIndex]?.url;
@@ -215,7 +215,7 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async refreshToken(refreshDto: RefreshDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthResponseDto>> {
+        async refreshToken(refreshDto: RefreshDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.refreshToken(refreshDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.refreshToken']?.[localVarOperationServerIndex]?.url;
@@ -227,7 +227,7 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async register(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthResponseDto>> {
+        async register(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.register(authDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.register']?.[localVarOperationServerIndex]?.url;
@@ -245,12 +245,12 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @param {SignDto} signDto Sign in with google account
+         * @param {GoogleAuthDto} googleAuthDto Sign in with google account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        googleSign(signDto: SignDto, options?: any): AxiosPromise<AuthResponseDto> {
-            return localVarFp.googleSign(signDto, options).then((request) => request(axios, basePath));
+        googleSign(googleAuthDto: GoogleAuthDto, options?: any): AxiosPromise<AuthOutput> {
+            return localVarFp.googleSign(googleAuthDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -258,7 +258,7 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        login(authDto: AuthDto, options?: any): AxiosPromise<AuthResponseDto> {
+        login(authDto: AuthDto, options?: any): AxiosPromise<AuthOutput> {
             return localVarFp.login(authDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -267,7 +267,7 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshToken(refreshDto: RefreshDto, options?: any): AxiosPromise<AuthResponseDto> {
+        refreshToken(refreshDto: RefreshDto, options?: any): AxiosPromise<AuthOutput> {
             return localVarFp.refreshToken(refreshDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -276,7 +276,7 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        register(authDto: AuthDto, options?: any): AxiosPromise<AuthResponseDto> {
+        register(authDto: AuthDto, options?: any): AxiosPromise<AuthOutput> {
             return localVarFp.register(authDto, options).then((request) => request(axios, basePath));
         },
     };
@@ -291,13 +291,13 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
 export class AuthApi extends BaseAPI {
     /**
      * 
-     * @param {SignDto} signDto Sign in with google account
+     * @param {GoogleAuthDto} googleAuthDto Sign in with google account
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public googleSign(signDto: SignDto, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).googleSign(signDto, options).then((request) => request(this.axios, this.basePath));
+    public googleSign(googleAuthDto: GoogleAuthDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).googleSign(googleAuthDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

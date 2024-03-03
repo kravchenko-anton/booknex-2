@@ -82,7 +82,7 @@ const Book: FC = () => {
 				<Button
 					icon={Text}
 					isLoading={startReadingLoading}
-					className='rounded-xl'
+					className='rounded-lg'
 					variant='primary'
 					size='md'
 					onPress={startReadingBook}

@@ -5,8 +5,6 @@ import type { EBookType } from 'global/api-client'
 import { CaseSensitive, ChevronDown, ChevronUp, Close } from 'icons'
 import { useEffect, type FC } from 'react'
 
-//TODO: сделать тут типизацию
-
 const EbookComposer: FC<{
 	defaultBooks?: EBookType[]
 	updateBooks: (books: EBookType[]) => void

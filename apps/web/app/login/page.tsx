@@ -2,23 +2,17 @@
 import { Button, Field } from '@/components/ui'
 import { useAction } from '@/hooks'
 import { loginRoute } from '@/providers/secure-route'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
-import type { AuthDto } from 'global/api-client'
+import { AuthDto } from 'backend/src/auth/dto/auth.dto'
 import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 const Page = () => {
 	const { mailLogin, googleLogin } = useAction()
 	const { handleSubmit, control } = useForm<AuthDto>({
 		mode: 'onSubmit',
-		resolver: zodResolver(
-			z.object({
-				email: z.string().email(),
-				password: z.string().min(8)
-			})
-		)
+		resolver: classValidatorResolver(AuthDto)
 	})
 	const onSubmit = (data: AuthDto) => {
 		mailLogin(data)

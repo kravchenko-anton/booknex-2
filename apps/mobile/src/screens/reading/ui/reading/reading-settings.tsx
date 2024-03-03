@@ -57,7 +57,7 @@ const ReadingSettings: FC<{
 					renderItem={({ item: theme }) => (
 						<AnimatedPress
 							key={`${theme.slug}-${theme.title}`}
-							className='mb-4 mr-2 rounded-xl border-2 p-2 px-6'
+							className='mb-4 mr-2 rounded-lg border-2 p-2 px-6'
 							style={{
 								backgroundColor: theme.colorPalette.background.darker,
 								borderColor:

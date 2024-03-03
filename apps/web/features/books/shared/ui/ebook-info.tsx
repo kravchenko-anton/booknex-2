@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ebookValidation } from '@/features/books/shared/book-compose/ebook-validation'
 import Editor from '@/features/books/shared/book-compose/editor'
 import { errorToast } from '@/utils/toast'
 import { useQuery } from '@tanstack/react-query'
@@ -55,12 +54,8 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 						size='md'
 						variant='primary'
 						onClick={() => {
-							ebookValidation
-								.parseAsync(books)
-								.then(value => onEdit(value))
-								.catch(error => {
-									errorToast(error)
-								})
+							if (!books) return errorToast('Error saving book')
+							onEdit(books)
 						}}
 					>
 						Save

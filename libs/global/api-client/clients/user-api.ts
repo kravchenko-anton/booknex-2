@@ -22,11 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { UserAdminCatalog } from '../models';
+import { UserAdminCatalogOutput } from '../models';
 // @ts-ignore
-import { UserLibrary } from '../models';
+import { UserLibraryOutput } from '../models';
 // @ts-ignore
-import { UserProfile } from '../models';
+import { UserProfileOutput } from '../models';
 /**
  * UserApi - axios parameter creator
  * @export
@@ -348,7 +348,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminCatalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserAdminCatalog>> {
+        async adminCatalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserAdminCatalogOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminCatalog(searchTerm, page, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.adminCatalog']?.[localVarOperationServerIndex]?.url;
@@ -383,7 +383,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async library(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserLibrary>> {
+        async library(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserLibraryOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.library(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.library']?.[localVarOperationServerIndex]?.url;
@@ -394,7 +394,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async profile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserProfile>> {
+        async profile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserProfileOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.profile(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.profile']?.[localVarOperationServerIndex]?.url;
@@ -453,7 +453,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminCatalog(searchTerm: string, page: number, options?: any): AxiosPromise<UserAdminCatalog> {
+        adminCatalog(searchTerm: string, page: number, options?: any): AxiosPromise<UserAdminCatalogOutput> {
             return localVarFp.adminCatalog(searchTerm, page, options).then((request) => request(axios, basePath));
         },
         /**
@@ -479,7 +479,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        library(options?: any): AxiosPromise<UserLibrary> {
+        library(options?: any): AxiosPromise<UserLibraryOutput> {
             return localVarFp.library(options).then((request) => request(axios, basePath));
         },
         /**
@@ -487,7 +487,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        profile(options?: any): AxiosPromise<UserProfile> {
+        profile(options?: any): AxiosPromise<UserProfileOutput> {
             return localVarFp.profile(options).then((request) => request(axios, basePath));
         },
         /**

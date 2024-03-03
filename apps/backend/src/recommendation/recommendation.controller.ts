@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { shortGenre } from '../genre/genre.model'
+import { shortGenre } from '../genre/genre.entity'
 import { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
 import { RecommendationService } from './recommendation.service'
 
@@ -26,8 +26,7 @@ export class RecommendationController {
 	@Auth()
 	@Get('/recommendation-genres')
 	@ApiOkResponse({
-		type: shortGenre,
-		isArray: true,
+		type: [shortGenre],
 		description: 'Recommendation genres'
 	})
 	async recommendationsGenres(@CurrentUser('id') userId: number): Promise<

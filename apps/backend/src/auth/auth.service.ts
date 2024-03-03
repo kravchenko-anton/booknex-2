@@ -12,7 +12,7 @@ import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 
-import type { AuthDto, SignDto } from './dto/auth.dto'
+import type { AuthDto, GoogleAuthDto } from './dto/auth.dto'
 
 export type RoleType = keyof typeof Role
 
@@ -43,7 +43,7 @@ export class AuthService {
 	}
 
 	async register(dto: AuthDto) {
-		await this.checkOldUser({ email: dto.email })
+		await this.checkOldUser({ email: dto.email }, true)
 		const popularGenres = await this.getPopular()
 		const user = await this.prisma.user.create({
 			data: {
@@ -68,7 +68,7 @@ export class AuthService {
 		}
 	}
 
-	async googleSign(dto: SignDto) {
+	async googleSign(dto: GoogleAuthDto) {
 		const ticket = await this.google
 			.verifyIdToken({
 				idToken: dto.socialId,
@@ -182,9 +182,12 @@ export class AuthService {
 		return user
 	}
 
-	private async checkOldUser(where: Prisma.UserWhereUniqueInput) {
+	private async checkOldUser(
+		where: Prisma.UserWhereUniqueInput,
+		userExistCheck = false
+	) {
 		const user = await this.prisma.user.findUnique({ where })
-		if (!user)
+		if ((!userExistCheck && !user) || (userExistCheck && user))
 			throw serverError(
 				HttpStatus.BAD_REQUEST,
 				AuthErrors.passwordOrEmailInvalid

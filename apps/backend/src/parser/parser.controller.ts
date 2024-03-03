@@ -23,11 +23,8 @@ import {
 import { Auth } from '../auth/decorators/auth.decorator'
 
 import { ParserDto } from './dto/parser.dto'
-import {
-	BookTemplate,
-	BookTemplateCatalogOutput,
-	UnfoldOutput
-} from './parser.model'
+import { BookTemplate } from './parser.entity'
+import { BookTemplateCatalogOutput, UnfoldOutput } from './parser.model'
 import { ParserService } from './parser.service'
 
 @Auth('admin')

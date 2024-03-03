@@ -1,13 +1,13 @@
 import { Button, Field, FormTextArea } from '@/components/ui'
 import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator'
+import { EditBookDto } from 'backend/src/book/dto/manipulation.book.dto'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 import * as React from 'react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 interface UpdateBioProperties {
 	title: string
@@ -18,27 +18,15 @@ interface UpdateBioProperties {
 	onSaveEdit: (data: object) => void
 }
 
-const UpdateBioValidationSchema = z.object({
-	title: z.string(),
-	author: z.string(),
-	pages: z.coerce.number(),
-	popularity: z.coerce.number(),
-	description: z.string()
-})
-
-export type UpdateBioValidationSchemaType = z.infer<
-	typeof UpdateBioValidationSchema
->
-
 const UpdateBio: FC<UpdateBioProperties> = properties => {
 	const {
 		handleSubmit,
 		control,
 		reset,
 		formState: { dirtyFields }
-	} = useForm<UpdateBioValidationSchemaType>({
+	} = useForm<EditBookDto>({
 		mode: 'onSubmit',
-		resolver: zodResolver(UpdateBioValidationSchema)
+		resolver: classValidatorResolver(EditBookDto)
 	})
 	//set isEditing if something change
 	const [isEditing, setIsEditing] = useState(false)

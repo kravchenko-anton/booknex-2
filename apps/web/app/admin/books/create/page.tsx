@@ -90,7 +90,7 @@ const Page: FC = () => {
 				</div>
 			</div>
 			<Editor
-				updateBooks={(books: EBookType[]) => form.setValue('books', books)}
+				updateBooks={(books: EBookType[]) => form.setValue('ebook', books)}
 			/>
 
 			<Button

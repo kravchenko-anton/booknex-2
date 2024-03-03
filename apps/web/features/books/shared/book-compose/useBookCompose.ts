@@ -3,7 +3,7 @@ import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import type { EBookType } from 'global/api-client'
 import { useLayoutEffect, useState } from 'react'
-
+//TODO: сократить тут код до минимума чтобы было очень просто
 export const useBookCompose = (defaultBooks?: EBookType[]) => {
 	const [books, setBooks] = useState<EBookType[] | null>([])
 	useLayoutEffect(() => setBooks(defaultBooks || []), [defaultBooks])

@@ -1,4 +1,5 @@
 import ActivityList from '@/components/activity-list'
+import { Button } from '@/components/ui'
 import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { CatalogUserOutput } from 'global/api-client/models/catalog-user-output'
@@ -26,16 +27,19 @@ export const columns = ({
 				<img
 					alt={row.original.email}
 					src={getFileUrl(row.original.picture || 'fallback.png')}
-					width={100}
-					height={100}
-					className='mt-2 h-[60px] w-[60px] rounded-full'
+					width={50}
+					height={50}
+					className=' h-[60px] w-[60px] rounded-full'
 				/>
 				<h2 className='text-lg'>{row.original.fullName}</h2>
-				<p className='text-md'>{row.original.email}</p>
-				<p> {row.original.socialId}</p>
-
-				<button
-					className='bg-danger mt-1 rounded-md p-1 text-white'
+				<p className='text-xm'>{row.original.email}</p>
+				<p className='text-xm'> {row.original.socialId}</p>
+				<p>joined: {timeAgo(new Date(row.original.createdAt))}</p>
+				<p>location: {row.original.location}</p>
+				<Button
+					size='sm'
+					className='mt-1'
+					variant='danger'
 					onClick={() =>
 						acceptToast('Are you sure you want to delete this user?', {
 							action: {
@@ -46,7 +50,7 @@ export const columns = ({
 					}
 				>
 					Delete
-				</button>
+				</Button>
 			</div>
 		)
 	},
@@ -62,15 +66,15 @@ export const columns = ({
 		header: () => <p className='text-center text-lg'>Library</p>,
 		cell: ({ row }) => (
 			<div className=' items-center justify-center  gap-2'>
-				<h2 className='bg-muted border-bordered mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
-					{row.original._count.savedBooks} Saved Books
-				</h2>
-				<h2 className='bg-muted border-bordered mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
-					{row.original._count.readingBooks} Reading Books
-				</h2>
-				<h2 className='bg-muted border-bordered mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
-					{row.original._count.finishedBooks} Finished Books
-				</h2>
+				<Button size='sm' variant='muted' className='m-1 w-full'>
+					{`${row.original._count.savedBooks} Saved`}
+				</Button>
+				<Button size='sm' variant='muted' className='m-1 w-full'>
+					{`${row.original._count.readingBooks} Reading`}
+				</Button>
+				<Button size='sm' variant='muted' className='m-1 w-full'>
+					{`${row.original._count.finishedBooks} Finished`}
+				</Button>
 			</div>
 		)
 	},
@@ -81,31 +85,15 @@ export const columns = ({
 		cell: ({ row }) => (
 			<div className='gap-2'>
 				{row.original.selectedGenres.map(genre => (
-					<h2
-						className='bg-muted border-bordered mt-2 rounded-xl border-2 p-1.5 text-center font-light'
+					<Button
+						size='sm'
+						variant='muted'
+						className='m-1 w-full'
 						key={genre.name}
 					>
 						{genre.name}
-					</h2>
+					</Button>
 				))}
-			</div>
-		)
-	},
-	{
-		id: 'Statistics',
-		enableHiding: false,
-		header: () => <p className='text-center text-xl'>Statistics</p>,
-		cell: ({ row }) => (
-			<div className=' items-center justify-center gap-2'>
-				<h2 className='bg-muted border-bordered mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
-					joined: {timeAgo(new Date(row.original.createdAt))}
-				</h2>
-				<h2 className='bg-muted border-bordered mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
-					location: {row.original.location}
-				</h2>
-				<h2 className='bg-muted border-bordered mt-2 rounded-xl border-2 p-1.5 text-center font-light'>
-					role: {row.original.role}
-				</h2>
 			</div>
 		)
 	}

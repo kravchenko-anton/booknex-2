@@ -1,11 +1,8 @@
 import { useAction } from '@/hooks'
 import { useAuthorize } from '@/screens/auth/useAuthorize'
-import {
-	authValidationSchema,
-	type AuthValidationSchemaType
-} from '@/screens/auth/validation'
 import { Button, Field, ScrollLayout } from '@/ui'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator'
+import { AuthDto } from 'backend/src/auth/dto/auth.dto'
 import { Mail, Password } from 'icons'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
@@ -13,15 +10,13 @@ import { useForm } from 'react-hook-form'
 const Login = () => {
 	const { mailLogin } = useAction()
 	const { isLoading } = useAuthorize()
-	const { control, handleSubmit } = useForm<AuthValidationSchemaType>({
+	const { control, handleSubmit } = useForm<AuthDto>({
 		mode: 'onSubmit',
-		resolver: zodResolver(authValidationSchema)
+		resolver: classValidatorResolver(AuthDto)
 	})
 
-	const onSubmit: SubmitHandler<AuthValidationSchemaType> = ({
-		password,
-		email
-	}) => mailLogin({ password, email })
+	const onSubmit: SubmitHandler<AuthDto> = ({ password, email }) =>
+		mailLogin({ password, email })
 
 	return (
 		<ScrollLayout className='px-2 py-4'>

@@ -2,7 +2,11 @@ import { Controller, Delete, Get, Param, Patch, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { UserAdminCatalog, UserLibrary, UserProfile } from './user.model'
+import {
+	UserAdminCatalogOutput,
+	UserLibraryOutput,
+	UserProfileOutput
+} from './user.model'
 // import { UserLibrary, UserProfile } from './user.model'
 import { UserService } from './user.service'
 
@@ -13,14 +17,14 @@ export class UserController {
 	constructor(private readonly usersService: UserService) {}
 	@Auth()
 	@Get('/profile')
-	@ApiOkResponse({ type: UserProfile })
+	@ApiOkResponse({ type: UserProfileOutput })
 	async profile(@CurrentUser('id') id: number) {
 		return this.usersService.profile(+id)
 	}
 
 	@Auth()
 	@Get('/library')
-	@ApiOkResponse({ type: UserLibrary })
+	@ApiOkResponse({ type: UserLibraryOutput })
 	async library(@CurrentUser('id') id: number) {
 		return this.usersService.library(+id)
 	}
@@ -60,11 +64,11 @@ export class UserController {
 	// admin
 	@Auth('admin')
 	@Get('admin/catalog')
-	@ApiOkResponse({ type: UserAdminCatalog })
+	@ApiOkResponse({ type: UserAdminCatalogOutput })
 	async adminCatalog(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
-	): Promise<UserAdminCatalog> {
+	): Promise<UserAdminCatalogOutput> {
 		return this.usersService.adminCatalog(searchTerm || '', page || 1)
 	}
 

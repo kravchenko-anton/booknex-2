@@ -30,12 +30,6 @@ import { UserCountOutput } from './user-count-output';
  */
 export interface CatalogUserOutput {
     /**
-     * user role
-     * @type {string}
-     * @memberof CatalogUserOutput
-     */
-    'role': RoleEnum;
-    /**
      * user id
      * @type {number}
      * @memberof CatalogUserOutput
@@ -102,12 +96,4 @@ export interface CatalogUserOutput {
      */
     '_count': UserCountOutput;
 }
-
-export const RoleEnum = {
-    User: 'user',
-    Admin: 'admin'
-} as const;
-
-export type RoleEnum = typeof RoleEnum[keyof typeof RoleEnum];
-
 

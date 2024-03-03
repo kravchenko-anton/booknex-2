@@ -1,45 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
-import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
-import { ShortBook } from '../book/book.model'
+import { IsArray, ValidateNested } from 'class-validator'
+import { ShortBook } from '../book/book.entity'
+import { shortGenre } from './genre.entity'
 
-export class shortGenre {
-	@ApiProperty({ example: 1, description: 'genre id', type: Number })
-	@IsNumber()
-	id: number
-
-	@ApiProperty({ example: 'name', description: 'genre name', type: String })
-	@IsString()
-	name: string
-}
-
-export class Genre extends shortGenre {
-	@ApiProperty({
-		example: 'description',
-		description: 'genre description',
-		type: String
-	})
-	@IsString()
-	description: string
-
-	@ApiProperty({
-		example: '2021-07-01',
-		description: 'genre created at',
-		type: String
-	})
-	@IsString()
-	createdAt: string
-
-	@ApiProperty({
-		example: '2021-07-01',
-		description: 'genre updated at',
-		type: String
-	})
-	@IsString()
-	updatedAt: string
-}
-
-export class byIdOutput extends shortGenre {
+export class GenreByIdOutput extends shortGenre {
 	@ApiProperty({ type: [ShortBook] })
 	@IsArray()
 	@ValidateNested()

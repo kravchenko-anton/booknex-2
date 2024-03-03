@@ -2,12 +2,12 @@ import api from '@/services/index'
 import { errorToast, successToast } from '@/utils/toast'
 import { Role } from '@prisma/client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import type { AuthDto, AuthResponseDto } from 'backend/src/auth/dto/auth.dto'
+import type { AuthDto, AuthOutput } from 'global/api-client'
 import { GlobalErrorsEnum } from 'global/errors'
 
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 
-export const mailLogin = createAsyncThunk<AuthResponseDto, AuthDto>(
+export const mailLogin = createAsyncThunk<AuthOutput, AuthDto>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
 		try {
@@ -33,7 +33,7 @@ export const mailLogin = createAsyncThunk<AuthResponseDto, AuthDto>(
 )
 
 export const googleLogin = createAsyncThunk<
-	AuthResponseDto,
+	AuthOutput,
 	{
 		socialId: string
 	}

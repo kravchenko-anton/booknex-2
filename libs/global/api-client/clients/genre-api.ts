@@ -22,7 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { ByIdOutput } from '../models';
+import { GenreByIdOutput } from '../models';
 // @ts-ignore
 import { ShortGenre } from '../models';
 /**
@@ -128,7 +128,7 @@ export const GenreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async byId(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ByIdOutput>> {
+        async byId(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenreByIdOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.byId(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GenreApi.byId']?.[localVarOperationServerIndex]?.url;
@@ -158,7 +158,7 @@ export const GenreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        byId(id: number, options?: any): AxiosPromise<ByIdOutput> {
+        byId(id: number, options?: any): AxiosPromise<GenreByIdOutput> {
             return localVarFp.byId(id, options).then((request) => request(axios, basePath));
         },
     };

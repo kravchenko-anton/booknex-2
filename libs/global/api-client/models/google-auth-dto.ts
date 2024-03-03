@@ -17,26 +17,14 @@
 /**
  * 
  * @export
- * @interface ByIdOutput
+ * @interface GoogleAuthDto
  */
-export interface ByIdOutput {
+export interface GoogleAuthDto {
     /**
-     * genre id
-     * @type {number}
-     * @memberof ByIdOutput
-     */
-    'id': number;
-    /**
-     * genre name
+     * Social id
      * @type {string}
-     * @memberof ByIdOutput
+     * @memberof GoogleAuthDto
      */
-    'name': string;
-    /**
-     * 
-     * @type {Array<Array>}
-     * @memberof ByIdOutput
-     */
-    'majorBooks': Array<Array>;
+    'socialId': string;
 }
 

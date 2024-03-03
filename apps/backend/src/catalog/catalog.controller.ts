@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { ShortBook } from '../book/book.model'
+import { ShortBook } from '../book/book.entity'
 import { FeaturedOutput } from './catalog.model'
 
 import { CatalogService } from './catalog.service'

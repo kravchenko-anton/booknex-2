@@ -1,7 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common'
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { AuthOutput } from './auth.model'
 import { AuthService } from './auth.service'
-import { AuthDto, AuthResponseDto, RefreshDto, SignDto } from './dto/auth.dto'
+import { AuthDto, GoogleAuthDto, RefreshDto } from './dto/auth.dto'
 
 @ApiTags('🔐 auth')
 @Controller('auth')
@@ -11,13 +12,13 @@ export class AuthController {
 	@Post('/google-sign')
 	@ApiOkResponse({
 		description: 'Return access and refresh token',
-		type: AuthResponseDto
+		type: AuthOutput
 	})
 	@ApiBody({
-		type: SignDto,
+		type: GoogleAuthDto,
 		description: 'Sign in with google account'
 	})
-	async googleSign(@Body() dto: SignDto): Promise<AuthResponseDto> {
+	async googleSign(@Body() dto: GoogleAuthDto): Promise<AuthOutput> {
 		return this.authService.googleSign(dto)
 	}
 
@@ -28,9 +29,9 @@ export class AuthController {
 	})
 	@ApiOkResponse({
 		description: 'Return access and refresh token',
-		type: AuthResponseDto
+		type: AuthOutput
 	})
-	async register(@Body() dto: AuthDto): Promise<AuthResponseDto> {
+	async register(@Body() dto: AuthDto): Promise<AuthOutput> {
 		return this.authService.register(dto)
 	}
 
@@ -41,9 +42,9 @@ export class AuthController {
 	})
 	@ApiOkResponse({
 		description: 'Return access and refresh token',
-		type: AuthResponseDto
+		type: AuthOutput
 	})
-	async login(@Body() dto: AuthDto): Promise<AuthResponseDto> {
+	async login(@Body() dto: AuthDto): Promise<AuthOutput> {
 		return this.authService.login(dto)
 	}
 
@@ -54,9 +55,9 @@ export class AuthController {
 	})
 	@ApiOkResponse({
 		description: 'Return access token',
-		type: AuthResponseDto
+		type: AuthOutput
 	})
-	async refreshToken(@Body() dto: RefreshDto): Promise<AuthResponseDto> {
+	async refreshToken(@Body() dto: RefreshDto): Promise<AuthOutput> {
 		return this.authService.refresh(dto.refreshToken)
 	}
 }

@@ -57,7 +57,7 @@ const ChaptersList: FC<{
 					<Title
 						weight='bold'
 						numberOfLines={2}
-						className='  mt-[-1px] border-b-[1px] p-4'
+						className='mt-[-1px] border-b-[1px] p-4'
 						size={'xxl'}
 						color={colorScheme.colorPalette.text}
 						style={{

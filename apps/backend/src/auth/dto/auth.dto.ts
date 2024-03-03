@@ -1,16 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Role } from '@prisma/client'
-import { Type } from 'class-transformer'
-import {
-	IsEmail,
-	IsEnum,
-	IsObject,
-	IsString,
-	MinLength,
-	ValidateNested
-} from 'class-validator'
+import { IsEmail, IsEnum, IsString, MinLength } from 'class-validator'
 
-export class SignDto {
+export class GoogleAuthDto {
 	@ApiProperty({
 		description: 'Social id',
 		example: '1234567890'
@@ -18,7 +10,7 @@ export class SignDto {
 	@IsString()
 	socialId: string
 }
-export class AuthUserDto {
+export class AuthUser {
 	@ApiProperty({
 		description: 'User id',
 		example: 1
@@ -64,34 +56,4 @@ export class AuthDto {
 	})
 	@MinLength(8)
 	password: string
-}
-
-export class AuthResponseDto {
-	@ApiProperty({
-		description: 'Access token',
-		example: '1234567890'
-	})
-	@IsString()
-	accessToken: string
-	@ApiProperty({
-		description: 'Refresh token',
-		example: '1234567890'
-	})
-	@IsString()
-	refreshToken: string
-	@ApiProperty({
-		description: 'type of auth',
-		example: 'login'
-	})
-	@IsString()
-	type?: string
-
-	@ApiProperty({
-		type: AuthUserDto,
-		description: 'User data'
-	})
-	@IsObject()
-	@ValidateNested()
-	@Type(() => AuthUserDto)
-	user: AuthUserDto
 }

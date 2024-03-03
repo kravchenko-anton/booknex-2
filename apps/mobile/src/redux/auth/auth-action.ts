@@ -1,11 +1,11 @@
 import api from '@/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import type { AuthDto, AuthResponseDto } from 'global/api-client'
+import type { AuthDto, AuthOutput } from 'global/api-client'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
 
 export const googleLogin = createAsyncThunk<
-	AuthResponseDto,
+	AuthOutput,
 	{
 		socialId: string
 	}
@@ -30,7 +30,7 @@ export const googleLogin = createAsyncThunk<
 	}
 })
 
-export const mailRegister = createAsyncThunk<AuthResponseDto, AuthDto>(
+export const mailRegister = createAsyncThunk<AuthOutput, AuthDto>(
 	'auth/mailRegister',
 	async (properties, thunkAPI) => {
 		const { data: registerResponse } = await api.auth.register(properties)
@@ -44,7 +44,7 @@ export const mailRegister = createAsyncThunk<AuthResponseDto, AuthDto>(
 	}
 )
 
-export const mailLogin = createAsyncThunk<AuthResponseDto, AuthDto>(
+export const mailLogin = createAsyncThunk<AuthOutput, AuthDto>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
 		const { data: loginResponse } = await api.auth.login({

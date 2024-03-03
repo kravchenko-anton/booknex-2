@@ -1,24 +1,21 @@
 import { useAction } from '@/hooks'
 import { useAuthorize } from '@/screens/auth/useAuthorize'
-import {
-	authValidationSchema,
-	type AuthValidationSchemaType
-} from '@/screens/auth/validation'
+
 import { Button, Field, ScrollLayout } from '@/ui'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator'
+import { AuthDto } from 'backend/src/auth/dto/auth.dto'
 import { Mail, Password } from 'icons'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 const Register = () => {
 	const { isLoading } = useAuthorize()
 	const { mailRegister } = useAction()
-	const { control, handleSubmit } = useForm<AuthValidationSchemaType>({
-		resolver: zodResolver(authValidationSchema)
+	const { control, handleSubmit } = useForm<AuthDto>({
+		mode: 'onSubmit',
+		resolver: classValidatorResolver(AuthDto)
 	})
-	const onSubmit: SubmitHandler<AuthValidationSchemaType> = ({
-		email,
-		password
-	}) => {
+
+	const onSubmit: SubmitHandler<AuthDto> = ({ email, password }) => {
 		mailRegister({
 			password,
 			email

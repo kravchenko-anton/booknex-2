@@ -8,8 +8,8 @@ export const settings: {
 	iconSize: Record<ButtonProperties['size'], number>
 } = {
 	colors: {
-		foreground: 'bg-foreground border-[1px] border-muted',
-		muted: 'bg-muted border-[1px] border-foreground',
+		foreground: 'bg-foreground border-[1px] border-bordered',
+		muted: 'bg-muted border-[1px] border-bordered',
 		primary: 'bg-primary border-[1px] border-transparent',
 		danger: 'bg-danger border-[1px] border-transparent',
 		background: 'bg-background border-[1px] border-transparent',

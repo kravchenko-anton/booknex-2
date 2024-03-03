@@ -1,11 +1,11 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
-import type { SendReviewSchemaType } from '@/screens/book-review/validation'
 import { Button, Field, Icon, ScrollView, Title } from '@/ui'
 import { successToast } from '@/utils/toast'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator'
 import { useMutation } from '@tanstack/react-query'
 import { reviewTags } from 'backend/src/review/review-tags'
-import type { ReviewBookDto } from 'global/api-client'
+import { ReviewBookDto } from 'global/api-client'
 import { Color } from 'global/colors'
 import { Close, Star } from 'icons'
 import { FinishBook } from 'illustrations'
@@ -17,12 +17,13 @@ const BookReview: FC = () => {
 	const { params } = useTypedRoute<'BookReview'>()
 	const [selectedStars, setSelectedStars] = useState(0)
 	const { navigate } = useTypedNavigation()
-	const { control, setValue, handleSubmit, watch } =
-		useForm<SendReviewSchemaType>()
+	const { control, setValue, handleSubmit, watch } = useForm<ReviewBookDto>({
+		mode: 'onSubmit',
+		resolver: classValidatorResolver(ReviewBookDto)
+	})
 
-	const selectedTags = watch('selectedTags') || []
-	const setSelectedTags = (tags: string[]) => setValue('selectedTags', tags)
-	console.log(selectedTags)
+	const selectedTags = watch('tags') || []
+	const setSelectedTags = (tags: string[]) => setValue('tags', tags)
 	const mappedTags = (
 		tags: {
 			id: number
@@ -54,20 +55,12 @@ const BookReview: FC = () => {
 			api.review.review(id, dto)
 	})
 
-	const submitReview = async (data: SendReviewSchemaType) => {
-		console.log({
-			id: params.id,
-			dto: {
-				rating: selectedStars,
-				comment: data.AdditionalComments || 'No comment',
-				tags: selectedTags || []
-			}
-		})
+	const submitReview = async (data: ReviewBookDto) => {
 		await sendReview({
 			id: params.id,
 			dto: {
 				rating: selectedStars,
-				comment: data.AdditionalComments || 'No comment',
+				comment: data.comment || 'No comment',
 				tags: selectedTags || []
 			}
 		}).then(() => {

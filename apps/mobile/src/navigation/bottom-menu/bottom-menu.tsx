@@ -10,7 +10,7 @@ interface IBottomMenuProperties {
 }
 
 const BottomMenu: FC<IBottomMenuProperties> = properties => (
-	<View className='border-muted bg-background w-full flex-row items-center justify-between overflow-hidden border-t-[1px]  px-4 pb-1 pt-2'>
+	<View className='border-bordered bg-background w-full flex-row items-center justify-between overflow-hidden border-t-[1px]  px-4 pb-1 pt-2'>
 		{menuItems.map(item => (
 			<MenuItem key={item.path} item={item} {...properties} />
 		))}

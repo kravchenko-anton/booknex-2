@@ -61,9 +61,7 @@ const UpdateRecommendation = () => {
 							key={genre.id}
 							size='md'
 							className='mb-2.5 mr-2.5'
-							variant={
-								selectedGenres.includes(genre.id) ? 'primary' : 'foreground'
-							}
+							variant={selectedGenres.includes(genre.id) ? 'primary' : 'muted'}
 							onPress={() => {
 								selectedGenres.includes(genre.id)
 									? setSelectedGenres(

@@ -251,7 +251,7 @@ export class BookService {
 			folder: 'ebooks',
 			file: Buffer.from(JSON.stringify(dto.ebook)),
 			role: 'admin',
-			filename: dto.title
+			filename: dto.title + '.json'
 		})
 
 		await this.prisma.book.create({
