@@ -23,7 +23,6 @@ const ReaderBar: FC<{
 	const { colorScheme } = useTypedSelector(state => state.readingUi)
 	const { goBack } = useTypedNavigation()
 	const { top, bottom } = useSafeAreaInsets()
-
 	return (
 		<View className='absolute h-screen w-full'>
 			<AnimatedView

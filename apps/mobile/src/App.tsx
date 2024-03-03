@@ -10,6 +10,7 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { View } from 'react-native'
+import { default as codePush } from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -70,4 +71,4 @@ function app() {
 	)
 }
 
-export default Sentry.wrap(app)
+export default codePush(Sentry.wrap(app))

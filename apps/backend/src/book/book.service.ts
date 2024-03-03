@@ -197,7 +197,7 @@ export class BookService {
 			file: ebook.map(({ chapters }) =>
 				chapters
 					.map(
-						({ text, name, romanNumber }) => `<label id="${name}">
+						({ text, name, romanNumber }) => `<div id="${name}">
 <div style="
 	width: 100%;
 	height: 80px;
@@ -207,7 +207,8 @@ export class BookService {
 	text-align: center;">
 	<h2>${romanNumber}</h2>
 </div>
-</label> ${text}`
+ ${text}
+</div>`
 					)
 					.join(' ')
 			),

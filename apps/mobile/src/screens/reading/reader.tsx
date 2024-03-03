@@ -11,26 +11,25 @@ import { Loader } from '@/ui'
 import { windowHeight, windowWidth } from '@/utils/dimensions'
 import { getFileUrl } from 'global/api-config'
 import { Color } from 'global/colors'
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import WebView from 'react-native-webview'
 
 //TODO: переделать реадер на контекст и сделать его в 100 раз красивее
+
 const Reader = () => {
+	const [readerUiVisible, setReaderUiVisible] = useState(false)
 	const {
 		colorScheme,
 		onMessage,
 		styleTag,
 		progress,
 		initialScroll,
-		readerUiVisible,
 		reference,
 		defaultTheme,
-		ebook,
-		setReaderUiVisible
+		ebook
 	} = useReading()
-	console.log(initialScroll)
 	if (!ebook || !styleTag) return <Loader />
 	return (
 		<SafeAreaView className='flex-1'>

@@ -3,7 +3,6 @@ import { ScrollLayout } from '@/ui'
 import { Logout, MessageCircleQuestion } from 'icons'
 import { Linking } from 'react-native'
 import * as List from './settings-list'
-//TODO: после обновления проложения добавить тут больше разнообразия и пофиксить консоль логи
 const Settings = () => {
 	const { navigate } = useTypedNavigation()
 	return (

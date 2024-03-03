@@ -2,7 +2,6 @@ import api from '@/api'
 
 import { useTypedNavigation, useTypedRoute, useTypedSelector } from '@/hooks'
 import {
-	beforeLoad,
 	getStyleTag,
 	injectStyle
 } from '@/screens/reading/helpers/book-viewer-function'
@@ -31,7 +30,6 @@ export const useReading = () => {
 		queryFn: () => api.book.ebookById(+params.id),
 		select: data => data.data
 	})
-	const [readerUiVisible, setReaderUiVisible] = useState(true)
 	const reference = useRef<WebView>(null)
 
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
@@ -40,12 +38,8 @@ export const useReading = () => {
 	const { books } = useTypedSelector(state => state.readingProgress)
 	const { navigate } = useTypedNavigation()
 	const [readerState, setReaderState] = useState({
-		progress: Number(
-			books.find(book => book.id === id)?.latestProgress.progress
-		),
-		scrollTop: Number(
-			books.find(book => book.id === id)?.latestProgress.location
-		)
+		progress: books.find(book => book.id === id)?.latestProgress.progress || 1,
+		scrollTop: books.find(book => book.id === id)?.latestProgress.location || 1
 	})
 
 	useSaveProgress({
@@ -101,7 +95,6 @@ export const useReading = () => {
 	useEffect(() => {
 		reference.current?.injectJavaScript(`
 		${injectStyle(styleTag)}
-		${beforeLoad(Number(readerState.scrollTop))}
 		`)
 	}, [])
 
@@ -114,8 +107,6 @@ export const useReading = () => {
 		progress: Math.round(readerState.progress),
 		initialScroll: readerState.scrollTop,
 		ebook,
-		readerUiVisible,
-		setReaderUiVisible,
 		reference,
 		defaultTheme
 	}

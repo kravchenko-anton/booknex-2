@@ -113,7 +113,8 @@ export const getStyleTag = ({
 	fontSize: number
 	lineHeight: number
 	padding: number
-}) => `
+}) =>
+	`
 	span {
 		color: ${colorPalette.text} !important;
 	}

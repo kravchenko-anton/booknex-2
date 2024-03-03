@@ -995,6 +995,18 @@ components:
           type: string
           example: description
           description: book description
+        readingTime:
+          type: number
+          example: 100
+          description: book readingTime
+        chapters:
+          type: number
+          example: 100
+          description: book chapters count
+        rating:
+          type: number
+          example: 5
+          description: book rating
         genres:
           type: array
           items:
@@ -1005,6 +1017,9 @@ components:
         - picture
         - author
         - description
+        - readingTime
+        - chapters
+        - rating
         - genres
     OutputChapterChild:
       type: object
@@ -1133,6 +1148,10 @@ components:
           type: number
           example: 100
           description: book readingTime
+        chapters:
+          type: number
+          example: 100
+          description: book chapters count
         rating:
           type: number
           example: 5
@@ -1178,6 +1197,7 @@ components:
         - author
         - description
         - readingTime
+        - chapters
         - rating
         - visible
         - genres
@@ -1214,6 +1234,10 @@ components:
           type: number
           example: 100
           description: book readingTime
+        chapters:
+          type: number
+          example: 100
+          description: book chapters count
         rating:
           type: number
           example: 5
@@ -1233,6 +1257,7 @@ components:
         - author
         - description
         - readingTime
+        - chapters
         - rating
         - visible
         - genres
@@ -1302,6 +1327,10 @@ components:
           type: string
           example: description
           description: book description
+        chapters:
+          type: number
+          example: 100
+          description: book chapters count
         rating:
           type: number
           example: 5
@@ -1324,6 +1353,7 @@ components:
         - picture
         - author
         - description
+        - chapters
         - rating
         - ebook
         - genres
@@ -1346,6 +1376,10 @@ components:
           type: string
           example: description
           description: book description
+        chapters:
+          type: number
+          example: 100
+          description: book chapters count
         rating:
           type: number
           example: 5

@@ -42,7 +42,7 @@ export const StaticItem = ({
 				{title}
 			</Title>
 			<Title size={'lg'} weight='bold' color={Color.white}>
-				{count}
+				{String(count)}
 			</Title>
 		</View>
 	</View>
@@ -94,7 +94,16 @@ const Book: FC = () => {
 							count={book.chapters}
 						/>
 					</View>
-					<Image url={book.picture} height={260} width={170} />
+					<Image
+						url={book.picture}
+						height={260}
+						width={170}
+						style={{
+							borderRadius: 8,
+							borderWidth: 1,
+							borderColor: Color.bordered
+						}}
+					/>
 				</View>
 			</View>
 			<View className=' px-2 pt-2'>

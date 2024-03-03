@@ -3,6 +3,9 @@
   "displayName": "BookNex",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex -d Production --disable-duplicate-release-error"
+  },
   "dependencies": {
     "@react-native-async-storage/async-storage": "*",
     "react": "*",
@@ -18,6 +21,7 @@
     "react-native-gesture-handler": "*",
     "react-native-safe-area-context": "*",
     "react-native-webview": "*",
+    "react-native-code-push": "*",
     "react-native-toast-message": "*",
     "react-native-encrypted-storage": "*",
     "react-native-linear-gradient": "*",
