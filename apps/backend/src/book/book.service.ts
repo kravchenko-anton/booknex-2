@@ -99,7 +99,7 @@ export class BookService {
 			where: { id: +id, visible: true },
 			select: {
 				description: true,
-				majorGenre: false,
+				mainGenre: false,
 				genres: { select: ReturnGenreObject }
 			}
 		})
@@ -218,7 +218,7 @@ export class BookService {
 					popularity: true,
 					visible: true,
 					description: true,
-					majorGenre: {
+					mainGenre: {
 						select: ReturnGenreObject
 					}
 				},
@@ -243,7 +243,7 @@ export class BookService {
 
 	async create(dto: CreateBookDto) {
 		console.log(dto.genres, 'it is genres', typeof dto.genres)
-		const { selectedGenres, mainGenreId } = await this.getGenres(dto.genres)
+		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
 
 		const { name: ebookName } = await this.storageService.upload({
 			folder: 'ebooks',
@@ -269,9 +269,9 @@ export class BookService {
 				ebook: ebookName,
 				author: dto.author,
 				genres: {
-					connect: selectedGenres
+					connect: genreIds
 				},
-				majorGenre: {
+				mainGenre: {
 					connect: {
 						id: mainGenreId
 					}
@@ -313,14 +313,14 @@ export class BookService {
 
 	async updateGenre(id: number, dto: UpdateGenreDto) {
 		await this.checkExist(id)
-		const { selectedGenres, mainGenreId } = await this.getGenres(dto.genres)
+		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
 		await this.prisma.book.update({
 			where: { id },
 			data: {
 				genres: {
-					set: selectedGenres
+					set: genreIds
 				},
-				majorGenre: {
+				mainGenre: {
 					connect: {
 						id: mainGenreId
 					}
@@ -341,10 +341,8 @@ export class BookService {
 			bookId: id
 		})
 	}
-	//TODO: сделать тут нормальные названия переменных
 	async getGenres(genres: number[]) {
-		console.log(genres)
-		const majorGenre = await this.prisma.genre.findFirst({
+		const mainGenre = await this.prisma.genre.findFirst({
 			where: {
 				id: {
 					in: genres
@@ -354,16 +352,16 @@ export class BookService {
 				id: true
 			},
 			orderBy: {
-				majorBooks: {
+				mainBooks: {
 					_count: 'asc'
 				}
 			}
 		})
-		if (!majorGenre)
+		if (!mainGenre)
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		return {
-			mainGenreId: majorGenre.id,
-			selectedGenres: genres.map(id => ({ id }))
+			mainGenreId: mainGenre.id,
+			genreIds: genres.map(id => ({ id }))
 		}
 	}
 }

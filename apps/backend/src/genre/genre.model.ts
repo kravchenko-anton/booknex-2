@@ -9,5 +9,5 @@ export class GenreByIdOutput extends shortGenre {
 	@IsArray()
 	@ValidateNested()
 	@Type(() => ShortBook)
-	majorBooks: ShortBook[]
+	mainBooks: ShortBook[]
 }

@@ -1,6 +1,5 @@
 import api from '@/services/index'
 import { errorToast, successToast } from '@/utils/toast'
-import { Role } from '@prisma/client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import type { AuthDto, AuthOutput } from 'global/api-client'
 import { GlobalErrorsEnum } from 'global/errors'
@@ -16,7 +15,7 @@ export const mailLogin = createAsyncThunk<AuthOutput, AuthDto>(
 				password
 			})
 			console.log(loginResponse)
-			if (loginResponse.user.role !== Role.admin)
+			if (loginResponse.user.role !== 'admin')
 				return thunkAPI.rejectWithValue('You are not admin')
 			saveTokensStorage({
 				accessToken: loginResponse.accessToken,
@@ -42,7 +41,7 @@ export const googleLogin = createAsyncThunk<
 		const { data: loginResponse } = await api.auth.googleSign({ socialId })
 		console.log(loginResponse)
 
-		if (loginResponse.user.role !== Role.admin)
+		if (loginResponse.user.role !== 'admin')
 			return thunkAPI.rejectWithValue(GlobalErrorsEnum.somethingWrong)
 		saveTokensStorage({
 			accessToken: loginResponse.accessToken,

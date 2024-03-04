@@ -13,8 +13,8 @@ import type { FC } from 'react'
 
 export const iconsList = [
 	{ icon: Graph, link: '/admin/dashboard', name: 'Dashboard' },
-	{ icon: User, link: '/admin/users', name: 'Users' },
-	{ icon: Book, link: '/admin/books', name: 'Books' },
+	{ icon: User, link: '/admin/user/catalog', name: 'Users' },
+	{ icon: Book, link: '/admin/book/catalog', name: 'Books' },
 	{ icon: Settings, link: '/admin/parser', name: 'Parser' }
 	// { icon: Library, link: '/admin/collections', name: 'Collections' }
 ]

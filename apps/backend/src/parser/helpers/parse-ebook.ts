@@ -149,7 +149,9 @@ export const parseCurrentBook = async (page: Page, url: string) => {
 		const genres = document.querySelectorAll(
 			selector + ' > span:nth-child(1) > span > a > .Button__labelItem'
 		)
-		return [...genres].map(genre => genre.textContent) ?? ['No genres']
+		return (
+			[...genres].slice(0, 3).map(genre => genre.textContent) ?? ['No genres']
+		)
 	}, parseSelectors.genres)
 
 	return {

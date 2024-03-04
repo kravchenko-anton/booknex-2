@@ -1,16 +1,16 @@
 'use client'
 
-import { useOverview } from '@/app/admin/books/[id]/overview/useOverview'
+import EbookInfo from '@/app/admin/_shared/ui/ebook-info'
+import ReviewTable from '@/app/admin/_shared/ui/review/review-table'
+import UpdateBio from '@/app/admin/book/[id]/_ui/update-bio'
+import UpdateGenres from '@/app/admin/book/[id]/_ui/update-genres'
+import UpdatePicture from '@/app/admin/book/[id]/_ui/update-picture'
 import ActivityList from '@/components/activity-list'
 import Loader from '@/components/ui/loader/loader'
-import EbookInfo from '@/features/books/shared/ui/ebook-info'
-import ReviewTable from '@/features/books/shared/ui/review/review-table'
-import UpdateBio from '@/features/books/update/update-bio'
-import UpdateGenres from '@/features/books/update/update-genres'
-import UpdatePicture from '@/features/books/update/update-picture'
 import { cn } from '@/utils'
 import { acceptToast } from '@/utils/toast'
 import * as React from 'react'
+import { useOverview } from './useOverview'
 //TODO: сделать во фронте при композиции книги типы которые в бекенде
 const Page = () => {
 	const { book, remove, update, updateEbook, toggleVisibility, updatePicture } =

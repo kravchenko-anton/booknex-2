@@ -987,14 +987,14 @@ components:
           type: string
           example: name
           description: genre name
-        majorBooks:
+        mainBooks:
           type: array
           items:
             $ref: "#/components/schemas/ShortBook"
       required:
         - id
         - name
-        - majorBooks
+        - mainBooks
     InfoByIdOutput:
       type: object
       properties:

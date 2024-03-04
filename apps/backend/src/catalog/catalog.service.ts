@@ -26,7 +26,6 @@ export class CatalogService {
 			popularBooks: await this.popularBooks(),
 			bestSellingBooks: await this.bestSellingBooks(),
 			newReleases: await this.newReleases()
-			//TODO: сделать тут исходя из реков списки
 		}
 	}
 

@@ -39,7 +39,12 @@ export const getNewTokens = async () => {
 	const refreshToken = getRefreshToken()
 	if (!refreshToken) throw new Error('No refresh token')
 	console.log('refreshToken', refreshToken)
-	const { data: response } = await api.auth.refreshToken({ refreshToken })
+	const { data: response } = await api.auth
+		.refreshToken({ refreshToken })
+		.catch(error => {
+			console.log('error in get New token', error)
+			return error
+		})
 	console.log(
 		'response',
 		response,

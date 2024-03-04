@@ -39,6 +39,7 @@ export const updatedContent = async (text: string) => {
 		if (element.tagName === 'script') element.remove()
 		if (element.tagName === 'style') element.remove()
 		if (element.tagName === 'table') element.remove()
+		if (element.tagName === 'TABLE') element.remove()
 		if (element.tagName === 'SUP') element.remove()
 		if (element.tagName === 'SUB') element.remove()
 	}

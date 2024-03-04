@@ -1,5 +1,5 @@
+import { useBookCompose } from '@/app/admin/_shared/book-compose/useBookCompose'
 import { DropZone, TextArea } from '@/components/ui'
-import { useBookCompose } from '@/features/books/shared/book-compose/useBookCompose'
 import { errorToast } from '@/utils/toast'
 import type { EBookType } from 'global/api-client'
 import { CaseSensitive, ChevronDown, ChevronUp, Close } from 'icons'

@@ -42,6 +42,7 @@ instance.interceptors.response.use(
 				return await instance.request(originalRequest)
 			} catch {
 				console.log('catch', error)
+				//TODO: пофиксить авторизацию, скорее всего ошибка в new Token
 				if (
 					error.response?.status === 401 ||
 					errorCatch(error) === 'jwt expired' ||

@@ -40,6 +40,6 @@ export interface GenreByIdOutput {
      * @type {Array<ShortBook>}
      * @memberof GenreByIdOutput
      */
-    'majorBooks': Array<ShortBook>;
+    'mainBooks': Array<ShortBook>;
 }
 

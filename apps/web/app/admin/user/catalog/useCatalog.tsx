@@ -1,5 +1,5 @@
-import { columns } from '@/features/users/catalog/columns'
-import { useQueries } from '@/features/users/catalog/useQueries'
+import { columns } from '@/app/admin/user/catalog/columns'
+import { useQueries } from '@/app/admin/user/catalog/useQueries'
 import { useTableParameters } from '@/hooks/useTableParameters'
 import {
 	generateParameters,
@@ -9,7 +9,7 @@ import {
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
-export const userRoute = '/admin/users'
+export const userRoute = '/admin/user'
 export const useCatalog = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()

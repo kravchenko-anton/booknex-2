@@ -1,3 +1,4 @@
+import { bookRoute } from '@/app/admin/book/catalog/useCatalog'
 import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
@@ -67,7 +68,7 @@ export const useOverview = () => {
 		mutationFn: (id: number) => api.book.remove(id),
 		onSuccess: () => {
 			successToast('Book removed')
-			router.push('/admin/books')
+			router.push(bookRoute)
 		}
 	})
 

@@ -4,7 +4,7 @@ import ManageRecommendationMenu from '@/screens/update-recommendation/manage-rec
 import { BookCard, Button, Flatlist, Loader, ScrollLayout } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
 import { useQuery } from '@tanstack/react-query'
-//TODO: добавить тут shelves
+
 const Featured = () => {
 	const { data: featured } = useQuery({
 		queryKey: ['featured'],

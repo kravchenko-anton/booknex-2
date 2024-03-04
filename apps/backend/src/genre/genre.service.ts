@@ -33,7 +33,7 @@ export class GenreService {
 			},
 			select: {
 				...ReturnGenreObject,
-				majorBooks: {
+				mainBooks: {
 					select: returnBookObject
 				}
 			}

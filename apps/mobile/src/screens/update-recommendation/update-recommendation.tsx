@@ -84,7 +84,7 @@ const UpdateRecommendation = () => {
 				className={cn('mx-2 mb-4', selectedGenres.length === 0 && 'hidden')}
 				onPress={async () => {
 					console.log({ selectedGenres })
-					await update({ selectedGenres })
+					await update({ selectedGenres: genreIds })
 
 					await queryClient.invalidateQueries({
 						queryKey: ['featured']

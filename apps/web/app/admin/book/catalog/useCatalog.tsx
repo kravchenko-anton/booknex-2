@@ -1,4 +1,4 @@
-import { columns } from '@/features/books/catalog/columns'
+import { columns } from '@/app/admin/book/catalog/columns'
 import { useTableParameters } from '@/hooks/useTableParameters'
 import api from '@/services'
 import {
@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
-export const bookRoute = '/admin/books'
+export const bookRoute = '/admin/book'
 export const useCatalog = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
@@ -21,7 +21,7 @@ export const useCatalog = () => {
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			preview: id => router.push(`/admin/books/${id}/overview`)
+			preview: id => router.push(`${bookRoute}/${id}`)
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})
@@ -35,7 +35,7 @@ export const useCatalog = () => {
 			pushParameters({ searchTerm: data.searchTerm })
 	}
 
-	const onCreateButtonClick = () => router.push('/admin/books/create')
+	const onCreateButtonClick = () => router.push(`${bookRoute}/create`)
 
 	const tableProperties = {
 		table,

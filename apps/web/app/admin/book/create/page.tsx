@@ -1,5 +1,8 @@
 'use client'
 
+import Editor from '@/app/admin/_shared/book-compose/editor'
+import SelectGenres from '@/app/admin/_shared/ui/select-genres'
+import { useCreateForm } from '@/app/admin/book/create/useCreateForm'
 import {
 	Button,
 	DropZone,
@@ -7,9 +10,6 @@ import {
 	Field,
 	FormTextArea
 } from '@/components/ui'
-import { useCreateForm } from '@/features/books/create/useCreateForm'
-import Editor from '@/features/books/shared/book-compose/editor'
-import SelectGenres from '@/features/books/shared/ui/select-genres'
 import type { EBookType } from 'global/api-client'
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'

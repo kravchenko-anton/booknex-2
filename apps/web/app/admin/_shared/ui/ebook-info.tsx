@@ -1,6 +1,6 @@
+import Editor from '@/app/admin/_shared/book-compose/editor'
 import { Button } from '@/components/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import Editor from '@/features/books/shared/book-compose/editor'
 import { errorToast } from '@/utils/toast'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
