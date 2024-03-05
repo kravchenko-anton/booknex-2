@@ -30,7 +30,7 @@ const ActivityList: FC<{
 		setSelectActivity(active)
 	}
 	return (
-		<>
+		<div className='sm:min-w-full xl:min-w-[700px]'>
 			<ActivityCalendar
 				maxLevel={10}
 				data={data}
@@ -80,7 +80,7 @@ const ActivityList: FC<{
 					<div>Nothing selected</div>
 				)}
 			</SheetComponent>
-		</>
+		</div>
 	)
 }
 

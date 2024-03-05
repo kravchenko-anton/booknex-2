@@ -18,7 +18,7 @@ const TabsList = forwardRef<
 	<TabsPrimitive.List
 		ref={reference}
 		className={cn(
-			'bg-muted text-gray inline-flex h-9 items-center justify-center rounded-lg p-1',
+			'bg-muted text-gray inline-flex h-9 items-center justify-center rounded p-1',
 			className
 		)}
 		{...properties}

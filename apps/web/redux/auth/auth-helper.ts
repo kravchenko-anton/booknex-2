@@ -2,21 +2,21 @@ import api from '@/services'
 import Cookies from 'js-cookie'
 
 export const getAccessToken = () => {
-	console.log('getAccessToken')
 	const accessToken = Cookies.get('accessToken')
+	console.log('getAccessToken', accessToken)
 	return accessToken || null
 }
 
 export const getRefreshToken = () => {
-	console.log('getRefreshToken')
 	const refreshToken = Cookies.get('refreshToken')
+	console.log('getRefreshToken', refreshToken)
 	return refreshToken || null
 }
 
 export const getTokensStorage = () => {
-	console.log('getTokensStorage')
 	const accessToken = Cookies.get('accessToken') || null
 	const refreshToken = Cookies.get('refreshToken') || null
+	console.log('getTokensStorage', { accessToken, refreshToken })
 	return { accessToken, refreshToken }
 }
 
@@ -24,9 +24,9 @@ export const saveTokensStorage = (data: {
 	accessToken: string
 	refreshToken: string
 }) => {
-	console.log('saveTokensStorage', data)
 	Cookies.set('accessToken', data.accessToken)
 	Cookies.set('refreshToken', data.refreshToken)
+	console.log('saveTokensStorage', data)
 }
 
 export const deleteTokensStorage = () => {

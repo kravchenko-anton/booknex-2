@@ -1,4 +1,4 @@
-import { reviewColumns } from '@/app/admin/_shared/ui/review/review-columns'
+import { reviewColumns } from '@/app/admin/book/_shared/ui/review/review-columns'
 import { columns } from '@/app/admin/book/catalog/columns'
 import {
 	Table,
@@ -28,7 +28,7 @@ const ReviewTable: FC<ReviewTableProperties> = ({ review }) => {
 		getCoreRowModel: getCoreRowModel()
 	})
 	return (
-		<div className='mt-4 '>
+		<div className='mt-4'>
 			<h1 className='mb-2 text-xl'>Review</h1>
 			<Table>
 				<TableHeader>

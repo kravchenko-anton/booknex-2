@@ -24,36 +24,36 @@ export const Sidebar: FC = () => {
 	const activePath = usePathname()
 	const router = useRouter()
 	return (
-		<div className='z-0 h-full w-full justify-center duration-100 ease-linear md:fixed md:w-[190px] md:flex-col'>
-			<div className='bg-foreground border-muted flex w-full justify-between border-b-2 p-5 text-sm md:h-full md:flex-col md:border-r-2'>
+		<div className='z-0 h-full w-full justify-center duration-100 ease-linear xl:fixed xl:w-[190px] xl:flex-col'>
+			<div className='bg-foreground border-muted flex w-full justify-between border-b-2 p-5 text-sm xl:h-full xl:flex-col xl:border-r-2'>
 				<button
-					className='flex cursor-pointer items-center text-2xl font-bold md:mb-12'
+					className='flex cursor-pointer items-center text-2xl font-bold xl:mb-12'
 					type='button'
 					onClick={() => router.push('/')}
 				>
-					<span className='bg-muted rounded-xl p-1 text-[21px] text-white  md:w-full '>
+					<span className='bg-muted rounded p-1 text-[21px] text-white  xl:w-full '>
 						Booknex 🧑‍💻
 					</span>
 				</button>
-				<ul className='hidden md:block'>
+				<ul className='hidden xl:block'>
 					{iconsList.map(icon => (
 						<li className='w-full' key={icon.link}>
 							<a
 								href={icon.link}
 								className={cn(
-									'my-2 flex items-center p-2 duration-100  ease-linear md:gap-3'
+									'my-2 flex items-center p-2 duration-100  ease-linear xl:gap-3'
 								)}
 							>
 								<icon.icon
 									width={22}
 									height={22}
-									className='hidden  md:block'
+									className='hidden  xl:block'
 									style={{
 										color: activePath === icon.link ? '#fff' : '#9ca3af'
 									}}
 								/>
 								<span
-									className='block text-sm md:text-[16px]'
+									className='block text-sm xl:text-[16px]'
 									style={{
 										color: activePath === icon.link ? '#fff' : '#9ca3af'
 									}}
@@ -65,20 +65,20 @@ export const Sidebar: FC = () => {
 					))}
 				</ul>
 				<div
-					className='text-danger hidden cursor-pointer  items-center duration-100 ease-linear md:mt-auto md:flex  md:gap-3 md:p-2'
+					className='text-danger hidden cursor-pointer  items-center duration-100 ease-linear xl:mt-auto xl:flex  xl:gap-3 xl:p-2'
 					onClick={() => logout()}
 				>
 					<Logout width={22} height={22} />
-					<span className='block text-sm md:text-[16px]'>Logout</span>
+					<span className='block text-sm xl:text-[16px]'>Logout</span>
 				</div>
 
-				<div className='flex items-center justify-center  md:hidden'>
+				<div className='flex items-center justify-center  xl:hidden'>
 					<DropdownMenu>
 						<DropdownMenuTrigger className='focus-visible:outline-0'>
 							<MoreHorizontal
 								height={40}
 								width={40}
-								className='bg-muted border-bordered rounded-xl border-2 p-2'
+								className='bg-muted border-bordered rounded-lg border-2 p-2'
 							/>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align='end'>

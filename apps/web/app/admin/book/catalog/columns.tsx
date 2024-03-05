@@ -25,7 +25,7 @@ export const columns = ({
 		cell: ({ row }) => (
 			<Image
 				alt={row.original.title}
-				className=' mx-auto w-[100px] cursor-pointer rounded-xl'
+				className=' mx-auto w-[100px] cursor-pointer rounded'
 				src={getFileUrl(row.original.picture)}
 				width={200}
 				height={250}

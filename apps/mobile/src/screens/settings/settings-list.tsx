@@ -16,13 +16,13 @@ export const Category = ({
 }: PropsWithChildren<ListCategoryItemType>) => (
 	<View
 		key={title}
-		className={cn('mb-2 w-full rounded-xl', className)}
+		className={cn('mb-2 w-full rounded', className)}
 		{...properties}
 	>
 		<Title size={'xxl'} weight='bold' className='mb-2'>
 			{title}
 		</Title>
-		<View className='bg-foreground border-bordered rounded-xl border-[1px] p-1.5'>
+		<View className='bg-foreground border-bordered rounded border-[1px] p-1.5'>
 			{children}
 		</View>
 	</View>

@@ -4,9 +4,9 @@ import { adminRoute } from '@/providers/secure-route'
 import type { FC, PropsWithChildren } from 'react'
 
 const AdminLayout: FC<PropsWithChildren> = ({ children }) => (
-	<div className='md:flex'>
+	<div className='overflow-hidden xl:flex'>
 		<Sidebar />
-		<div className='md:w-[calc(100% - 190px)] mt-4 w-full  p-2 pt-0 duration-200 ease-linear md:ml-[190px] md:p-4'>
+		<div className='xl:w-[calc(100% - 190px)] mt-4 w-full  p-2 pt-0 duration-200 ease-linear xl:ml-[190px] xl:p-4'>
 			{children}
 		</div>
 	</div>

@@ -1,8 +1,8 @@
 import { useAction } from '@/hooks'
 import { useAuthorize } from '@/screens/auth/useAuthorize'
 import { Button, Field, ScrollLayout } from '@/ui'
-import { classValidatorResolver } from '@hookform/resolvers/class-validator'
-import { AuthDto } from 'global/api-dto/auth/auth.dto'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { AuthDto, type AuthDtoType } from 'global/dto/auth/auth.dto'
 import { Mail, Password } from 'icons'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
@@ -10,12 +10,12 @@ import { useForm } from 'react-hook-form'
 const Login = () => {
 	const { mailLogin } = useAction()
 	const { isLoading } = useAuthorize()
-	const { control, handleSubmit } = useForm<AuthDto>({
+	const { control, handleSubmit } = useForm<AuthDtoType>({
 		mode: 'onSubmit',
-		resolver: classValidatorResolver(AuthDto)
+		resolver: zodResolver(AuthDto)
 	})
 
-	const onSubmit: SubmitHandler<AuthDto> = ({ password, email }) =>
+	const onSubmit: SubmitHandler<AuthDtoType> = ({ password, email }) =>
 		mailLogin({ password, email })
 
 	return (

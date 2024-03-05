@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import type { EBookType } from 'global/api-client'
 import { useLayoutEffect, useState } from 'react'
 //TODO: сократить тут код до минимума чтобы было очень просто
+
 export const useBookCompose = (defaultBooks?: EBookType[]) => {
 	const [books, setBooks] = useState<EBookType[] | null>([])
 	useLayoutEffect(() => setBooks(defaultBooks || []), [defaultBooks])
@@ -20,7 +21,7 @@ export const useBookCompose = (defaultBooks?: EBookType[]) => {
 		setBooks(books?.filter(book => book.id !== bookId))
 		successToast('Book deleted')
 	}
-	const generateChaptersNames = ({ bookId }: { bookId: number }) => {
+	const generateChapterNames = ({ bookId }: { bookId: number }) => {
 		setBooks(books => {
 			if (!books) return books
 			return books.map(book => {
@@ -113,14 +114,14 @@ export const useBookCompose = (defaultBooks?: EBookType[]) => {
 		})
 	}
 
-	const updateChapterTitle = ({
+	const updateBookTitle = ({
 		value,
 		bookId
 	}: {
 		value: string
 		bookId: number
 	}) => {
-		if (!books) return errorToast('Error updating chapter title')
+		if (!books) return errorToast('Error updating book title')
 		setBooks(
 			books.map(book => {
 				if (book.id === bookId) {
@@ -134,11 +135,11 @@ export const useBookCompose = (defaultBooks?: EBookType[]) => {
 		)
 	}
 
-	const removeToc = (title: string, removedId: number) => {
+	const removeChapter = (bookId: number, removedId: number) => {
 		if (!books) return errorToast('Error removing chapter')
 		setBooks(
 			books.map(book => {
-				if (book.title === title) {
+				if (book.id === bookId) {
 					return {
 						...book,
 						chapters: book.chapters.filter(content => content.id !== removedId)
@@ -150,14 +151,17 @@ export const useBookCompose = (defaultBooks?: EBookType[]) => {
 		successToast('Chapter removed')
 	}
 
-	const updateTocTitle = ({
+	const updateChapter = ({
 		chapterId,
 		bookId,
 		value
 	}: {
 		chapterId: number
 		bookId: number
-		value: string
+		value: {
+			name?: string
+			text?: string
+		}
 	}) => {
 		setBooks(books => {
 			if (!books) return books
@@ -169,38 +173,7 @@ export const useBookCompose = (defaultBooks?: EBookType[]) => {
 							if (chapter.id === chapterId) {
 								return {
 									...chapter,
-									name: value
-								}
-							}
-							return chapter
-						})
-					}
-				}
-				return book
-			})
-		})
-	}
-
-	const updateTocContent = ({
-		bookId,
-		chapterId,
-		value
-	}: {
-		bookId: number
-		chapterId: number
-		value: string
-	}) => {
-		setBooks(books => {
-			if (!books) return books
-			return books.map(book => {
-				if (book.id === bookId) {
-					return {
-						...book,
-						chapters: book.chapters.map(chapter => {
-							if (chapter.id === chapterId) {
-								return {
-									...chapter,
-									text: value
+									...value
 								}
 							}
 							return chapter
@@ -260,14 +233,13 @@ export const useBookCompose = (defaultBooks?: EBookType[]) => {
 		books: {
 			upload: unfoldWithUpload,
 			state: books || [],
-			generateChaptersNames,
+			generateChapterNames,
 			addNewCharacterAfterContent,
 			delete: deleteBook,
-			updateTocContent,
-			updateTocTitle,
-			updateChapterTitle,
+			updateToc: updateChapter,
+			updateBookTitle,
 			mergeContentWithTopCharacter,
-			removeToc
+			removeToc: removeChapter
 		}
 	}
 }

@@ -21,7 +21,7 @@ export enum AdminErrors {
 	//book
 
 	bookNotFound = 'Book not found',
-
+	bookAlreadyExist = 'Book already exist',
 	//user
 
 	userNotFound = 'User not found'

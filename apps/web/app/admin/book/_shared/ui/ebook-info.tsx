@@ -1,4 +1,4 @@
-import Editor from '@/app/admin/_shared/book-compose/editor'
+import Editor from '@/app/admin/book/_shared/book-compose/editor'
 import { Button } from '@/components/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { errorToast } from '@/utils/toast'

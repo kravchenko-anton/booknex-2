@@ -1,12 +1,15 @@
+import {
+	UpdateBookDto,
+	type UpdateBookDtoType
+} from '@/app/admin/book/_shared/validation/update.book.dto'
 import { Button, Field, FormTextArea } from '@/components/ui'
 import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/form'
-import { classValidatorResolver } from '@hookform/resolvers/class-validator'
-import { UpdateBookDto } from 'global/api-dto/book/update.book.dto'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import { Book, PenNib, User } from 'icons'
 import type { FC } from 'react'
 import * as React from 'react'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface UpdateBioProperties {
@@ -24,12 +27,10 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 		control,
 		reset,
 		formState: { dirtyFields }
-	} = useForm<UpdateBookDto>({
+	} = useForm<UpdateBookDtoType>({
 		mode: 'onSubmit',
-		resolver: classValidatorResolver(UpdateBookDto)
+		resolver: zodResolver(UpdateBookDto)
 	})
-	//set isEditing if something change
-	const [isEditing, setIsEditing] = useState(false)
 
 	return (
 		<div>
@@ -40,7 +41,6 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						control={control}
 						name='title'
 						defaultValue={properties.title}
-						onClick={() => setIsEditing(true)}
 					/>
 				</div>
 				<div className='md:w-4/5'>
@@ -50,7 +50,6 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						name='author'
 						defaultValue={properties.author}
 						icon={PenNib}
-						onClick={() => setIsEditing(true)}
 					/>
 				</div>
 
@@ -62,7 +61,6 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						type='number'
 						defaultValue={properties.pages}
 						icon={Book}
-						onClick={() => setIsEditing(true)}
 					/>
 				</div>
 				<div className='md:w-5/12'>
@@ -74,7 +72,6 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						type='number'
 						defaultValue={properties.popularity}
 						icon={User}
-						onClick={() => setIsEditing(true)}
 					/>
 				</div>
 			</div>
@@ -89,16 +86,19 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 					style={{
 						height: 250
 					}}
-					onClick={() => setIsEditing(true)}
 				/>
 			</div>
 
-			<div className={cn('', isEditing ? 'mt-4 flex gap-2' : 'hidden')}>
+			<div
+				className={cn(
+					'',
+					Object.keys(dirtyFields).length > 0 ? 'mt-4 flex gap-2' : 'hidden'
+				)}
+			>
 				<Button
 					size='sm'
 					variant='foreground'
 					onClick={() => {
-						setIsEditing(false)
 						reset()
 					}}
 				>
@@ -107,12 +107,9 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 				<Button
 					size='sm'
 					variant='primary'
-					// post ony dirty values
-					onClick={handleSubmit(data => {
-						if (!data) return
+					onClick={handleSubmit(data =>
 						properties.onSaveEdit(dirtyValues(dirtyFields, data))
-						setIsEditing(false)
-					})}
+					)}
 				>
 					Save
 				</Button>

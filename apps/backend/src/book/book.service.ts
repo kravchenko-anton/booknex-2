@@ -251,7 +251,16 @@ export class BookService {
 			role: 'admin',
 			filename: dto.title + '.json'
 		})
-
+		const checkExist = await this.prisma.book.findUnique({
+			where: {
+				title: dto.title
+			},
+			select: {
+				id: true
+			}
+		})
+		if (checkExist)
+			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.bookAlreadyExist)
 		await this.prisma.book.create({
 			data: {
 				activities: {

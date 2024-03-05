@@ -4,14 +4,16 @@ import { forwardRef } from 'react'
 
 const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
 	({ className, ...properties }, reference) => (
-		<table
-			ref={reference}
-			className={cn(
-				'rounded-table relative w-full caption-bottom  border-collapse overflow-hidden  rounded-lg text-sm',
-				className
-			)}
-			{...properties}
-		/>
+		<div className='overflow-y-scroll'>
+			<table
+				ref={reference}
+				className={cn(
+					' relative w-full caption-bottom  border-collapse overflow-scroll rounded text-sm',
+					className
+				)}
+				{...properties}
+			/>
+		</div>
 	)
 )
 Table.displayName = 'Table'

@@ -57,7 +57,7 @@ const ReadingSettings: FC<{
 					renderItem={({ item: theme }) => (
 						<AnimatedPress
 							key={`${theme.slug}-${theme.title}`}
-							className='mb-4 mr-2 rounded-lg border-2 p-2 px-6'
+							className='mb-4 mr-2 rounded border-2 p-2 px-6'
 							style={{
 								backgroundColor: theme.colorPalette.background.darker,
 								borderColor:
@@ -99,7 +99,7 @@ const ReadingSettings: FC<{
 												: Color.transparent
 									}}
 									className={cn(
-										' mb-2 mr-2 rounded-xl border-2 border-transparent p-2 px-4',
+										' mb-2 mr-2 rounded border-2 border-transparent p-2 px-4',
 										item.value === font.fontFamily && 'border-primary '
 									)}
 									onPress={() =>

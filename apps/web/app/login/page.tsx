@@ -2,19 +2,19 @@
 import { Button, Field } from '@/components/ui'
 import { useAction } from '@/hooks'
 import { loginRoute } from '@/providers/secure-route'
-import { classValidatorResolver } from '@hookform/resolvers/class-validator'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
-import { AuthDto } from 'global/api-dto/auth/auth.dto'
+import { AuthDto, type AuthDtoType } from 'global/dto/auth/auth.dto'
 import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
 
 const Page = () => {
 	const { mailLogin, googleLogin } = useAction()
-	const { handleSubmit, control } = useForm<AuthDto>({
+	const { handleSubmit, control } = useForm<AuthDtoType>({
 		mode: 'onSubmit',
-		resolver: classValidatorResolver(AuthDto)
+		resolver: zodResolver(AuthDto)
 	})
-	const onSubmit = (data: AuthDto) => {
+	const onSubmit = (data: AuthDtoType) => {
 		mailLogin(data)
 	}
 
@@ -27,7 +27,7 @@ const Page = () => {
 
 	return (
 		<div className='flex h-screen w-screen items-center justify-center'>
-			<div className='bg-foreground  w-[450px] items-center justify-center rounded-xl p-8'>
+			<div className='bg-foreground  w-[450px] items-center justify-center rounded p-8'>
 				<h1 className='mb-4 text-center text-3xl text-white'>Sign in</h1>
 				<Field
 					icon={Mail}

@@ -22,7 +22,11 @@ const Field = <T extends Record<string, any>>({
 					value={value}
 					icon={Icon}
 					onBlur={onBlur}
-					onChange={onChange}
+					onChange={
+						properties.type === 'number'
+							? event => onChange(Number(+event.target.value))
+							: onChange
+					}
 					{...properties}
 				/>
 				{!!error && (

@@ -1,11 +1,16 @@
+import {
+	CreateBookDto,
+	type CreateBookDtoType
+} from '@/app/admin/book/_shared/validation/create.book.dto'
+import { bookRoute } from '@/app/admin/book/catalog/useCatalog'
 import { useTemplate } from '@/app/admin/book/create/useTemplate'
 import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
-import { classValidatorResolver } from '@hookform/resolvers/class-validator'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import type { CreateBookDto as CreateBookPayload } from 'global/api-client'
-import { CreateBookDto } from 'global/api-dto/book/create.book.dto'
+
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
@@ -17,10 +22,12 @@ export const useCreateForm = () => {
 		watch,
 		handleSubmit,
 		setValue,
+		getValues,
 		formState: { errors }
-	} = useForm<CreateBookDto>({
-		resolver: classValidatorResolver(CreateBookDto)
+	} = useForm<CreateBookDtoType>({
+		resolver: zodResolver(CreateBookDto)
 	})
+	console.log(errors, 'it is errors', getValues(), 'it is values')
 	const template = useTemplate({ setValue })
 
 	const { mutateAsync: create } = useMutation({
@@ -45,7 +52,8 @@ export const useCreateForm = () => {
 		onError: () => errorToast('Error while uploading book')
 	})
 
-	const submit = handleSubmit(async (data: CreateBookDto) => {
+	const submit = handleSubmit(async (data: CreateBookDtoType) => {
+		console.log('validation,pass')
 		const { data: pictureFile } = await upload({
 			name: data.title,
 			folder: 'booksCovers',
@@ -63,9 +71,10 @@ export const useCreateForm = () => {
 			popularity: data.popularity
 		})
 			.then(async () => {
-				console.log(template.id, 'it is template id')
-				await deleteTemplate(template.id)
-				router.push('/admin/books')
+				if (template.id) {
+					await deleteTemplate(template.id)
+				}
+				router.push(`${bookRoute}/catalog`)
 				successToast('Book created')
 			})
 			.catch(() => {
@@ -77,6 +86,7 @@ export const useCreateForm = () => {
 		control,
 		errors,
 		setValue,
+		getValues,
 		submit
 	}
 }

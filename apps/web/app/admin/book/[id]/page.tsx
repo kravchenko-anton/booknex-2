@@ -1,10 +1,10 @@
 'use client'
 
-import EbookInfo from '@/app/admin/_shared/ui/ebook-info'
-import ReviewTable from '@/app/admin/_shared/ui/review/review-table'
 import UpdateBio from '@/app/admin/book/[id]/_ui/update-bio'
 import UpdateGenres from '@/app/admin/book/[id]/_ui/update-genres'
 import UpdatePicture from '@/app/admin/book/[id]/_ui/update-picture'
+import EbookInfo from '@/app/admin/book/_shared/ui/ebook-info'
+import ReviewTable from '@/app/admin/book/_shared/ui/review/review-table'
 import ActivityList from '@/components/activity-list'
 import Loader from '@/components/ui/loader/loader'
 import { cn } from '@/utils'

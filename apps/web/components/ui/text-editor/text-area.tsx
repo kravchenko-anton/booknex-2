@@ -11,7 +11,7 @@ const TextArea: FC<TextAreaProperties> = ({
 	<textarea
 		value={properties.value}
 		className={cn(
-			'placeholder-gray h-full w-full resize-none rounded-xl p-2 text-white focus:outline-0',
+			'placeholder-gray h-full w-full resize-none rounded-md p-2 text-white focus:outline-0',
 			settings.colors[variant],
 			properties.disabled && 'cursor-not-allowed',
 			className

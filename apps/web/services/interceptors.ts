@@ -3,7 +3,6 @@ import {
 	getAccessToken,
 	getNewTokens
 } from '@/redux/auth/auth-helper'
-import { errorToast } from '@/utils/toast'
 import axios from 'axios'
 import { serverURL } from 'global/api-config'
 import { errorCatch } from 'global/helpers/catch-error'
@@ -39,12 +38,17 @@ instance.interceptors.response.use(
 			originalRequest._isRetry = true
 			try {
 				await getNewTokens()
-				return await instance.request(originalRequest)
+				console.log('originalRequest for retry', originalRequest)
+				return await axios.request({
+					...originalRequest,
+					headers: {
+						...originalRequest.headers,
+						Authorization: `Bearer ${getAccessToken()}`
+					}
+				})
 			} catch {
 				console.log('catch', error)
-				//TODO: пофиксить авторизацию, скорее всего ошибка в new Token
 				if (
-					error.response?.status === 401 ||
 					errorCatch(error) === 'jwt expired' ||
 					errorCatch(error) === 'jwt must be provided'
 				) {
@@ -52,7 +56,6 @@ instance.interceptors.response.use(
 				}
 			}
 		}
-		errorToast(errorCatch(error))
 		throw error
 	}
 )

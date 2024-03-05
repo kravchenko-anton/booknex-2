@@ -1,3 +1,4 @@
+import type { UpdateGenreDtoType } from '@/app/admin/book/_shared/validation/update.genre.dto'
 import { Button } from '@/components/ui'
 import {
 	Command,
@@ -15,7 +16,6 @@ import api from '@/services'
 import { cn } from '@/utils'
 import { errorToast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import type { UpdateGenreDto } from 'global/api-dto/book/update.genre.dto'
 import { Color } from 'global/colors'
 import { Check } from 'icons'
 import * as React from 'react'
@@ -40,8 +40,13 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
 	const { mutateAsync: updateGenre, isLoading: updateGenreLoading } =
 		useMutation({
 			mutationKey: ['update-genre'],
-			mutationFn: ({ id, payload }: { id: number; payload: UpdateGenreDto }) =>
-				api.book.updateGenre(id, payload),
+			mutationFn: ({
+				id,
+				payload
+			}: {
+				id: number
+				payload: UpdateGenreDtoType
+			}) => api.book.updateGenre(id, payload),
 			onError: () => errorToast('Error while uploading book')
 		})
 
@@ -55,7 +60,7 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
 						<PopoverTrigger className='w-full'>
 							<div
 								className={cn(
-									'border-bordered bg-foreground h-full rounded-lg border-2 px-4 py-2'
+									'border-bordered bg-foreground h-full rounded border-2 px-4 py-2'
 								)}
 								{...properties}
 							>

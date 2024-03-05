@@ -43,7 +43,7 @@ export class CreateBookDto {
 		example: 300,
 		required: true
 	})
-	@IsString()
+	@IsNumber()
 	pages: number
 
 	@ApiProperty({
@@ -51,7 +51,7 @@ export class CreateBookDto {
 		example: 1_000_000,
 		required: true
 	})
-	@IsString()
+	@IsNumber()
 	popularity: number
 
 	@IsArray()

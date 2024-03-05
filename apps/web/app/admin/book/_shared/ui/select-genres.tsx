@@ -52,7 +52,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 							<PopoverTrigger className='w-full'>
 								<div
 									className={cn(
-										'border-muted h-full rounded-xl border-2 px-4 py-3',
+										'border-muted h-full rounded border-2 px-4 py-3',
 										disable && 'cursor-not-allowed'
 									)}
 									{...properties}
