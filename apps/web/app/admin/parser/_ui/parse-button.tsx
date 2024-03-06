@@ -30,7 +30,7 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 			<Button
 				isLoading={parseLoading}
 				size='sm'
-				variant='primary'
+				variant='muted'
 				onClick={properties.openParserDialog}
 			>
 				Parsing

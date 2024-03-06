@@ -11,7 +11,7 @@ interface NothingFountProperties extends ViewDefaultProperties {
 
 const NothingFount: FC<PropsWithChildren<NothingFountProperties>> = ({
 	children,
-	text = `Nothing found, try looking ${'\n'} for something else`,
+	text = `It's quiet, too quiet`,
 	...properties
 }) => (
 	<View className='mt-4 flex-1 items-center justify-start' {...properties}>

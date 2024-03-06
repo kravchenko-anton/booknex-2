@@ -59,36 +59,45 @@ const Book: FC = () => {
 				</View>
 				<Image className='-mt-16' url={book.picture} height={260} width={170} />
 			</View>
-			<View className='flex-1 flex-row items-center justify-between px-2 pt-4'>
-				<View className='mr-4 flex-1'>
-					<Title
-						numberOfLines={2}
-						weight='semiBold'
-						size={'xxl'}
-						className='mt-2'
-					>
-						{book.title}
-					</Title>
-					<Title
-						numberOfLines={1}
-						color={Color.gray}
-						weight='regular'
-						size={'md'}
-						className='mt-1'
-					>
-						{book.author}
-					</Title>
-				</View>
+			<View className=' px-2 pt-4'>
+				<Title
+					numberOfLines={2}
+					weight='semiBold'
+					size={'xxl'}
+					className='mt-2'
+				>
+					{book.title}
+				</Title>
+				<Title
+					numberOfLines={1}
+					color={Color.gray}
+					weight='regular'
+					size={'md'}
+					className='mt-1'
+				>
+					{book.author}
+				</Title>
+			</View>
+			<View className='h-[65px] flex-row justify-between gap-2 px-2 pt-4'>
 				<Button
 					icon={Text}
 					isLoading={startReadingLoading}
-					className='rounded'
+					className='flex-1'
 					variant='primary'
 					size='md'
 					onPress={startReadingBook}
 				>
-					Read
+					Start reading
 				</Button>
+				<AnimatedIcon
+					variant='muted'
+					icon={Bookmarked}
+					fatness={2}
+					disabled={toggleSavedLoading}
+					size='sm'
+					fill={!!isSaved}
+					onPress={() => toggleSaved(book.id)}
+				/>
 			</View>
 			<Flatlist
 				horizontal

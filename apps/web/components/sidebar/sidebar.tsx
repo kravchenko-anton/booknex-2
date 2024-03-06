@@ -29,9 +29,9 @@ export const Sidebar: FC = () => {
 				<button
 					className='flex cursor-pointer items-center text-2xl font-bold xl:mb-12'
 					type='button'
-					onClick={() => router.push('/')}
+					onClick={() => router.push('/admin/dashboard')}
 				>
-					<span className='bg-muted rounded p-1 text-[21px] text-white  xl:w-full '>
+					<span className='bg-muted rounded-xl  p-1 px-2 text-[21px] text-white  xl:w-full '>
 						Booknex 🧑‍💻
 					</span>
 				</button>

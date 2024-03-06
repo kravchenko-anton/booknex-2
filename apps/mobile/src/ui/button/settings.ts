@@ -17,18 +17,18 @@ export const settings: {
 		warning: 'bg-warning border-[1px] border-transparent'
 	},
 	iconSize: {
-		sm: 16,
-		md: 22,
-		lg: 36
+		sm: 14,
+		md: 20,
+		lg: 26
 	},
 	titleSize: {
 		sm: 'sm',
 		md: 'lg',
-		lg: 'xxl'
+		lg: 'xl'
 	},
 	padding: {
 		sm: 'py-1 px-2.5',
 		md: 'py-1.5 px-3',
-		lg: 'py-2 px-4'
+		lg: 'py-2 px-3.5'
 	}
 }

@@ -3,7 +3,7 @@ export const Color = {
 	bordered: '#2d2e30' as const,
 	background: '#111113' as const,
 	foreground: '#18191b' as const,
-	primary: '#477160' as const,
+	primary: '#306A9C' as const,
 
 	black: '#000000' as const,
 	gray: '#9F9F9F' as const,

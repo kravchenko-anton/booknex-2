@@ -18,7 +18,7 @@ const Icon: FC<IconProperties> = ({
 }) => (
 	<Pressable
 		className={cn(
-			'items-center justify-center rounded-2xl',
+			'items-center justify-center rounded-xl',
 			properties.disabled && 'opacity-50',
 			noPadding ? 'p-0' : settings.padding[size],
 			settings.colors[variant],

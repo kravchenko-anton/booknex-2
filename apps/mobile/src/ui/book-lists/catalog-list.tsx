@@ -23,7 +23,7 @@ const CatalogList = ({
 		data={data}
 		ListEmptyComponent={() => (
 			<Title className='mx-auto' size={'md'} color={Color.gray} weight='medium'>
-				Nothing here
+				It's quiet, too quiet
 			</Title>
 		)}
 		columnWrapperStyle={{

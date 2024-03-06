@@ -10,7 +10,7 @@ const Button: FC<ButtonProperties> = ({
 	icon: Icon,
 	fullWidth,
 	size = 'md',
-	variant = 'primary',
+	variant = 'foreground',
 	disabled = false,
 	isLoading = false,
 	className,

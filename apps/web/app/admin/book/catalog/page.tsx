@@ -12,7 +12,7 @@ const Page: FC = () => {
 	return (
 		<div className='w-full'>
 			<DataTableHeader title='Books' {...headerProperties}>
-				<Button size='sm' variant='primary' onClick={onCreateButtonClick}>
+				<Button size='sm' variant='muted' onClick={onCreateButtonClick}>
 					Create
 				</Button>
 			</DataTableHeader>

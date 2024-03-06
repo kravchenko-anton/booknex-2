@@ -71,12 +71,7 @@ const DataTable: FC<DataTableProperties> = ({
 				{currentPage} page of {totalPages} pages
 			</div>
 			<div className='flex space-x-2'>
-				<Button
-					size='sm'
-					variant='primary'
-					disabled={currentPage < 1}
-					onClick={previous}
-				>
+				<Button size='sm' disabled={currentPage < 1} onClick={previous}>
 					Previous
 				</Button>
 				<Button size='sm' disabled={canLoadMore} onClick={next}>

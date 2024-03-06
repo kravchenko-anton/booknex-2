@@ -9,7 +9,7 @@ module.exports = {
 				bordered: '#2d2e30',
 				background: '#111113',
 				foreground: '#18191b',
-				primary: '#477160',
+				primary: '#306A9C',
 				black: '#000000',
 				gray: '#9F9F9F',
 				white: '#ffffff',
