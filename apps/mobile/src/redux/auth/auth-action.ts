@@ -35,7 +35,9 @@ export const mailRegister = createAsyncThunk<AuthOutput, AuthDto>(
 	async (properties, thunkAPI) => {
 		const { data: registerResponse } = await api.auth.register(properties)
 		if (!registerResponse.accessToken)
-			return thunkAPI.rejectWithValue('No response')
+			return thunkAPI.rejectWithValue({
+				message: 'No response'
+			})
 		await saveTokensStorage({
 			accessToken: registerResponse.accessToken,
 			refreshToken: registerResponse.refreshToken

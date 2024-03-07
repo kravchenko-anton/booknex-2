@@ -34,13 +34,18 @@ export const useReading = () => {
 	const [readerUiVisible, setReaderUiVisible] = useState(true)
 	const reference = useRef<WebView>(null)
 
-	const { colorScheme, padding, lineHeight, font, fontSize, books } =
-		useTypedSelector(state => state.readingSettings)
-
+	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
+		state => state.readingUi
+	)
+	const { books } = useTypedSelector(state => state.readingProgress)
 	const { navigate } = useTypedNavigation()
 	const [readerState, setReaderState] = useState({
-		progress: Number(books.find(book => book.id === id)?.lastProgress.progress),
-		scrollTop: Number(books.find(book => book.id === id)?.lastProgress.location)
+		progress: Number(
+			books.find(book => book.id === id)?.latestProgress.progress
+		),
+		scrollTop: Number(
+			books.find(book => book.id === id)?.latestProgress.location
+		)
 	})
 
 	useSaveProgress({

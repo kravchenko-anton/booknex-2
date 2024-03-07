@@ -3,7 +3,11 @@
 	"version": "0.0.5",
 	"private": true,
 	"license": "MIT",
-	"scripts": {},
+	"scripts": {
+		"build:web": "nx build web",
+		"build:backend": "nx build backend",
+		"build:mobile": "nx build mobile"
+	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.405.0",
 		"@gorhom/bottom-sheet": "^4.6.0",
@@ -17,6 +21,7 @@
 		"@nestjs/mapped-types": "*",
 		"@nestjs/passport": "^10.0.0",
 		"@nestjs/platform-express": "^10.0.2",
+		"@nestjs/serve-static": "^4.0.1",
 		"@nestjs/swagger": "^7.2.0",
 		"@nestjs/throttler": "^5.0.0",
 		"@prisma/client": "^5.9.0",
@@ -53,6 +58,7 @@
 		"jsdom": "^23.0.1",
 		"nativewind": "^2.0.11",
 		"nest-openapi-tools": "^6.0.2",
+		"nest-winston": "^1.9.4",
 		"nestjs-pino": "^4.0.0",
 		"next": "14.1.0",
 		"passport": "^0.6.0",
@@ -84,6 +90,8 @@
 		"tailwind-merge": "^2.2.0",
 		"util": "^0.12.5",
 		"vaul": "^0.9.0",
+		"winston": "^3.12.0",
+		"winston-daily-rotate-file": "^5.0.0",
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {

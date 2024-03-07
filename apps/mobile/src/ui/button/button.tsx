@@ -19,7 +19,7 @@ const Button = ({
 	<AnimatedPress
 		disabled={disabled || isLoading}
 		className={cn(
-			'flex-row items-center justify-center',
+			'flex-row items-center justify-center rounded-lg',
 			settings.padding[size],
 			settings.colors[variant],
 			(disabled || isLoading) && 'opacity-70',

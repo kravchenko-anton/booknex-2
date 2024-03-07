@@ -60,7 +60,7 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
 						<PopoverTrigger className='w-full'>
 							<div
 								className={cn(
-									'border-bordered bg-foreground h-full rounded border-2 px-4 py-2'
+									'border-bordered bg-foreground h-full rounded-lg border-2 px-4 py-2'
 								)}
 								{...properties}
 							>

@@ -59,7 +59,7 @@ const Page = () => {
 						<div className='mb-4 flex gap-2 md:mt-0'>
 							<button
 								className={cn(
-									'mt-1 rounded-md px-2 py-1 text-white',
+									'mt-1 rounded-lg px-2 py-1 text-white',
 									book.visible ? 'bg-success' : 'bg-warning'
 								)}
 								onClick={toggleVisibility}
@@ -67,7 +67,7 @@ const Page = () => {
 								{book.visible ? 'Hide' : 'Show'}
 							</button>
 							<button
-								className={cn('bg-danger mt-1 rounded-md px-2 py-1 text-white')}
+								className={cn('bg-danger mt-1 rounded-lg px-2 py-1 text-white')}
 								onClick={() =>
 									acceptToast('Are you sure you want to delete this book?', {
 										action: {

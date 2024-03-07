@@ -34,30 +34,19 @@ const Book: FC = () => {
 					<AnimatedIcon
 						variant='foreground'
 						icon={ArrowLeft}
-						size='sm'
+						size='md'
 						onPress={() => goBack()}
 					/>
-					<View>
-						<AnimatedIcon
-							variant='transparent'
-							icon={Share}
-							size='sm'
-							onPress={() =>
-								share(`${book.title} is a great book! Check it on Booknex!`)
-							}
-						/>
-						<AnimatedIcon
-							variant='transparent'
-							icon={Bookmarked}
-							fatness={2}
-							disabled={toggleSavedLoading}
-							size='sm'
-							fill={!!isSaved}
-							onPress={() => toggleSaved(book.id)}
-						/>
-					</View>
+					<AnimatedIcon
+						variant='foreground'
+						icon={Share}
+						size='md'
+						onPress={() =>
+							share(`${book.title} is a great book! Check it on Booknex!`)
+						}
+					/>
 				</View>
-				<Image className='-mt-16' url={book.picture} height={260} width={170} />
+				<Image className='-mt-8' url={book.picture} height={260} width={170} />
 			</View>
 			<View className=' px-2 pt-4'>
 				<Title

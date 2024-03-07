@@ -1,8 +1,9 @@
 import { CacheModule } from '@nestjs/cache-manager'
-import { Module } from '@nestjs/common'
+import { Module, type MiddlewareConsumer } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { ServeStaticModule } from '@nestjs/serve-static'
 import { ThrottlerModule } from '@nestjs/throttler'
-import { LoggerModule } from 'nestjs-pino'
+import { join } from 'node:path'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
@@ -14,6 +15,7 @@ import { RecommendationModule } from './recommendation/recommendation.module'
 import { ReviewModule } from './review/review.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
+import { RequestLoggerMiddleware } from './utils/request-logger.middleware'
 import { ActivityModule } from './utils/services/activity/activity.module'
 
 @Module({
@@ -26,26 +28,15 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 		StorageModule,
 		ParserModule,
 		ActivityModule,
-		LoggerModule.forRoot({
-			pinoHttp: {
-				transport: {
-					target: 'pino-pretty',
-					options: {
-						colorize: true,
-						translateTime: 'SYS:standard',
-						ignore:
-							'pid,hostname,reqId,level,context,scope,req,req-headers,res,res-headers,hostname,remoteAddress,remotePort,req.remoteAddress',
-						messageFormat: '{msg} {req.method} {req.url} {res.statusCode}'
-					}
-				}
-			}
-		}),
 		ThrottlerModule.forRoot([
 			{
 				ttl: 60,
 				limit: 10
 			}
 		]),
+		ServeStaticModule.forRoot({
+			rootPath: join(__dirname, '..', 'client')
+		}),
 		CacheModule.register({
 			isGlobal: true,
 			ttl: 5000,
@@ -57,4 +48,8 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 	controllers: [AppController],
 	providers: [AppService, ConfigService]
 })
-export class AppModule {}
+export class AppModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(RequestLoggerMiddleware).forRoutes('*')
+	}
+}

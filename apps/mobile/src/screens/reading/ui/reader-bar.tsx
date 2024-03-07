@@ -21,7 +21,7 @@ const ReaderBar: FC<{
 	title = '',
 	progress = 0
 }) => {
-	const { colorScheme } = useTypedSelector(state => state.readingSettings)
+	const { colorScheme } = useTypedSelector(state => state.readingUi)
 	const { goBack } = useTypedNavigation()
 	const { top, bottom } = useSafeAreaInsets()
 	const opacityAnimation = useAnimatedStyle(() => ({

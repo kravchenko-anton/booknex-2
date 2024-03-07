@@ -25,7 +25,7 @@ export const columns = ({
 		cell: ({ row }) => (
 			<Image
 				alt={row.original.title}
-				className=' mx-auto w-[100px] cursor-pointer rounded'
+				className=' mx-auto w-[100px] cursor-pointer rounded-lg'
 				src={getFileUrl(row.original.picture)}
 				width={200}
 				height={250}
@@ -82,7 +82,7 @@ export const columns = ({
 		cell: ({ row }) => (
 			<div className='flex w-[130px] flex-wrap gap-2'>
 				<div className='mt-2 gap-2 text-center'>
-					<p className='bg-muted mb-2 rounded-md p-1.5 font-light'>
+					<p className='bg-muted mb-2 rounded-lg p-1.5 font-light'>
 						<b
 							className={cn(
 								'font-bold',
@@ -92,10 +92,10 @@ export const columns = ({
 							{row.original.visible ? 'Visible' : 'Hidden'}
 						</b>
 					</p>
-					<p className='bg-muted mb-2 rounded-md p-1.5 font-light'>
+					<p className='bg-muted mb-2 rounded-lg p-1.5 font-light'>
 						<b className='font-bold text-white'>{row.original.pages}</b> pages
 					</p>
-					<p className='bg-muted rounded-md p-1.5 font-light'>
+					<p className='bg-muted rounded-lg p-1.5 font-light'>
 						<b className='font-bold text-white'>
 							{nFormatter(row.original.popularity)}{' '}
 						</b>{' '}

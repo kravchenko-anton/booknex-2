@@ -70,7 +70,7 @@ const Welcome: FC = () => {
 					<Button
 						size='md'
 						isLoading={isLoading}
-						className='mr-2 flex-1'
+						className='mr-2 h-full flex-1'
 						icon={Google}
 						onPress={signIn}
 					>

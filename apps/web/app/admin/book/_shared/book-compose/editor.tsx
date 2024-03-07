@@ -35,12 +35,12 @@ const EbookComposer: FC<{
 				{books.state.map(book => (
 					<div
 						key={book.title}
-						className='bg-foreground mb-4 mr-1 w-[600px]  rounded p-3'
+						className='bg-foreground mb-4 mr-1 w-[600px]  rounded-lg p-3'
 					>
 						<div className='mb-4 flex items-center  justify-between gap-2'>
 							<input
 								defaultValue={book.title}
-								className='bg-muted hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-sm border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
+								className='bg-muted hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-lg border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
 								onBlur={event =>
 									books.updateBookTitle({
 										bookId: book.id,
@@ -51,7 +51,7 @@ const EbookComposer: FC<{
 							<CaseSensitive
 								width={45}
 								height={45}
-								className='bg-muted cursor-pointer rounded-sm p-2'
+								className='bg-muted cursor-pointer rounded-lg p-2'
 								onClick={() => {
 									books.generateChapterNames({
 										bookId: book.id
@@ -61,11 +61,11 @@ const EbookComposer: FC<{
 							/>
 						</div>
 						{book.chapters.map((chapter, index) => (
-							<div key={chapter.id} className='bg-muted m-2 rounded p-2'>
+							<div key={chapter.id} className='bg-muted m-2 rounded-lg p-2'>
 								<div className='mb-2 flex w-full items-center justify-between gap-2'>
 									<input
 										value={chapter.name}
-										className='bg-foreground border-gray bomder-0 w-full rounded-sm px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2'
+										className='bg-foreground border-gray bomder-0 w-full rounded-lg px-4 py-2 text-sm text-white placeholder-white  outline-0 duration-200 ease-linear focus:border-2'
 										onChange={event => {
 											books.updateToc({
 												bookId: book.id,
@@ -80,7 +80,7 @@ const EbookComposer: FC<{
 										<ChevronUp
 											width={36}
 											height={36}
-											className='bg-muted cursor-pointer rounded p-2'
+											className='bg-muted cursor-pointer rounded-lg p-2'
 											onClick={() => {
 												if (!book.chapters[index - 1])
 													return errorToast("Can't move up")
@@ -95,7 +95,7 @@ const EbookComposer: FC<{
 										<ChevronDown
 											width={36}
 											height={36}
-											className='bg-muted cursor-pointer rounded p-2'
+											className='bg-muted cursor-pointer rounded-lg p-2'
 											onClick={() => {
 												books.addNewCharacterAfterContent({
 													bookId: book.id,
@@ -107,7 +107,7 @@ const EbookComposer: FC<{
 										<Close
 											width={36}
 											height={36}
-											className='bg-muted cursor-pointer rounded p-2'
+											className='bg-muted cursor-pointer rounded-lg p-2'
 											onClick={() => {
 												books.removeToc(book.id, chapter.id)
 												console.log('remove toc')
@@ -119,7 +119,7 @@ const EbookComposer: FC<{
 								<TextArea
 									value={chapter.text}
 									variant='background'
-									className=' bomder-0 min-h-[340px] w-full rounded-sm px-4 py-2 font-mono text-sm duration-200 ease-linear'
+									className=' bomder-0 min-h-[340px] w-full rounded-lg px-4 py-2 font-mono text-sm duration-200 ease-linear'
 									onChange={event => {
 										books.updateToc({
 											chapterId: chapter.id,

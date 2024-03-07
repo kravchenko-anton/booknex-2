@@ -72,7 +72,7 @@ export const reviewColumns = (): ColumnDef<Review, any>[] => [
 		cell: ({ row }) => (
 			<div className='flex flex-wrap items-center justify-center gap-1.5'>
 				{row.original.tags.map(tag => (
-					<p key={tag} className='bg-foreground rounded p-1.5 font-light'>
+					<p key={tag} className='bg-foreground rounded-lg p-1.5 font-light'>
 						<b className='font-bold text-white'>{tag}</b>
 					</p>
 				))}

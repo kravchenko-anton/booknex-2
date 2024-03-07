@@ -27,7 +27,7 @@ const ReadingSettings: FC<{
 		changeFontSize
 	} = useAction()
 	const { padding, lineHeight, font, fontSize, colorScheme } = useTypedSelector(
-		state => state.readingSettings
+		state => state.readingUi
 	)
 	return (
 		<BottomSheetModal
@@ -57,7 +57,7 @@ const ReadingSettings: FC<{
 					renderItem={({ item: theme }) => (
 						<AnimatedPress
 							key={`${theme.slug}-${theme.title}`}
-							className='mb-4 mr-2 rounded border-2 p-2 px-6'
+							className='mb-4 mr-2 rounded-lg border-2 p-2 px-6'
 							style={{
 								backgroundColor: theme.colorPalette.background.darker,
 								borderColor:
@@ -99,7 +99,7 @@ const ReadingSettings: FC<{
 												: Color.transparent
 									}}
 									className={cn(
-										' mb-2 mr-2 rounded border-2 border-transparent p-2 px-4',
+										' mb-2 mr-2 rounded-lg border-2 border-transparent p-2 px-4',
 										item.value === font.fontFamily && 'border-primary '
 									)}
 									onPress={() =>
@@ -131,7 +131,7 @@ const ReadingSettings: FC<{
 							</Title>
 							<View className='flex-row items-center'>
 								<TouchableOpacity
-									className='rounded-l-xl p-2 px-4'
+									className='rounded-l-lg p-2 px-4'
 									disabled={fontSize === fontSizeSettings.min}
 									style={{
 										backgroundColor:
@@ -149,7 +149,7 @@ const ReadingSettings: FC<{
 									/>
 								</TouchableOpacity>
 								<TouchableOpacity
-									className='rounded-r-xl p-2 px-4'
+									className='rounded-r-lg p-2 px-4'
 									disabled={fontSize === fontSizeSettings.max}
 									style={{
 										backgroundColor:

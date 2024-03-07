@@ -38,21 +38,11 @@ const initialState = {
 	},
 	fontSize: fontSizeSettings.min,
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
-	padding: 14 as 14 | 4 | 20,
-	//TODO: переделать на более оптимальный вариант
-	books: [] as NonNullable<
-		{
-			id: number
-			lastProgress: {
-				location: number
-				progress: number
-			}
-		}[]
-	>
+	padding: 14 as 14 | 4 | 20
 }
 
-const ReadingSettingsSlice = createSlice({
-	name: 'reading-settings',
+const ReadingUiSlice = createSlice({
+	name: 'reading-ui',
 	initialState,
 	reducers: {
 		changeTheme: (state, { payload }: PayloadAction<ThemePackType['slug']>) => {
@@ -78,35 +68,8 @@ const ReadingSettingsSlice = createSlice({
 			if (payload < fontSizeSettings.min || payload > fontSizeSettings.max)
 				return
 			state.fontSize = payload
-		},
-
-		updateReadingProgress: (
-			state,
-			{
-				payload
-			}: PayloadAction<{ id: number; progress: number; location: number }>
-		) => {
-			console.log('updateReadingProgress', payload)
-			const book = state.books.find(value => value.id === payload.id)
-			if (book)
-				book.lastProgress = {
-					progress: payload.progress,
-					location: payload.location
-				}
-			state.books = [
-				...state.books,
-				{
-					id: payload.id,
-					lastProgress: {
-						progress: payload.progress,
-						location: payload.location
-					}
-				}
-			]
 		}
 	}
 })
-export const {
-	reducer: ReadingSettingsReducer,
-	actions: ReadingSettingsAction
-} = ReadingSettingsSlice
+export const { reducer: ReadingUiReducer, actions: ReadingUiAction } =
+	ReadingUiSlice

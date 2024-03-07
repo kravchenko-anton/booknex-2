@@ -46,7 +46,7 @@ export const columns = ({
 		cell: ({ row }) => (
 			<img
 				alt={row.original.title}
-				className='mx-auto w-[100px] cursor-pointer rounded'
+				className='mx-auto w-[100px] cursor-pointer rounded-lg'
 				src={getFileUrl(row.original.picture)}
 				onClick={() => {
 					useAsTemplate(row.original.id)
@@ -62,10 +62,10 @@ export const columns = ({
 				<h3 className='text-xl'>{row.original.title}</h3>
 				<p>{row.original.author}</p>
 				<div className='flex flex-wrap gap-2'>
-					<p className='bg-foreground mt-2 rounded-xl p-1.5 font-light'>
+					<p className='bg-foreground mt-2 rounded-lg p-1.5 font-light'>
 						<b className='font-bold text-white'>{row.original.pages}</b> pages
 					</p>
-					<p className='bg-foreground mt-2 rounded p-1.5 font-light'>
+					<p className='bg-foreground mt-2 rounded-lg p-1.5 font-light'>
 						<b className='font-bold text-white'>
 							{nFormatter(row.original.popularity)}{' '}
 						</b>{' '}
@@ -112,7 +112,7 @@ export const columns = ({
 					<MoreHorizontal
 						height={40}
 						width={40}
-						className='bg-muted border-bordered rounded-xl border-2 p-2'
+						className='bg-muted border-bordered rounded-lg border-2 p-2'
 					/>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align='end'>

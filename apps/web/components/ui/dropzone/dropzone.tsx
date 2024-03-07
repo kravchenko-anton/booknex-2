@@ -48,7 +48,7 @@ const Dropzone = ({
 								<div
 									color={variant}
 									className={cn(
-										'mb-2 max-w-[200px] items-center justify-center rounded border-[1px] p-2 text-center',
+										'mb-2 max-w-[200px] items-center justify-center rounded-lg border-[1px] p-2 text-center',
 										settings.colors[variant]
 									)}
 									onClick={() => {
@@ -72,7 +72,7 @@ const Dropzone = ({
 			</div>
 			<div
 				className={cn(
-					'mt-2 flex cursor-pointer items-center justify-center rounded  border-2  duration-200',
+					'mt-2 flex cursor-pointer items-center justify-center rounded-lg  border-2  duration-200',
 					settings.padding[size],
 					settings.colors[variant]
 				)}

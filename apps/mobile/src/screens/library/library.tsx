@@ -1,5 +1,5 @@
 import api from '@/api'
-import { useTypedNavigation } from '@/hooks'
+import { useTypedNavigation, useTypedSelector } from '@/hooks'
 import {
 	AnimatedPress,
 	BookCard,
@@ -12,6 +12,8 @@ import { settings } from '@/ui/book-card/settings'
 import BannerList from '@/ui/book-lists/banner-list'
 import NothingFount from '@/ui/nothing-fount'
 import { useQuery } from '@tanstack/react-query'
+import { Color } from 'global/colors'
+import { View } from 'react-native'
 
 const Library = () => {
 	const { data: library } = useQuery({
@@ -20,7 +22,7 @@ const Library = () => {
 		select: data => data.data
 	})
 	const { navigate } = useTypedNavigation()
-	console.log('library', library)
+	const { books } = useTypedSelector(state => state.readingProgress)
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&
@@ -40,14 +42,42 @@ const Library = () => {
 			<BannerList
 				title='Continue reading'
 				data={library.readingBooks}
-				renderItem={({ item }) => (
+				renderItem={({ item: book }) => (
 					//TODO: сделать с прогресс
-					<AnimatedPress onPress={() => navigate('Reader', { id: item.id })}>
+					<AnimatedPress onPress={() => navigate('Reader', { id: book.id })}>
 						<Image
 							width={settings.width.sm * 1.2}
 							height={settings.height.sm * 1.3}
-							url={item.picture}
+							url={book.picture}
+							className='mb-1'
 						/>
+						<View
+							className='absolute'
+							style={{
+								bottom: 0,
+								left: 0,
+								right: 0,
+								zIndex: 50
+							}}
+						>
+							<View
+								className='relative w-full'
+								style={{
+									backgroundColor: Color.primary
+								}}
+							>
+								<View
+									className=' absolute bottom-0 left-0 h-1 rounded-full'
+									style={{
+										backgroundColor: Color.primary,
+										width: `${
+											books.find(b => b.id === book.id)?.latestProgress
+												.progress || 10
+										}%`
+									}}
+								/>
+							</View>
+						</View>
 					</AnimatedPress>
 				)}
 			/>
@@ -55,12 +85,12 @@ const Library = () => {
 				horizontal
 				title='Saved to read'
 				data={library.savedBooks}
-				renderItem={({ item }) => (
+				renderItem={({ item: book }) => (
 					<BookCard
 						size='sm'
-						image={{ uri: item.picture }}
-						author={item.author}
-						onPress={() => navigate('Book', { id: item.id })}
+						image={{ uri: book.picture }}
+						author={book.author}
+						onPress={() => navigate('Book', { id: book.id })}
 					/>
 				)}
 			/>
@@ -70,12 +100,12 @@ const Library = () => {
 				className='mb-4'
 				title='Finished'
 				data={library.finishedBooks}
-				renderItem={({ item }) => (
+				renderItem={({ item: book }) => (
 					<BookCard
 						size='sm'
-						image={{ uri: item.picture }}
-						author={item.author}
-						onPress={() => navigate('Book', { id: item.id })}
+						image={{ uri: book.picture }}
+						author={book.author}
+						onPress={() => navigate('Book', { id: book.id })}
 					/>
 				)}
 			/>

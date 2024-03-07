@@ -31,7 +31,7 @@ export const Sidebar: FC = () => {
 					type='button'
 					onClick={() => router.push('/admin/dashboard')}
 				>
-					<span className='bg-muted rounded-xl  p-1 px-2 text-[21px] text-white  xl:w-full '>
+					<span className='bg-muted rounded-lg  p-1 px-2 text-[21px] text-white  xl:w-full '>
 						Booknex 🧑‍💻
 					</span>
 				</button>

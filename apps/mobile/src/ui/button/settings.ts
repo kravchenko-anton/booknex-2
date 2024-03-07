@@ -21,6 +21,7 @@ export const settings: {
 		md: 20,
 		lg: 26
 	},
+
 	titleSize: {
 		sm: 'sm',
 		md: 'lg',

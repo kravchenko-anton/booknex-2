@@ -8,7 +8,7 @@ const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
 			<table
 				ref={reference}
 				className={cn(
-					' relative w-full caption-bottom  border-collapse overflow-scroll rounded text-sm',
+					' relative w-full caption-bottom  border-collapse overflow-scroll rounded-lg text-sm',
 					className
 				)}
 				{...properties}

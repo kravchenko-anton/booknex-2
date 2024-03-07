@@ -1,7 +1,9 @@
 import * as authActions from '@/redux/auth/auth-action'
-import { ReadingSettingsAction } from '@/redux/reader/reading-settings-slice'
+import { ReadingProgressAction } from '@/redux/reader/readering-progress-slice'
+import { ReadingUiAction } from '@/redux/reader/reading-settings-slice'
 
 export const rootAction = {
 	...authActions,
-	...ReadingSettingsAction
+	...ReadingUiAction,
+	...ReadingProgressAction
 }

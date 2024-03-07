@@ -8,7 +8,7 @@ const { composePlugins, withNx } = require('@nx/next')
  **/
 const nextConfig = {
 	images: {
-		domains: ['f005.backblazeb2.com']
+		domains: ['f005.backblazeb2.com', 'localhost']
 	},
 	nx: {
 		svgr: true

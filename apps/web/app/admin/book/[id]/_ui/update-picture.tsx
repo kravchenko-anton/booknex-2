@@ -24,7 +24,7 @@ const UpdatePicture: FC<UpdatePictureProperties> = ({
 		/>
 		<Image
 			width={220}
-			className='border-muted cursor-pointer rounded border-2'
+			className='border-muted cursor-pointer rounded-lg border-2'
 			height={300}
 			src={getFileUrl(picture)}
 			alt='Cover'

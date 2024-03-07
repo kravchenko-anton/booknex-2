@@ -13,13 +13,13 @@ export const settings: {
 		transparent: 'bg-transparent'
 	},
 	padding: {
-		sm: 'p-2.5',
-		md: 'p-3',
+		sm: 'p-2',
+		md: 'p-2.5',
 		lg: 'p-4'
 	},
 	size: {
 		sm: 20,
-		md: 24,
+		md: 22,
 		lg: 28
 	}
 }

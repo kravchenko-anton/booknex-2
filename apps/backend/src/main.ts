@@ -4,10 +4,28 @@ import { DocumentBuilder } from '@nestjs/swagger'
 import { json } from 'express'
 import helmet from 'helmet'
 import { OpenApiNestFactory } from 'nest-openapi-tools'
+import { WinstonModule } from 'nest-winston'
+import { format, transports } from 'winston'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule)
+	const app = await NestFactory.create(AppModule, {
+		logger: WinstonModule.createLogger({
+			transports: [
+				new transports.Console({
+					format: format.combine(
+						format.cli(),
+						format.splat(),
+						format.colorize(),
+						format.timestamp(),
+						format.printf(
+							info => `${info.timestamp} ${info.level}: ${info.message}ne`
+						)
+					)
+				})
+			]
+		})
+	})
 	app.setGlobalPrefix('/api')
 	app.enableCors({})
 	app.use(helmet())
