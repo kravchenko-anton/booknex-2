@@ -1,6 +1,7 @@
 import type { OnModuleInit } from '@nestjs/common'
 import { Injectable } from '@nestjs/common'
 import { PrismaClient } from '@prisma/client'
+import environment from '../common/environment.config'
 
 declare global {
 	var prisma: PrismaService | null // eslint-disable-line no-var
@@ -26,7 +27,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
 let prisma: PrismaService
 
-if (process.env.NODE_ENV === 'production') {
+if (environment.NODE_ENV === 'production') {
 	prisma = new PrismaService()
 } else {
 	if (!global.prisma) {

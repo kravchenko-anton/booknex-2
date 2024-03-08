@@ -21,9 +21,6 @@ import { Activity } from './activity';
 import { CountOutput } from './count-output';
 // May contain unused imports in some cases
 // @ts-ignore
-import { Review } from './review';
-// May contain unused imports in some cases
-// @ts-ignore
 import { ShortGenre } from './short-genre';
 
 /**
@@ -57,6 +54,36 @@ export interface AdminInfoByIdOutput {
      */
     'author': string;
     /**
+     * book description
+     * @type {string}
+     * @memberof AdminInfoByIdOutput
+     */
+    'description': string;
+    /**
+     * book pages
+     * @type {number}
+     * @memberof AdminInfoByIdOutput
+     */
+    'readingTime': number;
+    /**
+     * book popularity
+     * @type {number}
+     * @memberof AdminInfoByIdOutput
+     */
+    'rating': number;
+    /**
+     * book visibility
+     * @type {boolean}
+     * @memberof AdminInfoByIdOutput
+     */
+    'visible': boolean;
+    /**
+     * 
+     * @type {Array<ShortGenre>}
+     * @memberof AdminInfoByIdOutput
+     */
+    'genres': Array<ShortGenre>;
+    /**
      * book created at
      * @type {string}
      * @memberof AdminInfoByIdOutput
@@ -69,36 +96,6 @@ export interface AdminInfoByIdOutput {
      */
     'updatedAt': string;
     /**
-     * book visibility
-     * @type {boolean}
-     * @memberof AdminInfoByIdOutput
-     */
-    'visible': boolean;
-    /**
-     * book ebook
-     * @type {string}
-     * @memberof AdminInfoByIdOutput
-     */
-    'ebook': string;
-    /**
-     * book description
-     * @type {string}
-     * @memberof AdminInfoByIdOutput
-     */
-    'description': string;
-    /**
-     * book popularity
-     * @type {number}
-     * @memberof AdminInfoByIdOutput
-     */
-    'popularity': number;
-    /**
-     * book pages
-     * @type {number}
-     * @memberof AdminInfoByIdOutput
-     */
-    'pages': number;
-    /**
      * book activities
      * @type {Array<Activity>}
      * @memberof AdminInfoByIdOutput
@@ -110,17 +107,5 @@ export interface AdminInfoByIdOutput {
      * @memberof AdminInfoByIdOutput
      */
     '_count': CountOutput;
-    /**
-     * book review
-     * @type {Array<Review>}
-     * @memberof AdminInfoByIdOutput
-     */
-    'review': Array<Review>;
-    /**
-     * 
-     * @type {Array<ShortGenre>}
-     * @memberof AdminInfoByIdOutput
-     */
-    'genres': Array<ShortGenre>;
 }
 

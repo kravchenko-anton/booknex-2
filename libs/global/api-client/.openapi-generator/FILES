@@ -34,7 +34,6 @@ models/ebook-by-id-output.ts
 models/ebook-chapter.ts
 models/ebook-type.ts
 models/featured-output.ts
-models/filename-dto.ts
 models/genre-by-id-output.ts
 models/google-auth-dto.ts
 models/index.ts
@@ -42,7 +41,6 @@ models/info-by-id-output.ts
 models/parser-dto.ts
 models/refresh-dto.ts
 models/review-book-dto.ts
-models/review.ts
 models/short-book.ts
 models/short-genre.ts
 models/unfold-output.ts

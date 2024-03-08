@@ -2532,6 +2532,26 @@
   resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.14.2.tgz#c3ec604a0b54b9a9b87e9735dfc59e1a5da6a5fb"
   integrity sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==
 
+"@neodx/colors@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@neodx/colors/-/colors-0.2.7.tgz#6e5e7ccc781955efa1eb9aa27e3ec34d8279fd21"
+  integrity sha512-6ZwTLOaZ+pJhsmybRzEaYYux5fOI0p/V8ZkZVe6pwBm7xLWaHMPUNcwuijibdEjAzC5nocCJ3+nn/ofyqKo+/w==
+  dependencies:
+    "@neodx/std" "0.3.0"
+
+"@neodx/log@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@neodx/log/-/log-0.4.0.tgz#1c84205c422e2295472373ad153dbc5237e06c21"
+  integrity sha512-FSmW+3gqc8vr24QmWDpibzl/DD86c4T6TIXkjj+ZE4Bch97qJ2H9TlNjSBVbD3LHTaMESSUmxreWQrXD6krfvw==
+  dependencies:
+    "@neodx/colors" "0.2.7"
+    pathe "1.1.2"
+
+"@neodx/std@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@neodx/std/-/std-0.3.0.tgz#6b2ea5c70e3ae94048df290e0f2f77a9c482446c"
+  integrity sha512-et61Dc32iHvetJ7pQg2c/h9BkFcljdr0fSpNzKsRY0oKVgSCV919puzi52pIwH9qyS2AE2Wfex2XWTJHrboqbg==
+
 "@nestjs/axios@3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@nestjs/axios/-/axios-3.0.1.tgz#b006f81dd54a49def92cfaf9a8970434567e75ce"
@@ -13932,6 +13952,11 @@ path-type@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+
+pathe@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/pathe/-/pathe-1.1.2.tgz#6c4cb47a945692e48a1ddd6e4094d170516437ec"
+  integrity sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==
 
 pause@0.0.1:
   version "0.0.1"

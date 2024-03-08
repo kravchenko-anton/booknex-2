@@ -62,7 +62,7 @@ export class CatalogService {
 				visible: true
 			},
 			orderBy: {
-				popularity: 'desc'
+				rating: 'desc'
 			}
 		})
 	}
@@ -74,7 +74,7 @@ export class CatalogService {
 				visible: true
 			},
 			orderBy: {
-				popularity: 'desc'
+				rating: 'desc'
 			}
 		})
 	}

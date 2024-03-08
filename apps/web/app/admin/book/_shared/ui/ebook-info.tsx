@@ -32,18 +32,19 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 			</TabsList>
 			<div className=' border-bordered mt-4 border-[1px] p-2'>
 				<TabsContent value='preview'>
-					<p
-						className='mb-4 h-[700px] w-full overflow-y-scroll'
-						dangerouslySetInnerHTML={{
-							__html: ebook.map(({ chapters }) =>
-								chapters
-									.map(
-										({ name, text }) => `<label id="${name}"></label> ${text}`
-									)
-									.join(' ')
-							)
-						}}
-					/>
+					<div className='mb-4 h-[600px] min-h-[600px] w-full overflow-y-scroll'>
+						<p
+							dangerouslySetInnerHTML={{
+								__html: ebook.map(({ chapters }) =>
+									chapters
+										.map(
+											({ name, text }) => `<label id="${name}"></label> ${text}`
+										)
+										.join(' ')
+								)
+							}}
+						/>
+					</div>
 				</TabsContent>
 				<TabsContent value='edit'>
 					<Editor

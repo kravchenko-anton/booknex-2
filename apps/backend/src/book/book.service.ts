@@ -121,8 +121,9 @@ export class BookService {
 			select: {
 				createdAt: true,
 				updatedAt: true,
-				pages: true,
-				popularity: true,
+				rating: true,
+				readingTime: true,
+
 				genres: { select: ReturnGenreObject },
 				ebook: true,
 				description: true,
@@ -214,8 +215,8 @@ export class BookService {
 				onlyVisible: false,
 				select: {
 					genres: { select: ReturnGenreObject },
-					pages: true,
-					popularity: true,
+					readingTime: true,
+					rating: true,
 					visible: true,
 					description: true,
 					mainGenre: {
@@ -271,8 +272,8 @@ export class BookService {
 				},
 				title: dto.title,
 
-				popularity: dto.popularity,
-				pages: dto.pages,
+				rating: dto.rating,
+				readingTime: dto.readingTime,
 				description: dto.description,
 				picture: dto.picture,
 				ebook: ebookName,

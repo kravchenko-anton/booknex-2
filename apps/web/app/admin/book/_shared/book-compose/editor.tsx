@@ -24,7 +24,7 @@ const EbookComposer: FC<{
 					onDropFile={files => {
 						books.upload(files)
 					}}
-					onFileDelete={(_skip, index) => {
+					onFileDelete={(_file, index) => {
 						books.delete({
 							bookId: books.state[index].id
 						})

@@ -1,9 +1,7 @@
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module, type MiddlewareConsumer } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { ServeStaticModule } from '@nestjs/serve-static'
 import { ThrottlerModule } from '@nestjs/throttler'
-import { join } from 'node:path'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
@@ -34,9 +32,6 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 				limit: 10
 			}
 		]),
-		ServeStaticModule.forRoot({
-			rootPath: join(__dirname, '..', 'client')
-		}),
 		CacheModule.register({
 			isGlobal: true,
 			ttl: 5000,

@@ -1,5 +1,4 @@
 import {
-	Body,
 	Controller,
 	MaxFileSizeValidator,
 	Param,
@@ -20,23 +19,17 @@ import {
 import { RoleType } from '../auth/auth.service'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { FilenameDto, UploadOutputDto } from './dto/upload.dto'
+import environment from '../utils/common/environment.config'
+import { UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
 import { StorageFolderType } from './storage.types'
 
-@ApiTags('📁 storage')
+@ApiTags('storage')
 @ApiBearerAuth()
 @Controller('storage')
 @Auth()
 export class StorageController {
 	constructor(private readonly uploadService: StorageService) {}
-
-	@Post('/delete')
-	@ApiBody({ type: FilenameDto })
-	@ApiOkResponse({ description: 'File deleted', type: null })
-	async delete(@Body() dto: FilenameDto) {
-		return this.uploadService.delete(dto.filename)
-	}
 
 	@Post('/:folder')
 	@UseInterceptors(FileInterceptor('file'))
@@ -63,7 +56,7 @@ export class StorageController {
 			new ParseFilePipe({
 				validators: [
 					new MaxFileSizeValidator({
-						maxSize: 10_000_000
+						maxSize: environment.MAX_UPLOAD_SIZE
 					})
 				]
 			})

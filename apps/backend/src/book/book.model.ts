@@ -8,7 +8,6 @@ import {
 	ValidateNested
 } from 'class-validator'
 import { shortGenre } from '../genre/genre.entity'
-import { Review } from '../review/review.entity'
 import { Activity } from '../utils/services/activity/activity.model'
 import { Book, ShortBook } from './book.entity'
 
@@ -58,7 +57,7 @@ export class CountOutput {
 	savedBy: number
 }
 
-export class AdminInfoByIdOutput extends ShortBook {
+export class AdminInfoByIdOutput extends Book {
 	@ApiProperty({
 		example: '2021-07-01',
 		description: 'book created at',
@@ -75,25 +74,6 @@ export class AdminInfoByIdOutput extends ShortBook {
 	@IsString()
 	updatedAt: Date
 
-	@ApiProperty({ example: true, description: 'book visibility', type: Boolean })
-	@IsBoolean()
-	visible: boolean
-	@ApiProperty({ example: 'ebook', description: 'book ebook', type: String })
-	@IsString()
-	ebook: string
-	@ApiProperty({
-		example: 'description',
-		description: 'book description',
-		type: String
-	})
-	@IsString()
-	description: string
-	@ApiProperty({ example: 100, description: 'book popularity', type: Number })
-	@IsNumber()
-	popularity: number
-	@ApiProperty({ example: 100, description: 'book pages', type: Number })
-	@IsNumber()
-	pages: number
 	@ApiProperty({
 		type: [Activity],
 		description: 'book activities'
@@ -102,6 +82,7 @@ export class AdminInfoByIdOutput extends ShortBook {
 	@ValidateNested({ each: true })
 	@Type(() => Activity)
 	activities: Activity[]
+
 	@ApiProperty({
 		type: CountOutput,
 		description: 'book count'
@@ -113,23 +94,6 @@ export class AdminInfoByIdOutput extends ShortBook {
 		readingBy: number
 		savedBy: number
 	}
-	@ApiProperty({
-		type: [Review],
-		description: 'book review'
-	})
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => Review)
-	review: Review[]
-
-	@ApiProperty({ type: [shortGenre] })
-	@IsArray()
-	@ValidateNested()
-	@Type(() => shortGenre)
-	genres: {
-		id: number
-		name: string
-	}[]
 }
 
 class ChapterChild {

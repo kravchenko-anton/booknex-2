@@ -24,23 +24,53 @@ import { EBookType } from './ebook-type';
  */
 export interface CreateBookDto {
     /**
-     * Title of the book
+     * book id
+     * @type {number}
+     * @memberof CreateBookDto
+     */
+    'id': number;
+    /**
+     * book title
      * @type {string}
      * @memberof CreateBookDto
      */
     'title': string;
     /**
-     * Author of the book
+     * book picture
+     * @type {string}
+     * @memberof CreateBookDto
+     */
+    'picture': string;
+    /**
+     * book author
      * @type {string}
      * @memberof CreateBookDto
      */
     'author': string;
     /**
-     * Description of the book
+     * book description
      * @type {string}
      * @memberof CreateBookDto
      */
     'description': string;
+    /**
+     * book pages
+     * @type {number}
+     * @memberof CreateBookDto
+     */
+    'readingTime': number;
+    /**
+     * book popularity
+     * @type {number}
+     * @memberof CreateBookDto
+     */
+    'rating': number;
+    /**
+     * book visibility
+     * @type {boolean}
+     * @memberof CreateBookDto
+     */
+    'visible': boolean;
     /**
      * 
      * @type {Array<EBookType>}
@@ -48,28 +78,10 @@ export interface CreateBookDto {
      */
     'ebook': Array<EBookType>;
     /**
-     * Number of pages in the book
-     * @type {number}
-     * @memberof CreateBookDto
-     */
-    'pages': number;
-    /**
-     * Number of goodRead reviews
-     * @type {number}
-     * @memberof CreateBookDto
-     */
-    'popularity': number;
-    /**
      * Array of genres
      * @type {Array<number>}
      * @memberof CreateBookDto
      */
     'genres': Array<number>;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBookDto
-     */
-    'picture': string;
 }
 

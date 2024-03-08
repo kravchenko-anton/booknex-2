@@ -31,7 +31,7 @@ export class RecommendationService {
 
 		return this.prisma.book.findMany({
 			take: 10,
-			orderBy: { popularity: 'desc' },
+			orderBy: { rating: 'desc' },
 			where: {
 				visible: true,
 				genres: {

@@ -484,23 +484,6 @@ paths:
                 $ref: "#/components/schemas/AuthOutput"
       tags:
         - 🔐 auth
-  /api/storage/delete:
-    post:
-      operationId: delete
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FilenameDto"
-      responses:
-        "200":
-          description: File deleted
-      tags:
-        - 📁 storage
-      security:
-        - bearer: []
   "/api/storage/{folder}":
     post:
       operationId: upload
@@ -531,7 +514,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UploadOutputDto"
       tags:
-        - 📁 storage
+        - storage
       security:
         - bearer: []
   /api/parser/admin/catalog:
@@ -1103,32 +1086,6 @@ components:
         - finishedBy
         - readingBy
         - savedBy
-    Review:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-          description: review id
-        tags:
-          example: tags
-          description: review tags
-          type: array
-          items:
-            type: string
-        text:
-          type: string
-          example: text
-          description: review text
-        rating:
-          type: number
-          example: 1
-          description: review rating
-      required:
-        - id
-        - tags
-        - text
-        - rating
     AdminInfoByIdOutput:
       type: object
       properties:
@@ -1148,6 +1105,26 @@ components:
           type: string
           example: author
           description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        readingTime:
+          type: number
+          example: 100
+          description: book pages
+        rating:
+          type: number
+          example: 100
+          description: book popularity
+        visible:
+          type: boolean
+          example: true
+          description: book visibility
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/shortGenre"
         createdAt:
           type: string
           example: 2021-07-01
@@ -1156,26 +1133,6 @@ components:
           type: string
           example: 2021-07-01
           description: book updated at
-        visible:
-          type: boolean
-          example: true
-          description: book visibility
-        ebook:
-          type: string
-          example: ebook
-          description: book ebook
-        description:
-          type: string
-          example: description
-          description: book description
-        popularity:
-          type: number
-          example: 100
-          description: book popularity
-        pages:
-          type: number
-          example: 100
-          description: book pages
         activities:
           description: book activities
           type: array
@@ -1185,31 +1142,20 @@ components:
           description: book count
           allOf:
             - $ref: "#/components/schemas/CountOutput"
-        review:
-          description: book review
-          type: array
-          items:
-            $ref: "#/components/schemas/Review"
-        genres:
-          type: array
-          items:
-            $ref: "#/components/schemas/shortGenre"
       required:
         - id
         - title
         - picture
         - author
+        - description
+        - readingTime
+        - rating
+        - visible
+        - genres
         - createdAt
         - updatedAt
-        - visible
-        - ebook
-        - description
-        - popularity
-        - pages
         - activities
         - _count
-        - review
-        - genres
     Book:
       type: object
       properties:
@@ -1233,11 +1179,11 @@ components:
           type: string
           example: description
           description: book description
-        pages:
+        readingTime:
           type: number
           example: 100
           description: book pages
-        popularity:
+        rating:
           type: number
           example: 100
           description: book popularity
@@ -1255,8 +1201,8 @@ components:
         - picture
         - author
         - description
-        - pages
-        - popularity
+        - readingTime
+        - rating
         - visible
         - genres
     AdminCatalogOutput:
@@ -1309,32 +1255,42 @@ components:
     CreateBookDto:
       type: object
       properties:
+        id:
+          type: number
+          example: 1
+          description: book id
         title:
           type: string
-          description: Title of the book
-          example: The Great Gatsby
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
         author:
           type: string
-          description: Author of the book
-          example: F. Scott Fitzgerald
+          example: author
+          description: book author
         description:
           type: string
-          description: Description of the book
-          example: The Great Gatsby is a novel by the American author F. Scott Fitzgerald.
-            First published in 1925, it is set on Long Island's North Shore and
-            in New York City from spring to autumn of 1922.
+          example: description
+          description: book description
+        readingTime:
+          type: number
+          example: 100
+          description: book pages
+        rating:
+          type: number
+          example: 100
+          description: book popularity
+        visible:
+          type: boolean
+          example: true
+          description: book visibility
         ebook:
           type: array
           items:
             $ref: "#/components/schemas/EBookType"
-        pages:
-          type: number
-          description: Number of pages in the book
-          example: 300
-        popularity:
-          type: number
-          description: Number of goodRead reviews
-          example: 1000000
         genres:
           description: Array of genres
           example:
@@ -1344,17 +1300,17 @@ components:
           type: array
           items:
             type: number
-        picture:
-          type: string
       required:
+        - id
         - title
+        - picture
         - author
         - description
+        - readingTime
+        - rating
+        - visible
         - ebook
-        - pages
-        - popularity
         - genres
-        - picture
     UpdateBookDto:
       type: object
       properties:
@@ -1474,13 +1430,6 @@ components:
           example: "1234567890"
       required:
         - refreshToken
-    FilenameDto:
-      type: object
-      properties:
-        filename:
-          type: string
-      required:
-        - filename
     UploadOutputDto:
       type: object
       properties:

@@ -31,7 +31,7 @@ export class ShortBook {
 	author: string
 }
 
-export class Book extends ShortBook {
+export class BaseBook extends ShortBook {
 	@ApiProperty({
 		example: 'description',
 		description: 'book description',
@@ -48,14 +48,16 @@ export class Book extends ShortBook {
 	picture: string
 	@ApiProperty({ example: 100, description: 'book pages', type: Number })
 	@IsNumber()
-	pages: number
+	readingTime: number
 	@ApiProperty({ example: 100, description: 'book popularity', type: Number })
 	@IsNumber()
-	popularity: number
+	rating: number
 	@ApiProperty({ example: true, description: 'book visibility', type: Boolean })
 	@IsBoolean()
 	visible: boolean
+}
 
+export class Book extends BaseBook {
 	@ApiProperty({ type: [shortGenre] })
 	@IsArray()
 	@ValidateNested()

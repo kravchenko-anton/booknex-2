@@ -21,7 +21,7 @@ model Genre {
   description        String         @default("")
   users              User[]
   books              Book[]         @relation("BookGenre")
-  mainBooks         Book[]         @relation("BookMajorGenre")
+  mainBooks          Book[]         @relation("BookMajorGenre")
   similarBy          Genre[]        @relation("Similar")
   similar            Genre[]        @relation("Similar")
   bookTemplates      BookTemplate[]
@@ -65,12 +65,12 @@ model Book {
   description String
   picture     String
   ebook       String
-  pages       Int
-  popularity  Int          @default(0)
+  readingTime Int          @default(0)
+  rating      Float        @default(0)
   visible     Boolean      @default(false)
-  mainGenre  Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
+  mainGenre   Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres      Genre[]      @relation("BookGenre")
-  review    Review[]
+  review      Review[]
   finishedBy  User[]       @relation("FinishedBooks")
   savedBy     User[]       @relation("SavedBooks")
   readingBy   User[]       @relation("ReadingBooks")

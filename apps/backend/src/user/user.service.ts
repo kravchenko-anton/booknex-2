@@ -60,20 +60,7 @@ export class UserService {
 			...returnUserObject
 		})
 
-		const {
-			_count: { id: bookCount },
-			_sum: { pages: totalPageCount }
-		} = await this.prisma.book.aggregate({
-			where: { finishedBy: { some: { id } } },
-			_count: { id: true },
-			_sum: { pages: true }
-		})
-
-		return {
-			...user,
-			bookCount: bookCount ?? 0,
-			totalPageCount: totalPageCount ?? 0
-		}
+		return user
 	}
 
 	async adminCatalog(searchTerm: string, page: number) {

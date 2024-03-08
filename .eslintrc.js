@@ -45,8 +45,9 @@ module.exports = {
 			{
 				selector: 'default',
 				format: ['camelCase', 'PascalCase'],
+				leadingUnderscore: 'allow',
 				filter: {
-					regex: '^(_count|__html|_skip|_sum)$',
+					regex: '^(_count|__html|_sum)$',
 					match: false
 				}
 			},

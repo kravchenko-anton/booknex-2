@@ -7,6 +7,8 @@ import { OpenApiNestFactory } from 'nest-openapi-tools'
 import { WinstonModule } from 'nest-winston'
 import { format, transports } from 'winston'
 import { AppModule } from './app.module'
+import { checkEnvironmentSet } from './utils/common/check-environment-set'
+import environment from './utils/common/environment.config'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {
@@ -19,7 +21,7 @@ async function bootstrap() {
 						format.colorize(),
 						format.timestamp(),
 						format.printf(
-							info => `${info.timestamp} ${info.level}: ${info.message}ne`
+							info => `${info.timestamp} ${info.level}: ${info.message}`
 						)
 					)
 				})
@@ -54,15 +56,15 @@ async function bootstrap() {
 			.addBearerAuth(),
 		{
 			webServerOptions: {
-				enabled: process.env.NODE_ENV === 'development',
+				enabled: environment.NODE_ENV === 'development',
 				path: 'api-docs'
 			},
 			fileGeneratorOptions: {
-				enabled: process.env.NODE_ENV === 'development',
+				enabled: environment.NODE_ENV === 'development',
 				outputFilePath: './openapi.yaml' // or ./openapi.json
 			},
 			clientGeneratorOptions: {
-				enabled: process.env.NODE_ENV === 'development',
+				enabled: environment.NODE_ENV === 'development',
 				type: 'typescript-axios',
 				outputFolderPath: './libs/global/api-client',
 				additionalProperties:
@@ -73,7 +75,8 @@ async function bootstrap() {
 		}
 	)
 
-	await app.listen(7777)
+	checkEnvironmentSet()
+	await app.listen(environment.PORT)
 }
 
 bootstrap() // eslint-disable-line unicorn/prefer-top-level-await

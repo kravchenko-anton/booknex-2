@@ -58,13 +58,13 @@ export interface Book {
      * @type {number}
      * @memberof Book
      */
-    'pages': number;
+    'readingTime': number;
     /**
      * book popularity
      * @type {number}
      * @memberof Book
      */
-    'popularity': number;
+    'rating': number;
     /**
      * book visibility
      * @type {boolean}
