@@ -28,7 +28,7 @@ import { AdminInfoByIdOutput } from '../models';
 // @ts-ignore
 import { CreateBookDto } from '../models';
 // @ts-ignore
-import { EBookType } from '../models';
+import { EBookPayload } from '../models';
 // @ts-ignore
 import { EbookByIdOutput } from '../models';
 // @ts-ignore
@@ -323,15 +323,15 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {number} id 
-         * @param {Array<EBookType>} eBookType 
+         * @param {Array<EBookPayload>} eBookPayload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateEbook: async (id: number, eBookType: Array<EBookType>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateEbook: async (id: number, eBookPayload: Array<EBookPayload>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateEbook', 'id', id)
-            // verify required parameter 'eBookType' is not null or undefined
-            assertParamExists('updateEbook', 'eBookType', eBookType)
+            // verify required parameter 'eBookPayload' is not null or undefined
+            assertParamExists('updateEbook', 'eBookPayload', eBookPayload)
             const localVarPath = `/api/book/admin/update-ebook/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -356,7 +356,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(eBookType, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(eBookPayload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -505,12 +505,12 @@ export const BookApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} id 
-         * @param {Array<EBookType>} eBookType 
+         * @param {Array<EBookPayload>} eBookPayload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateEbook(id: number, eBookType: Array<EBookType>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEbook(id, eBookType, options);
+        async updateEbook(id: number, eBookPayload: Array<EBookPayload>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEbook(id, eBookPayload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookApi.updateEbook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -606,12 +606,12 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @param {number} id 
-         * @param {Array<EBookType>} eBookType 
+         * @param {Array<EBookPayload>} eBookPayload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateEbook(id: number, eBookType: Array<EBookType>, options?: any): AxiosPromise<void> {
-            return localVarFp.updateEbook(id, eBookType, options).then((request) => request(axios, basePath));
+        updateEbook(id: number, eBookPayload: Array<EBookPayload>, options?: any): AxiosPromise<void> {
+            return localVarFp.updateEbook(id, eBookPayload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -715,13 +715,13 @@ export class BookApi extends BaseAPI {
     /**
      * 
      * @param {number} id 
-     * @param {Array<EBookType>} eBookType 
+     * @param {Array<EBookPayload>} eBookPayload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public updateEbook(id: number, eBookType: Array<EBookType>, options?: RawAxiosRequestConfig) {
-        return BookApiFp(this.configuration).updateEbook(id, eBookType, options).then((request) => request(this.axios, this.basePath));
+    public updateEbook(id: number, eBookPayload: Array<EBookPayload>, options?: RawAxiosRequestConfig) {
+        return BookApiFp(this.configuration).updateEbook(id, eBookPayload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -29,6 +29,8 @@ export type DefaultInputProperties = Pick<
 	| 'onChange'
 	| 'defaultValue'
 	| 'type'
+	| 'min'
+	| 'max'
 >
 
 export type DefaultTextAreaProperties = Pick<

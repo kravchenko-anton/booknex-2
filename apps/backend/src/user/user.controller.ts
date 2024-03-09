@@ -7,7 +7,6 @@ import {
 	UserLibraryOutput,
 	UserProfileOutput
 } from './user.model'
-// import { UserLibrary, UserProfile } from './user.model'
 import { UserService } from './user.service'
 
 @ApiBearerAuth()

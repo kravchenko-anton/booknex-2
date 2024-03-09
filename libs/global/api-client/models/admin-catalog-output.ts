@@ -24,12 +24,6 @@ import { Book } from './book';
  */
 export interface AdminCatalogOutput {
     /**
-     * 
-     * @type {Array<Book>}
-     * @memberof AdminCatalogOutput
-     */
-    'data': Array<Book>;
-    /**
      * can load more
      * @type {boolean}
      * @memberof AdminCatalogOutput
@@ -41,5 +35,11 @@ export interface AdminCatalogOutput {
      * @memberof AdminCatalogOutput
      */
     'totalPages': number;
+    /**
+     * 
+     * @type {Array<Book>}
+     * @memberof AdminCatalogOutput
+     */
+    'data': Array<Book>;
 }
 

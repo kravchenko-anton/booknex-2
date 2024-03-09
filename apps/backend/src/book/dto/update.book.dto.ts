@@ -1,58 +1,18 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator'
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger'
+import { IsNumber } from 'class-validator'
+import { Book } from '../book.entity'
 
-export class UpdateBookDto {
-	@ApiProperty({ type: String, required: false })
-	@IsString()
-	@IsOptional()
-	picture?: string
-	@ApiProperty({
-		description: 'Title of the book',
-		example: 'The Great Gatsby',
-		required: false
-	})
-	@IsString()
-	@IsOptional()
-	title?: string
-	@ApiProperty({
-		description: 'Author of the book',
-		example: 'F. Scott Fitzgerald',
-		required: false
-	})
-	@IsString()
-	@IsOptional()
-	author?: string
-	@ApiProperty({
-		description: 'Uploaded picture',
-		example: 'picture.jpg',
-		required: false
-	})
-	@IsString()
-	@IsOptional()
-	description?: string
-	@ApiProperty({
-		description: 'Number of pages in the book',
-		example: 300,
-		required: false
-	})
-	@IsOptional()
-	@IsNumber()
-	pages?: number
+export class UpdateBookDto extends PartialType(
+	OmitType(Book, ['id', 'genres', 'readingTime'])
+) {}
 
+export class UpdateGenreDto {
 	@ApiProperty({
-		description: 'Is book visible',
-		example: true,
+		description: 'Array of genres',
+		example: [1, 2, 3],
+		type: [Number],
 		required: false
 	})
-	@IsOptional()
-	@IsBoolean()
-	visible?: boolean
-	@ApiProperty({
-		description: 'Number of goodRead reviews',
-		example: 1_000_000,
-		required: false
-	})
-	@IsOptional()
-	@IsNumber()
-	popularity?: number
+	@IsNumber({}, { each: true })
+	genres: number[]
 }

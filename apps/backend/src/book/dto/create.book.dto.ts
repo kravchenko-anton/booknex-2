@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, OmitType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
 	ArrayMinSize,
@@ -6,15 +6,20 @@ import {
 	IsNumber,
 	ValidateNested
 } from 'class-validator'
-import { BaseBook, EBookType } from '../book.entity'
+import { Book } from '../book.entity'
+import { EBookPayload } from '../ebook.model'
 
-// extend book but remove genres
-export class CreateBookDto extends BaseBook {
-	@ApiProperty({ type: [EBookType] })
+export class CreateBookDto extends OmitType(Book, [
+	'readingTime',
+	'genres',
+	'id',
+	'visible'
+]) {
+	@ApiProperty({ type: [EBookPayload] })
 	@IsArray()
 	@ValidateNested()
-	@Type(() => EBookType)
-	ebook: EBookType[]
+	@Type(() => EBookPayload)
+	ebook: EBookPayload[]
 
 	@IsArray()
 	@ArrayMinSize(1)

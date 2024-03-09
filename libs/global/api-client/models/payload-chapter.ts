@@ -13,33 +13,30 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { Chapter } from './chapter';
 
 /**
  * 
  * @export
- * @interface EBookDTO
+ * @interface PayloadChapter
  */
-export interface EBookDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof EBookDTO
-     */
-    'title': string;
+export interface PayloadChapter {
     /**
      * 
      * @type {number}
-     * @memberof EBookDTO
+     * @memberof PayloadChapter
      */
     'id': number;
     /**
      * 
-     * @type {Array<Chapter>}
-     * @memberof EBookDTO
+     * @type {string}
+     * @memberof PayloadChapter
      */
-    'chapters': Array<Chapter>;
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PayloadChapter
+     */
+    'text': string;
 }
 

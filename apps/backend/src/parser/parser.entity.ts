@@ -37,17 +37,10 @@ export class BookTemplate {
 	picture: string
 	@ApiProperty({
 		type: Number,
-		description: 'pages of the book'
+		description: 'rating of the book'
 	})
 	@IsNumber()
-	pages: number
-	@ApiProperty({
-		type: Number,
-		description: 'popularity of the book'
-	})
-	@IsNumber()
-	popularity: number
-
+	rating: number
 	@ApiProperty({ type: [shortGenre] })
 	@IsArray()
 	@ValidateNested()

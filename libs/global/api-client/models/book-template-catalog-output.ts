@@ -24,12 +24,6 @@ import { BookTemplate } from './book-template';
  */
 export interface BookTemplateCatalogOutput {
     /**
-     * book template
-     * @type {Array<BookTemplate>}
-     * @memberof BookTemplateCatalogOutput
-     */
-    'data': Array<BookTemplate>;
-    /**
      * can load more
      * @type {boolean}
      * @memberof BookTemplateCatalogOutput
@@ -41,5 +35,11 @@ export interface BookTemplateCatalogOutput {
      * @memberof BookTemplateCatalogOutput
      */
     'totalPages': number;
+    /**
+     * book template
+     * @type {Array<BookTemplate>}
+     * @memberof BookTemplateCatalogOutput
+     */
+    'data': Array<BookTemplate>;
 }
 

@@ -24,22 +24,22 @@ import { CatalogUserOutput } from './catalog-user-output';
  */
 export interface UserAdminCatalogOutput {
     /**
-     * 
-     * @type {Array<CatalogUserOutput>}
-     * @memberof UserAdminCatalogOutput
-     */
-    'data': Array<CatalogUserOutput>;
-    /**
-     * 
+     * can load more
      * @type {boolean}
      * @memberof UserAdminCatalogOutput
      */
     'canLoadMore': boolean;
     /**
-     * 
+     * total pages
      * @type {number}
      * @memberof UserAdminCatalogOutput
      */
     'totalPages': number;
+    /**
+     * 
+     * @type {Array<CatalogUserOutput>}
+     * @memberof UserAdminCatalogOutput
+     */
+    'data': Array<CatalogUserOutput>;
 }
 

@@ -88,8 +88,8 @@ const Page = () => {
 						author={book.author}
 						title={book.title}
 						description={book.description}
-						pages={book.pages}
-						popularity={book.popularity}
+						rating={book.rating}
+						readingTime={book.readingTime}
 						onSaveEdit={async data => {
 							await update({
 								id: book.id,

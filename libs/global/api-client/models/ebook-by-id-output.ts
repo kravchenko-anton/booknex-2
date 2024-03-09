@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Chapter } from './chapter';
+import { OutputChapter } from './output-chapter';
 
 /**
  * 
@@ -24,17 +24,17 @@ import { Chapter } from './chapter';
  */
 export interface EbookByIdOutput {
     /**
-     * book cover
-     * @type {string}
-     * @memberof EbookByIdOutput
-     */
-    'picture': string;
-    /**
      * book title
      * @type {string}
      * @memberof EbookByIdOutput
      */
     'title': string;
+    /**
+     * book picture
+     * @type {string}
+     * @memberof EbookByIdOutput
+     */
+    'picture': string;
     /**
      * book file
      * @type {Array<string>}
@@ -43,9 +43,9 @@ export interface EbookByIdOutput {
     'file': Array<string>;
     /**
      * book chapters
-     * @type {Array<Chapter>}
+     * @type {Array<OutputChapter>}
      * @memberof EbookByIdOutput
      */
-    'chapters': Array<Chapter>;
+    'chapters': Array<OutputChapter>;
 }
 

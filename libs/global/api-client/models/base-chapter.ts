@@ -17,20 +17,26 @@
 /**
  * 
  * @export
- * @interface CreateRequest
+ * @interface BaseChapter
  */
-export interface CreateRequest {
+export interface BaseChapter {
     /**
      * 
-     * @type {File}
-     * @memberof CreateRequest
+     * @type {number}
+     * @memberof BaseChapter
      */
-    'avatar'?: File;
+    'id': number;
     /**
      * 
-     * @type {File}
-     * @memberof CreateRequest
+     * @type {string}
+     * @memberof BaseChapter
      */
-    'background'?: File;
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseChapter
+     */
+    'text': string;
 }
 

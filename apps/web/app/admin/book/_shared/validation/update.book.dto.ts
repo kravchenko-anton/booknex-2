@@ -5,9 +5,8 @@ export const UpdateBookDto = z.object({
 	title: z.string().optional(),
 	author: z.string().optional(),
 	description: z.string().optional(),
-	pages: z.number().optional(),
-	visible: z.boolean().optional(),
-	popularity: z.number().optional()
+	rating: z.number().optional(),
+	visible: z.boolean().optional()
 })
 
 export type UpdateBookDtoType = z.infer<typeof UpdateBookDto>

@@ -1,12 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
-import {
-	IsArray,
-	IsBoolean,
-	IsNumber,
-	IsString,
-	ValidateNested
-} from 'class-validator'
+import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
+import { BaseCatalogModel } from '../utils/common/base-catalog.model'
 import { BookTemplate } from './parser.entity'
 
 export class UnfoldOutput {
@@ -32,7 +27,7 @@ export class UnfoldOutput {
 	text: string
 }
 
-export class BookTemplateCatalogOutput {
+export class BookTemplateCatalogOutput extends BaseCatalogModel {
 	@IsArray()
 	@ApiProperty({
 		type: [BookTemplate],
@@ -41,18 +36,4 @@ export class BookTemplateCatalogOutput {
 	@ValidateNested({ each: true })
 	@Type(() => BookTemplate)
 	data: BookTemplate[]
-
-	@IsBoolean()
-	@ApiProperty({
-		type: Boolean,
-		description: 'can load more'
-	})
-	canLoadMore: boolean
-
-	@IsNumber()
-	@ApiProperty({
-		type: Number,
-		description: 'total pages'
-	})
-	totalPages: number
 }

@@ -10,8 +10,8 @@ import {
 	Field,
 	FormTextArea
 } from '@/components/ui'
-import type { EBookType } from 'global/api-client'
-import { Book, PenNib, User } from 'icons'
+import type { EBookPayload } from 'global/api-client'
+import { PenNib, Star } from 'icons'
 import type { FC } from 'react'
 
 const Page: FC = () => {
@@ -23,7 +23,7 @@ const Page: FC = () => {
 			<div className=' mb-4 justify-between gap-5  md:flex'>
 				<div className='w-11/12'>
 					<div className='mt-2 justify-between gap-3 md:flex'>
-						<div className='md:w-1/3'>
+						<div className='md:w-1/2'>
 							<h1 className='my-2'>Title</h1>
 							<Field
 								type='text'
@@ -43,24 +43,16 @@ const Page: FC = () => {
 							/>
 						</div>
 
-						<div>
-							<h1 className='my-2'>Pages</h1>
+						<div className='md:w-1/4'>
+							<h1 className='my-2'>Rating</h1>
 							<Field
-								type='number'
-								icon={Book}
-								control={form.control}
-								name='pages'
-								placeholder='Pages'
-							/>
-						</div>
-						<div>
-							<h1 className='my-2'>Popularity</h1>
-							<Field
-								icon={User}
+								icon={Star}
 								type='number'
 								control={form.control}
-								name='popularity'
-								placeholder='Popularity'
+								name='rating'
+								placeholder='Rating'
+								min={1}
+								max={5}
 							/>
 						</div>
 					</div>
@@ -95,7 +87,7 @@ const Page: FC = () => {
 				</div>
 			</div>
 			<Editor
-				updateBooks={(books: EBookType[]) => form.setValue('ebook', books)}
+				updateBooks={(books: EBookPayload[]) => form.setValue('ebook', books)}
 			/>
 			<ErrorMessage name='ebook' errors={form.errors} />
 

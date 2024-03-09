@@ -6,8 +6,8 @@ export const CreateBookDto = z.object({
 	author: z.string(),
 	description: z.string(),
 	ebook: z.array(EBookTypeDto).min(1),
-	pages: z.number().min(1).int().positive(),
-	popularity: z.number().min(1).int().positive(),
+	readingTime: z.number().min(1).int().positive(),
+	rating: z.number().min(1).int().positive(),
 	picture: z.unknown(),
 	genres: z.array(z.number()).min(1)
 })

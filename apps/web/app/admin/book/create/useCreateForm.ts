@@ -39,8 +39,7 @@ export const useCreateForm = () => {
 				picture: payload.picture,
 				ebook: payload.ebook,
 				genres: payload.genres,
-				pages: payload.pages,
-				popularity: payload.popularity,
+				rating: payload.rating,
 				author: payload.author
 			}),
 		onError: () => errorToast('Error while uploading book')
@@ -67,8 +66,7 @@ export const useCreateForm = () => {
 			ebook: data.ebook,
 			author: data.author,
 			genres: data.genres,
-			pages: data.pages,
-			popularity: data.popularity
+			rating: data.rating
 		})
 			.then(async () => {
 				if (template.id) {

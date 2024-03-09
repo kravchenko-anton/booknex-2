@@ -21,6 +21,9 @@ import { Activity } from './activity';
 import { CountOutput } from './count-output';
 // May contain unused imports in some cases
 // @ts-ignore
+import { Review } from './review';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ShortGenre } from './short-genre';
 
 /**
@@ -60,13 +63,13 @@ export interface AdminInfoByIdOutput {
      */
     'description': string;
     /**
-     * book pages
+     * book readingTime
      * @type {number}
      * @memberof AdminInfoByIdOutput
      */
     'readingTime': number;
     /**
-     * book popularity
+     * book rating
      * @type {number}
      * @memberof AdminInfoByIdOutput
      */
@@ -96,6 +99,12 @@ export interface AdminInfoByIdOutput {
      */
     'updatedAt': string;
     /**
+     * book ebook
+     * @type {string}
+     * @memberof AdminInfoByIdOutput
+     */
+    'ebook': string;
+    /**
      * book activities
      * @type {Array<Activity>}
      * @memberof AdminInfoByIdOutput
@@ -107,5 +116,11 @@ export interface AdminInfoByIdOutput {
      * @memberof AdminInfoByIdOutput
      */
     '_count': CountOutput;
+    /**
+     * book review
+     * @type {Array<Review>}
+     * @memberof AdminInfoByIdOutput
+     */
+    'review': Array<Review>;
 }
 

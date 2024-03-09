@@ -21,46 +21,40 @@
  */
 export interface UpdateBookDto {
     /**
-     * 
-     * @type {string}
-     * @memberof UpdateBookDto
-     */
-    'picture'?: string;
-    /**
-     * Title of the book
+     * book title
      * @type {string}
      * @memberof UpdateBookDto
      */
     'title'?: string;
     /**
-     * Author of the book
+     * book picture
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'picture'?: string;
+    /**
+     * book author
      * @type {string}
      * @memberof UpdateBookDto
      */
     'author'?: string;
     /**
-     * Uploaded picture
+     * book description
      * @type {string}
      * @memberof UpdateBookDto
      */
     'description'?: string;
     /**
-     * Number of pages in the book
+     * book rating
      * @type {number}
      * @memberof UpdateBookDto
      */
-    'pages'?: number;
+    'rating'?: number;
     /**
-     * Is book visible
+     * book visibility
      * @type {boolean}
      * @memberof UpdateBookDto
      */
     'visible'?: boolean;
-    /**
-     * Number of goodRead reviews
-     * @type {number}
-     * @memberof UpdateBookDto
-     */
-    'popularity'?: number;
 }
 

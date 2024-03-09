@@ -16,7 +16,7 @@ const parseSelectors = {
 		'div.BookPageMetadataSection > div.BookPageMetadataSection__contributor > h3 > div > span:nth-child(1) > a > span',
 	description:
 		'div.BookPageMetadataSection > div.BookPageMetadataSection__description > div > div.TruncatedContent__text.TruncatedContent__text--large > div > div > span',
-	ratingCount: '[data-testid="ratingsCount"]',
+	ratingCount: '.RatingStatistics__rating',
 	pages: '[data-testid="pagesFormat"]',
 	picture: 'div.BookPage__bookCover > div > div > div > div > div > div > img',
 	genres:
@@ -124,7 +124,7 @@ export const parseCurrentBook = async (page: Page, url: string) => {
 	const rating = await page.evaluate(selector => {
 		const ratingCount = document.querySelector(selector)
 		return ratingCount?.textContent
-			? Number.parseInt(
+			? Number.parseFloat(
 					ratingCount.textContent
 						.replaceAll('ratings', '')
 						.replaceAll(',', '')
@@ -132,13 +132,6 @@ export const parseCurrentBook = async (page: Page, url: string) => {
 				)
 			: 0
 	}, parseSelectors.ratingCount)
-
-	const pages = await page.evaluate(selector => {
-		const pages = document.querySelector(selector)
-		return pages?.textContent
-			? Number.parseInt(pages.textContent.replaceAll(/[^\d\s,]/g, '').trim())
-			: 0
-	}, parseSelectors.pages)
 
 	const picture = await page.evaluate(selector => {
 		const picture = document.querySelector(selector)
@@ -159,7 +152,6 @@ export const parseCurrentBook = async (page: Page, url: string) => {
 		author,
 		description,
 		rating,
-		pages,
 		picture,
 		genres
 	}

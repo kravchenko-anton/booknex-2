@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { EBookType } from './ebook-type';
+import { EBookPayload } from './ebook-payload';
 
 /**
  * 
@@ -23,12 +23,6 @@ import { EBookType } from './ebook-type';
  * @interface CreateBookDto
  */
 export interface CreateBookDto {
-    /**
-     * book id
-     * @type {number}
-     * @memberof CreateBookDto
-     */
-    'id': number;
     /**
      * book title
      * @type {string}
@@ -54,29 +48,17 @@ export interface CreateBookDto {
      */
     'description': string;
     /**
-     * book pages
-     * @type {number}
-     * @memberof CreateBookDto
-     */
-    'readingTime': number;
-    /**
-     * book popularity
+     * book rating
      * @type {number}
      * @memberof CreateBookDto
      */
     'rating': number;
     /**
-     * book visibility
-     * @type {boolean}
-     * @memberof CreateBookDto
-     */
-    'visible': boolean;
-    /**
      * 
-     * @type {Array<EBookType>}
+     * @type {Array<EBookPayload>}
      * @memberof CreateBookDto
      */
-    'ebook': Array<EBookType>;
+    'ebook': Array<EBookPayload>;
     /**
      * Array of genres
      * @type {Array<number>}

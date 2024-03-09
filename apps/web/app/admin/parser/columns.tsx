@@ -11,7 +11,6 @@ import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { AxiosResponse } from 'axios'
 import { getFileUrl } from 'global/api-config'
-import { nFormatter } from 'global/helpers/number-formater'
 import { MoreHorizontal } from 'icons'
 import * as React from 'react'
 
@@ -21,8 +20,7 @@ type ColumnType = ColumnDef<{
 	author: string
 	picture: string
 	description: string
-	pages: number
-	popularity: number
+	rating: number
 	genres: { name: string }[]
 }>[]
 
@@ -61,17 +59,9 @@ export const columns = ({
 			<div className='w-[250px]'>
 				<h3 className='text-xl'>{row.original.title}</h3>
 				<p>{row.original.author}</p>
-				<div className='flex flex-wrap gap-2'>
-					<p className='bg-foreground mt-2 rounded-lg p-1.5 font-light'>
-						<b className='font-bold text-white'>{row.original.pages}</b> pages
-					</p>
-					<p className='bg-foreground mt-2 rounded-lg p-1.5 font-light'>
-						<b className='font-bold text-white'>
-							{nFormatter(row.original.popularity)}{' '}
-						</b>{' '}
-						popularity
-					</p>
-				</div>
+				<p>
+					rating: <b className='text-warning'>{row.original.rating}</b>
+				</p>
 			</div>
 		)
 	},

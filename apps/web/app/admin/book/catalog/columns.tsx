@@ -93,11 +93,12 @@ export const columns = ({
 						</b>
 					</p>
 					<p className='bg-muted mb-2 rounded-lg p-1.5 font-light'>
-						<b className='font-bold text-white'>{row.original.pages}</b> pages
+						<b className='font-bold text-white'>{row.original.readingTime}</b>{' '}
+						pages
 					</p>
 					<p className='bg-muted rounded-lg p-1.5 font-light'>
 						<b className='font-bold text-white'>
-							{nFormatter(row.original.popularity)}{' '}
+							{nFormatter(row.original.rating)}{' '}
 						</b>{' '}
 						popularity
 					</p>

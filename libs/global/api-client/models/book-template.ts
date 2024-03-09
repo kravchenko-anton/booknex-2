@@ -54,17 +54,11 @@ export interface BookTemplate {
      */
     'picture': string;
     /**
-     * pages of the book
+     * rating of the book
      * @type {number}
      * @memberof BookTemplate
      */
-    'pages': number;
-    /**
-     * popularity of the book
-     * @type {number}
-     * @memberof BookTemplate
-     */
-    'popularity': number;
+    'rating': number;
     /**
      * 
      * @type {Array<ShortGenre>}

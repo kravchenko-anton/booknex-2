@@ -13,24 +13,33 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { PayloadChapter } from './payload-chapter';
 
 /**
  * 
  * @export
- * @interface UserProfileOutput
+ * @interface EBookPayload
  */
-export interface UserProfileOutput {
+export interface EBookPayload {
     /**
      * 
      * @type {number}
-     * @memberof UserProfileOutput
+     * @memberof EBookPayload
      */
     'id': number;
     /**
      * 
      * @type {string}
-     * @memberof UserProfileOutput
+     * @memberof EBookPayload
      */
-    'email': string;
+    'title': string;
+    /**
+     * 
+     * @type {Array<PayloadChapter>}
+     * @memberof EBookPayload
+     */
+    'chapters': Array<PayloadChapter>;
 }
 

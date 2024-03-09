@@ -17,20 +17,20 @@
 /**
  * 
  * @export
- * @interface CreateRequestEbookInnerChaptersInner
+ * @interface OutputChapterChild
  */
-export interface CreateRequestEbookInnerChaptersInner {
+export interface OutputChapterChild {
     /**
-     * 
+     * chapter child name
      * @type {string}
-     * @memberof CreateRequestEbookInnerChaptersInner
+     * @memberof OutputChapterChild
      */
-    'name'?: string;
+    'name': string;
     /**
-     * 
+     * chapter child link
      * @type {string}
-     * @memberof CreateRequestEbookInnerChaptersInner
+     * @memberof OutputChapterChild
      */
-    'text'?: string;
+    'link': string;
 }
 

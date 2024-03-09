@@ -1,47 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, PickType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
-import {
-	IsArray,
-	IsBoolean,
-	IsNumber,
-	IsString,
-	ValidateNested
-} from 'class-validator'
-import { shortGenre } from '../genre/genre.entity'
+import { IsArray, IsNumber, ValidateNested } from 'class-validator'
+import { Review } from '../review/review.entity'
+import { BaseCatalogModel } from '../utils/common/base-catalog.model'
 import { Activity } from '../utils/services/activity/activity.model'
-import { Book, ShortBook } from './book.entity'
-
-export class AdminCatalogOutput {
-	@ApiProperty({ type: [Book] })
-	@IsArray()
-	@ValidateNested()
-	@Type(() => Book)
-	data: Book[]
-	@ApiProperty({ example: true, description: 'can load more', type: Boolean })
-	@IsBoolean()
-	canLoadMore: boolean
-	@ApiProperty({ example: 1, description: 'total pages', type: Number })
-	@IsNumber()
-	totalPages: number
-}
-
-export class InfoByIdOutput extends ShortBook {
-	@ApiProperty({
-		example: 'description',
-		description: 'book description',
-		type: String
-	})
-	@IsString()
-	description: string
-	@ApiProperty({ type: [shortGenre] })
-	@IsArray()
-	@ValidateNested()
-	@Type(() => shortGenre)
-	genres: {
-		id: number
-		name: string
-	}[]
-}
+import { Book, FullBook } from './book.entity'
 
 export class CountOutput {
 	@ApiProperty({ example: 1, description: 'FinishedBy', type: Number })
@@ -57,23 +20,23 @@ export class CountOutput {
 	savedBy: number
 }
 
-export class AdminInfoByIdOutput extends Book {
-	@ApiProperty({
-		example: '2021-07-01',
-		description: 'book created at',
-		type: String
-	})
-	@IsString()
-	createdAt: Date
+export class AdminCatalogOutput extends BaseCatalogModel {
+	@ApiProperty({ type: [Book] })
+	@IsArray()
+	@ValidateNested()
+	@Type(() => Book)
+	data: Book[]
+}
+export class InfoByIdOutput extends PickType(Book, [
+	'description',
+	'id',
+	'title',
+	'author',
+	'genres',
+	'picture'
+]) {}
 
-	@ApiProperty({
-		example: '2021-07-01',
-		description: 'book updated at',
-		type: String
-	})
-	@IsString()
-	updatedAt: Date
-
+export class AdminInfoByIdOutput extends FullBook {
 	@ApiProperty({
 		type: [Activity],
 		description: 'book activities'
@@ -82,52 +45,19 @@ export class AdminInfoByIdOutput extends Book {
 	@ValidateNested({ each: true })
 	@Type(() => Activity)
 	activities: Activity[]
-
 	@ApiProperty({
 		type: CountOutput,
 		description: 'book count'
 	})
 	@ValidateNested()
 	@Type(() => CountOutput)
-	_count: {
-		finishedBy: number
-		readingBy: number
-		savedBy: number
-	}
-}
-
-class ChapterChild {
-	@ApiProperty({ example: 'name', description: 'chapter child name' })
-	@IsString()
-	name: string
-	@ApiProperty({ example: 'link', description: 'chapter child link' })
-	@IsString()
-	link: string
-}
-
-class Chapter {
-	@ApiProperty({ example: 'title', description: 'chapter title' })
-	@IsString()
-	title: string
-	@ApiProperty({ type: [ChapterChild], description: 'chapter children' })
-	@ValidateNested({ each: true })
-	@Type(() => ChapterChild)
-	children: ChapterChild[]
-}
-
-export class EbookByIdOutput {
-	@IsString()
-	@ApiProperty({ example: 'image.png', description: 'book cover' })
-	picture: string
-	@IsString()
-	@ApiProperty({ example: 'title', description: 'book title' })
-	title: string
-	@ApiProperty({ type: [String], description: 'book file' })
+	_count: CountOutput
+	@ApiProperty({
+		type: [Review],
+		description: 'book review'
+	})
 	@IsArray()
-	@IsString({ each: true })
-	file: string[]
-	@ApiProperty({ type: [Chapter], description: 'book chapters' })
 	@ValidateNested({ each: true })
-	@Type(() => Chapter)
-	chapters: Chapter[]
+	@Type(() => Review)
+	review: Review[]
 }

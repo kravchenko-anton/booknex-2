@@ -86,8 +86,7 @@ model BookTemplate {
   author            String
   description       String
   picture           String
-  pages             Int
-  popularity        Int
+  rating            Float   @default(0)
   genres            Genre[]
 
 }

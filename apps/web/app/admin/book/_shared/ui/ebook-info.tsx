@@ -4,13 +4,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { errorToast } from '@/utils/toast'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import type { EBookType } from 'global/api-client'
+import type { EBookPayload } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { useState, type FC } from 'react'
 
 interface EbookInfoProperties {
 	bookLink: string
-	onEdit: (books: EBookType[]) => void
+	onEdit: (books: EBookPayload[]) => void
 }
 
 const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
@@ -18,11 +18,11 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 		queryKey: ['book-preview', bookLink],
 		queryFn: () =>
 			axios
-				.get<EBookType[]>(getFileUrl(bookLink))
+				.get<EBookPayload[]>(getFileUrl(bookLink))
 				.then(response => response.data),
 		enabled: !!bookLink
 	})
-	const [books, setBooks] = useState<EBookType[] | null>(null)
+	const [books, setBooks] = useState<EBookPayload[] | null>(null)
 	if (!ebook) return null
 	return (
 		<Tabs defaultValue='preview' className=' mt-8 w-full '>
@@ -49,7 +49,7 @@ const EbookInfo: FC<EbookInfoProperties> = ({ bookLink, onEdit }) => {
 				<TabsContent value='edit'>
 					<Editor
 						defaultBooks={ebook}
-						updateBooks={(value: EBookType[]) => setBooks(value)}
+						updateBooks={(value: EBookPayload[]) => setBooks(value)}
 					/>
 					<Button
 						size='md'

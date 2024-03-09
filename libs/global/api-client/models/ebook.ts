@@ -13,24 +13,27 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { ChapterChild } from './chapter-child';
 
 /**
  * 
  * @export
- * @interface UserProfileOutput
+ * @interface Ebook
  */
-export interface UserProfileOutput {
+export interface Ebook {
     /**
-     * 
-     * @type {number}
-     * @memberof UserProfileOutput
-     */
-    'id': number;
-    /**
-     * 
+     * chapter title
      * @type {string}
-     * @memberof UserProfileOutput
+     * @memberof Ebook
      */
-    'email': string;
+    'title': string;
+    /**
+     * chapter children
+     * @type {Array<ChapterChild>}
+     * @memberof Ebook
+     */
+    'children': Array<ChapterChild>;
 }
 

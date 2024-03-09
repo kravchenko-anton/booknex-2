@@ -23,12 +23,11 @@ export class ParserService {
 				select: {
 					...defaultReturnObject,
 					title: true,
-					pages: true,
+					rating: true,
 					description: true,
 					author: true,
 					genres: true,
-					picture: true,
-					popularity: true
+					picture: true
 				},
 				...(page && {
 					skip: page * perPage
@@ -79,12 +78,11 @@ export class ParserService {
 			select: {
 				...defaultReturnObject,
 				title: true,
-				pages: true,
+				rating: true,
 				description: true,
 				author: true,
 				picture: true,
-				genres: true,
-				popularity: true
+				genres: true
 			}
 		})
 	}
@@ -101,10 +99,11 @@ export class ParserService {
 			console.log(books.length, 'books')
 			for (const book of books) {
 				try {
-					const { title, author, description, picture, pages, genres, rating } =
+					const { title, author, description, picture, genres, rating } =
 						await parseCurrentBook(page, book.link)
-					if (rating < 100_000) continue
 					if (bookTemplate.some(b => b.title === title.trim())) continue
+					console.log('rating', rating)
+					if (rating < 2) continue
 					const goodGenres = await this.prisma.genre.findMany({
 						where: {
 							OR: genres.map(name => ({
@@ -121,13 +120,12 @@ export class ParserService {
 							author: author.name,
 							description,
 							picture,
-							pages,
+							rating,
 							genres: {
 								connect: goodGenres.map(genre => ({
 									name: genre.name
 								}))
-							},
-							popularity: rating
+							}
 						}
 					})
 				} catch (error) {

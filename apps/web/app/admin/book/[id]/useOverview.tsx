@@ -3,7 +3,8 @@ import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { EBookType, UpdateBookDto } from 'global/api-client'
+import type { UpdateBookDto } from 'global/api-client'
+import type { EBookType } from 'global/api-client/models/ebook-type'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useOverview = () => {

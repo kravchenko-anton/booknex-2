@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { getFileUrl } from '../../../../libs/global/api-config'
 import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
@@ -10,10 +10,10 @@ import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
-import type { EBookType } from './book.entity'
 import type { CreateBookDto } from './dto/create.book.dto'
-import type { UpdateBookDto } from './dto/update.book.dto'
-import type { UpdateGenreDto } from './dto/update.genre.dto'
+import type { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto'
+import type { EBookPayload } from './ebook.model'
+import { useGetEbook } from './helpers/get-ebook'
 import { returnBookObject } from './return.book.object'
 
 @Injectable()
@@ -178,7 +178,7 @@ export class BookService {
 				picture: true
 			}
 		})
-		const ebook: EBookType[] = await fetch(getFileUrl(book.ebook)).then(
+		const ebook: EBookPayload[] = await fetch(getFileUrl(book.ebook)).then(
 			result => result.json()
 		)
 
@@ -243,12 +243,17 @@ export class BookService {
 	}
 
 	async create(dto: CreateBookDto) {
-		console.log(dto.genres, 'it is genres', typeof dto.genres)
 		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
-
+		const { chaptersCount, readingTime, uploadedEbook } = useGetEbook(dto.ebook)
+		Logger.log({
+			chaptersCount,
+			readingTime,
+			uploadedEbook,
+			dtoEbook: dto.ebook
+		})
 		const { name: ebookName } = await this.storageService.upload({
 			folder: 'ebooks',
-			file: Buffer.from(JSON.stringify(dto.ebook)),
+			file: Buffer.from(JSON.stringify(uploadedEbook)),
 			role: 'admin',
 			filename: dto.title + '.json'
 		})
@@ -273,7 +278,7 @@ export class BookService {
 				title: dto.title,
 
 				rating: dto.rating,
-				readingTime: dto.readingTime,
+				readingTime: readingTime,
 				description: dto.description,
 				picture: dto.picture,
 				ebook: ebookName,
@@ -300,7 +305,7 @@ export class BookService {
 		await this.prisma.book.delete({ where: { id } })
 	}
 
-	async updateEbook(id: number, dto: EBookType[]) {
+	async updateEbook(id: number, dto: EBookPayload[]) {
 		const book = await this.findOne({
 			where: { id },
 			select: {

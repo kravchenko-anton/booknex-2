@@ -1,12 +1,12 @@
 import api from '@/services'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import type { EBookType } from 'global/api-client'
+import type { EBookPayload } from 'global/api-client'
 import { useLayoutEffect, useState } from 'react'
 //TODO: сократить тут код до минимума чтобы было очень просто
 
-export const useBookCompose = (defaultBooks?: EBookType[]) => {
-	const [books, setBooks] = useState<EBookType[] | null>([])
+export const useBookCompose = (defaultBooks?: EBookPayload[]) => {
+	const [books, setBooks] = useState<EBookPayload[] | null>([])
 	useLayoutEffect(() => setBooks(defaultBooks || []), [defaultBooks])
 
 	const { mutateAsync: unfold } = useMutation({

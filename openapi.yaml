@@ -380,7 +380,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/EBookType"
+                $ref: "#/components/schemas/EBookPayload"
       responses:
         "200":
           description: ""
@@ -725,17 +725,9 @@ components:
         email:
           type: string
           example: email
-        bookCount:
-          type: number
-          example: 1
-        totalPageCount:
-          type: number
-          example: 1
       required:
         - id
         - email
-        - bookCount
-        - totalPageCount
     ShortBook:
       type: object
       properties:
@@ -916,20 +908,22 @@ components:
     UserAdminCatalogOutput:
       type: object
       properties:
+        canLoadMore:
+          type: boolean
+          example: true
+          description: can load more
+        totalPages:
+          type: number
+          example: 1
+          description: total pages
         data:
           type: array
           items:
             $ref: "#/components/schemas/CatalogUserOutput"
-        canLoadMore:
-          type: boolean
-          example: true
-        totalPages:
-          type: number
-          example: 1
       required:
-        - data
         - canLoadMore
         - totalPages
+        - data
     FeaturedOutput:
       type: object
       properties:
@@ -1012,7 +1006,7 @@ components:
         - author
         - description
         - genres
-    ChapterChild:
+    OutputChapterChild:
       type: object
       properties:
         name:
@@ -1026,7 +1020,7 @@ components:
       required:
         - name
         - link
-    Chapter:
+    OutputChapter:
       type: object
       properties:
         title:
@@ -1037,21 +1031,21 @@ components:
           description: chapter children
           type: array
           items:
-            $ref: "#/components/schemas/ChapterChild"
+            $ref: "#/components/schemas/OutputChapterChild"
       required:
         - title
         - children
     EbookByIdOutput:
       type: object
       properties:
-        picture:
-          type: string
-          example: image.png
-          description: book cover
         title:
           type: string
           example: title
           description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
         file:
           description: book file
           type: array
@@ -1061,10 +1055,10 @@ components:
           description: book chapters
           type: array
           items:
-            $ref: "#/components/schemas/Chapter"
+            $ref: "#/components/schemas/OutputChapter"
       required:
-        - picture
         - title
+        - picture
         - file
         - chapters
     CountOutput:
@@ -1086,6 +1080,32 @@ components:
         - finishedBy
         - readingBy
         - savedBy
+    Review:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: review id
+        tags:
+          example: tags
+          description: review tags
+          type: array
+          items:
+            type: string
+        text:
+          type: string
+          example: text
+          description: review text
+        rating:
+          type: number
+          example: 1
+          description: review rating
+      required:
+        - id
+        - tags
+        - text
+        - rating
     AdminInfoByIdOutput:
       type: object
       properties:
@@ -1112,11 +1132,11 @@ components:
         readingTime:
           type: number
           example: 100
-          description: book pages
+          description: book readingTime
         rating:
           type: number
-          example: 100
-          description: book popularity
+          example: 5
+          description: book rating
         visible:
           type: boolean
           example: true
@@ -1133,6 +1153,10 @@ components:
           type: string
           example: 2021-07-01
           description: book updated at
+        ebook:
+          type: string
+          example: ebook
+          description: book ebook
         activities:
           description: book activities
           type: array
@@ -1142,6 +1166,11 @@ components:
           description: book count
           allOf:
             - $ref: "#/components/schemas/CountOutput"
+        review:
+          description: book review
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
       required:
         - id
         - title
@@ -1154,8 +1183,10 @@ components:
         - genres
         - createdAt
         - updatedAt
+        - ebook
         - activities
         - _count
+        - review
     Book:
       type: object
       properties:
@@ -1182,11 +1213,11 @@ components:
         readingTime:
           type: number
           example: 100
-          description: book pages
+          description: book readingTime
         rating:
           type: number
-          example: 100
-          description: book popularity
+          example: 5
+          description: book rating
         visible:
           type: boolean
           example: true
@@ -1208,10 +1239,6 @@ components:
     AdminCatalogOutput:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: "#/components/schemas/Book"
         canLoadMore:
           type: boolean
           example: true
@@ -1220,11 +1247,15 @@ components:
           type: number
           example: 1
           description: total pages
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Book"
       required:
-        - data
         - canLoadMore
         - totalPages
-    EbookChapter:
+        - data
+    PayloadChapter:
       type: object
       properties:
         id:
@@ -1237,28 +1268,24 @@ components:
         - id
         - name
         - text
-    EBookType:
+    EBookPayload:
       type: object
       properties:
-        title:
-          type: string
         id:
           type: number
+        title:
+          type: string
         chapters:
           type: array
           items:
-            $ref: "#/components/schemas/EbookChapter"
+            $ref: "#/components/schemas/PayloadChapter"
       required:
-        - title
         - id
+        - title
         - chapters
     CreateBookDto:
       type: object
       properties:
-        id:
-          type: number
-          example: 1
-          description: book id
         title:
           type: string
           example: title
@@ -1275,22 +1302,14 @@ components:
           type: string
           example: description
           description: book description
-        readingTime:
-          type: number
-          example: 100
-          description: book pages
         rating:
           type: number
-          example: 100
-          description: book popularity
-        visible:
-          type: boolean
-          example: true
-          description: book visibility
+          example: 5
+          description: book rating
         ebook:
           type: array
           items:
-            $ref: "#/components/schemas/EBookType"
+            $ref: "#/components/schemas/EBookPayload"
         genres:
           description: Array of genres
           example:
@@ -1301,45 +1320,40 @@ components:
           items:
             type: number
       required:
-        - id
         - title
         - picture
         - author
         - description
-        - readingTime
         - rating
-        - visible
         - ebook
         - genres
     UpdateBookDto:
       type: object
       properties:
-        picture:
-          type: string
         title:
           type: string
-          description: Title of the book
-          example: The Great Gatsby
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
         author:
           type: string
-          description: Author of the book
-          example: F. Scott Fitzgerald
+          example: author
+          description: book author
         description:
           type: string
-          description: Uploaded picture
-          example: picture.jpg
-        pages:
+          example: description
+          description: book description
+        rating:
           type: number
-          description: Number of pages in the book
-          example: 300
+          example: 5
+          description: book rating
         visible:
           type: boolean
-          description: Is book visible
           example: true
-        popularity:
-          type: number
-          description: Number of goodRead reviews
-          example: 1000000
+          description: book visibility
     UpdateGenreDto:
       type: object
       properties:
@@ -1455,12 +1469,9 @@ components:
         picture:
           type: string
           description: picture of the book
-        pages:
+        rating:
           type: number
-          description: pages of the book
-        popularity:
-          type: number
-          description: popularity of the book
+          description: rating of the book
         genres:
           type: array
           items:
@@ -1471,27 +1482,28 @@ components:
         - author
         - description
         - picture
-        - pages
-        - popularity
+        - rating
         - genres
     BookTemplateCatalogOutput:
       type: object
       properties:
+        canLoadMore:
+          type: boolean
+          example: true
+          description: can load more
+        totalPages:
+          type: number
+          example: 1
+          description: total pages
         data:
           description: book template
           type: array
           items:
             $ref: "#/components/schemas/BookTemplate"
-        canLoadMore:
-          type: boolean
-          description: can load more
-        totalPages:
-          type: number
-          description: total pages
       required:
-        - data
         - canLoadMore
         - totalPages
+        - data
     ParserDto:
       type: object
       properties:

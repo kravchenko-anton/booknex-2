@@ -15,25 +15,25 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CreateRequestEbookInnerChaptersInner } from './create-request-ebook-inner-chapters-inner';
+import { OutputChapterChild } from './output-chapter-child';
 
 /**
  * 
  * @export
- * @interface CreateRequestEbookInner
+ * @interface OutputChapter
  */
-export interface CreateRequestEbookInner {
+export interface OutputChapter {
     /**
-     * 
+     * chapter title
      * @type {string}
-     * @memberof CreateRequestEbookInner
+     * @memberof OutputChapter
      */
-    'title'?: string;
+    'title': string;
     /**
-     * 
-     * @type {Array<CreateRequestEbookInnerChaptersInner>}
-     * @memberof CreateRequestEbookInner
+     * chapter children
+     * @type {Array<OutputChapterChild>}
+     * @memberof OutputChapter
      */
-    'chapters'?: Array<CreateRequestEbookInnerChaptersInner>;
+    'children': Array<OutputChapterChild>;
 }
 

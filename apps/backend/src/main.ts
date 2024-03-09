@@ -19,6 +19,7 @@ async function bootstrap() {
 						format.cli(),
 						format.splat(),
 						format.colorize(),
+						format.prettyPrint(),
 						format.timestamp(),
 						format.printf(
 							info => `${info.timestamp} ${info.level}: ${info.message}`

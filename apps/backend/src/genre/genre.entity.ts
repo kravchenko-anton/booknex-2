@@ -13,14 +13,6 @@ export class shortGenre {
 
 export class Genre extends shortGenre {
 	@ApiProperty({
-		example: 'description',
-		description: 'genre description',
-		type: String
-	})
-	@IsString()
-	description: string
-
-	@ApiProperty({
 		example: '2021-07-01',
 		description: 'genre created at',
 		type: String
@@ -35,4 +27,12 @@ export class Genre extends shortGenre {
 	})
 	@IsString()
 	updatedAt: string
+
+	@ApiProperty({
+		example: 'description',
+		description: 'genre description',
+		type: String
+	})
+	@IsString()
+	description: string
 }

@@ -24,8 +24,7 @@ export const useTemplate = ({
 			setValue('title', template.title)
 			setValue('description', template.description)
 			setValue('author', template.author)
-			setValue('pages', template.pages)
-			setValue('popularity', template.popularity)
+			setValue('rating', template.rating)
 			setValue(
 				'genres',
 				template.genres.map(genre => genre.id)

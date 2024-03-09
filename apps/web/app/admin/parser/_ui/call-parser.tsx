@@ -31,24 +31,20 @@ const defaultParserLinks = [
 		link: 'https://www.goodreads.com/list/show/6.Best_Science_Fiction_Books'
 	},
 	{
-		title: 'best mystery books',
-		link: 'https://www.goodreads.com/list/show/47.Best_Fantasy_Books'
+		title: 'best horror books',
+		link: 'https://www.goodreads.com/list/show/47.Best_Horror_Books'
 	},
 	{
-		title: 'best horror books',
-		link: 'https://www.goodreads.com/list/show/47.Best_Fantasy_Books'
+		title: 'best mystery books',
+		link: 'https://www.goodreads.com/list/show/12.Best_Mystery_Books'
 	},
 	{
 		title: 'best thriller books',
-		link: 'https://www.goodreads.com/list/show/47.Best_Fantasy_Books'
+		link: 'https://www.goodreads.com/list/show/348.Best_Thriller_Books_Ever'
 	},
 	{
 		title: 'best historical fiction books',
-		link: 'https://www.goodreads.com/list/show/47.Best_Fantasy_Books'
-	},
-	{
-		title: 'best nonfiction books',
-		link: 'https://www.goodreads.com/list/show/47.Best_Fantasy_Books'
+		link: 'https://www.goodreads.com/list/show/12.Best_Historical_Fiction_Books'
 	}
 ]
 
@@ -87,7 +83,7 @@ const CallParserDialog: FC<NewParserPopupProperties> = properties => {
 			<Button
 				size='sm'
 				variant='primary'
-				className='mx-auto'
+				className='mx-auto mt-4'
 				onClick={handleSubmit(properties.onSubmit)}
 			>
 				Parse

@@ -5,8 +5,8 @@ import {
 	IsBoolean,
 	IsNumber,
 	IsString,
+	Max,
 	Min,
-	Validate,
 	ValidateNested
 } from 'class-validator'
 import { shortGenre } from '../genre/genre.entity'
@@ -15,6 +15,7 @@ export class ShortBook {
 	@ApiProperty({ example: 1, description: 'book id', type: Number })
 	@IsNumber()
 	id: number
+
 	@ApiProperty({ example: 'title', description: 'book title', type: String })
 	@IsString()
 	title: string
@@ -31,7 +32,7 @@ export class ShortBook {
 	author: string
 }
 
-export class BaseBook extends ShortBook {
+export class Book extends ShortBook {
 	@ApiProperty({
 		example: 'description',
 		description: 'book description',
@@ -39,25 +40,21 @@ export class BaseBook extends ShortBook {
 	})
 	@IsString()
 	description: string
-	@ApiProperty({
-		example: 'picture',
-		description: 'book picture',
-		type: String
-	})
-	@IsString()
-	picture: string
-	@ApiProperty({ example: 100, description: 'book pages', type: Number })
+
+	@ApiProperty({ example: 100, description: 'book readingTime', type: Number })
 	@IsNumber()
 	readingTime: number
-	@ApiProperty({ example: 100, description: 'book popularity', type: Number })
+
+	@ApiProperty({ example: 5, description: 'book rating', type: Number })
 	@IsNumber()
+	@Min(1)
+	@Max(5)
 	rating: number
+
 	@ApiProperty({ example: true, description: 'book visibility', type: Boolean })
 	@IsBoolean()
 	visible: boolean
-}
 
-export class Book extends BaseBook {
 	@ApiProperty({ type: [shortGenre] })
 	@IsArray()
 	@ValidateNested()
@@ -68,37 +65,24 @@ export class Book extends BaseBook {
 	}[]
 }
 
-// ebook
-
-export class EbookChapter {
-	@ApiProperty({ type: Number })
-	@IsNumber()
-	@Min(1)
-	id: number
-
-	@ApiProperty({ type: String })
-	@IsString()
-	name: string
-
-	@ApiProperty({ type: String })
-	@IsString()
-	text: string
-}
-
-export class EBookType {
-	@ApiProperty({ type: String })
-	@IsString()
-	@Validate((value: string) => !value.includes('epub'), {
-		message: 'Ebook cannot be an epub'
+export class FullBook extends Book {
+	@ApiProperty({
+		example: '2021-07-01',
+		description: 'book created at',
+		type: String
 	})
-	title: string
+	@IsString()
+	createdAt: Date
 
-	@ApiProperty({ type: Number })
-	@IsNumber()
-	@Min(1)
-	id: number
-	@ApiProperty({ type: [EbookChapter] })
-	@ValidateNested({ each: true })
-	@Type(() => EbookChapter)
-	chapters: EbookChapter[]
+	@ApiProperty({
+		example: '2021-07-01',
+		description: 'book updated at',
+		type: String
+	})
+	@IsString()
+	updatedAt: Date
+
+	@ApiProperty({ example: 'ebook', description: 'book ebook', type: String })
+	@IsString()
+	ebook: string
 }
