@@ -11,6 +11,7 @@
     "nativewind": "*",
     "tailwind-merge": "*",
     "zod": "*",
+    "@sentry/react-native": "*",
     "@gorhom/bottom-sheet": "*",
     "react-native-bootsplash": "*",
     "react-native-reanimated": "*",

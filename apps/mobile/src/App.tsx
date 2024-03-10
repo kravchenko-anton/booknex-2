@@ -5,10 +5,10 @@ import Loader from '@/ui/loader/loader'
 import Toast from '@/ui/toast'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Sentry from '@sentry/react-native'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { GlobalErrorsEnum, errorCode } from 'global/errors'
 import { View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
@@ -24,15 +24,20 @@ const queryClient = new QueryClient({
 	}
 })
 
+Sentry.init({
+	dsn: 'https://db7342e99f043024192f33c9678bf56a@o4506886163267584.ingest.us.sentry.io/4506886375145472',
+
+	// Set tracesSampleRate to 1.0 to capture 100%
+	// of transactions for performance monitoring.
+	// We recommend adjusting this value in production
+	tracesSampleRate: 1
+})
+
 const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
-const googleAuthClientID = process.env.CLIENT_ID
-if (!googleAuthClientID)
-	throw new Error(
-		`${GlobalErrorsEnum.somethingWrong}, Code:${errorCode.someEnvNotTransmitted}`
-	)
-export default function app() {
+
+function app() {
 	return (
 		<Provider store={store}>
 			<PersistGate
@@ -64,3 +69,5 @@ export default function app() {
 		</Provider>
 	)
 }
+
+export default Sentry.wrap(app)
