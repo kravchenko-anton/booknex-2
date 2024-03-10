@@ -93,6 +93,7 @@ const Page: FC = () => {
 
 			<Button
 				size='md'
+				isLoading={form.submitLoading}
 				className='mt-4'
 				variant='primary'
 				onClick={form.submit}

@@ -30,8 +30,8 @@ export const useCreateForm = () => {
 	console.log(errors, 'it is errors', getValues(), 'it is values')
 	const template = useTemplate({ setValue })
 
-	const { mutateAsync: create } = useMutation({
-		mutationKey: ['upload-book'],
+	const { mutateAsync: create, isLoading: submitLoading } = useMutation({
+		mutationKey: ['create-book'],
 		mutationFn: (payload: CreateBookPayload) =>
 			api.book.create({
 				title: payload.title,
@@ -52,7 +52,6 @@ export const useCreateForm = () => {
 	})
 
 	const submit = handleSubmit(async (data: CreateBookDtoType) => {
-		console.log('validation,pass')
 		const { data: pictureFile } = await upload({
 			name: data.title,
 			folder: 'booksCovers',
@@ -85,6 +84,7 @@ export const useCreateForm = () => {
 		errors,
 		setValue,
 		getValues,
-		submit
+		submit,
+		submitLoading
 	}
 }

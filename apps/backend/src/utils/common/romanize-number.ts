@@ -6,7 +6,7 @@ const numeralCodes = [
 
 export function convertToRoman(number: number) {
 	let numeral = ''
-	const digits = number.toString().split('').reverse()
+	const digits = [...number.toString()].reverse()
 	for (const [index, digit] of digits.entries()) {
 		numeral = numeralCodes[index][Number.parseInt(digit)] + numeral
 	}

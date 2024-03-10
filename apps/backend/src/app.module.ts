@@ -13,7 +13,7 @@ import { RecommendationModule } from './recommendation/recommendation.module'
 import { ReviewModule } from './review/review.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
-import { RequestLoggerMiddleware } from './utils/request-logger.middleware'
+import { AppLoggerMiddleware } from './utils/helpers/logger'
 import { ActivityModule } from './utils/services/activity/activity.module'
 
 @Module({
@@ -45,6 +45,6 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 })
 export class AppModule {
 	configure(consumer: MiddlewareConsumer) {
-		consumer.apply(RequestLoggerMiddleware).forRoutes('*')
+		consumer.apply(AppLoggerMiddleware).forRoutes('*')
 	}
 }

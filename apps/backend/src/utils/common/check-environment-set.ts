@@ -1,3 +1,4 @@
+import { errorCode, GlobalErrorsEnum } from '../../../../../libs/global/errors'
 import environment, { type EnvironmentType } from './environment.config'
 
 export const checkEnvironmentSet = (): void => {
@@ -10,7 +11,7 @@ export const checkEnvironmentSet = (): void => {
 	)
 	if (environmentProperties.length > 0) {
 		console.error(
-			`Environment variables are not set: ${environmentProperties.join(', ')}`
+			`${GlobalErrorsEnum.somethingWrong}, Code:${errorCode.someEnvNotTransmitted} - ${environmentProperties.join(', ')}`
 		)
 		process.exit(1)
 	}

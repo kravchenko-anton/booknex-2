@@ -1,5 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
-
+apps/web/.sentryclirc
 # compiled output
 dist
 tmp
@@ -139,3 +139,6 @@ apps/native-e2e/artifacts
 apps/booker-e2e/artifacts
 apps/mobile-e2e/artifacts
 apps/test-e2e/artifacts
+
+# Sentry Config File
+.sentryclirc

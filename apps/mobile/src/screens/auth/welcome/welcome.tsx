@@ -16,8 +16,7 @@ const Welcome: FC = () => {
 	useLayoutEffect(() => {
 		GoogleSignin.configure({
 			scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
-			webClientId:
-				'390949311214-hqfqvic7p47pt3elpne00es58k99nonh.apps.googleusercontent.com'
+			webClientId: process.env.CLIENT_ID
 		})
 	}, [])
 

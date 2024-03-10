@@ -28,7 +28,6 @@ const UpdatePicture: FC<UpdatePictureProperties> = ({
 			height={300}
 			src={getFileUrl(picture)}
 			alt='Cover'
-			objectFit='cover'
 			onClick={() => {
 				const element: HTMLElement | null =
 					document.querySelector('input[type=file]')

@@ -10,7 +10,7 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
 const parserRoute = '/admin/parser'
-
+const parserCatalogRoute = parserRoute
 export const useCatalog = () => {
 	const { page, searchTerm, dialog } = useTableParameters()
 	const router = useRouter()
@@ -20,7 +20,7 @@ export const useCatalog = () => {
 	})
 
 	const pushParameters = (parameters: GenerateParametersType) =>
-		router.replace(generateParameters(parserRoute, parameters))
+		router.replace(generateParameters(parserCatalogRoute, parameters))
 
 	const table = useReactTable({
 		data: books?.data ?? [],

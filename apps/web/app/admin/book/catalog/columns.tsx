@@ -1,10 +1,9 @@
-import { Button } from '@/components/ui'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { cn } from '@/utils'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { Book } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
-import { nFormatter } from 'global/helpers/number-formater'
+import { minutesToTime } from 'global/helpers/time-converter'
 import Image from 'next/image'
 
 export const columns = ({
@@ -43,6 +42,13 @@ export const columns = ({
 			>
 				<h3 className='mb-1 text-xl'>{row.original.title}</h3>
 				<p>{row.original.author}</p>
+				<div className='mt-2 flex gap-1'>
+					{row.original.genres.map(genre => (
+						<span key={genre.id} className='text-gray bg-muted rounded-lg p-1'>
+							{genre.name}
+						</span>
+					))}
+				</div>
 			</button>
 		)
 	},
@@ -63,19 +69,7 @@ export const columns = ({
 			</Drawer>
 		)
 	},
-	{
-		id: 'genres',
-		header: () => <p className='text-center text-xl'>Genres</p>,
-		cell: ({ row }) => (
-			<div className='flex w-[200px]  flex-wrap items-center gap-1'>
-				{row.original.genres.map(genre => (
-					<Button size='sm' variant='muted' key={genre.name}>
-						{genre.name}
-					</Button>
-				))}
-			</div>
-		)
-	},
+
 	{
 		id: 'statistic',
 		header: () => <p className='text-center text-xl'>Statistic</p>,
@@ -93,14 +87,14 @@ export const columns = ({
 						</b>
 					</p>
 					<p className='bg-muted mb-2 rounded-lg p-1.5 font-light'>
-						<b className='font-bold text-white'>{row.original.readingTime}</b>{' '}
-						pages
+						<b className='font-bold text-white'>
+							{minutesToTime(row.original.readingTime)}
+						</b>{' '}
+						to read
 					</p>
 					<p className='bg-muted rounded-lg p-1.5 font-light'>
-						<b className='font-bold text-white'>
-							{nFormatter(row.original.rating)}{' '}
-						</b>{' '}
-						popularity
+						<b className='text-warning font-bold'>{row.original.rating} </b>{' '}
+						rating
 					</p>
 				</div>
 			</div>

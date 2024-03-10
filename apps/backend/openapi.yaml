@@ -7,8 +7,12 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileOutput"
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   /api/user/library:
@@ -18,13 +22,17 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLibraryOutput"
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/start-reading/{id}":
     patch:
-      operationId: toggle
+      operationId: startReading
       parameters:
         - name: id
           required: true
@@ -35,7 +43,7 @@ paths:
         "200":
           description: ""
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/finish-reading/{id}":
@@ -51,7 +59,7 @@ paths:
         "200":
           description: ""
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/toggle-save/{id}":
@@ -66,8 +74,12 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: boolean
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/is-saved/{id}":
@@ -82,8 +94,12 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: boolean
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   /api/user/admin/catalog:
@@ -103,8 +119,12 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserAdminCatalogOutput"
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/user/admin/remove/{id}":
@@ -120,7 +140,7 @@ paths:
         "200":
           description: ""
       tags:
-        - user
+        - 👤 user
       security:
         - bearer: []
   "/api/catalog/search/{query}":
@@ -142,7 +162,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/ShortBook"
       tags:
-        - catalog
+        - 📚 catalog
       security:
         - bearer: []
   /api/catalog/featured:
@@ -155,9 +175,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/featuredOutput"
+                $ref: "#/components/schemas/FeaturedOutput"
       tags:
-        - catalog
+        - 📚 catalog
       security:
         - bearer: []
   /api/genre:
@@ -174,7 +194,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/shortGenre"
       tags:
-        - genre
+        - 🔖 genre
       security:
         - bearer: []
   "/api/genre/by-id/{id}":
@@ -192,9 +212,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/byIdOutput"
+                $ref: "#/components/schemas/GenreByIdOutput"
       tags:
-        - genre
+        - 🔖 genre
       security:
         - bearer: []
   "/api/book/by-id/{id}":
@@ -214,7 +234,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/InfoByIdOutput"
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/ebook/{id}":
@@ -234,7 +254,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/EbookByIdOutput"
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/admin/by-id/{id}":
@@ -254,7 +274,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminInfoByIdOutput"
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   /api/book/admin/catalog:
@@ -279,7 +299,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminCatalogOutput"
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   /api/book/admin/create:
@@ -288,6 +308,7 @@ paths:
       parameters: []
       requestBody:
         required: true
+        description: Create book
         content:
           application/json:
             schema:
@@ -296,7 +317,7 @@ paths:
         "200":
           description: ""
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   "/api/book/admin/update/{id}":
@@ -313,17 +334,63 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EditBookDto"
+              $ref: "#/components/schemas/UpdateBookDto"
       responses:
         "200":
           description: ""
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/delete/{id}":
+  "/api/book/admin/update-genre/{id}":
+    put:
+      operationId: updateGenre
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGenreDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  "/api/book/admin/update-ebook/{id}":
+    post:
+      operationId: updateEbook
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/EBookPayload"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  "/api/book/admin/remove/{id}":
     delete:
-      operationId: delete
+      operationId: remove
       parameters:
         - name: id
           required: true
@@ -334,7 +401,7 @@ paths:
         "200":
           description: ""
       tags:
-        - book
+        - 📙 book
       security:
         - bearer: []
   /api/auth/google-sign:
@@ -347,16 +414,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SignDto"
+              $ref: "#/components/schemas/GoogleAuthDto"
       responses:
         "200":
           description: Return access and refresh token
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponseDto"
+                $ref: "#/components/schemas/AuthOutput"
       tags:
-        - auth
+        - 🔐 auth
   /api/auth/mail-register:
     post:
       operationId: register
@@ -374,9 +441,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponseDto"
+                $ref: "#/components/schemas/AuthOutput"
       tags:
-        - auth
+        - 🔐 auth
   /api/auth/mail-login:
     post:
       operationId: login
@@ -394,9 +461,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponseDto"
+                $ref: "#/components/schemas/AuthOutput"
       tags:
-        - auth
+        - 🔐 auth
   /api/auth/refresh:
     post:
       operationId: refreshToken
@@ -414,53 +481,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponseDto"
+                $ref: "#/components/schemas/AuthOutput"
       tags:
-        - auth
-  /api/storage/delete:
-    post:
-      operationId: delete
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FilenameDto"
-      responses:
-        "200":
-          description: File deleted
-      tags:
-        - storage
-      security:
-        - bearer: []
-  /api/storage/replacement:
-    post:
-      operationId: replacement
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-                deleteFilename:
-                  type: string
-      responses:
-        "200":
-          description: File uploaded
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UploadOutputDto"
-      tags:
-        - storage
-      security:
-        - bearer: []
+        - 🔐 auth
   "/api/storage/{folder}":
     post:
       operationId: upload
@@ -513,8 +536,12 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookTemplateCatalogOutput"
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   "/api/parser/admin/by-id/{id}":
@@ -529,8 +556,12 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookTemplate"
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   /api/parser/admin/parse:
@@ -544,10 +575,10 @@ paths:
             schema:
               $ref: "#/components/schemas/ParserDto"
       responses:
-        "200":
+        "201":
           description: ""
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   /api/parser/admin/unfold:
@@ -563,12 +594,18 @@ paths:
               properties:
                 file:
                   type: string
-                  format: epub
+                  format: binary
       responses:
-        "201":
-          description: ""
+        "200":
+          description: Unfolded book content
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UnfoldOutput"
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   "/api/parser/admin/remove/{id}":
@@ -584,7 +621,7 @@ paths:
         "200":
           description: ""
       tags:
-        - parser
+        - 📦 parser
       security:
         - bearer: []
   "/api/review/review/{id}":
@@ -604,10 +641,10 @@ paths:
             schema:
               $ref: "#/components/schemas/ReviewBookDto"
       responses:
-        "201":
-          description: ""
+        "200":
+          description: Review book
       tags:
-        - review
+        - ⭐ review
       security:
         - bearer: []
   /api/recommendation/update-recommendations:
@@ -621,10 +658,10 @@ paths:
             schema:
               $ref: "#/components/schemas/UserUpdateSelectedGenresDto"
       responses:
-        "201":
-          description: ""
+        "200":
+          description: Recommendations updated
       tags:
-        - recommendation
+        - 📨 recommendation
       security:
         - bearer: []
   /api/recommendation/recommendation-genres:
@@ -633,9 +670,15 @@ paths:
       parameters: []
       responses:
         "200":
-          description: ""
+          description: Recommendation genres
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/shortGenre"
       tags:
-        - recommendation
+        - 📨 recommendation
       security:
         - bearer: []
 info:
@@ -647,27 +690,23 @@ info:
     url: https://github.com/kravchenko-anton/booknex-2-monorepo
     email: Github repository
 tags:
-  - name: user
+  - name: 👤 user
     description: user service
-  - name: auth
+  - name: 🔐 auth
     description: auth service
-  - name: admin
-    description: admin service
-  - name: book
+  - name: 📙 book
     description: book service
-  - name: collection
-    description: collection service
-  - name: catalog
+  - name: 📚 catalog
     description: catalog service
-  - name: genre
+  - name: 🔖 genre
     description: genre service
-  - name: storage
+  - name: 📁 storage
     description: storage service
-  - name: review
+  - name: ⭐ review
     description: review service
-  - name: recommendation
+  - name: 📨 recommendation
     description: recommendation service
-  - name: parser
+  - name: 📦 parser
     description: parser service
 servers: []
 components:
@@ -677,563 +716,706 @@ components:
       bearerFormat: JWT
       type: http
   schemas:
+    UserProfileOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        email:
+          type: string
+          example: email
+      required:
+        - id
+        - email
     ShortBook:
       type: object
       properties:
         id:
-          type: integer
+          type: number
+          example: 1
+          description: book id
         title:
           type: string
+          example: title
+          description: book title
         picture:
           type: string
+          example: picture
+          description: book picture
         author:
           type: string
+          example: author
+          description: book author
       required:
         - id
         - title
         - picture
         - author
-    featuredOutput:
+    UserLibraryOutput:
+      type: object
+      properties:
+        readingBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+        finishedBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+        savedBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+      required:
+        - readingBooks
+        - finishedBooks
+        - savedBooks
+    shortGenre:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: genre id
+        name:
+          type: string
+          example: name
+          description: genre name
+      required:
+        - id
+        - name
+    ActivityItem:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Activity message
+          example: startedReading
+        time:
+          type: string
+          description: Active time
+          example: 2021-07-01T10:00:00
+        importance:
+          type: number
+          description: Activity importance
+          example: 1
+      required:
+        - message
+        - time
+        - importance
+    Activity:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Active date
+          example: 2021-07-01
+        count:
+          type: number
+          description: Active count
+          example: 10
+        level:
+          type: number
+          description: Active level
+          example: 10
+        activities:
+          description: List of activities
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivityItem"
+      required:
+        - date
+        - count
+        - level
+        - activities
+    UserCountOutput:
+      type: object
+      properties:
+        savedBooks:
+          type: number
+          example: 1
+        finishedBooks:
+          type: number
+          example: 1
+        readingBooks:
+          type: number
+          example: 1
+      required:
+        - savedBooks
+        - finishedBooks
+        - readingBooks
+    CatalogUserOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: user id
+        createdAt:
+          format: date-time
+          type: string
+          example: 2021-07-01
+          description: user created at
+        email:
+          type: string
+          example: email
+          description: user email
+        socialId:
+          type: string
+          example: socialId
+          description: user social id
+        password:
+          type: string
+          example: password
+          description: user password
+        picture:
+          type: string
+          example: picture
+          description: user picture
+        fullName:
+          type: string
+          example: fullName
+          description: user full name
+        location:
+          type: string
+          example: location
+          description: user location
+        selectedGenres:
+          type: array
+          items:
+            $ref: "#/components/schemas/shortGenre"
+        activities:
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+        _count:
+          description: Count of books finished, reading and saved by the user
+          allOf:
+            - $ref: "#/components/schemas/UserCountOutput"
+      required:
+        - id
+        - createdAt
+        - email
+        - socialId
+        - password
+        - picture
+        - fullName
+        - location
+        - selectedGenres
+        - activities
+        - _count
+    UserAdminCatalogOutput:
+      type: object
+      properties:
+        canLoadMore:
+          type: boolean
+          example: true
+          description: can load more
+        totalPages:
+          type: number
+          example: 1
+          description: total pages
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CatalogUserOutput"
+      required:
+        - canLoadMore
+        - totalPages
+        - data
+    FeaturedOutput:
       type: object
       properties:
         relatedGenres:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              name:
-                type: string
-                required: true
-            required:
-              - id
-              - name
+            $ref: "#/components/schemas/shortGenre"
         recommendations:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
         popularBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
         bestSellingBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
         newReleases:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
+            $ref: "#/components/schemas/ShortBook"
       required:
         - relatedGenres
         - recommendations
         - popularBooks
         - bestSellingBooks
         - newReleases
-    shortGenre:
+    GenreByIdOutput:
       type: object
       properties:
         id:
-          type: integer
+          type: number
+          example: 1
+          description: genre id
         name:
           type: string
-      required:
-        - id
-        - name
-    byIdOutput:
-      type: object
-      properties:
-        majorBooks:
+          example: name
+          description: genre name
+        mainBooks:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - id
-              - title
-              - picture
-              - author
-            id:
-              example: 1
-              description: book id
-            title:
-              example: title
-              description: book title
-            picture:
-              example: picture
-              description: book picture
-            author:
-              example: author
-              description: book author
-        id:
-          type: integer
-        name:
-          type: string
+            $ref: "#/components/schemas/ShortBook"
       required:
-        - majorBooks
         - id
         - name
+        - mainBooks
     InfoByIdOutput:
       type: object
       properties:
         id:
-          type: integer
+          type: number
+          example: 1
+          description: book id
         title:
           type: string
+          example: title
+          description: book title
         picture:
           type: string
+          example: picture
+          description: book picture
         author:
           type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
         genres:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              name:
-                type: string
-                required: true
-            required:
-              - id
-              - name
+            $ref: "#/components/schemas/shortGenre"
       required:
         - id
         - title
         - picture
         - author
+        - description
         - genres
+    OutputChapterChild:
+      type: object
+      properties:
+        name:
+          type: string
+          example: name
+          description: chapter child name
+        link:
+          type: string
+          example: link
+          description: chapter child link
+      required:
+        - name
+        - link
+    OutputChapter:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+          description: chapter title
+        children:
+          description: chapter children
+          type: array
+          items:
+            $ref: "#/components/schemas/OutputChapterChild"
+      required:
+        - title
+        - children
     EbookByIdOutput:
       type: object
       properties:
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
         file:
+          description: book file
           type: array
           items:
             type: string
         chapters:
+          description: book chapters
           type: array
           items:
-            type: object
-            properties:
-              title:
-                type: string
-                required: true
-              children:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      required: true
-                    link:
-                      type: string
-                      required: true
-                  required:
-                    - name
-                    - link
-                required: true
-            required:
-              - title
-              - children
-        id:
-          type: integer
-        title:
-          type: string
-        picture:
-          type: string
-        author:
-          type: string
+            $ref: "#/components/schemas/OutputChapter"
       required:
-        - file
-        - chapters
-        - id
         - title
         - picture
-        - author
+        - file
+        - chapters
+    CountOutput:
+      type: object
+      properties:
+        finishedBy:
+          type: number
+          example: 1
+          description: FinishedBy
+        readingBy:
+          type: number
+          example: 1
+          description: ReadingBy
+        savedBy:
+          type: number
+          example: 1
+          description: SavedBy
+      required:
+        - finishedBy
+        - readingBy
+        - savedBy
+    Review:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: review id
+        tags:
+          example: tags
+          description: review tags
+          type: array
+          items:
+            type: string
+        text:
+          type: string
+          example: text
+          description: review text
+        rating:
+          type: number
+          example: 1
+          description: review rating
+      required:
+        - id
+        - tags
+        - text
+        - rating
     AdminInfoByIdOutput:
       type: object
       properties:
-        visible:
-          type: boolean
-        ebook:
-          type: string
-        description:
-          type: string
-        popularity:
-          type: integer
-        pages:
-          type: integer
-        _count:
-          type: object
-          properties:
-            finishedBy:
-              type: integer
-              required: true
-            readingBy:
-              type: integer
-              required: true
-            savedBy:
-              type: integer
-              required: true
-        review:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              tags:
-                type: array
-                items:
-                  type: string
-                required: true
-              text:
-                type: string
-                required: true
-              rating:
-                type: integer
-                required: true
-              user:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    required: true
-                  email:
-                    type: string
-                    required: true
-                required: true
-            required:
-              - id
-              - tags
-              - text
-              - rating
-              - user
         id:
-          type: integer
+          type: number
+          example: 1
+          description: book id
         title:
           type: string
+          example: title
+          description: book title
         picture:
           type: string
+          example: picture
+          description: book picture
         author:
           type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        readingTime:
+          type: number
+          example: 100
+          description: book readingTime
+        rating:
+          type: number
+          example: 5
+          description: book rating
+        visible:
+          type: boolean
+          example: true
+          description: book visibility
         genres:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                required: true
-              name:
-                type: string
-                required: true
-            required:
-              - id
-              - name
+            $ref: "#/components/schemas/shortGenre"
+        createdAt:
+          type: string
+          example: 2021-07-01
+          description: book created at
+        updatedAt:
+          type: string
+          example: 2021-07-01
+          description: book updated at
+        ebook:
+          type: string
+          example: ebook
+          description: book ebook
+        activities:
+          description: book activities
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+        _count:
+          description: book count
+          allOf:
+            - $ref: "#/components/schemas/CountOutput"
+        review:
+          description: book review
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
       required:
-        - visible
-        - ebook
-        - description
-        - popularity
-        - pages
-        - _count
-        - review
         - id
         - title
         - picture
         - author
+        - description
+        - readingTime
+        - rating
+        - visible
+        - genres
+        - createdAt
+        - updatedAt
+        - ebook
+        - activities
+        - _count
+        - review
+    Book:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: book id
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        readingTime:
+          type: number
+          example: 100
+          description: book readingTime
+        rating:
+          type: number
+          example: 5
+          description: book rating
+        visible:
+          type: boolean
+          example: true
+          description: book visibility
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/shortGenre"
+      required:
+        - id
+        - title
+        - picture
+        - author
+        - description
+        - readingTime
+        - rating
+        - visible
         - genres
     AdminCatalogOutput:
       type: object
       properties:
+        canLoadMore:
+          type: boolean
+          example: true
+          description: can load more
+        totalPages:
+          type: number
+          example: 1
+          description: total pages
         data:
           type: array
           items:
-            type: object
-            properties:
-              description:
-                type: string
-                required: true
-              pages:
-                type: integer
-                required: true
-              popularity:
-                type: integer
-                required: true
-              visible:
-                type: boolean
-                required: true
-              genres:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      required: true
-                    name:
-                      type: string
-                      required: true
-                  required:
-                    - id
-                    - name
-                required: true
-              majorGenre:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    required: true
-                  name:
-                    type: string
-                    required: true
-                required: true
-              id:
-                type: integer
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - description
-              - pages
-              - popularity
-              - visible
-              - genres
-              - majorGenre
-              - id
-              - title
-              - picture
-              - author
-        canLoadMore:
-          type: boolean
-        totalPages:
-          type: integer
+            $ref: "#/components/schemas/Book"
       required:
-        - data
         - canLoadMore
         - totalPages
+        - data
+    PayloadChapter:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        text:
+          type: string
+      required:
+        - id
+        - name
+        - text
+    EBookPayload:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        chapters:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayloadChapter"
+      required:
+        - id
+        - title
+        - chapters
     CreateBookDto:
       type: object
       properties:
         title:
           type: string
-          minLength: 1
-          maxLength: 255
-        author:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type: string
-          minLength: 1
-          maxLength: 255
+          example: title
+          description: book title
         picture:
           type: string
-          minLength: 1
-          maxLength: 255
-        ebook:
+          example: picture
+          description: book picture
+        author:
           type: string
-          minLength: 1
-          maxLength: 255
-        pages:
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        rating:
           type: number
-          minimum: 0
-          exclusiveMinimum: true
-        popularity:
-          type: number
-          minimum: 0
-          exclusiveMinimum: true
+          example: 5
+          description: book rating
+        ebook:
+          type: array
+          items:
+            $ref: "#/components/schemas/EBookPayload"
         genres:
+          description: Array of genres
+          example:
+            - 1
+            - 2
+            - 3
           type: array
           items:
             type: number
-            minimum: 0
-            exclusiveMinimum: true
       required:
         - title
+        - picture
         - author
         - description
-        - picture
+        - rating
         - ebook
-        - pages
-        - popularity
         - genres
-    EditBookDto:
+    UpdateBookDto:
       type: object
       properties:
         title:
           type: string
-          minLength: 1
-          maxLength: 255
-        author:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type: string
-          minLength: 1
-          maxLength: 255
+          example: title
+          description: book title
         picture:
           type: string
-          minLength: 1
-          maxLength: 255
-        ebook:
+          example: picture
+          description: book picture
+        author:
           type: string
-          minLength: 1
-          maxLength: 255
-        pages:
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        rating:
           type: number
-          minimum: 0
-          exclusiveMinimum: true
-        popularity:
-          type: number
-          minimum: 0
-          exclusiveMinimum: true
+          example: 5
+          description: book rating
+        visible:
+          type: boolean
+          example: true
+          description: book visibility
+    UpdateGenreDto:
+      type: object
+      properties:
         genres:
+          description: Array of genres
+          example:
+            - 1
+            - 2
+            - 3
           type: array
           items:
             type: number
-            minimum: 0
-            exclusiveMinimum: true
-      required:
-        - title
-        - author
-        - description
-        - picture
-        - ebook
-        - pages
-        - popularity
-        - genres
-    SignDto:
+    GoogleAuthDto:
       type: object
       properties:
         socialId:
           type: string
+          description: Social id
+          example: "1234567890"
       required:
         - socialId
-    AuthResponseDto:
+    AuthUser:
+      type: object
+      properties:
+        id:
+          type: number
+          description: User id
+          example: 1
+        email:
+          type: string
+          description: User email
+          example: test@gmail.com
+        role:
+          type: string
+          description: User role
+          example: user
+          enum:
+            - user
+            - admin
+      required:
+        - id
+        - email
+        - role
+    AuthOutput:
       type: object
       properties:
         accessToken:
           type: string
+          description: Access token
+          example: "1234567890"
         refreshToken:
           type: string
+          description: Refresh token
+          example: "1234567890"
         type:
           type: string
+          description: type of auth
+          example: login
         user:
-          type: object
-          properties:
-            id:
-              type: number
-              minimum: 0
-              exclusiveMinimum: true
-              required: true
-            email:
-              type: string
-              required: true
-            role:
-              type: string
-              enum:
-                - admin
-                - user
-              required: true
+          description: User data
+          allOf:
+            - $ref: "#/components/schemas/AuthUser"
       required:
         - accessToken
         - refreshToken
@@ -1244,10 +1426,12 @@ components:
       properties:
         email:
           type: string
-          format: email
+          description: User email
+          example: test@gmail.com
         password:
           type: string
-          minLength: 8
+          description: User password
+          example: password
       required:
         - email
         - password
@@ -1256,61 +1440,124 @@ components:
       properties:
         refreshToken:
           type: string
+          description: Refresh token
+          example: "1234567890"
       required:
         - refreshToken
-    FilenameDto:
-      type: object
-      properties:
-        filename:
-          type: string
-          minLength: 1
-          maxLength: 255
-      required:
-        - filename
     UploadOutputDto:
       type: object
       properties:
         name:
           type: string
-          minLength: 1
-          maxLength: 255
       required:
         - name
+    BookTemplate:
+      type: object
+      properties:
+        id:
+          type: number
+          description: id of the book
+        title:
+          type: string
+          description: title of the book
+        author:
+          type: string
+          description: author of the book
+        description:
+          type: string
+          description: description of the book
+        picture:
+          type: string
+          description: picture of the book
+        rating:
+          type: number
+          description: rating of the book
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/shortGenre"
+      required:
+        - id
+        - title
+        - author
+        - description
+        - picture
+        - rating
+        - genres
+    BookTemplateCatalogOutput:
+      type: object
+      properties:
+        canLoadMore:
+          type: boolean
+          example: true
+          description: can load more
+        totalPages:
+          type: number
+          example: 1
+          description: total pages
+        data:
+          description: book template
+          type: array
+          items:
+            $ref: "#/components/schemas/BookTemplate"
+      required:
+        - canLoadMore
+        - totalPages
+        - data
     ParserDto:
       type: object
       properties:
         url:
           type: string
-          minLength: 1
-          maxLength: 255
+          description: url of the parser
         page:
-          type: integer
+          type: number
+          description: page of the parser
       required:
         - url
         - page
+    UnfoldOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          description: id of the chapter
+        name:
+          type: string
+          description: name of the chapter
+        text:
+          type: string
+          description: text of the chapter
+      required:
+        - id
+        - name
+        - text
     ReviewBookDto:
       type: object
       properties:
         rating:
-          type: integer
-          minimum: 1
-          maximum: 5
+          type: number
+          example: 5
+          description: rating
         tags:
+          description: tags
           type: array
           items:
             type: string
         comment:
           type: string
+          example: comment
+          description: comment
       required:
         - rating
+        - tags
     UserUpdateSelectedGenresDto:
       type: object
       properties:
         selectedGenres:
+          description: selected genres
           type: array
           items:
             type: number
-            minimum: 0
-            exclusiveMinimum: true
       required:
         - selectedGenres

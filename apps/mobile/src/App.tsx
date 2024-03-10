@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { GlobalErrorsEnum, errorCode } from 'global/errors'
 import { View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
@@ -26,7 +27,11 @@ const queryClient = new QueryClient({
 const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
-
+const googleAuthClientID = process.env.CLIENT_ID
+if (!googleAuthClientID)
+	throw new Error(
+		`${GlobalErrorsEnum.somethingWrong}, Code:${errorCode.someEnvNotTransmitted}`
+	)
 export default function app() {
 	return (
 		<Provider store={store}>

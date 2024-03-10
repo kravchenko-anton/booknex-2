@@ -26,3 +26,7 @@ export enum AdminErrors {
 
 	userNotFound = 'User not found'
 }
+
+export const errorCode = {
+	someEnvNotTransmitted: '4056'
+}

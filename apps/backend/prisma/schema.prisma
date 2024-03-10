@@ -65,6 +65,7 @@ model Book {
   description String
   picture     String
   ebook       String
+  // Minutes
   readingTime Int          @default(0)
   rating      Float        @default(0)
   visible     Boolean      @default(false)
@@ -132,6 +133,7 @@ enum Activities {
   visitBook
   createBook
   updateBook
+  updateGenre
   visitGenre
   visitCollection
   getEbook

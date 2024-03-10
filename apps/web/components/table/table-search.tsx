@@ -14,7 +14,11 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 	title = '',
 	onSearchSubmit
 }) => {
-	const { control, handleSubmit } = useForm<{ searchTerm: string }>()
+	const { control, handleSubmit } = useForm<{ searchTerm: string }>({
+		defaultValues: {
+			searchTerm: defaultTerm
+		}
+	})
 	return (
 		<div className=' flex w-full items-center justify-between  p-3'>
 			<h1 className='text-3xl font-medium'>{title}</h1>
@@ -24,7 +28,6 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 						control={control}
 						icon={Search}
 						name='searchTerm'
-						defaultValue={defaultTerm}
 						placeholder='Explore...'
 						type='search'
 					/>

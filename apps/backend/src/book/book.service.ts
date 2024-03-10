@@ -184,7 +184,7 @@ export class BookService {
 
 		await this.activityService.create({
 			type: Activities.getEbook,
-			importance: 1,
+			importance: 2,
 			userId,
 			bookId: id
 		})
@@ -244,9 +244,8 @@ export class BookService {
 
 	async create(dto: CreateBookDto) {
 		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
-		const { chaptersCount, readingTime, uploadedEbook } = useGetEbook(dto.ebook)
+		const { readingTime, uploadedEbook } = useGetEbook(dto.ebook)
 		Logger.log({
-			chaptersCount,
 			readingTime,
 			uploadedEbook,
 			dtoEbook: dto.ebook
@@ -306,6 +305,8 @@ export class BookService {
 	}
 
 	async updateEbook(id: number, dto: EBookPayload[]) {
+		await this.checkExist(id)
+		const { uploadedEbook, readingTime } = useGetEbook(dto)
 		const book = await this.findOne({
 			where: { id },
 			select: {
@@ -314,14 +315,15 @@ export class BookService {
 		})
 		const { name: ebookName } = await this.storageService.upload({
 			folder: StorageFolderEnum.ebooks,
-			file: Buffer.from(JSON.stringify(dto)),
+			file: Buffer.from(JSON.stringify(uploadedEbook)),
 			role: 'admin',
 			filename: `${book.title}.json`
 		})
 		await this.prisma.book.update({
 			where: { id },
 			data: {
-				ebook: ebookName
+				ebook: ebookName,
+				readingTime
 			}
 		})
 	}
@@ -329,6 +331,11 @@ export class BookService {
 	async updateGenre(id: number, dto: UpdateGenreDto) {
 		await this.checkExist(id)
 		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
+		await this.activityService.create({
+			type: Activities.updateGenre,
+			importance: 7,
+			bookId: id
+		})
 		await this.prisma.book.update({
 			where: { id },
 			data: {
@@ -352,7 +359,7 @@ export class BookService {
 
 		await this.activityService.create({
 			type: Activities.updateBook,
-			importance: 9,
+			importance: 7,
 			bookId: id
 		})
 	}

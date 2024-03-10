@@ -14,9 +14,9 @@ export const useGetEbook = (ebooks: EBookPayload[]) => {
 		title: ebook.title,
 		chapters: ebook.chapters.map((chapter, chapterIndex) => ({
 			id: chapterIndex + 1,
+			romanNumber: convertToRoman(chapterIndex + 1),
 			name: chapter.name,
-			text: chapter.text,
-			romanNumber: convertToRoman(chapterIndex + 1)
+			text: chapter.text
 		}))
 	}))
 	const readingTime = calculateReadingTime(
@@ -24,12 +24,11 @@ export const useGetEbook = (ebooks: EBookPayload[]) => {
 			.map(ebook => ebook.chapters.map(chapter => chapter.text).join(' '))
 			.join(' ')
 	)
-	const chaptersCount = ebooks
-		.map(ebook => ebook.chapters.length)
-		.reduce((a, b) => a + b, 0)
+	// const chaptersCount = ebooks
+	// 	.map(ebook => ebook.chapters.length)
+	// 	.reduce((a, b) => a + b, 0)
 	return {
 		uploadedEbook,
-		readingTime,
-		chaptersCount
+		readingTime
 	}
 }

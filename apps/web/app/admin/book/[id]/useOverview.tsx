@@ -21,7 +21,7 @@ export const useOverview = () => {
 		queryFn: () => api.book.infoByIdAdmin(id),
 		select: data => data.data
 	})
-	const { mutateAsync: update } = useMutation({
+	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
 		mutationKey: ['update-book'],
 		mutationFn: ({ id, payload }: { id: number; payload: UpdateBookDto }) =>
 			api.book.update(id, payload),
@@ -35,6 +35,7 @@ export const useOverview = () => {
 
 	const updatePicture = async (file: File) => {
 		if (!book) return errorToast('Book not found')
+		if (updateLoading) return
 		const { data: picture } = await upload({
 			blob: file,
 			name: book.title,
@@ -75,6 +76,7 @@ export const useOverview = () => {
 
 	const toggleVisibility = async () => {
 		if (!book) return errorToast('Book not found')
+		if (updateLoading) return
 		await update({
 			id,
 			payload: {
@@ -88,6 +90,7 @@ export const useOverview = () => {
 	return {
 		book,
 		update,
+		updateLoading,
 		remove,
 		updateEbook,
 		updatePicture,

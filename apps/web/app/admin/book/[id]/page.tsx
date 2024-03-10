@@ -1,5 +1,6 @@
 'use client'
 
+import InfoBlock from '@/app/admin/book/[id]/_ui/info-block'
 import UpdateBio from '@/app/admin/book/[id]/_ui/update-bio'
 import UpdateGenres from '@/app/admin/book/[id]/_ui/update-genres'
 import UpdatePicture from '@/app/admin/book/[id]/_ui/update-picture'
@@ -29,33 +30,12 @@ const Page = () => {
 						}}
 					/>
 					<div className='mt-4 px-0.5'>
-						<div className='border-foreground my-2 border-2 p-2'>
-							<p className='text-md mb-1'>
-								finished By:
-								<b className='text-white'> {book._count.finishedBy}</b>
-							</p>
-							<p className='text-md mb-1'>
-								saved By: <b className='text-white'> {book._count.savedBy}</b>
-							</p>
-
-							<p className='text-md mb-1'>
-								reading By:
-								<b className='text-white'> {book._count.readingBy}</b>
-							</p>
-
-							<p className='text-md mb-1'>
-								create At:
-								<b className='text-white'>
-									{' ' + new Date(book.createdAt).toLocaleDateString()}
-								</b>
-							</p>
-							<p className='text-md'>
-								update At:
-								<b className='text-white'>
-									{' ' + new Date(book.updatedAt).toLocaleDateString()}
-								</b>
-							</p>
-						</div>
+						<InfoBlock
+							readingTime={book.readingTime}
+							createdAt={book.createdAt}
+							_count={book._count}
+							updatedAt={book.updatedAt}
+						/>
 						<div className='mb-4 flex gap-2 md:mt-0'>
 							<button
 								className={cn(

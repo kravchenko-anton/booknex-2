@@ -29,7 +29,13 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 		formState: { dirtyFields }
 	} = useForm<UpdateBookDtoType>({
 		mode: 'onSubmit',
-		resolver: zodResolver(UpdateBookDto)
+		resolver: zodResolver(UpdateBookDto),
+		defaultValues: {
+			title: properties.title,
+			author: properties.author,
+			rating: properties.rating,
+			description: properties.description
+		}
 	})
 
 	return (
@@ -37,20 +43,11 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 			<div className='mb-4 flex flex-wrap gap-2 md:flex-nowrap'>
 				<div className='md:w-4/5'>
 					<h1 className='mb-2 text-xl'>Title</h1>
-					<Field
-						control={control}
-						name='title'
-						defaultValue={properties.title}
-					/>
+					<Field control={control} name='title' />
 				</div>
 				<div className='md:w-3/4'>
 					<h1 className='mb-2 text-xl'>Author</h1>
-					<Field
-						control={control}
-						name='author'
-						defaultValue={properties.author}
-						icon={PenNib}
-					/>
+					<Field control={control} name='author' icon={PenNib} />
 				</div>
 
 				<div className='md:w-5/12'>
@@ -62,7 +59,6 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 						type='number'
 						max={5}
 						min={1}
-						defaultValue={properties.rating}
 						icon={Star}
 					/>
 				</div>
@@ -74,7 +70,6 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 					control={control}
 					name='description'
 					className='text-md'
-					defaultValue={properties.description}
 					style={{
 						height: 250
 					}}

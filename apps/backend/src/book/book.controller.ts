@@ -73,7 +73,6 @@ export class BookController {
 		description: 'Create book'
 	})
 	async create(@Body() dto: CreateBookDto) {
-		console.log(dto)
 		return this.bookService.create(dto)
 	}
 

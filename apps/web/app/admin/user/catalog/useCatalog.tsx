@@ -10,6 +10,7 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
 export const userRoute = '/admin/user'
+export const userCatalogRoute = userRoute + '/catalog'
 export const useCatalog = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
@@ -24,7 +25,7 @@ export const useCatalog = () => {
 	})
 
 	const pushParameters = (parameters: GenerateParametersType) =>
-		router.replace(generateParameters(userRoute, parameters))
+		router.replace(generateParameters(userCatalogRoute, parameters))
 
 	const headerProperties = {
 		defaultTerm: searchTerm,

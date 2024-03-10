@@ -21,13 +21,11 @@ import { Controller } from 'react-hook-form'
 
 interface SelectGenresProperties {
 	disable?: boolean
-	defaultValue?: number[]
 	control: any
 }
 
 const SelectGenres: FC<SelectGenresProperties> = ({
 	disable = false,
-	defaultValue = [],
 	control,
 	...properties
 }) => {
@@ -41,7 +39,6 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 		<Controller
 			control={control}
 			name='genres'
-			defaultValue={defaultValue}
 			render={({
 				field: { value = [], onChange: setGenre },
 				fieldState: { error }
@@ -58,7 +55,11 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 									{...properties}
 								>
 									<span className='flex flex-wrap gap-2'>
-										Selected genres ({value.length})
+										{value.map((selectedGenre: number) => (
+											<span key={selectedGenre}>
+												{genres.find(genre => genre.id === selectedGenre)?.name}
+											</span>
+										))}
 									</span>
 								</div>
 							</PopoverTrigger>
