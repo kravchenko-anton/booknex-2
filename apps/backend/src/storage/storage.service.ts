@@ -73,7 +73,6 @@ export class StorageService {
 		if (!StorageFolderArray.includes(folder)) {
 			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.invalidFolder)
 		}
-		await this.delete(`${folder}/${optimizeFilename(filename)}`)
 		const finalFile =
 			folder === StorageFolderEnum.ebooks
 				? file

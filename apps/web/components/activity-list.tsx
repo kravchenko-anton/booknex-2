@@ -20,8 +20,9 @@ const activityPalette = [
 ]
 
 const ActivityList: FC<{
+	onlyGraph?: boolean
 	data: ActivitiesOutput[]
-}> = ({ data = [] }) => {
+}> = ({ onlyGraph = false, data = [] }) => {
 	const [selectActivity, setSelectActivity] = useState<ActivitiesOutput | null>(
 		null
 	)
@@ -30,8 +31,11 @@ const ActivityList: FC<{
 		setSelectActivity(active)
 	}
 	return (
-		<div className='sm:min-w-full xl:min-w-[700px]'>
+		<div className='sm:min-w-full xl:min-w-[600px]'>
 			<ActivityCalendar
+				hideColorLegend={onlyGraph}
+				hideTotalCount={onlyGraph}
+				hideMonthLabels={onlyGraph}
 				maxLevel={10}
 				data={data}
 				style={{
@@ -53,7 +57,7 @@ const ActivityList: FC<{
 					<>
 						<SheetHeader className='pb-2'>
 							<h1 className='text-3xl font-medium'>
-								Activities: {new Date(selectActivity.date).toLocaleDateString()}
+								Activities: {new Date(selectActivity.date).toDateString()}
 							</h1>
 						</SheetHeader>
 						<div className='no-scrollbar h-[95%] w-full overflow-y-scroll'>

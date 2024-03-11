@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
+	ArrayMinSize,
 	IsArray,
 	IsBoolean,
 	IsNumber,
@@ -57,6 +58,7 @@ export class Book extends ShortBook {
 
 	@ApiProperty({ type: [shortGenre] })
 	@IsArray()
+	@ArrayMinSize(1)
 	@ValidateNested()
 	@Type(() => shortGenre)
 	genres: {

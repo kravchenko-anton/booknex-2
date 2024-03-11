@@ -15,37 +15,31 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AuthUserDto } from './auth-user-dto';
+import { PayloadChapter } from './payload-chapter';
 
 /**
  * 
  * @export
- * @interface AuthResponseDto
+ * @interface PayloadEBook
  */
-export interface AuthResponseDto {
+export interface PayloadEBook {
     /**
-     * Access token
+     * 
+     * @type {number}
+     * @memberof PayloadEBook
+     */
+    'id': number;
+    /**
+     * 
      * @type {string}
-     * @memberof AuthResponseDto
+     * @memberof PayloadEBook
      */
-    'accessToken': string;
+    'title': string;
     /**
-     * Refresh token
-     * @type {string}
-     * @memberof AuthResponseDto
+     * 
+     * @type {Array<PayloadChapter>}
+     * @memberof PayloadEBook
      */
-    'refreshToken': string;
-    /**
-     * type of auth
-     * @type {string}
-     * @memberof AuthResponseDto
-     */
-    'type': string;
-    /**
-     * User data
-     * @type {AuthUserDto}
-     * @memberof AuthResponseDto
-     */
-    'user': AuthUserDto;
+    'chapters': Array<PayloadChapter>;
 }
 

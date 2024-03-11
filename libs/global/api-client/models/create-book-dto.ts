@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { EBookPayload } from './ebook-payload';
+import { PayloadEBook } from './payload-ebook';
 
 /**
  * 
@@ -55,10 +55,10 @@ export interface CreateBookDto {
     'rating': number;
     /**
      * 
-     * @type {Array<EBookPayload>}
+     * @type {Array<PayloadEBook>}
      * @memberof CreateBookDto
      */
-    'ebook': Array<EBookPayload>;
+    'ebook': Array<PayloadEBook>;
     /**
      * Array of genres
      * @type {Array<number>}

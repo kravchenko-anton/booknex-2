@@ -54,13 +54,18 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 									)}
 									{...properties}
 								>
-									<span className='flex flex-wrap gap-2'>
-										{value.map((selectedGenre: number) => (
-											<span key={selectedGenre}>
-												{genres.find(genre => genre.id === selectedGenre)?.name}
-											</span>
-										))}
-									</span>
+									<div className='flex max-w-xl flex-nowrap gap-2 overflow-hidden'>
+										{value.length > 0
+											? value.map((selectedGenre: number) => (
+													<span key={selectedGenre}>
+														{
+															genres.find(genre => genre.id === selectedGenre)
+																?.name
+														}
+													</span>
+												))
+											: 'No genre selected'}
+									</div>
 								</div>
 							</PopoverTrigger>
 							<PopoverContent className=' p-0'>

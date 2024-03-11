@@ -12,7 +12,7 @@ export const useTemplate = ({
 	setValue: UseFormSetValue<CreateBookDtoType>
 }) => {
 	const parameters = useSearchParams()
-	const id = Number(parameters.get('template'))
+	const id = +(parameters.get('template') ?? 0)
 	const { data: template } = useQuery({
 		queryKey: ['book-template'],
 		queryFn: () => api.parser.byId(id),

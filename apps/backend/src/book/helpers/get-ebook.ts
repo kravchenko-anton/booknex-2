@@ -1,5 +1,5 @@
 import { convertToRoman } from '../../utils/common/romanize-number'
-import type { EBookPayload } from '../ebook.model'
+import type { PayloadEBook } from '../ebook.model'
 
 const calculateReadingTime = (text: string) => {
 	const wordsPerMinute = 200
@@ -8,7 +8,7 @@ const calculateReadingTime = (text: string) => {
 	return Math.ceil(minutes)
 }
 
-export const useGetEbook = (ebooks: EBookPayload[]) => {
+export const useGetEbook = (ebooks: PayloadEBook[]) => {
 	const uploadedEbook = ebooks.map((ebook, ebookIndex) => ({
 		id: ebookIndex + 1,
 		title: ebook.title,

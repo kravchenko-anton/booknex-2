@@ -1,10 +1,9 @@
-import { bookRoute } from '@/app/admin/book/catalog/useCatalog'
+import { bookRoute } from '@/app/admin/book/_shared/route-names'
 import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { UpdateBookDto } from 'global/api-client'
-import type { EBookType } from 'global/api-client/models/ebook-type'
+import type { PayloadEBook, UpdateBookDto } from 'global/api-client'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useOverview = () => {
@@ -12,7 +11,11 @@ export const useOverview = () => {
 	const parameters = useParams()
 	const queryClient = useQueryClient()
 	const router = useRouter()
-	const id = Number(parameters.id)
+	const parametersId = +parameters.id || 0
+	const id =
+		!Number.isNaN(parametersId) && parametersId > 0 && parametersId < 10_000
+			? parametersId
+			: 0
 	//TODO: полностью переписать  чтобы было всё вынесенно в бекенд и не было багов, так-же всё было оптимизированно
 
 	console.log(id, 'it is id')
@@ -38,7 +41,6 @@ export const useOverview = () => {
 		if (updateLoading) return
 		const { data: picture } = await upload({
 			blob: file,
-			name: book.title,
 			folder: 'booksCovers'
 		})
 		if (!picture) return errorToast('Picture not uploaded')
@@ -55,7 +57,7 @@ export const useOverview = () => {
 
 	const { mutateAsync: updateEbook } = useMutation({
 		mutationKey: ['update-picture'],
-		mutationFn: ({ id, payload }: { id: number; payload: EBookType[] }) =>
+		mutationFn: ({ id, payload }: { id: number; payload: PayloadEBook[] }) =>
 			api.book.updateEbook(id, payload),
 		onSuccess: async () => {
 			successToast('Book updated')

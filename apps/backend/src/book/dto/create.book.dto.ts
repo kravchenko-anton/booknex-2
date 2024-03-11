@@ -7,7 +7,7 @@ import {
 	ValidateNested
 } from 'class-validator'
 import { Book } from '../book.entity'
-import { EBookPayload } from '../ebook.model'
+import { PayloadEBook } from '../ebook.model'
 
 export class CreateBookDto extends OmitType(Book, [
 	'readingTime',
@@ -15,14 +15,15 @@ export class CreateBookDto extends OmitType(Book, [
 	'id',
 	'visible'
 ]) {
-	@ApiProperty({ type: [EBookPayload] })
-	@IsArray()
-	@ValidateNested()
-	@Type(() => EBookPayload)
-	ebook: EBookPayload[]
-
+	@ApiProperty({ type: [PayloadEBook] })
 	@IsArray()
 	@ArrayMinSize(1)
+	@ValidateNested()
+	@Type(() => PayloadEBook)
+	ebook: PayloadEBook[]
+
+	@IsArray()
+	@ArrayMinSize(2)
 	@ApiProperty({
 		description: 'Array of genres',
 		example: [1, 2, 3],

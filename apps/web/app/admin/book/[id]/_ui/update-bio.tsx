@@ -40,8 +40,8 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 
 	return (
 		<div>
-			<div className='mb-4 flex flex-wrap gap-2 md:flex-nowrap'>
-				<div className='md:w-4/5'>
+			<div className='mb-4 flex flex-wrap items-center justify-center  gap-2 md:flex-nowrap'>
+				<div className='md:w-4/5 '>
 					<h1 className='mb-2 text-xl'>Title</h1>
 					<Field control={control} name='title' />
 				</div>

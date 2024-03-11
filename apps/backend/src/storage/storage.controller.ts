@@ -20,6 +20,7 @@ import { RoleType } from '../auth/auth.service'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import environment from '../utils/common/environment.config'
+import { optimizeFilename } from '../utils/helpers/string.functions'
 import { UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
 import { StorageFolderType } from './storage.types'
@@ -67,7 +68,7 @@ export class StorageController {
 	): Promise<UploadOutputDto> {
 		return this.uploadService.upload({
 			file: file.buffer,
-			filename: file.originalname,
+			filename: optimizeFilename(file.originalname),
 			folder,
 			role
 		})

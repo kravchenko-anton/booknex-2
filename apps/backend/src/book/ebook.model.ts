@@ -1,6 +1,7 @@
-import { ApiProperty, PickType } from '@nestjs/swagger'
+import { ApiProperty, OmitType, PickType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
+	ArrayMinSize,
 	IsArray,
 	IsNumber,
 	IsOptional,
@@ -11,7 +12,7 @@ import {
 import { ShortBook } from './book.entity'
 
 /* Payload */
-export class PayloadChapter {
+export class Chapter {
 	@ApiProperty({ type: Number })
 	@IsNumber()
 	@IsOptional()
@@ -24,9 +25,15 @@ export class PayloadChapter {
 	@ApiProperty({ type: String })
 	@IsString()
 	text: string
+
+	@ApiProperty({ type: String })
+	@IsString()
+	romanNumber: string
 }
 
-export class EBookPayload {
+export class PayloadChapter extends OmitType(Chapter, ['romanNumber']) {}
+
+export class EBookBase {
 	@ApiProperty({ type: Number })
 	@IsNumber()
 	@IsOptional()
@@ -38,15 +45,24 @@ export class EBookPayload {
 		message: 'Ebook cannot be an epub'
 	})
 	title: string
+}
+export class StoredEBook extends EBookBase {
+	@ApiProperty({ type: [Chapter] })
+	@ValidateNested({ each: true })
+	@IsArray()
+	@ArrayMinSize(1)
+	@Type(() => Chapter)
+	chapters: Chapter[]
+}
 
+export class PayloadEBook extends EBookBase {
 	@ApiProperty({ type: [PayloadChapter] })
 	@ValidateNested({ each: true })
+	@IsArray()
+	@ArrayMinSize(1)
 	@Type(() => PayloadChapter)
 	chapters: PayloadChapter[]
 }
-/* Payload */
-
-/* Output */
 
 class OutputChapterChild {
 	@ApiProperty({ example: 'name', description: 'chapter child name' })
@@ -77,4 +93,3 @@ export class EbookByIdOutput extends PickType(ShortBook, ['title', 'picture']) {
 	@Type(() => OutputChapter)
 	chapters: OutputChapter[]
 }
-/* Output */

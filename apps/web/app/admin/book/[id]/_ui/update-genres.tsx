@@ -65,11 +65,16 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
 								{...properties}
 							>
 								<span className='flex flex-wrap gap-2'>
-									{selectedGenres.map((selectedGenre: number) => (
-										<span key={selectedGenre}>
-											{genres.find(genre => genre.id === selectedGenre)?.name}
-										</span>
-									))}
+									{selectedGenres.length > 0
+										? selectedGenres.map((selectedGenre: number) => (
+												<span key={selectedGenre}>
+													{
+														genres.find(genre => genre.id === selectedGenre)
+															?.name
+													}
+												</span>
+											))
+										: 'No genre selected'}
 								</span>
 							</div>
 						</PopoverTrigger>

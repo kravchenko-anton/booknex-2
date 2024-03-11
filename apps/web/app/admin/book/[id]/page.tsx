@@ -23,12 +23,7 @@ const Page = () => {
 			<h1 className='text-3xl'>Book overview</h1>
 			<div className='mt-4  gap-5 px-2 md:flex'>
 				<div>
-					<UpdatePicture
-						picture={book.picture}
-						updatePicture={async picture => {
-							await updatePicture(picture)
-						}}
-					/>
+					<UpdatePicture picture={book.picture} updatePicture={updatePicture} />
 					<div className='mt-4 px-0.5'>
 						<InfoBlock
 							readingTime={book.readingTime}

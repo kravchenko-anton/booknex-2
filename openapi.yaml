@@ -380,7 +380,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/EBookPayload"
+                $ref: "#/components/schemas/PayloadEBook"
       responses:
         "200":
           description: ""
@@ -1268,7 +1268,7 @@ components:
         - id
         - name
         - text
-    EBookPayload:
+    PayloadEBook:
       type: object
       properties:
         id:
@@ -1309,7 +1309,7 @@ components:
         ebook:
           type: array
           items:
-            $ref: "#/components/schemas/EBookPayload"
+            $ref: "#/components/schemas/PayloadEBook"
         genres:
           description: Array of genres
           example:

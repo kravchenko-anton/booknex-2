@@ -12,7 +12,7 @@ import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { CreateBookDto } from './dto/create.book.dto'
 import type { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto'
-import type { EBookPayload } from './ebook.model'
+import type { PayloadEBook, StoredEBook } from './ebook.model'
 import { useGetEbook } from './helpers/get-ebook'
 import { returnBookObject } from './return.book.object'
 
@@ -178,7 +178,7 @@ export class BookService {
 				picture: true
 			}
 		})
-		const ebook: EBookPayload[] = await fetch(getFileUrl(book.ebook)).then(
+		const ebook: StoredEBook[] = await fetch(getFileUrl(book.ebook)).then(
 			result => result.json()
 		)
 
@@ -193,7 +193,19 @@ export class BookService {
 			...book,
 			file: ebook.map(({ chapters }) =>
 				chapters
-					.map(({ text, name }) => `<label id="${name}"></label> ${text}`)
+					.map(
+						({ text, name, romanNumber }) => `<label id="${name}">
+<div style="
+	width: 100%;
+	height: 160px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;">
+	<h2>${romanNumber}</h2>
+</div>
+</label> ${text}`
+					)
 					.join(' ')
 			),
 			chapters: ebook.map(({ title, chapters }) => ({
@@ -304,7 +316,7 @@ export class BookService {
 		await this.prisma.book.delete({ where: { id } })
 	}
 
-	async updateEbook(id: number, dto: EBookPayload[]) {
+	async updateEbook(id: number, dto: PayloadEBook[]) {
 		await this.checkExist(id)
 		const { uploadedEbook, readingTime } = useGetEbook(dto)
 		const book = await this.findOne({
@@ -379,7 +391,7 @@ export class BookService {
 				}
 			}
 		})
-		if (!mainGenre)
+		if (genres.length < 2 || !mainGenre)
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 		return {
 			mainGenreId: mainGenre.id,

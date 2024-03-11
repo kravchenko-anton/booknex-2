@@ -1,8 +1,9 @@
+import { bookCatalogRoute } from '@/app/admin/book/_shared/route-names'
 import {
 	CreateBookDto,
 	type CreateBookDtoType
 } from '@/app/admin/book/_shared/validation/create.book.dto'
-import { bookRoute } from '@/app/admin/book/catalog/useCatalog'
+
 import { useTemplate } from '@/app/admin/book/create/useTemplate'
 import api from '@/services'
 import { useUploadFile } from '@/utils/files'
@@ -53,7 +54,6 @@ export const useCreateForm = () => {
 
 	const submit = handleSubmit(async (data: CreateBookDtoType) => {
 		const { data: pictureFile } = await upload({
-			name: data.title,
 			folder: 'booksCovers',
 			blob: data.picture
 		})
@@ -71,7 +71,7 @@ export const useCreateForm = () => {
 				if (template.id) {
 					await deleteTemplate(template.id)
 				}
-				router.push(`${bookRoute}/catalog`)
+				router.push(bookCatalogRoute)
 				successToast('Book created')
 			})
 			.catch(() => {

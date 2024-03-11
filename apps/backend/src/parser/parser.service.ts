@@ -96,13 +96,11 @@ export class ParserService {
 			const { browser, page } = await useParser()
 
 			const books = await parseBookTable(page, dto.url, dto.page)
-			console.log(books.length, 'books')
 			for (const book of books) {
 				try {
 					const { title, author, description, picture, genres, rating } =
 						await parseCurrentBook(page, book.link)
 					if (bookTemplate.some(b => b.title === title.trim())) continue
-					console.log('rating', rating)
 					if (rating < 2) continue
 					const goodGenres = await this.prisma.genre.findMany({
 						where: {

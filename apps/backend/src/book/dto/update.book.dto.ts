@@ -1,5 +1,5 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger'
-import { IsNumber } from 'class-validator'
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsNumber } from 'class-validator'
 import { Book } from '../book.entity'
 
 export class UpdateBookDto extends PartialType(
@@ -14,5 +14,8 @@ export class UpdateGenreDto {
 		required: false
 	})
 	@IsNumber({}, { each: true })
+	@IsArray()
+	@ArrayMinSize(1)
+	@ArrayMaxSize(3)
 	genres: number[]
 }

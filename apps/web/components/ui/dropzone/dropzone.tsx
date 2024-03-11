@@ -2,7 +2,7 @@
 import { cn } from '@/utils'
 import { Color } from 'global/colors'
 import { File } from 'icons'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { settings } from './settings'
 import type { DropzoneProperties } from './types'
 
@@ -21,6 +21,7 @@ const Dropzone = ({
 	...properties
 }: DropzoneProperties) => {
 	const [files, setFiles] = useState<File[]>(defaultFiles)
+	const reference = useRef<HTMLInputElement>(null)
 	const onDrop = useCallback(
 		(acceptedFiles: File[]) => {
 			if (!multiple) {
@@ -32,6 +33,11 @@ const Dropzone = ({
 		},
 		[files, multiple, onDropFile]
 	)
+	useEffect(() => {
+		if (reference.current && files.length === 0) {
+			reference.current.value = ''
+		}
+	}, [files])
 
 	return (
 		<div className={cn(settings.maxWidth[size], className)} style={style}>
@@ -80,12 +86,13 @@ const Dropzone = ({
 				<input
 					multiple={multiple}
 					type='file'
+					ref={reference}
 					className='h-full w-full cursor-pointer'
 					disabled={disabled}
 					accept={accept}
 					onChange={event => {
 						if (event.target.files) {
-							onDrop([...(event.target.files as unknown as File[])])
+							onDrop([...event.target.files])
 							onChange(event)
 						}
 					}}

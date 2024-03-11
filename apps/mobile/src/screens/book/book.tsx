@@ -27,6 +27,7 @@ const Book: FC = () => {
 		startReadingBook
 	} = useBook()
 	if (!book) return <Loader />
+	console.log(book.picture)
 	return (
 		<ScrollLayout>
 			<View className='z-50 items-center justify-between overflow-hidden rounded-b-3xl px-2 pb-6 pt-2'>

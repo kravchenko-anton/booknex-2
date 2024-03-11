@@ -19,7 +19,7 @@ import {
 import { BookService } from './book.service'
 import { CreateBookDto } from './dto/create.book.dto'
 import { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto'
-import { EBookPayload, EbookByIdOutput } from './ebook.model'
+import { EbookByIdOutput, PayloadEBook } from './ebook.model'
 
 @ApiTags('📙 book')
 @ApiBearerAuth()
@@ -93,8 +93,8 @@ export class BookController {
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
 	@Post('admin/update-ebook/:id')
-	@ApiBody({ type: [EBookPayload] })
-	async updateEbook(@Param('id') bookId: number, @Body() dto: EBookPayload[]) {
+	@ApiBody({ type: [PayloadEBook] })
+	async updateEbook(@Param('id') bookId: number, @Body() dto: PayloadEBook[]) {
 		return this.bookService.updateEbook(+bookId, dto)
 	}
 

@@ -10,7 +10,7 @@ import {
 	Field,
 	FormTextArea
 } from '@/components/ui'
-import type { EBookPayload } from 'global/api-client'
+import type { PayloadEBook } from 'global/api-client'
 import { PenNib, Star } from 'icons'
 import type { FC } from 'react'
 
@@ -22,8 +22,8 @@ const Page: FC = () => {
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
 			<div className=' mb-4 justify-between gap-5  md:flex'>
 				<div className='w-11/12'>
-					<div className='mt-2 justify-between gap-3 md:flex'>
-						<div className='md:w-1/2'>
+					<div className='mt-2  gap-3 md:flex'>
+						<div className=' md:w-1/2'>
 							<h1 className='my-2'>Title</h1>
 							<Field
 								type='text'
@@ -32,7 +32,7 @@ const Page: FC = () => {
 								placeholder='Title'
 							/>
 						</div>
-						<div className='md:w-1/3'>
+						<div className=' md:w-1/3'>
 							<h1 className='my-2'>Author</h1>
 							<Field
 								type='text'
@@ -87,7 +87,7 @@ const Page: FC = () => {
 				</div>
 			</div>
 			<Editor
-				updateBooks={(books: EBookPayload[]) => form.setValue('ebook', books)}
+				updateBooks={(books: PayloadEBook[]) => form.setValue('ebook', books)}
 			/>
 			<ErrorMessage name='ebook' errors={form.errors} />
 

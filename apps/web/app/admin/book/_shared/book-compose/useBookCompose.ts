@@ -1,12 +1,11 @@
 import api from '@/services'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import type { EBookPayload } from 'global/api-client'
+import type { PayloadEBook } from 'global/api-client'
 import { useLayoutEffect, useState } from 'react'
-//TODO: сократить тут код до минимума чтобы было очень просто
 
-export const useBookCompose = (defaultBooks?: EBookPayload[]) => {
-	const [books, setBooks] = useState<EBookPayload[] | null>([])
+export const useBookCompose = (defaultBooks?: PayloadEBook[]) => {
+	const [books, setBooks] = useState<PayloadEBook[] | null>([])
 	useLayoutEffect(() => setBooks(defaultBooks || []), [defaultBooks])
 
 	const { mutateAsync: unfold } = useMutation({
@@ -72,6 +71,37 @@ export const useBookCompose = (defaultBooks?: EBookPayload[]) => {
 			return books
 		})
 	}
+	const moveChaptersToNewBook = ({
+		bookId,
+		chapterId
+	}: {
+		bookId: number
+		chapterId: number
+	}) => {
+		if (!books) return errorToast('Error moving chapters')
+		const book = books.find(book => book.id === bookId)
+		if (!book) return books
+		const index = book.chapters.findIndex(content => content.id === chapterId)
+		if (index <= 1) return errorToast('Error moving chapters')
+		const chapters = book.chapters.slice(index)
+		const oldBookChapters = book.chapters.filter(
+			content => !chapters.some(chapter => chapter.id === content.id)
+		)
+		const newBook = {
+			id: books.length + 1,
+			title: `${books.length + 1} book`,
+			chapters
+		}
+		return setBooks(books => {
+			if (!books) return books
+			return [
+				...books.map(book =>
+					book.id === bookId ? { ...book, chapters: oldBookChapters } : book
+				),
+				newBook
+			]
+		})
+	}
 
 	const mergeContentWithTopCharacter = ({
 		bookId,
@@ -81,7 +111,7 @@ export const useBookCompose = (defaultBooks?: EBookPayload[]) => {
 		bookId: number
 		topChapterId: number
 		insertedContent: string
-	}) => {
+	}) =>
 		setBooks(books => {
 			if (!books) return books
 			return books.map(book => {
@@ -112,7 +142,6 @@ export const useBookCompose = (defaultBooks?: EBookPayload[]) => {
 				return book
 			})
 		})
-	}
 
 	const updateBookTitle = ({
 		value,
@@ -239,7 +268,8 @@ export const useBookCompose = (defaultBooks?: EBookPayload[]) => {
 			updateToc: updateChapter,
 			updateBookTitle,
 			mergeContentWithTopCharacter,
-			removeToc: removeChapter
+			removeToc: removeChapter,
+			moveChaptersToNewBook
 		}
 	}
 }

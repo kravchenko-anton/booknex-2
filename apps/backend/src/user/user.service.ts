@@ -97,17 +97,18 @@ export class UserService {
 						finishedBooks: true,
 						readingBooks: true
 					}
-				},
-				...(searchTerm && {
-					where: {
-						title: {
-							contains: searchTerm
-						}
-					}
-				})
+				}
 			},
+
 			...(page && {
 				skip: page * perPage
+			}),
+			...(searchTerm && {
+				where: {
+					fullName: {
+						contains: searchTerm
+					}
+				}
 			})
 		})
 		return {

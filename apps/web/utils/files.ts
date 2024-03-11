@@ -1,11 +1,10 @@
 import api from '@/services'
 import { useMutation } from '@tanstack/react-query'
-import type { UploadFolderEnum } from 'global/api-client'
+import type { StorageFolderType } from '../../backend/src/storage/storage.types'
 import { errorToast } from './toast'
 
 interface UploadFileProperties {
-	name: string
-	folder: UploadFolderEnum
+	folder: StorageFolderType
 	blob: File
 }
 

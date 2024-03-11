@@ -5,7 +5,8 @@ export enum AuthErrors {
 
 export enum GlobalErrorsEnum {
 	invalidValue = 'Invalid value provided',
-	somethingWrong = 'Something went wrong, please try again later'
+	somethingWrong = 'Something went wrong, please try again later',
+	noValidParameters = 'No valid parameters'
 }
 
 export enum AdminErrors {
@@ -25,6 +26,7 @@ export enum AdminErrors {
 	//user
 
 	userNotFound = 'User not found'
+	//'No valid parameters'
 }
 
 export const errorCode = {

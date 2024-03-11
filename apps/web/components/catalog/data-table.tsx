@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/table'
 import type { useReactTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
-import type { FunctionType } from 'global/types'
 import type { FC } from 'react'
 import * as React from 'react'
 
@@ -17,14 +16,10 @@ export interface DataTableProperties {
 	table: ReturnType<typeof useReactTable<any>>
 	totalPages: number
 	currentPage: number
-	previous: FunctionType
-	next: FunctionType
 	canLoadMore?: boolean
 }
 const DataTable: FC<DataTableProperties> = ({
-	next,
 	currentPage,
-	previous,
 	table,
 	canLoadMore,
 	totalPages
@@ -71,12 +66,16 @@ const DataTable: FC<DataTableProperties> = ({
 				{currentPage} page of {totalPages} pages
 			</div>
 			<div className='flex space-x-2'>
-				<Button size='sm' disabled={currentPage < 1} onClick={previous}>
-					Previous
-				</Button>
-				<Button size='sm' disabled={canLoadMore} onClick={next}>
-					Next
-				</Button>
+				<a href={currentPage >= 1 ? `?page=${currentPage - 1}` : undefined}>
+					<Button size='sm' disabled={currentPage < 1}>
+						Previous
+					</Button>
+				</a>
+				<a href={canLoadMore ? `?page=${currentPage + 1}` : undefined}>
+					<Button size='sm' disabled={!canLoadMore}>
+						Next
+					</Button>
+				</a>
 			</div>
 		</div>
 	</>

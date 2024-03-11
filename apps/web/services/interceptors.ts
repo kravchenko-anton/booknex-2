@@ -48,15 +48,15 @@ instance.interceptors.response.use(
 					}
 				})
 			} catch {
-				console.log('catch', error)
 				if (
 					errorCatch(error) === 'jwt expired' ||
 					errorCatch(error) === 'jwt must be provided'
 				) {
-					deleteTokensStorage()
+					return deleteTokensStorage()
 				}
 			}
 		}
+		console.log('error in interceptor', error)
 		errorToast(error)
 		throw error
 	}

@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import {
 	DropdownMenu,
@@ -44,7 +43,7 @@ export const columns = ({
 		cell: ({ row }) => (
 			<img
 				alt={row.original.title}
-				className='mx-auto w-[100px] cursor-pointer rounded-lg'
+				className='mx-auto w-[60px] cursor-pointer rounded'
 				src={getFileUrl(row.original.picture)}
 				onClick={() => {
 					useAsTemplate(row.original.id)
@@ -56,13 +55,20 @@ export const columns = ({
 		id: 'Information',
 		header: () => <p className='text-center text-xl'>Information</p>,
 		cell: ({ row }) => (
-			<div className='w-[250px]'>
+			<div>
 				<h3 className='text-xl'>{row.original.title}</h3>
 				<p>{row.original.author}</p>
-				<p>
-					rating: <b className='text-warning'>{row.original.rating}</b>
-				</p>
 			</div>
+		)
+	},
+	{
+		//rating
+		id: 'rating',
+		header: () => <p className='text-center text-xl'>Rating</p>,
+		cell: ({ row }) => (
+			<h1 className='text-warning flex items-center justify-center text-lg '>
+				{row.original.rating}
+			</h1>
 		)
 	},
 	{
@@ -81,19 +87,7 @@ export const columns = ({
 			</Drawer>
 		)
 	},
-	{
-		id: 'genres',
-		header: () => <p className='text-center text-xl'>Genres</p>,
-		cell: ({ row }) => (
-			<div className='flex flex-wrap items-center justify-center'>
-				{row.original.genres.map(genre => (
-					<Button variant='muted' className='m-0.5' size='sm' key={genre.name}>
-						{genre.name}
-					</Button>
-				))}
-			</div>
-		)
-	},
+
 	{
 		id: 'Actions',
 		cell: ({ row }) => (

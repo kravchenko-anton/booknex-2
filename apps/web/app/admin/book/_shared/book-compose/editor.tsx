@@ -1,20 +1,20 @@
 import { useBookCompose } from '@/app/admin/book/_shared/book-compose/useBookCompose'
 import { DropZone, TextArea } from '@/components/ui'
 import { errorToast } from '@/utils/toast'
-import type { EBookType } from 'global/api-client/models/ebook-type'
-import { CaseSensitive, ChevronDown, ChevronUp, Close } from 'icons'
+import type { PayloadEBook } from 'global/api-client'
+import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
 import { useEffect, type FC } from 'react'
 
 const EbookComposer: FC<{
-	defaultBooks?: EBookType[]
-	updateBooks: (books: EBookType[]) => void
+	defaultBooks?: PayloadEBook[]
+	updateBooks: (books: PayloadEBook[]) => void
 }> = ({ updateBooks, defaultBooks }) => {
 	const { books } = useBookCompose(defaultBooks)
 	useEffect(() => updateBooks(books.state), [books.state])
 	if (!books) return null
 	console.log(books.state, 'book compose in editor')
 	return (
-		<>
+		<div className='md:w-max md:overflow-y-scroll '>
 			<div className='mb-4'>
 				<h1 className='mt-2  text-xl'>Book file</h1>
 				<DropZone
@@ -31,11 +31,11 @@ const EbookComposer: FC<{
 					}}
 				/>
 			</div>
-			<div className=' flex gap-2 overflow-scroll'>
+			<div className='gap-2 md:flex md:w-fit '>
 				{books.state.map(book => (
 					<div
 						key={book.title}
-						className='bg-foreground mb-4 mr-1 w-[600px]  rounded-lg p-3'
+						className='bg-foreground mb-4 w-full rounded-lg p-3 md:mr-1 md:w-[600px]'
 					>
 						<div className='mb-4 flex items-center  justify-between gap-2'>
 							<input
@@ -104,6 +104,18 @@ const EbookComposer: FC<{
 												console.log('add new character')
 											}}
 										/>
+										<Combine
+											width={36}
+											height={36}
+											className='bg-muted cursor-pointer rounded-lg p-2'
+											onClick={() => {
+												console.log('combine')
+												books.moveChaptersToNewBook({
+													bookId: book.id,
+													chapterId: chapter.id
+												})
+											}}
+										/>
 										<Close
 											width={36}
 											height={36}
@@ -135,7 +147,7 @@ const EbookComposer: FC<{
 					</div>
 				))}
 			</div>
-		</>
+		</div>
 	)
 }
 
