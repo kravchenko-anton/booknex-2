@@ -11,6 +11,7 @@ const options = () => ({
 		borderRadius: 12,
 		height: 45,
 		borderColor: Color.muted,
+
 		borderWidth: 1.5,
 		borderLeftWidth: 1.5,
 		shadowColor: Color.transparent
