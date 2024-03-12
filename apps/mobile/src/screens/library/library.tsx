@@ -6,14 +6,14 @@ import {
 	Flatlist,
 	Image,
 	Loader,
-	ScrollLayout
+	ScrollLayout,
+	Title
 } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import BannerList from '@/ui/book-lists/banner-list'
 import NothingFount from '@/ui/nothing-fount'
+import ProgressBar from '@/ui/progress-bar/progress-bar'
 import { useQuery } from '@tanstack/react-query'
-import { Color } from 'global/colors'
-import { View } from 'react-native'
 
 const Library = () => {
 	const { data: library } = useQuery({
@@ -43,41 +43,28 @@ const Library = () => {
 				title='Continue reading'
 				data={library.readingBooks}
 				renderItem={({ item: book }) => (
-					//TODO: сделать с прогресс
-					<AnimatedPress onPress={() => navigate('Reader', { id: book.id })}>
+					<AnimatedPress
+						style={{
+							width: settings.width.sm * 1.2
+						}}
+						onPress={() => navigate('Reader', { id: book.id })}
+					>
 						<Image
 							width={settings.width.sm * 1.2}
 							height={settings.height.sm * 1.3}
 							url={book.picture}
-							className='mb-1'
+							className='mb-2'
 						/>
-						<View
-							className='absolute'
-							style={{
-								bottom: 0,
-								left: 0,
-								right: 0,
-								zIndex: 50
-							}}
-						>
-							<View
-								className='relative w-full'
-								style={{
-									backgroundColor: Color.primary
-								}}
-							>
-								<View
-									className=' absolute bottom-0 left-0 h-1 rounded-full'
-									style={{
-										backgroundColor: Color.primary,
-										width: `${
-											books.find(b => b.id === book.id)?.latestProgress
-												.progress || 10
-										}%`
-									}}
-								/>
-							</View>
-						</View>
+						<ProgressBar
+							progress={
+								Number(
+									books.find(b => b.id === book.id)?.latestProgress.progress
+								) / 100 || 0.1
+							}
+						/>
+						<Title numberOfLines={2} size='md' weight='medium' className='mt-1'>
+							{book.title}
+						</Title>
 					</AnimatedPress>
 				)}
 			/>

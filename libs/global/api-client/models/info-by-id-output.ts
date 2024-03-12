@@ -54,6 +54,24 @@ export interface InfoByIdOutput {
      */
     'description': string;
     /**
+     * book readingTime
+     * @type {number}
+     * @memberof InfoByIdOutput
+     */
+    'readingTime': number;
+    /**
+     * book chapters count
+     * @type {number}
+     * @memberof InfoByIdOutput
+     */
+    'chapters': number;
+    /**
+     * book rating
+     * @type {number}
+     * @memberof InfoByIdOutput
+     */
+    'rating': number;
+    /**
      * 
      * @type {Array<ShortGenre>}
      * @memberof InfoByIdOutput

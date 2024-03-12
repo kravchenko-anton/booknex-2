@@ -14,7 +14,6 @@ export const useBook = () => {
 		select: data => data.data
 	})
 	const { navigate, goBack } = useTypedNavigation()
-
 	const { mutateAsync: startReading, isLoading: startReadingLoading } =
 		useMutation({
 			mutationKey: ['start-reading', params.id],

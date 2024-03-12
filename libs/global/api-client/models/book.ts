@@ -60,6 +60,12 @@ export interface Book {
      */
     'readingTime': number;
     /**
+     * book chapters count
+     * @type {number}
+     * @memberof Book
+     */
+    'chapters': number;
+    /**
      * book rating
      * @type {number}
      * @memberof Book

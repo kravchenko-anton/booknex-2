@@ -9,6 +9,7 @@ import type { ButtonProperties } from '@/ui/button/types'
 import type { IconProperties } from '@/ui/icon/types'
 import { cn } from '@/utils'
 import { Color } from 'global/colors'
+import { appName } from 'global/utils'
 import { ArrowLeft } from 'icons'
 import type { FC, PropsWithChildren } from 'react'
 import { Pressable, View } from 'react-native'
@@ -64,7 +65,7 @@ export const Logo: FC<Omit<TextDefaultProperties, 'onPress'>> = ({
 		color={Color.white}
 		{...properties}
 	>
-		Booknex
+		{appName}
 	</Title>
 )
 export const Button: FC<

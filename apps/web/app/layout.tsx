@@ -1,10 +1,11 @@
 import Providers from '@/providers/app-provider'
+import { appName } from 'global/utils'
 import { Space_Grotesk } from 'next/font/google'
 import type { ReactNode } from 'react'
 import './global.css'
 
 export const metadata = {
-	title: 'Booknex',
+	title: appName,
 	description: 'Mobile app for reading books'
 }
 

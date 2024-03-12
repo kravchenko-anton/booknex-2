@@ -35,7 +35,6 @@ const Navigation: FC = () => {
 		route: keyof TypeRootStackParameterListType
 	) => {
 		if (!route || !authRequiredRoutes.has(route)) return
-		console.log('checkRefreshToken', route, authRequiredRoutes.has(route))
 		const refreshToken = await getRefreshToken()
 		if (!refreshToken && user) logout()
 	}

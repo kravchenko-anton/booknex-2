@@ -100,6 +100,9 @@ export class BookService {
 			select: {
 				description: true,
 				mainGenre: false,
+				readingTime: true,
+				chapters: true,
+				rating: true,
 				genres: { select: ReturnGenreObject }
 			}
 		})
@@ -197,7 +200,7 @@ export class BookService {
 						({ text, name, romanNumber }) => `<label id="${name}">
 <div style="
 	width: 100%;
-	height: 160px;
+	height: 80px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -256,7 +259,7 @@ export class BookService {
 
 	async create(dto: CreateBookDto) {
 		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
-		const { readingTime, uploadedEbook } = useGetEbook(dto.ebook)
+		const { readingTime, uploadedEbook, chaptersCount } = useGetEbook(dto.ebook)
 		Logger.log({
 			readingTime,
 			uploadedEbook,
@@ -286,8 +289,8 @@ export class BookService {
 						importance: 9
 					}
 				},
+				chapters: chaptersCount,
 				title: dto.title,
-
 				rating: dto.rating,
 				readingTime: readingTime,
 				description: dto.description,
@@ -318,7 +321,7 @@ export class BookService {
 
 	async updateEbook(id: number, dto: PayloadEBook[]) {
 		await this.checkExist(id)
-		const { uploadedEbook, readingTime } = useGetEbook(dto)
+		const { uploadedEbook, readingTime, chaptersCount } = useGetEbook(dto)
 		const book = await this.findOne({
 			where: { id },
 			select: {
@@ -335,7 +338,8 @@ export class BookService {
 			where: { id },
 			data: {
 				ebook: ebookName,
-				readingTime
+				readingTime,
+				chapters: chaptersCount
 			}
 		})
 	}

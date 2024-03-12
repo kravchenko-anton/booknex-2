@@ -46,6 +46,14 @@ export class Book extends ShortBook {
 	@IsNumber()
 	readingTime: number
 
+	@ApiProperty({
+		example: 100,
+		description: 'book chapters count',
+		type: Number
+	})
+	@IsNumber()
+	chapters: number
+
 	@ApiProperty({ example: 5, description: 'book rating', type: Number })
 	@IsNumber()
 	@Min(1)

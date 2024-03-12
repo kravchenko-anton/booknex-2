@@ -24,11 +24,12 @@ export const useGetEbook = (ebooks: PayloadEBook[]) => {
 			.map(ebook => ebook.chapters.map(chapter => chapter.text).join(' '))
 			.join(' ')
 	)
-	// const chaptersCount = ebooks
-	// 	.map(ebook => ebook.chapters.length)
-	// 	.reduce((a, b) => a + b, 0)
+	const chaptersCount = ebooks
+		.map(ebook => ebook.chapters.length)
+		.reduce((a, b) => a + b, 0)
 	return {
 		uploadedEbook,
-		readingTime
+		readingTime,
+		chaptersCount
 	}
 }

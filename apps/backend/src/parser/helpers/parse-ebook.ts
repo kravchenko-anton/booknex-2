@@ -97,7 +97,6 @@ export const parseCurrentBook = async (page: Page, url: string) => {
 		parseSelectors.genres +
 			' > span:nth-child(1) > span > a > .Button__labelItem'
 	)
-	console.log('all waits done')
 	const title = await page.evaluate(() => {
 		const title = document.querySelector('div.BookPageTitleSection > div > h1')
 		return title?.textContent ?? 'No title'

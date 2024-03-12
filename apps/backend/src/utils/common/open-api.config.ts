@@ -1,4 +1,5 @@
 import { DocumentBuilder } from '@nestjs/swagger'
+import { appName } from '../../../../../libs/global/utils'
 import environment from './environment.config'
 
 export const openApiSwaggerConfig = {
@@ -13,7 +14,7 @@ export const openApiSwaggerConfig = {
 	clientGeneratorOptions: {
 		enabled: environment.NODE_ENV === 'development',
 		type: 'typescript-axios',
-		outputFolderPath: './libs/global/api-client',
+		outputFolderPath: '../../libs/global/api-client',
 		additionalProperties:
 			'apiPackage=clients,modelPackage=models,withoutPrefixEnums=true,withSeparateModelsAndApi=true',
 		openApiFilePath: './openapi.yaml',
@@ -22,9 +23,9 @@ export const openApiSwaggerConfig = {
 }
 
 export const openApiConfig = new DocumentBuilder()
-	.setTitle('Booknex')
+	.setTitle(appName)
 	.setContact(
-		'Booknex',
+		appName,
 		'https://github.com/kravchenko-anton/booknex-2-monorepo',
 		'Github repository'
 	)

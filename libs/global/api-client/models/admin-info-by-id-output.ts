@@ -69,6 +69,12 @@ export interface AdminInfoByIdOutput {
      */
     'readingTime': number;
     /**
+     * book chapters count
+     * @type {number}
+     * @memberof AdminInfoByIdOutput
+     */
+    'chapters': number;
+    /**
      * book rating
      * @type {number}
      * @memberof AdminInfoByIdOutput

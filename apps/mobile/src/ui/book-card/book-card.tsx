@@ -23,8 +23,8 @@ const BookCard: FC<BookCardProperties> = ({
 	>
 		<Image
 			url={image.uri}
-			borderRadius={14}
-			className='mb-2'
+			borderRadius={12}
+			className=' mb-2'
 			height={settings.height[size]}
 			width={settings.width[size]}
 		/>

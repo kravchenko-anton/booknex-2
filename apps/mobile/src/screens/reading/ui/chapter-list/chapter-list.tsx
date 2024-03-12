@@ -5,25 +5,22 @@ import {
 	BottomSheetModal,
 	BottomSheetSectionList
 } from '@gorhom/bottom-sheet'
-import type { Chapter } from 'global/api-client'
+import type { OutputChapter } from 'global/api-client'
 import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Pressable } from 'react-native'
 
-const ChaptersList: FC<{
+const ChapterList: FC<{
 	SheetRef: any
-	chapters: Chapter[]
+	chapters: OutputChapter[]
 	openChapter: (chapterId: string) => void
 }> = ({ SheetRef, chapters, openChapter }) => {
-	const { colorScheme } = useTypedSelector(state => state.readingSettings)
+	const { colorScheme } = useTypedSelector(state => state.readingUi)
 	const sections = useMemo(
 		() =>
 			chapters.map(chapter => ({
 				title: chapter.title,
-				data: chapter.children.map(child => ({
-					title: child.name,
-					link: child.link
-				}))
+				data: chapter.children
 			})),
 		[chapters]
 	)
@@ -68,7 +65,7 @@ const ChaptersList: FC<{
 						{section.title}
 					</Title>
 				)}
-				renderItem={({ item }) => (
+				renderItem={({ item: chapter }) => (
 					<Pressable
 						className=' w-full border-b-[1px] p-4'
 						style={{
@@ -76,8 +73,8 @@ const ChaptersList: FC<{
 							borderColor: colorScheme.colorPalette.background.normal
 						}}
 						onPress={() => {
-							console.log(item.link)
-							openChapter(item.link)
+							console.log(chapter.link)
+							openChapter(chapter.link)
 						}}
 					>
 						<Title
@@ -88,7 +85,7 @@ const ChaptersList: FC<{
 								color: colorScheme.colorPalette.text
 							}}
 						>
-							{item.title}
+							{chapter.name}
 						</Title>
 					</Pressable>
 				)}
@@ -97,4 +94,4 @@ const ChaptersList: FC<{
 	)
 }
 
-export default ChaptersList
+export default ChapterList

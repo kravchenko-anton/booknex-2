@@ -48,6 +48,12 @@ export interface CreateBookDto {
      */
     'description': string;
     /**
+     * book chapters count
+     * @type {number}
+     * @memberof CreateBookDto
+     */
+    'chapters': number;
+    /**
      * book rating
      * @type {number}
      * @memberof CreateBookDto

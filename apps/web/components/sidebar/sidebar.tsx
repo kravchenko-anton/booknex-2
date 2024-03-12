@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useAction } from '@/hooks'
 import { cn } from '@/utils'
+import { appName } from 'global/utils'
 import { Book, Graph, Logout, MoreHorizontal, Settings, User } from 'icons'
 import { usePathname, useRouter } from 'next/navigation'
 import type { FC } from 'react'
@@ -32,7 +33,7 @@ export const Sidebar: FC = () => {
 					onClick={() => router.push('/admin/dashboard')}
 				>
 					<span className='bg-muted rounded-lg  p-1 px-2 text-[21px] text-white  xl:w-full '>
-						Booknex 🧑‍💻
+						{appName} 🧑‍💻
 					</span>
 				</button>
 				<ul className='hidden xl:block'>

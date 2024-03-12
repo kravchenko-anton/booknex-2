@@ -67,6 +67,8 @@ model Book {
   ebook       String
   // Minutes
   readingTime Int          @default(0)
+  //Chapters count
+  chapters    Int          @default(0)
   rating      Float        @default(0)
   visible     Boolean      @default(false)
   mainGenre   Genre        @relation("BookMajorGenre", fields: [mainGenreId], references: [id])

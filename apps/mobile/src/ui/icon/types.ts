@@ -10,6 +10,7 @@ export interface IconProperties
 	icon: FC<SvgProps>
 	fatness?: number
 	fill?: boolean
+	stroke?: string
 	fullRounded?: boolean
 	noPadding?: boolean
 	variant?: ClampPaletteType | 'white-outlined' | 'transparent'

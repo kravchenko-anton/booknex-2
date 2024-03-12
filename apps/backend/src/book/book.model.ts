@@ -33,7 +33,10 @@ export class InfoByIdOutput extends PickType(Book, [
 	'title',
 	'author',
 	'genres',
-	'picture'
+	'picture',
+	'readingTime',
+	'chapters',
+	'rating'
 ]) {}
 
 export class AdminInfoByIdOutput extends FullBook {

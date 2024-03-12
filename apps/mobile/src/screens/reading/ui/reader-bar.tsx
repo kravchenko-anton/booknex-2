@@ -5,7 +5,6 @@ import type { FunctionType } from 'global/types'
 import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const ReaderBar: FC<{
@@ -24,16 +23,13 @@ const ReaderBar: FC<{
 	const { colorScheme } = useTypedSelector(state => state.readingUi)
 	const { goBack } = useTypedNavigation()
 	const { top, bottom } = useSafeAreaInsets()
-	const opacityAnimation = useAnimatedStyle(() => ({
-		opacity: withTiming(visible ? 1 : 0)
-	}))
 
 	return (
 		<View className='absolute h-screen w-full'>
 			<AnimatedView
 				className=' absolute z-50 mb-0 mt-0 w-full flex-1 justify-center border-b-2'
 				style={[
-					opacityAnimation,
+					visible ? { display: 'flex' } : { display: 'none' },
 					{
 						top,
 						backgroundColor: colorScheme.colorPalette?.background?.darker,
@@ -73,7 +69,7 @@ const ReaderBar: FC<{
 					/>
 				</View>
 			</AnimatedView>
-
+			{/* //TODO: сделать нормальный прогресс бар с главой */}
 			<View
 				className='absolute'
 				style={{
