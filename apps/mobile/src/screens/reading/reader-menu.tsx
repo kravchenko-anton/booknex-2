@@ -1,4 +1,5 @@
-import { useTypedNavigation, useTypedSelector } from '@/hooks'
+import { useTypedNavigation } from '@/hooks'
+import { useReader } from '@/screens/reading/reading-context'
 import { Title } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import type { FunctionType } from 'global/types'
@@ -7,20 +8,12 @@ import type { FC } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const ReaderBar: FC<{
-	title: string
+const ReaderMenu: FC<{
 	visible: boolean
-	progress: number
 	onChapterIconPress: FunctionType
 	onSelectThemeIconPress: FunctionType
-}> = ({
-	visible = false,
-	onChapterIconPress,
-	onSelectThemeIconPress,
-	title = '',
-	progress = 0
-}) => {
-	const { colorScheme } = useTypedSelector(state => state.readingUi)
+}> = ({ visible = false, onChapterIconPress, onSelectThemeIconPress }) => {
+	const { colorScheme, progress, ebook } = useReader()
 	const { goBack } = useTypedNavigation()
 	const { top, bottom } = useSafeAreaInsets()
 	return (
@@ -51,7 +44,7 @@ const ReaderBar: FC<{
 							weight='bold'
 							color={colorScheme.colorPalette.text}
 						>
-							{title}
+							{ebook?.title}
 						</Title>
 					</View>
 					<ListOrdered
@@ -97,4 +90,4 @@ const ReaderBar: FC<{
 	)
 }
 
-export default ReaderBar
+export default ReaderMenu

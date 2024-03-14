@@ -1,18 +1,40 @@
 import api from '@/api'
-
 import { useTypedNavigation, useTypedRoute, useTypedSelector } from '@/hooks'
+import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import {
 	getStyleTag,
 	injectStyle
-} from '@/screens/reading/helpers/book-viewer-function'
-import { useSaveProgress } from '@/screens/reading/helpers/useSaveProgress'
+} from '@/screens/reading/reader-viewer/reader-viewer-function'
+import { useSaveProgress } from '@/screens/reading/reader-viewer/useSaveProgress'
 
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import type { EbookByIdOutput } from 'global/api-client'
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+	type FC,
+	type PropsWithChildren
+} from 'react'
 import type WebView from 'react-native-webview'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
+export const ReadingContext = createContext(
+	null as unknown as {
+		colorScheme: ThemePackType
+		styleTag: string
+		onMessage: (event: WebViewMessageEvent) => Promise<void>
+		progress: number
+		initialScroll: number
+		ebook: EbookByIdOutput | undefined
+		reference: React.RefObject<WebView>
+		defaultTheme: string
+	}
+)
 export interface WebviewMessageType {
 	type: 'scroll' | 'finishBook'
 	payload: {
@@ -20,10 +42,10 @@ export interface WebviewMessageType {
 		progress: number
 	}
 }
-export const useReading = () => {
+
+export const ReadingProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { params } = useTypedRoute<'Reader'>()
 	const queryClient = useQueryClient()
-
 	const id = +params.id
 	const { data: ebook } = useQuery({
 		queryKey: ['e-books', +params.id],
@@ -31,7 +53,6 @@ export const useReading = () => {
 		select: data => data.data
 	})
 	const reference = useRef<WebView>(null)
-
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
 		state => state.readingUi
 	)
@@ -46,6 +67,7 @@ export const useReading = () => {
 		id,
 		readerState
 	})
+
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
 		useMutation({
 			mutationKey: ['end-reading', id],
@@ -94,13 +116,13 @@ export const useReading = () => {
 
 	useEffect(() => {
 		reference.current?.injectJavaScript(`
-		${injectStyle(styleTag)}
-		`)
+    ${injectStyle(styleTag)}
+    `)
 	}, [])
 
 	const [defaultTheme] = useState(styleTag) // eslint-disable-line react/hook-use-state
 
-	return {
+	const value = {
 		colorScheme,
 		styleTag,
 		onMessage,
@@ -110,4 +132,17 @@ export const useReading = () => {
 		reference,
 		defaultTheme
 	}
+
+	return (
+		<ReadingContext.Provider value={value}>{children}</ReadingContext.Provider>
+	)
+}
+
+// Custom hook to use the context
+export const useReader = () => {
+	const context = useContext(ReadingContext)
+	if (!context) {
+		throw new Error('useReading must be used within a ReadingProvider')
+	}
+	return context
 }

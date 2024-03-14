@@ -4,9 +4,10 @@ import {
 	fontSizeSettings,
 	type ReaderFontsEnum
 } from '@/redux/reader/reading-settings-slice'
-import LineHeightIcon from '@/screens/reading/ui/reading/icons/line-height'
-import PageMarginIcon from '@/screens/reading/ui/reading/icons/page-margin'
-import { themePack } from '@/screens/reading/ui/reading/theme-pack'
+import LineHeightIcon from '@/screens/reading/reader-customization/icons/line-height'
+import PageMarginIcon from '@/screens/reading/reader-customization/icons/page-margin'
+import { themePack } from '@/screens/reading/reader-customization/theme-pack'
+
 import { AnimatedPress, Title } from '@/ui'
 import { cn } from '@/utils'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
@@ -15,8 +16,8 @@ import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { Pressable, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-
-const ReadingSettings: FC<{
+//TODO: меньше кода тут
+const ReaderCustomization: FC<{
 	sheetRef: any
 }> = ({ sheetRef }) => {
 	const {
@@ -238,4 +239,4 @@ const ReadingSettings: FC<{
 	)
 }
 
-export default ReadingSettings
+export default ReaderCustomization

@@ -10,11 +10,11 @@ import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Pressable } from 'react-native'
 
-const ChapterList: FC<{
-	SheetRef: any
+const ReaderChapters: FC<{
+	sheetRef: any
 	chapters: OutputChapter[]
 	openChapter: (chapterId: string) => void
-}> = ({ SheetRef, chapters, openChapter }) => {
+}> = ({ sheetRef, chapters, openChapter }) => {
 	const { colorScheme } = useTypedSelector(state => state.readingUi)
 	const sections = useMemo(
 		() =>
@@ -31,7 +31,7 @@ const ChapterList: FC<{
 			enableHandlePanningGesture
 			enablePanDownToClose
 			enableOverDrag
-			ref={SheetRef}
+			ref={sheetRef}
 			snapPoints={['40%', '50%']}
 			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
 			backgroundStyle={{
@@ -94,4 +94,4 @@ const ChapterList: FC<{
 	)
 }
 
-export default ChapterList
+export default ReaderChapters

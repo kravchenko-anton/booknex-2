@@ -81,7 +81,7 @@ const Book: FC = () => {
 					/>
 				</View>
 				<View className='mt-4 w-full flex-row justify-between'>
-					<View className='mr-6 flex-1 flex-col justify-between'>
+					<View className='mr-8 flex-1 flex-col justify-between'>
 						<StaticItem title='Rating' icon={Star} count={book.rating} />
 						<StaticItem
 							title='Reading Time'
@@ -97,7 +97,7 @@ const Book: FC = () => {
 					<Image
 						url={book.picture}
 						height={260}
-						width={170}
+						width={180}
 						style={{
 							borderRadius: 8,
 							borderWidth: 1,
