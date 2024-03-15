@@ -1,5 +1,5 @@
 import { useAction } from '@/hooks'
-import type { RouteProperties } from '@/navigation/types'
+import type { RouteProperties } from '@/navigation/navigation-types'
 
 import Alert from '@/ui/alert/alert'
 import { Logout } from 'icons'

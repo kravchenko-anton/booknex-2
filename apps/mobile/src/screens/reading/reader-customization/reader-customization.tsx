@@ -13,12 +13,12 @@ import { cn } from '@/utils'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import { Color } from 'global/colors'
 import { Minus, Plus } from 'icons'
-import type { FC } from 'react'
+import type { FC, RefObject } from 'react'
 import { Pressable, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 //TODO: меньше кода тут
 const ReaderCustomization: FC<{
-	sheetRef: any
+	sheetRef: RefObject<BottomSheetModal>
 }> = ({ sheetRef }) => {
 	const {
 		changePadding,

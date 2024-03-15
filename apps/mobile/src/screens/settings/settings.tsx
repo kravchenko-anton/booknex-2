@@ -3,6 +3,7 @@ import { ScrollLayout } from '@/ui'
 import { Logout, MessageCircleQuestion } from 'icons'
 import { Linking } from 'react-native'
 import * as List from './settings-list'
+
 const Settings = () => {
 	const { navigate } = useTypedNavigation()
 	return (

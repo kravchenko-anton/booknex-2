@@ -1,4 +1,4 @@
-import type { TypeRootStackParameterListType } from '@/navigation/types'
+import type { TypeRootStackParameterListType } from '@/navigation/navigation-types'
 import type { IconType } from '@/types/global'
 import { Bookmarked, Home, Search, User } from 'icons'
 

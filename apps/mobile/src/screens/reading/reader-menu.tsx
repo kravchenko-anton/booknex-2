@@ -1,7 +1,7 @@
 import { useTypedNavigation } from '@/hooks'
-import { useReader } from '@/screens/reading/reading-context'
-import { Title } from '@/ui'
+import { useReader } from '@/screens/reading/reader-context'
 import { AnimatedView } from '@/ui/animated-components'
+import ProgressBar from '@/ui/progress-bar/progress-bar'
 import type { FunctionType } from 'global/types'
 import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
@@ -13,9 +13,9 @@ const ReaderMenu: FC<{
 	onChapterIconPress: FunctionType
 	onSelectThemeIconPress: FunctionType
 }> = ({ visible = false, onChapterIconPress, onSelectThemeIconPress }) => {
-	const { colorScheme, progress, ebook } = useReader()
+	const { colorScheme, progress } = useReader()
 	const { goBack } = useTypedNavigation()
-	const { top, bottom } = useSafeAreaInsets()
+	const { top } = useSafeAreaInsets()
 	return (
 		<View className='absolute h-screen w-full'>
 			<AnimatedView
@@ -37,15 +37,13 @@ const ReaderMenu: FC<{
 							color={colorScheme.colorPalette.text}
 							onPress={() => goBack()}
 						/>
-						<Title
-							center
-							size={'xl'}
-							className='ml-2'
-							weight='bold'
-							color={colorScheme.colorPalette.text}
-						>
-							{ebook?.title}
-						</Title>
+						<View className='ml-auto w-1/2'>
+							<ProgressBar
+								tintColor={colorScheme.colorPalette.primary}
+								trackTintColor={colorScheme.colorPalette.background.lighter}
+								progress={progress / 100}
+							/>
+						</View>
 					</View>
 					<ListOrdered
 						width={28}
@@ -61,31 +59,6 @@ const ReaderMenu: FC<{
 					/>
 				</View>
 			</AnimatedView>
-			{/* //TODO: сделать нормальный прогресс бар с главой */}
-			<View
-				className='absolute'
-				style={{
-					bottom: bottom,
-					left: 0,
-					right: 0,
-					zIndex: 50
-				}}
-			>
-				<View
-					className='relative w-full'
-					style={{
-						backgroundColor: colorScheme.colorPalette?.background?.lighter
-					}}
-				>
-					<View
-						className=' absolute bottom-0 left-0 h-0.5'
-						style={{
-							backgroundColor: colorScheme.colorPalette.primary,
-							width: `${progress}%`
-						}}
-					/>
-				</View>
-			</View>
 		</View>
 	)
 }

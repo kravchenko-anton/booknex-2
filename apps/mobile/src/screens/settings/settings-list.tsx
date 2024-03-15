@@ -1,12 +1,24 @@
 import type {
-	ListCategoryItemType,
-	ListItemType
-} from '@/screens/settings/types'
+	PressableDefaultProperties,
+	ViewDefaultProperties
+} from '@/types/component-types'
 import { Title } from '@/ui'
 import { cn } from '@/utils'
 import { ChevronRight } from 'icons'
-import type { PropsWithChildren } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 import { Pressable, View } from 'react-native'
+import type { SvgProps } from 'react-native-svg'
+
+export interface ListCategoryItemType extends ViewDefaultProperties {
+	title: string
+}
+
+export interface ListItemType
+	extends Omit<PressableDefaultProperties, 'pointerEvents' | 'style'> {
+	title: string
+	bordered?: boolean
+	icon: FC<SvgProps>
+}
 
 export const Category = ({
 	title,

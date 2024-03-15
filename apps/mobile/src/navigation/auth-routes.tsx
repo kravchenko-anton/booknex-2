@@ -2,7 +2,7 @@ import Login from '@/screens/auth/login/login'
 import Register from '@/screens/auth/register/register'
 import Welcome from '@/screens/auth/welcome/welcome'
 import * as Header from '@/ui/header/header'
-import type { IRouteType } from './types'
+import type { IRouteType } from './navigation-types'
 
 export const authRoutes: IRouteType[] = [
 	{

@@ -1,7 +1,7 @@
 import type {
 	MenuItemType,
 	TypeNavigate
-} from '@/navigation/bottom-menu/menu-data'
+} from '@/navigation/bottom-menu/menu.list'
 import { Title } from '@/ui'
 import { AnimatedPressable } from '@/ui/animated-components'
 import { usePressAnimation } from '@/ui/animated-press/press-animation'

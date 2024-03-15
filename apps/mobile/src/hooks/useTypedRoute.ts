@@ -1,4 +1,4 @@
-import type { TypeRootStackParameterListType } from '@/navigation/types'
+import type { TypeRootStackParameterListType } from '@/navigation/navigation-types'
 import type { RouteProp } from '@react-navigation/native'
 import { useRoute } from '@react-navigation/native'
 

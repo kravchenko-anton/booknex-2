@@ -15,7 +15,9 @@ export type ProgressBarProperties = React.ComponentPropsWithRef<typeof View> & {
 	/**
 	 * Color of the progress bar. The background color will be calculated based on this but you can change it by passing `backgroundColor` to `style` prop.
 	 */
-	color?: string
+
+	tintColor?: string
+	trackTintColor?: string
 	/**
 	 * If the progress bar will show indeterminate progress.
 	 */

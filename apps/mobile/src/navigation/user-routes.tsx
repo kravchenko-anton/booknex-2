@@ -10,7 +10,7 @@ import Settings from '@/screens/settings/settings'
 import UpdateRecommendation from '@/screens/update-recommendation/update-recommendation'
 import * as Header from '@/ui/header/header'
 import { Search as SearchIcon, Settings as SettingsIcon } from 'icons'
-import type { IRouteType } from './types'
+import type { IRouteType } from './navigation-types'
 
 export const routes: IRouteType[] = [
 	{

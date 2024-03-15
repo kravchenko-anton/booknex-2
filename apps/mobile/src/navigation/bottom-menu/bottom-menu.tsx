@@ -1,8 +1,8 @@
 import MenuItem from '@/navigation/bottom-menu/menu-item'
 import type { FC } from 'react'
 import { View } from 'react-native'
-import type { TypeNavigate } from './menu-data'
-import { menuItems } from './menu-data'
+import type { TypeNavigate } from './menu.list'
+import { menuItems } from './menu.list'
 
 interface IBottomMenuProperties {
 	currentRoute?: string

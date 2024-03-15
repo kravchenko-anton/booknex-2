@@ -1,5 +1,5 @@
-import LogoutAlert from '@/screens/settings/modal/logout'
-import type { IRouteType } from './types'
+import LogoutAlert from '@/screens/settings/settings-logout'
+import type { IRouteType } from './navigation-types'
 
 export const modalRoutes: IRouteType[] = [
 	{

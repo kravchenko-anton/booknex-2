@@ -1,4 +1,4 @@
-import type { TypeRootStackParameterListType } from '@/navigation/types'
+import type { TypeRootStackParameterListType } from '@/navigation/navigation-types'
 import type { NavigationProp } from '@react-navigation/native'
 import { useNavigation } from '@react-navigation/native'
 

@@ -1,4 +1,4 @@
-import { useTypedSelector } from '@/hooks'
+import { useReader } from '@/screens/reading/reader-context'
 import { Title } from '@/ui'
 import {
 	BottomSheetBackdrop,
@@ -11,11 +11,10 @@ import { useMemo } from 'react'
 import { Pressable } from 'react-native'
 
 const ReaderChapters: FC<{
-	sheetRef: any
+	sheetRef: React.RefObject<BottomSheetModal>
 	chapters: OutputChapter[]
-	openChapter: (chapterId: string) => void
-}> = ({ sheetRef, chapters, openChapter }) => {
-	const { colorScheme } = useTypedSelector(state => state.readingUi)
+}> = ({ sheetRef, chapters }) => {
+	const { colorScheme, changeChapter } = useReader()
 	const sections = useMemo(
 		() =>
 			chapters.map(chapter => ({
@@ -74,7 +73,7 @@ const ReaderChapters: FC<{
 						}}
 						onPress={() => {
 							console.log(chapter.link)
-							openChapter(chapter.link)
+							changeChapter(chapter.link)
 						}}
 					>
 						<Title

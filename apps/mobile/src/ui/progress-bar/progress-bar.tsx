@@ -18,6 +18,7 @@ const { isRTL } = I18nManager
 const styles = StyleSheet.create({
 	container: {
 		height: 4,
+		borderRadius: 1.5,
 		overflow: 'hidden'
 	},
 	webContainer: {
@@ -30,7 +31,8 @@ const styles = StyleSheet.create({
 })
 
 const ProgressBar = ({
-	color,
+	tintColor = Color.primary,
+	trackTintColor = Color.bordered,
 	indeterminate,
 	progress = 0,
 	visible = true,
@@ -140,9 +142,6 @@ const ProgressBar = ({
 		setPreviousWidth(width)
 		setWidth(event.nativeEvent.layout.width)
 	}
-
-	const tintColor = Color.primary
-	const trackTintColor = Color.muted
 
 	return (
 		<View
