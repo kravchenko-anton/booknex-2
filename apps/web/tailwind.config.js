@@ -9,11 +9,18 @@ module.exports = {
 		'./features/**/*.{js,ts,jsx,tsx,mdx}'
 	],
 	theme: {
+		colors: {
+			...Colors,
+			transparent: tailwindcssColors.transparent
+		},
+		borderRadius: {
+			none: '0',
+			sm: '0.125rem',
+			DEFAULT: '0.25rem',
+			lg: '0.5rem',
+			full: '9999px'
+		},
 		extend: {
-			colors: {
-				...Colors,
-				transparent: tailwindcssColors.transparent
-			},
 			keyframes: {
 				'accordion-down': {
 					from: { height: '0' },

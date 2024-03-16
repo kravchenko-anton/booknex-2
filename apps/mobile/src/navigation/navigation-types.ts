@@ -16,7 +16,9 @@ export type TypeRootStackParameterListType = {
 	UpdateRecommendation: undefined
 	Search: undefined
 	Settings: undefined
-
+	TextSelect: {
+		text: string
+	}
 	Logout: undefined
 }
 

@@ -14,11 +14,20 @@ export const StatisticItem: FC<StatisticItemProperties> = ({
 	icon,
 	count
 }) => (
-	<View className='flex-row items-center'>
-		<Icon stroke={Color.gray} icon={icon} size={'sm'} variant='transparent' />
-		<View>
-			<Title size={'md'} weight='bold' color={Color.gray}>
-				{String(count)} {title}
+	<View className=' items-center text-center'>
+		<Icon
+			stroke={Color.gray}
+			className='rounded-full'
+			icon={icon}
+			size={'lg'}
+			variant='muted'
+		/>
+		<View className='mt-2  items-center text-center'>
+			<Title size={'md'} weight='semiBold' color={Color.white}>
+				{String(count)}
+			</Title>
+			<Title size={'sm'} color={Color.gray}>
+				{title}
 			</Title>
 		</View>
 	</View>

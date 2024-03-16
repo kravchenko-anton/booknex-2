@@ -71,7 +71,7 @@ const BookReview: FC = () => {
 	return (
 		<ScrollView className='h-full px-2'>
 			<Icon
-				className='mt-2 w-[50px] items-start'
+				className='mt-2 w-[45px] items-start'
 				icon={Close}
 				size='md'
 				variant='muted'

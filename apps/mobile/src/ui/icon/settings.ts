@@ -15,11 +15,11 @@ export const settings: {
 	padding: {
 		sm: 'p-2',
 		md: 'p-2.5',
-		lg: 'p-4'
+		lg: 'p-3'
 	},
 	size: {
 		sm: 20,
 		md: 22,
-		lg: 28
+		lg: 26
 	}
 }

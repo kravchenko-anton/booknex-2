@@ -2,7 +2,7 @@ import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { Button } from '@/ui'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Text } from 'icons'
+import { Book } from 'icons'
 import type { FC } from 'react'
 
 const BookReadingButton: FC<{ id: number }> = ({ id }) => {
@@ -25,10 +25,10 @@ const BookReadingButton: FC<{ id: number }> = ({ id }) => {
 
 	return (
 		<Button
-			icon={Text}
+			icon={Book}
 			isLoading={startReadingLoading}
 			className='flex-1'
-			variant='muted'
+			variant='primary'
 			size='md'
 			onPress={startReadingBook}
 		>

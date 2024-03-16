@@ -194,10 +194,10 @@ export class BookService {
 
 		return {
 			...book,
-			file: ebook.map(({ chapters }) =>
+			file: ebook.map(({ chapters, title }) =>
 				chapters
 					.map(
-						({ text, name, romanNumber }) => `<div id="${name}">
+						({ text, name, romanNumber }) => `<div id="${name + ' ' + title}">
 <div style="
 	width: 100%;
 	height: 80px;
@@ -216,7 +216,7 @@ export class BookService {
 				title,
 				children: chapters.map(({ name }) => ({
 					name,
-					link: `#${name}`
+					link: `#${name + ' ' + title}`
 				}))
 			}))
 		}

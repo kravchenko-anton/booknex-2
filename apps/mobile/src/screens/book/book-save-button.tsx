@@ -36,7 +36,7 @@ const BookSaveButton: FC<{ id: number }> = ({ id }) => {
 			fatness={2}
 			disabled={toggleSavedLoading}
 			size='md'
-			className='ml-3'
+			className='ml-4'
 			fill={!!isSaved}
 			onPress={() => toggleSaved(id)}
 		/>

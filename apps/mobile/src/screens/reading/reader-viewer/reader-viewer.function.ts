@@ -1,3 +1,4 @@
+import { getFileUrl } from 'global/api-config'
 import { Color } from 'global/colors'
 import type { FunctionType } from 'global/types'
 
@@ -16,10 +17,6 @@ export const handleDoublePress = (handleAction: FunctionType) => {
 		}, 300)
 	}
 }
-
-export const beforeLoad = (lastPosition: number) => `
-	window.scrollTo({ top: ${lastPosition} });
-`
 
 export const finishBookButton = `
 		<div
@@ -63,17 +60,67 @@ export const finishBookButton = `
 </div>
 `
 
+export const ViewerHtml = ({
+	title,
+	picture,
+	file,
+	defaultTheme
+}: {
+	title: string
+	picture: string
+	file: string[]
+	defaultTheme: string
+}) => `
+	<head>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+				<title>${title}</title>
+			</head>
+			<style>${defaultTheme}</style>
+			<div>
+				<img style='width:100%; height: 300px; object-fit: contain; object-position: center; padding-top: 40px'
+					 src="${getFileUrl(picture)}" alt="${title}" />
+				<h1>${title}</h1>
+			</div>
+			${file}
+			${finishBookButton}
+	`
+export const onTextSelectDisplayContextMenu = `
+let lastSelection = '';
+let debounceTimer = null;
+
+document.addEventListener('selectionchange', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        const selection = window.getSelection();
+        
+        if (lastSelection === selection.toString()) return;
+        if (selection.toString().length < 3 || selection.toString().length > 700) {
+            selection.removeAllRanges();
+            lastSelection = '';
+            window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'textSelectFail' }));
+        } else {
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: 'textSelect',
+                payload: {
+                    text: selection.toString()
+                }
+            }));
+            lastSelection = selection.toString();
+        }
+    }, 1500);
+});
+`
+
 export const scrollProgressDetect = `
 let timerId;
+let chapters = document.querySelectorAll('div');
 
 window.addEventListener('scroll', function() {
  clearTimeout(timerId);
 
  timerId = setTimeout(() => {
    let currentScrollPosition = document.body.scrollTop;
-		if  (currentScrollPosition === 100) {
-			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finishBook' }))
-		};
+
    window.ReactNativeWebView.postMessage(JSON.stringify({
      type: "scroll",
      payload: {
@@ -81,6 +128,7 @@ window.addEventListener('scroll', function() {
        progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight) * 100)
      }
    }));
+   
  }, 1000);
 });
 `

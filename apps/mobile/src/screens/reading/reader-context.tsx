@@ -7,7 +7,7 @@ import {
 } from '@/screens/reading/reader-viewer/reader-viewer.function'
 import { useSaveProgress } from '@/screens/reading/reader-viewer/useSaveProgress'
 
-import { successToast } from '@/utils/toast'
+import { errorToast, successToast } from '@/utils/toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
 	createContext,
@@ -35,10 +35,11 @@ export const ReaderContext = createContext(
 	}
 )
 export interface WebviewMessageType {
-	type: 'scroll' | 'finishBook'
+	type: 'scroll' | 'finishBook' | 'textSelect' | 'textSelectFail'
 	payload: {
 		scrollTop: number
 		progress: number
+		text: string
 	}
 }
 
@@ -48,7 +49,7 @@ export const ReadingProvider: FC<
 	}>
 > = ({ children, id }) => {
 	const queryClient = useQueryClient()
-	const reference = useRef<WebView>(null)
+	const viewerReference = useRef<WebView>(null)
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
 		state => state.readingUi
 	)
@@ -76,7 +77,16 @@ export const ReadingProvider: FC<
 				event.nativeEvent.data
 			) as WebviewMessageType
 			const { type, payload } = parsedEvent
+			if (type === 'textSelectFail') {
+				errorToast('Text selection is too long or too short')
+			}
+			if (type === 'textSelect') {
+				navigate('TextSelect', {
+					text: payload.text
+				})
+			}
 			if (type === 'scroll') {
+				console.log('scroll', payload)
 				if (readerState.progress === payload.progress) return
 				setReaderState({
 					progress: payload.progress,
@@ -111,13 +121,16 @@ export const ReadingProvider: FC<
 	})
 
 	useEffect(() => {
-		reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
+		viewerReference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 	}, [styleTag])
 
 	const [defaultTheme] = useState(styleTag) // eslint-disable-line react/hook-use-state
 
-	const changeChapter = useCallback((chapter: string) => {
-		reference.current?.injectJavaScript(`window.location.hash = '${chapter}'`)
+	const changeChapter = useCallback((link: string) => {
+		console.log('changeChapter', link)
+		viewerReference.current?.injectJavaScript(
+			`window.location.hash = '${link}'`
+		)
 	}, [])
 
 	const value = {
@@ -126,7 +139,7 @@ export const ReadingProvider: FC<
 		onMessage,
 		progress: Math.round(readerState.progress),
 		initialScroll: readerState.scrollTop,
-		reference,
+		reference: viewerReference,
 		changeChapter,
 		defaultTheme
 	}

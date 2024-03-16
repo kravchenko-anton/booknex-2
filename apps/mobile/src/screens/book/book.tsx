@@ -2,7 +2,6 @@ import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import BookReadingButton from '@/screens/book/book-reading-button'
 import BookSaveButton from '@/screens/book/book-save-button'
-import { StatisticItem } from '@/screens/book/statistic-item'
 import {
 	AnimatedIcon,
 	Button,
@@ -16,9 +15,8 @@ import {
 import { share } from '@/utils/share-function'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
-import { minutesToTime } from 'global/helpers/time-converter'
 import { appName } from 'global/utils'
-import { ArrowLeft, Book as BookIcon, Clock, Share, Star } from 'icons'
+import { ArrowLeft, Share } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 
@@ -66,19 +64,19 @@ const Book: FC = () => {
 				/>
 			</View>
 			<View className=' px-2 pt-2'>
-				<View className=' flex-1 flex-row '>
-					<StatisticItem title='Rating' icon={Star} count={book.rating} />
-					<StatisticItem
-						title='Reading Time'
-						icon={Clock}
-						count={minutesToTime(book.readingTime)}
-					/>
-					<StatisticItem
-						title='Chapters'
-						icon={BookIcon}
-						count={book.chapters}
-					/>
-				</View>
+				{/* <View className=' flex-1 flex-row '> */}
+				{/* 	<StatisticItem title='Rating' icon={Star} count={book.rating} /> */}
+				{/* 	<StatisticItem */}
+				{/* 		title='Reading Time' */}
+				{/* 		icon={Clock} */}
+				{/* 		count={minutesToTime(book.readingTime)} */}
+				{/* 	/> */}
+				{/* 	<StatisticItem */}
+				{/* 		title='Chapters' */}
+				{/* 		icon={BookIcon} */}
+				{/* 		count={book.chapters} */}
+				{/* 	/> */}
+				{/* </View> */}
 				<Title
 					numberOfLines={2}
 					weight='semiBold'
@@ -97,7 +95,7 @@ const Book: FC = () => {
 					{book.author}
 				</Title>
 			</View>
-			<View className='h-[65px] flex-row justify-between px-2 pt-4'>
+			<View className='flex-row justify-between px-2 pt-4'>
 				<BookReadingButton id={book.id} />
 				<BookSaveButton id={book.id} />
 			</View>
@@ -108,7 +106,7 @@ const Book: FC = () => {
 				renderItem={({ item: genre }) => (
 					<Button
 						variant='foreground'
-						size='sm'
+						size='md'
 						onPress={() => {
 							navigate('Genre', { id: genre.id, name: genre.name })
 						}}
