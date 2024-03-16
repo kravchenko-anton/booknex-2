@@ -37,7 +37,7 @@ const Parser: FC = () => {
 	return (
 		<div className='w-full'>
 			<DataTableHeader
-				title='Users'
+				title='Parser'
 				defaultTerm={searchTerm}
 				onSearchSubmit={term => {
 					router.replace(
