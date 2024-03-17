@@ -332,7 +332,7 @@ paths:
         required: true
         description: Create book
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/CreateBookDto"
       responses:
@@ -379,6 +379,28 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UpdateGenreDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  "/api/book/admin/update-picture/{id}":
+    put:
+      operationId: updatePicture
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/updatePictureDto"
       responses:
         "200":
           description: ""
@@ -1368,10 +1390,6 @@ components:
           type: string
           example: title
           description: book title
-        picture:
-          type: string
-          example: picture
-          description: book picture
         author:
           type: string
           example: author
@@ -1397,14 +1415,18 @@ components:
           type: array
           items:
             type: number
+        picture:
+          type: string
+          description: picture
+          format: binary
       required:
         - title
-        - picture
         - author
         - description
         - rating
         - ebook
         - genres
+        - picture
     UpdateBookDto:
       type: object
       properties:
@@ -1448,6 +1470,15 @@ components:
           type: array
           items:
             type: number
+    updatePictureDto:
+      type: object
+      properties:
+        picture:
+          type: string
+          description: picture
+          format: binary
+      required:
+        - picture
     GoogleAuthDto:
       type: object
       properties:

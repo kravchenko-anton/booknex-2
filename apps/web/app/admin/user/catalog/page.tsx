@@ -1,12 +1,12 @@
 'use client'
 
-import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import { columns } from '@/app/admin/user/catalog/columns'
 import { useQueries } from '@/app/admin/user/catalog/useQueries'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'
 import { useTableParameters } from '@/hooks/useTableParameters'
 import { generateParameters } from '@/utils/generate-parameters'
+import { secureRoutes } from '@/utils/route'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 import type { FC } from 'react'

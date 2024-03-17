@@ -1,4 +1,3 @@
-import type { UpdateGenreDtoType } from '@/app/admin/book/_shared/validation/update.genre.dto'
 import { Button } from '@/components/ui'
 import {
 	Command,
@@ -17,6 +16,7 @@ import { cn } from '@/utils'
 import { errorToast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
+import type { UpdateGenreDtoType } from 'global/dto/book/update.genre.dto'
 import { Check } from 'icons'
 import * as React from 'react'
 import { useState, type FC } from 'react'
@@ -26,7 +26,7 @@ interface UpdateGenresProperties {
 	defaultGenres?: number[]
 }
 
-const UpdateGenres: FC<UpdateGenresProperties> = ({
+const BookUpdateGenres: FC<UpdateGenresProperties> = ({
 	defaultGenres = [],
 	bookId,
 	...properties
@@ -138,4 +138,4 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
 	)
 }
 
-export default UpdateGenres
+export default BookUpdateGenres

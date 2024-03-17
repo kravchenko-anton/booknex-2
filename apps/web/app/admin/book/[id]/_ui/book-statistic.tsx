@@ -13,7 +13,7 @@ interface InfoBlockProperties {
 	readingTime: number
 }
 
-const InfoBlock: FC<InfoBlockProperties> = ({
+const BookStatistic: FC<InfoBlockProperties> = ({
 	_count,
 	createdAt,
 	readingTime,
@@ -52,4 +52,4 @@ const InfoBlock: FC<InfoBlockProperties> = ({
 	</div>
 )
 
-export default InfoBlock
+export default BookStatistic

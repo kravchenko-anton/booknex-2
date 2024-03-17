@@ -6,7 +6,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { acceptToast, infoToast } from '@/utils/toast'
+import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { AxiosResponse } from 'axios'
 import { getFileUrl } from 'global/api-config'
@@ -111,14 +111,14 @@ export const columns = ({
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem
+						disabled={removeLoading}
 						onClick={() => {
 							acceptToast('Are you sure you want to delete this book?', {
 								action: {
 									label: 'Delete',
 
-									onClick: () => {
-										if (removeLoading) return infoToast('Please wait')
-										remove(row.original.id)
+									onClick: async () => {
+										await remove(row.original.id)
 									}
 								}
 							})

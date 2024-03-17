@@ -48,6 +48,7 @@ instance.interceptors.response.use(
 					}
 				})
 			} catch {
+				console.assert(errorCatch(error))
 				if (
 					errorCatch(error) === 'jwt expired' ||
 					errorCatch(error) === 'jwt must be provided'
@@ -56,9 +57,9 @@ instance.interceptors.response.use(
 				}
 			}
 		}
-		console.log('error in interceptor', error)
+		if (error.response.status === 401) return
 		errorToast(error)
-		throw error
+		throw errorCatch(error)
 	}
 )
 

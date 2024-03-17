@@ -1,13 +1,13 @@
 'use client'
 
-import { secureRoutes } from '@/app/admin/book/_shared/route-names'
-import ParseButton from '@/app/admin/parser/_ui/parse-button'
 import { columns } from '@/app/admin/parser/columns'
+import ParseButton from '@/app/admin/parser/parser-modal/parse-button'
 import { useQueries } from '@/app/admin/parser/useQueries'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'
 import { useTableParameters } from '@/hooks/useTableParameters'
 import { generateParameters } from '@/utils/generate-parameters'
+import { secureRoutes } from '@/utils/route'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 

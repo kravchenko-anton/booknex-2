@@ -276,13 +276,20 @@ export class BookService {
 		}
 	}
 
-	async create(dto: CreateBookDto) {
+	async create(dto: CreateBookDto, picture: Express.Multer.File) {
 		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
 		const { readingTime, uploadedEbook, chaptersCount } = useGetEbook(dto.ebook)
 		Logger.log({
 			readingTime,
 			uploadedEbook,
 			dtoEbook: dto.ebook
+		})
+
+		const { name: pictureName } = await this.storageService.upload({
+			folder: 'booksCovers',
+			file: picture.buffer,
+			role: 'admin',
+			filename: dto.title + '.png'
 		})
 		const { name: ebookName } = await this.storageService.upload({
 			folder: 'ebooks',
@@ -310,10 +317,10 @@ export class BookService {
 				},
 				chapters: chaptersCount,
 				title: dto.title,
+				picture: pictureName,
 				rating: dto.rating,
 				readingTime: readingTime,
 				description: dto.description,
-				picture: dto.picture,
 				ebook: ebookName,
 				author: dto.author,
 				genres: {
@@ -362,7 +369,26 @@ export class BookService {
 			}
 		})
 	}
-
+	async updatePicture(id: number, picture: Express.Multer.File) {
+		const book = await this.findOne({
+			where: { id },
+			select: {
+				title: true
+			}
+		})
+		const { name: pictureName } = await this.storageService.upload({
+			folder: 'booksCovers',
+			file: picture.buffer,
+			role: 'admin',
+			filename: book.title + '.png'
+		})
+		await this.prisma.book.update({
+			where: { id },
+			data: {
+				picture: pictureName
+			}
+		})
+	}
 	async updateGenre(id: number, dto: UpdateGenreDto) {
 		await this.checkExist(id)
 		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)

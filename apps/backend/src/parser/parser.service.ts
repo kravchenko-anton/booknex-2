@@ -1,4 +1,4 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { AdminErrors } from '../../../../libs/global/errors'
 import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
@@ -16,7 +16,6 @@ export class ParserService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async adminCatalog(searchTerm: string, page: number) {
-		throw new BadRequestException('Method not implemented.')
 		const perPage = 20
 		return {
 			data: await this.prisma.bookTemplate.findMany({

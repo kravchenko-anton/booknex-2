@@ -11,7 +11,6 @@ export * from './book-template-catalog-output';
 export * from './catalog-user-output';
 export * from './chapter';
 export * from './count-output';
-export * from './create-book-dto';
 export * from './ebook-by-id-output';
 export * from './featured-output';
 export * from './genre-by-id-output';

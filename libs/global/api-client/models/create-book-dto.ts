@@ -30,12 +30,6 @@ export interface CreateBookDto {
      */
     'title': string;
     /**
-     * book picture
-     * @type {string}
-     * @memberof CreateBookDto
-     */
-    'picture': string;
-    /**
      * book author
      * @type {string}
      * @memberof CreateBookDto
@@ -65,5 +59,11 @@ export interface CreateBookDto {
      * @memberof CreateBookDto
      */
     'genres': Array<number>;
+    /**
+     * picture
+     * @type {File}
+     * @memberof CreateBookDto
+     */
+    'picture': File;
 }
 

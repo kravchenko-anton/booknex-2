@@ -1,8 +1,8 @@
 'use client'
 
-import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import { useAction, useAuth } from '@/hooks'
 import { getRefreshToken } from '@/redux/auth/auth-helper'
+import { publicRoutes, secureRoutes } from '@/utils/route'
 import { redirect } from 'next/navigation'
 import { useLayoutEffect, type FC } from 'react'
 
@@ -31,7 +31,7 @@ export const adminRoute = (Component: FC) =>
 			}
 
 			checkRefreshToken()
-			if (!user && !isLoading) redirect('/')
+			if (!user && !isLoading) redirect(publicRoutes.login)
 		}, [user, isLoading])
 
 		return <Component {...properties} />

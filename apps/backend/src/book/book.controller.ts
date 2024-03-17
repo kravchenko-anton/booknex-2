@@ -3,14 +3,26 @@ import {
 	Controller,
 	Delete,
 	Get,
+	MaxFileSizeValidator,
 	Param,
+	ParseFilePipe,
 	Post,
 	Put,
-	Query
+	Query,
+	UploadedFile,
+	UseInterceptors
 } from '@nestjs/common'
-import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { FileInterceptor } from '@nestjs/platform-express'
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiConsumes,
+	ApiOkResponse,
+	ApiTags
+} from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
+import environment from '../utils/common/environment.config'
 import {
 	AdminCatalogOutput,
 	AdminInfoByIdOutput,
@@ -18,7 +30,11 @@ import {
 } from './book.model'
 import { BookService } from './book.service'
 import { CreateBookDto } from './dto/create.book.dto'
-import { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto'
+import {
+	UpdateBookDto,
+	UpdateGenreDto,
+	updatePictureDto
+} from './dto/update.book.dto'
 import { EbookByIdOutput, PayloadEBook, StoredEBook } from './ebook.model'
 
 @ApiTags('📙 book')
@@ -78,8 +94,22 @@ export class BookController {
 		type: CreateBookDto,
 		description: 'Create book'
 	})
-	async create(@Body() dto: CreateBookDto) {
-		return this.bookService.create(dto)
+	@UseInterceptors(FileInterceptor('picture'))
+	@ApiConsumes('multipart/form-data')
+	async create(
+		@UploadedFile(
+			new ParseFilePipe({
+				validators: [
+					new MaxFileSizeValidator({
+						maxSize: environment.MAX_UPLOAD_SIZE
+					})
+				]
+			})
+		)
+		picture: Express.Multer.File,
+		@Body() dto: CreateBookDto
+	) {
+		return this.bookService.create(dto, picture)
 	}
 
 	@Auth('admin')
@@ -94,6 +124,28 @@ export class BookController {
 	@Put('admin/update-genre/:id')
 	async updateGenre(@Param('id') bookId: number, @Body() dto: UpdateGenreDto) {
 		return this.bookService.updateGenre(+bookId, dto)
+	}
+
+	@Auth('admin')
+	@ApiOkResponse({ type: null })
+	@Put('admin/update-picture/:id')
+	@ApiBody({ type: updatePictureDto })
+	@UseInterceptors(FileInterceptor('picture'))
+	@ApiConsumes('multipart/form-data')
+	async updatePicture(
+		@UploadedFile(
+			new ParseFilePipe({
+				validators: [
+					new MaxFileSizeValidator({
+						maxSize: environment.MAX_UPLOAD_SIZE
+					})
+				]
+			})
+		)
+		picture: Express.Multer.File,
+		@Param('id') bookId: number
+	) {
+		return this.bookService.updatePicture(+bookId, picture)
 	}
 
 	@Auth('admin')

@@ -1,4 +1,4 @@
-import CallParserDialog from '@/app/admin/parser/_ui/call-parser'
+import CallParserDialog from '@/app/admin/parser/parser-modal/call-parser'
 import { Button } from '@/components/ui'
 import type { DialogProperties } from '@/components/ui/base-components-types'
 import api from '@/services'
@@ -38,6 +38,7 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 
 			<CallParserDialog
 				isOpen={properties.isOpen}
+				isLoading={parseLoading}
 				onClose={properties.onClose}
 				onSubmit={async data => {
 					await parse({

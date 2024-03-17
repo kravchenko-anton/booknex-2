@@ -1,6 +1,6 @@
-import type { CreateBookDtoType } from '@/app/admin/book/_shared/validation/create.book.dto'
 import api from '@/services'
 import { useQuery } from '@tanstack/react-query'
+import type { CreateBookDtoType } from 'global/dto/book/create.book.dto'
 
 import { useSearchParams } from 'next/navigation'
 import { useLayoutEffect } from 'react'

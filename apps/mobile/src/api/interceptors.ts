@@ -56,8 +56,9 @@ instance.interceptors.response.use(
 				}
 			}
 		}
+		if (error.response.status === 401) return
 		errorToast(error)
-		throw error
+		throw errorCatch(error)
 	}
 )
 export default instance

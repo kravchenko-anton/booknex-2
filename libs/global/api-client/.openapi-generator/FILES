@@ -28,7 +28,6 @@ models/book.ts
 models/catalog-user-output.ts
 models/chapter.ts
 models/count-output.ts
-models/create-book-dto.ts
 models/ebook-by-id-output.ts
 models/featured-output.ts
 models/genre-by-id-output.ts

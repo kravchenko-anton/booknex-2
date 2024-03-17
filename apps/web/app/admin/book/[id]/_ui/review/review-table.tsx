@@ -1,4 +1,4 @@
-import { reviewColumns } from '@/app/admin/book/_shared/ui/review/review-columns'
+import { reviewColumns } from '@/app/admin/book/[id]/_ui/review/review-columns'
 import { columns } from '@/app/admin/book/catalog/columns'
 import {
 	Table,

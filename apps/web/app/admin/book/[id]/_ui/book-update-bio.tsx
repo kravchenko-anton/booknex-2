@@ -1,11 +1,13 @@
-import {
-	UpdateBookDto,
-	type UpdateBookDtoType
-} from '@/app/admin/book/_shared/validation/update.book.dto'
 import { Button, Field, FormTextArea } from '@/components/ui'
+import api from '@/services'
 import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
+import {
+	UpdateBookDto,
+	type UpdateBookDtoType
+} from 'global/dto/book/update.book.dto'
 
 import { PenNib, Star } from 'icons'
 import type { FC } from 'react'
@@ -18,11 +20,16 @@ interface UpdateBioProperties {
 	readingTime: number
 	rating: number
 	description: string
-	onSaveEdit: (data: object) => void
-	isLoading: boolean
+	onSuccess: () => void
 }
 
-const UpdateBio: FC<UpdateBioProperties> = properties => {
+const BookUpdateBio: FC<UpdateBioProperties> = properties => {
+	const { mutateAsync: updateBio, isLoading: updateBioLoading } = useMutation({
+		mutationKey: ['update-book-bio'],
+		mutationFn: ({ id, payload }: { id: number; payload: UpdateBookDtoType }) =>
+			api.book.update(id, payload),
+		onSuccess: properties.onSuccess
+	})
 	const {
 		handleSubmit,
 		control,
@@ -94,10 +101,10 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 				</Button>
 				<Button
 					size='sm'
-					isLoading={properties.isLoading}
+					isLoading={updateBioLoading}
 					variant='primary'
 					onClick={handleSubmit(data =>
-						properties.onSaveEdit(dirtyValues(dirtyFields, data))
+						updateBio(dirtyValues(dirtyFields, data))
 					)}
 				>
 					Save
@@ -107,4 +114,4 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 	)
 }
 
-export default UpdateBio
+export default BookUpdateBio

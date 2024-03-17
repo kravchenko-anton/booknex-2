@@ -84,6 +84,7 @@ export class StorageService {
 
 						.toFormat('jpeg', { progressive: true, quality: 50 })
 						.toBuffer()
+		await this.delete(`${folder}/${optimizeFilename(filename)}`)
 		await this.s3
 			.send(
 				new PutObjectCommand({

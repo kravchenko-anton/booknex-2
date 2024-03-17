@@ -1,16 +1,17 @@
-import {
-	callParserDto,
-	type CallParserDtoType
-} from '@/app/admin/parser/_ui/validation'
 import { Button, Field } from '@/components/ui'
 import type { DialogProperties } from '@/components/ui/base-components-types'
 import { SheetComponent, SheetHeader } from '@/components/ui/sheet'
 import { zodResolver } from '@hookform/resolvers/zod'
+import {
+	callParserDto,
+	type CallParserDtoType
+} from 'global/dto/book/call-parser.dto'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface NewParserPopupProperties extends DialogProperties {
 	onSubmit: (data: { link: string; page: number }) => void
+	isLoading: boolean
 }
 
 const defaultParserLinks = [
@@ -82,6 +83,7 @@ const CallParserDialog: FC<NewParserPopupProperties> = properties => {
 			</div>
 			<Button
 				size='sm'
+				isLoading={properties.isLoading}
 				variant='primary'
 				className='mx-auto mt-4'
 				onClick={handleSubmit(properties.onSubmit)}

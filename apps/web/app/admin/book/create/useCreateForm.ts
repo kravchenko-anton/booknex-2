@@ -1,23 +1,20 @@
-import { secureRoutes } from '@/app/admin/book/_shared/route-names'
-import {
-	CreateBookDto,
-	type CreateBookDtoType
-} from '@/app/admin/book/_shared/validation/create.book.dto'
-
 import { useTemplate } from '@/app/admin/book/create/useTemplate'
 import api from '@/services'
-import { useUploadFile } from '@/utils/files'
+import { secureRoutes } from '@/utils/route'
 import { errorToast, successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import type { CreateBookDto as CreateBookPayload } from 'global/api-client'
+import type { PayloadEBook } from 'global/api-client'
+import {
+	CreateBookDto,
+	type CreateBookDtoType
+} from 'global/dto/book/create.book.dto'
 
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
 export const useCreateForm = () => {
 	const router = useRouter()
-	const { upload } = useUploadFile()
 	const {
 		control,
 		watch,
@@ -33,16 +30,24 @@ export const useCreateForm = () => {
 
 	const { mutateAsync: create, isLoading: submitLoading } = useMutation({
 		mutationKey: ['create-book'],
-		mutationFn: (payload: CreateBookPayload) =>
-			api.book.create({
-				title: payload.title,
-				description: payload.description,
-				picture: payload.picture,
-				ebook: payload.ebook,
-				genres: payload.genres,
-				rating: payload.rating,
-				author: payload.author
-			}),
+		mutationFn: (payload: {
+			title: string
+			author: string
+			description: string
+			rating: number
+			ebook: PayloadEBook[]
+			genres: number[]
+			picture: File
+		}) =>
+			api.book.create(
+				payload.title,
+				payload.author,
+				payload.description,
+				payload.rating,
+				payload.ebook,
+				payload.genres,
+				payload.picture
+			),
 		onError: () => errorToast('Error while uploading book')
 	})
 
@@ -53,15 +58,10 @@ export const useCreateForm = () => {
 	})
 
 	const submit = handleSubmit(async (data: CreateBookDtoType) => {
-		const { data: pictureFile } = await upload({
-			folder: 'booksCovers',
-			blob: data.picture
-		})
-		if (!pictureFile.name) return
 		await create({
 			title: data.title,
 			description: data.description,
-			picture: pictureFile.name,
+			picture: data.picture,
 			ebook: data.ebook,
 			author: data.author,
 			genres: data.genres,

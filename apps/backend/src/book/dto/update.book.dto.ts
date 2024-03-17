@@ -19,3 +19,13 @@ export class UpdateGenreDto {
 	@ArrayMaxSize(3)
 	genres: number[]
 }
+
+export class updatePictureDto {
+	@ApiProperty({
+		description: 'picture',
+		required: true,
+		type: String,
+		format: 'binary'
+	})
+	picture: Buffer
+}

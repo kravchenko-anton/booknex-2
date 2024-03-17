@@ -12,7 +12,6 @@ import { PayloadEBook } from '../ebook.model'
 export class CreateBookDto extends PickType(Book, [
 	'author',
 	'description',
-	'picture',
 	'rating',
 	'title'
 ]) {
@@ -33,4 +32,12 @@ export class CreateBookDto extends PickType(Book, [
 	})
 	@IsNumber({}, { each: true })
 	genres: number[]
+
+	@ApiProperty({
+		description: 'picture',
+		required: true,
+		type: String,
+		format: 'binary'
+	})
+	picture: Buffer
 }

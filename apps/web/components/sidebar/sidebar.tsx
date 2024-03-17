@@ -1,4 +1,3 @@
-import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -8,6 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useAction } from '@/hooks'
 import { cn } from '@/utils'
+import { secureRoutes } from '@/utils/route'
 import { appName } from 'global/utils'
 import { Book, Graph, Logout, MoreHorizontal, Settings, User } from 'icons'
 import { usePathname, useRouter } from 'next/navigation'
@@ -68,7 +68,7 @@ export const Sidebar: FC = () => {
 				</ul>
 				<div
 					className='text-danger hidden cursor-pointer  items-center duration-100 ease-linear xl:mt-auto xl:flex  xl:gap-3 xl:p-2'
-					onClick={() => logout()}
+					onClick={logout}
 				>
 					<Logout width={22} height={22} />
 					<span className='block text-sm xl:text-[16px]'>Logout</span>

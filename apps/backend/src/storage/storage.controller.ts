@@ -33,12 +33,11 @@ export class StorageController {
 	constructor(private readonly uploadService: StorageService) {}
 
 	@Post('/:folder')
-	@UseInterceptors(FileInterceptor('file'))
-	@ApiConsumes('multipart/form-data')
 	@ApiParam({
 		name: 'folder',
 		enum: ['ebooks', 'booksCovers']
 	})
+	@UseInterceptors(FileInterceptor('file'))
 	@ApiConsumes('multipart/form-data')
 	@ApiBody({
 		schema: {
