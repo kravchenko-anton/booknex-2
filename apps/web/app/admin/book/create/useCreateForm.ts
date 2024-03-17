@@ -1,4 +1,4 @@
-import { bookCatalogRoute } from '@/app/admin/book/_shared/route-names'
+import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import {
 	CreateBookDto,
 	type CreateBookDtoType
@@ -71,7 +71,7 @@ export const useCreateForm = () => {
 				if (template.id) {
 					await deleteTemplate(template.id)
 				}
-				router.push(bookCatalogRoute)
+				router.push(secureRoutes.bookCatalogRoute)
 				successToast('Book created')
 			})
 			.catch(() => {

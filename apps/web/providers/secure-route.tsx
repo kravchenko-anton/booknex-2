@@ -1,5 +1,6 @@
 'use client'
 
+import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import { useAction, useAuth } from '@/hooks'
 import { getRefreshToken } from '@/redux/auth/auth-helper'
 import { redirect } from 'next/navigation'
@@ -10,7 +11,7 @@ export const loginRoute = (Component: FC) =>
 		const { user, isLoading } = useAuth()
 
 		useLayoutEffect(() => {
-			if (user) redirect('/admin/dashboard')
+			if (user) redirect(secureRoutes.dashboard)
 		}, [user, isLoading])
 
 		return <Component {...properties} />

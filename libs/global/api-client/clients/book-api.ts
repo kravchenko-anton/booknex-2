@@ -34,6 +34,8 @@ import { InfoByIdOutput } from '../models';
 // @ts-ignore
 import { PayloadEBook } from '../models';
 // @ts-ignore
+import { StoredEBook } from '../models';
+// @ts-ignore
 import { UpdateBookDto } from '../models';
 // @ts-ignore
 import { UpdateGenreDto } from '../models';
@@ -280,6 +282,43 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storedEbook: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('storedEbook', 'id', id)
+            const localVarPath = `/api/book/stored-ebook/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
          * @param {UpdateBookDto} updateBookDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -492,6 +531,18 @@ export const BookApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storedEbook(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoredEBook>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storedEbook(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookApi.storedEbook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} id 
          * @param {UpdateBookDto} updateBookDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -592,6 +643,15 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
          */
         remove(id: number, options?: any): AxiosPromise<void> {
             return localVarFp.remove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storedEbook(id: number, options?: any): AxiosPromise<Array<StoredEBook>> {
+            return localVarFp.storedEbook(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -698,6 +758,17 @@ export class BookApi extends BaseAPI {
      */
     public remove(id: number, options?: RawAxiosRequestConfig) {
         return BookApiFp(this.configuration).remove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookApi
+     */
+    public storedEbook(id: number, options?: RawAxiosRequestConfig) {
+        return BookApiFp(this.configuration).storedEbook(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

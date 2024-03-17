@@ -1,4 +1,4 @@
-import { useBookCompose } from '@/app/admin/book/_shared/book-compose/useBookCompose'
+import { useBookCompose } from '@/app/admin/book/_shared/book-editor/useBookCompose'
 import { DropZone, TextArea } from '@/components/ui'
 import { errorToast } from '@/utils/toast'
 import type { PayloadEBook } from 'global/api-client'
@@ -21,6 +21,7 @@ const EbookComposer: FC<{
 					multiple
 					size='sm'
 					accept='.epub'
+					disabled={books.unfoldLoading}
 					onDropFile={files => {
 						books.upload(files)
 					}}

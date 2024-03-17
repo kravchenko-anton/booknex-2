@@ -10,19 +10,21 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 		select: data => data.data
 	})
 
-	const { mutateAsync: deleteFromParser } = useMutation({
-		mutationKey: ['delete-template'],
-		mutationFn: (id: number) => api.parser.remove(id),
-		async onSuccess() {
-			successToast('Book deleted')
-			await queryClient.invalidateQueries({
-				queryKey: ['book-templates']
-			})
-		}
-	})
+	const { mutateAsync: deleteFromParser, isLoading: deleteFromParserLoading } =
+		useMutation({
+			mutationKey: ['delete-template'],
+			mutationFn: (id: number) => api.parser.remove(id),
+			async onSuccess() {
+				successToast('Book deleted')
+				await queryClient.invalidateQueries({
+					queryKey: ['book-templates']
+				})
+			}
+		})
 
 	return {
 		books,
-		deleteFromParser
+		deleteFromParser,
+		deleteFromParserLoading
 	}
 }

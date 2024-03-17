@@ -1,4 +1,4 @@
-import { bookRoute } from '@/app/admin/book/_shared/route-names'
+import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import api from '@/services'
 import { useUploadFile } from '@/utils/files'
 import { errorToast, successToast } from '@/utils/toast'
@@ -55,24 +55,25 @@ export const useOverview = () => {
 		})
 	}
 
-	const { mutateAsync: updateEbook } = useMutation({
-		mutationKey: ['update-picture'],
-		mutationFn: ({ id, payload }: { id: number; payload: PayloadEBook[] }) =>
-			api.book.updateEbook(id, payload),
-		onSuccess: async () => {
-			successToast('Book updated')
-			await queryClient.invalidateQueries({
-				queryKey: ['book-overview', id]
-			})
-		}
-	})
+	const { mutateAsync: updateEbook, isLoading: updateEbookLoading } =
+		useMutation({
+			mutationKey: ['update-picture'],
+			mutationFn: ({ id, payload }: { id: number; payload: PayloadEBook[] }) =>
+				api.book.updateEbook(id, payload),
+			onSuccess: async () => {
+				successToast('Book updated')
+				await queryClient.invalidateQueries({
+					queryKey: ['book-overview', id]
+				})
+			}
+		})
 
-	const { mutateAsync: remove } = useMutation({
+	const { mutateAsync: remove, isLoading: removeLoading } = useMutation({
 		mutationKey: ['remove-book'],
 		mutationFn: (id: number) => api.book.remove(id),
 		onSuccess: () => {
 			successToast('Book removed')
-			router.push(bookRoute)
+			router.push(secureRoutes.bookRoute)
 		}
 	})
 
@@ -95,7 +96,9 @@ export const useOverview = () => {
 		updateLoading,
 		remove,
 		updateEbook,
+		updateEbookLoading,
 		updatePicture,
+		removeLoading,
 		toggleVisibility
 	}
 }

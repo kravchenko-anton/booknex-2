@@ -1,3 +1,4 @@
+import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -30,7 +31,7 @@ export const Sidebar: FC = () => {
 				<button
 					className='flex cursor-pointer items-center text-2xl font-bold xl:mb-12'
 					type='button'
-					onClick={() => router.push('/admin/dashboard')}
+					onClick={() => router.push(secureRoutes.dashboard)}
 				>
 					<span className='bg-muted rounded-lg  p-1 px-2 text-[21px] text-white  xl:w-full '>
 						{appName} 🧑‍💻

@@ -1,6 +1,6 @@
 'use client'
 
-import Editor from '@/app/admin/book/_shared/book-compose/editor'
+import Editor from '@/app/admin/book/_shared/book-editor/editor'
 import SelectGenres from '@/app/admin/book/_shared/ui/select-genres'
 import { useCreateForm } from '@/app/admin/book/create/useCreateForm'
 import {

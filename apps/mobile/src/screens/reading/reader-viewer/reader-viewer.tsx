@@ -7,15 +7,11 @@ import {
 import { windowHeight, windowWidth } from '@/utils/dimensions'
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
+import Clipboard from '@react-native-clipboard/clipboard'
 import { Color } from 'global/colors'
 import type { FunctionType } from 'global/types'
 import type { FC } from 'react'
-import {
-	Clipboard,
-	Linking,
-	TouchableWithoutFeedback,
-	View
-} from 'react-native'
+import { Linking, TouchableWithoutFeedback, View } from 'react-native'
 import WebView from 'react-native-webview'
 
 export interface ReaderViewerProperties {

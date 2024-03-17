@@ -34,8 +34,8 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 		]),
 		CacheModule.register({
 			isGlobal: true,
-			ttl: 5000,
-			max: 1000
+			ttl: 60,
+			max: 100
 		}),
 		ReviewModule,
 		RecommendationModule

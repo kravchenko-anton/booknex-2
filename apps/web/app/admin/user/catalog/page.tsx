@@ -1,6 +1,6 @@
 'use client'
 
-import { userCatalogRoute } from '@/app/admin/book/_shared/route-names'
+import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import { columns } from '@/app/admin/user/catalog/columns'
 import { useQueries } from '@/app/admin/user/catalog/useQueries'
 import DataTable from '@/components/catalog/data-table'
@@ -14,12 +14,16 @@ import type { FC } from 'react'
 const Page: FC = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
-	const { users, deleteUser } = useQueries({ page, searchTerm })
+	const { users, deleteUser, deleteUserLoading } = useQueries({
+		page,
+		searchTerm
+	})
 
 	const table = useReactTable({
 		data: users?.data ?? [],
 		columns: columns({
-			remove: deleteUser
+			remove: deleteUser,
+			removeLoading: deleteUserLoading
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})
@@ -30,7 +34,7 @@ const Page: FC = () => {
 				defaultTerm={searchTerm}
 				onSearchSubmit={term => {
 					router.replace(
-						generateParameters(userCatalogRoute, {
+						generateParameters(secureRoutes.userCatalogRoute, {
 							searchTerm: term.searchTerm
 						})
 					)

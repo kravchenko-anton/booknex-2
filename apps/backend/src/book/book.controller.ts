@@ -19,7 +19,7 @@ import {
 import { BookService } from './book.service'
 import { CreateBookDto } from './dto/create.book.dto'
 import { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto'
-import { EbookByIdOutput, PayloadEBook } from './ebook.model'
+import { EbookByIdOutput, PayloadEBook, StoredEBook } from './ebook.model'
 
 @ApiTags('📙 book')
 @ApiBearerAuth()
@@ -47,6 +47,12 @@ export class BookController {
 		return this.bookService.ebookById(+bookId, +userId)
 	}
 
+	@Auth('admin')
+	@Get('/stored-ebook/:id')
+	@ApiOkResponse({ type: [StoredEBook] })
+	async storedEbook(@Param('id') bookId: number): Promise<StoredEBook[]> {
+		return this.bookService.storedEbook(+bookId)
+	}
 	//  admin
 	@Auth('admin')
 	@Get('admin/by-id/:id')

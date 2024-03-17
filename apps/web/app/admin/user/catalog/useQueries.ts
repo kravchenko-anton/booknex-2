@@ -10,22 +10,25 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 		select: data => data.data
 	})
 
-	const { mutateAsync: deleteUser } = useMutation({
-		mutationKey: ['delete-user'],
-		mutationFn: (id: number) => api.user.remove(id),
-		onError(error: string) {
-			console.log('error', error)
-		},
-		async onSuccess() {
-			successToast('User deleted')
-			await queryClient.invalidateQueries({
-				queryKey: ['users']
-			})
+	const { mutateAsync: deleteUser, isLoading: deleteUserLoading } = useMutation(
+		{
+			mutationKey: ['delete-user'],
+			mutationFn: (id: number) => api.user.remove(id),
+			onError(error: string) {
+				console.log('error', error)
+			},
+			async onSuccess() {
+				successToast('User deleted')
+				await queryClient.invalidateQueries({
+					queryKey: ['users']
+				})
+			}
 		}
-	})
+	)
 
 	return {
 		users,
-		deleteUser
+		deleteUser,
+		deleteUserLoading
 	}
 }

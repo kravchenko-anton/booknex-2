@@ -14,6 +14,10 @@ export const loadingToast = (message: string, data?: ExternalToast) => {
 	toast.loading(message, data)
 }
 
+export const infoToast = (message: string, data?: ExternalToast) => {
+	toast.info(message, data)
+}
+
 export const acceptToast = (
 	message: string,
 	data?: ExternalToast | undefined

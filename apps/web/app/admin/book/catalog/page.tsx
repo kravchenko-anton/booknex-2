@@ -1,9 +1,6 @@
 'use client'
 
-import {
-	bookCatalogRoute,
-	bookRoute
-} from '@/app/admin/book/_shared/route-names'
+import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import { columns } from '@/app/admin/book/catalog/columns'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'
@@ -27,12 +24,13 @@ const Page: FC = () => {
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			preview: id => router.push(`${bookRoute}/${id}`)
+			preview: id => router.push(`${secureRoutes.bookRoute}/${id}`)
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})
 
-	const onCreateButtonClick = () => router.push(`${bookRoute}/create`)
+	const onCreateButtonClick = () =>
+		router.push(`${secureRoutes.bookRoute}/create`)
 
 	return (
 		<div className='w-full'>
@@ -41,7 +39,7 @@ const Page: FC = () => {
 				defaultTerm={searchTerm}
 				onSearchSubmit={term => {
 					router.replace(
-						generateParameters(bookCatalogRoute, {
+						generateParameters(secureRoutes.bookCatalogRoute, {
 							searchTerm: term.searchTerm
 						})
 					)

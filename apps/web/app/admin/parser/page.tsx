@@ -1,10 +1,6 @@
 'use client'
 
-import {
-	bookRoute,
-	parserCatalogRoute,
-	parserRoute
-} from '@/app/admin/book/_shared/route-names'
+import { secureRoutes } from '@/app/admin/book/_shared/route-names'
 import ParseButton from '@/app/admin/parser/_ui/parse-button'
 import { columns } from '@/app/admin/parser/columns'
 import { useQueries } from '@/app/admin/parser/useQueries'
@@ -20,7 +16,7 @@ import type { FC } from 'react'
 const Parser: FC = () => {
 	const { page, searchTerm, dialog } = useTableParameters()
 	const router = useRouter()
-	const { books, deleteFromParser } = useQueries({
+	const { books, deleteFromParser, deleteFromParserLoading } = useQueries({
 		page,
 		searchTerm
 	})
@@ -29,7 +25,9 @@ const Parser: FC = () => {
 		data: books?.data ?? [],
 		columns: columns({
 			remove: (id: number) => deleteFromParser(id),
-			useAsTemplate: id => router.push(`${bookRoute}/create?template=${id}`)
+			removeLoading: deleteFromParserLoading,
+			useAsTemplate: id =>
+				router.push(`${secureRoutes.bookRoute}/create?template=${id}`)
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})
@@ -41,7 +39,7 @@ const Parser: FC = () => {
 				defaultTerm={searchTerm}
 				onSearchSubmit={term => {
 					router.replace(
-						generateParameters(parserCatalogRoute, {
+						generateParameters(secureRoutes.parserCatalogRoute, {
 							searchTerm: term.searchTerm
 						})
 					)
@@ -51,10 +49,12 @@ const Parser: FC = () => {
 					isOpen={dialog === 'parse'}
 					openParserDialog={() =>
 						router.replace(
-							generateParameters(parserCatalogRoute, { dialog: 'parse' })
+							generateParameters(secureRoutes.parserCatalogRoute, {
+								dialog: 'parse'
+							})
 						)
 					}
-					onClose={() => router.replace(parserRoute)}
+					onClose={() => router.replace(secureRoutes.parserRoute)}
 				/>
 			</DataTableHeader>
 			<DataTable

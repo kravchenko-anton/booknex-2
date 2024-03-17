@@ -8,7 +8,7 @@ export const useBookCompose = (defaultBooks?: PayloadEBook[]) => {
 	const [books, setBooks] = useState<PayloadEBook[] | null>([])
 	useLayoutEffect(() => setBooks(defaultBooks || []), [defaultBooks])
 
-	const { mutateAsync: unfold } = useMutation({
+	const { mutateAsync: unfold, isLoading: unfoldLoading } = useMutation({
 		mutationKey: ['unfold'],
 		mutationFn: (file: File) => api.parser.unfold(file),
 		onSuccess: () => successToast('File uploaded'),
@@ -262,6 +262,7 @@ export const useBookCompose = (defaultBooks?: PayloadEBook[]) => {
 		books: {
 			upload: unfoldWithUpload,
 			state: books || [],
+			unfoldLoading,
 			generateChapterNames,
 			addNewCharacterAfterContent,
 			delete: deleteBook,

@@ -6,7 +6,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { acceptToast } from '@/utils/toast'
+import { acceptToast, infoToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { AxiosResponse } from 'axios'
 import { getFileUrl } from 'global/api-config'
@@ -25,10 +25,12 @@ type ColumnType = ColumnDef<{
 
 export const columns = ({
 	remove,
-	useAsTemplate
+	useAsTemplate,
+	removeLoading
 }: {
 	remove: (id: number) => Promise<AxiosResponse<void, any>>
 	useAsTemplate: (id: number) => void
+	removeLoading: boolean
 }): ColumnType => [
 	{
 		id: 'id',
@@ -109,14 +111,18 @@ export const columns = ({
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem
-						onClick={() =>
+						onClick={() => {
 							acceptToast('Are you sure you want to delete this book?', {
 								action: {
 									label: 'Delete',
-									onClick: () => remove(row.original.id)
+
+									onClick: () => {
+										if (removeLoading) return infoToast('Please wait')
+										remove(row.original.id)
+									}
 								}
 							})
-						}
+						}}
 					>
 						Delete
 					</DropdownMenuItem>

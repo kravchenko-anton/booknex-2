@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger'
+import { ApiProperty, PickType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
 	ArrayMinSize,
@@ -9,12 +9,12 @@ import {
 import { Book } from '../book.entity'
 import { PayloadEBook } from '../ebook.model'
 
-export class CreateBookDto extends OmitType(Book, [
-	'readingTime',
-	'genres',
-	'id',
-	'visible',
-	'chapters'
+export class CreateBookDto extends PickType(Book, [
+	'author',
+	'description',
+	'picture',
+	'rating',
+	'title'
 ]) {
 	@ApiProperty({ type: [PayloadEBook] })
 	@IsArray()

@@ -19,6 +19,7 @@ interface UpdateBioProperties {
 	rating: number
 	description: string
 	onSaveEdit: (data: object) => void
+	isLoading: boolean
 }
 
 const UpdateBio: FC<UpdateBioProperties> = properties => {
@@ -93,6 +94,7 @@ const UpdateBio: FC<UpdateBioProperties> = properties => {
 				</Button>
 				<Button
 					size='sm'
+					isLoading={properties.isLoading}
 					variant='primary'
 					onClick={handleSubmit(data =>
 						properties.onSaveEdit(dirtyValues(dirtyFields, data))

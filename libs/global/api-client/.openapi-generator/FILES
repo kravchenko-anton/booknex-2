@@ -26,6 +26,7 @@ models/book-template-catalog-output.ts
 models/book-template.ts
 models/book.ts
 models/catalog-user-output.ts
+models/chapter.ts
 models/count-output.ts
 models/create-book-dto.ts
 models/ebook-by-id-output.ts
@@ -44,6 +45,7 @@ models/review-book-dto.ts
 models/review.ts
 models/short-book.ts
 models/short-genre.ts
+models/stored-ebook.ts
 models/unfold-output.ts
 models/update-book-dto.ts
 models/update-genre-dto.ts

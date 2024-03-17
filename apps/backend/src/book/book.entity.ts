@@ -7,7 +7,9 @@ import {
 	IsNumber,
 	IsString,
 	Max,
+	MaxLength,
 	Min,
+	MinLength,
 	ValidateNested
 } from 'class-validator'
 import { shortGenre } from '../genre/genre.entity'
@@ -40,6 +42,8 @@ export class Book extends ShortBook {
 		type: String
 	})
 	@IsString()
+	@MinLength(10)
+	@MaxLength(1000)
 	description: string
 
 	@ApiProperty({ example: 100, description: 'book readingTime', type: Number })
@@ -52,6 +56,7 @@ export class Book extends ShortBook {
 		type: Number
 	})
 	@IsNumber()
+	@Min(1)
 	chapters: number
 
 	@ApiProperty({ example: 5, description: 'book rating', type: Number })

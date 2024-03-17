@@ -6,7 +6,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { acceptToast } from '@/utils/toast'
+import { acceptToast, infoToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { CatalogUserOutput } from 'global/api-client/models/catalog-user-output'
 import { getFileUrl } from 'global/api-config'
@@ -15,9 +15,11 @@ import { MoreHorizontal } from 'icons'
 import * as React from 'react'
 
 export const columns = ({
-	remove
+	remove,
+	removeLoading
 }: {
 	remove: (id: number) => void
+	removeLoading: boolean
 }): ColumnDef<CatalogUserOutput, any>[] => [
 	{
 		id: 'id',
@@ -117,7 +119,10 @@ export const columns = ({
 							acceptToast('Are you sure you want to delete this book?', {
 								action: {
 									label: 'Delete',
-									onClick: () => remove(row.original.id)
+									onClick: () => {
+										if (removeLoading) return infoToast('Please wait')
+										remove(row.original.id)
+									}
 								}
 							})
 						}
