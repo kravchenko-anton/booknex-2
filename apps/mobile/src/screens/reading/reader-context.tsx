@@ -7,7 +7,7 @@ import {
 } from '@/screens/reading/reader-viewer/reader-viewer.function'
 import { useSaveProgress } from '@/screens/reading/reader-viewer/useSaveProgress'
 
-import { errorToast, successToast } from '@/utils/toast'
+import { successToast } from '@/utils/toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
 	createContext,
@@ -77,14 +77,7 @@ export const ReadingProvider: FC<
 				event.nativeEvent.data
 			) as WebviewMessageType
 			const { type, payload } = parsedEvent
-			if (type === 'textSelectFail') {
-				errorToast('Text selection is too long or too short')
-			}
-			if (type === 'textSelect') {
-				navigate('TextSelect', {
-					text: payload.text
-				})
-			}
+
 			if (type === 'scroll') {
 				console.log('scroll', payload)
 				if (readerState.progress === payload.progress) return

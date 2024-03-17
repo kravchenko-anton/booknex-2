@@ -13,7 +13,8 @@ export class CreateBookDto extends OmitType(Book, [
 	'readingTime',
 	'genres',
 	'id',
-	'visible'
+	'visible',
+	'chapters'
 ]) {
 	@ApiProperty({ type: [PayloadEBook] })
 	@IsArray()

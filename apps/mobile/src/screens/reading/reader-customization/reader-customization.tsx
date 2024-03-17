@@ -1,8 +1,7 @@
 import { useAction, useTypedSelector } from '@/hooks'
 import {
 	ReaderFont,
-	fontSizeSettings,
-	type ReaderFontsEnum
+	fontSizeSettings
 } from '@/redux/reader/reading-settings-slice'
 import LineHeightIcon from '@/screens/reading/reader-customization/icons/line-height'
 import PageMarginIcon from '@/screens/reading/reader-customization/icons/page-margin'
@@ -58,7 +57,7 @@ const ReaderCustomization: FC<{
 					renderItem={({ item: theme }) => (
 						<AnimatedPress
 							key={`${theme.slug}-${theme.title}`}
-							className='mb-4 mr-2 rounded-lg border-2 p-2 px-6'
+							className='mb-4 mr-2 rounded-lg border-2 p-1 px-6'
 							style={{
 								backgroundColor: theme.colorPalette.background.darker,
 								borderColor:
@@ -82,6 +81,7 @@ const ReaderCustomization: FC<{
 					<View className='w-full'>
 						<FlatList
 							horizontal
+							showsHorizontalScrollIndicator={false}
 							contentContainerStyle={{
 								paddingHorizontal: 8
 							}}
@@ -100,12 +100,12 @@ const ReaderCustomization: FC<{
 												: Color.transparent
 									}}
 									className={cn(
-										' mb-2 mr-2 rounded-lg border-2 border-transparent p-2 px-4',
+										' mb-2 mr-2 rounded-lg border-2 border-transparent p-1 px-4',
 										item.value === font.fontFamily && 'border-primary '
 									)}
 									onPress={() =>
 										changeFontFamily({
-											fontFamily: item.value as ReaderFontsEnum,
+											fontFamily: item.value,
 											title: item.label
 										})
 									}
@@ -132,7 +132,7 @@ const ReaderCustomization: FC<{
 							</Title>
 							<View className='flex-row items-center'>
 								<TouchableOpacity
-									className='rounded-l-lg p-2 px-4'
+									className='rounded-l-lg p-1 px-4'
 									disabled={fontSize === fontSizeSettings.min}
 									style={{
 										backgroundColor:
@@ -150,7 +150,7 @@ const ReaderCustomization: FC<{
 									/>
 								</TouchableOpacity>
 								<TouchableOpacity
-									className='rounded-r-lg p-2 px-4'
+									className='rounded-r-lg p-1 px-4'
 									disabled={fontSize === fontSizeSettings.max}
 									style={{
 										backgroundColor:

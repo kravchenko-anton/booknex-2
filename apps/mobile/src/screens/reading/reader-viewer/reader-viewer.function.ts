@@ -1,3 +1,4 @@
+import { ReaderFont } from '@/redux/reader/reading-settings-slice'
 import { getFileUrl } from 'global/api-config'
 import { Color } from 'global/colors'
 import type { FunctionType } from 'global/types'
@@ -70,10 +71,33 @@ export const ViewerHtml = ({
 	picture: string
 	file: string[]
 	defaultTheme: string
-}) => `
+}) => {
+	const fonts = ReaderFont.map(font => font.fontFamily)
+	const fontFaces = fonts.map(
+		font => `
+		@font-face {
+    font-family: '${font}-Bold';
+    src:url('file:///android_asset/fonts/${font}-Bold.ttf') format('truetype')
+		}
+
+		@font-face {
+			font-family: '${font}-Regular';
+			src:url('file:///android_asset/fonts/${font}-Regular.ttf') format('truetype')
+		}
+		
+		@font-face {
+			font-family: '${font}-Light';
+			src:url('file:///android_asset/fonts/${font}-Light.ttf') format('truetype')
+		}
+	`
+	)
+	return `
 	<head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 				<title>${title}</title>
+				<style>
+					${fontFaces.join('')}
+</style>
 			</head>
 			<style>${defaultTheme}</style>
 			<div>
@@ -84,32 +108,7 @@ export const ViewerHtml = ({
 			${file}
 			${finishBookButton}
 	`
-export const onTextSelectDisplayContextMenu = `
-let lastSelection = '';
-let debounceTimer = null;
-
-document.addEventListener('selectionchange', function() {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        const selection = window.getSelection();
-        
-        if (lastSelection === selection.toString()) return;
-        if (selection.toString().length < 3 || selection.toString().length > 700) {
-            selection.removeAllRanges();
-            lastSelection = '';
-            window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'textSelectFail' }));
-        } else {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-                type: 'textSelect',
-                payload: {
-                    text: selection.toString()
-                }
-            }));
-            lastSelection = selection.toString();
-        }
-    }, 1500);
-});
-`
+}
 
 export const scrollProgressDetect = `
 let timerId;
@@ -165,13 +164,15 @@ export const getStyleTag = ({
 	`
 	span {
 		color: ${colorPalette.text} !important;
+		font-family: ${fontFamily} !important;
 	}
 		p {
 		color: ${colorPalette.text} !important;
+		font-family: ${fontFamily}-Regular !important;
 	}
 	body {
 		background: ${colorPalette.background.normal} !important;
-		font-family: ${fontFamily} !important;
+		font-family: ${fontFamily}-Regular !important;
 		font-size: ${fontSize}px;
 		line-height: ${lineHeight};
 		padding: ${padding}px;
@@ -180,13 +181,15 @@ export const getStyleTag = ({
 
 	li {
 		color: ${colorPalette.text} !important;
+		font-family: ${fontFamily}-Regular !important;
 	}
 	a {
 		color: ${colorPalette.secondary} !important;
+		font-family: ${fontFamily}-Bold !important;
 	}
 	h1 {
 		font-size: ${fontSize * 1.6}px !important;
-		font-weight: bold !important;
+		font-family: ${fontFamily}-Bold !important;
 		color: ${colorPalette.primary} !important;
 	}
 	h2 {

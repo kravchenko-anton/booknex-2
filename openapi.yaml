@@ -1327,10 +1327,6 @@ components:
           type: string
           example: description
           description: book description
-        chapters:
-          type: number
-          example: 100
-          description: book chapters count
         rating:
           type: number
           example: 5
@@ -1353,7 +1349,6 @@ components:
         - picture
         - author
         - description
-        - chapters
         - rating
         - ebook
         - genres

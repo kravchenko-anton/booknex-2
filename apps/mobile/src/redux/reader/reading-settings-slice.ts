@@ -5,37 +5,39 @@ import {
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
-export enum ReaderFontsEnum {
-	Courier = 'Courier New, Courier, monospace',
-	Arial = 'Arial, Helvetica, sans-serif',
-	TimesRoman = 'Times New Roman, Times, serif'
-}
-
 export const fontSizeSettings = {
 	min: 18,
 	max: 26
 }
 export const ReaderFont = [
 	{
-		title: 'Courier',
-		fontFamily: ReaderFontsEnum.Courier
+		title: 'Fira Sans',
+		fontFamily: 'FiraSans'
 	},
 	{
-		title: 'Arial',
-		fontFamily: ReaderFontsEnum.Arial
+		title: 'Open Sans',
+		fontFamily: 'OpenSans'
 	},
 	{
-		title: 'Time Roman',
-		fontFamily: ReaderFontsEnum.TimesRoman
+		title: 'Poppins',
+		fontFamily: 'Poppins'
+	},
+	{
+		title: 'PT Serif',
+		fontFamily: 'PTSerif'
+	},
+	{
+		title: 'Roboto',
+		fontFamily: 'Roboto'
 	}
 ]
 
 const initialState = {
 	colorScheme: themePack[0] as ThemePackType,
 	font: {
-		title: 'Courier New',
-		fontFamily: ReaderFontsEnum.Courier
-	},
+		title: ReaderFont[0].title,
+		fontFamily: ReaderFont[0].fontFamily
+	} as (typeof ReaderFont)[number],
 	fontSize: fontSizeSettings.min,
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
 	padding: 14 as 14 | 4 | 20
