@@ -6,12 +6,12 @@ import { ReviewBookDto } from './dto/review.book.dto'
 import { ReviewService } from './review.service'
 
 @Controller('review')
-@ApiTags('⭐ review')
+@ApiTags('⭐ book-review')
 @ApiBearerAuth()
 export class ReviewController {
 	constructor(private readonly reviewService: ReviewService) {}
 
-	@Post('/review/:id')
+	@Post('/book-review/:id')
 	@Auth()
 	@ApiOkResponse({ description: 'Review book' })
 	@ApiBody({ type: ReviewBookDto, required: true, description: 'Review book' })

@@ -123,7 +123,7 @@ export interface AdminInfoByIdOutput {
      */
     '_count': CountOutput;
     /**
-     * book review
+     * book book-review
      * @type {Array<Review>}
      * @memberof AdminInfoByIdOutput
      */

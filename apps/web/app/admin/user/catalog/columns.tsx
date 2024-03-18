@@ -20,7 +20,7 @@ export const columns = ({
 }: {
 	remove: (id: number) => void
 	removeLoading: boolean
-}): ColumnDef<CatalogUserOutput, any>[] => [
+}): ColumnDef<CatalogUserOutput, unknown>[] => [
 	{
 		id: 'id',
 		enableHiding: false,

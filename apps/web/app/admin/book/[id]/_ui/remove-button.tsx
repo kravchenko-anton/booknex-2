@@ -12,7 +12,7 @@ interface BookVisibleButtonProperties {
 	id: number
 	onSuccess: () => void
 }
-export const BookRemoveButton: FC<BookVisibleButtonProperties> = properties => {
+export const RemoveButton: FC<BookVisibleButtonProperties> = properties => {
 	const router = useRouter()
 	const { mutateAsync: remove, isLoading: removeLoading } = useMutation({
 		mutationKey: ['remove-book'],
@@ -26,7 +26,6 @@ export const BookRemoveButton: FC<BookVisibleButtonProperties> = properties => {
 		<Button
 			size={'sm'}
 			isLoading={removeLoading}
-			disabled={removeLoading}
 			className={cn('bg-danger rounded-lg text-white')}
 			onClick={() =>
 				acceptToast('Are you sure you want to delete this book?', {

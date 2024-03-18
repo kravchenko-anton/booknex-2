@@ -27,12 +27,6 @@ export interface UpdateBookDto {
      */
     'title'?: string;
     /**
-     * book picture
-     * @type {string}
-     * @memberof UpdateBookDto
-     */
-    'picture'?: string;
-    /**
      * book author
      * @type {string}
      * @memberof UpdateBookDto
@@ -44,12 +38,6 @@ export interface UpdateBookDto {
      * @memberof UpdateBookDto
      */
     'description'?: string;
-    /**
-     * book chapters count
-     * @type {number}
-     * @memberof UpdateBookDto
-     */
-    'chapters'?: number;
     /**
      * book rating
      * @type {number}

@@ -10,7 +10,6 @@ import type { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { useQuery } from '@tanstack/react-query'
 import { useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-//TODO: переделать реадер на контекст и сделать его в 100 раз красивее
 
 const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()

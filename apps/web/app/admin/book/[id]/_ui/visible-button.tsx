@@ -10,9 +10,7 @@ interface BookVisibleButtonProperties {
 	id: number
 	onSuccess: () => void
 }
-export const BookVisibleButton: FC<
-	BookVisibleButtonProperties
-> = properties => {
+export const VisibleButton: FC<BookVisibleButtonProperties> = properties => {
 	const { mutateAsync: toggleVisible, isLoading: toggleVisibleLoading } =
 		useMutation({
 			mutationKey: ['toggle-Visible'],

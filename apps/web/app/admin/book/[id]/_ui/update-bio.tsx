@@ -1,12 +1,13 @@
 import { Button, Field, FormTextArea } from '@/components/ui'
 import api from '@/services'
 import { cn } from '@/utils'
-import { dirtyValues } from '@/utils/form'
+import { getDirtyValues } from '@/utils/form'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import {
-	UpdateBookDto,
-	type UpdateBookDtoType
+	UpdateBookBioValidation,
+	type UpdateBookBioValidationType
 } from 'global/dto/book/update.book.dto'
 
 import { PenNib, Star } from 'icons'
@@ -15,6 +16,7 @@ import * as React from 'react'
 import { useForm } from 'react-hook-form'
 
 interface UpdateBioProperties {
+	id: number
 	title: string
 	author: string
 	readingTime: number
@@ -23,11 +25,16 @@ interface UpdateBioProperties {
 	onSuccess: () => void
 }
 
-const BookUpdateBio: FC<UpdateBioProperties> = properties => {
+const UpdateBio: FC<UpdateBioProperties> = properties => {
 	const { mutateAsync: updateBio, isLoading: updateBioLoading } = useMutation({
 		mutationKey: ['update-book-bio'],
-		mutationFn: ({ id, payload }: { id: number; payload: UpdateBookDtoType }) =>
-			api.book.update(id, payload),
+		mutationFn: ({
+			id,
+			payload
+		}: {
+			id: number
+			payload: UpdateBookBioValidationType
+		}) => api.book.update(id, payload),
 		onSuccess: properties.onSuccess
 	})
 	const {
@@ -35,9 +42,9 @@ const BookUpdateBio: FC<UpdateBioProperties> = properties => {
 		control,
 		reset,
 		formState: { dirtyFields }
-	} = useForm<UpdateBookDtoType>({
+	} = useForm<UpdateBookBioValidationType>({
 		mode: 'onSubmit',
-		resolver: zodResolver(UpdateBookDto),
+		resolver: zodResolver(UpdateBookBioValidation),
 		defaultValues: {
 			title: properties.title,
 			author: properties.author,
@@ -104,7 +111,16 @@ const BookUpdateBio: FC<UpdateBioProperties> = properties => {
 					isLoading={updateBioLoading}
 					variant='primary'
 					onClick={handleSubmit(data =>
-						updateBio(dirtyValues(dirtyFields, data))
+						updateBio({
+							id: properties.id,
+
+							payload: getDirtyValues(dirtyFields, {
+								author: data.author,
+								title: data.title,
+								rating: data.rating,
+								description: data.description
+							})
+						})
 					)}
 				>
 					Save
@@ -114,4 +130,4 @@ const BookUpdateBio: FC<UpdateBioProperties> = properties => {
 	)
 }
 
-export default BookUpdateBio
+export default UpdateBio

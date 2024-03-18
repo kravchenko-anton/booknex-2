@@ -5,7 +5,7 @@ import { Star } from 'icons'
 import * as React from 'react'
 import { useState } from 'react'
 
-export const reviewColumns = (): ColumnDef<Review, any>[] => [
+export const reviewColumns = (): ColumnDef<Review, unknown>[] => [
 	{
 		id: 'id',
 		enableHiding: false,
@@ -17,7 +17,7 @@ export const reviewColumns = (): ColumnDef<Review, any>[] => [
 		enableHiding: false,
 		header: () => <p className='text-center text-xl'>User</p>,
 		cell: ({ row }) => (
-			//TODO: добавить тут данные пользователя после того как я сделаю авторизацию через google
+			//TODO: добавить тут нормальную инфу о пользователе
 			<h1 className='text-lg'>
 				{
 					row.original.id

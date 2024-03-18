@@ -11,7 +11,7 @@ import { View } from 'react-native'
 
 const Welcome: FC = () => {
 	const { googleLogin } = useAction()
-	const { isLoading, onMainButtonPress } = useAuthorize()
+	const { isLoading: authLoading, onMainButtonPress } = useAuthorize()
 
 	useLayoutEffect(() => {
 		GoogleSignin.configure({
@@ -69,7 +69,7 @@ const Welcome: FC = () => {
 				<View className='mb-2 w-full flex-row items-center justify-between'>
 					<Button
 						size='md'
-						isLoading={isLoading}
+						isLoading={authLoading}
 						className='mr-2 h-full flex-1'
 						icon={Google}
 						onPress={signIn}

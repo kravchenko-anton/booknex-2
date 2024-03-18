@@ -4,11 +4,11 @@ api.ts
 base.ts
 clients/auth-api.ts
 clients/book-api.ts
+clients/book-review-api.ts
 clients/catalog-api.ts
 clients/genre-api.ts
 clients/parser-api.ts
 clients/recommendation-api.ts
-clients/review-api.ts
 clients/storage-api.ts
 clients/user-api.ts
 common.ts

@@ -1,12 +1,16 @@
 import { z } from 'zod'
+import type { UpdateBookDto } from '../../api-client'
 
-export const UpdateBookDto = z.object({
-	picture: z.string().optional(),
+export const UpdateBookBioValidation: z.ZodType<
+	Pick<UpdateBookDto, 'title' | 'author' | 'description' | 'rating'>
+> = z.object({
 	title: z.string().optional(),
 	author: z.string().optional(),
 	description: z.string().optional(),
-	rating: z.number().optional(),
-	visible: z.boolean().optional()
+	rating: z.number().optional()
 })
 
-export type UpdateBookDtoType = z.infer<typeof UpdateBookDto>
+export type UpdateBookBioValidationType = Pick<
+	UpdateBookDto,
+	'title' | 'author' | 'description' | 'rating'
+>

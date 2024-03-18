@@ -11,7 +11,7 @@ interface UpdatePictureProperties {
 	onSuccess?: () => void
 }
 
-const BookUpdatePicture: FC<UpdatePictureProperties> = properties => {
+const UpdatePicture: FC<UpdatePictureProperties> = properties => {
 	const {
 		mutateAsync: updatePictureMutation,
 		isLoading: updatePictureLoading
@@ -52,4 +52,4 @@ const BookUpdatePicture: FC<UpdatePictureProperties> = properties => {
 	)
 }
 
-export default BookUpdatePicture
+export default UpdatePicture

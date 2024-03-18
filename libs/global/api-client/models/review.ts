@@ -21,25 +21,25 @@
  */
 export interface Review {
     /**
-     * review id
+     * book-review id
      * @type {number}
      * @memberof Review
      */
     'id': number;
     /**
-     * review tags
+     * book-review tags
      * @type {Array<string>}
      * @memberof Review
      */
     'tags': Array<string>;
     /**
-     * review text
+     * book-review text
      * @type {string}
      * @memberof Review
      */
     'text': string;
     /**
-     * review rating
+     * book-review rating
      * @type {number}
      * @memberof Review
      */

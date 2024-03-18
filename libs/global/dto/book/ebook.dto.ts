@@ -1,14 +1,14 @@
 import { z } from 'zod'
+import type { PayloadEBook as GeneratedPayloadEBook } from '../../api-client'
 
-export const EbookChapterDto = z.object({
-	id: z.number().min(1),
-	name: z.string(),
-	text: z.string()
-})
-
-// Define the schema for EBookTypeDto
-export const EBookTypeDto = z.object({
+export const EBookValidation: z.ZodType<GeneratedPayloadEBook> = z.object({
 	title: z.string(),
 	id: z.number().min(1),
-	chapters: z.array(EbookChapterDto)
+	chapters: z.array(
+		z.object({
+			id: z.number().min(1),
+			name: z.string(),
+			text: z.string()
+		})
+	)
 })

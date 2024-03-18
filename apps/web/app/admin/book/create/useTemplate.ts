@@ -1,6 +1,6 @@
 import api from '@/services'
 import { useQuery } from '@tanstack/react-query'
-import type { CreateBookDtoType } from 'global/dto/book/create.book.dto'
+import type { CreateBookValidationType } from 'global/dto/book/create.book.dto'
 
 import { useSearchParams } from 'next/navigation'
 import { useLayoutEffect } from 'react'
@@ -9,7 +9,7 @@ import type { UseFormSetValue } from 'react-hook-form'
 export const useTemplate = ({
 	setValue
 }: {
-	setValue: UseFormSetValue<CreateBookDtoType>
+	setValue: UseFormSetValue<CreateBookValidationType>
 }) => {
 	const parameters = useSearchParams()
 	const id = +(parameters.get('template') ?? 0)

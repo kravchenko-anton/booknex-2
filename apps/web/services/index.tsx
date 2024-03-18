@@ -6,10 +6,10 @@ import {
 	GenreApi,
 	ParserApi,
 	RecommendationApi,
-	ReviewApi,
 	StorageApi,
 	UserApi
 } from 'global/api-client'
+import { ReviewApi } from 'global/api-client/clients/review-api'
 import { serverURL } from 'global/api-config'
 
 export default {

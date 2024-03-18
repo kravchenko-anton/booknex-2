@@ -28,7 +28,7 @@ export const columns = ({
 	useAsTemplate,
 	removeLoading
 }: {
-	remove: (id: number) => Promise<AxiosResponse<void, any>>
+	remove: (id: number) => Promise<AxiosResponse<void, unknown>>
 	useAsTemplate: (id: number) => void
 	removeLoading: boolean
 }): ColumnType => [

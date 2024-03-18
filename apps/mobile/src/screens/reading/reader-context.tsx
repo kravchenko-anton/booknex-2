@@ -1,10 +1,11 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedSelector } from '@/hooks'
-import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
+import type { ThemePackType } from '@/screens/reading/reader-customization/helpers/theme-pack'
 import {
 	getStyleTag,
 	injectStyle
-} from '@/screens/reading/reader-viewer/reader-viewer.function'
+} from '@/screens/reading/reader-viewer/stylesFunctions'
+
 import { useSaveProgress } from '@/screens/reading/reader-viewer/useSaveProgress'
 
 import { successToast } from '@/utils/toast'
@@ -43,11 +44,13 @@ export interface WebviewMessageType {
 	}
 }
 
-export const ReadingProvider: FC<
-	PropsWithChildren<{
-		id: number
-	}>
-> = ({ children, id }) => {
+type ReaderProviderProperties = PropsWithChildren<{
+	id: number
+}>
+export const ReadingProvider: FC<ReaderProviderProperties> = ({
+	children,
+	id
+}) => {
 	const queryClient = useQueryClient()
 	const viewerReference = useRef<WebView>(null)
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(

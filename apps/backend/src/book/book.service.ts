@@ -414,7 +414,7 @@ export class BookService {
 	async update(id: number, dto: UpdateBookDto) {
 		await this.checkExist(id)
 		await this.prisma.book.update({
-			where: { id: id },
+			where: { id },
 			data: dto
 		})
 

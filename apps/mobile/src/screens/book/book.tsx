@@ -1,7 +1,7 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
-import BookReadingButton from '@/screens/book/book-reading-button'
-import BookSaveButton from '@/screens/book/book-save-button'
+import ReadingButton from '@/screens/book/reading-button'
+import SaveButton from '@/screens/book/save-button'
 import {
 	AnimatedIcon,
 	Button,
@@ -96,8 +96,8 @@ const Book: FC = () => {
 				</Title>
 			</View>
 			<View className='flex-row justify-between px-2 pt-4'>
-				<BookReadingButton id={book.id} />
-				<BookSaveButton id={book.id} />
+				<ReadingButton id={book.id} />
+				<SaveButton id={book.id} />
 			</View>
 			<Flatlist
 				horizontal

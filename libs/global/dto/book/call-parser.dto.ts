@@ -1,8 +1,9 @@
 import { z } from 'zod'
+import type { ParserDto as GeneratedParserType } from '../../api-client'
 
-export const callParserDto = z.object({
-	link: z.string(),
+export const callParserValidation: z.ZodType<GeneratedParserType> = z.object({
+	url: z.string(),
 	page: z.number().int()
 })
 
-export type CallParserDtoType = z.infer<typeof callParserDto>
+export type CallParserValidationType = GeneratedParserType

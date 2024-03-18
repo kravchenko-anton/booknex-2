@@ -57,7 +57,7 @@ export class AdminInfoByIdOutput extends FullBook {
 	_count: CountOutput
 	@ApiProperty({
 		type: [Review],
-		description: 'book review'
+		description: 'book book-review'
 	})
 	@IsArray()
 	@ValidateNested({ each: true })

@@ -6,10 +6,10 @@ import {
 	GenreApi,
 	ParserApi,
 	RecommendationApi,
-	ReviewApi,
 	StorageApi,
 	UserApi
 } from 'global/api-client'
+import { ReviewApi } from 'global/api-client/clients/review-api'
 import { emulatorServerURL } from 'global/api-config'
 import 'react-native-url-polyfill/auto'
 

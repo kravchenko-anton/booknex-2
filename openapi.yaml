@@ -668,7 +668,7 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  "/api/review/review/{id}":
+  "/api/review/book-review/{id}":
     post:
       operationId: review
       parameters:
@@ -688,7 +688,7 @@ paths:
         "200":
           description: Review book
       tags:
-        - ⭐ review
+        - ⭐ book-review
       security:
         - bearer: []
   /api/recommendation/update-recommendations:
@@ -746,8 +746,8 @@ tags:
     description: genre service
   - name: 📁 storage
     description: storage service
-  - name: ⭐ review
-    description: review service
+  - name: ⭐ book-review
+    description: book-review service
   - name: 📨 recommendation
     description: recommendation service
   - name: 📦 parser
@@ -1176,21 +1176,21 @@ components:
         id:
           type: number
           example: 1
-          description: review id
+          description: book-review id
         tags:
           example: tags
-          description: review tags
+          description: book-review tags
           type: array
           items:
             type: string
         text:
           type: string
           example: text
-          description: review text
+          description: book-review text
         rating:
           type: number
           example: 1
-          description: review rating
+          description: book-review rating
       required:
         - id
         - tags
@@ -1261,7 +1261,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/CountOutput"
         review:
-          description: book review
+          description: book book-review
           type: array
           items:
             $ref: "#/components/schemas/Review"
@@ -1434,10 +1434,6 @@ components:
           type: string
           example: title
           description: book title
-        picture:
-          type: string
-          example: picture
-          description: book picture
         author:
           type: string
           example: author
@@ -1446,10 +1442,6 @@ components:
           type: string
           example: description
           description: book description
-        chapters:
-          type: number
-          example: 100
-          description: book chapters count
         rating:
           type: number
           example: 5

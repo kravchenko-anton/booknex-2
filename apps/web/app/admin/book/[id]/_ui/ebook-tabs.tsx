@@ -3,24 +3,30 @@ import { Button } from '@/components/ui'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import api from '@/services'
 import { errorToast } from '@/utils/toast'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import type { PayloadEBook } from 'global/api-client'
 import { useState, type FC } from 'react'
 
 interface EbookInfoProperties {
 	bookId: number
-	isLoading: boolean
-	onEdit: (books: PayloadEBook[]) => void
+	onSuccess: () => void
 }
 
-const EbookInfo: FC<EbookInfoProperties> = ({ isLoading, bookId, onEdit }) => {
+const BookOverview: FC<EbookInfoProperties> = ({ bookId, onSuccess }) => {
 	const { data: ebook } = useQuery({
-		queryKey: ['book-preview', bookId],
+		queryKey: ['stored-ebook', bookId],
 		queryFn: () => api.book.storedEbook(bookId),
 		enabled: !!bookId,
 		select: data => data.data
 	})
-	const [books, setBooks] = useState<PayloadEBook[] | null>(null)
+	const { mutateAsync: updateEbook, isLoading: updateEbookLoading } =
+		useMutation({
+			mutationKey: ['update-picture'],
+			mutationFn: ({ id, payload }: { id: number; payload: PayloadEBook[] }) =>
+				api.book.updateEbook(id, payload),
+			onSuccess: onSuccess
+		})
+	const [books, setBooks] = useState<PayloadEBook[] | []>([])
 	if (!ebook) return null
 	return (
 		<Tabs defaultValue='preview' className=' mt-8 w-full'>
@@ -51,11 +57,11 @@ const EbookInfo: FC<EbookInfoProperties> = ({ isLoading, bookId, onEdit }) => {
 					/>
 					<Button
 						size='md'
+						disabled={updateEbookLoading}
 						variant='primary'
-						isLoading={isLoading}
-						onClick={() => {
+						onClick={async () => {
 							if (!books) return errorToast('Error saving book')
-							onEdit(books)
+							await updateEbook({ id: bookId, payload: books })
 						}}
 					>
 						Save
@@ -66,4 +72,4 @@ const EbookInfo: FC<EbookInfoProperties> = ({ isLoading, bookId, onEdit }) => {
 	)
 }
 
-export default EbookInfo
+export default BookOverview

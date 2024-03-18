@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 
 const Login = () => {
 	const { mailLogin } = useAction()
-	const { isLoading } = useAuthorize()
+	const { isLoading: authLoading } = useAuthorize()
 	const { control, handleSubmit } = useForm<AuthDtoType>({
 		mode: 'onSubmit',
 		resolver: zodResolver(AuthDto)
@@ -36,7 +36,7 @@ const Login = () => {
 			/>
 			<Button
 				size='lg'
-				isLoading={isLoading}
+				isLoading={authLoading}
 				variant='primary'
 				className='mb-4 mt-2'
 				onPress={handleSubmit(onSubmit)}

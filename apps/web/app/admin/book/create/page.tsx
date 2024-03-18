@@ -1,7 +1,7 @@
 'use client'
 
 import Editor from '@/app/admin/book/_shared/book-editor/editor'
-import SelectGenres from '@/app/admin/book/_shared/ui/select-genres'
+import SelectGenres from '@/app/admin/book/create/select-genres'
 import { useCreateForm } from '@/app/admin/book/create/useCreateForm'
 import {
 	Button,
@@ -16,7 +16,6 @@ import type { FC } from 'react'
 
 const Page: FC = () => {
 	const form = useCreateForm()
-	console.log(form.errors, 'errors')
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -93,7 +92,7 @@ const Page: FC = () => {
 
 			<Button
 				size='md'
-				isLoading={form.submitLoading}
+				isLoading={form.createLoading}
 				className='mt-4'
 				variant='primary'
 				onClick={form.submit}

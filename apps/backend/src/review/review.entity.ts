@@ -20,35 +20,35 @@ export class UserInReview {
 export class Review {
 	@ApiProperty({
 		example: 1,
-		description: 'review id'
+		description: 'book-review id'
 	})
 	@IsNumber()
 	id: number
 
 	@ApiProperty({
 		example: 'tags',
-		description: 'review tags'
+		description: 'book-review tags'
 	})
 	@IsString({ each: true })
 	tags: string[]
 
 	@ApiProperty({
 		example: 'text',
-		description: 'review text'
+		description: 'book-review text'
 	})
 	@IsString()
 	text: string
 
 	@ApiProperty({
 		example: 1,
-		description: 'review rating'
+		description: 'book-review rating'
 	})
 	@IsNumber()
 	rating: number
 	//  TODO: пофиксить тут чтобы типы возвращали юзера и я мог его получить
 	// @ApiProperty({
 	// 	type: UserInReview,
-	// 	description: 'review user'
+	// 	description: 'book-review user'
 	// })
 	// @IsObject()
 	// @Type(() => UserInReview)

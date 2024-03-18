@@ -8,7 +8,7 @@ import { Mail, Password } from 'icons'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 const Register = () => {
-	const { isLoading } = useAuthorize()
+	const { isLoading: authLoading } = useAuthorize()
 	const { mailRegister } = useAction()
 	const { control, handleSubmit } = useForm<AuthDtoType>({
 		mode: 'onSubmit',
@@ -39,7 +39,7 @@ const Register = () => {
 				placeholder='Password'
 			/>
 			<Button
-				isLoading={isLoading}
+				isLoading={authLoading}
 				size='lg'
 				className='mb-2 mt-1'
 				variant='primary'

@@ -1,11 +1,15 @@
-import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger'
+import { ApiProperty, PartialType, PickType } from '@nestjs/swagger'
 import { ArrayMaxSize, ArrayMinSize, IsArray, IsNumber } from 'class-validator'
 import { Book } from '../book.entity'
 
-export class UpdateBookDto extends PartialType(
-	OmitType(Book, ['id', 'genres', 'readingTime'])
-) {}
-
+export class UpdateBookPick extends PickType(Book, [
+	'author',
+	'description',
+	'title',
+	'visible',
+	'rating'
+]) {}
+export class UpdateBookDto extends PartialType(UpdateBookPick) {}
 export class UpdateGenreDto {
 	@ApiProperty({
 		description: 'Array of genres',

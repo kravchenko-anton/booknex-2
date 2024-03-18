@@ -5,7 +5,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Book } from 'icons'
 import type { FC } from 'react'
 
-const BookReadingButton: FC<{ id: number }> = ({ id }) => {
+interface BookReadingButtonProperties {
+	id: number
+}
+const ReadingButton: FC<BookReadingButtonProperties> = ({ id }) => {
 	const { navigate } = useTypedNavigation()
 	const queryClient = useQueryClient()
 	const { mutateAsync: startReading, isLoading: startReadingLoading } =
@@ -37,4 +40,4 @@ const BookReadingButton: FC<{ id: number }> = ({ id }) => {
 	)
 }
 
-export default BookReadingButton
+export default ReadingButton

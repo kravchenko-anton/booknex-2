@@ -1,14 +1,16 @@
-// This function is used to get the dirty values of a form
-//TODO: сделать строгие типы
+export function getDirtyValues<
+	T extends Record<string, unknown>,
+	V extends Record<keyof T, unknown>
+>(dirtyFields: T, values: V): Partial<typeof values> {
+	return Object.keys(dirtyFields).reduce((previous, key) => {
+		if (!dirtyFields[key]) return previous
 
-export function dirtyValues(dirtyFields: object | boolean, allValues: object) {
-	if (dirtyFields === true || Array.isArray(dirtyFields)) return allValues
-	// Here, we have an object
-	return Object.fromEntries(
-		Object.keys(dirtyFields).map(key => [
-			key,
-			// @ts-ignore - we know that dirtyFields[key] is an object
-			dirtyValues(dirtyFields[key], allValues[key])
-		])
-	)
+		return {
+			...previous,
+			[key]:
+				typeof dirtyFields[key] === 'object'
+					? getDirtyValues(dirtyFields[key] as T, values[key] as V)
+					: values[key]
+		}
+	}, {})
 }

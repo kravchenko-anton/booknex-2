@@ -6,8 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import type { PayloadEBook } from 'global/api-client'
 import {
-	CreateBookDto,
-	type CreateBookDtoType
+	CreateBookValidation,
+	type CreateBookValidationType
 } from 'global/dto/book/create.book.dto'
 
 import { useRouter } from 'next/navigation'
@@ -22,14 +22,15 @@ export const useCreateForm = () => {
 		setValue,
 		getValues,
 		formState: { errors }
-	} = useForm<CreateBookDtoType>({
-		resolver: zodResolver(CreateBookDto)
+	} = useForm<CreateBookValidationType>({
+		resolver: zodResolver(CreateBookValidation)
 	})
 	console.log(errors, 'it is errors', getValues(), 'it is values')
 	const template = useTemplate({ setValue })
 
-	const { mutateAsync: create, isLoading: submitLoading } = useMutation({
+	const { mutateAsync: create, isLoading: createLoading } = useMutation({
 		mutationKey: ['create-book'],
+
 		mutationFn: (payload: {
 			title: string
 			author: string
@@ -57,7 +58,7 @@ export const useCreateForm = () => {
 		onError: () => errorToast('Error while uploading book')
 	})
 
-	const submit = handleSubmit(async (data: CreateBookDtoType) => {
+	const submit = handleSubmit(async (data: CreateBookValidationType) => {
 		await create({
 			title: data.title,
 			description: data.description,
@@ -85,6 +86,6 @@ export const useCreateForm = () => {
 		setValue,
 		getValues,
 		submit,
-		submitLoading
+		createLoading
 	}
 }

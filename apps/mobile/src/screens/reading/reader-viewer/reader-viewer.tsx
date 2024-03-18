@@ -1,6 +1,6 @@
 import { useReader } from '@/screens/reading/reader-context'
+import { handleDoublePress } from '@/screens/reading/reader-viewer/handle-double-press'
 import {
-	handleDoublePress,
 	scrollProgressDetect,
 	ViewerHtml
 } from '@/screens/reading/reader-viewer/reader-viewer.function'

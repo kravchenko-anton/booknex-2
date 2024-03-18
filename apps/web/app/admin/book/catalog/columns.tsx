@@ -12,7 +12,7 @@ export const columns = ({
 	preview
 }: {
 	preview: (id: number) => void
-}): ColumnDef<Book, any>[] => [
+}): ColumnDef<Book, unknown>[] => [
 	{
 		id: 'id',
 		enableHiding: false,

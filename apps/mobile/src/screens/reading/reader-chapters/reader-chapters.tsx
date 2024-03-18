@@ -10,10 +10,15 @@ import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Pressable } from 'react-native'
 
-const ReaderChapters: FC<{
+interface ReaderChaptersProperties {
 	sheetRef: React.RefObject<BottomSheetModal>
 	chapters: OutputChapter[]
-}> = ({ sheetRef, chapters }) => {
+}
+
+const ReaderChapters: FC<ReaderChaptersProperties> = ({
+	sheetRef,
+	chapters
+}) => {
 	const { colorScheme, changeChapter } = useReader()
 	const sections = useMemo(
 		() =>

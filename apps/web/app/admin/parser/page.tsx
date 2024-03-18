@@ -1,7 +1,7 @@
 'use client'
 
 import { columns } from '@/app/admin/parser/columns'
-import ParseButton from '@/app/admin/parser/parser-modal/parse-button'
+import ParseButton from '@/app/admin/parser/parse-modal/parse-button'
 import { useQueries } from '@/app/admin/parser/useQueries'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'

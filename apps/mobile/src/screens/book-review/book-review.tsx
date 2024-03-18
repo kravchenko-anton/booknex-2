@@ -64,7 +64,7 @@ const BookReview: FC = () => {
 				tags: selectedTags || []
 			}
 		}).then(() => {
-			successToast('thanks for review')
+			successToast('thanks for book-review')
 			navigate('Library')
 		})
 	}

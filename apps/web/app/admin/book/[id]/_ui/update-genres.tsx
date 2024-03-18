@@ -16,7 +16,7 @@ import { cn } from '@/utils'
 import { errorToast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
-import type { UpdateGenreDtoType } from 'global/dto/book/update.genre.dto'
+import type { UpdateGenreValidationType } from 'global/dto/book/update.genre.dto'
 import { Check } from 'icons'
 import * as React from 'react'
 import { useState, type FC } from 'react'
@@ -26,7 +26,7 @@ interface UpdateGenresProperties {
 	defaultGenres?: number[]
 }
 
-const BookUpdateGenres: FC<UpdateGenresProperties> = ({
+const UpdateGenres: FC<UpdateGenresProperties> = ({
 	defaultGenres = [],
 	bookId,
 	...properties
@@ -45,7 +45,7 @@ const BookUpdateGenres: FC<UpdateGenresProperties> = ({
 				payload
 			}: {
 				id: number
-				payload: UpdateGenreDtoType
+				payload: UpdateGenreValidationType
 			}) => api.book.updateGenre(id, payload),
 			onError: () => errorToast('Error while uploading book')
 		})
@@ -138,4 +138,4 @@ const BookUpdateGenres: FC<UpdateGenresProperties> = ({
 	)
 }
 
-export default BookUpdateGenres
+export default UpdateGenres
