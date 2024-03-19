@@ -18,7 +18,7 @@
 import { Activity } from './activity';
 // May contain unused imports in some cases
 // @ts-ignore
-import { CountOutput } from './count-output';
+import { BookCount } from './book-count';
 // May contain unused imports in some cases
 // @ts-ignore
 import { Review } from './review';
@@ -111,19 +111,19 @@ export interface AdminInfoByIdOutput {
      */
     'ebook': string;
     /**
+     * book count
+     * @type {BookCount}
+     * @memberof AdminInfoByIdOutput
+     */
+    '_count': BookCount;
+    /**
      * book activities
      * @type {Array<Activity>}
      * @memberof AdminInfoByIdOutput
      */
     'activities': Array<Activity>;
     /**
-     * book count
-     * @type {CountOutput}
-     * @memberof AdminInfoByIdOutput
-     */
-    '_count': CountOutput;
-    /**
-     * book book-review
+     * book review
      * @type {Array<Review>}
      * @memberof AdminInfoByIdOutput
      */

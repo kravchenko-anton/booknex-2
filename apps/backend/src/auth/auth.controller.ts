@@ -31,7 +31,7 @@ export class AuthController {
 		description: 'Return access and refresh token',
 		type: AuthOutput
 	})
-	async register(@Body() dto: AuthDto): Promise<AuthOutput> {
+	async mailRegister(@Body() dto: AuthDto): Promise<AuthOutput> {
 		return this.authService.register(dto)
 	}
 
@@ -44,7 +44,7 @@ export class AuthController {
 		description: 'Return access and refresh token',
 		type: AuthOutput
 	})
-	async login(@Body() dto: AuthDto): Promise<AuthOutput> {
+	async mailLogin(@Body() dto: AuthDto): Promise<AuthOutput> {
 		return this.authService.login(dto)
 	}
 

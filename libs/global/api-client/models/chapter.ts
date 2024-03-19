@@ -44,5 +44,11 @@ export interface Chapter {
      * @memberof Chapter
      */
     'romanNumber': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Chapter
+     */
+    'readingTime': number;
 }
 

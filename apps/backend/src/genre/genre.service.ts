@@ -14,7 +14,7 @@ export class GenreService {
 		private readonly activityService: ActivityService
 	) {}
 
-	all() {
+	catalog() {
 		return this.prisma.genre.findMany({
 			select: ReturnGenreObject
 		})

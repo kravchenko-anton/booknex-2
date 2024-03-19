@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { Path, PathValue } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 import Input from './input'
@@ -9,7 +10,7 @@ const Field = <T extends Record<string, any>>({
 	style,
 	icon: Icon,
 	...properties
-}: FieldProperties<T>): JSX.Element | null => (
+}: FieldProperties<T>): ReactNode | null => (
 	<Controller
 		control={properties.control}
 		name={properties.name}

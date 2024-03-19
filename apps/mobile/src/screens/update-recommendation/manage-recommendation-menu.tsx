@@ -15,7 +15,7 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
 }) => {
 	const { data: selectedGenres } = useQuery({
 		queryKey: ['recommendation-genres'],
-		queryFn: () => api.recommendation.recommendationsGenres(),
+		queryFn: () => api.recommendation.currentRecommendation(),
 		select: data => data.data
 	})
 	if (!selectedGenres) return null

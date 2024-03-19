@@ -24,8 +24,8 @@ import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import environment from '../utils/common/environment.config'
 import {
-	AdminCatalogOutput,
 	AdminInfoByIdOutput,
+	CatalogOutput,
 	InfoByIdOutput
 } from './book.model'
 import { BookService } from './book.service'
@@ -33,7 +33,7 @@ import { CreateBookDto } from './dto/create.book.dto'
 import {
 	UpdateBookDto,
 	UpdateGenreDto,
-	updatePictureDto
+	UpdatePictureDto
 } from './dto/update.book.dto'
 import { EbookByIdOutput, PayloadEBook, StoredEBook } from './ebook.model'
 
@@ -44,7 +44,7 @@ export class BookController {
 	constructor(private readonly bookService: BookService) {}
 
 	@Auth()
-	@Get('/by-id/:id')
+	@Get('/info/by-id/:id')
 	@ApiOkResponse({ type: InfoByIdOutput })
 	async infoById(
 		@Param('id') bookId: number,
@@ -54,7 +54,7 @@ export class BookController {
 	}
 
 	@Auth()
-	@Get('/ebook/:id')
+	@Get('/ebook/by-id/:id')
 	@ApiOkResponse({ type: EbookByIdOutput })
 	async ebookById(
 		@Param('id') bookId: number,
@@ -63,28 +63,29 @@ export class BookController {
 		return this.bookService.ebookById(+bookId, +userId)
 	}
 
+	//  admin
+
 	@Auth('admin')
-	@Get('/stored-ebook/:id')
+	@Get('/admin/stored-ebook/:id')
 	@ApiOkResponse({ type: [StoredEBook] })
 	async storedEbook(@Param('id') bookId: number): Promise<StoredEBook[]> {
 		return this.bookService.storedEbook(+bookId)
 	}
-	//  admin
 	@Auth('admin')
-	@Get('admin/by-id/:id')
+	@Get('/admin-info/by-id/:id')
 	@ApiOkResponse({ type: AdminInfoByIdOutput })
-	async infoByIdAdmin(@Param('id') id: number): Promise<AdminInfoByIdOutput> {
+	async adminInfoById(@Param('id') id: number): Promise<AdminInfoByIdOutput> {
 		return this.bookService.infoByIdAdmin(+id)
 	}
 
 	@Auth('admin')
 	@Get('/admin/catalog')
-	@ApiOkResponse({ type: AdminCatalogOutput })
-	async adminCatalog(
+	@ApiOkResponse({ type: CatalogOutput })
+	async catalog(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
-	): Promise<AdminCatalogOutput> {
-		return this.bookService.adminCatalog(searchTerm, page || 1)
+	): Promise<CatalogOutput> {
+		return this.bookService.catalog(searchTerm, page || 1)
 	}
 
 	@Auth('admin')
@@ -129,7 +130,7 @@ export class BookController {
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
 	@Put('admin/update-picture/:id')
-	@ApiBody({ type: updatePictureDto })
+	@ApiBody({ type: UpdatePictureDto })
 	@UseInterceptors(FileInterceptor('picture'))
 	@ApiConsumes('multipart/form-data')
 	async updatePicture(

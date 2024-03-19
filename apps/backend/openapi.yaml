@@ -104,7 +104,7 @@ paths:
         - bearer: []
   /api/user/admin/catalog:
     get:
-      operationId: adminCatalog
+      operationId: catalog
       parameters:
         - name: searchTerm
           required: true
@@ -122,7 +122,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserAdminCatalogOutput"
+                $ref: "#/components/schemas/UserCatalogOutput"
       tags:
         - 👤 user
       security:
@@ -182,7 +182,7 @@ paths:
         - bearer: []
   /api/genre:
     get:
-      operationId: all
+      operationId: catalog
       parameters: []
       responses:
         "200":
@@ -192,7 +192,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/shortGenre"
+                  $ref: "#/components/schemas/ShortGenre"
       tags:
         - 🔖 genre
       security:
@@ -217,7 +217,7 @@ paths:
         - 🔖 genre
       security:
         - bearer: []
-  "/api/book/by-id/{id}":
+  "/api/book/info/by-id/{id}":
     get:
       operationId: infoById
       parameters:
@@ -237,7 +237,7 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/ebook/{id}":
+  "/api/book/ebook/by-id/{id}":
     get:
       operationId: ebookById
       parameters:
@@ -257,9 +257,31 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/by-id/{id}":
+  "/api/book/admin/stored-ebook/{id}":
     get:
-      operationId: infoByIdAdmin
+      operationId: storedEbook
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StoredEBook"
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  "/api/book/admin-info/by-id/{id}":
+    get:
+      operationId: adminInfoById
       parameters:
         - name: id
           required: true
@@ -279,7 +301,7 @@ paths:
         - bearer: []
   /api/book/admin/catalog:
     get:
-      operationId: adminCatalog
+      operationId: catalog
       parameters:
         - name: searchTerm
           required: true
@@ -297,7 +319,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AdminCatalogOutput"
+                $ref: "#/components/schemas/CatalogOutput"
       tags:
         - 📙 book
       security:
@@ -310,7 +332,7 @@ paths:
         required: true
         description: Create book
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/CreateBookDto"
       responses:
@@ -357,6 +379,28 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UpdateGenreDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  "/api/book/admin/update-picture/{id}":
+    put:
+      operationId: updatePicture
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdatePictureDto"
       responses:
         "200":
           description: ""
@@ -426,7 +470,7 @@ paths:
         - 🔐 auth
   /api/auth/mail-register:
     post:
-      operationId: register
+      operationId: mailRegister
       parameters: []
       requestBody:
         required: true
@@ -446,7 +490,7 @@ paths:
         - 🔐 auth
   /api/auth/mail-login:
     post:
-      operationId: login
+      operationId: mailLogin
       parameters: []
       requestBody:
         required: true
@@ -519,7 +563,7 @@ paths:
         - bearer: []
   /api/parser/admin/catalog:
     get:
-      operationId: adminCatalog
+      operationId: catalog
       parameters:
         - name: searchTerm
           required: false
@@ -626,7 +670,7 @@ paths:
         - bearer: []
   "/api/review/review/{id}":
     post:
-      operationId: book-review
+      operationId: review
       parameters:
         - name: id
           required: true
@@ -644,29 +688,29 @@ paths:
         "200":
           description: Review book
       tags:
-        - ⭐ book-review
+        - ⭐ review
       security:
         - bearer: []
-  /api/recommendation/update-recommendations:
+  /api/recommendation/update-recommendation:
     post:
-      operationId: updateRecommendations
+      operationId: updateRecommendation
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserUpdateSelectedGenresDto"
+              $ref: "#/components/schemas/UpdateRecommendationDto"
       responses:
         "200":
-          description: Recommendations updated
+          description: Recommendation updated
       tags:
         - 📨 recommendation
       security:
         - bearer: []
-  /api/recommendation/recommendation-genres:
+  /api/recommendation/recommendation-genre:
     get:
-      operationId: recommendationsGenres
+      operationId: currentRecommendation
       parameters: []
       responses:
         "200":
@@ -676,11 +720,79 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/shortGenre"
+                  $ref: "#/components/schemas/ShortGenre"
       tags:
         - 📨 recommendation
       security:
         - bearer: []
+  /api/health:
+    get:
+      operationId: check
+      parameters: []
+      responses:
+        "200":
+          description: Health check
+          content:
+            application/json:
+              schema:
+                type: object
+        "503":
+          description: The Health Check is not successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  info:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example:
+                      redis:
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                      redis:
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+      tags:
+        - ❤️ health
 info:
   title: Booknex
   description: ""
@@ -698,12 +810,14 @@ tags:
     description: book service
   - name: 📚 catalog
     description: catalog service
+  - name: ❤️ health
+    description: health service
   - name: 🔖 genre
     description: genre service
   - name: 📁 storage
     description: storage service
-  - name: ⭐ book-review
-    description: book-review service
+  - name: ⭐ review
+    description: review service
   - name: 📨 recommendation
     description: recommendation service
   - name: 📦 parser
@@ -771,7 +885,7 @@ components:
         - readingBooks
         - finishedBooks
         - savedBooks
-    shortGenre:
+    ShortGenre:
       type: object
       properties:
         id:
@@ -884,7 +998,7 @@ components:
         selectedGenres:
           type: array
           items:
-            $ref: "#/components/schemas/shortGenre"
+            $ref: "#/components/schemas/ShortGenre"
         activities:
           type: array
           items:
@@ -905,7 +1019,7 @@ components:
         - selectedGenres
         - activities
         - _count
-    UserAdminCatalogOutput:
+    UserCatalogOutput:
       type: object
       properties:
         canLoadMore:
@@ -930,7 +1044,7 @@ components:
         relatedGenres:
           type: array
           items:
-            $ref: "#/components/schemas/shortGenre"
+            $ref: "#/components/schemas/ShortGenre"
         recommendations:
           type: array
           items:
@@ -1010,7 +1124,7 @@ components:
         genres:
           type: array
           items:
-            $ref: "#/components/schemas/shortGenre"
+            $ref: "#/components/schemas/ShortGenre"
       required:
         - id
         - title
@@ -1076,7 +1190,41 @@ components:
         - picture
         - file
         - chapters
-    CountOutput:
+    Chapter:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        text:
+          type: string
+        romanNumber:
+          type: string
+        readingTime:
+          type: number
+      required:
+        - id
+        - name
+        - text
+        - romanNumber
+        - readingTime
+    StoredEBook:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        chapters:
+          type: array
+          items:
+            $ref: "#/components/schemas/Chapter"
+      required:
+        - id
+        - title
+        - chapters
+    BookCount:
       type: object
       properties:
         finishedBy:
@@ -1101,21 +1249,21 @@ components:
         id:
           type: number
           example: 1
-          description: book-review id
+          description: review id
         tags:
           example: tags
-          description: book-review tags
+          description: review tags
           type: array
           items:
             type: string
         text:
           type: string
           example: text
-          description: book-review text
+          description: review text
         rating:
           type: number
           example: 1
-          description: book-review rating
+          description: review rating
       required:
         - id
         - tags
@@ -1163,7 +1311,7 @@ components:
         genres:
           type: array
           items:
-            $ref: "#/components/schemas/shortGenre"
+            $ref: "#/components/schemas/ShortGenre"
         createdAt:
           type: string
           example: 2021-07-01
@@ -1176,17 +1324,17 @@ components:
           type: string
           example: ebook
           description: book ebook
+        _count:
+          description: book count
+          allOf:
+            - $ref: "#/components/schemas/BookCount"
         activities:
           description: book activities
           type: array
           items:
             $ref: "#/components/schemas/Activity"
-        _count:
-          description: book count
-          allOf:
-            - $ref: "#/components/schemas/CountOutput"
         review:
-          description: book book-review
+          description: book review
           type: array
           items:
             $ref: "#/components/schemas/Review"
@@ -1204,8 +1352,8 @@ components:
         - createdAt
         - updatedAt
         - ebook
-        - activities
         - _count
+        - activities
         - review
     Book:
       type: object
@@ -1249,7 +1397,7 @@ components:
         genres:
           type: array
           items:
-            $ref: "#/components/schemas/shortGenre"
+            $ref: "#/components/schemas/ShortGenre"
       required:
         - id
         - title
@@ -1261,7 +1409,7 @@ components:
         - rating
         - visible
         - genres
-    AdminCatalogOutput:
+    CatalogOutput:
       type: object
       properties:
         canLoadMore:
@@ -1315,10 +1463,6 @@ components:
           type: string
           example: title
           description: book title
-        picture:
-          type: string
-          example: picture
-          description: book picture
         author:
           type: string
           example: author
@@ -1327,10 +1471,6 @@ components:
           type: string
           example: description
           description: book description
-        chapters:
-          type: number
-          example: 100
-          description: book chapters count
         rating:
           type: number
           example: 5
@@ -1348,15 +1488,18 @@ components:
           type: array
           items:
             type: number
+        picture:
+          type: string
+          description: picture
+          format: binary
       required:
         - title
-        - picture
         - author
         - description
-        - chapters
         - rating
         - ebook
         - genres
+        - picture
     UpdateBookDto:
       type: object
       properties:
@@ -1364,10 +1507,6 @@ components:
           type: string
           example: title
           description: book title
-        picture:
-          type: string
-          example: picture
-          description: book picture
         author:
           type: string
           example: author
@@ -1376,10 +1515,6 @@ components:
           type: string
           example: description
           description: book description
-        chapters:
-          type: number
-          example: 100
-          description: book chapters count
         rating:
           type: number
           example: 5
@@ -1400,6 +1535,15 @@ components:
           type: array
           items:
             type: number
+    UpdatePictureDto:
+      type: object
+      properties:
+        picture:
+          type: string
+          description: picture
+          format: binary
+      required:
+        - picture
     GoogleAuthDto:
       type: object
       properties:
@@ -1509,7 +1653,7 @@ components:
         genres:
           type: array
           items:
-            $ref: "#/components/schemas/shortGenre"
+            $ref: "#/components/schemas/ShortGenre"
       required:
         - id
         - title
@@ -1585,13 +1729,13 @@ components:
       required:
         - rating
         - tags
-    UserUpdateSelectedGenresDto:
+    UpdateRecommendationDto:
       type: object
       properties:
-        selectedGenres:
-          description: selected genres
+        genres:
+          description: new genres for recommendation
           type: array
           items:
             type: number
       required:
-        - selectedGenres
+        - genres

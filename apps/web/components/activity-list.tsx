@@ -19,10 +19,14 @@ const activityPalette = [
 	'#A1172C'
 ]
 
-const ActivityList: FC<{
+interface ActivityListProperties {
 	onlyGraph?: boolean
 	data: ActivitiesOutput[]
-}> = ({ onlyGraph = false, data = [] }) => {
+}
+const ActivityList: FC<ActivityListProperties> = ({
+	onlyGraph = false,
+	data = []
+}) => {
 	const [selectActivity, setSelectActivity] = useState<ActivitiesOutput | null>(
 		null
 	)

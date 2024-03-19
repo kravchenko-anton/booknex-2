@@ -5,10 +5,15 @@ import type { PayloadEBook } from 'global/api-client'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
 import { useEffect, type FC } from 'react'
 
-const EbookComposer: FC<{
+interface EbookComposerProperties {
 	defaultBooks?: PayloadEBook[]
 	updateBooks: (books: PayloadEBook[]) => void
-}> = ({ updateBooks, defaultBooks }) => {
+}
+
+const EbookComposer: FC<EbookComposerProperties> = ({
+	updateBooks,
+	defaultBooks
+}) => {
 	const { books } = useBookCompose(defaultBooks)
 	useEffect(() => updateBooks(books.state), [books.state])
 	if (!books) return null

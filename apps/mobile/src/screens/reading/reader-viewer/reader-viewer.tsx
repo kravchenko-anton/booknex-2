@@ -1,9 +1,9 @@
 import { useReader } from '@/screens/reading/reader-context'
-import { handleDoublePress } from '@/screens/reading/reader-viewer/handle-double-press'
+import { doublePressFunction } from '@/screens/reading/reader-viewer/double-press.function'
 import {
 	scrollProgressDetect,
 	ViewerHtml
-} from '@/screens/reading/reader-viewer/reader-viewer.function'
+} from '@/screens/reading/reader-viewer/viewer.function'
 import { windowHeight, windowWidth } from '@/utils/dimensions'
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
@@ -26,6 +26,7 @@ const textSelectionValidation = (selectedText: string) => {
 	if (selectedText.length < 3) return errorToast('Select more text')
 	if (selectedText.length > 800) return errorToast('Select less text')
 }
+//TODO: сделать дизайн в меню select
 
 const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 	const { defaultTheme, initialScroll, onMessage, reference } = useReader()
@@ -34,7 +35,7 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 	return (
 		<View className='m-0 h-screen w-full items-center justify-center p-0'>
 			<TouchableWithoutFeedback
-				onPress={() => handleDoublePress(properties.handleDoublePress)}
+				onPress={() => doublePressFunction(properties.handleDoublePress)}
 			>
 				<WebView
 					scrollEnabled
@@ -72,7 +73,7 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 						backgroundColor: Color.background
 					}}
 					onMessage={onMessage}
-					onCustomMenuSelection={event => {
+					onCustomMenuSelection={async event => {
 						if (event.nativeEvent.key === 'copy') {
 							textSelectionValidation(event.nativeEvent.selectedText)
 							console.log('Copy', event.nativeEvent.selectedText)
@@ -80,11 +81,11 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 						}
 						if (event.nativeEvent.key === 'share') {
 							textSelectionValidation(event.nativeEvent.selectedText)
-							share(event.nativeEvent.selectedText)
+							await share(event.nativeEvent.selectedText)
 						}
 						if (event.nativeEvent.key === 'Translate') {
 							textSelectionValidation(event.nativeEvent.selectedText)
-							Linking.openURL(
+							await Linking.openURL(
 								`https://translate.google.com/?sl=auto&text=${event.nativeEvent.selectedText}&op=translate`
 							)
 						}
@@ -93,6 +94,11 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 						`)
 					}}
 					onLayout={() => {
+						reference.current?.injectJavaScript(
+							`window.scrollTo({ top: ${initialScroll} })`
+						)
+					}}
+					onLoadEnd={() => {
 						reference.current?.injectJavaScript(
 							`window.scrollTo({ top: ${initialScroll} })`
 						)

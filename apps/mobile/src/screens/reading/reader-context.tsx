@@ -4,7 +4,7 @@ import type { ThemePackType } from '@/screens/reading/reader-customization/helpe
 import {
 	getStyleTag,
 	injectStyle
-} from '@/screens/reading/reader-viewer/stylesFunctions'
+} from '@/screens/reading/reader-viewer/styles.function'
 
 import { useSaveProgress } from '@/screens/reading/reader-viewer/useSaveProgress'
 
@@ -33,6 +33,13 @@ export const ReaderContext = createContext(
 		reference: React.RefObject<WebView>
 		defaultTheme: string
 		changeChapter: (chapter: string) => void
+		padding: number
+		lineHeight: number
+		font: {
+			title: string
+			fontFamily: string
+		}
+		fontSize: number
 	}
 )
 export interface WebviewMessageType {
@@ -56,6 +63,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
 		state => state.readingUi
 	)
+
 	const { books } = useTypedSelector(state => state.readingProgress)
 	const { navigate } = useTypedNavigation()
 	const [readerState, setReaderState] = useState({
@@ -70,7 +78,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
 		useMutation({
-			mutationKey: ['end-reading', id],
+			mutationKey: ['finish-reading', id],
 			mutationFn: (id: number) => api.user.finishReading(id)
 		})
 
@@ -137,7 +145,12 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		initialScroll: readerState.scrollTop,
 		reference: viewerReference,
 		changeChapter,
-		defaultTheme
+
+		defaultTheme,
+		lineHeight,
+		padding,
+		font,
+		fontSize
 	}
 	console.log('context render' + Math.random())
 	return (
@@ -145,7 +158,6 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 	)
 }
 
-// Custom hook to use the context
 export const useReader = () => {
 	const context = useContext(ReaderContext)
 	if (!context) {

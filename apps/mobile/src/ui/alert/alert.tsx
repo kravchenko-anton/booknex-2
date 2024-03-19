@@ -6,27 +6,34 @@ import type { FunctionType } from 'global/types'
 import type { FC } from 'react'
 import { Modal as DefaultModal, View } from 'react-native'
 
-const Alert: FC<{
+interface AlertProperties {
 	icon: IconType
 	description: string
 	acceptText: string
 	type: VividPaletteType
 	onAccept: FunctionType
 	onClose: FunctionType
-}> = ({ acceptText, description, onClose, icon: Icon, onAccept, type }) => (
+}
+
+const Alert: FC<AlertProperties> = ({
+	icon: Icon,
+	onAccept,
+	onClose,
+	...properties
+}) => (
 	<DefaultModal
 		transparent
 		statusBarTranslucent
 		visible
 		animationType='fade'
-		onRequestClose={() => onClose()}
+		onRequestClose={onClose}
 	>
 		<View
 			className='flex-1 items-center justify-center'
 			style={{
 				backgroundColor: `${Color.background}99`
 			}}
-			onTouchStart={() => onClose()}
+			onTouchStart={onClose}
 		>
 			<View
 				className='bg-foreground z-50 w-9/12 items-center rounded-xl p-4'
@@ -41,25 +48,25 @@ const Alert: FC<{
 					weight='semiBold'
 					numberOfLines={2}
 				>
-					{description}
+					{properties.description}
 				</Title>
 
 				<Button
 					className='mt-4 w-full'
-					variant={type}
+					variant={properties.type}
 					size='md'
 					onPress={() => {
 						onAccept()
 						onClose()
 					}}
 				>
-					{acceptText}
+					{properties.acceptText}
 				</Button>
 				<Button
 					className='mt-2 w-full'
 					variant='foreground'
 					size='md'
-					onPress={() => onClose()}
+					onPress={onClose}
 				>
 					Cancel
 				</Button>

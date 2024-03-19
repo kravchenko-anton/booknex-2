@@ -22,7 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { UserAdminCatalogOutput } from '../models';
+import { UserCatalogOutput } from '../models';
 // @ts-ignore
 import { UserLibraryOutput } from '../models';
 // @ts-ignore
@@ -40,11 +40,11 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminCatalog: async (searchTerm: string, page: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        catalog: async (searchTerm: string, page: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchTerm' is not null or undefined
-            assertParamExists('adminCatalog', 'searchTerm', searchTerm)
+            assertParamExists('catalog', 'searchTerm', searchTerm)
             // verify required parameter 'page' is not null or undefined
-            assertParamExists('adminCatalog', 'page', page)
+            assertParamExists('catalog', 'page', page)
             const localVarPath = `/api/user/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -348,10 +348,10 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminCatalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserAdminCatalogOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCatalog(searchTerm, page, options);
+        async catalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCatalogOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.catalog(searchTerm, page, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserApi.adminCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.catalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -453,8 +453,8 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminCatalog(searchTerm: string, page: number, options?: any): AxiosPromise<UserAdminCatalogOutput> {
-            return localVarFp.adminCatalog(searchTerm, page, options).then((request) => request(axios, basePath));
+        catalog(searchTerm: string, page: number, options?: any): AxiosPromise<UserCatalogOutput> {
+            return localVarFp.catalog(searchTerm, page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -535,8 +535,8 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public adminCatalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).adminCatalog(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
+    public catalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).catalog(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

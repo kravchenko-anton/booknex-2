@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module'
 import { BookModule } from './book/book.module'
 import { CatalogModule } from './catalog/catalog.module'
 import { GenreModule } from './genre/genre.module'
+import { HealthModule } from './health/health.module'
 import { ParserModule } from './parser/parser.module'
 import { RecommendationModule } from './recommendation/recommendation.module'
 import { ReviewModule } from './review/review.module'
@@ -26,19 +27,20 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 		StorageModule,
 		ParserModule,
 		ActivityModule,
+		CacheModule.register({
+			isGlobal: true,
+			max: 1000,
+			ttl: 60
+		}),
 		ThrottlerModule.forRoot([
 			{
 				ttl: 60,
 				limit: 10
 			}
 		]),
-		CacheModule.register({
-			isGlobal: true,
-			ttl: 60,
-			max: 100
-		}),
 		ReviewModule,
-		RecommendationModule
+		RecommendationModule,
+		HealthModule
 	],
 	controllers: [AppController],
 	providers: [AppService, ConfigService]

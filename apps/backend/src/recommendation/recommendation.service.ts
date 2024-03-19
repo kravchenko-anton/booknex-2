@@ -4,7 +4,7 @@ import { AdminErrors } from '../../../../libs/global/errors'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
-import type { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
+import type { UpdateRecommendationDto } from './dto/update-recommendation.dto'
 
 @Injectable()
 export class RecommendationService {
@@ -64,7 +64,7 @@ export class RecommendationService {
 		})
 	}
 
-	recommendationGenres(userId: number) {
+	currentRecommendation(userId: number) {
 		return this.prisma.user
 			.findUnique({
 				where: {
@@ -82,12 +82,12 @@ export class RecommendationService {
 			.selectedGenres()
 	}
 
-	async updateRecommendations(id: number, dto: UserUpdateSelectedGenresDto) {
+	async updateRecommendation(id: number, dto: UpdateRecommendationDto) {
 		await this.checkUserExist(id)
 		const selectedGenres = await this.prisma.genre.findMany({
 			where: {
 				id: {
-					in: dto.selectedGenres
+					in: dto.genres
 				}
 			},
 			select: {

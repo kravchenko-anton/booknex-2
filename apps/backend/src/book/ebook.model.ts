@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType, PickType } from '@nestjs/swagger'
+import { ApiProperty, PickType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
 	ArrayMinSize,
@@ -29,9 +29,13 @@ export class Chapter {
 	@ApiProperty({ type: String })
 	@IsString()
 	romanNumber: string
+
+	@ApiProperty({ type: Number })
+	@IsNumber()
+	readingTime: number
 }
 
-export class PayloadChapter extends OmitType(Chapter, ['romanNumber']) {}
+export class PayloadChapter extends PickType(Chapter, ['id', 'name', 'text']) {}
 
 export class EBookBase {
 	@ApiProperty({ type: Number })

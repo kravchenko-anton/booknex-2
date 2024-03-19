@@ -1,3 +1,4 @@
+import { useAction } from '@/hooks'
 import { useReader } from '@/screens/reading/reader-context'
 import { FontSizeSettings } from '@/screens/reading/reader-customization/font-size-settings'
 import { FontStyleSettings } from '@/screens/reading/reader-customization/font-style-settings'
@@ -7,12 +8,22 @@ import { ThemeStyleSettings } from '@/screens/reading/reader-customization/theme
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import type { FC, RefObject } from 'react'
 import { Pressable, View } from 'react-native'
-//TODO: меньше кода тут
 
-const ReaderCustomization: FC<{
+interface ReaderCustomizationProperties {
 	sheetRef: RefObject<BottomSheetModal>
-}> = ({ sheetRef }) => {
-	const { colorScheme } = useReader()
+}
+
+const ReaderCustomization: FC<ReaderCustomizationProperties> = ({
+	sheetRef
+}) => {
+	const { colorScheme, font, fontSize, lineHeight, padding } = useReader()
+	const {
+		changePadding,
+		changeTheme,
+		changeLineHeight,
+		changeFontFamily,
+		changeFontSize
+	} = useAction()
 	return (
 		<BottomSheetModal
 			enableContentPanningGesture
@@ -20,8 +31,10 @@ const ReaderCustomization: FC<{
 			enablePanDownToClose
 			enableOverDrag
 			snapPoints={[290, 290]}
-			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
 			ref={sheetRef}
+			handleIndicatorStyle={{
+				backgroundColor: colorScheme.colorPalette.text
+			}}
 			backgroundStyle={{
 				backgroundColor: colorScheme.colorPalette.background.darker
 			}}
@@ -30,17 +43,36 @@ const ReaderCustomization: FC<{
 			)}
 		>
 			<Pressable>
-				<FontStyleSettings />
+				<FontStyleSettings
+					changeFontFamily={changeFontFamily}
+					activeFont={font}
+					colorScheme={colorScheme}
+				/>
 				<View>
 					<View className='w-full'>
-						<ThemeStyleSettings />
-						<FontSizeSettings />
+						<ThemeStyleSettings
+							colorScheme={colorScheme}
+							changeTheme={changeTheme}
+						/>
+						<FontSizeSettings
+							colorScheme={colorScheme}
+							activeFontSize={fontSize}
+							changeFontSize={changeFontSize}
+						/>
 					</View>
 
 					<View className='mt-6 flex-row items-center justify-center'>
-						<LineHeightSettings />
+						<LineHeightSettings
+							colorScheme={colorScheme}
+							changeLineHeight={changeLineHeight}
+							lineHeight={lineHeight}
+						/>
 
-						<PageMarginSettings />
+						<PageMarginSettings
+							colorScheme={colorScheme}
+							changePadding={changePadding}
+							padding={padding}
+						/>
 					</View>
 				</View>
 			</Pressable>

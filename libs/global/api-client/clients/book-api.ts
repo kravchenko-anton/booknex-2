@@ -22,9 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { AdminCatalogOutput } from '../models';
-// @ts-ignore
 import { AdminInfoByIdOutput } from '../models';
+// @ts-ignore
+import { CatalogOutput } from '../models';
 // @ts-ignore
 import { EbookByIdOutput } from '../models';
 // @ts-ignore
@@ -45,16 +45,53 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminInfoById: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('adminInfoById', 'id', id)
+            const localVarPath = `/api/book/admin-info/by-id/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} searchTerm 
          * @param {number} page 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminCatalog: async (searchTerm: string, page: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        catalog: async (searchTerm: string, page: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchTerm' is not null or undefined
-            assertParamExists('adminCatalog', 'searchTerm', searchTerm)
+            assertParamExists('catalog', 'searchTerm', searchTerm)
             // verify required parameter 'page' is not null or undefined
-            assertParamExists('adminCatalog', 'page', page)
+            assertParamExists('catalog', 'page', page)
             const localVarPath = `/api/book/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -185,7 +222,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         ebookById: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('ebookById', 'id', id)
-            const localVarPath = `/api/book/ebook/{id}`
+            const localVarPath = `/api/book/ebook/by-id/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -222,44 +259,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         infoById: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('infoById', 'id', id)
-            const localVarPath = `/api/book/by-id/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        infoByIdAdmin: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('infoByIdAdmin', 'id', id)
-            const localVarPath = `/api/book/admin/by-id/{id}`
+            const localVarPath = `/api/book/info/by-id/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -333,7 +333,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         storedEbook: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('storedEbook', 'id', id)
-            const localVarPath = `/api/book/stored-ebook/{id}`
+            const localVarPath = `/api/book/admin/stored-ebook/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -550,15 +550,27 @@ export const BookApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminInfoById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminInfoByIdOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminInfoById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookApi.adminInfoById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} searchTerm 
          * @param {number} page 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminCatalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminCatalogOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCatalog(searchTerm, page, options);
+        async catalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.catalog(searchTerm, page, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BookApi.adminCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BookApi.catalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -601,18 +613,6 @@ export const BookApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.infoById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookApi.infoById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async infoByIdAdmin(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminInfoByIdOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.infoByIdAdmin(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BookApi.infoByIdAdmin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -703,13 +703,22 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminInfoById(id: number, options?: any): AxiosPromise<AdminInfoByIdOutput> {
+            return localVarFp.adminInfoById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} searchTerm 
          * @param {number} page 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminCatalog(searchTerm: string, page: number, options?: any): AxiosPromise<AdminCatalogOutput> {
-            return localVarFp.adminCatalog(searchTerm, page, options).then((request) => request(axios, basePath));
+        catalog(searchTerm: string, page: number, options?: any): AxiosPromise<CatalogOutput> {
+            return localVarFp.catalog(searchTerm, page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -743,15 +752,6 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
          */
         infoById(id: number, options?: any): AxiosPromise<InfoByIdOutput> {
             return localVarFp.infoById(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        infoByIdAdmin(id: number, options?: any): AxiosPromise<AdminInfoByIdOutput> {
-            return localVarFp.infoByIdAdmin(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -823,14 +823,25 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
 export class BookApi extends BaseAPI {
     /**
      * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookApi
+     */
+    public adminInfoById(id: number, options?: RawAxiosRequestConfig) {
+        return BookApiFp(this.configuration).adminInfoById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} searchTerm 
      * @param {number} page 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public adminCatalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig) {
-        return BookApiFp(this.configuration).adminCatalog(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
+    public catalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig) {
+        return BookApiFp(this.configuration).catalog(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -870,17 +881,6 @@ export class BookApi extends BaseAPI {
      */
     public infoById(id: number, options?: RawAxiosRequestConfig) {
         return BookApiFp(this.configuration).infoById(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BookApi
-     */
-    public infoByIdAdmin(id: number, options?: RawAxiosRequestConfig) {
-        return BookApiFp(this.configuration).infoByIdAdmin(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

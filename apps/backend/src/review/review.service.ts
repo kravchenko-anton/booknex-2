@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
-import { AdminErrors } from '../../../../libs/global/errors'
+import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -49,7 +49,7 @@ export class ReviewService {
 			}
 		})
 		if (!book)
-			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.bookNotFound)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.unknownError)
 		return !!book
 	}
 

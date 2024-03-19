@@ -33,9 +33,10 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
 }) => {
 	const { data: genres = [] } = useQuery({
 		queryKey: ['genres'],
-		queryFn: () => api.genre.all(),
+		queryFn: () => api.genre.catalog(),
 		select: data => data.data
 	})
+
 	const [selectedGenres, setSelectedGenres] = useState<number[]>(defaultGenres)
 	const { mutateAsync: updateGenre, isLoading: updateGenreLoading } =
 		useMutation({

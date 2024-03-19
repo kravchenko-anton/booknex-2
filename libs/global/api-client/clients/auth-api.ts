@@ -76,10 +76,45 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        login: async (authDto: AuthDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        mailLogin: async (authDto: AuthDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'authDto' is not null or undefined
-            assertParamExists('login', 'authDto', authDto)
+            assertParamExists('mailLogin', 'authDto', authDto)
             const localVarPath = `/api/auth/mail-login`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(authDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {AuthDto} authDto Register new user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mailRegister: async (authDto: AuthDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authDto' is not null or undefined
+            assertParamExists('mailRegister', 'authDto', authDto)
+            const localVarPath = `/api/auth/mail-register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -140,41 +175,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {AuthDto} authDto Register new user
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        register: async (authDto: AuthDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authDto' is not null or undefined
-            assertParamExists('register', 'authDto', authDto)
-            const localVarPath = `/api/auth/mail-register`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(authDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -203,10 +203,22 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async login(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.login(authDto, options);
+        async mailLogin(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.mailLogin(authDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.login']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.mailLogin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {AuthDto} authDto Register new user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async mailRegister(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.mailRegister(authDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.mailRegister']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -219,18 +231,6 @@ export const AuthApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.refreshToken(refreshDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.refreshToken']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {AuthDto} authDto Register new user
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async register(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.register(authDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.register']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -258,8 +258,17 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        login(authDto: AuthDto, options?: any): AxiosPromise<AuthOutput> {
-            return localVarFp.login(authDto, options).then((request) => request(axios, basePath));
+        mailLogin(authDto: AuthDto, options?: any): AxiosPromise<AuthOutput> {
+            return localVarFp.mailLogin(authDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {AuthDto} authDto Register new user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mailRegister(authDto: AuthDto, options?: any): AxiosPromise<AuthOutput> {
+            return localVarFp.mailRegister(authDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -269,15 +278,6 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         refreshToken(refreshDto: RefreshDto, options?: any): AxiosPromise<AuthOutput> {
             return localVarFp.refreshToken(refreshDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {AuthDto} authDto Register new user
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        register(authDto: AuthDto, options?: any): AxiosPromise<AuthOutput> {
-            return localVarFp.register(authDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -307,8 +307,19 @@ export class AuthApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public login(authDto: AuthDto, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).login(authDto, options).then((request) => request(this.axios, this.basePath));
+    public mailLogin(authDto: AuthDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).mailLogin(authDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {AuthDto} authDto Register new user
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public mailRegister(authDto: AuthDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).mailRegister(authDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -320,17 +331,6 @@ export class AuthApi extends BaseAPI {
      */
     public refreshToken(refreshDto: RefreshDto, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).refreshToken(refreshDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {AuthDto} authDto Register new user
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthApi
-     */
-    public register(authDto: AuthDto, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).register(authDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

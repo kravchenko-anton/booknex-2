@@ -5,7 +5,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Bookmarked } from 'icons'
 import type { FC } from 'react'
 
-const SaveButton: FC<{ id: number }> = ({ id }) => {
+interface SaveButtonProperties {
+	id: number
+}
+
+const SaveButton: FC<SaveButtonProperties> = ({ id }) => {
 	const queryClient = useQueryClient()
 
 	const { mutateAsync: toggleSaved, isLoading: toggleSavedLoading } =

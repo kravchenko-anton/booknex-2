@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import {
-	UserAdminCatalogOutput,
+	UserCatalogOutput,
 	UserLibraryOutput,
 	UserProfileOutput
 } from './user.model'
@@ -63,12 +63,12 @@ export class UserController {
 	// admin
 	@Auth('admin')
 	@Get('admin/catalog')
-	@ApiOkResponse({ type: UserAdminCatalogOutput })
-	async adminCatalog(
+	@ApiOkResponse({ type: UserCatalogOutput })
+	async catalog(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
-	): Promise<UserAdminCatalogOutput> {
-		return this.usersService.adminCatalog(searchTerm || '', page || 1)
+	): Promise<UserCatalogOutput> {
+		return this.usersService.catalog(searchTerm || '', page || 1)
 	}
 
 	@Auth('admin')

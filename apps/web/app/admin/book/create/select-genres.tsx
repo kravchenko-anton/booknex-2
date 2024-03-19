@@ -14,14 +14,15 @@ import api from '@/services'
 import { cn } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
+import type { CreateBookValidationType } from 'global/dto/book/create.book.dto'
 import { Check } from 'icons'
 import type { FC } from 'react'
 import * as React from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, type Control } from 'react-hook-form'
 
 interface SelectGenresProperties {
 	disable?: boolean
-	control: any
+	control: Control<CreateBookValidationType, any, CreateBookValidationType>
 }
 
 const SelectGenres: FC<SelectGenresProperties> = ({
@@ -31,7 +32,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 }) => {
 	const { data: genres = [] } = useQuery({
 		queryKey: ['genres'],
-		queryFn: () => api.genre.all(),
+		queryFn: () => api.genre.catalog(),
 		select: data => data.data
 	})
 

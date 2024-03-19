@@ -6,11 +6,11 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
 	const { data: books } = useQuery({
 		queryKey: ['book-templates', searchTerm, page],
-		queryFn: () => api.parser.adminCatalog(searchTerm, +page),
+		queryFn: () => api.parser.catalog(searchTerm, +page),
 		select: data => data.data
 	})
 
-	const { mutateAsync: deleteFromParser, isLoading: deleteFromParserLoading } =
+	const { mutateAsync: deleteTemplate, isLoading: deleteTemplateLoading } =
 		useMutation({
 			mutationKey: ['delete-template'],
 			mutationFn: (id: number) => api.parser.remove(id),
@@ -24,7 +24,7 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 
 	return {
 		books,
-		deleteFromParser,
-		deleteFromParserLoading
+		deleteTemplate,
+		deleteTemplateLoading
 	}
 }

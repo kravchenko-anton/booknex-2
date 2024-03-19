@@ -35,6 +35,7 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 			enableHandlePanningGesture
 			enablePanDownToClose
 			enableOverDrag
+			index={0}
 			ref={sheetRef}
 			snapPoints={['40%', '50%']}
 			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}

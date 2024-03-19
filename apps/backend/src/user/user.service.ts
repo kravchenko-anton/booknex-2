@@ -25,8 +25,9 @@ export class UserService {
 				...selectObject
 			}
 		})
-		if (!user)
+		if (!user) {
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		}
 		return user
 	}
 
@@ -63,7 +64,7 @@ export class UserService {
 		return user
 	}
 
-	async adminCatalog(searchTerm: string, page: number) {
+	async catalog(searchTerm: string, page: number) {
 		const perPage = 20
 		const data = await this.prisma.user.findMany({
 			take: perPage,

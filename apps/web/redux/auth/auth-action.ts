@@ -10,7 +10,7 @@ export const mailLogin = createAsyncThunk<AuthOutput, AuthDto>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
 		try {
-			const { data: loginResponse } = await api.auth.login({
+			const { data: loginResponse } = await api.auth.mailLogin({
 				email,
 				password
 			})

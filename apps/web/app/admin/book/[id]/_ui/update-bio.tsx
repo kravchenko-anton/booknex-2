@@ -27,7 +27,7 @@ interface UpdateBioProperties {
 
 const UpdateBio: FC<UpdateBioProperties> = properties => {
 	const { mutateAsync: updateBio, isLoading: updateBioLoading } = useMutation({
-		mutationKey: ['update-book-bio'],
+		mutationKey: ['update-bio'],
 		mutationFn: ({
 			id,
 			payload

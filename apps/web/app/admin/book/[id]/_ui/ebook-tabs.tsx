@@ -21,7 +21,7 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookId, onSuccess }) => {
 	})
 	const { mutateAsync: updateEbook, isLoading: updateEbookLoading } =
 		useMutation({
-			mutationKey: ['update-picture'],
+			mutationKey: ['update-ebook'],
 			mutationFn: ({ id, payload }: { id: number; payload: PayloadEBook[] }) =>
 				api.book.updateEbook(id, payload),
 			onSuccess: onSuccess
@@ -39,10 +39,22 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookId, onSuccess }) => {
 					<div className='mb-4 h-[600px] min-h-[600px] w-full overflow-y-scroll'>
 						<p
 							dangerouslySetInnerHTML={{
-								__html: ebook.map(({ chapters }) =>
+								__html: ebook.map(({ chapters, title }) =>
 									chapters
 										.map(
-											({ name, text }) => `<label id="${name}"></label> ${text}`
+											({ name, text, romanNumber }) => `<div
+                       id="${name + ' ' + title}">
+											<div style="
+												width: 100%;
+												height: 80px;
+												display: flex;
+												justify-content: center;
+												align-items: center;
+												text-align: center;">
+												<h2 style="font-size: 24px">${romanNumber}</h2>
+											</div>
+											 ${text}
+											</div>`
 										)
 										.join(' ')
 								)

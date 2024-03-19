@@ -37,10 +37,10 @@ const Reader = () => {
 				<ReaderMenu
 					visible={readerUiVisible}
 					onChapterIconPress={() =>
-						chaptersListModalReference.current?.present()
+						chaptersListModalReference.current?.expand()
 					}
 					onSelectThemeIconPress={() =>
-						readingSettingsModalReference.current?.present()
+						readingSettingsModalReference.current?.expand()
 					}
 				/>
 				<ReaderChapters

@@ -2,9 +2,11 @@ import { Color } from 'global/colors'
 import type { FC } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 
-const Loader: FC<{ background?: string }> = ({
-	background = Color.background
-}) => (
+interface LoaderProperties {
+	background?: string
+}
+
+const Loader: FC<LoaderProperties> = ({ background = Color.background }) => (
 	<View
 		className='flex-1 items-center justify-center'
 		style={{

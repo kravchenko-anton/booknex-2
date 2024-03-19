@@ -24,12 +24,12 @@ export class UpdateGenreDto {
 	genres: number[]
 }
 
-export class updatePictureDto {
+export class UpdatePictureDto {
 	@ApiProperty({
 		description: 'picture',
 		required: true,
 		type: String,
 		format: 'binary'
 	})
-	picture: Buffer
+	picture: Express.Multer.File
 }

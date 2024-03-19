@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { shortGenre } from './genre.entity'
+import { ShortGenre } from './genre.entity'
 import { GenreByIdOutput } from './genre.model'
 
 import { GenreService } from './genre.service'
@@ -14,9 +14,9 @@ export class GenreController {
 	constructor(private readonly genreService: GenreService) {}
 
 	@Get()
-	@ApiOkResponse({ type: shortGenre, isArray: true })
-	async all(): Promise<shortGenre[]> {
-		return this.genreService.all()
+	@ApiOkResponse({ type: [ShortGenre] })
+	async catalog(): Promise<ShortGenre[]> {
+		return this.genreService.catalog()
 	}
 
 	@Auth()

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNumber, IsString } from 'class-validator'
 
-export class shortGenre {
+export class ShortGenre {
 	@ApiProperty({ example: 1, description: 'genre id', type: Number })
 	@IsNumber()
 	id: number
@@ -11,7 +11,7 @@ export class shortGenre {
 	name: string
 }
 
-export class Genre extends shortGenre {
+export class Genre extends ShortGenre {
 	@ApiProperty({
 		example: '2021-07-01',
 		description: 'genre created at',

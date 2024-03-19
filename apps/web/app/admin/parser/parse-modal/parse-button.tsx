@@ -17,7 +17,7 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 	const queryClient = useQueryClient()
 
 	const { mutateAsync: parse, isLoading: parseLoading } = useMutation({
-		mutationKey: ['parse-templates'],
+		mutationKey: ['parse-template'],
 		mutationFn: (dto: ParserDto) => api.parser.parse(dto),
 		onSuccess: async () => {
 			successToast('Books parsed')

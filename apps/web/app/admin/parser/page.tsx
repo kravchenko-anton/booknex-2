@@ -16,7 +16,7 @@ import type { FC } from 'react'
 const Parser: FC = () => {
 	const { page, searchTerm, dialog } = useTableParameters()
 	const router = useRouter()
-	const { books, deleteFromParser, deleteFromParserLoading } = useQueries({
+	const { books, deleteTemplate, deleteTemplateLoading } = useQueries({
 		page,
 		searchTerm
 	})
@@ -24,8 +24,8 @@ const Parser: FC = () => {
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			remove: (id: number) => deleteFromParser(id),
-			removeLoading: deleteFromParserLoading,
+			remove: (id: number) => deleteTemplate(id),
+			removeLoading: deleteTemplateLoading,
 			useAsTemplate: id =>
 				router.push(`${secureRoutes.bookRoute}/create?template=${id}`)
 		}),

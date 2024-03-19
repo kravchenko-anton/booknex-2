@@ -39,5 +39,5 @@ export class CreateBookDto extends PickType(Book, [
 		type: String,
 		format: 'binary'
 	})
-	picture: Buffer
+	picture: Express.Multer.File
 }

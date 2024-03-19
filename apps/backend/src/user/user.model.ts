@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
 import { ShortBook } from '../book/book.entity'
-import { shortGenre } from '../genre/genre.entity'
+import { ShortGenre } from '../genre/genre.entity'
 import { BaseCatalogModel } from '../utils/common/base-catalog.model'
 import { Activity } from '../utils/services/activity/activity.model'
 import { User } from './user.entity'
@@ -22,10 +22,10 @@ export class UserCountOutput {
 }
 
 export class CatalogUserOutput extends User {
-	@ApiProperty({ type: [shortGenre] })
+	@ApiProperty({ type: [ShortGenre] })
 	@IsArray()
 	@ValidateNested()
-	@Type(() => shortGenre)
+	@Type(() => ShortGenre)
 	selectedGenres: {
 		id: number
 		name: string
@@ -46,7 +46,7 @@ export class CatalogUserOutput extends User {
 	_count: UserCountOutput
 }
 
-export class UserAdminCatalogOutput extends BaseCatalogModel {
+export class UserCatalogOutput extends BaseCatalogModel {
 	@IsArray()
 	@ApiProperty({ type: [CatalogUserOutput] })
 	@ValidateNested({ each: true })

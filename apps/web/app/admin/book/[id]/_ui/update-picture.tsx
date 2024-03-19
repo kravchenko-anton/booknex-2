@@ -8,19 +8,17 @@ import * as React from 'react'
 interface UpdatePictureProperties {
 	picture: string
 	id: number
-	onSuccess?: () => void
+	onSuccess: () => void
 }
 
 const UpdatePicture: FC<UpdatePictureProperties> = properties => {
-	const {
-		mutateAsync: updatePictureMutation,
-		isLoading: updatePictureLoading
-	} = useMutation({
-		mutationKey: ['update-book'],
-		mutationFn: ({ id, payload }: { id: number; payload: File }) =>
-			api.book.updatePicture(id, payload),
-		onSuccess: properties.onSuccess
-	})
+	const { mutateAsync: updatePicture, isLoading: updatePictureLoading } =
+		useMutation({
+			mutationKey: ['update-picture'],
+			mutationFn: ({ id, payload }: { id: number; payload: File }) =>
+				api.book.updatePicture(id, payload),
+			onSuccess: properties.onSuccess
+		})
 	return (
 		<div>
 			<input
@@ -30,7 +28,7 @@ const UpdatePicture: FC<UpdatePictureProperties> = properties => {
 				onChange={async ({ target }) => {
 					const file = target?.files?.[0]
 					if (!file) return
-					await updatePictureMutation({
+					await updatePicture({
 						id: properties.id,
 						payload: file
 					})

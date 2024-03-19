@@ -1,5 +1,6 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
+import Sentry from '@sentry/node'
 import { plainToClassFromExist } from 'class-transformer'
 import { validate } from 'class-validator'
 import { getFileUrl } from '../../../../libs/global/api-config'
@@ -46,8 +47,12 @@ export class BookService {
 				...select
 			}
 		})
-		if (!book)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		if (!book) {
+			Sentry.captureException(
+				new Error('Book not found' + { extra: { where, select, onlyVisible } })
+			)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.unknownError)
+		}
 		return book
 	}
 
@@ -92,7 +97,7 @@ export class BookService {
 		})
 
 		if (!exist)
-			throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.bookNotFound)
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
 
 		return !!exist
 	}
@@ -186,11 +191,13 @@ export class BookService {
 		const ebook: StoredEBook[] = await fetch(getFileUrl(book.ebook))
 			.then(result => result.json())
 			.catch(() => null)
-		if (!ebook)
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		if (!ebook) {
+			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.unknownError)
+		}
 		const errors = await validate(plainToClassFromExist(PayloadEBook, ebook))
-		if (errors.length > 0)
+		if (errors.length > 0) {
 			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+		}
 		return ebook
 	}
 
@@ -240,7 +247,7 @@ export class BookService {
 		}
 	}
 
-	async adminCatalog(searchTerm: string, page: number) {
+	async catalog(searchTerm: string, page: number) {
 		const perPage = 20
 		const count = await this.prisma.book.count()
 		return {
@@ -279,12 +286,6 @@ export class BookService {
 	async create(dto: CreateBookDto, picture: Express.Multer.File) {
 		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
 		const { readingTime, uploadedEbook, chaptersCount } = useGetEbook(dto.ebook)
-		Logger.log({
-			readingTime,
-			uploadedEbook,
-			dtoEbook: dto.ebook
-		})
-
 		const { name: pictureName } = await this.storageService.upload({
 			folder: 'booksCovers',
 			file: picture.buffer,
@@ -360,6 +361,11 @@ export class BookService {
 			role: 'admin',
 			filename: `${book.title}.json`
 		})
+		await this.activityService.create({
+			type: Activities.updateEBook,
+			importance: 7,
+			bookId: id
+		})
 		await this.prisma.book.update({
 			where: { id },
 			data: {
@@ -381,6 +387,11 @@ export class BookService {
 			file: picture.buffer,
 			role: 'admin',
 			filename: book.title + '.png'
+		})
+		await this.activityService.create({
+			type: Activities.updatePicture,
+			importance: 7,
+			bookId: id
 		})
 		await this.prisma.book.update({
 			where: { id },

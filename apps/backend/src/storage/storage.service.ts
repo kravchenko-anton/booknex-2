@@ -1,9 +1,4 @@
-import {
-	DeleteObjectCommand,
-	GetObjectCommand,
-	PutObjectCommand,
-	S3Client
-} from '@aws-sdk/client-s3'
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Role } from '@prisma/client'
@@ -30,32 +25,6 @@ export class StorageService {
 			secretAccessKey: this.configService.get('AWS_SECRET_ACCESS_KEY')
 		}
 	})
-
-	async delete(filename: string) {
-		if (!filename)
-			serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
-		try {
-			await this.s3.send(
-				new GetObjectCommand({
-					Bucket: this.configService.get('AWS_BUCKET'),
-					Key: filename
-				})
-			)
-		} catch {
-			return
-		}
-		await this.s3
-			.send(
-				new DeleteObjectCommand({
-					Bucket: this.configService.get('AWS_BUCKET'),
-					Key: filename
-				})
-			)
-			.catch(() =>
-				serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.invalidValue)
-			)
-		Logger.log(`File ${filename} deleted`, StorageService.name)
-	}
 
 	async upload({
 		file,
@@ -84,7 +53,6 @@ export class StorageService {
 
 						.toFormat('jpeg', { progressive: true, quality: 50 })
 						.toBuffer()
-		await this.delete(`${folder}/${optimizeFilename(filename)}`)
 		await this.s3
 			.send(
 				new PutObjectCommand({

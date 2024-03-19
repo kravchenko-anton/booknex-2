@@ -3,28 +3,28 @@ import { useTypedNavigation } from '@/hooks'
 import { Button, Icon, Loader, ScrollLayout, Title } from '@/ui'
 import { cn } from '@/utils'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { UserUpdateSelectedGenresDto } from 'global/api-client/models'
+import type { UpdateRecommendationDto } from 'global/api-client'
 
 import { Color } from 'global/colors'
 import { Close } from 'icons'
 import { useState } from 'react'
 import { View } from 'react-native'
-//TODO: сделать тут отделный компонент для выбора жанров где будет отдельный запрос
+
 const UpdateRecommendation = () => {
 	const queryClient = useQueryClient()
 	const [selectedGenres, setSelectedGenres] = useState<number[]>([])
 	const { data: genres } = useQuery({
 		queryKey: ['genres'],
-		queryFn: () => api.genre.all(),
+		queryFn: () => api.genre.catalog(),
 		select: data => data.data
 	})
 
 	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
 		mutationKey: ['update-recommendation'],
-		mutationFn: (dto: UserUpdateSelectedGenresDto) =>
-			api.recommendation.updateRecommendations(dto),
-		onSuccess: () => {
-			queryClient.invalidateQueries({
+		mutationFn: (dto: UpdateRecommendationDto) =>
+			api.recommendation.updateRecommendation(dto),
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
 				queryKey: ['recommendation-genres']
 			})
 		}
@@ -84,7 +84,7 @@ const UpdateRecommendation = () => {
 				className={cn('mx-2 mb-4', selectedGenres.length === 0 && 'hidden')}
 				onPress={async () => {
 					console.log({ selectedGenres })
-					await update({ selectedGenres: selectedGenres })
+					await update({ genres: selectedGenres })
 
 					await queryClient.invalidateQueries({
 						queryKey: ['featured']

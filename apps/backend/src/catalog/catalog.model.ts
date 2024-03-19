@@ -2,13 +2,13 @@ import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { IsArray, ValidateNested } from 'class-validator'
 import { ShortBook } from '../book/book.entity'
-import { shortGenre } from '../genre/genre.entity'
+import { ShortGenre } from '../genre/genre.entity'
 
 export class FeaturedOutput {
-	@ApiProperty({ type: [shortGenre] })
+	@ApiProperty({ type: [ShortGenre] })
 	@ValidateNested({ each: true })
-	@Type(() => shortGenre)
-	relatedGenres: shortGenre[]
+	@Type(() => ShortGenre)
+	relatedGenres: ShortGenre[]
 
 	@ApiProperty({ type: [ShortBook] })
 	@IsArray()

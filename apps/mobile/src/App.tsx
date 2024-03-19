@@ -1,4 +1,3 @@
-import { ClickOutsideProvider } from '@/hooks/outside-press/provider'
 import Navigation from '@/navigation/navigation'
 import { persistor, store } from '@/redux/store'
 import Loader from '@/ui/loader/loader'
@@ -38,37 +37,33 @@ const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
 
-function app() {
-	return (
-		<Provider store={store}>
-			<PersistGate
-				persistor={persistor}
-				loading={
-					<View className='bg-background h-screen w-screen'>
-						<Loader />
-					</View>
-				}
+const App = () => (
+	<Provider store={store}>
+		<PersistGate
+			persistor={persistor}
+			loading={
+				<View className='bg-background h-screen w-screen'>
+					<Loader />
+				</View>
+			}
+		>
+			<PersistQueryClientProvider
+				client={queryClient}
+				persistOptions={{ persister: asyncStoragePersist }}
 			>
-				<PersistQueryClientProvider
-					client={queryClient}
-					persistOptions={{ persister: asyncStoragePersist }}
+				<GestureHandlerRootView
+					style={{
+						flex: 1
+					}}
 				>
-					<ClickOutsideProvider>
-						<GestureHandlerRootView
-							style={{
-								flex: 1
-							}}
-						>
-							<BottomSheetModalProvider>
-								<Navigation />
-							</BottomSheetModalProvider>
-						</GestureHandlerRootView>
-						<Toast />
-					</ClickOutsideProvider>
-				</PersistQueryClientProvider>
-			</PersistGate>
-		</Provider>
-	)
-}
+					<BottomSheetModalProvider>
+						<Navigation />
+					</BottomSheetModalProvider>
+				</GestureHandlerRootView>
+				<Toast />
+			</PersistQueryClientProvider>
+		</PersistGate>
+	</Provider>
+)
 
-export default codePush(Sentry.wrap(app))
+export default codePush(Sentry.wrap(App))

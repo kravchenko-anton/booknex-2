@@ -1,4 +1,5 @@
 import api from '@/services'
+import { validateNumberParameter } from '@/utils/validate-parameter'
 import { useQuery } from '@tanstack/react-query'
 import type { CreateBookValidationType } from 'global/dto/book/create.book.dto'
 
@@ -12,7 +13,7 @@ export const useTemplate = ({
 	setValue: UseFormSetValue<CreateBookValidationType>
 }) => {
 	const parameters = useSearchParams()
-	const id = +(parameters.get('template') ?? 0)
+	const id = validateNumberParameter(parameters.get('template'))
 	const { data: template } = useQuery({
 		queryKey: ['book-template'],
 		queryFn: () => api.parser.byId(id),

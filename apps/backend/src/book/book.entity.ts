@@ -12,7 +12,7 @@ import {
 	MinLength,
 	ValidateNested
 } from 'class-validator'
-import { shortGenre } from '../genre/genre.entity'
+import { ShortGenre } from '../genre/genre.entity'
 
 export class ShortBook {
 	@ApiProperty({ example: 1, description: 'book id', type: Number })
@@ -69,11 +69,11 @@ export class Book extends ShortBook {
 	@IsBoolean()
 	visible: boolean
 
-	@ApiProperty({ type: [shortGenre] })
+	@ApiProperty({ type: [ShortGenre] })
 	@IsArray()
 	@ArrayMinSize(1)
 	@ValidateNested()
-	@Type(() => shortGenre)
+	@Type(() => ShortGenre)
 	genres: {
 		id: number
 		name: string
@@ -100,4 +100,27 @@ export class FullBook extends Book {
 	@ApiProperty({ example: 'ebook', description: 'book ebook', type: String })
 	@IsString()
 	ebook: string
+}
+export class BookCount {
+	@ApiProperty({ example: 1, description: 'FinishedBy', type: Number })
+	@IsNumber()
+	finishedBy: number
+
+	@ApiProperty({ example: 1, description: 'ReadingBy', type: Number })
+	@IsNumber()
+	readingBy: number
+
+	@ApiProperty({ example: 1, description: 'SavedBy', type: Number })
+	@IsNumber()
+	savedBy: number
+}
+
+export class BookWithCount extends FullBook {
+	@ApiProperty({
+		type: BookCount,
+		description: 'book count'
+	})
+	@ValidateNested()
+	@Type(() => BookCount)
+	_count: BookCount
 }

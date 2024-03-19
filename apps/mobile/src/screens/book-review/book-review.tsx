@@ -50,7 +50,7 @@ const BookReview: FC = () => {
 		))
 
 	const { mutateAsync: sendReview, isLoading: reviewLoading } = useMutation({
-		mutationKey: ['review'],
+		mutationKey: ['send-review'],
 		mutationFn: ({ id, dto }: { id: number; dto: ReviewBookDto }) =>
 			api.review.review(id, dto)
 	})
@@ -64,7 +64,7 @@ const BookReview: FC = () => {
 				tags: selectedTags || []
 			}
 		}).then(() => {
-			successToast('thanks for book-review')
+			successToast('thanks for review')
 			navigate('Library')
 		})
 	}

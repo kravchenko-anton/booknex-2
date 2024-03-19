@@ -15,7 +15,7 @@ import { getEbook } from './helpers/unfold-ebook'
 export class ParserService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async adminCatalog(searchTerm: string, page: number) {
+	async catalog(searchTerm: string, page: number) {
 		const perPage = 20
 		return {
 			data: await this.prisma.bookTemplate.findMany({

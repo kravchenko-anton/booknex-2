@@ -2,8 +2,8 @@ import { Body, Controller, Get, Post } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { shortGenre } from '../genre/genre.entity'
-import { UserUpdateSelectedGenresDto } from './dto/update-selected-genres.dto'
+import { ShortGenre } from '../genre/genre.entity'
+import { UpdateRecommendationDto } from './dto/update-recommendation.dto'
 import { RecommendationService } from './recommendation.service'
 
 @Controller('recommendation')
@@ -13,29 +13,29 @@ export class RecommendationController {
 	constructor(private readonly recommendationService: RecommendationService) {}
 
 	@Auth()
-	@Post('/update-recommendations')
-	@ApiOkResponse({ description: 'Recommendations updated' })
-	@ApiBody({ type: UserUpdateSelectedGenresDto })
-	async updateRecommendations(
+	@Post('/update-recommendation')
+	@ApiOkResponse({ description: 'Recommendation updated' })
+	@ApiBody({ type: UpdateRecommendationDto })
+	async updateRecommendation(
 		@CurrentUser('id') id: number,
-		@Body() dto: UserUpdateSelectedGenresDto
+		@Body() dto: UpdateRecommendationDto
 	) {
-		return this.recommendationService.updateRecommendations(+id, dto)
+		return this.recommendationService.updateRecommendation(+id, dto)
 	}
 
 	@Auth()
-	@Get('/recommendation-genres')
+	@Get('/recommendation-genre')
 	@ApiOkResponse({
-		type: [shortGenre],
+		type: [ShortGenre],
 		description: 'Recommendation genres'
 	})
-	async recommendationsGenres(@CurrentUser('id') userId: number): Promise<
+	async currentRecommendation(@CurrentUser('id') userId: number): Promise<
 		| {
 				id: number
 				name: string
 		  }[]
 		| null
 	> {
-		return this.recommendationService.recommendationGenres(+userId)
+		return this.recommendationService.currentRecommendation(+userId)
 	}
 }

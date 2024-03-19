@@ -38,11 +38,11 @@ export class ParserController {
 	@ApiOkResponse({ type: BookTemplateCatalogOutput })
 	@ApiQuery({ name: 'searchTerm', required: false, example: 'The Hobbit' })
 	@ApiQuery({ name: 'page', required: false, example: 1 })
-	async adminCatalog(
+	async catalog(
 		@Query('searchTerm') searchTerm: string,
 		@Query('page') page: number
 	): Promise<BookTemplateCatalogOutput> {
-		return this.parserService.adminCatalog(searchTerm, page || 1)
+		return this.parserService.catalog(searchTerm, page || 1)
 	}
 
 	@Get('admin/by-id/:id')

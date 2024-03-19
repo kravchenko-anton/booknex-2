@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
-import { shortGenre } from '../genre/genre.entity'
+import { ShortGenre } from '../genre/genre.entity'
 
 export class BookTemplate {
 	@ApiProperty({
@@ -41,10 +41,10 @@ export class BookTemplate {
 	})
 	@IsNumber()
 	rating: number
-	@ApiProperty({ type: [shortGenre] })
+	@ApiProperty({ type: [ShortGenre] })
 	@IsArray()
 	@ValidateNested()
-	@Type(() => shortGenre)
+	@Type(() => ShortGenre)
 	genres: {
 		id: number
 		name: string

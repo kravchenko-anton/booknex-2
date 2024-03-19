@@ -8,11 +8,17 @@ import type { FC } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const ReaderMenu: FC<{
+interface ReaderMenuProperties {
 	visible: boolean
 	onChapterIconPress: FunctionType
 	onSelectThemeIconPress: FunctionType
-}> = ({ visible = false, onChapterIconPress, onSelectThemeIconPress }) => {
+}
+
+const ReaderMenu: FC<ReaderMenuProperties> = ({
+	visible = false,
+	onChapterIconPress,
+	onSelectThemeIconPress
+}) => {
 	const { colorScheme, progress } = useReader()
 	const { goBack } = useTypedNavigation()
 	const { top } = useSafeAreaInsets()

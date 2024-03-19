@@ -24,7 +24,7 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, ope
 // @ts-ignore
 import { ShortGenre } from '../models';
 // @ts-ignore
-import { UserUpdateSelectedGenresDto } from '../models';
+import { UpdateRecommendationDto } from '../models';
 /**
  * RecommendationApi - axios parameter creator
  * @export
@@ -36,8 +36,8 @@ export const RecommendationApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recommendationsGenres: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/recommendation/recommendation-genres`;
+        currentRecommendation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/recommendation/recommendation-genre`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -66,14 +66,14 @@ export const RecommendationApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @param {UserUpdateSelectedGenresDto} userUpdateSelectedGenresDto 
+         * @param {UpdateRecommendationDto} updateRecommendationDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateRecommendations: async (userUpdateSelectedGenresDto: UserUpdateSelectedGenresDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userUpdateSelectedGenresDto' is not null or undefined
-            assertParamExists('updateRecommendations', 'userUpdateSelectedGenresDto', userUpdateSelectedGenresDto)
-            const localVarPath = `/api/recommendation/update-recommendations`;
+        updateRecommendation: async (updateRecommendationDto: UpdateRecommendationDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateRecommendationDto' is not null or undefined
+            assertParamExists('updateRecommendation', 'updateRecommendationDto', updateRecommendationDto)
+            const localVarPath = `/api/recommendation/update-recommendation`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -96,7 +96,7 @@ export const RecommendationApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userUpdateSelectedGenresDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(updateRecommendationDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -118,22 +118,22 @@ export const RecommendationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async recommendationsGenres(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ShortGenre>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.recommendationsGenres(options);
+        async currentRecommendation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ShortGenre>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.currentRecommendation(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecommendationApi.recommendationsGenres']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RecommendationApi.currentRecommendation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {UserUpdateSelectedGenresDto} userUpdateSelectedGenresDto 
+         * @param {UpdateRecommendationDto} updateRecommendationDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateRecommendations(userUpdateSelectedGenresDto: UserUpdateSelectedGenresDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRecommendations(userUpdateSelectedGenresDto, options);
+        async updateRecommendation(updateRecommendationDto: UpdateRecommendationDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRecommendation(updateRecommendationDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecommendationApi.updateRecommendations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RecommendationApi.updateRecommendation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -151,17 +151,17 @@ export const RecommendationApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recommendationsGenres(options?: any): AxiosPromise<Array<ShortGenre>> {
-            return localVarFp.recommendationsGenres(options).then((request) => request(axios, basePath));
+        currentRecommendation(options?: any): AxiosPromise<Array<ShortGenre>> {
+            return localVarFp.currentRecommendation(options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {UserUpdateSelectedGenresDto} userUpdateSelectedGenresDto 
+         * @param {UpdateRecommendationDto} updateRecommendationDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateRecommendations(userUpdateSelectedGenresDto: UserUpdateSelectedGenresDto, options?: any): AxiosPromise<void> {
-            return localVarFp.updateRecommendations(userUpdateSelectedGenresDto, options).then((request) => request(axios, basePath));
+        updateRecommendation(updateRecommendationDto: UpdateRecommendationDto, options?: any): AxiosPromise<void> {
+            return localVarFp.updateRecommendation(updateRecommendationDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -179,19 +179,19 @@ export class RecommendationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RecommendationApi
      */
-    public recommendationsGenres(options?: RawAxiosRequestConfig) {
-        return RecommendationApiFp(this.configuration).recommendationsGenres(options).then((request) => request(this.axios, this.basePath));
+    public currentRecommendation(options?: RawAxiosRequestConfig) {
+        return RecommendationApiFp(this.configuration).currentRecommendation(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {UserUpdateSelectedGenresDto} userUpdateSelectedGenresDto 
+     * @param {UpdateRecommendationDto} updateRecommendationDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RecommendationApi
      */
-    public updateRecommendations(userUpdateSelectedGenresDto: UserUpdateSelectedGenresDto, options?: RawAxiosRequestConfig) {
-        return RecommendationApiFp(this.configuration).updateRecommendations(userUpdateSelectedGenresDto, options).then((request) => request(this.axios, this.basePath));
+    public updateRecommendation(updateRecommendationDto: UpdateRecommendationDto, options?: RawAxiosRequestConfig) {
+        return RecommendationApiFp(this.configuration).updateRecommendation(updateRecommendationDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -33,7 +33,7 @@ export const googleLogin = createAsyncThunk<
 export const mailRegister = createAsyncThunk<AuthOutput, AuthDto>(
 	'auth/mailRegister',
 	async (properties, thunkAPI) => {
-		const { data: registerResponse } = await api.auth.register(properties)
+		const { data: registerResponse } = await api.auth.mailRegister(properties)
 		if (!registerResponse.accessToken)
 			return thunkAPI.rejectWithValue({
 				message: 'No response'
@@ -49,7 +49,7 @@ export const mailRegister = createAsyncThunk<AuthOutput, AuthDto>(
 export const mailLogin = createAsyncThunk<AuthOutput, AuthDto>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
-		const { data: loginResponse } = await api.auth.login({
+		const { data: loginResponse } = await api.auth.mailLogin({
 			email,
 			password
 		})

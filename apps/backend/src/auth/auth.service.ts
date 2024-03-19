@@ -73,8 +73,7 @@ export class AuthService {
 				idToken: dto.socialId,
 				audience: [this.configService.getOrThrow('GOOGLE_CLIENT_ID')]
 			})
-			.catch(error => {
-				console.error(error)
+			.catch(() => {
 				throw serverError(HttpStatus.BAD_REQUEST, AuthErrors.invalidGoogleToken)
 			})
 
@@ -105,7 +104,7 @@ export class AuthService {
 		}
 
 		if (!data?.email)
-			throw serverError(HttpStatus.BAD_REQUEST, 'Invalid google token')
+			throw serverError(HttpStatus.BAD_REQUEST, AuthErrors.invalidGoogleToken)
 		await this.checkOldUser({ email: data.email })
 
 		const popularGenres = await this.getPopular()
