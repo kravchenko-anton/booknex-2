@@ -6,7 +6,6 @@ import type { Book } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { minutesToTime } from 'global/helpers/time-converter'
 import Image from 'next/image'
-import * as React from 'react'
 
 export const columns = ({
 	preview

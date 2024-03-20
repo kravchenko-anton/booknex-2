@@ -1,7 +1,7 @@
 import { SheetComponent, SheetHeader } from '@/components/ui/sheet'
 import { cn } from '@/utils'
 import type { ActivitiesOutput } from 'global/utils/activity-transformer'
-import * as React from 'react'
+
 import { useState, type FC } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 

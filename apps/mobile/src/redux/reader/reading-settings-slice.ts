@@ -33,7 +33,7 @@ export const ReaderFont = [
 ]
 
 const initialState = {
-	colorScheme: themePack[0] as ThemePackType,
+	colorScheme: themePack[0],
 	font: {
 		title: ReaderFont[0].title,
 		fontFamily: ReaderFont[0].fontFamily

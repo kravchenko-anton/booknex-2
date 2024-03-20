@@ -22,6 +22,7 @@ import {
 } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
+import { PayloadEBook } from '../ebook/ebook.model'
 import environment from '../utils/common/environment.config'
 import {
 	AdminInfoByIdOutput,
@@ -35,7 +36,6 @@ import {
 	UpdateGenreDto,
 	UpdatePictureDto
 } from './dto/update.book.dto'
-import { EbookByIdOutput, PayloadEBook, StoredEBook } from './ebook.model'
 
 @ApiTags('📙 book')
 @ApiBearerAuth()
@@ -53,24 +53,6 @@ export class BookController {
 		return this.bookService.infoById(+bookId, +userId)
 	}
 
-	@Auth()
-	@Get('/ebook/by-id/:id')
-	@ApiOkResponse({ type: EbookByIdOutput })
-	async ebookById(
-		@Param('id') bookId: number,
-		@CurrentUser('id') userId: string
-	): Promise<EbookByIdOutput> {
-		return this.bookService.ebookById(+bookId, +userId)
-	}
-
-	//  admin
-
-	@Auth('admin')
-	@Get('/admin/stored-ebook/:id')
-	@ApiOkResponse({ type: [StoredEBook] })
-	async storedEbook(@Param('id') bookId: number): Promise<StoredEBook[]> {
-		return this.bookService.storedEbook(+bookId)
-	}
 	@Auth('admin')
 	@Get('/admin-info/by-id/:id')
 	@ApiOkResponse({ type: AdminInfoByIdOutput })

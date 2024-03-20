@@ -16,6 +16,7 @@ import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
 import { AppLoggerMiddleware } from './utils/helpers/logger'
 import { ActivityModule } from './utils/services/activity/activity.module'
+import { EbookModule } from './ebook/ebook.module';
 
 @Module({
 	imports: [
@@ -40,7 +41,8 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 		]),
 		ReviewModule,
 		RecommendationModule,
-		HealthModule
+		HealthModule,
+		EbookModule
 	],
 	controllers: [AppController],
 	providers: [AppService, ConfigService]

@@ -1,6 +1,7 @@
 import type { ProgressBarProperties } from '@/ui/progress-bar/types'
 import { Color } from 'global/colors'
-import * as React from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
 import {
 	Animated,
 	I18nManager,
@@ -43,21 +44,22 @@ const ProgressBar = ({
 	...rest
 }: ProgressBarProperties) => {
 	const isWeb = Platform.OS === 'web'
-	const { current: timer } = React.useRef<Animated.Value>(new Animated.Value(0))
-	const { current: fade } = React.useRef<Animated.Value>(new Animated.Value(0))
+	const { current: timer } = useRef<Animated.Value>(new Animated.Value(0))
+	const { current: fade } = useRef<Animated.Value>(new Animated.Value(0))
 	const passedAnimatedValue =
-		React.useRef<ProgressBarProperties['animatedValue']>(animatedValue)
-	const [width, setWidth] = React.useState<number>(0)
-	const [previousWidth, setPreviousWidth] = React.useState<number>(0)
+		useRef<ProgressBarProperties['animatedValue']>(animatedValue)
+	const [width, setWidth] = useState<number>(0)
+	const [previousWidth, setPreviousWidth] = useState<number>(0)
 
-	const indeterminateAnimation =
-		React.useRef<Animated.CompositeAnimation | null>(null)
+	const indeterminateAnimation = useRef<Animated.CompositeAnimation | null>(
+		null
+	)
 
-	React.useEffect(() => {
+	useEffect(() => {
 		passedAnimatedValue.current = animatedValue
 	})
 
-	const startAnimation = React.useCallback(() => {
+	const startAnimation = useCallback(() => {
 		// Show progress bar
 		Animated.timing(fade, {
 			duration: 200 * scale,
@@ -106,7 +108,7 @@ const ProgressBar = ({
 		}
 	}, [fade, scale, indeterminate, timer, progress, isWeb])
 
-	const stopAnimation = React.useCallback(() => {
+	const stopAnimation = useCallback(() => {
 		// Stop indeterminate animation
 		if (indeterminateAnimation.current) {
 			indeterminateAnimation.current.stop()
@@ -120,18 +122,18 @@ const ProgressBar = ({
 		}).start()
 	}, [fade, scale])
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (visible) startAnimation()
 		else stopAnimation()
 	}, [visible, startAnimation, stopAnimation])
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (animatedValue && animatedValue >= 0) {
 			timer.setValue(animatedValue)
 		}
 	}, [animatedValue, timer])
 
-	React.useEffect(() => {
+	useEffect(() => {
 		// Start animation the very first time when previously the width was unclear
 		if (visible && previousWidth === 0) {
 			startAnimation()

@@ -1,11 +1,9 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import Sentry from '@sentry/node'
-import { plainToClassFromExist } from 'class-transformer'
-import { validate } from 'class-validator'
-import { getFileUrl } from '../../../../libs/global/api-config'
 import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
 import { transformActivity } from '../../../../libs/global/utils/activity-transformer'
+import type { PayloadEBook } from '../ebook/ebook.model'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
 import { StorageFolderEnum } from '../storage/storage.types'
@@ -15,8 +13,6 @@ import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { CreateBookDto } from './dto/create.book.dto'
 import type { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto'
-import type { StoredEBook } from './ebook.model'
-import { PayloadEBook } from './ebook.model'
 import { useGetEbook } from './helpers/get-ebook'
 import { returnBookObject } from './return.book.object'
 
@@ -178,72 +174,6 @@ export class BookService {
 		return {
 			...rest,
 			activities: transformActivity(activities)
-		}
-	}
-
-	async storedEbook(id: number) {
-		const book = await this.findOne({
-			where: { id },
-			select: {
-				ebook: true
-			}
-		})
-		const ebook: StoredEBook[] = await fetch(getFileUrl(book.ebook))
-			.then(result => result.json())
-			.catch(() => null)
-		if (!ebook) {
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.unknownError)
-		}
-		const errors = await validate(plainToClassFromExist(PayloadEBook, ebook))
-		if (errors.length > 0) {
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
-		}
-		return ebook
-	}
-
-	async ebookById(id: number, userId: number) {
-		const book = await this.findOne({
-			where: { id },
-			select: {
-				ebook: true,
-				picture: true
-			}
-		})
-		const ebook = await this.storedEbook(id)
-		await this.activityService.create({
-			type: Activities.getEbook,
-			importance: 2,
-			userId,
-			bookId: id
-		})
-
-		return {
-			...book,
-			file: ebook.map(({ chapters, title }) =>
-				chapters
-					.map(
-						({ text, name, romanNumber }) => `<div id="${name + ' ' + title}">
-<div style="
-	width: 100%;
-	height: 80px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;">
-	<h2>${romanNumber}</h2>
-</div>
- ${text}
-</div>`
-					)
-					.join(' ')
-			),
-			chapters: ebook.map(({ title, chapters }) => ({
-				title,
-				children: chapters.map(({ name }) => ({
-					name,
-					link: `#${name + ' ' + title}`
-				}))
-			}))
 		}
 	}
 

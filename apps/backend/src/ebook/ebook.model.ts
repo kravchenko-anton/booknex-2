@@ -9,7 +9,7 @@ import {
 	Validate,
 	ValidateNested
 } from 'class-validator'
-import { ShortBook } from './book.entity'
+import { ShortBook } from '../book/book.entity'
 
 /* Payload */
 export class Chapter {

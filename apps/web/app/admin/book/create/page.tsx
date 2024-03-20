@@ -13,7 +13,7 @@ import {
 import type { PayloadEBook } from 'global/api-client'
 import { PenNib, Star } from 'icons'
 import type { FC } from 'react'
-
+//TODO: сдеалть всё на компонентах из [id]
 const Page: FC = () => {
 	const form = useCreateForm()
 	return (

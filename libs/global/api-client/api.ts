@@ -17,6 +17,7 @@
 export * from './clients/auth-api';
 export * from './clients/book-api';
 export * from './clients/catalog-api';
+export * from './clients/ebook-api';
 export * from './clients/genre-api';
 export * from './clients/health-api';
 export * from './clients/parser-api';

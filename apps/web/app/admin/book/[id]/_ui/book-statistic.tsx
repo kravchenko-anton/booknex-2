@@ -1,6 +1,5 @@
 import { minutesToTime } from 'global/helpers/time-converter'
 import type { FC } from 'react'
-import * as React from 'react'
 
 interface InfoBlockProperties {
 	_count: {

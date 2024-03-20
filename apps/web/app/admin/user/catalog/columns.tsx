@@ -12,7 +12,6 @@ import type { CatalogUserOutput } from 'global/api-client/models/catalog-user-ou
 import { getFileUrl } from 'global/api-config'
 import { timeAgo } from 'global/helpers/time-format'
 import { MoreHorizontal } from 'icons'
-import * as React from 'react'
 
 export const columns = ({
 	remove,

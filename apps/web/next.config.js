@@ -36,6 +36,8 @@ module.exports = composePlugins(...plugins)(nextConfig)
 
 // Injected content via Sentry wizard below
 
+// Injected content via Sentry wizard below
+
 const { withSentryConfig } = require('@sentry/nextjs')
 
 module.exports = withSentryConfig(
@@ -47,7 +49,7 @@ module.exports = withSentryConfig(
 		// Suppresses source map uploading logs during build
 		silent: true,
 		org: 'booknex',
-		project: 'javascript-nextjs'
+		project: 'web'
 	},
 	{
 		// For all available options, see:
@@ -59,7 +61,9 @@ module.exports = withSentryConfig(
 		// Transpiles SDK to be compatible with IE11 (increases bundle size)
 		transpileClientSDK: true,
 
-		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
+		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers. (increases server load)
+		// Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
+		// side errors will fail.
 		tunnelRoute: '/monitoring',
 
 		// Hides source maps from generated client bundles

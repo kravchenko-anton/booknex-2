@@ -18,7 +18,6 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import type { UpdateGenreValidationType } from 'global/dto/book/update.genre.dto'
 import { Check } from 'icons'
-import * as React from 'react'
 import { useState, type FC } from 'react'
 
 interface UpdateGenresProperties {

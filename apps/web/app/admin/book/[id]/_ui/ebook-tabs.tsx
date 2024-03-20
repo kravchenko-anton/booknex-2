@@ -15,7 +15,7 @@ interface EbookInfoProperties {
 const BookOverview: FC<EbookInfoProperties> = ({ bookId, onSuccess }) => {
 	const { data: ebook } = useQuery({
 		queryKey: ['stored-ebook', bookId],
-		queryFn: () => api.book.storedEbook(bookId),
+		queryFn: () => api.ebook.storedEbook(bookId),
 		enabled: !!bookId,
 		select: data => data.data
 	})

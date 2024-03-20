@@ -8,7 +8,6 @@ import type {
 	ElementRef,
 	HTMLAttributes
 } from 'react'
-import * as React from 'react'
 import { forwardRef } from 'react'
 
 const DropdownMenu = DropdownMenuPrimitive.Root

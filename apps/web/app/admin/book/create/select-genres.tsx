@@ -17,7 +17,7 @@ import { Color } from 'global/colors'
 import type { CreateBookValidationType } from 'global/dto/book/create.book.dto'
 import { Check } from 'icons'
 import type { FC } from 'react'
-import * as React from 'react'
+
 import { Controller, type Control } from 'react-hook-form'
 
 interface SelectGenresProperties {

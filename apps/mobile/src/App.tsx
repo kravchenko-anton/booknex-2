@@ -8,6 +8,7 @@ import * as Sentry from '@sentry/react-native'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import { default as codePush } from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -36,34 +37,78 @@ Sentry.init({
 const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
+const codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL }
 
-const App = () => (
-	<Provider store={store}>
-		<PersistGate
-			persistor={persistor}
-			loading={
-				<View className='bg-background h-screen w-screen'>
-					<Loader />
-				</View>
-			}
-		>
-			<PersistQueryClientProvider
-				client={queryClient}
-				persistOptions={{ persister: asyncStoragePersist }}
+const App = () => {
+	const [isSyncInProgress, setIsSyncInProgress] = useState(false)
+
+	React.useEffect(() => {
+		if (!isSyncInProgress) {
+			setIsSyncInProgress(true)
+			codePush
+				.sync(
+					codePushOptions,
+					status => {
+						switch (status) {
+							case codePush.SyncStatus.CHECKING_FOR_UPDATE: {
+								console.log('Checking for updates.')
+								break
+							}
+							case codePush.SyncStatus.DOWNLOADING_PACKAGE: {
+								console.log('Downloading package.')
+								break
+							}
+							case codePush.SyncStatus.INSTALLING_UPDATE: {
+								console.log('Installing update.')
+								break
+							}
+							case codePush.SyncStatus.UP_TO_DATE: {
+								console.log('Up-to-date.')
+								break
+							}
+							case codePush.SyncStatus.UPDATE_INSTALLED: {
+								console.log('Update installed.')
+								break
+							}
+						}
+					},
+					error => {
+						console.log('An error occurred. ' + error)
+					}
+				)
+				.finally(() => {
+					setIsSyncInProgress(false)
+				})
+		}
+	}, [])
+	return (
+		<Provider store={store}>
+			<PersistGate
+				persistor={persistor}
+				loading={
+					<View className='bg-background h-screen w-screen'>
+						<Loader />
+					</View>
+				}
 			>
-				<GestureHandlerRootView
-					style={{
-						flex: 1
-					}}
+				<PersistQueryClientProvider
+					client={queryClient}
+					persistOptions={{ persister: asyncStoragePersist }}
 				>
-					<BottomSheetModalProvider>
-						<Navigation />
-					</BottomSheetModalProvider>
-				</GestureHandlerRootView>
-				<Toast />
-			</PersistQueryClientProvider>
-		</PersistGate>
-	</Provider>
-)
+					<GestureHandlerRootView
+						style={{
+							flex: 1
+						}}
+					>
+						<BottomSheetModalProvider>
+							<Navigation />
+						</BottomSheetModalProvider>
+					</GestureHandlerRootView>
+					<Toast />
+				</PersistQueryClientProvider>
+			</PersistGate>
+		</Provider>
+	)
+}
 
 export default codePush(Sentry.wrap(App))

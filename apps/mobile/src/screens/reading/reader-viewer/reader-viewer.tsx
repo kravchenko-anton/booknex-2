@@ -26,7 +26,6 @@ const textSelectionValidation = (selectedText: string) => {
 	if (selectedText.length < 3) return errorToast('Select more text')
 	if (selectedText.length > 800) return errorToast('Select less text')
 }
-//TODO: сделать дизайн в меню select
 
 const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 	const { defaultTheme, initialScroll, onMessage, reference } = useReader()

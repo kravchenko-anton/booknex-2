@@ -6,7 +6,6 @@ import { acceptToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
-import * as React from 'react'
 
 interface BookVisibleButtonProperties {
 	id: number

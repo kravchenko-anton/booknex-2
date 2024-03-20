@@ -12,7 +12,7 @@ import {
 
 import { PenNib, Star } from 'icons'
 import type { FC } from 'react'
-import * as React from 'react'
+
 import { useForm } from 'react-hook-form'
 
 interface UpdateBioProperties {

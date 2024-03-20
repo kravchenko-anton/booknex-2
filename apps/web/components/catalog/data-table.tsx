@@ -10,7 +10,6 @@ import {
 import type { useReactTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
 import type { FC } from 'react'
-import * as React from 'react'
 
 export interface DataTableProperties {
 	table: ReturnType<typeof useReactTable<any>>

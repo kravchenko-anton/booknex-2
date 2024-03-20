@@ -5,6 +5,7 @@ base.ts
 clients/auth-api.ts
 clients/book-api.ts
 clients/catalog-api.ts
+clients/ebook-api.ts
 clients/genre-api.ts
 clients/health-api.ts
 clients/parser-api.ts

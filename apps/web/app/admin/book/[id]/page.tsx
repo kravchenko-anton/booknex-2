@@ -10,7 +10,7 @@ import UpdatePicture from '@/app/admin/book/[id]/_ui/update-picture'
 import { VisibleButton } from '@/app/admin/book/[id]/_ui/visible-button'
 import ActivityList from '@/components/activity-list'
 import Loader from '@/components/ui/loader/loader'
-import * as React from 'react'
+
 import { useOverview } from './useOverview'
 
 const Page = () => {

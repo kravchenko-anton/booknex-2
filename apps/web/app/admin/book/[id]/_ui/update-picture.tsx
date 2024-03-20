@@ -3,7 +3,6 @@ import { useMutation } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
 import Image from 'next/image'
 import type { FC } from 'react'
-import * as React from 'react'
 
 interface UpdatePictureProperties {
 	picture: string

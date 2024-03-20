@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import * as React from 'react'
+
 import {
 	forwardRef,
 	type ComponentPropsWithoutRef,

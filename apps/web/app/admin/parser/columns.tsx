@@ -11,7 +11,6 @@ import type { ColumnDef } from '@tanstack/react-table'
 import type { AxiosResponse } from 'axios'
 import { getFileUrl } from 'global/api-config'
 import { MoreHorizontal } from 'icons'
-import * as React from 'react'
 
 type ColumnType = ColumnDef<{
 	id: number

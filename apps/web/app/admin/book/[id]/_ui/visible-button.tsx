@@ -3,7 +3,6 @@ import api from '@/services'
 import { cn } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
 import type { FC } from 'react'
-import * as React from 'react'
 
 interface BookVisibleButtonProperties {
 	visible: boolean

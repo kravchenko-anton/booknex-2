@@ -22,12 +22,12 @@ import { View } from 'react-native'
 
 const Book: FC = () => {
 	const { params } = useTypedRoute<'Book'>()
-
 	const { data: book } = useQuery({
 		queryKey: ['book', params.id],
 		queryFn: () => api.book.infoById(+params.id),
 		select: data => data.data
 	})
+
 	const { navigate, goBack } = useTypedNavigation()
 
 	if (!book) return <Loader />

@@ -237,48 +237,6 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/ebook/by-id/{id}":
-    get:
-      operationId: ebookById
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EbookByIdOutput"
-      tags:
-        - 📙 book
-      security:
-        - bearer: []
-  "/api/book/admin/stored-ebook/{id}":
-    get:
-      operationId: storedEbook
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/StoredEBook"
-      tags:
-        - 📙 book
-      security:
-        - bearer: []
   "/api/book/admin-info/by-id/{id}":
     get:
       operationId: adminInfoById
@@ -793,6 +751,44 @@ paths:
                       additionalProperties: true
       tags:
         - ❤️ health
+  "/api/ebook/ebook/by-id/{id}":
+    get:
+      operationId: ebookById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EbookByIdOutput"
+      tags:
+        - 📙 ebook
+  "/api/ebook/admin/stored-ebook/{id}":
+    get:
+      operationId: storedEbook
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StoredEBook"
+      tags:
+        - 📙 ebook
 info:
   title: Booknex
   description: ""
@@ -1135,95 +1131,6 @@ components:
         - chapters
         - rating
         - genres
-    OutputChapterChild:
-      type: object
-      properties:
-        name:
-          type: string
-          example: name
-          description: chapter child name
-        link:
-          type: string
-          example: link
-          description: chapter child link
-      required:
-        - name
-        - link
-    OutputChapter:
-      type: object
-      properties:
-        title:
-          type: string
-          example: title
-          description: chapter title
-        children:
-          description: chapter children
-          type: array
-          items:
-            $ref: "#/components/schemas/OutputChapterChild"
-      required:
-        - title
-        - children
-    EbookByIdOutput:
-      type: object
-      properties:
-        title:
-          type: string
-          example: title
-          description: book title
-        picture:
-          type: string
-          example: picture
-          description: book picture
-        file:
-          description: book file
-          type: array
-          items:
-            type: string
-        chapters:
-          description: book chapters
-          type: array
-          items:
-            $ref: "#/components/schemas/OutputChapter"
-      required:
-        - title
-        - picture
-        - file
-        - chapters
-    Chapter:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-        text:
-          type: string
-        romanNumber:
-          type: string
-        readingTime:
-          type: number
-      required:
-        - id
-        - name
-        - text
-        - romanNumber
-        - readingTime
-    StoredEBook:
-      type: object
-      properties:
-        id:
-          type: number
-        title:
-          type: string
-        chapters:
-          type: array
-          items:
-            $ref: "#/components/schemas/Chapter"
-      required:
-        - id
-        - title
-        - chapters
     BookCount:
       type: object
       properties:
@@ -1739,3 +1646,92 @@ components:
             type: number
       required:
         - genres
+    OutputChapterChild:
+      type: object
+      properties:
+        name:
+          type: string
+          example: name
+          description: chapter child name
+        link:
+          type: string
+          example: link
+          description: chapter child link
+      required:
+        - name
+        - link
+    OutputChapter:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+          description: chapter title
+        children:
+          description: chapter children
+          type: array
+          items:
+            $ref: "#/components/schemas/OutputChapterChild"
+      required:
+        - title
+        - children
+    EbookByIdOutput:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        file:
+          description: book file
+          type: array
+          items:
+            type: string
+        chapters:
+          description: book chapters
+          type: array
+          items:
+            $ref: "#/components/schemas/OutputChapter"
+      required:
+        - title
+        - picture
+        - file
+        - chapters
+    Chapter:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        text:
+          type: string
+        romanNumber:
+          type: string
+        readingTime:
+          type: number
+      required:
+        - id
+        - name
+        - text
+        - romanNumber
+        - readingTime
+    StoredEBook:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        chapters:
+          type: array
+          items:
+            $ref: "#/components/schemas/Chapter"
+      required:
+        - id
+        - title
+        - chapters

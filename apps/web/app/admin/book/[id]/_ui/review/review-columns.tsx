@@ -2,7 +2,6 @@ import type { ColumnDef } from '@tanstack/react-table'
 import type { Review } from 'global/api-client'
 import { Color } from 'global/colors'
 import { Star } from 'icons'
-import * as React from 'react'
 import { useState } from 'react'
 
 export const reviewColumns = (): ColumnDef<Review, unknown>[] => [

@@ -15,7 +15,6 @@ import {
 } from '@tanstack/react-table'
 import type { AdminInfoByIdOutput } from 'global/api-client'
 import type { FC } from 'react'
-import * as React from 'react'
 
 interface ReviewTableProperties {
 	review: AdminInfoByIdOutput['review']
