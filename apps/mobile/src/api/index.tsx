@@ -3,6 +3,7 @@ import {
 	AuthApi,
 	BookApi,
 	CatalogApi,
+	EbookApi,
 	GenreApi,
 	ParserApi,
 	RecommendationApi,
@@ -21,6 +22,14 @@ export default {
 		},
 		undefined,
 		undefined
+	),
+	ebook: new EbookApi(
+		{
+			basePath: emulatorServerURL,
+			isJsonMime: () => false
+		},
+		undefined,
+		instance
 	),
 	book: new BookApi(
 		{

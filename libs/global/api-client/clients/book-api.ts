@@ -131,11 +131,11 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {number} rating book rating
          * @param {Array<PayloadEBook>} ebook 
          * @param {Array<number>} genres Array of genres
-         * @param {File} picture picture
+         * @param {string} picture picture
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        create: async (title: string, author: string, description: string, rating: number, ebook: Array<PayloadEBook>, genres: Array<number>, picture: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        create: async (title: string, author: string, description: string, rating: number, ebook: Array<PayloadEBook>, genres: Array<number>, picture: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'title' is not null or undefined
             assertParamExists('create', 'title', title)
             // verify required parameter 'author' is not null or undefined
@@ -503,11 +503,11 @@ export const BookApiFp = function(configuration?: Configuration) {
          * @param {number} rating book rating
          * @param {Array<PayloadEBook>} ebook 
          * @param {Array<number>} genres Array of genres
-         * @param {File} picture picture
+         * @param {string} picture picture
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async create(title: string, author: string, description: string, rating: number, ebook: Array<PayloadEBook>, genres: Array<number>, picture: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async create(title: string, author: string, description: string, rating: number, ebook: Array<PayloadEBook>, genres: Array<number>, picture: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.create(title, author, description, rating, ebook, genres, picture, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookApi.create']?.[localVarOperationServerIndex]?.url;
@@ -626,11 +626,11 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
          * @param {number} rating book rating
          * @param {Array<PayloadEBook>} ebook 
          * @param {Array<number>} genres Array of genres
-         * @param {File} picture picture
+         * @param {string} picture picture
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        create(title: string, author: string, description: string, rating: number, ebook: Array<PayloadEBook>, genres: Array<number>, picture: File, options?: any): AxiosPromise<void> {
+        create(title: string, author: string, description: string, rating: number, ebook: Array<PayloadEBook>, genres: Array<number>, picture: string, options?: any): AxiosPromise<void> {
             return localVarFp.create(title, author, description, rating, ebook, genres, picture, options).then((request) => request(axios, basePath));
         },
         /**
@@ -732,12 +732,12 @@ export class BookApi extends BaseAPI {
      * @param {number} rating book rating
      * @param {Array<PayloadEBook>} ebook 
      * @param {Array<number>} genres Array of genres
-     * @param {File} picture picture
+     * @param {string} picture picture
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public create(title: string, author: string, description: string, rating: number, ebook: Array<PayloadEBook>, genres: Array<number>, picture: File, options?: RawAxiosRequestConfig) {
+    public create(title: string, author: string, description: string, rating: number, ebook: Array<PayloadEBook>, genres: Array<number>, picture: string, options?: RawAxiosRequestConfig) {
         return BookApiFp(this.configuration).create(title, author, description, rating, ebook, genres, picture, options).then((request) => request(this.axios, this.basePath));
     }
 

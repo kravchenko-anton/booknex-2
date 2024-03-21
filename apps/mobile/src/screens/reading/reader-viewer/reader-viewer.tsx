@@ -1,7 +1,7 @@
 import { useReader } from '@/screens/reading/reader-context'
 import { doublePressFunction } from '@/screens/reading/reader-viewer/double-press.function'
 import {
-	scrollProgressDetect,
+	readerActions,
 	ViewerHtml
 } from '@/screens/reading/reader-viewer/viewer.function'
 import { windowHeight, windowWidth } from '@/utils/dimensions'
@@ -63,9 +63,6 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 							title: properties.title
 						})
 					}}
-					injectedJavaScriptBeforeContentLoaded={`
-						${scrollProgressDetect}
-						`}
 					style={{
 						width: windowWidth,
 						height: windowHeight,
@@ -84,6 +81,8 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 						}
 						if (event.nativeEvent.key === 'Translate') {
 							textSelectionValidation(event.nativeEvent.selectedText)
+							//TODO: проверить работу ссылки, открывается ли в приложении
+
 							await Linking.openURL(
 								`https://translate.google.com/?sl=auto&text=${event.nativeEvent.selectedText}&op=translate`
 							)
@@ -93,14 +92,10 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 						`)
 					}}
 					onLayout={() => {
-						reference.current?.injectJavaScript(
-							`window.scrollTo({ top: ${initialScroll} })`
-						)
+						reference.current?.injectJavaScript(readerActions(+initialScroll))
 					}}
 					onLoadEnd={() => {
-						reference.current?.injectJavaScript(
-							`window.scrollTo({ top: ${initialScroll} })`
-						)
+						reference.current?.injectJavaScript(readerActions(+initialScroll))
 					}}
 				/>
 			</TouchableWithoutFeedback>

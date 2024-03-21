@@ -204,6 +204,9 @@ export class BookService {
 					where: {
 						title: {
 							contains: searchTerm
+						},
+						id: {
+							equals: Number.parseInt(searchTerm)
 						}
 					}
 				})

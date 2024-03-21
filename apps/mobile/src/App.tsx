@@ -8,7 +8,7 @@ import * as Sentry from '@sentry/react-native'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import React, { useState } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import { default as codePush } from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -19,14 +19,13 @@ const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			networkMode: 'offlineFirst',
-			refetchOnWindowFocus: false,
-			refetchOnReconnect: false
+			refetchOnWindowFocus: false
 		}
 	}
 })
 
 Sentry.init({
-	dsn: 'https://db7342e99f043024192f33c9678bf56a@o4506886163267584.ingest.us.sentry.io/4506886375145472',
+	dsn: 'https://5b4c8cc2dc0a1223669dbfe7284599f1@o4506886163267584.ingest.us.sentry.io/4506886443630592',
 
 	// Set tracesSampleRate to 1.0 to capture 100%
 	// of transactions for performance monitoring.
@@ -37,78 +36,34 @@ Sentry.init({
 const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
-const codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL }
 
-const App = () => {
-	const [isSyncInProgress, setIsSyncInProgress] = useState(false)
-
-	React.useEffect(() => {
-		if (!isSyncInProgress) {
-			setIsSyncInProgress(true)
-			codePush
-				.sync(
-					codePushOptions,
-					status => {
-						switch (status) {
-							case codePush.SyncStatus.CHECKING_FOR_UPDATE: {
-								console.log('Checking for updates.')
-								break
-							}
-							case codePush.SyncStatus.DOWNLOADING_PACKAGE: {
-								console.log('Downloading package.')
-								break
-							}
-							case codePush.SyncStatus.INSTALLING_UPDATE: {
-								console.log('Installing update.')
-								break
-							}
-							case codePush.SyncStatus.UP_TO_DATE: {
-								console.log('Up-to-date.')
-								break
-							}
-							case codePush.SyncStatus.UPDATE_INSTALLED: {
-								console.log('Update installed.')
-								break
-							}
-						}
-					},
-					error => {
-						console.log('An error occurred. ' + error)
-					}
-				)
-				.finally(() => {
-					setIsSyncInProgress(false)
-				})
-		}
-	}, [])
-	return (
-		<Provider store={store}>
-			<PersistGate
-				persistor={persistor}
-				loading={
-					<View className='bg-background h-screen w-screen'>
-						<Loader />
-					</View>
-				}
+const App = () => (
+	<Provider store={store}>
+		<PersistGate
+			persistor={persistor}
+			loading={
+				<View className='bg-background h-screen w-screen'>
+					<Loader />
+				</View>
+			}
+		>
+			<PersistQueryClientProvider
+				client={queryClient}
+				persistOptions={{ persister: asyncStoragePersist }}
 			>
-				<PersistQueryClientProvider
-					client={queryClient}
-					persistOptions={{ persister: asyncStoragePersist }}
+				<GestureHandlerRootView
+					style={{
+						flex: 1
+					}}
 				>
-					<GestureHandlerRootView
-						style={{
-							flex: 1
-						}}
-					>
-						<BottomSheetModalProvider>
-							<Navigation />
-						</BottomSheetModalProvider>
-					</GestureHandlerRootView>
-					<Toast />
-				</PersistQueryClientProvider>
-			</PersistGate>
-		</Provider>
-	)
-}
+					<BottomSheetModalProvider>
+						<Navigation />
+					</BottomSheetModalProvider>
+				</GestureHandlerRootView>
+				<Toast />
+			</PersistQueryClientProvider>
+		</PersistGate>
+	</Provider>
+)
 
 export default codePush(Sentry.wrap(App))

@@ -37,7 +37,7 @@ const initialState = {
 	font: {
 		title: ReaderFont[0].title,
 		fontFamily: ReaderFont[0].fontFamily
-	} as (typeof ReaderFont)[number],
+	},
 	fontSize: fontSizeSettings.min,
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
 	padding: 14 as 14 | 4 | 20

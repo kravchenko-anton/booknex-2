@@ -88,7 +88,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 				event.nativeEvent.data
 			) as WebviewMessageType
 			const { type, payload } = parsedEvent
-
+			console.log(type, payload)
 			if (type === 'scroll') {
 				console.log('scroll', payload)
 				if (readerState.progress === payload.progress) return

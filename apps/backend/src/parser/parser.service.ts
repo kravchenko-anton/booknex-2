@@ -42,6 +42,11 @@ export class ParserService {
 								}
 							},
 							{
+								id: {
+									equals: Number.parseInt(searchTerm)
+								}
+							},
+							{
 								title: {
 									contains: searchTerm,
 									mode: 'insensitive'

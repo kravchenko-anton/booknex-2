@@ -27,7 +27,9 @@ instance.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
+		console.debug(error)
 		if (!error.response) return
+		console.log('error.response', error.response)
 		if (error.response.status === 403) return deleteTokensStorage()
 		if (
 			(error.response.status === 401 ||
@@ -59,7 +61,7 @@ instance.interceptors.response.use(
 		}
 		if (error.response.status === 401) return
 		errorToast(error)
-		throw errorCatch(error)
+		throw error
 	}
 )
 

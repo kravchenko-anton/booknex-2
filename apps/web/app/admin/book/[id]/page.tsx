@@ -10,11 +10,26 @@ import UpdatePicture from '@/app/admin/book/[id]/_ui/update-picture'
 import { VisibleButton } from '@/app/admin/book/[id]/_ui/visible-button'
 import ActivityList from '@/components/activity-list'
 import Loader from '@/components/ui/loader/loader'
-
-import { useOverview } from './useOverview'
+import api from '@/services'
+import { validateNumberParameter } from '@/utils/validate-parameter'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useParams } from 'next/navigation'
 
 const Page = () => {
-	const { book, onUpdateSuccess } = useOverview()
+	const parameters = useParams()
+	const queryClient = useQueryClient()
+
+	const id = validateNumberParameter(parameters.id)
+
+	const { data: book } = useQuery({
+		queryKey: ['book-overview', id],
+		queryFn: () => api.book.adminInfoById(id),
+		select: data => data.data
+	})
+	const onUpdateSuccess = () => {
+		queryClient.invalidateQueries(['book-overview', id])
+	}
+
 	if (!book) return <Loader />
 
 	return (
@@ -61,7 +76,13 @@ const Page = () => {
 					/>
 					<ActivityList data={book.activities} />
 
-					<BookOverview bookId={book.id} onSuccess={onUpdateSuccess} />
+					<BookOverview
+						bookId={book.id}
+						onSuccess={() => {
+							onUpdateSuccess()
+							queryClient.invalidateQueries(['stored-ebook', book.id])
+						}}
+					/>
 					<ReviewTable review={book.review} />
 				</div>
 			</div>

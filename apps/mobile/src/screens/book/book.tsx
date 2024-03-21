@@ -31,7 +31,6 @@ const Book: FC = () => {
 	const { navigate, goBack } = useTypedNavigation()
 
 	if (!book) return <Loader />
-	console.log(book.chapters, 'book.chapters')
 	return (
 		<ScrollLayout>
 			<View className=' rounded-b-4xl overflow-hid5en z-50 items-center justify-between rounded-b-none rounded-t-2xl px-2 pb-4 pt-2'>

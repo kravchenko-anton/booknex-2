@@ -5,6 +5,7 @@ import api from '@/services'
 import { errorToast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import type { PayloadEBook } from 'global/api-client'
+import { arrayOfEBookValidation } from 'global/dto/book/ebook.dto'
 import { useState, type FC } from 'react'
 
 interface EbookInfoProperties {
@@ -22,8 +23,16 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookId, onSuccess }) => {
 	const { mutateAsync: updateEbook, isLoading: updateEbookLoading } =
 		useMutation({
 			mutationKey: ['update-ebook'],
-			mutationFn: ({ id, payload }: { id: number; payload: PayloadEBook[] }) =>
-				api.book.updateEbook(id, payload),
+			mutationFn: async ({
+				id,
+				payload
+			}: {
+				id: number
+				payload: PayloadEBook[]
+			}) => {
+				await arrayOfEBookValidation.parseAsync(payload).catch(errorToast)
+				return api.book.updateEbook(id, payload)
+			},
 			onSuccess: onSuccess
 		})
 	const [books, setBooks] = useState<PayloadEBook[] | []>([])
@@ -34,7 +43,7 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookId, onSuccess }) => {
 				<TabsTrigger value='preview'>Preview Ebook</TabsTrigger>
 				<TabsTrigger value='edit'>Edit</TabsTrigger>
 			</TabsList>
-			<div className=' border-bordered mt-4 border-[1px] p-2'>
+			<div className='mt-4 p-2'>
 				<TabsContent value='preview'>
 					<div className='mb-4 h-[600px] min-h-[600px] w-full overflow-y-scroll'>
 						<p
@@ -69,7 +78,7 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookId, onSuccess }) => {
 					/>
 					<Button
 						size='md'
-						disabled={updateEbookLoading}
+						disabled={updateEbookLoading || ebook === books}
 						variant='primary'
 						onClick={async () => {
 							if (!books) return errorToast('Error saving book')

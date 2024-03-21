@@ -10,6 +10,7 @@ interface EbookComposerProperties {
 	updateBooks: (books: PayloadEBook[]) => void
 }
 
+//TODO: сделать отдельный компонент формы где я смогу выбрать откуда по куда я смогу обрезать текст во всех inpuтах
 const EbookComposer: FC<EbookComposerProperties> = ({
 	updateBooks,
 	defaultBooks
@@ -37,13 +38,14 @@ const EbookComposer: FC<EbookComposerProperties> = ({
 					}}
 				/>
 			</div>
-			<div className='gap-2 md:flex md:w-fit '>
+
+			<div className=' md:flex md:w-fit '>
 				{books.state.map(book => (
 					<div
 						key={book.title}
-						className='bg-foreground mb-4 w-full rounded-lg p-3 md:mr-1 md:w-[600px]'
+						className='bg-foreground mb-4 w-full rounded-lg p-2 md:mr-1 md:w-[600px]'
 					>
-						<div className='mb-4 flex items-center  justify-between gap-2'>
+						<div className='mb-4 flex items-center  justify-between gap-1'>
 							<input
 								defaultValue={book.title}
 								className='bg-muted hover:border-foreground focus:border-foreground focus:shadow-outline h-full w-full  rounded-lg border-2  border-transparent px-4 py-3 text-sm text-white  placeholder-white duration-200 ease-linear focus:outline-0'
@@ -67,7 +69,7 @@ const EbookComposer: FC<EbookComposerProperties> = ({
 							/>
 						</div>
 						{book.chapters.map((chapter, index) => (
-							<div key={chapter.id} className='bg-muted m-2 rounded-lg p-2'>
+							<div key={chapter.id} className='bg-muted mb-2 rounded-lg p-2'>
 								<div className='mb-2 flex w-full items-center justify-between gap-2'>
 									<input
 										value={chapter.name}

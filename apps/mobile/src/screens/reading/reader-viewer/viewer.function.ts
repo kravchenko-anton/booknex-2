@@ -90,7 +90,8 @@ export const ViewerHtml = ({
 	`
 }
 
-export const scrollProgressDetect = `
+export const readerActions = (initialScroll: number) => `
+window.scrollTo({ top: ${initialScroll} });
 let timerId;
 let chapters = document.querySelectorAll('div');
 

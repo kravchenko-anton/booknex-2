@@ -16,7 +16,8 @@ const Reader = () => {
 	const id = +params.id
 	const { data: ebook } = useQuery({
 		queryKey: ['e-books', +params.id],
-		queryFn: () => api.book.ebookById(+params.id),
+
+		queryFn: () => api.ebook.ebookById(+params.id),
 		select: data => data.data
 	})
 	const [readerUiVisible, setReaderUiVisible] = useState(false)

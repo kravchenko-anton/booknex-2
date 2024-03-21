@@ -11,6 +11,8 @@ import {
 } from 'class-validator'
 import { ShortBook } from '../book/book.entity'
 
+const htmlRegex = /<([A-Za-z][\dA-Za-z]*)\b[^>]*>(.*?)<\/\1>/
+
 /* Payload */
 export class Chapter {
 	@ApiProperty({ type: Number })
@@ -24,6 +26,9 @@ export class Chapter {
 
 	@ApiProperty({ type: String })
 	@IsString()
+	@Validate((value: string) => htmlRegex.test(value), {
+		message: 'Invalid HTML string'
+	})
 	text: string
 
 	@ApiProperty({ type: String })

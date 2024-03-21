@@ -1,6 +1,5 @@
 import { useTemplate } from '@/app/admin/book/create/useTemplate'
 import api from '@/services'
-import { secureRoutes } from '@/utils/route'
 import { errorToast, successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -9,9 +8,18 @@ import {
 	CreateBookValidation,
 	type CreateBookValidationType
 } from 'global/dto/book/create.book.dto'
-
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+
+type CreateBookType = {
+	title: string
+	author: string
+	description: string
+	rating: number
+	ebook: PayloadEBook[]
+	genres: number[]
+	picture: File
+}
 
 export const useCreateForm = () => {
 	const router = useRouter()
@@ -25,21 +33,17 @@ export const useCreateForm = () => {
 	} = useForm<CreateBookValidationType>({
 		resolver: zodResolver(CreateBookValidation)
 	})
-	console.log(errors, 'it is errors', getValues(), 'it is values')
+	console.log('errors', errors)
+	const { mutateAsync: deleteTemplate } = useMutation({
+		mutationKey: ['delete-template'],
+		mutationFn: (id: number) => api.parser.remove(id),
+		onError: () => errorToast('Error while uploading book')
+	})
 	const template = useTemplate({ setValue })
 
 	const { mutateAsync: create, isLoading: createLoading } = useMutation({
 		mutationKey: ['create-book'],
-
-		mutationFn: (payload: {
-			title: string
-			author: string
-			description: string
-			rating: number
-			ebook: PayloadEBook[]
-			genres: number[]
-			picture: File
-		}) =>
+		mutationFn: (payload: CreateBookType) =>
 			api.book.create(
 				payload.title,
 				payload.author,
@@ -49,16 +53,19 @@ export const useCreateForm = () => {
 				payload.genres,
 				payload.picture
 			),
-		onError: () => errorToast('Error while uploading book')
-	})
-
-	const { mutateAsync: deleteTemplate } = useMutation({
-		mutationKey: ['delete-template'],
-		mutationFn: (id: number) => api.parser.remove(id),
-		onError: () => errorToast('Error while uploading book')
+		onError: () => errorToast('Error while uploading book'),
+		onSuccess: async () => {
+			console.log('template.id success', template.id)
+			// if (template.id) {
+			// 	await deleteTemplate(template.id)
+			// }
+			successToast('Book created')
+			// router.push(secureRoutes.bookCatalogRoute)
+		}
 	})
 
 	const submit = handleSubmit(async (data: CreateBookValidationType) => {
+		console.log('ebook', data)
 		await create({
 			title: data.title,
 			description: data.description,
@@ -68,16 +75,6 @@ export const useCreateForm = () => {
 			genres: data.genres,
 			rating: data.rating
 		})
-			.then(async () => {
-				if (template.id) {
-					await deleteTemplate(template.id)
-				}
-				router.push(secureRoutes.bookCatalogRoute)
-				successToast('Book created')
-			})
-			.catch(() => {
-				errorToast('Error while creating book')
-			})
 	})
 	return {
 		watch,

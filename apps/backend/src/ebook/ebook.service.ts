@@ -73,12 +73,12 @@ export class EbookService {
 						}) => `<div id="${name + ' ' + title}">
 			<div style="
 	width: 100%;
-	height: 60px;
+	height: 80px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;">
 	<div>
-	<a style="margin: 0; padding: 0; font-size: 18px; margin-bottom:4px">${name + ' ' + title}</a>
+	<a style="margin: 0; padding: 0; font-size: 18px; margin-bottom:4px">${name}</a>
 	<p style="margin: 0; padding: 0;">${minutesToTime(readingTime)}</p>
 </div>
 	<h2 style="margin: 0; padding: 0;">${romanNumber}</h2>

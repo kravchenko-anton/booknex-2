@@ -1398,7 +1398,6 @@ components:
         picture:
           type: string
           description: picture
-          format: binary
       required:
         - title
         - author
