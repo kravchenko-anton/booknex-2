@@ -36,7 +36,8 @@ export class CreateBookDto extends PickType(Book, [
 	@ApiProperty({
 		description: 'picture',
 		required: true,
-		type: 'string'
+		type: String,
+		format: 'binary'
 	})
 	picture: Express.Multer.File
 }

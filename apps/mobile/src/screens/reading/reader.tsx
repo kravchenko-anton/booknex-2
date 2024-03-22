@@ -38,12 +38,13 @@ const Reader = () => {
 				<ReaderMenu
 					visible={readerUiVisible}
 					onChapterIconPress={() =>
-						chaptersListModalReference.current?.expand()
+						chaptersListModalReference.current?.present()
 					}
 					onSelectThemeIconPress={() =>
-						readingSettingsModalReference.current?.expand()
+						readingSettingsModalReference.current?.present()
 					}
 				/>
+
 				<ReaderChapters
 					chapters={ebook.chapters}
 					sheetRef={chaptersListModalReference}

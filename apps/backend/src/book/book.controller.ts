@@ -79,6 +79,7 @@ export class BookController {
 	})
 	@UseInterceptors(FileInterceptor('picture'))
 	@ApiConsumes('multipart/form-data')
+	@ApiConsumes('application/json')
 	async create(
 		@UploadedFile(
 			new ParseFilePipe({

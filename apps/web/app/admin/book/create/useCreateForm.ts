@@ -1,5 +1,6 @@
 import { useTemplate } from '@/app/admin/book/create/useTemplate'
 import api from '@/services'
+import { secureRoutes } from '@/utils/route'
 import { errorToast, successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -44,23 +45,23 @@ export const useCreateForm = () => {
 	const { mutateAsync: create, isLoading: createLoading } = useMutation({
 		mutationKey: ['create-book'],
 		mutationFn: (payload: CreateBookType) =>
-			api.book.create(
-				payload.title,
-				payload.author,
-				payload.description,
-				payload.rating,
-				payload.ebook,
-				payload.genres,
-				payload.picture
-			),
+			api.book.create({
+				title: payload.title,
+				description: payload.description,
+				picture: payload.picture,
+				ebook: payload.ebook,
+				author: payload.author,
+				genres: payload.genres,
+				rating: payload.rating
+			}),
 		onError: () => errorToast('Error while uploading book'),
 		onSuccess: async () => {
 			console.log('template.id success', template.id)
-			// if (template.id) {
-			// 	await deleteTemplate(template.id)
-			// }
+			if (template.id) {
+				await deleteTemplate(template.id)
+			}
 			successToast('Book created')
-			// router.push(secureRoutes.bookCatalogRoute)
+			router.push(secureRoutes.bookCatalogRoute)
 		}
 	})
 

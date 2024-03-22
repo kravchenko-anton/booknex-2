@@ -13,6 +13,7 @@ export * from './catalog-user-output';
 export * from './chapter';
 export * from './check503-response';
 export * from './check503-response-info-value';
+export * from './create-book-dto';
 export * from './ebook-by-id-output';
 export * from './featured-output';
 export * from './genre-by-id-output';

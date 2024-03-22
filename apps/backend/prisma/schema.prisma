@@ -16,6 +16,7 @@ model Genre {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   name          String         @unique
+  slug          String         @unique
   description   String         @default("")
   users         User[]
   books         Book[]         @relation("BookGenre")
@@ -57,6 +58,7 @@ model Book {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String     @unique
+  slug        String     @unique
   author      String
   description String
   picture     String
@@ -82,6 +84,7 @@ model BookTemplate {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   title       String   @unique
+  slug        String   @unique
   author      String
   description String
   picture     String

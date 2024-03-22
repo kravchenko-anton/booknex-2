@@ -7,6 +7,7 @@ import { errorToast } from '@/utils/toast'
 import axios from 'axios'
 import { serverURL } from 'global/api-config'
 import { errorCatch } from 'global/helpers/catch-error'
+import { catchError } from 'rxjs'
 
 const instance = axios.create({
 	baseURL: serverURL,
@@ -27,8 +28,7 @@ instance.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
-		console.debug(error)
-		if (!error.response) return
+		console.debug(' interceptor errors', error)
 		console.log('error.response', error.response)
 		if (error.response.status === 403) return deleteTokensStorage()
 		if (
@@ -61,7 +61,7 @@ instance.interceptors.response.use(
 		}
 		if (error.response.status === 401) return
 		errorToast(error)
-		throw error
+		throw catchError(error)
 	}
 )
 

@@ -290,6 +290,9 @@ paths:
         required: true
         description: Create book
         content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookDto"
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/CreateBookDto"
@@ -1398,6 +1401,7 @@ components:
         picture:
           type: string
           description: picture
+          format: binary
       required:
         - title
         - author

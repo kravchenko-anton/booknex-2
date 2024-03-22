@@ -16,6 +16,7 @@ import type { FC } from 'react'
 //TODO: сдеалть всё на компонентах из [id]
 const Page: FC = () => {
 	const form = useCreateForm()
+	console.debug(form.errors)
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -94,7 +95,7 @@ const Page: FC = () => {
 				size='md'
 				isLoading={form.createLoading}
 				className='mt-4'
-				variant='primary'
+				variant={Object.keys(form.errors).length > 0 ? 'danger' : 'foreground'}
 				onClick={form.submit}
 			>
 				Create

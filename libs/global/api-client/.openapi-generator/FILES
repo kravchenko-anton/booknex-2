@@ -32,6 +32,7 @@ models/catalog-user-output.ts
 models/chapter.ts
 models/check503-response-info-value.ts
 models/check503-response.ts
+models/create-book-dto.ts
 models/ebook-by-id-output.ts
 models/featured-output.ts
 models/genre-by-id-output.ts

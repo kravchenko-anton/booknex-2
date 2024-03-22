@@ -36,6 +36,15 @@ Sentry.init({
 const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
+codePush.sync({
+	updateDialog: {
+		title: 'New update available',
+		mandatoryUpdateMessage: 'The app has been updated',
+		mandatoryContinueButtonLabel: 'Update',
+		optionalIgnoreButtonLabel: 'Later'
+	},
+	installMode: codePush.InstallMode.IMMEDIATE
+})
 
 const App = () => (
 	<Provider store={store}>

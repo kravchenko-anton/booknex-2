@@ -37,7 +37,7 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 			enableOverDrag
 			index={0}
 			ref={sheetRef}
-			snapPoints={['40%', '50%']}
+			snapPoints={['40%', '80%']}
 			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
 			backgroundStyle={{
 				backgroundColor: colorScheme.colorPalette.background.darker
