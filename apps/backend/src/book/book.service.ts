@@ -3,7 +3,6 @@ import { Activities, type Prisma } from '@prisma/client'
 import Sentry from '@sentry/node'
 import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors'
 import { transformActivity } from '../../../../libs/global/utils/activity-transformer'
-import type { PayloadEBook } from '../ebook/ebook.model'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
 import { StorageFolderEnum } from '../storage/storage.types'
@@ -13,6 +12,7 @@ import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { CreateBookDto } from './dto/create.book.dto'
 import type { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto'
+import type { PayloadEBook } from './ebook/ebook.model'
 import { useGetEbook } from './helpers/get-ebook'
 import { returnBookObject } from './return.book.object'
 
@@ -105,7 +105,6 @@ export class BookService {
 				description: true,
 				mainGenre: false,
 				readingTime: true,
-				chapters: true,
 				rating: true,
 				genres: { select: ReturnGenreObject }
 			}

@@ -12,6 +12,7 @@ const Button = ({
 	disabled = false,
 	isLoading = false,
 	icon: Icon,
+
 	className = '',
 	children = '',
 	...properties
@@ -19,8 +20,9 @@ const Button = ({
 	<AnimatedPress
 		disabled={disabled || isLoading}
 		className={cn(
-			'flex-row items-center justify-center rounded-lg',
+			'flex-row items-center justify-center rounded-xl',
 			settings.padding[size],
+
 			settings.colors[variant],
 			(disabled || isLoading) && 'opacity-70',
 			className
@@ -39,14 +41,14 @@ const Button = ({
 		) : null}
 		{!!Icon && !isLoading && (
 			<Icon
-				className='mr-2 mt-0.5'
+				className='mr-2 mt-1'
 				color={InnerColor[variant]}
 				width={settings.iconSize[size]}
 				height={settings.iconSize[size]}
 			/>
 		)}
 		<Title
-			weight='bold'
+			weight='semiBold'
 			color={InnerColor[variant]}
 			size={settings.titleSize[size]}
 		>

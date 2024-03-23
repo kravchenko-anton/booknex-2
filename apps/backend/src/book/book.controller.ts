@@ -22,7 +22,6 @@ import {
 } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { PayloadEBook } from '../ebook/ebook.model'
 import environment from '../utils/common/environment.config'
 import {
 	AdminInfoByIdOutput,
@@ -36,6 +35,7 @@ import {
 	UpdateGenreDto,
 	UpdatePictureDto
 } from './dto/update.book.dto'
+import { PayloadEBook } from './ebook/ebook.model'
 
 @ApiTags('📙 book')
 @ApiBearerAuth()

@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { Auth } from '../auth/decorators/auth.decorator'
-import { CurrentUser } from '../auth/decorators/user.decorator'
+import { Auth } from '../../auth/decorators/auth.decorator'
+import { CurrentUser } from '../../auth/decorators/user.decorator'
 import { EbookByIdOutput, StoredEBook } from './ebook.model'
 import { EbookService } from './ebook.service'
 

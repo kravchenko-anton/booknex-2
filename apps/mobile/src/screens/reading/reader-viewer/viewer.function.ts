@@ -1,6 +1,38 @@
-import { ReaderFont } from '@/redux/reader/reading-settings-slice'
+import { injectFont } from '@/screens/reading/reader-viewer/font-injection'
 import { getFileUrl } from 'global/api-config'
 import { Color } from 'global/colors'
+
+export const calculateProgress = `
+	 let currentScrollPosition = document.body.scrollTop;
+	 let chapters = document.querySelectorAll('div');
+	 chapters = Array.from(chapters).filter(chapter => chapter.id);
+			 let currentChapterProgress = 0;
+			 let currentChapter = 0;
+			 
+			 for (let i = 0; i < chapters.length; i++) {
+				 const chapter = chapters[i];
+				 const chapterHeight = chapter.scrollHeight;
+				 const chapterTop = chapter.offsetTop;
+				 const chapterBottom = chapterTop + chapterHeight;
+				 if (currentScrollPosition >= chapterTop && currentScrollPosition <= chapterBottom) {
+					 currentChapterProgress = (currentScrollPosition - chapterTop) / chapterHeight * 100;
+					 currentChapter = i;
+					 break;
+				 }
+			 }
+	
+		
+				
+	
+   window.ReactNativeWebView.postMessage(JSON.stringify({
+     type: "scroll",
+     payload: {
+       scrollTop: currentScrollPosition ,
+       progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight) * 100),
+       currentChapterProgress: currentChapterProgress
+     }
+   }));
+`
 
 export const finishBookButton = `
 		<div
@@ -45,41 +77,24 @@ export const ViewerHtml = ({
 	title,
 	picture,
 	file,
-	defaultTheme
+	defaultProperties
 }: {
 	title: string
 	picture: string
 	file: string[]
-	defaultTheme: string
-}) => {
-	const fonts = ReaderFont.map(font => font.fontFamily)
-	const fontFaces = fonts.map(
-		font => `
-		@font-face {
-    font-family: '${font}-Bold';
-    src:url('file:///android_asset/fonts/${font}-Bold.ttf') format('truetype')
-		}
-
-		@font-face {
-			font-family: '${font}-Regular';
-			src:url('file:///android_asset/fonts/${font}-Regular.ttf') format('truetype')
-		}
-		
-		@font-face {
-			font-family: '${font}-Light';
-			src:url('file:///android_asset/fonts/${font}-Light.ttf') format('truetype')
-		}
-	`
-	)
-	return `
-	<head>
+	defaultProperties: {
+		scrollPosition: number
+		theme: string
+	}
+}) => `
+				<head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 				<title>${title}</title>
-				<style>
-					${fontFaces.join('')}
-</style>
+				<style>${injectFont()}</style>
+
 			</head>
-			<style>${defaultTheme}</style>
+		
+			<style>${defaultProperties.theme}</style>
 			<div>
 				<img style='width:100%; height: 300px; object-fit: contain; object-position: center; padding-top: 40px'
 					 src="${getFileUrl(picture)}" alt="${title}" />
@@ -87,28 +102,26 @@ export const ViewerHtml = ({
 			</div>
 			${file}
 			${finishBookButton}
+				
+				<script>
+					window.onload = function() {
+						window.scrollTo({
+							top: ${defaultProperties.scrollPosition}
+						}).then(() => {
+								${calculateProgress}
+						});
+					}
+</script>
 	`
-}
 
-export const readerActions = (initialScroll: number) => `
-window.scrollTo({ top: ${initialScroll} });
+export const readerActions = `
 let timerId;
-let chapters = document.querySelectorAll('div');
-
 window.addEventListener('scroll', function() {
  clearTimeout(timerId);
 
  timerId = setTimeout(() => {
-   let currentScrollPosition = document.body.scrollTop;
-
-   window.ReactNativeWebView.postMessage(JSON.stringify({
-     type: "scroll",
-     payload: {
-       scrollTop: currentScrollPosition,
-       progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight) * 100)
-     }
-   }));
-   
+  ${calculateProgress}
+  
  }, 1000);
 });
 `

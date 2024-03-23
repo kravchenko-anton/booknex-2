@@ -9,7 +9,7 @@ import {
 	Validate,
 	ValidateNested
 } from 'class-validator'
-import { ShortBook } from '../book/book.entity'
+import { ShortBook } from '../book.entity'
 
 const htmlRegex = /<([A-Za-z][\dA-Za-z]*)\b[^>]*>(.*?)<\/\1>/
 

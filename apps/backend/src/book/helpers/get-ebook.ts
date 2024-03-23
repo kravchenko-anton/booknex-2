@@ -1,5 +1,5 @@
-import type { PayloadEBook, StoredEBook } from '../../ebook/ebook.model'
 import { convertToRoman } from '../../utils/common/romanize-number'
+import type { PayloadEBook, StoredEBook } from '../ebook/ebook.model'
 
 const calculateReadingTime = (text: string) => {
 	const wordsPerMinute = 200

@@ -24,12 +24,12 @@ export const settings: {
 
 	titleSize: {
 		sm: 'sm',
-		md: 'lg',
-		lg: 'xl'
+		md: 'md',
+		lg: 'lg'
 	},
 	padding: {
-		sm: 'py-1 px-2.5',
-		md: 'py-1.5 px-3',
-		lg: 'py-2 px-3.5'
+		sm: 'py-1 px-2',
+		md: 'py-1.5 px-4',
+		lg: 'py-2 px-4'
 	}
 }

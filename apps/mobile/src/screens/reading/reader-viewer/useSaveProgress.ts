@@ -4,13 +4,12 @@ import { AppState } from 'react-native'
 
 export const useSaveProgress = ({
 	id,
-	readerState
+	progress,
+	scrollPosition
 }: {
 	id: number
-	readerState: {
-		progress: number
-		scrollTop: number
-	}
+	progress: number
+	scrollPosition: number
 }) => {
 	const { addListener } = useTypedNavigation()
 	const { updateReadingProgress } = useAction()
@@ -19,16 +18,16 @@ export const useSaveProgress = ({
 		const unsubscribe = addListener('beforeRemove', () => {
 			updateReadingProgress({
 				id,
-				progress: readerState.progress,
-				location: readerState.scrollTop
+				progress: progress,
+				scrollPosition: scrollPosition
 			})
 		})
 		const subscription = AppState.addEventListener('change', nextAppState => {
 			if (/inactive|background/.test(nextAppState)) {
 				updateReadingProgress({
 					id,
-					progress: readerState.progress,
-					location: readerState.scrollTop
+					progress: progress,
+					scrollPosition: scrollPosition
 				})
 			}
 		})
@@ -36,11 +35,5 @@ export const useSaveProgress = ({
 			unsubscribe()
 			subscription.remove()
 		}
-	}, [
-		addListener,
-		id,
-		readerState.progress,
-		readerState.scrollTop,
-		updateReadingProgress
-	])
+	}, [addListener, id, progress, scrollPosition, updateReadingProgress])
 }

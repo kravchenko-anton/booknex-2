@@ -45,9 +45,15 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 						/>
 						<View className='ml-auto w-1/2'>
 							<ProgressBar
+								className='mb-1.5'
+								tintColor={colorScheme.colorPalette.secondary}
+								trackTintColor={colorScheme.colorPalette.background.lighter}
+								progress={progress.chapterProgress / 100}
+							/>
+							<ProgressBar
 								tintColor={colorScheme.colorPalette.primary}
 								trackTintColor={colorScheme.colorPalette.background.lighter}
-								progress={progress / 100}
+								progress={progress.bookProgress / 100}
 							/>
 						</View>
 					</View>

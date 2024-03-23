@@ -9,7 +9,7 @@ export type ButtonProperties = PressableDefaultProperties &
 		textSize?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 		icon?: FC<SvgProps>
 		isLoading?: boolean
-		children?: string
+		children?: any
 		isDisabled?: boolean
 		uppercase?: boolean
 		pulse?: boolean

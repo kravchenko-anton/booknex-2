@@ -1112,10 +1112,6 @@ components:
           type: number
           example: 100
           description: book readingTime
-        chapters:
-          type: number
-          example: 100
-          description: book chapters count
         rating:
           type: number
           example: 5
@@ -1131,7 +1127,6 @@ components:
         - author
         - description
         - readingTime
-        - chapters
         - rating
         - genres
     BookCount:

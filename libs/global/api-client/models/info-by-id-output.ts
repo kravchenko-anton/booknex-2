@@ -60,12 +60,6 @@ export interface InfoByIdOutput {
      */
     'readingTime': number;
     /**
-     * book chapters count
-     * @type {number}
-     * @memberof InfoByIdOutput
-     */
-    'chapters': number;
-    /**
      * book rating
      * @type {number}
      * @memberof InfoByIdOutput

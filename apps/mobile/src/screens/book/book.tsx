@@ -15,6 +15,7 @@ import {
 import { share } from '@/utils/share-function'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
+import { minutesToTime } from 'global/helpers/time-converter'
 import { appName } from 'global/utils'
 import { ArrowLeft, Share } from 'icons'
 import type { FC } from 'react'
@@ -33,16 +34,16 @@ const Book: FC = () => {
 	if (!book) return <Loader />
 	return (
 		<ScrollLayout>
-			<View className=' rounded-b-4xl overflow-hid5en z-50 items-center justify-between rounded-b-none rounded-t-2xl px-2 pb-4 pt-2'>
+			<View className='overflow-hid5en z-50 items-center justify-between rounded-b-none rounded-t-2xl px-2 pb-4 pt-2'>
 				<View className='mt-1 w-full flex-row items-start justify-between'>
 					<AnimatedIcon
-						variant='muted'
+						variant='foreground'
 						icon={ArrowLeft}
 						size='md'
 						onPress={() => goBack()}
 					/>
 					<AnimatedIcon
-						variant='muted'
+						variant='foreground'
 						icon={Share}
 						size='md'
 						onPress={() =>
@@ -52,7 +53,7 @@ const Book: FC = () => {
 				</View>
 				<Image
 					url={book.picture}
-					height={280}
+					height={270}
 					className='mx-auto -mt-5'
 					width={180}
 					style={{
@@ -62,42 +63,31 @@ const Book: FC = () => {
 					}}
 				/>
 			</View>
-			<View className=' px-2 pt-2'>
-				{/* <View className=' flex-1 flex-row '> */}
-				{/* 	<StatisticItem title='Rating' icon={Star} count={book.rating} /> */}
-				{/* 	<StatisticItem */}
-				{/* 		title='Reading Time' */}
-				{/* 		icon={Clock} */}
-				{/* 		count={minutesToTime(book.readingTime)} */}
-				{/* 	/> */}
-				{/* 	<StatisticItem */}
-				{/* 		title='Chapters' */}
-				{/* 		icon={BookIcon} */}
-				{/* 		count={book.chapters} */}
-				{/* 	/> */}
-				{/* </View> */}
-				<Title
-					numberOfLines={2}
-					weight='semiBold'
-					size={'xxl'}
-					className='mt-2'
-				>
+
+			<View className='px-2 pt-2'>
+				<View className='flex-grow flex-row items-center justify-between gap-2'>
+					<Title size={'sm'} color={Color.gray} weight='regular'>
+						{book.rating} Rating • {minutesToTime(book.readingTime)} read time
+					</Title>
+				</View>
+				<Title numberOfLines={2} weight='semiBold' size={'xxl'}>
 					{book.title}
 				</Title>
 				<Title
 					numberOfLines={1}
 					color={Color.gray}
-					weight='regular'
+					weight='semiBold'
 					size={'md'}
-					className='mt-1'
 				>
 					{book.author}
 				</Title>
 			</View>
+
 			<View className='flex-row justify-between px-2 pt-4'>
 				<ReadingButton id={book.id} />
 				<SaveButton id={book.id} />
 			</View>
+
 			<Flatlist
 				horizontal
 				title='Explore categories'

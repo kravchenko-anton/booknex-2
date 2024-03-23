@@ -40,7 +40,7 @@ const SaveButton: FC<SaveButtonProperties> = ({ id }) => {
 			fatness={2}
 			disabled={toggleSavedLoading}
 			size='md'
-			className='ml-4'
+			className='ml-3'
 			fill={!!isSaved}
 			onPress={() => toggleSaved(id)}
 		/>

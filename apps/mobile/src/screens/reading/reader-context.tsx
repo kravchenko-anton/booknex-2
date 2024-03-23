@@ -28,10 +28,15 @@ export const ReaderContext = createContext(
 		colorScheme: ThemePackType
 		styleTag: string
 		onMessage: (event: WebViewMessageEvent) => Promise<void>
-		progress: number
-		initialScroll: number
+		progress: {
+			bookProgress: number
+			chapterProgress: number
+		}
 		reference: React.RefObject<WebView>
-		defaultTheme: string
+		defaultProperties: {
+			defaultTheme: string
+			scrollPosition: number
+		}
 		changeChapter: (chapter: string) => void
 		padding: number
 		lineHeight: number
@@ -47,7 +52,7 @@ export interface WebviewMessageType {
 	payload: {
 		scrollTop: number
 		progress: number
-		text: string
+		currentChapterProgress: number
 	}
 }
 
@@ -66,14 +71,18 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 
 	const { books } = useTypedSelector(state => state.readingProgress)
 	const { navigate } = useTypedNavigation()
-	const [readerState, setReaderState] = useState({
-		progress: books.find(book => book.id === id)?.latestProgress.progress || 1,
-		scrollTop: books.find(book => book.id === id)?.latestProgress.location || 1
+	const [scrollPosition, setScrollPosition] = useState(
+		books.find(book => book.id === id)?.latestProgress.scrollPosition || 1
+	)
+	const [readingProgress, setReadingProgress] = useState({
+		bookProgress: 0,
+		chapterProgress: 0
 	})
 
 	useSaveProgress({
 		id,
-		readerState
+		scrollPosition,
+		progress: readingProgress.bookProgress
 	})
 
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
@@ -91,18 +100,20 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 			console.log(type, payload)
 			if (type === 'scroll') {
 				console.log('scroll', payload)
-				if (readerState.progress === payload.progress) return
-				setReaderState({
-					progress: payload.progress,
-					scrollTop: payload.scrollTop
+				if (readingProgress.bookProgress === payload.progress) return
+				setScrollPosition(payload.scrollTop)
+				setReadingProgress({
+					bookProgress: payload.progress,
+					chapterProgress: payload.currentChapterProgress
 				})
 			}
 			if (type === 'finishBook' && !finishReadingLoading) {
 				await finishReading(id).then(() => {
-					setReaderState({
-						progress: 0,
-						scrollTop: 0
+					setReadingProgress({
+						bookProgress: 1,
+						chapterProgress: 0.1
 					})
+					setScrollPosition(0.1)
 					successToast('Book successfully finished')
 					navigate('BookReview', {
 						id
@@ -113,7 +124,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 				})
 			}
 		},
-		[readerState.progress]
+		[readingProgress]
 	)
 
 	const styleTag = getStyleTag({
@@ -128,12 +139,18 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		viewerReference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 	}, [styleTag])
 
-	const [defaultTheme] = useState(styleTag) // eslint-disable-line react/hook-use-state
+	// eslint-disable-next-line  react/hook-use-state
+	const [defaultProperties] = useState({
+		defaultTheme: styleTag,
+		scrollPosition: scrollPosition
+	})
 
 	const changeChapter = useCallback((link: string) => {
 		console.log('changeChapter', link)
 		viewerReference.current?.injectJavaScript(
-			`window.location.hash = '${link}'`
+			`
+			window.location.hash = '${link}'
+			`
 		)
 	}, [])
 
@@ -141,18 +158,18 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		colorScheme,
 		styleTag,
 		onMessage,
-		progress: Math.round(readerState.progress),
-		initialScroll: readerState.scrollTop,
+		progress: {
+			bookProgress: readingProgress.bookProgress,
+			chapterProgress: readingProgress.chapterProgress
+		},
 		reference: viewerReference,
 		changeChapter,
-
-		defaultTheme,
+		defaultProperties,
 		lineHeight,
 		padding,
 		font,
 		fontSize
 	}
-	console.log('context render' + Math.random())
 	return (
 		<ReaderContext.Provider value={value}>{children}</ReaderContext.Provider>
 	)

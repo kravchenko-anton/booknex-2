@@ -8,6 +8,7 @@ import type { FC } from 'react'
 interface BookReadingButtonProperties {
 	id: number
 }
+
 const ReadingButton: FC<BookReadingButtonProperties> = ({ id }) => {
 	const { navigate } = useTypedNavigation()
 	const queryClient = useQueryClient()
@@ -35,7 +36,7 @@ const ReadingButton: FC<BookReadingButtonProperties> = ({ id }) => {
 			size='md'
 			onPress={startReadingBook}
 		>
-			{'Read'}
+			{startReadingLoading ? 'Loading...' : 'Start Reading'}
 		</Button>
 	)
 }

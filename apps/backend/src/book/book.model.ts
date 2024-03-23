@@ -21,7 +21,7 @@ export class InfoByIdOutput extends PickType(Book, [
 	'genres',
 	'picture',
 	'readingTime',
-	'chapters',
+
 	'rating'
 ]) {}
 

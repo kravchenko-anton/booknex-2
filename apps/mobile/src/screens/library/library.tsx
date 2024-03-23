@@ -23,6 +23,7 @@ const Library = () => {
 	})
 	const { navigate } = useTypedNavigation()
 	const { books } = useTypedSelector(state => state.readingProgress)
+	console.log(books)
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&
@@ -55,13 +56,17 @@ const Library = () => {
 							url={book.picture}
 							className='mb-2'
 						/>
+
 						<ProgressBar
 							progress={
 								Number(
 									books.find(b => b.id === book.id)?.latestProgress.progress
-								) / 100 || 0.1
+								) / 100 ||
+								// small progress  with index
+								0
 							}
 						/>
+
 						<Title numberOfLines={2} size='md' weight='medium' className='mt-1'>
 							{book.title}
 						</Title>

@@ -6,8 +6,8 @@ import {
 	IsNumber,
 	ValidateNested
 } from 'class-validator'
-import { PayloadEBook } from '../../ebook/ebook.model'
 import { Book } from '../book.entity'
+import { PayloadEBook } from '../ebook/ebook.model'
 
 export class CreateBookDto extends PickType(Book, [
 	'author',
