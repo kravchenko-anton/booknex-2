@@ -1,8 +1,8 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { Activities, type Prisma } from '@prisma/client';
-import Sentry from '@sentry/node';
 import { AdminErrors, GlobalErrorsEnum } from '../../../../libs/global/errors';
 import { transformActivity } from '../../../../libs/global/utils/activity-transformer';
+import { slugify } from '../../../../libs/global/utils/slugify';
 import { ReturnGenreObject } from '../genre/return.genre.object';
 import { StorageService } from '../storage/storage.service';
 import { StorageFolderEnum } from '../storage/storage.types';
@@ -44,9 +44,6 @@ export class BookService {
       }
     });
     if (!book) {
-      Sentry.captureException(
-        new Error('Book not found' + { extra: { where, select, onlyVisible } })
-      );
       throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.unknownError);
     }
     return book;
@@ -214,15 +211,10 @@ export class BookService {
     };
   }
 
-  async create(dto: CreateBookDto, picture: Express.Multer.File) {
+  async create(dto: CreateBookDto) {
     const { genreIds, mainGenreId } = await this.getGenres(dto.genres);
     const { readingTime, uploadedEbook, chaptersCount } = useGetEbook(dto.ebook);
-    const { name: pictureName } = await this.storageService.upload({
-      folder: 'booksCovers',
-      file: picture.buffer,
-      role: 'admin',
-      filename: dto.title + '.png'
-    });
+
     const { name: ebookName } = await this.storageService.upload({
       folder: 'ebooks',
       file: Buffer.from(JSON.stringify(uploadedEbook)),
@@ -240,6 +232,7 @@ export class BookService {
     if (checkExist) throw serverError(HttpStatus.BAD_REQUEST, AdminErrors.bookAlreadyExist);
     await this.prisma.book.create({
       data: {
+        slug: slugify(dto.title),
         activities: {
           create: {
             type: Activities.createBook,
@@ -248,7 +241,7 @@ export class BookService {
         },
         chapters: chaptersCount,
         title: dto.title,
-        picture: pictureName,
+        picture: dto.picture,
         rating: dto.rating,
         readingTime: readingTime,
         description: dto.description,
@@ -281,6 +274,7 @@ export class BookService {
     const { uploadedEbook, readingTime, chaptersCount } = useGetEbook(dto);
     const book = await this.findOne({
       where: { id },
+      onlyVisible: false,
       select: {
         title: true
       }

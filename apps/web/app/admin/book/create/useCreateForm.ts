@@ -19,7 +19,7 @@ type CreateBookType = {
   rating: number;
   ebook: PayloadEBook[];
   genres: number[];
-  picture: File;
+  picture: string;
 };
 
 export const useCreateForm = () => {

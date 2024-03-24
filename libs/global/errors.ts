@@ -12,6 +12,9 @@ export enum BookErrors {
   bookNotFound = 'Book not found'
 }
 
+export enum GenreErrors {
+  'genresAlreadyExist' = 'Genres already exist'
+}
 export enum UserErrors {}
 
 export enum GlobalErrorsEnum {

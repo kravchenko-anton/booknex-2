@@ -63,23 +63,8 @@ export class BookController {
     type: CreateBookDto,
     description: 'Create book'
   })
-  @UseInterceptors(FileInterceptor('picture'))
-  @ApiConsumes('multipart/form-data')
-  @ApiConsumes('application/json')
-  async create(
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({
-            maxSize: environment.MAX_UPLOAD_SIZE
-          })
-        ]
-      })
-    )
-    picture: Express.Multer.File,
-    @Body() dto: CreateBookDto
-  ) {
-    return this.bookService.create(dto, picture);
+  async create(@Body() dto: CreateBookDto) {
+    return this.bookService.create(dto);
   }
 
   @Auth('admin')

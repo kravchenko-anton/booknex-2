@@ -10,11 +10,8 @@ export const CreateBookValidation: z.ZodType<
   description: z.string().max(1000).min(10),
   ebook: arrayOfEBookValidation,
   rating: z.number().min(1).positive(),
-  picture: z.instanceof(File),
+  picture: z.string(),
   genres: z.array(z.number()).min(1)
 });
 
-export type CreateBookValidationType = Pick<
-  GeneratedCreateBookDto,
-  'title' | 'author' | 'description' | 'ebook' | 'rating' | 'genres'
-> & { picture: File };
+export type CreateBookValidationType = GeneratedCreateBookDto;

@@ -21,7 +21,6 @@ export class EbookController {
   }
 
   //  admin
-
   @Auth('admin')
   @Get('/admin/stored-ebook/:id')
   @ApiOkResponse({ type: [StoredEBook] })

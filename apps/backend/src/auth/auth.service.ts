@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Activities, Role, type Prisma, type User } from '@prisma/client';
+import { Activities, Role, type User } from '@prisma/client';
 import { hash, verify } from 'argon2';
 import { OAuth2Client } from 'google-auth-library';
 import { AuthErrors, GlobalErrorsEnum } from '../../../../libs/global/errors';
@@ -42,7 +42,8 @@ export class AuthService {
   }
 
   async register(dto: AuthDto) {
-    await this.checkOldUser({ email: dto.email }, true);
+    await this.checkUserExistBeforeCreate(dto.email);
+
     const popularGenres = await this.getPopular();
     const user = await this.prisma.user.create({
       data: {
@@ -103,8 +104,7 @@ export class AuthService {
     }
 
     if (!data?.email) throw serverError(HttpStatus.BAD_REQUEST, AuthErrors.invalidGoogleToken);
-    await this.checkOldUser({ email: data.email });
-
+    await this.checkUserExistBeforeCreate(data.email);
     const popularGenres = await this.getPopular();
     const newUser = await this.prisma.user.create({
       data: {
@@ -150,6 +150,14 @@ export class AuthService {
       ...tokens
     };
   }
+  private async checkUserExistBeforeCreate(email: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email
+      }
+    });
+    if (user) throw serverError(HttpStatus.BAD_REQUEST, AuthErrors.userExist);
+  }
 
   private issueToken(userId: number) {
     const data = { id: userId };
@@ -174,12 +182,6 @@ export class AuthService {
       throw serverError(HttpStatus.NOT_FOUND, AuthErrors.passwordOrEmailInvalid);
 
     return user;
-  }
-
-  private async checkOldUser(where: Prisma.UserWhereUniqueInput, userExistCheck = false) {
-    const user = await this.prisma.user.findUnique({ where });
-    if ((!userExistCheck && !user) || (userExistCheck && user))
-      throw serverError(HttpStatus.BAD_REQUEST, AuthErrors.passwordOrEmailInvalid);
   }
 
   async getPopular() {

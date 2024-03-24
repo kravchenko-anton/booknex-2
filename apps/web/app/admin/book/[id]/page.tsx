@@ -26,8 +26,10 @@ const Page = () => {
     queryFn: () => api.book.adminInfoById(id),
     select: (data) => data.data
   });
-  const onUpdateSuccess = () => {
-    queryClient.invalidateQueries(['book-overview', id]);
+  const onUpdateSuccess = async () => {
+    await queryClient.invalidateQueries({
+      queryKey: ['book-overview', id]
+    });
   };
 
   if (!book) return <Loader />;
@@ -67,9 +69,11 @@ const Page = () => {
 
           <BookOverview
             bookId={book.id}
-            onSuccess={() => {
-              onUpdateSuccess();
-              queryClient.invalidateQueries(['stored-ebook', book.id]);
+            onSuccess={async () => {
+              await onUpdateSuccess();
+              await queryClient.invalidateQueries({
+                queryKey: ['stored-ebook', book.id]
+              });
             }}
           />
           <ReviewTable review={book.review} />

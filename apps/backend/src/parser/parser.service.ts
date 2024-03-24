@@ -1,5 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { AdminErrors } from '../../../../libs/global/errors';
+import { slugify } from '../../../../libs/global/utils/slugify';
 import { defaultReturnObject } from '../utils/common/return.default.object';
 import { serverError } from '../utils/helpers/call-error';
 import { PrismaService } from '../utils/services/prisma.service';
@@ -119,6 +120,7 @@ export class ParserService {
               title: title.trim(),
               author: author.name,
               description,
+              slug: slugify(title),
               picture,
               rating,
               genres: {

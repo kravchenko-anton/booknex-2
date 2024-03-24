@@ -17,7 +17,7 @@ model Genre {
   updatedAt     DateTime       @updatedAt
   name          String         @unique
   slug          String         @unique
-  description   String         @default("")
+  icon          String         @default("")
   users         User[]
   books         Book[]         @relation("BookGenre")
   mainBooks     Book[]         @relation("BookMajorGenre")
@@ -54,19 +54,20 @@ model Review {
 }
 
 model Book {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  title       String     @unique
-  slug        String     @unique
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String   @unique
+  slug        String   @unique
   author      String
   description String
   picture     String
   ebook       String
   // Minutes
-  readingTime Int        @default(0)
+  readingTime Int      @default(0)
   // Chapters count
-  chapters    Int        @default(0)
+  chapters    Int      @default(0)
+
   rating      Float      @default(0)
   visible     Boolean    @default(false)
   mainGenre   Genre      @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
@@ -80,7 +81,8 @@ model Book {
 }
 
 model BookTemplate {
-  id          Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   title       String   @unique
@@ -115,6 +117,11 @@ model User {
 enum Role {
   user
   admin
+}
+
+enum StorageFolderEnum {
+  ebooks
+  booksCovers
 }
 
 enum Activities {

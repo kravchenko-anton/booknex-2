@@ -2,8 +2,9 @@
 
 import Editor from '@/app/admin/book/_shared/book-editor/editor';
 import SelectGenres from '@/app/admin/book/create/select-genres';
+import { SelectPicture } from '@/app/admin/book/create/select-picture';
 import { useCreateForm } from '@/app/admin/book/create/useCreateForm';
-import { Button, DropZone, ErrorMessage, Field, FormTextArea } from '@/components/ui';
+import { Button, ErrorMessage, Field, FormTextArea } from '@/components/ui';
 import type { PayloadEBook } from 'global/api-client';
 import { PenNib, Star } from 'icons';
 import type { FC } from 'react';
@@ -15,6 +16,15 @@ const Page: FC = () => {
     <div>
       <h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
       <div className=' mb-4 justify-between gap-5  md:flex'>
+        <div>
+          <div>
+            <h1 className='mt-2  text-xl'>Cover</h1>
+            <SelectPicture control={form.control} />
+          </div>
+          <h1 className='mb-2 mt-2  text-xl'>Genres</h1>
+
+          <SelectGenres control={form.control} />
+        </div>
         <div className='w-11/12'>
           <div className='mt-2  gap-3 md:flex'>
             <div className=' md:w-1/2'>
@@ -52,24 +62,6 @@ const Page: FC = () => {
             placeholder='Enter description'
             className='h-[250px]'
           />
-        </div>
-
-        <div>
-          <div>
-            <h1 className='mt-2  text-xl'>Cover</h1>
-            <DropZone
-              size='sm'
-              multiple={false}
-              accept='image/*'
-              onDropFile={(acceptedFiles) => {
-                form.setValue('picture', new File([acceptedFiles[0]], 'cover.jpg'));
-                console.log(acceptedFiles);
-              }}
-            />
-            <ErrorMessage name='picture' errors={form.errors} />
-          </div>
-          <h1 className='mb-2 mt-2  text-xl'>Genres</h1>
-          <SelectGenres control={form.control} />
         </div>
       </div>
       <Editor updateBooks={(books: PayloadEBook[]) => form.setValue('ebook', books)} />

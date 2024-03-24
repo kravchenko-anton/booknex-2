@@ -293,9 +293,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/CreateBookDto"
-          multipart/form-data:
-            schema:
-              $ref: "#/components/schemas/CreateBookDto"
       responses:
         "200":
           description: ""
@@ -1395,8 +1392,7 @@ components:
             type: number
         picture:
           type: string
-          description: picture
-          format: binary
+          description: picture name
       required:
         - title
         - author

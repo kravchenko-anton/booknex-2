@@ -17,6 +17,7 @@ const UpdatePicture: FC<UpdatePictureProperties> = (properties) => {
       api.book.updatePicture(id, payload),
     onSuccess: properties.onSuccess
   });
+
   return (
     <div>
       <input
