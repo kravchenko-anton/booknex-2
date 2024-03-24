@@ -12,40 +12,43 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface UpdateBookDto
  */
 export interface UpdateBookDto {
-	/**
-	 * book title
-	 * @type {string}
-	 * @memberof UpdateBookDto
-	 */
-	title?: string
-	/**
-	 * book author
-	 * @type {string}
-	 * @memberof UpdateBookDto
-	 */
-	author?: string
-	/**
-	 * book description
-	 * @type {string}
-	 * @memberof UpdateBookDto
-	 */
-	description?: string
-	/**
-	 * book rating
-	 * @type {number}
-	 * @memberof UpdateBookDto
-	 */
-	rating?: number
-	/**
-	 * book visibility
-	 * @type {boolean}
-	 * @memberof UpdateBookDto
-	 */
-	visible?: boolean
+    /**
+     * book title
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'title'?: string;
+    /**
+     * book author
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'author'?: string;
+    /**
+     * book description
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'description'?: string;
+    /**
+     * book rating
+     * @type {number}
+     * @memberof UpdateBookDto
+     */
+    'rating'?: number;
+    /**
+     * book visibility
+     * @type {boolean}
+     * @memberof UpdateBookDto
+     */
+    'visible'?: boolean;
 }
+

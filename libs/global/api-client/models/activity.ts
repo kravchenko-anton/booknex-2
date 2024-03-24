@@ -12,38 +12,40 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { ActivityItem } from './activity-item'
+import { ActivityItem } from './activity-item';
 
 /**
- *
+ * 
  * @export
  * @interface Activity
  */
 export interface Activity {
-	/**
-	 * Active date
-	 * @type {string}
-	 * @memberof Activity
-	 */
-	date: string
-	/**
-	 * Active count
-	 * @type {number}
-	 * @memberof Activity
-	 */
-	count: number
-	/**
-	 * Active level
-	 * @type {number}
-	 * @memberof Activity
-	 */
-	level: number
-	/**
-	 * List of activities
-	 * @type {Array<ActivityItem>}
-	 * @memberof Activity
-	 */
-	activities: Array<ActivityItem>
+    /**
+     * Active date
+     * @type {string}
+     * @memberof Activity
+     */
+    'date': string;
+    /**
+     * Active count
+     * @type {number}
+     * @memberof Activity
+     */
+    'count': number;
+    /**
+     * Active level
+     * @type {number}
+     * @memberof Activity
+     */
+    'level': number;
+    /**
+     * List of activities
+     * @type {Array<ActivityItem>}
+     * @memberof Activity
+     */
+    'activities': Array<ActivityItem>;
 }
+

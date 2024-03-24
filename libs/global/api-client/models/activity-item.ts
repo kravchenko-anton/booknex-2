@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface ActivityItem
  */
 export interface ActivityItem {
-	/**
-	 * Activity message
-	 * @type {string}
-	 * @memberof ActivityItem
-	 */
-	message: string
-	/**
-	 * Active time
-	 * @type {string}
-	 * @memberof ActivityItem
-	 */
-	time: string
-	/**
-	 * Activity importance
-	 * @type {number}
-	 * @memberof ActivityItem
-	 */
-	importance: number
+    /**
+     * Activity message
+     * @type {string}
+     * @memberof ActivityItem
+     */
+    'message': string;
+    /**
+     * Active time
+     * @type {string}
+     * @memberof ActivityItem
+     */
+    'time': string;
+    /**
+     * Activity importance
+     * @type {number}
+     * @memberof ActivityItem
+     */
+    'importance': number;
 }
+

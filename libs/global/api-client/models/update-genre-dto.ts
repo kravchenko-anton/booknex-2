@@ -12,16 +12,19 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface UpdateGenreDto
  */
 export interface UpdateGenreDto {
-	/**
-	 * Array of genres
-	 * @type {Array<number>}
-	 * @memberof UpdateGenreDto
-	 */
-	genres?: Array<number>
+    /**
+     * Array of genres
+     * @type {Array<number>}
+     * @memberof UpdateGenreDto
+     */
+    'genres'?: Array<number>;
 }
+

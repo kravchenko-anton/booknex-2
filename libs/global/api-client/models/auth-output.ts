@@ -12,38 +12,40 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { AuthUser } from './auth-user'
+import { AuthUser } from './auth-user';
 
 /**
- *
+ * 
  * @export
  * @interface AuthOutput
  */
 export interface AuthOutput {
-	/**
-	 * Access token
-	 * @type {string}
-	 * @memberof AuthOutput
-	 */
-	accessToken: string
-	/**
-	 * Refresh token
-	 * @type {string}
-	 * @memberof AuthOutput
-	 */
-	refreshToken: string
-	/**
-	 * type of auth
-	 * @type {string}
-	 * @memberof AuthOutput
-	 */
-	type: string
-	/**
-	 * User data
-	 * @type {AuthUser}
-	 * @memberof AuthOutput
-	 */
-	user: AuthUser
+    /**
+     * Access token
+     * @type {string}
+     * @memberof AuthOutput
+     */
+    'accessToken': string;
+    /**
+     * Refresh token
+     * @type {string}
+     * @memberof AuthOutput
+     */
+    'refreshToken': string;
+    /**
+     * type of auth
+     * @type {string}
+     * @memberof AuthOutput
+     */
+    'type': string;
+    /**
+     * User data
+     * @type {AuthUser}
+     * @memberof AuthOutput
+     */
+    'user': AuthUser;
 }
+
