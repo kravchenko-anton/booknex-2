@@ -1,6 +1,6 @@
-import { injectFont } from '@/screens/reading/reader-viewer/font-injection'
-import { getFileUrl } from 'global/api-config'
-import { Color } from 'global/colors'
+import { injectFont } from '@/screens/reading/reader-viewer/font-injection';
+import { getFileUrl } from 'global/api-config';
+import { Color } from 'global/colors';
 
 export const calculateProgress = `
 	 let currentScrollPosition = document.body.scrollTop;
@@ -32,7 +32,7 @@ export const calculateProgress = `
        currentChapterProgress: currentChapterProgress
      }
    }));
-`
+`;
 
 export const finishBookButton = `
 		<div
@@ -71,21 +71,21 @@ export const finishBookButton = `
 
 </div>
 
-`
+`;
 
 export const ViewerHtml = ({
-	title,
-	picture,
-	file,
-	defaultProperties
+  title,
+  picture,
+  file,
+  defaultProperties
 }: {
-	title: string
-	picture: string
-	file: string[]
-	defaultProperties: {
-		scrollPosition: number
-		theme: string
-	}
+  title: string;
+  picture: string;
+  file: string[];
+  defaultProperties: {
+    scrollPosition: number;
+    theme: string;
+  };
 }) => `
 				<head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -112,7 +112,7 @@ export const ViewerHtml = ({
 						});
 					}
 </script>
-	`
+	`;
 
 export const readerActions = `
 let timerId;
@@ -124,4 +124,4 @@ window.addEventListener('scroll', function() {
   
  }, 1000);
 });
-`
+`;

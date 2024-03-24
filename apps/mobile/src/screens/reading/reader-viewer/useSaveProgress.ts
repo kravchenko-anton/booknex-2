@@ -1,39 +1,39 @@
-import { useAction, useTypedNavigation } from '@/hooks'
-import { useEffect } from 'react'
-import { AppState } from 'react-native'
+import { useAction, useTypedNavigation } from '@/hooks';
+import { useEffect } from 'react';
+import { AppState } from 'react-native';
 
 export const useSaveProgress = ({
-	id,
-	progress,
-	scrollPosition
+  id,
+  progress,
+  scrollPosition
 }: {
-	id: number
-	progress: number
-	scrollPosition: number
+  id: number;
+  progress: number;
+  scrollPosition: number;
 }) => {
-	const { addListener } = useTypedNavigation()
-	const { updateReadingProgress } = useAction()
+  const { addListener } = useTypedNavigation();
+  const { updateReadingProgress } = useAction();
 
-	useEffect(() => {
-		const unsubscribe = addListener('beforeRemove', () => {
-			updateReadingProgress({
-				id,
-				progress: progress,
-				scrollPosition: scrollPosition
-			})
-		})
-		const subscription = AppState.addEventListener('change', nextAppState => {
-			if (/inactive|background/.test(nextAppState)) {
-				updateReadingProgress({
-					id,
-					progress: progress,
-					scrollPosition: scrollPosition
-				})
-			}
-		})
-		return () => {
-			unsubscribe()
-			subscription.remove()
-		}
-	}, [addListener, id, progress, scrollPosition, updateReadingProgress])
-}
+  useEffect(() => {
+    const unsubscribe = addListener('beforeRemove', () => {
+      updateReadingProgress({
+        id,
+        progress: progress,
+        scrollPosition: scrollPosition
+      });
+    });
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (/inactive|background/.test(nextAppState)) {
+        updateReadingProgress({
+          id,
+          progress: progress,
+          scrollPosition: scrollPosition
+        });
+      }
+    });
+    return () => {
+      unsubscribe();
+      subscription.remove();
+    };
+  }, [addListener, id, progress, scrollPosition, updateReadingProgress]);
+};

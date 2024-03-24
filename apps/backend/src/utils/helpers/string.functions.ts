@@ -1,13 +1,13 @@
 export function optimizeFilename(filename: string) {
-	// Split the filename and extension
-	const [name, extension] = filename.split(/\.(?=[^.]+$)/)
-	if (!name || !extension) return filename
-	const optimizedName = name
-		.replaceAll(/[^\s\w-]/g, '')
-		.trim()
-		.replaceAll(/\s+/g, '-')
-		.replaceAll(/-+/g, '-')
+  // Split the filename and extension
+  const [name, extension] = filename.split(/\.(?=[^.]+$)/);
+  if (!name || !extension) return filename;
+  const optimizedName = name
+    .replaceAll(/[^\s\w-]/g, '')
+    .trim()
+    .replaceAll(/\s+/g, '-')
+    .replaceAll(/-+/g, '-');
 
-	// Combine the optimized filename and the original extension
-	return `${optimizedName}.${extension}`
+  // Combine the optimized filename and the original extension
+  return `${optimizedName}.${extension}`;
 }

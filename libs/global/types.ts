@@ -1,7 +1,7 @@
-export type SizeType = 'sm' | 'md' | 'lg'
+export type SizeType = 'sm' | 'md' | 'lg';
 
 export interface SizeProperties {
-	size: SizeType
+  size: SizeType;
 }
 
-export type FunctionType = () => void
+export type FunctionType = () => void;

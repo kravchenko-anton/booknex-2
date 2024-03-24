@@ -3,31 +3,31 @@ export const injectStyle = (style: string) => `
 	style.type = 'text/css';
 	style.innerHTML = \`${style}\`;
  document.head.appendChild(style);
-		`
+		`;
 
 export const getStyleTag = ({
-	colorPalette,
-	fontFamily,
-	fontSize,
-	lineHeight,
-	padding
+  colorPalette,
+  fontFamily,
+  fontSize,
+  lineHeight,
+  padding
 }: {
-	colorPalette: {
-		text: string
-		background: {
-			normal: string
-			lighter: string
-			darker: string
-		}
-		primary: string
-		secondary: string
-	}
-	fontFamily: string
-	fontSize: number
-	lineHeight: number
-	padding: number
+  colorPalette: {
+    text: string;
+    background: {
+      normal: string;
+      lighter: string;
+      darker: string;
+    };
+    primary: string;
+    secondary: string;
+  };
+  fontFamily: string;
+  fontSize: number;
+  lineHeight: number;
+  padding: number;
 }) =>
-	`
+  `
 	span {
 		color: ${colorPalette.text} !important;
 		font-family: ${fontFamily} !important;
@@ -119,4 +119,4 @@ export const getStyleTag = ({
 	.finish-book-button-container {
 		background: ${colorPalette.background.darker} !important;
 	}
-	`
+	`;

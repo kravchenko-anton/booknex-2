@@ -1,8 +1,8 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const AuthDto = z.object({
-	email: z.string().email(),
-	password: z.string().min(8)
-})
+  email: z.string().email(),
+  password: z.string().min(8)
+});
 
-export type AuthDtoType = z.infer<typeof AuthDto>
+export type AuthDtoType = z.infer<typeof AuthDto>;

@@ -1,23 +1,20 @@
-import { z } from 'zod'
-import type { CreateBookDto as GeneratedCreateBookDto } from '../../api-client/models/create-book-dto'
-import { arrayOfEBookValidation } from './ebook.dto'
+import { z } from 'zod';
+import type { CreateBookDto as GeneratedCreateBookDto } from '../../api-client/models/create-book-dto';
+import { arrayOfEBookValidation } from './ebook.dto';
 
 export const CreateBookValidation: z.ZodType<
-	Pick<
-		GeneratedCreateBookDto,
-		'title' | 'author' | 'description' | 'ebook' | 'rating' | 'genres'
-	>
+  Pick<GeneratedCreateBookDto, 'title' | 'author' | 'description' | 'ebook' | 'rating' | 'genres'>
 > = z.object({
-	title: z.string(),
-	author: z.string(),
-	description: z.string().max(1000).min(10),
-	ebook: arrayOfEBookValidation,
-	rating: z.number().min(1).positive(),
-	picture: z.instanceof(File),
-	genres: z.array(z.number()).min(1)
-})
+  title: z.string(),
+  author: z.string(),
+  description: z.string().max(1000).min(10),
+  ebook: arrayOfEBookValidation,
+  rating: z.number().min(1).positive(),
+  picture: z.instanceof(File),
+  genres: z.array(z.number()).min(1)
+});
 
 export type CreateBookValidationType = Pick<
-	GeneratedCreateBookDto,
-	'title' | 'author' | 'description' | 'ebook' | 'rating' | 'genres'
-> & { picture: File }
+  GeneratedCreateBookDto,
+  'title' | 'author' | 'description' | 'ebook' | 'rating' | 'genres'
+> & { picture: File };

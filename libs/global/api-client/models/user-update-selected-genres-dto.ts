@@ -18,10 +18,10 @@
  * @interface UserUpdateSelectedGenresDto
  */
 export interface UserUpdateSelectedGenresDto {
-	/**
-	 * selected genres
-	 * @type {Array<number>}
-	 * @memberof UserUpdateSelectedGenresDto
-	 */
-	selectedGenres: Array<number>
+  /**
+   * selected genres
+   * @type {Array<number>}
+   * @memberof UserUpdateSelectedGenresDto
+   */
+  selectedGenres: Array<number>;
 }

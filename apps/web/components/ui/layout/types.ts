@@ -1,5 +1,3 @@
-import type { HTMLAttributes, PropsWithChildren } from 'react'
+import type { HTMLAttributes, PropsWithChildren } from 'react';
 
-export interface LayoutProperties
-	extends PropsWithChildren,
-		HTMLAttributes<HTMLDivElement> {}
+export interface LayoutProperties extends PropsWithChildren, HTMLAttributes<HTMLDivElement> {}

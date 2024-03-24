@@ -1,1 +1,1 @@
-export const appName = 'Booknex'
+export const appName = 'Booknex';

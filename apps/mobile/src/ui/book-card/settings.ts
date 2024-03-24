@@ -1,17 +1,17 @@
-import type { BookCardProperties } from '@/ui/book-card/types'
+import type { BookCardProperties } from '@/ui/book-card/types';
 
 export const settings: {
-	width: Record<BookCardProperties['size'], number>
-	height: Record<BookCardProperties['size'], number>
+  width: Record<BookCardProperties['size'], number>;
+  height: Record<BookCardProperties['size'], number>;
 } = {
-	width: {
-		sm: 120,
-		md: 150,
-		lg: 190
-	},
-	height: {
-		sm: 170,
-		md: 220,
-		lg: 260
-	}
-}
+  width: {
+    sm: 120,
+    md: 150,
+    lg: 190
+  },
+  height: {
+    sm: 170,
+    md: 220,
+    lg: 260
+  }
+};

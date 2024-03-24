@@ -1,9 +1,9 @@
-import { ReaderFont } from '@/redux/reader/reading-settings-slice'
+import { ReaderFont } from '@/redux/reader/reading-settings-slice';
 
 export const injectFont = () => {
-	const fonts = ReaderFont.map(font => font.fontFamily)
-	const fontFaces = fonts.map(
-		font => `
+  const fonts = ReaderFont.map((font) => font.fontFamily);
+  const fontFaces = fonts.map(
+    (font) => `
 		@font-face {
     font-family: '${font}-Bold';
     src:url('file:///android_asset/fonts/${font}-Bold.ttf') format('truetype')
@@ -19,6 +19,6 @@ export const injectFont = () => {
 			src:url('file:///android_asset/fonts/${font}-Light.ttf') format('truetype')
 		}
 	`
-	)
-	return fontFaces.join('')
-}
+  );
+  return fontFaces.join('');
+};
