@@ -3,10 +3,8 @@
 	"compilerOptions": {
 		"outDir": "../dist/out-tsc",
 		"module": "commonjs",
-		"types": ["node","express",	"multer" ],
-		"lib": [
-			"es5", "es6", "dom", "dom.iterable"
-		],
+		"types": ["node", "express", "multer"],
+		"lib": ["es5", "es6", "dom", "dom.iterable"],
 		"emitDecoratorMetadata": true,
 		"target": "es2021",
 		"isolatedModules": true,
@@ -17,6 +15,6 @@
 		"downlevelIteration": true,
 		"experimentalDecorators": true
 	},
-	"exclude": ["jest.config.ts","src/**/*.spec.ts", "src/**/*.test.ts"],
+	"exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
 	"include": ["src/**/*.ts"]
 }

@@ -12,34 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortBook } from './short-book';
+import { ShortBook } from './short-book'
 
 /**
- * 
+ *
  * @export
  * @interface UserLibraryOutput
  */
 export interface UserLibraryOutput {
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof UserLibraryOutput
-     */
-    'readingBooks': Array<ShortBook>;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof UserLibraryOutput
-     */
-    'finishedBooks': Array<ShortBook>;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof UserLibraryOutput
-     */
-    'savedBooks': Array<ShortBook>;
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof UserLibraryOutput
+	 */
+	readingBooks: Array<ShortBook>
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof UserLibraryOutput
+	 */
+	finishedBooks: Array<ShortBook>
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof UserLibraryOutput
+	 */
+	savedBooks: Array<ShortBook>
 }
-

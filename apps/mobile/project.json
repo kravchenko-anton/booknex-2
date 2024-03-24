@@ -6,10 +6,7 @@
 	"targets": {
 		"start": {
 			"executor": "@nx/react-native:start",
-			"dependsOn": [
-				"ensure-symlink",
-				"pod-install"
-			],
+			"dependsOn": ["ensure-symlink", "pod-install"],
 			"options": {
 				"port": 8081,
 				"resetCache": true
@@ -23,20 +20,13 @@
 		},
 		"run-ios": {
 			"executor": "@nx/react-native:run-ios",
-			"dependsOn": [
-				"ensure-symlink",
-				"pod-install"
-			],
+			"dependsOn": ["ensure-symlink", "pod-install"],
 			"options": {}
 		},
 		"bundle-ios": {
 			"executor": "@nx/react-native:bundle",
-			"dependsOn": [
-				"ensure-symlink"
-			],
-			"outputs": [
-				"{options.bundleOutput}"
-			],
+			"dependsOn": ["ensure-symlink"],
+			"outputs": ["{options.bundleOutput}"],
 			"options": {
 				"entryFile": "src/main.tsx",
 				"platform": "ios",
@@ -45,9 +35,7 @@
 		},
 		"run-android": {
 			"executor": "@nx/react-native:run-android",
-			"dependsOn": [
-				"ensure-symlink"
-			],
+			"dependsOn": ["ensure-symlink"],
 			"options": {
 				"resetCache": true
 			}
@@ -58,20 +46,13 @@
 				"{projectRoot}/android/app/build/outputs/bundle",
 				"{projectRoot}/android/app/build/outputs/apk"
 			],
-			"dependsOn": [
-				"ensure-symlink"
-			],
+			"dependsOn": ["ensure-symlink"],
 			"options": {}
 		},
 		"build-ios": {
 			"executor": "@nx/react-native:build-ios",
-			"outputs": [
-				"{projectRoot}/ios/build/Build"
-			],
-			"dependsOn": [
-				"ensure-symlink",
-				"pod-install"
-			],
+			"outputs": ["{projectRoot}/ios/build/Build"],
+			"dependsOn": ["ensure-symlink", "pod-install"],
 			"options": {}
 		},
 		"pod-install": {
@@ -80,12 +61,8 @@
 		},
 		"bundle-android": {
 			"executor": "@nx/react-native:bundle",
-			"dependsOn": [
-				"ensure-symlink"
-			],
-			"outputs": [
-				"{options.bundleOutput}"
-			],
+			"dependsOn": ["ensure-symlink"],
+			"outputs": ["{options.bundleOutput}"],
 			"options": {
 				"entryFile": "src/main.tsx",
 				"platform": "android",
@@ -102,15 +79,11 @@
 		},
 		"lint": {
 			"executor": "@nx/eslint:lint",
-			"outputs": [
-				"{options.outputFile}"
-			]
+			"outputs": ["{options.outputFile}"]
 		},
 		"test": {
 			"executor": "@nx/jest:jest",
-			"outputs": [
-				"{workspaceRoot}/coverage/{projectRoot}"
-			],
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
 				"jestConfig": "apps/mobile/jest.config.ts"
 			}

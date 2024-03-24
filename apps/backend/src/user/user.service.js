@@ -22,8 +22,8 @@ var __decorate =
 				c < 3
 					? target
 					: desc === null
-					  ? (desc = Object.getOwnPropertyDescriptor(target, key))
-					  : desc,
+						? (desc = Object.getOwnPropertyDescriptor(target, key))
+						: desc,
 			d
 		if (typeof Reflect === 'object' && typeof Reflect.decorate === 'function')
 			r = Reflect.decorate(decorators, target, key, desc)
@@ -41,7 +41,7 @@ var __awaiter =
 				? value
 				: new P(function (resolve) {
 						resolve(value)
-				  })
+					})
 		}
 
 		return new (P || (P = Promise))(function (resolve, reject) {
@@ -116,8 +116,8 @@ var __generator =
 								op[0] & 2
 									? y['return']
 									: op[0]
-									  ? y['throw'] || ((t = y['return']) && t.call(y), 0)
-									  : y.next) &&
+										? y['throw'] || ((t = y['return']) && t.call(y), 0)
+										: y.next) &&
 							!(t = t.call(y, op[1])).done)
 					)
 						return t
@@ -294,10 +294,10 @@ var UserService = /** @class */ (function () {
 							type === 'song'
 								? 'favoritesSong'
 								: type === 'album'
-								  ? 'favoritesAlbum'
-								  : type === 'artist'
-								    ? 'favoritesArtist'
-								    : 'favoritesPlaylist'
+									? 'favoritesAlbum'
+									: type === 'artist'
+										? 'favoritesArtist'
+										: 'favoritesPlaylist'
 						isFavorite = user[favoriteType].some(function (item) {
 							return item.id === +id
 						})

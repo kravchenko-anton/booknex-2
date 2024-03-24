@@ -5,12 +5,12 @@ paths:
       operationId: profile
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserProfileOutput"
+                $ref: '#/components/schemas/UserProfileOutput'
       tags:
         - 👤 user
       security:
@@ -20,17 +20,17 @@ paths:
       operationId: library
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserLibraryOutput"
+                $ref: '#/components/schemas/UserLibraryOutput'
       tags:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/start-reading/{id}":
+  '/api/user/start-reading/{id}':
     patch:
       operationId: startReading
       parameters:
@@ -40,13 +40,13 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/finish-reading/{id}":
+  '/api/user/finish-reading/{id}':
     patch:
       operationId: finishReading
       parameters:
@@ -56,13 +56,13 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/toggle-save/{id}":
+  '/api/user/toggle-save/{id}':
     patch:
       operationId: toggleSave
       parameters:
@@ -72,8 +72,8 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
@@ -82,7 +82,7 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/is-saved/{id}":
+  '/api/user/is-saved/{id}':
     get:
       operationId: isSaved
       parameters:
@@ -92,8 +92,8 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
@@ -117,17 +117,17 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserCatalogOutput"
+                $ref: '#/components/schemas/UserCatalogOutput'
       tags:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/admin/remove/{id}":
+  '/api/user/admin/remove/{id}':
     delete:
       operationId: remove
       parameters:
@@ -137,13 +137,13 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 👤 user
       security:
         - bearer: []
-  "/api/catalog/search/{query}":
+  '/api/catalog/search/{query}':
     get:
       operationId: search
       parameters:
@@ -153,14 +153,14 @@ paths:
           schema:
             type: string
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ShortBook"
+                  $ref: '#/components/schemas/ShortBook'
       tags:
         - 📚 catalog
       security:
@@ -170,12 +170,12 @@ paths:
       operationId: featured
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FeaturedOutput"
+                $ref: '#/components/schemas/FeaturedOutput'
       tags:
         - 📚 catalog
       security:
@@ -185,19 +185,19 @@ paths:
       operationId: catalog
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ShortGenre"
+                  $ref: '#/components/schemas/ShortGenre'
       tags:
         - 🔖 genre
       security:
         - bearer: []
-  "/api/genre/by-id/{id}":
+  '/api/genre/by-id/{id}':
     get:
       operationId: byId
       parameters:
@@ -207,17 +207,17 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GenreByIdOutput"
+                $ref: '#/components/schemas/GenreByIdOutput'
       tags:
         - 🔖 genre
       security:
         - bearer: []
-  "/api/book/info/by-id/{id}":
+  '/api/book/info/by-id/{id}':
     get:
       operationId: infoById
       parameters:
@@ -227,17 +227,17 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/InfoByIdOutput"
+                $ref: '#/components/schemas/InfoByIdOutput'
       tags:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin-info/by-id/{id}":
+  '/api/book/admin-info/by-id/{id}':
     get:
       operationId: adminInfoById
       parameters:
@@ -247,12 +247,12 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AdminInfoByIdOutput"
+                $ref: '#/components/schemas/AdminInfoByIdOutput'
       tags:
         - 📙 book
       security:
@@ -272,12 +272,12 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CatalogOutput"
+                $ref: '#/components/schemas/CatalogOutput'
       tags:
         - 📙 book
       security:
@@ -292,18 +292,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateBookDto"
+              $ref: '#/components/schemas/CreateBookDto'
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/CreateBookDto"
+              $ref: '#/components/schemas/CreateBookDto'
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/update/{id}":
+  '/api/book/admin/update/{id}':
     put:
       operationId: update
       parameters:
@@ -317,15 +317,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateBookDto"
+              $ref: '#/components/schemas/UpdateBookDto'
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/update-genre/{id}":
+  '/api/book/admin/update-genre/{id}':
     put:
       operationId: updateGenre
       parameters:
@@ -339,15 +339,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateGenreDto"
+              $ref: '#/components/schemas/UpdateGenreDto'
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/update-picture/{id}":
+  '/api/book/admin/update-picture/{id}':
     put:
       operationId: updatePicture
       parameters:
@@ -361,15 +361,15 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/UpdatePictureDto"
+              $ref: '#/components/schemas/UpdatePictureDto'
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/update-ebook/{id}":
+  '/api/book/admin/update-ebook/{id}':
     post:
       operationId: updateEbook
       parameters:
@@ -385,15 +385,15 @@ paths:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/PayloadEBook"
+                $ref: '#/components/schemas/PayloadEBook'
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/remove/{id}":
+  '/api/book/admin/remove/{id}':
     delete:
       operationId: remove
       parameters:
@@ -403,8 +403,8 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 📙 book
       security:
@@ -419,14 +419,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GoogleAuthDto"
+              $ref: '#/components/schemas/GoogleAuthDto'
       responses:
-        "200":
+        '200':
           description: Return access and refresh token
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthOutput"
+                $ref: '#/components/schemas/AuthOutput'
       tags:
         - 🔐 auth
   /api/auth/mail-register:
@@ -439,14 +439,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthDto"
+              $ref: '#/components/schemas/AuthDto'
       responses:
-        "200":
+        '200':
           description: Return access and refresh token
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthOutput"
+                $ref: '#/components/schemas/AuthOutput'
       tags:
         - 🔐 auth
   /api/auth/mail-login:
@@ -459,14 +459,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthDto"
+              $ref: '#/components/schemas/AuthDto'
       responses:
-        "200":
+        '200':
           description: Return access and refresh token
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthOutput"
+                $ref: '#/components/schemas/AuthOutput'
       tags:
         - 🔐 auth
   /api/auth/refresh:
@@ -479,17 +479,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RefreshDto"
+              $ref: '#/components/schemas/RefreshDto'
       responses:
-        "200":
+        '200':
           description: Return access token
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthOutput"
+                $ref: '#/components/schemas/AuthOutput'
       tags:
         - 🔐 auth
-  "/api/storage/{folder}":
+  '/api/storage/{folder}':
     post:
       operationId: upload
       parameters:
@@ -512,12 +512,12 @@ paths:
                   type: string
                   format: binary
       responses:
-        "200":
+        '200':
           description: File uploaded
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UploadOutputDto"
+                $ref: '#/components/schemas/UploadOutputDto'
       tags:
         - storage
       security:
@@ -539,17 +539,17 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BookTemplateCatalogOutput"
+                $ref: '#/components/schemas/BookTemplateCatalogOutput'
       tags:
         - 📦 parser
       security:
         - bearer: []
-  "/api/parser/admin/by-id/{id}":
+  '/api/parser/admin/by-id/{id}':
     get:
       operationId: byId
       parameters:
@@ -559,12 +559,12 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BookTemplate"
+                $ref: '#/components/schemas/BookTemplate'
       tags:
         - 📦 parser
       security:
@@ -578,10 +578,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ParserDto"
+              $ref: '#/components/schemas/ParserDto'
       responses:
-        "201":
-          description: ""
+        '201':
+          description: ''
       tags:
         - 📦 parser
       security:
@@ -601,19 +601,19 @@ paths:
                   type: string
                   format: binary
       responses:
-        "200":
+        '200':
           description: Unfolded book content
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/UnfoldOutput"
+                  $ref: '#/components/schemas/UnfoldOutput'
       tags:
         - 📦 parser
       security:
         - bearer: []
-  "/api/parser/admin/remove/{id}":
+  '/api/parser/admin/remove/{id}':
     delete:
       operationId: remove
       parameters:
@@ -623,13 +623,13 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
       tags:
         - 📦 parser
       security:
         - bearer: []
-  "/api/review/review/{id}":
+  '/api/review/review/{id}':
     post:
       operationId: review
       parameters:
@@ -644,9 +644,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ReviewBookDto"
+              $ref: '#/components/schemas/ReviewBookDto'
       responses:
-        "200":
+        '200':
           description: Review book
       tags:
         - ⭐ review
@@ -661,9 +661,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateRecommendationDto"
+              $ref: '#/components/schemas/UpdateRecommendationDto'
       responses:
-        "200":
+        '200':
           description: Recommendation updated
       tags:
         - 📨 recommendation
@@ -674,14 +674,14 @@ paths:
       operationId: currentRecommendation
       parameters: []
       responses:
-        "200":
+        '200':
           description: Recommendation genres
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ShortGenre"
+                  $ref: '#/components/schemas/ShortGenre'
       tags:
         - 📨 recommendation
       security:
@@ -691,13 +691,13 @@ paths:
       operationId: check
       parameters: []
       responses:
-        "200":
+        '200':
           description: Health check
           content:
             application/json:
               schema:
                 type: object
-        "503":
+        '503':
           description: The Health Check is not successful
           content:
             application/json:
@@ -754,7 +754,7 @@ paths:
                       additionalProperties: true
       tags:
         - ❤️ health
-  "/api/ebook/ebook/by-id/{id}":
+  '/api/ebook/ebook/by-id/{id}':
     get:
       operationId: ebookById
       parameters:
@@ -764,15 +764,15 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EbookByIdOutput"
+                $ref: '#/components/schemas/EbookByIdOutput'
       tags:
         - 📙 ebook
-  "/api/ebook/admin/stored-ebook/{id}":
+  '/api/ebook/admin/stored-ebook/{id}':
     get:
       operationId: storedEbook
       parameters:
@@ -782,20 +782,20 @@ paths:
           schema:
             type: number
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/StoredEBook"
+                  $ref: '#/components/schemas/StoredEBook'
       tags:
         - 📙 ebook
 info:
   title: Booknex
-  description: ""
-  version: "1.0"
+  description: ''
+  version: '1.0'
   contact:
     name: Booknex
     url: https://github.com/kravchenko-anton/booknex-2-monorepo
@@ -871,15 +871,15 @@ components:
         readingBooks:
           type: array
           items:
-            $ref: "#/components/schemas/ShortBook"
+            $ref: '#/components/schemas/ShortBook'
         finishedBooks:
           type: array
           items:
-            $ref: "#/components/schemas/ShortBook"
+            $ref: '#/components/schemas/ShortBook'
         savedBooks:
           type: array
           items:
-            $ref: "#/components/schemas/ShortBook"
+            $ref: '#/components/schemas/ShortBook'
       required:
         - readingBooks
         - finishedBooks
@@ -936,7 +936,7 @@ components:
           description: List of activities
           type: array
           items:
-            $ref: "#/components/schemas/ActivityItem"
+            $ref: '#/components/schemas/ActivityItem'
       required:
         - date
         - count
@@ -997,15 +997,15 @@ components:
         selectedGenres:
           type: array
           items:
-            $ref: "#/components/schemas/ShortGenre"
+            $ref: '#/components/schemas/ShortGenre'
         activities:
           type: array
           items:
-            $ref: "#/components/schemas/Activity"
+            $ref: '#/components/schemas/Activity'
         _count:
           description: Count of books finished, reading and saved by the user
           allOf:
-            - $ref: "#/components/schemas/UserCountOutput"
+            - $ref: '#/components/schemas/UserCountOutput'
       required:
         - id
         - createdAt
@@ -1032,7 +1032,7 @@ components:
         data:
           type: array
           items:
-            $ref: "#/components/schemas/CatalogUserOutput"
+            $ref: '#/components/schemas/CatalogUserOutput'
       required:
         - canLoadMore
         - totalPages
@@ -1043,23 +1043,23 @@ components:
         relatedGenres:
           type: array
           items:
-            $ref: "#/components/schemas/ShortGenre"
+            $ref: '#/components/schemas/ShortGenre'
         recommendations:
           type: array
           items:
-            $ref: "#/components/schemas/ShortBook"
+            $ref: '#/components/schemas/ShortBook'
         popularBooks:
           type: array
           items:
-            $ref: "#/components/schemas/ShortBook"
+            $ref: '#/components/schemas/ShortBook'
         bestSellingBooks:
           type: array
           items:
-            $ref: "#/components/schemas/ShortBook"
+            $ref: '#/components/schemas/ShortBook'
         newReleases:
           type: array
           items:
-            $ref: "#/components/schemas/ShortBook"
+            $ref: '#/components/schemas/ShortBook'
       required:
         - relatedGenres
         - recommendations
@@ -1080,7 +1080,7 @@ components:
         mainBooks:
           type: array
           items:
-            $ref: "#/components/schemas/ShortBook"
+            $ref: '#/components/schemas/ShortBook'
       required:
         - id
         - name
@@ -1119,7 +1119,7 @@ components:
         genres:
           type: array
           items:
-            $ref: "#/components/schemas/ShortGenre"
+            $ref: '#/components/schemas/ShortGenre'
       required:
         - id
         - title
@@ -1216,7 +1216,7 @@ components:
         genres:
           type: array
           items:
-            $ref: "#/components/schemas/ShortGenre"
+            $ref: '#/components/schemas/ShortGenre'
         createdAt:
           type: string
           example: 2021-07-01
@@ -1232,17 +1232,17 @@ components:
         _count:
           description: book count
           allOf:
-            - $ref: "#/components/schemas/BookCount"
+            - $ref: '#/components/schemas/BookCount'
         activities:
           description: book activities
           type: array
           items:
-            $ref: "#/components/schemas/Activity"
+            $ref: '#/components/schemas/Activity'
         review:
           description: book review
           type: array
           items:
-            $ref: "#/components/schemas/Review"
+            $ref: '#/components/schemas/Review'
       required:
         - id
         - title
@@ -1302,7 +1302,7 @@ components:
         genres:
           type: array
           items:
-            $ref: "#/components/schemas/ShortGenre"
+            $ref: '#/components/schemas/ShortGenre'
       required:
         - id
         - title
@@ -1328,7 +1328,7 @@ components:
         data:
           type: array
           items:
-            $ref: "#/components/schemas/Book"
+            $ref: '#/components/schemas/Book'
       required:
         - canLoadMore
         - totalPages
@@ -1356,7 +1356,7 @@ components:
         chapters:
           type: array
           items:
-            $ref: "#/components/schemas/PayloadChapter"
+            $ref: '#/components/schemas/PayloadChapter'
       required:
         - id
         - title
@@ -1383,7 +1383,7 @@ components:
         ebook:
           type: array
           items:
-            $ref: "#/components/schemas/PayloadEBook"
+            $ref: '#/components/schemas/PayloadEBook'
         genres:
           description: Array of genres
           example:
@@ -1455,7 +1455,7 @@ components:
         socialId:
           type: string
           description: Social id
-          example: "1234567890"
+          example: '1234567890'
       required:
         - socialId
     AuthUser:
@@ -1486,11 +1486,11 @@ components:
         accessToken:
           type: string
           description: Access token
-          example: "1234567890"
+          example: '1234567890'
         refreshToken:
           type: string
           description: Refresh token
-          example: "1234567890"
+          example: '1234567890'
         type:
           type: string
           description: type of auth
@@ -1498,7 +1498,7 @@ components:
         user:
           description: User data
           allOf:
-            - $ref: "#/components/schemas/AuthUser"
+            - $ref: '#/components/schemas/AuthUser'
       required:
         - accessToken
         - refreshToken
@@ -1524,7 +1524,7 @@ components:
         refreshToken:
           type: string
           description: Refresh token
-          example: "1234567890"
+          example: '1234567890'
       required:
         - refreshToken
     UploadOutputDto:
@@ -1558,7 +1558,7 @@ components:
         genres:
           type: array
           items:
-            $ref: "#/components/schemas/ShortGenre"
+            $ref: '#/components/schemas/ShortGenre'
       required:
         - id
         - title
@@ -1582,7 +1582,7 @@ components:
           description: book template
           type: array
           items:
-            $ref: "#/components/schemas/BookTemplate"
+            $ref: '#/components/schemas/BookTemplate'
       required:
         - canLoadMore
         - totalPages
@@ -1669,7 +1669,7 @@ components:
           description: chapter children
           type: array
           items:
-            $ref: "#/components/schemas/OutputChapterChild"
+            $ref: '#/components/schemas/OutputChapterChild'
       required:
         - title
         - children
@@ -1693,7 +1693,7 @@ components:
           description: book chapters
           type: array
           items:
-            $ref: "#/components/schemas/OutputChapter"
+            $ref: '#/components/schemas/OutputChapter'
       required:
         - title
         - picture
@@ -1728,7 +1728,7 @@ components:
         chapters:
           type: array
           items:
-            $ref: "#/components/schemas/Chapter"
+            $ref: '#/components/schemas/Chapter'
       required:
         - id
         - title

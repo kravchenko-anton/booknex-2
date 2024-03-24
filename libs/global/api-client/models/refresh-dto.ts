@@ -12,19 +12,16 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface RefreshDto
  */
 export interface RefreshDto {
-    /**
-     * Refresh token
-     * @type {string}
-     * @memberof RefreshDto
-     */
-    'refreshToken': string;
+	/**
+	 * Refresh token
+	 * @type {string}
+	 * @memberof RefreshDto
+	 */
+	refreshToken: string
 }
-

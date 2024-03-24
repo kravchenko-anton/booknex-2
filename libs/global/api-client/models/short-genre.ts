@@ -12,25 +12,22 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface ShortGenre
  */
 export interface ShortGenre {
-    /**
-     * genre id
-     * @type {number}
-     * @memberof ShortGenre
-     */
-    'id': number;
-    /**
-     * genre name
-     * @type {string}
-     * @memberof ShortGenre
-     */
-    'name': string;
+	/**
+	 * genre id
+	 * @type {number}
+	 * @memberof ShortGenre
+	 */
+	id: number
+	/**
+	 * genre name
+	 * @type {string}
+	 * @memberof ShortGenre
+	 */
+	name: string
 }
-

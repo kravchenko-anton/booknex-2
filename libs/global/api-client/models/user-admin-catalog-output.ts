@@ -12,34 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { CatalogUserOutput } from './catalog-user-output';
+import { CatalogUserOutput } from './catalog-user-output'
 
 /**
- * 
+ *
  * @export
  * @interface UserAdminCatalogOutput
  */
 export interface UserAdminCatalogOutput {
-    /**
-     * can load more
-     * @type {boolean}
-     * @memberof UserAdminCatalogOutput
-     */
-    'canLoadMore': boolean;
-    /**
-     * total pages
-     * @type {number}
-     * @memberof UserAdminCatalogOutput
-     */
-    'totalPages': number;
-    /**
-     * 
-     * @type {Array<CatalogUserOutput>}
-     * @memberof UserAdminCatalogOutput
-     */
-    'data': Array<CatalogUserOutput>;
+	/**
+	 * can load more
+	 * @type {boolean}
+	 * @memberof UserAdminCatalogOutput
+	 */
+	canLoadMore: boolean
+	/**
+	 * total pages
+	 * @type {number}
+	 * @memberof UserAdminCatalogOutput
+	 */
+	totalPages: number
+	/**
+	 *
+	 * @type {Array<CatalogUserOutput>}
+	 * @memberof UserAdminCatalogOutput
+	 */
+	data: Array<CatalogUserOutput>
 }
-

@@ -1,62 +1,44 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "module": "esnext",
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "baseUrl": ".",
-    
-    "allowJs": true,
-    "incremental": true,
-    "resolveJsonModule": true,
-    "strictPropertyInitialization": false,
-    "experimentalDecorators": true,
-    
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "icons": [
-        "../../libs/global/icons/react/index.ts"
-      ],
-      "illustrations": [
-        "../../libs/global/illustrations/react/index.ts"
-      ],
-      "global/*": [
-        "../../libs/global/*"
-      ],
-//      "backend/*": [
-//        "../backend/*"
-//      ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "types": [
-      "node"
-    ],
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-    "../../apps/web/.next/types/**/*.ts",
-    "../../dist/apps/web/.next/types/**/*.ts",
-    "next-env.d.ts",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"module": "esnext",
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"baseUrl": ".",
+
+		"allowJs": true,
+		"incremental": true,
+		"resolveJsonModule": true,
+		"strictPropertyInitialization": false,
+		"experimentalDecorators": true,
+
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"paths": {
+			"@/*": ["./*"],
+			"icons": ["../../libs/global/icons/react/index.ts"],
+			"illustrations": ["../../libs/global/illustrations/react/index.ts"],
+			"global/*": ["../../libs/global/*"]
+			//      "backend/*": [
+			//        "../backend/*"
+			//      ]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"types": ["node"]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"**/*.js",
+		"**/*.jsx",
+		"../../apps/web/.next/types/**/*.ts",
+		"../../dist/apps/web/.next/types/**/*.ts",
+		"next-env.d.ts",
+		".next/types/**/*.ts"
+	],
+	"exclude": ["node_modules", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

@@ -27,6 +27,8 @@ const ReaderCustomization: FC<ReaderCustomizationProperties> = ({
 	return (
 		<BottomSheetModal
 			enableContentPanningGesture
+			// close after page leave
+
 			enableHandlePanningGesture
 			enablePanDownToClose
 			enableOverDrag

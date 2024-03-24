@@ -15,19 +15,12 @@
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"paths": {
-			"@/*": [
-				"./src/*"
-			],
-			"icons": [
-				"../../libs/global/icons/react-native/index.ts"
-			],
+			"@/*": ["./src/*"],
+			"icons": ["../../libs/global/icons/react-native/index.ts"],
 			"illustrations": [
 				"../../libs/global/illustrations/react-native/index.ts"
 			],
-			"global/*": [
-				"../../libs/global/*"
-			]
-		
+			"global/*": ["../../libs/global/*"]
 		}
 	},
 	"exclude": [
@@ -35,7 +28,7 @@
 		"src/**/*.spec.ts",
 		"src/**/*.spec.tsx",
 		"test-setup.ts",
-		"../web/**/*",
+		"../web/**/*"
 	],
 	"include": [
 		"**/*.ts",

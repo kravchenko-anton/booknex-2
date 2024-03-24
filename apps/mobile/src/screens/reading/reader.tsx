@@ -1,5 +1,5 @@
 import api from '@/api'
-import { useTypedRoute } from '@/hooks'
+import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import ReaderChapters from '@/screens/reading/reader-chapters/reader-chapters'
 import { ReadingProvider } from '@/screens/reading/reader-context'
 import ReaderCustomization from '@/screens/reading/reader-customization/reader-customization'
@@ -12,8 +12,10 @@ import { useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Reader = () => {
+	const { addListener } = useTypedNavigation()
 	const { params } = useTypedRoute<'Reader'>()
 	const id = +params.id
+
 	const { data: ebook } = useQuery({
 		queryKey: ['e-books', +params.id],
 		queryFn: () => api.ebook.ebookById(+params.id),
@@ -22,7 +24,14 @@ const Reader = () => {
 	const [readerUiVisible, setReaderUiVisible] = useState(false)
 	const chaptersListModalReference = useRef<BottomSheetModal>(null)
 	const readingSettingsModalReference = useRef<BottomSheetModal>(null)
+	// closing all modals when leaving the screen
+	const unsubscribe = addListener('beforeRemove', () => {
+		setReaderUiVisible(false)
+		readingSettingsModalReference.current?.close()
+		chaptersListModalReference.current?.close()
 
+		return () => unsubscribe()
+	})
 	if (!ebook) return <Loader />
 	return (
 		<ReadingProvider id={id}>

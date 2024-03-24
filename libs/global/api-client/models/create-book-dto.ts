@@ -12,58 +12,56 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { PayloadEBook } from './payload-ebook';
+import { PayloadEBook } from './payload-ebook'
 
 /**
- * 
+ *
  * @export
  * @interface CreateBookDto
  */
 export interface CreateBookDto {
-    /**
-     * book title
-     * @type {string}
-     * @memberof CreateBookDto
-     */
-    'title': string;
-    /**
-     * book author
-     * @type {string}
-     * @memberof CreateBookDto
-     */
-    'author': string;
-    /**
-     * book description
-     * @type {string}
-     * @memberof CreateBookDto
-     */
-    'description': string;
-    /**
-     * book rating
-     * @type {number}
-     * @memberof CreateBookDto
-     */
-    'rating': number;
-    /**
-     * 
-     * @type {Array<PayloadEBook>}
-     * @memberof CreateBookDto
-     */
-    'ebook': Array<PayloadEBook>;
-    /**
-     * Array of genres
-     * @type {Array<number>}
-     * @memberof CreateBookDto
-     */
-    'genres': Array<number>;
-    /**
-     * picture
-     * @type {File}
-     * @memberof CreateBookDto
-     */
-    'picture': File;
+	/**
+	 * book title
+	 * @type {string}
+	 * @memberof CreateBookDto
+	 */
+	title: string
+	/**
+	 * book author
+	 * @type {string}
+	 * @memberof CreateBookDto
+	 */
+	author: string
+	/**
+	 * book description
+	 * @type {string}
+	 * @memberof CreateBookDto
+	 */
+	description: string
+	/**
+	 * book rating
+	 * @type {number}
+	 * @memberof CreateBookDto
+	 */
+	rating: number
+	/**
+	 *
+	 * @type {Array<PayloadEBook>}
+	 * @memberof CreateBookDto
+	 */
+	ebook: Array<PayloadEBook>
+	/**
+	 * Array of genres
+	 * @type {Array<number>}
+	 * @memberof CreateBookDto
+	 */
+	genres: Array<number>
+	/**
+	 * picture
+	 * @type {File}
+	 * @memberof CreateBookDto
+	 */
+	picture: File
 }
-

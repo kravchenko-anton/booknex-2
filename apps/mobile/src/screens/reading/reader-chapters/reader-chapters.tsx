@@ -6,8 +6,7 @@ import {
 	BottomSheetSectionList
 } from '@gorhom/bottom-sheet'
 import type { OutputChapter } from 'global/api-client'
-import type { FC } from 'react'
-import { useMemo } from 'react'
+import { useMemo, type FC } from 'react'
 import { Pressable } from 'react-native'
 
 interface ReaderChaptersProperties {

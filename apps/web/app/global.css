@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
 	@apply bg-background h-full  text-white;
 }
@@ -17,7 +16,7 @@ h6 {
 }
 .rounded-table {
 	outline: 1px solid;
-	@apply rounded-lg outline-1 outline-bordered
+	@apply outline-bordered rounded-lg outline-1;
 }
 p,
 span,
@@ -26,14 +25,13 @@ li {
 	@apply text-gray font-medium;
 }
 
-
 .no-scrollbar {
 	::-webkit-scrollbar {
 		display: none;
 		height: 0;
 		width: 0;
 	}
-	}
+}
 
 .scrollBarVisible {
 	::-webkit-scrollbar {
@@ -74,14 +72,12 @@ code {
 	line-height: 1.5;
 }
 
-
 .no-scrollbar::-webkit-scrollbar {
 	display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-	-ms-overflow-style: none;  /* IE and Edge */
-	scrollbar-width: none;  /* Firefox */
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
 }
-

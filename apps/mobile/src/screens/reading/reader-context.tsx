@@ -22,7 +22,7 @@ import {
 } from 'react'
 import type WebView from 'react-native-webview'
 import type { WebViewMessageEvent } from 'react-native-webview'
-
+//TODO: разнести контекст и максимально упростить
 export const ReaderContext = createContext(
 	null as unknown as {
 		colorScheme: ThemePackType
@@ -63,12 +63,17 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 	children,
 	id
 }) => {
-	const queryClient = useQueryClient()
 	const viewerReference = useRef<WebView>(null)
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
 		state => state.readingUi
 	)
+	const queryClient = useQueryClient()
 
+	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
+		useMutation({
+			mutationKey: ['finish-reading', id],
+			mutationFn: (id: number) => api.user.finishReading(id)
+		})
 	const { books } = useTypedSelector(state => state.readingProgress)
 	const { navigate } = useTypedNavigation()
 	const [scrollPosition, setScrollPosition] = useState(
@@ -84,12 +89,6 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		scrollPosition,
 		progress: readingProgress.bookProgress
 	})
-
-	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
-		useMutation({
-			mutationKey: ['finish-reading', id],
-			mutationFn: (id: number) => api.user.finishReading(id)
-		})
 
 	const onMessage = useCallback(
 		async (event: WebViewMessageEvent) => {
@@ -110,10 +109,10 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 			if (type === 'finishBook' && !finishReadingLoading) {
 				await finishReading(id).then(() => {
 					setReadingProgress({
-						bookProgress: 1,
-						chapterProgress: 0.1
+						bookProgress: 0,
+						chapterProgress: 0
 					})
-					setScrollPosition(0.1)
+					setScrollPosition(0)
 					successToast('Book successfully finished')
 					navigate('BookReview', {
 						id

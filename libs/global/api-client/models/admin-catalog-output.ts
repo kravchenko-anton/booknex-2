@@ -12,34 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { Book } from './book';
+import { Book } from './book'
 
 /**
- * 
+ *
  * @export
  * @interface AdminCatalogOutput
  */
 export interface AdminCatalogOutput {
-    /**
-     * can load more
-     * @type {boolean}
-     * @memberof AdminCatalogOutput
-     */
-    'canLoadMore': boolean;
-    /**
-     * total pages
-     * @type {number}
-     * @memberof AdminCatalogOutput
-     */
-    'totalPages': number;
-    /**
-     * 
-     * @type {Array<Book>}
-     * @memberof AdminCatalogOutput
-     */
-    'data': Array<Book>;
+	/**
+	 * can load more
+	 * @type {boolean}
+	 * @memberof AdminCatalogOutput
+	 */
+	canLoadMore: boolean
+	/**
+	 * total pages
+	 * @type {number}
+	 * @memberof AdminCatalogOutput
+	 */
+	totalPages: number
+	/**
+	 *
+	 * @type {Array<Book>}
+	 * @memberof AdminCatalogOutput
+	 */
+	data: Array<Book>
 }
-

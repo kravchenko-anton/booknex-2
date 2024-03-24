@@ -6,7 +6,9 @@
 	"scripts": {
 		"build:web": "nx build web",
 		"build:backend": "nx build backend",
-		"build:mobile": "nx build mobile"
+		"build:mobile": "nx build mobile",
+		"prepare": "husky",
+		"run:commit": "npx eslint --fix && npx prettier . --write"
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.405.0",
@@ -157,6 +159,7 @@
 		"eslint-plugin-sonarjs": "^0.21.0",
 		"eslint-plugin-unicorn": "^48.0.1",
 		"eslint-ts-patch": "^8.56.0-0",
+		"husky": "^9.0.11",
 		"jest": "^29.4.1",
 		"jest-environment-node": "^29.4.1",
 		"metro": "0.76.8",

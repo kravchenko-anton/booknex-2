@@ -9,7 +9,7 @@
 		"noEmit": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		
+
 		"strict": true,
 		"noImplicitAny": true,
 		"noImplicitThis": true,
@@ -21,7 +21,7 @@
 		"strictNullChecks": true,
 		"strictBindCallApply": true,
 		"useUnknownInCatchVariables": true,
-		
+
 		"strictPropertyInitialization": false,
 		"importHelpers": true,
 		"target": "es2021",

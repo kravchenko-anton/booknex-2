@@ -12,34 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortBook } from './short-book';
+import { ShortBook } from './short-book'
 
 /**
- * 
+ *
  * @export
  * @interface GenreByIdOutput
  */
 export interface GenreByIdOutput {
-    /**
-     * genre id
-     * @type {number}
-     * @memberof GenreByIdOutput
-     */
-    'id': number;
-    /**
-     * genre name
-     * @type {string}
-     * @memberof GenreByIdOutput
-     */
-    'name': string;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof GenreByIdOutput
-     */
-    'mainBooks': Array<ShortBook>;
+	/**
+	 * genre id
+	 * @type {number}
+	 * @memberof GenreByIdOutput
+	 */
+	id: number
+	/**
+	 * genre name
+	 * @type {string}
+	 * @memberof GenreByIdOutput
+	 */
+	name: string
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof GenreByIdOutput
+	 */
+	mainBooks: Array<ShortBook>
 }
-

@@ -58,7 +58,6 @@ export const googleLogin = createAsyncThunk<
 
 export const logout = createAsyncThunk('auth/logout', () => {
 	try {
-		successToast('Logout successfully')
 		deleteTokensStorage()
 	} catch (error) {
 		errorToast(error)

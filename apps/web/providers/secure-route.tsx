@@ -20,7 +20,6 @@ export const loginRoute = (Component: FC) =>
 export const adminRoute = (Component: FC) =>
 	function (properties: NonNullable<unknown>) {
 		const { user, isLoading } = useAuth()
-		console.log('user', user)
 		const { logout } = useAction()
 		useLayoutEffect(() => {
 			const checkRefreshToken = async () => {
