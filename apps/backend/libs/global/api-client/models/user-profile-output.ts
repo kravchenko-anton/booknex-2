@@ -12,25 +12,22 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface UserProfileOutput
  */
 export interface UserProfileOutput {
-    /**
-     * 
-     * @type {number}
-     * @memberof UserProfileOutput
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserProfileOutput
-     */
-    'email': string;
+  /**
+   *
+   * @type {number}
+   * @memberof UserProfileOutput
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof UserProfileOutput
+   */
+  email: string;
 }
-

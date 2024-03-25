@@ -1,5 +1,5 @@
 import { useTemplate } from '@/app/admin/book/create/useTemplate';
-import api from '@/services';
+import api from '@/services/api';
 import { secureRoutes } from '@/utils/route';
 import { errorToast, successToast } from '@/utils/toast';
 import { zodResolver } from '@hookform/resolvers/zod';

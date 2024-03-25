@@ -7,7 +7,7 @@ import {
   CommandItem
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import api from '@/services';
+import api from '@/services/api';
 import { cn } from '@/utils';
 import { errorToast } from '@/utils/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -44,12 +44,12 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
   return (
     <>
       <h1 className='my-2 text-xl'>Genres</h1>
-      <div className='flex items-center gap-2 text-left'>
+      <div className='flex h-max items-center gap-2 text-left'>
         <div>
           <Popover>
-            <PopoverTrigger className='w-full'>
+            <PopoverTrigger className='h-full w-max'>
               <div
-                className={cn('border-bordered bg-foreground h-full rounded-lg border-2 px-4 py-2')}
+                className={cn('border-bordered bg-foreground  rounded border-2 px-2 py-0.5')}
                 {...properties}
               >
                 <span className='flex flex-wrap gap-2'>
@@ -98,7 +98,8 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
           </Popover>
         </div>
         <Button
-          size={'md'}
+          size={'sm'}
+          className='h-full'
           isLoading={updateGenreLoading}
           variant='muted'
           disabled={JSON.stringify(selectedGenres) === JSON.stringify(defaultGenres)}
@@ -111,7 +112,7 @@ const UpdateGenres: FC<UpdateGenresProperties> = ({
             });
           }}
         >
-          Edit
+          Update
         </Button>
       </div>
     </>

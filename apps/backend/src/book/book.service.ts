@@ -6,7 +6,6 @@ import { slugify } from '../../../../libs/global/utils/slugify';
 import { ReturnGenreObject } from '../genre/return.genre.object';
 import { StorageService } from '../storage/storage.service';
 import { StorageFolderEnum } from '../storage/storage.types';
-import { defaultReturnObject } from '../utils/common/return.default.object';
 import { serverError } from '../utils/helpers/call-error';
 import { ActivityService } from '../utils/services/activity/activity.service';
 import { PrismaService } from '../utils/services/prisma.service';
@@ -14,7 +13,11 @@ import type { CreateBookDto } from './dto/create.book.dto';
 import type { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto';
 import type { PayloadEBook } from './ebook/ebook.model';
 import { useGetEbook } from './helpers/get-ebook';
-import { returnBookObject } from './return.book.object';
+import {
+  catalogReturnObject,
+  infoByIdAdminReturnObject,
+  returnBookObject
+} from './return.book.object';
 
 @Injectable()
 export class BookService {
@@ -27,15 +30,15 @@ export class BookService {
   async findOne({
     where,
     select,
-    onlyVisible = true
+    adminVisible = false
   }: {
     where?: Prisma.BookWhereUniqueInput;
     select?: Prisma.BookSelect;
-    onlyVisible?: boolean;
+    adminVisible: boolean;
   }) {
     const book = await this.prisma.book.findUnique({
       where: {
-        ...(onlyVisible && { visible: true }),
+        ...(adminVisible ? {} : { visible: true }),
         ...where
       },
       select: {
@@ -54,17 +57,17 @@ export class BookService {
     select,
     orderBy,
     take = 20,
-    onlyVisible = true
+    adminVisible = false
   }: {
     where?: Prisma.BookWhereInput;
     select?: Prisma.BookSelect;
     orderBy?: Prisma.BookOrderByWithRelationInput;
     take?: number;
-    onlyVisible?: boolean;
+    adminVisible?: boolean;
   }) {
     return this.prisma.book.findMany({
       where: {
-        ...(onlyVisible && { visible: true }),
+        ...(adminVisible ? {} : { visible: true }),
         ...where
       },
       take,
@@ -76,27 +79,10 @@ export class BookService {
     });
   }
 
-  async checkExist(
-    id: number,
-    options?: {
-      visible?: boolean;
-    }
-  ) {
-    const exist = await this.prisma.book.findUnique({
-      where: { id, ...options },
-      select: {
-        id: true
-      }
-    });
-
-    if (!exist) throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong);
-
-    return !!exist;
-  }
-
   async infoById(id: number, userId: number) {
     const book = await this.findOne({
       where: { id: +id, visible: true },
+      adminVisible: false,
       select: {
         description: true,
         mainGenre: false,
@@ -117,53 +103,7 @@ export class BookService {
   }
 
   async infoByIdAdmin(id: number) {
-    const book = await this.findOne({
-      where: { id },
-      onlyVisible: false,
-      select: {
-        createdAt: true,
-        updatedAt: true,
-        rating: true,
-        readingTime: true,
-
-        genres: { select: ReturnGenreObject },
-        ebook: true,
-        description: true,
-        visible: true,
-        review: {
-          select: {
-            ...defaultReturnObject,
-            tags: true,
-            text: true,
-            rating: true,
-            user: {
-              select: {
-                id: true,
-                email: true
-              }
-            }
-          }
-        },
-        _count: {
-          select: {
-            finishedBy: true,
-            readingBy: true,
-            savedBy: true
-          }
-        },
-        activities: {
-          select: {
-            type: true,
-            id: true,
-            importance: true,
-            createdAt: true,
-            genreId: true,
-            bookId: true,
-            userId: true
-          }
-        }
-      }
-    });
+    const book = await this.findOne(infoByIdAdminReturnObject(id));
     const { activities, ...rest } = book;
 
     return {
@@ -176,36 +116,13 @@ export class BookService {
     const perPage = 20;
     const count = await this.prisma.book.count();
     return {
-      data: await this.findMany({
-        take: perPage,
-        onlyVisible: false,
-        select: {
-          genres: { select: ReturnGenreObject },
-          readingTime: true,
-          rating: true,
-          visible: true,
-          description: true,
-          mainGenre: {
-            select: ReturnGenreObject
-          }
-        },
-        orderBy: {
-          visible: 'asc'
-        },
-        ...(page && {
-          skip: page * perPage
-        }),
-        ...(searchTerm && {
-          where: {
-            title: {
-              contains: searchTerm
-            },
-            id: {
-              equals: Number.parseInt(searchTerm)
-            }
-          }
+      data: await this.findMany(
+        catalogReturnObject({
+          perPage,
+          page,
+          searchTerm
         })
-      }),
+      ),
       canLoadMore: page < Math.floor(count / perPage),
       totalPages: Math.floor(count / perPage)
     };
@@ -260,7 +177,10 @@ export class BookService {
   }
 
   async remove(id: number) {
-    await this.checkExist(id);
+    await this.checkExist({
+      adminVisible: true,
+      where: { id }
+    });
     await this.prisma.review.deleteMany({
       where: {
         bookId: id
@@ -270,11 +190,14 @@ export class BookService {
   }
 
   async updateEbook(id: number, dto: PayloadEBook[]) {
-    await this.checkExist(id);
+    await this.checkExist({
+      adminVisible: true,
+      where: { id }
+    });
     const { uploadedEbook, readingTime, chaptersCount } = useGetEbook(dto);
     const book = await this.findOne({
       where: { id },
-      onlyVisible: false,
+      adminVisible: true,
       select: {
         title: true
       }
@@ -302,6 +225,7 @@ export class BookService {
   async updatePicture(id: number, picture: Express.Multer.File) {
     const book = await this.findOne({
       where: { id },
+      adminVisible: true,
       select: {
         title: true
       }
@@ -325,7 +249,10 @@ export class BookService {
     });
   }
   async updateGenre(id: number, dto: UpdateGenreDto) {
-    await this.checkExist(id);
+    await this.checkExist({
+      adminVisible: true,
+      where: { id }
+    });
     const { genreIds, mainGenreId } = await this.getGenres(dto.genres);
     await this.activityService.create({
       type: Activities.updateGenre,
@@ -347,7 +274,10 @@ export class BookService {
     });
   }
   async update(id: number, dto: UpdateBookDto) {
-    await this.checkExist(id);
+    await this.checkExist({
+      adminVisible: true,
+      where: { id }
+    });
     await this.prisma.book.update({
       where: { id },
       data: dto
@@ -381,5 +311,24 @@ export class BookService {
       mainGenreId: mainGenre.id,
       genreIds: genres.map((id) => ({ id }))
     };
+  }
+
+  async checkExist({
+    where,
+    adminVisible = false
+  }: {
+    where: Prisma.BookWhereUniqueInput;
+    adminVisible?: boolean;
+  }) {
+    const exist = await this.prisma.book.findUnique({
+      where: { ...where, ...(adminVisible ? {} : { visible: true }) },
+      select: {
+        id: true
+      }
+    });
+
+    if (!exist) throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong);
+
+    return !!exist;
   }
 }

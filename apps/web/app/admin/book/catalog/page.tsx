@@ -5,7 +5,7 @@ import DataTable from '@/components/catalog/data-table';
 import DataTableHeader from '@/components/catalog/table-search';
 import { Button } from '@/components/ui';
 import { useTableParameters } from '@/hooks/useTableParameters';
-import api from '@/services';
+import api from '@/services/api';
 import { generateParameters } from '@/utils/generate-parameters';
 import { secureRoutes } from '@/utils/route';
 import { useQuery } from '@tanstack/react-query';

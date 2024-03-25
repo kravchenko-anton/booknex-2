@@ -4,7 +4,7 @@ import { Color } from 'global/colors';
 
 export const calculateProgress = `
 	 let currentScrollPosition = document.body.scrollTop;
-	 let chapters = document.querySelectorAll('div');
+	 let chapters = document.querySelectorAll('section');
 	 chapters = Array.from(chapters).filter(chapter => chapter.id);
 			 let currentChapterProgress = 0;
 			 let currentChapter = 0;

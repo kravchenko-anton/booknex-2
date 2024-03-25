@@ -34,13 +34,14 @@ export const columns = ({
   {
     id: 'id',
     enableHiding: false,
-    header: () => <p className='text-center text-xl'>id</p>,
+
+    header: () => <p className='text-center text-lg'>id</p>,
     cell: ({ row }) => <p className='text-2xl'>{row.original.id}</p>
   },
   {
     id: 'picture',
     enableHiding: false,
-    header: () => <p className='text-center text-xl'>Picture</p>,
+    header: () => <p className='text-center text-lg'>Picture</p>,
     cell: ({ row }) => (
       <img
         alt={row.original.title}
@@ -54,7 +55,7 @@ export const columns = ({
   },
   {
     id: 'Information',
-    header: () => <p className='text-center text-xl'>Information</p>,
+    header: () => <p className='text-center text-lg'>Information</p>,
     cell: ({ row }) => (
       <div>
         <h3 className='text-xl'>{row.original.title}</h3>
@@ -65,7 +66,7 @@ export const columns = ({
   {
     //rating
     id: 'rating',
-    header: () => <p className='text-center text-xl'>Rating</p>,
+    header: () => <p className='text-center text-lg'>Rating</p>,
     cell: ({ row }) => (
       <h1 className='text-warning flex items-center justify-center text-lg '>
         {row.original.rating}
@@ -74,7 +75,7 @@ export const columns = ({
   },
   {
     id: 'description',
-    header: () => <p className='text-center text-xl'>Description</p>,
+    header: () => <p className='text-center text-lg'>Description</p>,
     cell: ({ row }) => (
       <Drawer>
         <DrawerTrigger asChild>
@@ -95,7 +96,7 @@ export const columns = ({
           <MoreHorizontal
             height={40}
             width={40}
-            className='bg-muted border-bordered rounded-lg border-2 p-2'
+            className='bg-muted border-bordered rounded border-2 p-2'
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>

@@ -1,4 +1,4 @@
-import api from '@/services';
+import api from '@/services/api';
 import { errorToast } from '@/utils/toast';
 import { useMutation } from '@tanstack/react-query';
 import type { StorageFolderType } from '../../backend/src/storage/storage.types';

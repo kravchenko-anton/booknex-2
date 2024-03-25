@@ -1,8 +1,8 @@
 'use client';
 
-import { columns } from '@/app/admin/parser/columns';
+import { columns } from '@/app/admin/parser/catalog/columns';
+import { useQueries } from '@/app/admin/parser/catalog/useQueries';
 import ParseButton from '@/app/admin/parser/parse-modal/parse-button';
-import { useQueries } from '@/app/admin/parser/useQueries';
 import DataTable from '@/components/catalog/data-table';
 import DataTableHeader from '@/components/catalog/table-search';
 import { useTableParameters } from '@/hooks/useTableParameters';
@@ -53,7 +53,7 @@ const Parser: FC = () => {
               })
             )
           }
-          onClose={() => router.replace(secureRoutes.parserRoute)}
+          onClose={() => router.replace(secureRoutes.parserCatalogRoute)}
         />
       </DataTableHeader>
       <DataTable

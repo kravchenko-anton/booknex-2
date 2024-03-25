@@ -27,7 +27,7 @@ const Page = () => {
 
   return (
     <div className='flex h-screen w-screen items-center justify-center'>
-      <div className='bg-foreground  w-[450px] items-center justify-center rounded-lg p-8'>
+      <div className='bg-foreground  w-[450px] items-center justify-center rounded p-8'>
         <h1 className='mb-4 text-center text-3xl text-white'>Sign in</h1>
         <Field
           icon={Mail}

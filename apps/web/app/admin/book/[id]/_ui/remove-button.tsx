@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui';
-import api from '@/services';
+import api from '@/services/api';
 import { cn } from '@/utils';
 import { secureRoutes } from '@/utils/route';
 import { acceptToast, successToast } from '@/utils/toast';
@@ -25,7 +25,7 @@ export const RemoveButton: FC<BookVisibleButtonProperties> = (properties) => {
     <Button
       size={'sm'}
       isLoading={removeLoading}
-      className={cn('bg-danger rounded-lg text-white')}
+      className={cn('bg-danger rounded text-white')}
       onClick={() =>
         acceptToast('Are you sure you want to delete this book?', {
           action: {

@@ -12,43 +12,40 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface Chapter
  */
 export interface Chapter {
-    /**
-     * 
-     * @type {number}
-     * @memberof Chapter
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Chapter
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Chapter
-     */
-    'text': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Chapter
-     */
-    'romanNumber': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Chapter
-     */
-    'readingTime': number;
+  /**
+   *
+   * @type {number}
+   * @memberof Chapter
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof Chapter
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Chapter
+   */
+  text: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Chapter
+   */
+  romanNumber: string;
+  /**
+   *
+   * @type {number}
+   * @memberof Chapter
+   */
+  readingTime: number;
 }
-

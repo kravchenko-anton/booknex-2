@@ -107,11 +107,13 @@ export class UserService {
         where: {
           fullName: {
             contains: searchTerm
-          },
-          id: {
-            equals: Number.parseInt(searchTerm)
           }
-        }
+        },
+        ...(!Number.isNaN(+searchTerm) && {
+          where: {
+            id: +searchTerm
+          }
+        })
       })
     });
     return {

@@ -10,7 +10,7 @@ import UpdatePicture from '@/app/admin/book/[id]/_ui/update-picture';
 import { VisibleButton } from '@/app/admin/book/[id]/_ui/visible-button';
 import ActivityList from '@/components/activity-list';
 import Loader from '@/components/ui/loader/loader';
-import api from '@/services';
+import api from '@/services/api';
 import { validateNumberParameter } from '@/utils/validate-parameter';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
@@ -37,9 +37,14 @@ const Page = () => {
   return (
     <div>
       <h1 className='text-3xl'>Book overview</h1>
-      <div className='mt-4 flex  gap-5 px-2 md:flex'>
+      <div className='mt-4 gap-5 px-2 md:flex md:flex'>
         <div>
-          <UpdatePicture picture={book.picture} id={book.id} onSuccess={onUpdateSuccess} />
+          <UpdatePicture
+            bookTitle={book.title}
+            picture={book.picture}
+            id={book.id}
+            onSuccess={onUpdateSuccess}
+          />
           <div className='mt-4 px-0.5'>
             <BookStatistic
               readingTime={book.readingTime}

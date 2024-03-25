@@ -13,17 +13,16 @@ const Icon: FC<IconProperties> = ({
   stroke = InnerColor[variant],
   className = '',
   fill = false,
-  fullRounded = false,
+
   noPadding = false,
   ...properties
 }) => (
   <Pressable
     className={cn(
-      'items-center justify-center rounded-lg',
+      'items-center justify-center rounded',
       properties.disabled && 'opacity-50',
       noPadding ? 'p-0' : settings.padding[size],
       settings.colors[variant],
-      fullRounded && 'rounded-full',
       className
     )}
     {...properties}

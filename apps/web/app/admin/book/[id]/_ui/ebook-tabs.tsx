@@ -1,7 +1,7 @@
 import Editor from '@/app/admin/book/_shared/book-editor/editor';
 import { Button } from '@/components/ui';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import api from '@/services';
+import api from '@/services/api';
 import { errorToast } from '@/utils/toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { PayloadEBook } from 'global/api-client';

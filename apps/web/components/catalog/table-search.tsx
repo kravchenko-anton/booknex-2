@@ -20,7 +20,7 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
     }
   });
   return (
-    <div className=' flex w-full items-center justify-between  p-3'>
+    <div className=' flex w-full items-center justify-between  pb-2'>
       <h1 className='text-3xl font-medium'>{title}</h1>
       <div className='flex gap-5'>
         <form onSubmit={handleSubmit(onSearchSubmit)}>

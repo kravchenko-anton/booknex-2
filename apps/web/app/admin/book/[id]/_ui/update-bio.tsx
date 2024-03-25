@@ -1,5 +1,5 @@
 import { Button, Field, FormTextArea } from '@/components/ui';
-import api from '@/services';
+import api from '@/services/api';
 import { cn } from '@/utils';
 import { getDirtyValues } from '@/utils/form';
 
@@ -32,6 +32,7 @@ const UpdateBio: FC<UpdateBioProperties> = (properties) => {
       api.book.update(id, payload),
     onSuccess: properties.onSuccess
   });
+
   const {
     handleSubmit,
     control,
@@ -50,7 +51,7 @@ const UpdateBio: FC<UpdateBioProperties> = (properties) => {
 
   return (
     <div>
-      <div className='mb-4 flex flex-wrap items-center justify-center  gap-2 md:flex-nowrap'>
+      <div className='mb-4 flex-wrap items-center justify-center gap-2  md:flex md:flex-nowrap'>
         <div className='md:w-4/5 '>
           <h1 className='mb-2 text-xl'>Title</h1>
           <Field control={control} name='title' />
@@ -74,7 +75,7 @@ const UpdateBio: FC<UpdateBioProperties> = (properties) => {
           name='description'
           className='text-md'
           style={{
-            height: 250
+            height: 180
           }}
         />
       </div>

@@ -12,40 +12,38 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
 import { OutputChapter } from './output-chapter';
 
 /**
- * 
+ *
  * @export
  * @interface EbookByIdOutput
  */
 export interface EbookByIdOutput {
-    /**
-     * book title
-     * @type {string}
-     * @memberof EbookByIdOutput
-     */
-    'title': string;
-    /**
-     * book picture
-     * @type {string}
-     * @memberof EbookByIdOutput
-     */
-    'picture': string;
-    /**
-     * book file
-     * @type {Array<string>}
-     * @memberof EbookByIdOutput
-     */
-    'file': Array<string>;
-    /**
-     * book chapters
-     * @type {Array<OutputChapter>}
-     * @memberof EbookByIdOutput
-     */
-    'chapters': Array<OutputChapter>;
+  /**
+   * book title
+   * @type {string}
+   * @memberof EbookByIdOutput
+   */
+  title: string;
+  /**
+   * book picture
+   * @type {string}
+   * @memberof EbookByIdOutput
+   */
+  picture: string;
+  /**
+   * book file
+   * @type {Array<string>}
+   * @memberof EbookByIdOutput
+   */
+  file: Array<string>;
+  /**
+   * book chapters
+   * @type {Array<OutputChapter>}
+   * @memberof EbookByIdOutput
+   */
+  chapters: Array<OutputChapter>;
 }
-

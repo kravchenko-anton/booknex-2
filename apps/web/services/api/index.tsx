@@ -1,4 +1,4 @@
-import instance from '@/services/interceptors';
+import instance from '@/services/api/interceptors';
 import {
   AuthApi,
   BookApi,

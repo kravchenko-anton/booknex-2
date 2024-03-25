@@ -1,4 +1,4 @@
-import api from '@/services';
+import api from '@/services/api';
 import { successToast } from '@/utils/toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 

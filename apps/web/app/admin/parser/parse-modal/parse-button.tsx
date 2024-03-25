@@ -1,7 +1,7 @@
 import CallParserDialog from '@/app/admin/parser/parse-modal/parse-sheet';
 import { Button } from '@/components/ui';
 import type { DialogProperties } from '@/components/ui/base-components-types';
-import api from '@/services';
+import api from '@/services/api';
 import { successToast } from '@/utils/toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 

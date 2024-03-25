@@ -12,37 +12,34 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface Review
  */
 export interface Review {
-    /**
-     * review id
-     * @type {number}
-     * @memberof Review
-     */
-    'id': number;
-    /**
-     * review tags
-     * @type {Array<string>}
-     * @memberof Review
-     */
-    'tags': Array<string>;
-    /**
-     * review text
-     * @type {string}
-     * @memberof Review
-     */
-    'text': string;
-    /**
-     * review rating
-     * @type {number}
-     * @memberof Review
-     */
-    'rating': number;
+  /**
+   * review id
+   * @type {number}
+   * @memberof Review
+   */
+  id: number;
+  /**
+   * review tags
+   * @type {Array<string>}
+   * @memberof Review
+   */
+  tags: Array<string>;
+  /**
+   * review text
+   * @type {string}
+   * @memberof Review
+   */
+  text: string;
+  /**
+   * review rating
+   * @type {number}
+   * @memberof Review
+   */
+  rating: number;
 }
-

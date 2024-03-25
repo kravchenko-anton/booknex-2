@@ -1,4 +1,4 @@
-import api from '@/services/index';
+import api from '@/services/api';
 import { errorToast, successToast } from '@/utils/toast';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AuthDto, AuthOutput } from 'global/api-client';

@@ -22,11 +22,11 @@ export const Category = ({
   className,
   ...properties
 }: PropsWithChildren<ListCategoryItemType>) => (
-  <View key={title} className={cn('mb-2 w-full rounded-lg', className)} {...properties}>
+  <View key={title} className={cn('mb-2 w-full rounded', className)} {...properties}>
     <Title size={'xxl'} weight='bold' className='mb-2'>
       {title}
     </Title>
-    <View className='bg-foreground border-bordered rounded-lg border-[1px] p-1.5'>{children}</View>
+    <View className='bg-foreground border-bordered rounded border-[1px] p-1.5'>{children}</View>
   </View>
 );
 //TODO: сделать тут анимированный компонент где будет анимация при нажатии и смена на серый цвет внутрених компонентов

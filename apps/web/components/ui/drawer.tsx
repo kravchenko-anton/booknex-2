@@ -45,7 +45,7 @@ const DrawerContent = forwardRef<
     <DrawerPrimitive.Content
       ref={reference}
       className={cn(
-        'bg-foreground border-bordered  focus:shadow-outline fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border focus:outline-0',
+        'bg-foreground border-bordered  focus:shadow-outline fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-md border focus:outline-0',
         className
       )}
       {...properties}

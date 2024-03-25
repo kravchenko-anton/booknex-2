@@ -70,7 +70,7 @@ export class EbookService {
               name,
               romanNumber,
               readingTime
-            }) => `<div id="${name + ' ' + title}">
+            }) => `<section id="${name + ' ' + title}">
 			<div style="
 	width: 100%;
 	height: 80px;
@@ -80,11 +80,11 @@ export class EbookService {
 	<div>
 	<a style="margin: 0; padding: 0; font-size: 18px; margin-bottom:4px">${name}</a>
 	<p style="margin: 0; padding: 0;">${minutesToTime(readingTime)}</p>
-</div>
+  </div>
 	<h2 style="margin: 0; padding: 0;">${romanNumber}</h2>
 </div>
  ${text}
-</div>`
+</section>`
           )
           .join(' ')
       ),

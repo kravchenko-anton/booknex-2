@@ -6,7 +6,7 @@ import {
   CommandItem
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import api from '@/services';
+import api from '@/services/api';
 import { cn } from '@/utils';
 import { useQuery } from '@tanstack/react-query';
 import { Color } from 'global/colors';
@@ -39,7 +39,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({ disable = false, control, ..
               <PopoverTrigger className='w-full'>
                 <div
                   className={cn(
-                    'border-muted h-full rounded-lg border-2 px-4 py-3',
+                    'border-muted h-full rounded border-2 px-4 py-3',
                     disable && 'cursor-not-allowed'
                   )}
                   {...properties}

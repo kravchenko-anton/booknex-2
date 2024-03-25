@@ -23,12 +23,12 @@ export const columns = ({
   {
     id: 'id',
     enableHiding: false,
-    header: () => <p className='text-center  text-xl'>id</p>,
+    header: () => <p className='text-center text-lg'>id</p>,
     cell: ({ row }) => <p className='text-center text-2xl'>{row.original.id}</p>
   },
   {
     id: 'picture',
-    header: () => <p className='text-center text-xl'>Picture</p>,
+    header: () => <p className='text-center text-lg'>Picture</p>,
     enableHiding: false,
     cell: ({ row }) => (
       <img
@@ -36,14 +36,14 @@ export const columns = ({
         src={getFileUrl(row.original.picture || 'fallback.png')}
         width={50}
         height={50}
-        className=' mx-auto h-[60px] w-[60px] rounded-full'
+        className=' mx-auto h-[60px] w-[60px] rounded-md'
       />
     )
   },
   {
     id: 'Bio',
     enableHiding: false,
-    header: () => <p className='text-center text-xl'>Info</p>,
+    header: () => <p className='text-center text-lg'>Info</p>,
     cell: ({ row }) => (
       <div className=' gap-4'>
         <h2 className='text-lg'>{row.original.fullName}</h2>
@@ -104,7 +104,7 @@ export const columns = ({
           <MoreHorizontal
             height={40}
             width={40}
-            className='bg-muted border-bordered rounded-lg border-2 p-2'
+            className='bg-muted border-bordered rounded border-2 p-2'
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>

@@ -17,7 +17,7 @@ export const iconsList = [
   { icon: Graph, link: '/admin/dashboard', name: 'Dashboard' },
   { icon: User, link: '/admin/user/catalog', name: 'Users' },
   { icon: Book, link: '/admin/book/catalog', name: 'Books' },
-  { icon: Settings, link: '/admin/parser', name: 'Parser' }
+  { icon: Settings, link: '/admin/parser/catalog', name: 'Parser' }
   // { icon: Library, link: '/admin/collections', name: 'Collections' }
 ];
 
@@ -33,7 +33,7 @@ export const Sidebar: FC = () => {
           type='button'
           onClick={() => router.push(secureRoutes.dashboard)}
         >
-          <span className='bg-muted rounded-lg  p-1 px-2 text-[21px] text-white  xl:w-full '>
+          <span className='bg-muted rounded  p-1 px-2 text-[21px] text-white  xl:w-full '>
             {appName} 🧑‍💻
           </span>
         </button>
@@ -78,7 +78,7 @@ export const Sidebar: FC = () => {
               <MoreHorizontal
                 height={40}
                 width={40}
-                className='bg-muted border-bordered rounded-lg border-2 p-2'
+                className='bg-muted border-bordered rounded border-2 p-2'
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>

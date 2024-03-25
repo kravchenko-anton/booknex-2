@@ -12,21 +12,18 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface Check503ResponseInfoValue
  */
 export interface Check503ResponseInfoValue {
-    [key: string]: any;
+  [key: string]: any;
 
-    /**
-     * 
-     * @type {string}
-     * @memberof Check503ResponseInfoValue
-     */
-    'status': string;
+  /**
+   *
+   * @type {string}
+   * @memberof Check503ResponseInfoValue
+   */
+  status: string;
 }
-

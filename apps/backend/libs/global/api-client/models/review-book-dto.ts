@@ -12,31 +12,28 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface ReviewBookDto
  */
 export interface ReviewBookDto {
-    /**
-     * rating
-     * @type {number}
-     * @memberof ReviewBookDto
-     */
-    'rating': number;
-    /**
-     * tags
-     * @type {Array<string>}
-     * @memberof ReviewBookDto
-     */
-    'tags': Array<string>;
-    /**
-     * comment
-     * @type {string}
-     * @memberof ReviewBookDto
-     */
-    'comment'?: string;
+  /**
+   * rating
+   * @type {number}
+   * @memberof ReviewBookDto
+   */
+  rating: number;
+  /**
+   * tags
+   * @type {Array<string>}
+   * @memberof ReviewBookDto
+   */
+  tags: Array<string>;
+  /**
+   * comment
+   * @type {string}
+   * @memberof ReviewBookDto
+   */
+  comment?: string;
 }
-

@@ -31,7 +31,7 @@ const Alert: FC<AlertProperties> = ({ icon: Icon, onAccept, onClose, ...properti
       onTouchStart={onClose}
     >
       <View
-        className='bg-foreground z-50 w-9/12 items-center rounded-xl p-4'
+        className='bg-foreground z-50 w-9/12 items-center rounded p-4'
         onTouchStart={(event) => event.stopPropagation()}
       >
         <Icon className='mt-2' width={40} height={40} color={Color.gray} />

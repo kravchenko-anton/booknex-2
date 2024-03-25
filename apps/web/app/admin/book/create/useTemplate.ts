@@ -1,4 +1,4 @@
-import api from '@/services';
+import api from '@/services/api';
 import { validateNumberParameter } from '@/utils/validate-parameter';
 import { useQuery } from '@tanstack/react-query';
 import type { CreateBookValidationType } from 'global/dto/book/create.book.dto';

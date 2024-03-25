@@ -12,28 +12,26 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
 import { OutputChapterChild } from './output-chapter-child';
 
 /**
- * 
+ *
  * @export
  * @interface OutputChapter
  */
 export interface OutputChapter {
-    /**
-     * chapter title
-     * @type {string}
-     * @memberof OutputChapter
-     */
-    'title': string;
-    /**
-     * chapter children
-     * @type {Array<OutputChapterChild>}
-     * @memberof OutputChapter
-     */
-    'children': Array<OutputChapterChild>;
+  /**
+   * chapter title
+   * @type {string}
+   * @memberof OutputChapter
+   */
+  title: string;
+  /**
+   * chapter children
+   * @type {Array<OutputChapterChild>}
+   * @memberof OutputChapter
+   */
+  children: Array<OutputChapterChild>;
 }
-

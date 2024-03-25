@@ -12,40 +12,38 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
 import { Check503ResponseInfoValue } from './check503-response-info-value';
 
 /**
- * 
+ *
  * @export
  * @interface Check503Response
  */
 export interface Check503Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof Check503Response
-     */
-    'status'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: Check503ResponseInfoValue; }}
-     * @memberof Check503Response
-     */
-    'info'?: { [key: string]: Check503ResponseInfoValue; } | null;
-    /**
-     * 
-     * @type {{ [key: string]: Check503ResponseInfoValue; }}
-     * @memberof Check503Response
-     */
-    'error'?: { [key: string]: Check503ResponseInfoValue; } | null;
-    /**
-     * 
-     * @type {{ [key: string]: Check503ResponseInfoValue; }}
-     * @memberof Check503Response
-     */
-    'details'?: { [key: string]: Check503ResponseInfoValue; };
+  /**
+   *
+   * @type {string}
+   * @memberof Check503Response
+   */
+  status?: string;
+  /**
+   *
+   * @type {{ [key: string]: Check503ResponseInfoValue; }}
+   * @memberof Check503Response
+   */
+  info?: { [key: string]: Check503ResponseInfoValue } | null;
+  /**
+   *
+   * @type {{ [key: string]: Check503ResponseInfoValue; }}
+   * @memberof Check503Response
+   */
+  error?: { [key: string]: Check503ResponseInfoValue } | null;
+  /**
+   *
+   * @type {{ [key: string]: Check503ResponseInfoValue; }}
+   * @memberof Check503Response
+   */
+  details?: { [key: string]: Check503ResponseInfoValue };
 }
-

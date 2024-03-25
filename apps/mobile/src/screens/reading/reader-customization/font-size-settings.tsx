@@ -23,7 +23,7 @@ export const FontSizeSettings: FC<FontSizeSettingsProperties> = ({
     </Title>
     <View className='flex-row items-center'>
       <TouchableOpacity
-        className='rounded-l-lg p-1 px-4'
+        className='rounded-l-md p-1 px-4'
         disabled={activeFontSize === fontSizeSettings.min}
         style={{
           backgroundColor:
@@ -36,7 +36,7 @@ export const FontSizeSettings: FC<FontSizeSettingsProperties> = ({
         <Minus width={30} color={colorScheme.colorPalette.text} strokeWidth={2} height={30} />
       </TouchableOpacity>
       <TouchableOpacity
-        className='rounded-r-lg p-1 px-4'
+        className='rounded-r-md p-1 px-4'
         disabled={activeFontSize === fontSizeSettings.max}
         style={{
           backgroundColor:

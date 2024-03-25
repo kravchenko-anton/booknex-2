@@ -14,7 +14,7 @@ const Input: FC<InputProperties> = ({
   <div className='relative flex items-center justify-center'>
     <input
       className={cn(
-        'placeholder-gray focus:shadow-outline w-full rounded-lg border-0 px-4 py-2 text-sm text-white duration-200 ease-linear focus:outline-0',
+        'placeholder-gray focus:shadow-outline w-full rounded border-0 px-4 py-1.5 text-sm text-white duration-200 ease-linear focus:outline-0',
         Icon && 'pl-9',
         isError && 'border-danger border-2',
         settings.colors[variant],

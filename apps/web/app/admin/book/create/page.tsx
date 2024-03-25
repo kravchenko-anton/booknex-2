@@ -12,6 +12,7 @@ import type { FC } from 'react';
 const Page: FC = () => {
   const form = useCreateForm();
   console.debug(form.errors);
+
   return (
     <div>
       <h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
@@ -19,7 +20,7 @@ const Page: FC = () => {
         <div>
           <div>
             <h1 className='mt-2  text-xl'>Cover</h1>
-            <SelectPicture control={form.control} />
+            <SelectPicture control={form.control} bookTitle={form.watch('title')} />
           </div>
           <h1 className='mb-2 mt-2  text-xl'>Genres</h1>
 

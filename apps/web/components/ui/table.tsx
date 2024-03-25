@@ -4,15 +4,16 @@ import { forwardRef } from 'react';
 
 const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
   ({ className, ...properties }, reference) => (
-    <div className=' border-collapse overflow-y-scroll'>
+    <div className=' border-bordered border-collapse overflow-auto rounded border-[1px]'>
       <table
         ref={reference}
-        className={cn(' relative w-full caption-bottom  rounded-lg text-sm', className)}
+        className={cn(' relative w-full caption-bottom   rounded text-sm', className)}
         {...properties}
       />
     </div>
   )
 );
+
 Table.displayName = 'Table';
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
@@ -45,7 +46,7 @@ const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElem
     <tr
       ref={reference}
       className={cn(
-        ' border-bordered bg-foreground  border-2  border-x border-b  transition-colors',
+        ' border-bordered bg-foreground  border-2  border-x-0 border-b border-t-0  transition-colors',
         className
       )}
       {...properties}
@@ -59,7 +60,7 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
     <th
       ref={reference}
       className={cn(
-        'border-bordered  bg-muted  h-10 overflow-hidden border-b-2 px-3 py-3 text-center align-middle  text-white  [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        'border-bordered bg-muted overflow-hidden border-b-2 border-t-0 px-3 py-1 text-center align-middle  text-white  [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
         className
       )}
       {...properties}

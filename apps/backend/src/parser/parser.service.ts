@@ -39,18 +39,18 @@ export class ParserService {
                 }
               },
               {
-                id: {
-                  equals: Number.parseInt(searchTerm)
-                }
-              },
-              {
                 title: {
                   contains: searchTerm,
                   mode: 'insensitive'
                 }
               }
             ]
-          }
+          },
+          ...(!Number.isNaN(+searchTerm) && {
+            where: {
+              id: +searchTerm
+            }
+          })
         })
       }),
       canLoadMore: page < Math.floor((await this.prisma.bookTemplate.count()) / perPage),

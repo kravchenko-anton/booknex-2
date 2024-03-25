@@ -16,12 +16,13 @@ const Command = forwardRef<
   <CommandPrimitive
     ref={reference}
     className={cn(
-      'bg-foreground text-gray flex h-full w-full flex-col overflow-hidden rounded-lg',
+      'bg-foreground text-gray flex h-full w-full flex-col overflow-hidden rounded',
       className
     )}
     {...properties}
   />
 ));
+
 Command.displayName = CommandPrimitive.displayName;
 
 type CommandDialogProperties = DialogProps;
@@ -45,7 +46,7 @@ const CommandInput = forwardRef<
     <CommandPrimitive.Input
       ref={reference}
       className={cn(
-        'flex h-10 w-full rounded-lg bg-transparent py-3 text-sm outline-none placeholder:text-white disabled:cursor-not-allowed disabled:opacity-50',
+        'flex h-10 w-full rounded bg-transparent py-3 text-sm outline-none placeholder:text-white disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...properties}
@@ -112,7 +113,7 @@ const CommandItem = forwardRef<
   <CommandPrimitive.Item
     ref={reference}
     className={cn(
-      'aria-selected:bg-muted aria-selected:text-gray relative flex cursor-default select-none items-center rounded-lg px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'aria-selected:bg-muted aria-selected:text-gray relative flex cursor-default select-none items-center rounded px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className
     )}
     {...properties}

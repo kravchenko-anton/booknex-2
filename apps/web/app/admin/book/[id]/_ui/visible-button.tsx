@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui';
-import api from '@/services';
+import api from '@/services/api';
 import { cn } from '@/utils';
 import { useMutation } from '@tanstack/react-query';
 import type { FC } from 'react';

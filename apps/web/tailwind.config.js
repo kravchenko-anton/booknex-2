@@ -13,7 +13,12 @@ module.exports = {
       ...Colors,
       transparent: tailwindcssColors.transparent
     },
-
+    borderRadius: {
+      none: '0',
+      DEFAULT: '0.25rem',
+      md: '0.375rem',
+      full: '9999px'
+    },
     extend: {
       keyframes: {
         'accordion-down': {

@@ -9,7 +9,6 @@ export interface IconProperties extends PressableDefaultProperties, SizeProperti
   fatness?: number;
   fill?: boolean;
   stroke?: string;
-  fullRounded?: boolean;
   noPadding?: boolean;
   variant?: ClampPaletteType | 'white-outlined' | 'transparent';
 }

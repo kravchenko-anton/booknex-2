@@ -1,12 +1,12 @@
-import api from '@/services';
+import api from '@/services/api';
 import { useMutation } from '@tanstack/react-query';
 import { getFileUrl } from 'global/api-config';
-import Image from 'next/image';
 import type { FC } from 'react';
 
 interface UpdatePictureProperties {
   picture: string;
   id: number;
+  bookTitle: string;
   onSuccess: () => void;
 }
 
@@ -23,19 +23,21 @@ const UpdatePicture: FC<UpdatePictureProperties> = (properties) => {
       <input
         type='file'
         className='hidden'
-        disabled={updatePictureLoading}
+        disabled={updatePictureLoading || !properties.bookTitle}
         onChange={async ({ target }) => {
           const file = target?.files?.[0];
           if (!file) return;
           await updatePicture({
             id: properties.id,
-            payload: file
+            payload: new File([file], `${properties.bookTitle}.png`, {
+              type: 'image/png'
+            })
           });
         }}
       />
-      <Image
+      <img
         width={220}
-        className='border-muted cursor-pointer rounded-lg border-2'
+        className='border-muted cursor-pointer rounded border-2'
         height={300}
         src={getFileUrl(properties.picture)}
         alt='Cover'
@@ -44,6 +46,9 @@ const UpdatePicture: FC<UpdatePictureProperties> = (properties) => {
           element?.click();
         }}
       />
+      {!properties.bookTitle && (
+        <p className='text-danger mt-0.5 text-xs italic'>{'Please select title of book'}</p>
+      )}
     </div>
   );
 };
