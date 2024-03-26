@@ -8,6 +8,7 @@ import {
 import { useAction } from '@/hooks';
 import { cn } from '@/utils';
 import { secureRoutes } from '@/utils/route';
+import { Color } from 'global/colors';
 import { appName } from 'global/utils';
 import { Book, Graph, Logout, MoreHorizontal, Settings, User } from 'icons';
 import { usePathname, useRouter } from 'next/navigation';
@@ -27,7 +28,7 @@ export const Sidebar: FC = () => {
   const router = useRouter();
   return (
     <div className='z-0 h-full w-full justify-center duration-100 ease-linear xl:fixed xl:w-[190px] xl:flex-col'>
-      <div className='bg-foreground border-muted flex w-full justify-between border-b-2 p-5 text-sm xl:h-full xl:flex-col xl:border-r-2'>
+      <div className='bg-foreground border-bordered flex w-full justify-between border-b-2 p-5 text-sm xl:h-full xl:flex-col xl:border-r-2'>
         <button
           className='flex cursor-pointer items-center text-2xl font-bold xl:mb-12'
           type='button'
@@ -78,7 +79,8 @@ export const Sidebar: FC = () => {
               <MoreHorizontal
                 height={40}
                 width={40}
-                className='bg-muted border-bordered rounded border-2 p-2'
+                color={Color.white}
+                className='bg-muted  border-bordered rounded-md border-[1px] p-1.5'
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>

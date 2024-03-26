@@ -96,7 +96,7 @@ export const columns = ({
           <MoreHorizontal
             height={40}
             width={40}
-            className='bg-muted border-bordered rounded border-2 p-2'
+            className='bg-muted border-bordered rounded border-[1px] p-2'
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>

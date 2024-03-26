@@ -19,9 +19,12 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
       searchTerm: defaultTerm
     }
   });
+
   return (
     <div className=' flex w-full items-center justify-between  pb-2'>
-      <h1 className='text-3xl font-medium'>{title}</h1>
+      <div>
+        <h1 className='hidden text-3xl font-medium sm:block'>{title}</h1>
+      </div>
       <div className='flex gap-5'>
         <form onSubmit={handleSubmit(onSearchSubmit)}>
           <Field

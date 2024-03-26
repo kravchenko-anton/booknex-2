@@ -26,7 +26,7 @@ const Parser: FC = () => {
     columns: columns({
       remove: (id: number) => deleteTemplate(id),
       removeLoading: deleteTemplateLoading,
-      useAsTemplate: (id) => router.push(`${secureRoutes.bookRoute}/create?template=${id}`)
+      useAsTemplate: (id) => router.push(secureRoutes.bookCreateWithTemplateRoute(id))
     }),
     getCoreRowModel: getCoreRowModel()
   });

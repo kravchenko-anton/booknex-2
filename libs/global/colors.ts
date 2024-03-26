@@ -7,11 +7,11 @@ export const Color = {
 
   black: '#000000' as const,
   gray: '#9F9F9F' as const,
-  white: '#ffffff' as const,
+  white: '#F4F3F2' as const,
 
   danger: '#DC3F41' as const,
   success: '#4CAF50' as const,
-  warning: '#FFBE0B' as const,
+  warning: '#f48c06' as const,
   transparent: 'transparent' as const
 };
 

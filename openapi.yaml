@@ -322,74 +322,6 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/update-genre/{id}":
-    put:
-      operationId: updateGenre
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateGenreDto"
-      responses:
-        "200":
-          description: ""
-      tags:
-        - 📙 book
-      security:
-        - bearer: []
-  "/api/book/admin/update-picture/{id}":
-    put:
-      operationId: updatePicture
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              $ref: "#/components/schemas/UpdatePictureDto"
-      responses:
-        "200":
-          description: ""
-      tags:
-        - 📙 book
-      security:
-        - bearer: []
-  "/api/book/admin/update-ebook/{id}":
-    post:
-      operationId: updateEbook
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: number
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/PayloadEBook"
-      responses:
-        "200":
-          description: ""
-      tags:
-        - 📙 book
-      security:
-        - bearer: []
   "/api/book/admin/remove/{id}":
     delete:
       operationId: remove
@@ -1408,6 +1340,10 @@ components:
           type: string
           example: title
           description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
         author:
           type: string
           example: author
@@ -1424,9 +1360,6 @@ components:
           type: boolean
           example: true
           description: book visibility
-    UpdateGenreDto:
-      type: object
-      properties:
         genres:
           description: Array of genres
           example:
@@ -1436,15 +1369,10 @@ components:
           type: array
           items:
             type: number
-    UpdatePictureDto:
-      type: object
-      properties:
-        picture:
-          type: string
-          description: picture
-          format: binary
-      required:
-        - picture
+        ebook:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayloadEBook"
     GoogleAuthDto:
       type: object
       properties:

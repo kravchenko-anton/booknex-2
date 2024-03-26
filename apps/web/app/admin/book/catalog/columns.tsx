@@ -85,7 +85,7 @@ export const columns = ({
     header: () => <p className='text-center text-lg'>Rating</p>,
     cell: ({ row }) => (
       <p className=' text-center text-xl font-light'>
-        <b className='text-warning font-bold'>{row.original.rating} </b>
+        <b className='text-warning font-bold'>{row.original.rating}</b>
       </p>
     )
   },

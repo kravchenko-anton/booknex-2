@@ -14,7 +14,7 @@ const PageMarginIcon: FC<PageMarginIconProperties> = ({
   ...properties
 }) => (
   <AnimatedPress
-    className='border-gray m-0 h-[32px] justify-between border-2 border-b-0'
+    className='border-gray m-0 h-[32px] justify-between border-[1px] border-b-0'
     {...properties}
   >
     {Array.from({ length: 4 })

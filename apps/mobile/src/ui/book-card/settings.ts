@@ -1,4 +1,4 @@
-import type { BookCardProperties } from '@/ui/book-card/types';
+import type { BookCardProperties } from '../../ui/book-card/types';
 
 export const settings: {
   width: Record<BookCardProperties['size'], number>;

@@ -24,12 +24,12 @@ const Page: FC = () => {
   const table = useReactTable({
     data: books?.data ?? [],
     columns: columns({
-      preview: (id) => router.push(`${secureRoutes.bookRoute}/${id}`)
+      preview: (id) => router.push(secureRoutes.bookOverviewRoute(id))
     }),
     getCoreRowModel: getCoreRowModel()
   });
 
-  const onCreateButtonClick = () => router.push(`${secureRoutes.bookRoute}/create`);
+  const onCreateButtonClick = () => router.push(secureRoutes.bookCreateRoute);
 
   return (
     <div className='w-full'>

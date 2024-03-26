@@ -39,7 +39,7 @@ export const FontStyleSettings: FC<FontStyleSettingsProperties> = ({
               : Color.transparent
         }}
         className={cn(
-          ' mb-2 mr-2 rounded border-2 border-transparent p-1 px-4',
+          ' mb-2 mr-2 rounded border-[1px] border-transparent p-1 px-4',
           item.value === activeFont.fontFamily && 'border-primary '
         )}
         onPress={() =>

@@ -1,21 +1,19 @@
 import { useUploadFile } from '@/hooks/useFileUpload';
 import { getFileUrl } from 'global/api-config';
-import type { CreateBookValidationType } from 'global/dto/book/create.book.dto';
-import type { FC } from 'react';
 import { Controller, type Control } from 'react-hook-form';
 
 interface SelectPictureProperties {
   disable?: boolean;
-  bookTitle: string;
-  control: Control<CreateBookValidationType, any, CreateBookValidationType>;
+  bookTitle: string | undefined;
+  control: Control<any>;
 }
 
-export const SelectPicture: FC<SelectPictureProperties> = ({ control, disable, bookTitle }) => {
+export const SelectPicture = ({ bookTitle, control, disable }: SelectPictureProperties) => {
   const { upload, uploadLoading } = useUploadFile();
   return (
     <Controller
       control={control}
-      name='picture'
+      name={'picture'}
       render={({ field: { value = '', onChange: setPicture }, fieldState: { error } }) => (
         <>
           <div>
@@ -38,7 +36,7 @@ export const SelectPicture: FC<SelectPictureProperties> = ({ control, disable, b
               />
               <img
                 width={220}
-                className='border-muted  cursor-pointer rounded border-2'
+                className='border-bordered  cursor-pointer rounded border-[1px]'
                 height={300}
                 src={getFileUrl(value)}
                 alt='Cover'

@@ -11,10 +11,10 @@ module.exports = {
       primary: '#306A9C',
       black: '#000000',
       gray: '#9F9F9F',
-      white: '#ffffff',
+      white: '#F4F3F2',
       danger: '#DC3F41',
       success: '#4CAF50',
-      warning: '#FFBE0B',
+      warning: '#f48c06',
       transparent: colors.transparent
     },
     //TODO: пофиксить border radius и сделать зависимость

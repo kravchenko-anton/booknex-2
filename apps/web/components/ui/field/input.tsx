@@ -11,12 +11,12 @@ const Input: FC<InputProperties> = ({
   variant = 'foreground',
   ...properties
 }) => (
-  <div className='relative flex items-center justify-center'>
+  <div className='relative flex h-full w-full cursor-text items-center justify-center'>
     <input
       className={cn(
         'placeholder-gray focus:shadow-outline w-full rounded border-0 px-4 py-1.5 text-sm text-white duration-200 ease-linear focus:outline-0',
         Icon && 'pl-9',
-        isError && 'border-danger border-2',
+        isError && 'border-danger border-[1px]',
         settings.colors[variant],
         properties.disabled && 'cursor-not-allowed',
         className

@@ -22,7 +22,7 @@ export const Head: FC<PropsWithChildren<ViewDefaultProperties>> = ({
 }) => (
   <View
     className={cn(
-      'bg-background  border-muted z-50 w-full flex-row items-center justify-between border-b-[1px]',
+      'bg-background  border-bordered z-50 w-full flex-row items-center justify-between border-b-[1px]',
       className
     )}
     {...properties}

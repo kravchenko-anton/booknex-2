@@ -52,7 +52,6 @@ models/short-genre.ts
 models/stored-ebook.ts
 models/unfold-output.ts
 models/update-book-dto.ts
-models/update-genre-dto.ts
 models/update-recommendation-dto.ts
 models/upload-output-dto.ts
 models/user-catalog-output.ts

@@ -32,7 +32,6 @@ export * from './short-genre';
 export * from './stored-ebook';
 export * from './unfold-output';
 export * from './update-book-dto';
-export * from './update-genre-dto';
 export * from './update-recommendation-dto';
 export * from './upload-output-dto';
 export * from './user-catalog-output';

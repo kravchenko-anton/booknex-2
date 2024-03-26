@@ -42,7 +42,7 @@ export const Item = ({
     key={title}
     className={cn(
       'flex-row items-center justify-between px-2 py-2',
-      bordered && 'border-muted border-b-[1px] pb-3',
+      bordered && 'border-bordered border-b-[1px] pb-3',
       className
     )}
     onPress={onPress}

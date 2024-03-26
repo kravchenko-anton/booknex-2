@@ -18,7 +18,7 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({ onManage
   });
   if (!selectedGenres) return null;
   return (
-    <View className='bg-foreground border-bordered m-3 rounded border-2 p-3.5'>
+    <View className='bg-foreground border-bordered m-3 rounded border-[1px] p-3.5'>
       <Title size={'xxl'} color={Color.white} weight='bold'>
         Manage Recommendation
       </Title>

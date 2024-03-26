@@ -13,8 +13,8 @@ interface InfoBlockProperties {
 }
 
 const BookStatistic: FC<InfoBlockProperties> = ({ _count, createdAt, readingTime, updatedAt }) => (
-  <div className='border-foreground my-2 border-2 p-2'>
-    <p className='border-muted text-md mb-1 border-b-2 pb-1'>
+  <div className='border-foreground my-2 border-[1px] p-2'>
+    <p className='border-bordered text-md mb-1 border-b-2 pb-1'>
       reading Time:
       <b className='text-white'> {minutesToTime(readingTime)}</b>
     </p>
@@ -26,7 +26,7 @@ const BookStatistic: FC<InfoBlockProperties> = ({ _count, createdAt, readingTime
       saved By: <b className='text-white'> {_count.savedBy}</b>
     </p>
 
-    <p className='text-md border-muted text-md mb-1 border-b-2 pb-1'>
+    <p className='text-md border-bordered text-md mb-1 border-b-2 pb-1'>
       reading By:
       <b className='text-white'> {_count.readingBy}</b>
     </p>

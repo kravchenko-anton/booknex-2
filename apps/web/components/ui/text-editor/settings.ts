@@ -5,9 +5,9 @@ export const settings: {
 } = {
   colors: {
     foreground:
-      'bg-foreground placeholder-white text-white border-[1px] border-muted hover:border-muted focus:border-muted',
+      'bg-foreground placeholder-white text-white border-[1px] border-bordered hover:border-bordered focus:border-bordered',
     muted:
-      'bg-muted placeholder-white text-white border-[1px] border-foreground hover:border-gray focus:border-gray',
+      'bg-muted placeholder-white text-white border-[1px] border-bordered hover:border-bordered focus:border-gray',
     background:
       'bg-background border-[1px] border-foreground placeholder-white text-white hover:border-foreground focus:border-foreground'
   }

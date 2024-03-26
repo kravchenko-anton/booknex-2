@@ -18,7 +18,7 @@ export const RemoveButton: FC<BookVisibleButtonProperties> = (properties) => {
     mutationFn: (id: number) => api.book.remove(id),
     onSuccess: () => {
       successToast('Book removed');
-      router.push(secureRoutes.bookRoute);
+      router.push(secureRoutes.bookCatalogRoute);
     }
   });
   return (

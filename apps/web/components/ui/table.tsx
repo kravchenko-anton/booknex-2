@@ -34,7 +34,7 @@ const TableFooter = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTable
   ({ className, ...properties }, reference) => (
     <tfoot
       ref={reference}
-      className={cn(' border-2 border-t font-medium [&>tr]:last:border-b-0', className)}
+      className={cn(' border-[1px] border-t font-medium [&>tr]:last:border-b-0', className)}
       {...properties}
     />
   )
@@ -46,7 +46,7 @@ const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElem
     <tr
       ref={reference}
       className={cn(
-        ' border-bordered bg-foreground  border-2  border-x-0 border-b border-t-0  transition-colors',
+        ' border-bordered bg-foreground  border-[1px]  border-x-0 border-b border-t-0  transition-colors',
         className
       )}
       {...properties}

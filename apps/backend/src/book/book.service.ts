@@ -10,7 +10,7 @@ import { serverError } from '../utils/helpers/call-error';
 import { ActivityService } from '../utils/services/activity/activity.service';
 import { PrismaService } from '../utils/services/prisma.service';
 import type { CreateBookDto } from './dto/create.book.dto';
-import type { UpdateBookDto, UpdateGenreDto } from './dto/update.book.dto';
+import type { UpdateBookDto } from './dto/update.book.dto';
 import type { PayloadEBook } from './ebook/ebook.model';
 import { useGetEbook } from './helpers/get-ebook';
 import {
@@ -222,65 +222,68 @@ export class BookService {
       }
     });
   }
-  async updatePicture(id: number, picture: Express.Multer.File) {
-    const book = await this.findOne({
-      where: { id },
-      adminVisible: true,
-      select: {
-        title: true
-      }
-    });
-    const { name: pictureName } = await this.storageService.upload({
-      folder: 'booksCovers',
-      file: picture.buffer,
-      role: 'admin',
-      filename: book.title + '.png'
-    });
-    await this.activityService.create({
-      type: Activities.updatePicture,
-      importance: 7,
-      bookId: id
-    });
-    await this.prisma.book.update({
-      where: { id },
-      data: {
-        picture: pictureName
-      }
-    });
-  }
-  async updateGenre(id: number, dto: UpdateGenreDto) {
-    await this.checkExist({
-      adminVisible: true,
-      where: { id }
-    });
-    const { genreIds, mainGenreId } = await this.getGenres(dto.genres);
-    await this.activityService.create({
-      type: Activities.updateGenre,
-      importance: 7,
-      bookId: id
-    });
-    await this.prisma.book.update({
-      where: { id },
-      data: {
-        genres: {
-          set: genreIds
-        },
-        mainGenre: {
-          connect: {
-            id: mainGenreId
-          }
-        }
-      }
-    });
-  }
+
+  //TODO: переделать всё на один запрос обновления
+  // async updatePicture(id: number, picture: Express.Multer.File) {
+  //   const book = await this.findOne({
+  //     where: { id },
+  //     adminVisible: true,
+  //     select: {
+  //       title: true
+  //     }
+  //   });
+  //   const { name: pictureName } = await this.storageService.upload({
+  //     folder: 'booksCovers',
+  //     file: picture.buffer,
+  //     role: 'admin',
+  //     filename: book.title + '.png'
+  //   });
+  //   await this.activityService.create({
+  //     type: Activities.updatePicture,
+  //     importance: 7,
+  //     bookId: id
+  //   });
+  //   await this.prisma.book.update({
+  //     where: { id },
+  //     data: {
+  //       picture: pictureName
+  //     }
+  //   });
+  // }
+  // async updateGenre(id: number, dto: UpdateGenreDto) {
+  //   await this.checkExist({
+  //     adminVisible: true,
+  //     where: { id }
+  //   });
+  //   const { genreIds, mainGenreId } = await this.getGenres(dto.genres);
+  //   await this.activityService.create({
+  //     type: Activities.updateGenre,
+  //     importance: 7,
+  //     bookId: id
+  //   });
+  //   await this.prisma.book.update({
+  //     where: { id },
+  //     data: {
+  //       genres: {
+  //         set: genreIds
+  //       },
+  //       mainGenre: {
+  //         connect: {
+  //           id: mainGenreId
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
   async update(id: number, dto: UpdateBookDto) {
+    const { genres, ebook, ...rest } = dto;
     await this.checkExist({
       adminVisible: true,
       where: { id }
     });
     await this.prisma.book.update({
       where: { id },
-      data: dto
+      data: rest
     });
 
     await this.activityService.create({

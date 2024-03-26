@@ -41,7 +41,7 @@ const CommandInput = forwardRef<
   ElementRef<typeof CommandPrimitive.Input>,
   ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...properties }, reference) => (
-  <div className='border-muted flex items-center border-b px-3'>
+  <div className='border-bordered flex items-center border-b px-3'>
     <Search className='mr-2 h-4 w-4 shrink-0 opacity-50' />
     <CommandPrimitive.Input
       ref={reference}

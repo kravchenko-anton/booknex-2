@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { PayloadEBook } from './payload-ebook';
 
 /**
  * 
@@ -26,6 +29,12 @@ export interface UpdateBookDto {
      * @memberof UpdateBookDto
      */
     'title'?: string;
+    /**
+     * book picture
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'picture'?: string;
     /**
      * book author
      * @type {string}
@@ -50,5 +59,17 @@ export interface UpdateBookDto {
      * @memberof UpdateBookDto
      */
     'visible'?: boolean;
+    /**
+     * Array of genres
+     * @type {Array<number>}
+     * @memberof UpdateBookDto
+     */
+    'genres'?: Array<number>;
+    /**
+     * 
+     * @type {Array<PayloadEBook>}
+     * @memberof UpdateBookDto
+     */
+    'ebook'?: Array<PayloadEBook>;
 }
 

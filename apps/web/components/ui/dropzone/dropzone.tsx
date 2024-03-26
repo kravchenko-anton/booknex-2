@@ -68,7 +68,7 @@ const Dropzone = ({
       </div>
       <div
         className={cn(
-          'mt-2 flex cursor-pointer items-center justify-center rounded  border-2  duration-200',
+          'mt-2 flex cursor-pointer items-center justify-center rounded  border-[1px]  duration-200',
           settings.padding[size],
           settings.colors[variant]
         )}

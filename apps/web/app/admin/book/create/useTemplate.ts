@@ -1,39 +1,38 @@
-import api from '@/services/api';
-import { validateNumberParameter } from '@/utils/validate-parameter';
-import { useQuery } from '@tanstack/react-query';
-import type { CreateBookValidationType } from 'global/dto/book/create.book.dto';
-
-import { useSearchParams } from 'next/navigation';
-import { useLayoutEffect } from 'react';
-import type { UseFormSetValue } from 'react-hook-form';
+import { CreateBookValidationType } from '@/app/admin/book/_validation/create.book.dto'
+import api from '@/services/api'
+import { errorToast } from '@/utils/toast'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useLayoutEffect } from 'react'
+import type { UseFormReset } from 'react-hook-form'
 
 export const useTemplate = ({
-  setValue
+	templateId,
+	reset
 }: {
-  setValue: UseFormSetValue<CreateBookValidationType>;
+	templateId: number
+	reset: UseFormReset<CreateBookValidationType>
 }) => {
-  const parameters = useSearchParams();
-  const id = validateNumberParameter(parameters.get('template'));
-  const { data: template } = useQuery({
-    queryKey: ['book-template'],
-    queryFn: () => api.parser.byId(id),
-    enabled: Boolean(id),
-    select: (data) => data.data
-  });
-  useLayoutEffect(() => {
-    if (template) {
-      setValue('title', template.title);
-      setValue('description', template.description);
-      setValue('author', template.author);
-      setValue('rating', template.rating);
-      setValue(
-        'genres',
-        template.genres.map((genre) => genre.id)
-      );
-    }
-  }, [setValue, template]);
+	const { data: template } = useQuery({
+		queryKey: ['book-template'],
+		queryFn: () => api.parser.byId(templateId),
+		enabled: Boolean(templateId),
+		select: data => data.data
+	})
+	const { mutateAsync: deleteTemplate } = useMutation({
+		mutationKey: ['delete-template'],
+		mutationFn: (id: number) => api.parser.remove(id),
+		onError: () => errorToast('Error while removing template')
+	})
+	useLayoutEffect(() => {
+		if (!template) return
+		reset({
+			title: template.title,
+			description: template.description,
+			author: template.author,
+			rating: template.rating,
+			genres: template.genres.map(genre => genre.id)
+		})
+	}, [reset, template])
 
-  return {
-    id
-  };
-};
+	return { deleteTemplate }
+}

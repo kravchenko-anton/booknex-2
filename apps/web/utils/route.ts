@@ -1,9 +1,10 @@
 export const secureRoutes = {
-  bookRoute: '/admin/book',
   bookCatalogRoute: '/admin/book' + '/catalog',
-  parserRoute: '/admin/parser',
+  bookCreateRoute: '/admin/book' + '/create',
+  bookCreateWithTemplateRoute: (id: number) => '/admin/book' + '/create?template=' + id,
+  bookEditRoute: (id: number) => '/admin/book/' + id + '/edit',
+  bookOverviewRoute: (id: number) => '/admin/book/' + id + '/overview',
   parserCatalogRoute: '/admin/parser' + '/catalog',
-  userRoute: '/admin/user',
   userCatalogRoute: '/admin/user' + '/catalog',
   dashboard: '/admin/dashboard'
 };

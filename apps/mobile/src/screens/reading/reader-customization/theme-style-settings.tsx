@@ -26,7 +26,7 @@ export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
     renderItem={({ item: theme }) => (
       <AnimatedPress
         key={`${theme.slug}-${theme.title}`}
-        className='mb-4 mr-2 rounded border-2 p-1 px-6'
+        className='mb-4 mr-2 rounded border-[1px] p-1 px-6'
         style={{
           backgroundColor: theme.colorPalette.background.darker,
           borderColor:
