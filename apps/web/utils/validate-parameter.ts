@@ -1,15 +1,16 @@
 //TODO: проверить во всех вариантах валидацию
 export const validateNumberParameter = (parameter: any): number => {
-  if (!parameter) return 0;
-  if (parameter < 0 || parameter > 10_000) throw new Error('Invalid parameter');
+	if (!parameter) return 0
+	if (parameter < 0 || parameter > 10_000) throw new Error('Invalid parameter')
 
-  return +parameter;
-};
+	return +parameter
+}
 
 export const validateStringParameter = (parameter: any): string => {
-  if (!parameter) return '';
-  if (typeof parameter !== 'string') throw new Error('Invalid parameter');
-  if (parameter.length === 0 || parameter.length > 100) throw new Error('Invalid parameter');
-  if (!/^\w*$/.test(parameter)) throw new Error('Invalid parameter');
-  return parameter;
-};
+	if (!parameter) return ''
+	if (typeof parameter !== 'string') throw new Error('Invalid parameter')
+	if (parameter.length === 0 || parameter.length > 100)
+		throw new Error('Invalid parameter')
+	if (!/^\w*$/.test(parameter)) throw new Error('Invalid parameter')
+	return parameter
+}

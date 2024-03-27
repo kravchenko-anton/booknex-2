@@ -1,10 +1,10 @@
-export const StorageFolderEnum = {
-  ebooks: 'ebooks' as const,
-  booksCovers: 'booksCovers' as const
-};
+export const storageFolder = {
+	ebooks: 'ebooks' as const,
+	booksCovers: 'booksCovers' as const
+}
 
-export type StorageFolderType = keyof typeof StorageFolderEnum;
+export type StorageFolderType = keyof typeof storageFolder
 export const StorageFolderArray: string[] = [
-  StorageFolderEnum.ebooks,
-  StorageFolderEnum.booksCovers
-];
+	storageFolder.ebooks,
+	storageFolder.booksCovers
+]

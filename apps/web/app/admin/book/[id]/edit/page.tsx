@@ -18,7 +18,7 @@ import { PenNib, Star } from 'icons'
 import { useParams } from 'next/navigation'
 import { useEffect, type FC } from 'react'
 import { useForm } from 'react-hook-form'
-
+//TODO: доделать страницу чтобы картинка обновлялась
 const Page: FC = () => {
 	const parameters = useParams()
 	const bookId = validateNumberParameter(parameters.id)
@@ -27,7 +27,6 @@ const Page: FC = () => {
 	const {
 		control,
 		reset,
-		watch,
 		handleSubmit,
 		formState: { errors, dirtyFields }
 	} = useForm<UpdateBookValidationType>({
@@ -75,16 +74,15 @@ const Page: FC = () => {
 	}, [reset, book, bookId, ebook])
 
 	const handleEdit = handleSubmit(async (data: UpdateBookValidationType) => {
-		console.log(data)
 		console.log(dirtyValues(dirtyFields, data))
-		// await edit({
-		//   id: bookId,
-		//   payload:
-		// });
+		await edit({
+			id: bookId,
+			payload: dirtyValues(dirtyFields, data)
+		})
 	})
 
 	console.log(dirtyFields)
-	if (!book) return <Loader />
+	if (!book || !ebook) return <Loader />
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>
@@ -94,7 +92,7 @@ const Page: FC = () => {
 				<div>
 					<div>
 						<h1 className='mt-2  text-xl'>Cover</h1>
-						<SelectPicture control={control} bookTitle={watch('title')} />
+						<SelectPicture control={control} />
 						<h1 className='my-1'>Genres</h1>
 
 						<SelectGenres control={control} />

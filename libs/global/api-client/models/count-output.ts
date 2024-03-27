@@ -18,22 +18,22 @@
  * @interface CountOutput
  */
 export interface CountOutput {
-  /**
-   * FinishedBy
-   * @type {number}
-   * @memberof CountOutput
-   */
-  finishedBy: number;
-  /**
-   * ReadingBy
-   * @type {number}
-   * @memberof CountOutput
-   */
-  readingBy: number;
-  /**
-   * SavedBy
-   * @type {number}
-   * @memberof CountOutput
-   */
-  savedBy: number;
+	/**
+	 * FinishedBy
+	 * @type {number}
+	 * @memberof CountOutput
+	 */
+	finishedBy: number
+	/**
+	 * ReadingBy
+	 * @type {number}
+	 * @memberof CountOutput
+	 */
+	readingBy: number
+	/**
+	 * SavedBy
+	 * @type {number}
+	 * @memberof CountOutput
+	 */
+	savedBy: number
 }

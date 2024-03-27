@@ -1,9 +1,9 @@
 export const defaultReturnObject = {
-  id: true
-};
+	id: true
+}
 
 export const idSelect = {
-  select: {
-    id: true
-  }
-};
+	select: {
+		id: true
+	}
+}

@@ -1,6 +1,6 @@
-import { Share } from 'react-native';
+import { Share } from 'react-native'
 
 export const share = (message: string) =>
-  Share.share({
-    message
-  });
+	Share.share({
+		message
+	})

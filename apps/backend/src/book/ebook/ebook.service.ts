@@ -3,7 +3,7 @@ import { Activities } from '@prisma/client'
 import { plainToClassFromExist } from 'class-transformer'
 import { validate } from 'class-validator'
 import { getFileUrl } from '../../../../../libs/global/api-config'
-import { GlobalErrorsEnum } from '../../../../../libs/global/errors'
+import { globalErrors } from '../../../../../libs/global/errors'
 import { getServerBookHtml } from '../../../../../libs/global/helpers/getBookHtml'
 import { serverError } from '../../utils/helpers/call-error'
 import { ActivityService } from '../../utils/services/activity/activity.service'
@@ -24,17 +24,17 @@ export class EbookService {
 			}
 		})
 		if (!book) {
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.unknownError)
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
 		}
 		const ebook: StoredEBook[] = await fetch(getFileUrl(book.ebook))
 			.then(result => result.json())
 			.catch(() => null)
 		if (!ebook) {
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.unknownError)
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
 		}
 		const errors = await validate(plainToClassFromExist(PayloadEBook, ebook))
 		if (errors.length > 0) {
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.somethingWrong)
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		}
 		return ebook
 	}
@@ -49,7 +49,7 @@ export class EbookService {
 			}
 		})
 		if (!book) {
-			throw serverError(HttpStatus.BAD_REQUEST, GlobalErrorsEnum.unknownError)
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
 		}
 		const ebook = await this.storedEbook(id)
 		await this.activityService.create({

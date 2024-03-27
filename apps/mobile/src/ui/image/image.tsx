@@ -1,36 +1,36 @@
-import { cn } from '@/utils';
-import { getFileUrl } from 'global/api-config';
-import type { FC } from 'react';
-import { Image as DefaultImage } from 'react-native';
-import type { ImageProperties } from './types';
+import { cn } from '@/utils'
+import { getFileUrl } from 'global/api-config'
+import type { FC } from 'react'
+import { Image as DefaultImage } from 'react-native'
+import type { ImageProperties } from './types'
 
 const Image: FC<ImageProperties> = ({
-  height = 100,
-  width = 100,
-  borderRadius = 12,
-  url = '',
-  className,
-  style,
-  fullSize = false,
-  ...properties
+	height = 100,
+	width = 100,
+	borderRadius = 12,
+	url = '',
+	className,
+	style,
+	fullSize = false,
+	...properties
 }) => (
-  <DefaultImage
-    className={cn('bg-muted', fullSize ? 'h-full' : 'h-auto', className)}
-    source={{
-      uri: getFileUrl(url),
-      width,
-      height
-    }}
-    style={[
-      {
-        width,
-        height,
-        borderRadius
-      },
-      style
-    ]}
-    {...properties}
-  />
-);
+	<DefaultImage
+		className={cn('bg-muted', fullSize ? 'h-full' : 'h-auto', className)}
+		source={{
+			uri: getFileUrl(url),
+			width,
+			height
+		}}
+		style={[
+			{
+				width,
+				height,
+				borderRadius
+			},
+			style
+		]}
+		{...properties}
+	/>
+)
 
-export default Image;
+export default Image

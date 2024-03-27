@@ -1,20 +1,20 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["node", "express", "multer"],
-    "lib": ["es5", "es6", "dom", "dom.iterable"],
-    "emitDecoratorMetadata": true,
-    "target": "es2021",
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "strictPropertyInitialization": false,
-    "strict": true,
-    "strictNullChecks": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true
-  },
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "include": ["src/**/*.ts"]
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../dist/out-tsc",
+		"module": "commonjs",
+		"types": ["node", "express", "multer"],
+		"lib": ["es5", "es6", "dom", "dom.iterable"],
+		"emitDecoratorMetadata": true,
+		"target": "es2021",
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"strictPropertyInitialization": false,
+		"strict": true,
+		"strictNullChecks": false,
+		"downlevelIteration": true,
+		"experimentalDecorators": true
+	},
+	"exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+	"include": ["src/**/*.ts"]
 }

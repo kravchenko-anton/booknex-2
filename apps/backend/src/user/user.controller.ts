@@ -1,69 +1,79 @@
-import { Controller, Delete, Get, Param, Patch, Query } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { Auth } from '../auth/decorators/auth.decorator';
-import { CurrentUser } from '../auth/decorators/user.decorator';
-import { UserCatalogOutput, UserLibraryOutput, UserProfileOutput } from './user.model';
-import { UserService } from './user.service';
+import { Controller, Delete, Get, Param, Patch, Query } from '@nestjs/common'
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
+import {
+	UserCatalogOutput,
+	UserLibraryOutput,
+	UserProfileOutput
+} from './user.model'
+import { UserService } from './user.service'
 
 @ApiBearerAuth()
 @Controller('user')
 @ApiTags('👤 user')
 export class UserController {
-  constructor(private readonly usersService: UserService) {}
-  @Auth()
-  @Get('/profile')
-  @ApiOkResponse({ type: UserProfileOutput })
-  async profile(@CurrentUser('id') id: number) {
-    return this.usersService.profile(+id);
-  }
+	constructor(private readonly usersService: UserService) {}
+	@Auth()
+	@Get('/profile')
+	@ApiOkResponse({ type: UserProfileOutput })
+	async profile(@CurrentUser('id') id: number) {
+		return this.usersService.profile(+id)
+	}
 
-  @Auth()
-  @Get('/library')
-  @ApiOkResponse({ type: UserLibraryOutput })
-  async library(@CurrentUser('id') id: number) {
-    return this.usersService.library(+id);
-  }
+	@Auth()
+	@Get('/library')
+	@ApiOkResponse({ type: UserLibraryOutput })
+	async library(@CurrentUser('id') id: number) {
+		return this.usersService.library(+id)
+	}
 
-  @Auth()
-  @Patch('/start-reading/:id')
-  async startReading(@CurrentUser('id') userId: number, @Param('id') id: number) {
-    return this.usersService.startReading(userId, +id);
-  }
+	@Auth()
+	@Patch('/start-reading/:id')
+	async startReading(
+		@CurrentUser('id') userId: number,
+		@Param('id') id: number
+	) {
+		return this.usersService.startReading(userId, +id)
+	}
 
-  @Auth()
-  @Patch('/finish-reading/:id')
-  async finishReading(@CurrentUser('id') userId: number, @Param('id') id: number) {
-    return this.usersService.finishReading(userId, +id);
-  }
+	@Auth()
+	@Patch('/finish-reading/:id')
+	async finishReading(
+		@CurrentUser('id') userId: number,
+		@Param('id') id: number
+	) {
+		return this.usersService.finishReading(userId, +id)
+	}
 
-  @Auth()
-  @Patch('/toggle-save/:id')
-  @ApiOkResponse({ type: Boolean })
-  async toggleSave(@CurrentUser('id') userId: number, @Param('id') id: number) {
-    return this.usersService.toggleSave(userId, +id);
-  }
+	@Auth()
+	@Patch('/toggle-save/:id')
+	@ApiOkResponse({ type: Boolean })
+	async toggleSave(@CurrentUser('id') userId: number, @Param('id') id: number) {
+		return this.usersService.toggleSave(userId, +id)
+	}
 
-  @Auth()
-  @Get('/is-saved/:id')
-  @ApiOkResponse({ type: Boolean })
-  async isSaved(@CurrentUser('id') userId: number, @Param('id') id: number) {
-    return this.usersService.isSaved(userId, +id);
-  }
+	@Auth()
+	@Get('/is-saved/:id')
+	@ApiOkResponse({ type: Boolean })
+	async isSaved(@CurrentUser('id') userId: number, @Param('id') id: number) {
+		return this.usersService.isSaved(userId, +id)
+	}
 
-  // admin
-  @Auth('admin')
-  @Get('admin/catalog')
-  @ApiOkResponse({ type: UserCatalogOutput })
-  async catalog(
-    @Query('searchTerm') searchTerm: string,
-    @Query('page') page: number
-  ): Promise<UserCatalogOutput> {
-    return this.usersService.catalog(searchTerm || '', page || 1);
-  }
+	// admin
+	@Auth('admin')
+	@Get('admin/catalog')
+	@ApiOkResponse({ type: UserCatalogOutput })
+	async catalog(
+		@Query('searchTerm') searchTerm: string,
+		@Query('page') page: number
+	): Promise<UserCatalogOutput> {
+		return this.usersService.catalog(searchTerm || '', page || 1)
+	}
 
-  @Auth('admin')
-  @Delete('admin/remove/:id')
-  async remove(@Param('id') id: number) {
-    return this.usersService.remove(+id);
-  }
+	@Auth('admin')
+	@Delete('admin/remove/:id')
+	async remove(@Param('id') id: number) {
+		return this.usersService.remove(+id)
+	}
 }

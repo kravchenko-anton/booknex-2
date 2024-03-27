@@ -5,14 +5,14 @@ import { StorageFolderType } from '../../backend/src/storage/storage.types'
 
 interface UploadFileProperties {
 	folder: StorageFolderType
-	blob: File
+	file: File
 }
 
 export const useUploadFile = () => {
 	const { mutateAsync: upload, isLoading: uploadLoading } = useMutation({
 		mutationKey: ['upload-file'],
-		mutationFn: ({ folder, blob }: UploadFileProperties) =>
-			api.storage.upload(folder, blob),
+		mutationFn: ({ folder, file }: UploadFileProperties) =>
+			api.storage.upload(folder, file),
 		onError: () =>
 			errorToast({
 				text1: 'Upload file',

@@ -44,8 +44,7 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookId }) => {
 							) || ''
 					}}
 				/>
-			</div
-			>
+			</div>
 			<div className=' flex gap-2 overflow-auto pb-2'>
 				{chapters?.map(children =>
 					children.map(({ name, link }) => {
