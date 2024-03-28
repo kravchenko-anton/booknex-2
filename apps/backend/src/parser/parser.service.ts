@@ -63,10 +63,10 @@ export class ParserService {
 		}
 	}
 
-	async remove(id: number) {
+	async remove(slug: string) {
 		return this.prisma.bookTemplate.delete({
 			where: {
-				id
+				slug
 			}
 		})
 	}
@@ -76,10 +76,10 @@ export class ParserService {
 			throw serverError(HttpStatus.BAD_REQUEST, adminErrors.invalidFile)
 		return getEbook(file.buffer)
 	}
-	async byId(id: number) {
+	async bySlug(slug: string) {
 		return this.prisma.bookTemplate.findUnique({
 			where: {
-				id
+				slug
 			},
 			select: {
 				...defaultReturnObject,

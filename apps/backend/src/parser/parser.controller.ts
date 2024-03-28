@@ -45,10 +45,10 @@ export class ParserController {
 		return this.parserService.catalog(searchTerm, page || 1)
 	}
 
-	@Get('admin/by-id/:id')
+	@Get('admin/by-slug/:slug')
 	@ApiOkResponse({ type: BookTemplate })
-	byId(@Param('id') id: number): Promise<BookTemplate> {
-		return this.parserService.byId(+id)
+	bySlug(@Param('slug') slug: string): Promise<BookTemplate> {
+		return this.parserService.bySlug(slug)
 	}
 
 	@Post('admin/parse')
@@ -91,8 +91,8 @@ export class ParserController {
 		return this.parserService.unfold(file)
 	}
 
-	@Delete('admin/remove/:id')
-	async remove(@Param('id') id: number) {
-		return this.parserService.remove(+id)
+	@Delete('admin/remove/:slug')
+	async remove(@Param('slug') slug: string) {
+		return this.parserService.remove(slug)
 	}
 }

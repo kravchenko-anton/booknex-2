@@ -13,7 +13,7 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const { mutateAsync: deleteTemplate, isLoading: deleteTemplateLoading } =
 		useMutation({
 			mutationKey: ['delete-template'],
-			mutationFn: (id: number) => api.parser.remove(id),
+			mutationFn: (slug: string) => api.parser.remove(slug),
 			async onSuccess() {
 				successToast('Book deleted')
 				await queryClient.invalidateQueries({

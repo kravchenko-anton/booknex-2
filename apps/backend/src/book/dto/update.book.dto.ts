@@ -16,6 +16,7 @@ export class UpdateBookPick extends PickType(Book, [
 	'description',
 	'title',
 	'visible',
+
 	'rating',
 	'picture'
 ]) {}
@@ -31,7 +32,7 @@ export class UpdateBookDto extends PartialType(UpdateBookPick) {
 	@IsArray()
 	@ArrayMinSize(1)
 	@ArrayMaxSize(3)
-	genres: number[]
+	genres: string[]
 
 	@ApiProperty({ type: [PayloadEBook], required: false })
 	@IsOptional()

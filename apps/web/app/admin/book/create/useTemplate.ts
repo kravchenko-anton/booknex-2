@@ -6,21 +6,21 @@ import { useLayoutEffect } from 'react'
 import type { UseFormReset } from 'react-hook-form'
 
 export const useTemplate = ({
-	templateId,
+	templateSlug,
 	reset
 }: {
-	templateId: number
+	templateSlug: string
 	reset: UseFormReset<CreateBookValidationType>
 }) => {
 	const { data: template } = useQuery({
 		queryKey: ['book-template'],
-		queryFn: () => api.parser.byId(templateId),
-		enabled: Boolean(templateId),
+		queryFn: () => api.parser.bySlug(templateSlug),
+		enabled: Boolean(templateSlug),
 		select: data => data.data
 	})
 	const { mutateAsync: deleteTemplate } = useMutation({
 		mutationKey: ['delete-template'],
-		mutationFn: (id: number) => api.parser.remove(id),
+		mutationFn: (templateSlug: string) => api.parser.remove(templateSlug),
 		onError: () => errorToast('Error while removing template')
 	})
 	useLayoutEffect(() => {
@@ -30,7 +30,7 @@ export const useTemplate = ({
 			description: template.description,
 			author: template.author,
 			rating: template.rating,
-			genres: template.genres.map(genre => genre.id)
+			genres: template.genres.map(genre => genre.slug)
 		})
 	}, [reset, template])
 

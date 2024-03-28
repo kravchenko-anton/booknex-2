@@ -24,7 +24,7 @@ const Page: FC = () => {
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			preview: id => router.push(secureRoutes.bookOverviewRoute(id))
+			preview: slug => router.push(secureRoutes.bookOverviewRoute(slug))
 		}),
 		getCoreRowModel: getCoreRowModel()
 	})

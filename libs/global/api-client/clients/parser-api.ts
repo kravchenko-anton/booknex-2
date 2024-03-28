@@ -37,15 +37,15 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
     return {
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        byId: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('byId', 'id', id)
-            const localVarPath = `/api/parser/admin/by-id/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        bySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('bySlug', 'slug', slug)
+            const localVarPath = `/api/parser/admin/by-slug/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -156,15 +156,15 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        remove: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('remove', 'id', id)
-            const localVarPath = `/api/parser/admin/remove/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        remove: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('remove', 'slug', slug)
+            const localVarPath = `/api/parser/admin/remove/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -245,14 +245,14 @@ export const ParserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async byId(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookTemplate>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.byId(id, options);
+        async bySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookTemplate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ParserApi.byId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ParserApi.bySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -282,12 +282,12 @@ export const ParserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async remove(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.remove(id, options);
+        async remove(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.remove(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ParserApi.remove']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -316,12 +316,12 @@ export const ParserApiFactory = function (configuration?: Configuration, basePat
     return {
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        byId(id: number, options?: any): AxiosPromise<BookTemplate> {
-            return localVarFp.byId(id, options).then((request) => request(axios, basePath));
+        bySlug(slug: string, options?: any): AxiosPromise<BookTemplate> {
+            return localVarFp.bySlug(slug, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -344,12 +344,12 @@ export const ParserApiFactory = function (configuration?: Configuration, basePat
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        remove(id: number, options?: any): AxiosPromise<void> {
-            return localVarFp.remove(id, options).then((request) => request(axios, basePath));
+        remove(slug: string, options?: any): AxiosPromise<void> {
+            return localVarFp.remove(slug, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -372,13 +372,13 @@ export const ParserApiFactory = function (configuration?: Configuration, basePat
 export class ParserApi extends BaseAPI {
     /**
      * 
-     * @param {number} id 
+     * @param {string} slug 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ParserApi
      */
-    public byId(id: number, options?: RawAxiosRequestConfig) {
-        return ParserApiFp(this.configuration).byId(id, options).then((request) => request(this.axios, this.basePath));
+    public bySlug(slug: string, options?: RawAxiosRequestConfig) {
+        return ParserApiFp(this.configuration).bySlug(slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -406,13 +406,13 @@ export class ParserApi extends BaseAPI {
 
     /**
      * 
-     * @param {number} id 
+     * @param {string} slug 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ParserApi
      */
-    public remove(id: number, options?: RawAxiosRequestConfig) {
-        return ParserApiFp(this.configuration).remove(id, options).then((request) => request(this.axios, this.basePath));
+    public remove(slug: string, options?: RawAxiosRequestConfig) {
+        return ParserApiFp(this.configuration).remove(slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

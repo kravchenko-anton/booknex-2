@@ -5,14 +5,15 @@ import { getServerBookHtml } from 'global/helpers/getBookHtml'
 import { FC, useRef } from 'react'
 
 interface EbookInfoProperties {
-	bookId: number
+	bookSlug: string
 }
 
-const BookOverview: FC<EbookInfoProperties> = ({ bookId }) => {
+
+const BookOverview: FC<EbookInfoProperties> = ({ bookSlug }) => {
 	const { data: ebook } = useQuery({
-		queryKey: ['stored-ebook', bookId],
-		queryFn: () => api.ebook.storedEbook(bookId),
-		enabled: !!bookId,
+		queryKey: ['stored-ebook', bookSlug],
+		queryFn: () => api.ebook.storedEbookBySlug(bookSlug),
+		enabled: !!bookSlug,
 		select: data => data.data
 	})
 	const ref = useRef<HTMLParagraphElement>(null)

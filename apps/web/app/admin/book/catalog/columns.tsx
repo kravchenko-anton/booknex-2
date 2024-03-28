@@ -10,7 +10,7 @@ import Image from 'next/image'
 export const columns = ({
 	preview
 }: {
-	preview: (id: number) => void
+	preview: (slug: string) => void
 }): ColumnDef<Book, unknown>[] => [
 	{
 		id: 'id',
@@ -29,7 +29,7 @@ export const columns = ({
 				src={getFileUrl(row.original.picture)}
 				width={200}
 				height={250}
-				onClick={() => preview(row.original.id)}
+				onClick={() => preview(row.original.slug)}
 			/>
 		)
 	},
@@ -39,7 +39,7 @@ export const columns = ({
 		cell: ({ row }) => (
 			<button
 				className='items-start justify-start text-left'
-				onClick={() => preview(row.original.id)}>
+				onClick={() => preview(row.original.slug)}>
 				<h3 className='mb-1 text-xl'>{row.original.title}</h3>
 				<p>{row.original.author}</p>
 			</button>
@@ -116,7 +116,7 @@ export const columns = ({
 						size='sm'
 						variant='muted'
 						className='mb-2 w-full'
-						key={genre.id}>
+						key={genre.slug}>
 						{genre.name}
 					</Button>
 				))}

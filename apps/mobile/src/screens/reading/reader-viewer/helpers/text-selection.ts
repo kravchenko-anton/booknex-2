@@ -7,12 +7,11 @@ const textSelectionValidation = (selectedText: string) => {
 	if (selectedText.length < 3) return errorToast('Select more text')
 	if (selectedText.length > 800) return errorToast('Select less text')
 }
-export const textSelectFunction = async (
-	event: any,
-	removeAllSelection: void
-) => {
+
+export const textSelection = async (event: any, removeAllSelection: void) => {
 	if (event.nativeEvent.key === 'copy') {
 		textSelectionValidation(event.nativeEvent.selectedText)
+
 		console.log('Copy', event.nativeEvent.selectedText)
 		Clipboard.setString(event.nativeEvent.selectedText)
 	}

@@ -15,9 +15,9 @@ import {
 import { ShortGenre } from '../genre/genre.entity'
 
 export class ShortBook {
-	@ApiProperty({ example: 1, description: 'book id', type: Number })
+	@ApiProperty({ example: 1, description: 'book slug', type: String })
 	@IsNumber()
-	id: number
+	slug: string
 
 	@ApiProperty({ example: 'title', description: 'book title', type: String })
 	@IsString()
@@ -36,6 +36,10 @@ export class ShortBook {
 }
 
 export class Book extends ShortBook {
+	@ApiProperty({ example: 1, description: 'book id', type: Number })
+	@IsNumber()
+	id: number
+
 	@ApiProperty({
 		example: 'description',
 		description: 'book description',

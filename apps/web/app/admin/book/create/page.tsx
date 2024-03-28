@@ -18,11 +18,12 @@ const Page: FC = () => {
 				<div>
 					<div>
 						<h1 className='mt-2  text-xl'>Cover</h1>
-						<SelectPicture control={control} />
+
+						<SelectPicture name='picture' control={control} />
 
 						<h1 className='mb-2 mt-2  text-xl'>Genres</h1>
 
-						<SelectGenres control={control} />
+						<SelectGenres name='genres' control={control} />
 					</div>
 				</div>
 				<div className='w-11/12'>
@@ -70,7 +71,7 @@ const Page: FC = () => {
 				</div>
 			</div>
 
-			<EbookEditor control={control} />
+			<EbookEditor control={control} name='ebook' />
 			<Button
 				size='md'
 				isLoading={form.createLoading}

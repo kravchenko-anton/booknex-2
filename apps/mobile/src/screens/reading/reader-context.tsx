@@ -4,9 +4,9 @@ import type { ThemePackType } from '@/screens/reading/reader-customization/helpe
 import {
 	getStyleTag,
 	injectStyle
-} from '@/screens/reading/reader-viewer/styles.function'
+} from '@/screens/reading/reader-viewer/helpers/styles-injection'
 
-import { useSaveProgress } from '@/screens/reading/reader-viewer/useSaveProgress'
+import { useSaveProgress } from '@/screens/reading/reader-viewer/helpers/useSaveProgress'
 
 import { successToast } from '@/utils/toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -20,8 +20,10 @@ import {
 	type FC,
 	type PropsWithChildren
 } from 'react'
+
 import type WebView from 'react-native-webview'
 import type { WebViewMessageEvent } from 'react-native-webview'
+
 //TODO: разнести контекст и максимально упростить
 export const ReaderContext = createContext(
 	null as unknown as {
@@ -47,6 +49,7 @@ export const ReaderContext = createContext(
 		fontSize: number
 	}
 )
+
 export interface WebviewMessageType {
 	type: 'scroll' | 'finishBook' | 'textSelect' | 'textSelectFail'
 	payload: {
@@ -57,11 +60,11 @@ export interface WebviewMessageType {
 }
 
 type ReaderProviderProperties = PropsWithChildren<{
-	id: number
+	slug: string
 }>
 export const ReadingProvider: FC<ReaderProviderProperties> = ({
 	children,
-	id
+	slug
 }) => {
 	const viewerReference = useRef<WebView>(null)
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
@@ -71,13 +74,13 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
 		useMutation({
-			mutationKey: ['finish-reading', id],
-			mutationFn: (id: number) => api.user.finishReading(id)
+			mutationKey: ['finish-reading', slug],
+			mutationFn: (slug: string) => api.user.finishReading(slug)
 		})
 	const { books } = useTypedSelector(state => state.readingProgress)
 	const { navigate } = useTypedNavigation()
 	const [scrollPosition, setScrollPosition] = useState(
-		books.find(book => book.id === id)?.latestProgress.scrollPosition || 1
+		books.find(book => book.slug === slug)?.latestProgress.scrollPosition || 1
 	)
 	const [readingProgress, setReadingProgress] = useState({
 		bookProgress: 0,
@@ -85,7 +88,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 	})
 
 	useSaveProgress({
-		id,
+		slug,
 		scrollPosition,
 		progress: readingProgress.bookProgress
 	})
@@ -107,15 +110,16 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 				})
 			}
 			if (type === 'finishBook' && !finishReadingLoading) {
-				await finishReading(id).then(() => {
+				await finishReading(slug).then(() => {
 					setReadingProgress({
 						bookProgress: 0,
 						chapterProgress: 0
 					})
+
 					setScrollPosition(0)
 					successToast('Book successfully finished')
 					navigate('BookReview', {
-						id
+						slug
 					})
 					queryClient.invalidateQueries({
 						queryKey: ['user-library']
@@ -123,7 +127,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 				})
 			}
 		},
-		[readingProgress]
+		[readingProgress.bookProgress, finishReading, navigate, slug, queryClient]
 	)
 
 	const styleTag = getStyleTag({

@@ -1,3 +1,5 @@
+import type { Control, FieldPath, FieldValues } from 'react-hook-form'
+
 export type SizeType = 'sm' | 'md' | 'lg'
 
 export interface SizeProperties {
@@ -5,3 +7,8 @@ export interface SizeProperties {
 }
 
 export type FunctionType = () => void
+
+export interface BaseFieldProperties<T extends FieldValues> {
+	control: Control<T>
+	name: FieldPath<T>
+}

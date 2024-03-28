@@ -5,6 +5,7 @@ import { transformActivity } from '../../../../libs/global/utils/activity-transf
 import { slugify } from '../../../../libs/global/utils/slugify'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
+import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -13,11 +14,7 @@ import type { CreateBookDto } from './dto/create.book.dto'
 
 import type { UpdateBookDto } from './dto/update.book.dto'
 import { useGetEbook } from './helpers/get-ebook'
-import {
-	catalogReturnObject,
-	infoByIdAdminReturnObject,
-	returnBookObject
-} from './return.book.object'
+import { returnBookObject } from './return.book.object'
 
 @Injectable()
 export class BookService {
@@ -79,7 +76,7 @@ export class BookService {
 		})
 	}
 
-	async infoById(slug: string, userId: number) {
+	async infoBySlug(slug: string, userId: number) {
 		const book = await this.findOne({
 			where: { slug, visible: true },
 			adminVisible: false,
@@ -104,8 +101,54 @@ export class BookService {
 		return book
 	}
 
-	async infoByIdAdmin(id: number) {
-		const book = await this.findOne(infoByIdAdminReturnObject(id))
+	async infoBySlugAdmin(slug: string) {
+		const book = await this.findOne({
+			where: { slug },
+			adminVisible: true,
+			select: {
+				slug: true,
+				createdAt: true,
+				updatedAt: true,
+				rating: true,
+				readingTime: true,
+				genres: { select: ReturnGenreObject },
+				ebook: true,
+				description: true,
+				visible: true,
+				review: {
+					select: {
+						...defaultReturnObject,
+						tags: true,
+						text: true,
+						rating: true,
+						user: {
+							select: {
+								id: true,
+								email: true
+							}
+						}
+					}
+				},
+				_count: {
+					select: {
+						finishedBy: true,
+						readingBy: true,
+						savedBy: true
+					}
+				},
+				activities: {
+					select: {
+						type: true,
+						id: true,
+						importance: true,
+						createdAt: true,
+						genreId: true,
+						bookId: true,
+						userId: true
+					}
+				}
+			}
+		})
 		const { activities, ...rest } = book
 
 		return {
@@ -118,13 +161,39 @@ export class BookService {
 		const perPage = 20
 		const count = await this.prisma.book.count()
 		return {
-			data: await this.findMany(
-				catalogReturnObject({
-					perPage,
-					page,
-					searchTerm
+			data: await this.findMany({
+				take: perPage,
+				adminVisible: true,
+				select: {
+					slug: true,
+					genres: { select: ReturnGenreObject },
+					readingTime: true,
+					rating: true,
+					visible: true,
+					description: true,
+					mainGenre: {
+						select: ReturnGenreObject
+					}
+				},
+				orderBy: {
+					visible: 'asc' as const
+				},
+				...(page && {
+					skip: page * perPage
+				}),
+				...(searchTerm && {
+					where: {
+						title: {
+							contains: searchTerm
+						}
+					},
+					...(!Number.isNaN(+searchTerm) && {
+						where: {
+							id: +searchTerm
+						}
+					})
 				})
-			),
+			}),
 			canLoadMore: page < Math.floor(count / perPage),
 			totalPages: Math.floor(count / perPage)
 		}
@@ -192,17 +261,18 @@ export class BookService {
 		await this.prisma.book.delete({ where: { id } })
 	}
 
-	async update(id: number, dto: UpdateBookDto) {
+	async update(slug: string, dto: UpdateBookDto) {
 		const book = await this.findOne({
-			where: { id },
+			where: { slug },
 			adminVisible: true,
 			select: {
+				id: true,
 				ebook: true
 			}
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		const { genres, ebook, ...rest } = dto
+		const { genres, title, ebook, ...rest } = dto
 
 		let updateData: UpdateBookDtoExtended = { ...rest }
 
@@ -236,22 +306,28 @@ export class BookService {
 				}
 			}
 		}
+		if (title) {
+			updateData = {
+				...updateData,
+				slug: slugify(title)
+			}
+		}
 
 		await this.prisma.book.update({
-			where: { id },
+			where: { id: book.id },
 			data: updateData
 		})
 
 		await this.activityService.create({
 			type: Activities.updateBook,
 			importance: 7,
-			bookId: id
+			bookId: book.id
 		})
 	}
-	async getGenres(genres: number[]) {
+	async getGenres(genres: string[]) {
 		const mainGenre = await this.prisma.genre.findFirst({
 			where: {
-				id: {
+				slug: {
 					in: genres
 				}
 			},
@@ -268,7 +344,7 @@ export class BookService {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		return {
 			mainGenreId: mainGenre.id,
-			genreIds: genres.map(id => ({ id }))
+			genreIds: genres.map(slug => ({ slug }))
 		}
 	}
 

@@ -31,7 +31,7 @@ export class GenreService {
 	//   });
 	// }
 
-	async findOne(id: number, userId: number) {
+	async findOne(slug: string, userId: number) {
 		await this.activityService.create({
 			type: Activities.visitGenre,
 			importance: 1,
@@ -40,7 +40,7 @@ export class GenreService {
 
 		const genre = await this.prisma.genre.findUnique({
 			where: {
-				id: +id
+				slug
 			},
 			select: {
 				...ReturnGenreObject,

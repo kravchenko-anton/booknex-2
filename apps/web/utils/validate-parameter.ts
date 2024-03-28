@@ -9,8 +9,5 @@ export const validateNumberParameter = (parameter: any): number => {
 export const validateStringParameter = (parameter: any): string => {
 	if (!parameter) return ''
 	if (typeof parameter !== 'string') throw new Error('Invalid parameter')
-	if (parameter.length === 0 || parameter.length > 100)
-		throw new Error('Invalid parameter')
-	if (!/^\w*$/.test(parameter)) throw new Error('Invalid parameter')
 	return parameter
 }

@@ -13,36 +13,39 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { OutputChapter } from './output-chapter';
 
 /**
  * 
  * @export
- * @interface ShortBook
+ * @interface EbookOutput
  */
-export interface ShortBook {
-    /**
-     * book slug
-     * @type {string}
-     * @memberof ShortBook
-     */
-    'slug': string;
+export interface EbookOutput {
     /**
      * book title
      * @type {string}
-     * @memberof ShortBook
+     * @memberof EbookOutput
      */
     'title': string;
     /**
      * book picture
      * @type {string}
-     * @memberof ShortBook
+     * @memberof EbookOutput
      */
     'picture': string;
     /**
-     * book author
-     * @type {string}
-     * @memberof ShortBook
+     * book file
+     * @type {Array<string>}
+     * @memberof EbookOutput
      */
-    'author': string;
+    'file': Array<string>;
+    /**
+     * book chapters
+     * @type {Array<OutputChapter>}
+     * @memberof EbookOutput
+     */
+    'chapters': Array<OutputChapter>;
 }
 

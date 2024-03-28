@@ -7,7 +7,6 @@ import { useEffect } from 'react'
 //TODO: сделать с показом полной ошибки
 export default function Error({
 	error,
-
 	reset
 }: {
 	error: Error & { digest?: string }

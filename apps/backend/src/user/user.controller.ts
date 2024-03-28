@@ -29,35 +29,41 @@ export class UserController {
 	}
 
 	@Auth()
-	@Patch('/start-reading/:id')
+	@Patch('/start-reading/:slug')
 	async startReading(
 		@CurrentUser('id') userId: number,
-		@Param('id') id: number
+		@Param('slug') slug: string
 	) {
-		return this.usersService.startReading(userId, +id)
+		return this.usersService.startReading(userId, slug)
 	}
 
 	@Auth()
-	@Patch('/finish-reading/:id')
+	@Patch('/finish-reading/:slug')
 	async finishReading(
 		@CurrentUser('id') userId: number,
-		@Param('id') id: number
+		@Param('slug') slug: string
 	) {
-		return this.usersService.finishReading(userId, +id)
+		return this.usersService.finishReading(userId, slug)
 	}
 
 	@Auth()
-	@Patch('/toggle-save/:id')
+	@Patch('/toggle-save/:slug')
 	@ApiOkResponse({ type: Boolean })
-	async toggleSave(@CurrentUser('id') userId: number, @Param('id') id: number) {
-		return this.usersService.toggleSave(userId, +id)
+	async toggleSave(
+		@CurrentUser('id') userId: number,
+		@Param('slug') slug: string
+	) {
+		return this.usersService.toggleSave(userId, slug)
 	}
 
 	@Auth()
-	@Get('/is-saved/:id')
+	@Get('/is-saved/:slug')
 	@ApiOkResponse({ type: Boolean })
-	async isSaved(@CurrentUser('id') userId: number, @Param('id') id: number) {
-		return this.usersService.isSaved(userId, +id)
+	async isSaved(
+		@CurrentUser('id') userId: number,
+		@Param('slug') slug: string
+	) {
+		return this.usersService.isSaved(userId, slug)
 	}
 
 	// admin

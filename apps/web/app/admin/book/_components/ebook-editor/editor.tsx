@@ -2,18 +2,17 @@ import { TrimContentMenu } from '@/app/admin/book/_components/ebook-editor/trim-
 import { useBookCompose } from '@/app/admin/book/_components/ebook-editor/useBookCompose'
 import { DropZone, Input, TextArea } from '@/components/ui'
 import { errorToast } from '@/utils/toast'
+import { BaseFieldProperties } from 'global/types'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
-import type { FC } from 'react'
-import { Controller, type Control } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
-interface EbookComposerProperties {
-	control: Control<any>
-}
-
-const EbookComposer: FC<EbookComposerProperties> = ({ control }) => (
+const EbookComposer = <T extends Record<string, any>>({
+	control,
+	name
+}: BaseFieldProperties<T>) => (
 	<Controller
 		control={control}
-		name={'ebook'}
+		name={name}
 		render={({ field: { value = [], onChange }, fieldState: { error } }) => {
 			const { books } = useBookCompose({
 				ebooks: value,

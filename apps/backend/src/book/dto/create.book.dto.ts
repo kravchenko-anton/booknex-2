@@ -27,11 +27,11 @@ export class CreateBookDto extends PickType(Book, [
 	@ApiProperty({
 		description: 'Array of genres',
 		example: [1, 2, 3],
-		type: [Number],
+		type: [String],
 		required: true
 	})
 	@IsNumber({}, { each: true })
-	genres: number[]
+	genres: string[]
 
 	@ApiProperty({
 		description: 'picture name',

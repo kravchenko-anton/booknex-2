@@ -1,10 +1,10 @@
 import { useReader } from '@/screens/reading/reader-context'
-import { doublePressFunction } from '@/screens/reading/reader-viewer/double-press.function'
-import { textSelectFunction } from '@/screens/reading/reader-viewer/text-select.function'
 import {
-	readerActions,
-	ViewerHtml
-} from '@/screens/reading/reader-viewer/viewer.function'
+	composeReaderViewHtml,
+	readerActions
+} from '@/screens/reading/reader-viewer/helpers/compose-html'
+import { handleDoublePress } from '@/screens/reading/reader-viewer/helpers/handleDoublePress'
+import { textSelection } from '@/screens/reading/reader-viewer/helpers/text-selection'
 import { windowHeight, windowWidth } from '@/utils/dimensions'
 import { Color } from 'global/colors'
 import type { FunctionType } from 'global/types'
@@ -27,7 +27,7 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 	return (
 		<View className='m-0 h-screen w-full items-center justify-center p-0'>
 			<TouchableWithoutFeedback
-				onPress={() => doublePressFunction(properties.handleDoublePress)}>
+				onPress={() => handleDoublePress(properties.handleDoublePress)}>
 				<WebView
 					scrollEnabled
 					javaScriptEnabled
@@ -48,7 +48,7 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 					]}
 					source={{
 						baseUrl: '',
-						html: ViewerHtml({
+						html: composeReaderViewHtml({
 							defaultProperties: {
 								scrollPosition: defaultProperties.scrollPosition,
 								theme: defaultProperties.defaultTheme
@@ -65,7 +65,7 @@ const ReaderViewer: FC<ReaderViewerProperties> = properties => {
 					}}
 					onMessage={onMessage}
 					onCustomMenuSelection={async event => {
-						await textSelectFunction(
+						await textSelection(
 							event,
 							reference.current?.injectJavaScript(`
 							document.getSelection().removeAllRanges()

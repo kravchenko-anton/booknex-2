@@ -1,21 +1,17 @@
 import { useUploadFile } from '@/hooks/useFileUpload'
 import { getFileUrl } from 'global/api-config'
-import { Controller, type Control } from 'react-hook-form'
+import { BaseFieldProperties } from 'global/types'
+import { Controller } from 'react-hook-form'
 
-interface SelectPictureProperties {
-	disable?: boolean
-	control: Control<any>
-}
-
-export const SelectPicture = ({
+export const SelectPicture = <T extends Record<string, any>>({
 	control,
-	disable
-}: SelectPictureProperties) => {
+	name
+}: BaseFieldProperties<T>) => {
 	const { upload, uploadLoading } = useUploadFile()
 	return (
 		<Controller
 			control={control}
-			name={'picture'}
+			name={name}
 			render={({
 				field: { value = '', onChange: setPicture },
 				fieldState: { error }
@@ -26,7 +22,7 @@ export const SelectPicture = ({
 							<input
 								type='file'
 								className='hidden'
-								disabled={uploadLoading || disable}
+								disabled={uploadLoading}
 								onChange={async ({ target }) => {
 									const file = target.files?.[0]
 

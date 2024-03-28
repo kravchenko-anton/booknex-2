@@ -3,11 +3,11 @@ import { useEffect } from 'react'
 import { AppState } from 'react-native'
 
 export const useSaveProgress = ({
-	id,
+	slug,
 	progress,
 	scrollPosition
 }: {
-	id: number
+	slug: string
 	progress: number
 	scrollPosition: number
 }) => {
@@ -17,7 +17,7 @@ export const useSaveProgress = ({
 	useEffect(() => {
 		const unsubscribe = addListener('beforeRemove', () => {
 			updateReadingProgress({
-				id,
+				slug,
 				progress: progress,
 				scrollPosition: scrollPosition
 			})
@@ -25,7 +25,7 @@ export const useSaveProgress = ({
 		const subscription = AppState.addEventListener('change', nextAppState => {
 			if (/inactive|background/.test(nextAppState)) {
 				updateReadingProgress({
-					id,
+					slug,
 					progress: progress,
 					scrollPosition: scrollPosition
 				})
@@ -35,5 +35,5 @@ export const useSaveProgress = ({
 			unsubscribe()
 			subscription.remove()
 		}
-	}, [addListener, id, progress, scrollPosition, updateReadingProgress])
+	}, [addListener, slug, progress, scrollPosition, updateReadingProgress])
 }

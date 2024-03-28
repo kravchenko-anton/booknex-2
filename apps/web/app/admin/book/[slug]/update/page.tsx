@@ -11,7 +11,7 @@ import Loader from '@/components/ui/loader/loader'
 import api from '@/services/api'
 import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/getDirtyValues'
-import { validateNumberParameter } from '@/utils/validate-parameter'
+import { validateStringParameter } from '@/utils/validate-parameter'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { PenNib, Star } from 'icons'
@@ -21,7 +21,8 @@ import { useForm } from 'react-hook-form'
 
 const Page: FC = () => {
 	const parameters = useParams()
-	const bookId = validateNumberParameter(parameters.id)
+
+	const bookSlug = validateStringParameter(parameters.slug)
 	const queryClient = useQueryClient()
 
 	const {
@@ -34,28 +35,24 @@ const Page: FC = () => {
 	})
 
 	const { data: book } = useQuery({
-		queryKey: ['book-update-info', bookId],
-		queryFn: () => api.book.adminInfoBySlug(bookId),
+		queryKey: ['book-update-info', bookSlug],
+		queryFn: () => api.book.adminInfoBySlug(bookSlug),
 		select: data => data.data
 	})
 	const { data: ebook } = useQuery({
-		queryKey: ['stored-ebook', bookId],
-		queryFn: () => api.ebook.storedEbook(bookId),
+		queryKey: ['stored-ebook', bookSlug],
+
+		queryFn: () => api.ebook.storedEbookBySlug(bookSlug),
 		select: data => data.data
 	})
 
 	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
 		mutationKey: ['update-book'],
-		mutationFn: ({
-			id,
-			payload
-		}: {
-			id: number
-			payload: UpdateBookValidationType
-		}) => api.book.update(id, payload),
+		mutationFn: (payload: UpdateBookValidationType) =>
+			api.book.update(bookSlug, payload),
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({
-				queryKey: ['book-update-info', bookId]
+				queryKey: ['book-update-info', bookSlug]
 			})
 		}
 	})
@@ -71,14 +68,11 @@ const Page: FC = () => {
 			picture: book.picture,
 			ebook: ebook
 		})
-	}, [reset, book, bookId, ebook])
+	}, [reset, book, bookSlug, ebook])
 
 	const handleUpdate = handleSubmit(async (data: UpdateBookValidationType) => {
 		console.log(dirtyValues(dirtyFields, data))
-		await update({
-			id: bookId,
-			payload: dirtyValues(dirtyFields, data)
-		})
+		await update(dirtyValues(dirtyFields, data))
 	})
 
 	console.log(dirtyFields)
@@ -92,10 +86,10 @@ const Page: FC = () => {
 				<div>
 					<div>
 						<h1 className='mt-2  text-xl'>Cover</h1>
-						<SelectPicture control={control} />
+						<SelectPicture name='picture' control={control} />
 						<h1 className='my-1'>Genres</h1>
 
-						<SelectGenres control={control} />
+						<SelectGenres name='genres' control={control} />
 						<div className='mt-2 flex items-center justify-between'>
 							<h1 className=''>Visibility</h1>
 							<Button
@@ -104,10 +98,7 @@ const Page: FC = () => {
 								isLoading={updateLoading}
 								onClick={async () => {
 									await update({
-										id: book.id,
-										payload: {
-											visible: !book.visible
-										}
+										visible: !book.visible
 									})
 								}}>
 								{book.visible ? 'Hide' : 'Show'}
@@ -160,7 +151,7 @@ const Page: FC = () => {
 				</div>
 			</div>
 
-			<EbookEditor control={control} />
+			<EbookEditor control={control} name='ebook' />
 			<Button
 				size='sm'
 				isLoading={updateLoading}

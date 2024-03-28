@@ -16,10 +16,11 @@ export class EbookService {
 		private readonly prisma: PrismaService,
 		private readonly activityService: ActivityService
 	) {}
-	async storedEbook(id: number) {
+	async storedEbook(slug: string) {
 		const book = await this.prisma.book.findUnique({
-			where: { id },
+			where: { slug },
 			select: {
+				id: true,
 				ebook: true
 			}
 		})
@@ -39,10 +40,11 @@ export class EbookService {
 		return ebook
 	}
 
-	async ebookById(id: number, userId: number) {
+	async ebookBySlug(slug: string, userId: number) {
 		const book = await this.prisma.book.findUnique({
-			where: { id, visible: true },
+			where: { slug, visible: true },
 			select: {
+				id: true,
 				title: true,
 				ebook: true,
 				picture: true
@@ -51,12 +53,12 @@ export class EbookService {
 		if (!book) {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
 		}
-		const ebook = await this.storedEbook(id)
+		const ebook = await this.storedEbook(slug)
 		await this.activityService.create({
 			type: Activities.getEbook,
 			importance: 2,
 			userId,
-			bookId: id
+			bookId: book.id
 		})
 
 		return {

@@ -30,15 +30,15 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/start-reading/{id}":
+  "/api/user/start-reading/{slug}":
     patch:
       operationId: startReading
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -46,15 +46,15 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/finish-reading/{id}":
+  "/api/user/finish-reading/{slug}":
     patch:
       operationId: finishReading
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -62,15 +62,15 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/toggle-save/{id}":
+  "/api/user/toggle-save/{slug}":
     patch:
       operationId: toggleSave
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -82,15 +82,15 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  "/api/user/is-saved/{id}":
+  "/api/user/is-saved/{slug}":
     get:
       operationId: isSaved
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -197,22 +197,22 @@ paths:
         - 🔖 genre
       security:
         - bearer: []
-  "/api/genre/by-id/{id}":
+  "/api/genre/by-slug/{slug}":
     get:
-      operationId: byId
+      operationId: bySlug
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GenreByIdOutput"
+                $ref: "#/components/schemas/FindOneGenreOutput"
       tags:
         - 🔖 genre
       security:
@@ -232,7 +232,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/InfoByIdOutput"
+                $ref: "#/components/schemas/BookInfoOutput"
       tags:
         - 📙 book
       security:
@@ -245,14 +245,14 @@ paths:
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AdminInfoByIdOutput"
+                $ref: "#/components/schemas/AdminBookInfoOutput"
       tags:
         - 📙 book
       security:
@@ -308,7 +308,7 @@ paths:
           required: true
           in: path
           schema:
-            type: number
+            type: string
       requestBody:
         required: true
         content:
@@ -478,15 +478,15 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  "/api/parser/admin/by-id/{id}":
+  "/api/parser/admin/by-slug/{slug}":
     get:
-      operationId: byId
+      operationId: bySlug
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -542,15 +542,15 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  "/api/parser/admin/remove/{id}":
+  "/api/parser/admin/remove/{slug}":
     delete:
       operationId: remove
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -683,33 +683,33 @@ paths:
                       additionalProperties: true
       tags:
         - ❤️ health
-  "/api/ebook/ebook/by-id/{id}":
+  "/api/ebook/ebook/by-slug/{slug}":
     get:
-      operationId: ebookById
+      operationId: ebookBySlug
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EbookByIdOutput"
+                $ref: "#/components/schemas/EbookOutput"
       tags:
         - 📙 ebook
-  "/api/ebook/admin/stored-ebook/{id}":
+  "/api/ebook/admin/stored-ebook/{slug}":
     get:
-      operationId: storedEbook
+      operationId: storedEbookBySlug
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -773,10 +773,10 @@ components:
     ShortBook:
       type: object
       properties:
-        id:
-          type: number
+        slug:
+          type: string
           example: 1
-          description: book id
+          description: book slug
         title:
           type: string
           example: title
@@ -790,7 +790,7 @@ components:
           example: author
           description: book author
       required:
-        - id
+        - slug
         - title
         - picture
         - author
@@ -816,16 +816,16 @@ components:
     ShortGenre:
       type: object
       properties:
-        id:
-          type: number
+        slug:
+          type: string
           example: 1
-          description: genre id
+          description: genre slug
         name:
           type: string
           example: name
           description: genre name
       required:
-        - id
+        - slug
         - name
     ActivityItem:
       type: object
@@ -995,13 +995,13 @@ components:
         - popularBooks
         - bestSellingBooks
         - newReleases
-    GenreByIdOutput:
+    FindOneGenreOutput:
       type: object
       properties:
-        id:
-          type: number
+        slug:
+          type: string
           example: 1
-          description: genre id
+          description: genre slug
         name:
           type: string
           example: name
@@ -1011,16 +1011,16 @@ components:
           items:
             $ref: "#/components/schemas/ShortBook"
       required:
-        - id
+        - slug
         - name
         - mainBooks
-    InfoByIdOutput:
+    BookInfoOutput:
       type: object
       properties:
-        id:
-          type: number
+        slug:
+          type: string
           example: 1
-          description: book id
+          description: book slug
         title:
           type: string
           example: title
@@ -1050,7 +1050,7 @@ components:
           items:
             $ref: "#/components/schemas/ShortGenre"
       required:
-        - id
+        - slug
         - title
         - picture
         - author
@@ -1103,13 +1103,13 @@ components:
         - tags
         - text
         - rating
-    AdminInfoByIdOutput:
+    AdminBookInfoOutput:
       type: object
       properties:
-        id:
-          type: number
+        slug:
+          type: string
           example: 1
-          description: book id
+          description: book slug
         title:
           type: string
           example: title
@@ -1122,6 +1122,10 @@ components:
           type: string
           example: author
           description: book author
+        id:
+          type: number
+          example: 1
+          description: book id
         description:
           type: string
           example: description
@@ -1173,10 +1177,11 @@ components:
           items:
             $ref: "#/components/schemas/Review"
       required:
-        - id
+        - slug
         - title
         - picture
         - author
+        - id
         - description
         - readingTime
         - chapters
@@ -1192,10 +1197,10 @@ components:
     Book:
       type: object
       properties:
-        id:
-          type: number
+        slug:
+          type: string
           example: 1
-          description: book id
+          description: book slug
         title:
           type: string
           example: title
@@ -1208,6 +1213,10 @@ components:
           type: string
           example: author
           description: book author
+        id:
+          type: number
+          example: 1
+          description: book id
         description:
           type: string
           example: description
@@ -1233,10 +1242,11 @@ components:
           items:
             $ref: "#/components/schemas/ShortGenre"
       required:
-        - id
+        - slug
         - title
         - picture
         - author
+        - id
         - description
         - readingTime
         - chapters
@@ -1321,7 +1331,7 @@ components:
             - 3
           type: array
           items:
-            type: number
+            type: string
         picture:
           type: string
           description: picture name
@@ -1597,7 +1607,7 @@ components:
       required:
         - title
         - children
-    EbookByIdOutput:
+    EbookOutput:
       type: object
       properties:
         title:

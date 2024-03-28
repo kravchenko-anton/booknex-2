@@ -24,11 +24,11 @@ import { ShortGenre } from './short-genre';
  */
 export interface Book {
     /**
-     * book id
-     * @type {number}
+     * book slug
+     * @type {string}
      * @memberof Book
      */
-    'id': number;
+    'slug': string;
     /**
      * book title
      * @type {string}
@@ -47,6 +47,12 @@ export interface Book {
      * @memberof Book
      */
     'author': string;
+    /**
+     * book id
+     * @type {number}
+     * @memberof Book
+     */
+    'id': number;
     /**
      * book description
      * @type {string}

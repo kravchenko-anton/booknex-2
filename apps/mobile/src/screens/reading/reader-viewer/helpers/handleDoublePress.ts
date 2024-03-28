@@ -2,7 +2,7 @@ import type { FunctionType } from 'global/types'
 
 let lastTap: number | null
 let timer: NodeJS.Timeout
-export const doublePressFunction = (handleAction: FunctionType) => {
+export const handleDoublePress = (handleAction: FunctionType) => {
 	if (lastTap) {
 		handleAction()
 		clearTimeout(timer)

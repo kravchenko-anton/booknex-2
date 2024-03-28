@@ -15,55 +15,61 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { PayloadEBook } from './payload-ebook';
+import { ShortGenre } from './short-genre';
 
 /**
  * 
  * @export
- * @interface CreateBookDto
+ * @interface BookInfoOutput
  */
-export interface CreateBookDto {
+export interface BookInfoOutput {
+    /**
+     * book slug
+     * @type {string}
+     * @memberof BookInfoOutput
+     */
+    'slug': string;
     /**
      * book title
      * @type {string}
-     * @memberof CreateBookDto
+     * @memberof BookInfoOutput
      */
     'title': string;
     /**
+     * book picture
+     * @type {string}
+     * @memberof BookInfoOutput
+     */
+    'picture': string;
+    /**
      * book author
      * @type {string}
-     * @memberof CreateBookDto
+     * @memberof BookInfoOutput
      */
     'author': string;
     /**
      * book description
      * @type {string}
-     * @memberof CreateBookDto
+     * @memberof BookInfoOutput
      */
     'description': string;
     /**
+     * book readingTime
+     * @type {number}
+     * @memberof BookInfoOutput
+     */
+    'readingTime': number;
+    /**
      * book rating
      * @type {number}
-     * @memberof CreateBookDto
+     * @memberof BookInfoOutput
      */
     'rating': number;
     /**
      * 
-     * @type {Array<PayloadEBook>}
-     * @memberof CreateBookDto
+     * @type {Array<ShortGenre>}
+     * @memberof BookInfoOutput
      */
-    'ebook': Array<PayloadEBook>;
-    /**
-     * Array of genres
-     * @type {Array<string>}
-     * @memberof CreateBookDto
-     */
-    'genres': Array<string>;
-    /**
-     * picture name
-     * @type {string}
-     * @memberof CreateBookDto
-     */
-    'picture': string;
+    'genres': Array<ShortGenre>;
 }
 

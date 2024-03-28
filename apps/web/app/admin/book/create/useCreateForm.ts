@@ -6,7 +6,7 @@ import { useTemplate } from '@/app/admin/book/create/useTemplate'
 import api from '@/services/api'
 import { secureRoutes } from '@/utils/route'
 import { errorToast, successToast } from '@/utils/toast'
-import { validateNumberParameter } from '@/utils/validate-parameter'
+import { validateStringParameter } from '@/utils/validate-parameter'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import type { CreateBookDto } from 'global/api-client'
@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form'
 
 export const useCreateForm = () => {
 	const parameters = useSearchParams()
-	const templateId = validateNumberParameter(parameters.get('template'))
+	const templateSlug = validateStringParameter(parameters.get('template'))
 	const router = useRouter()
 	const {
 		control,
@@ -29,15 +29,16 @@ export const useCreateForm = () => {
 	} = useForm<CreateBookValidationType>({
 		resolver: zodResolver(CreateBookValidation)
 	})
-	const { deleteTemplate } = useTemplate({ templateId, reset })
+
+	const { deleteTemplate } = useTemplate({ templateSlug, reset })
 
 	const { mutateAsync: create, isLoading: createLoading } = useMutation({
 		mutationKey: ['create-book'],
 		mutationFn: (payload: CreateBookDto) => api.book.create(payload),
 		onError: () => errorToast('Error while uploading book'),
 		onSuccess: async () => {
-			if (templateId) {
-				await deleteTemplate(templateId)
+			if (templateSlug) {
+				await deleteTemplate(templateSlug)
 			}
 			successToast('Book created')
 			router.push(secureRoutes.bookCatalogRoute)

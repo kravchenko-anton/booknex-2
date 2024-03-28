@@ -14,11 +14,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const Reader = () => {
 	const { addListener } = useTypedNavigation()
 	const { params } = useTypedRoute<'Reader'>()
-	const id = +params.id
+	const slug = params.slug
 
 	const { data: ebook } = useQuery({
-		queryKey: ['e-books', +params.id],
-		queryFn: () => api.ebook.ebookById(+params.id),
+		queryKey: ['e-books', slug],
+		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data
 	})
 	const [readerUiVisible, setReaderUiVisible] = useState(false)
@@ -34,7 +34,7 @@ const Reader = () => {
 	})
 	if (!ebook) return <Loader />
 	return (
-		<ReadingProvider id={id}>
+		<ReadingProvider slug={slug}>
 			<SafeAreaView className='flex-1'>
 				<ReaderViewer
 					title={ebook.title}

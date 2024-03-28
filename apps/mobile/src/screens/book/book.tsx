@@ -24,8 +24,8 @@ import { View } from 'react-native'
 const Book: FC = () => {
 	const { params } = useTypedRoute<'Book'>()
 	const { data: book } = useQuery({
-		queryKey: ['book', params.id],
-		queryFn: () => api.book.infoById(+params.id),
+		queryKey: ['book', params.slug],
+		queryFn: () => api.book.infoBySlug(params.slug),
 		select: data => data.data
 	})
 
@@ -83,8 +83,8 @@ const Book: FC = () => {
 			</View>
 
 			<View className='flex-row justify-between px-2 pt-4'>
-				<ReadingButton id={book.id} />
-				<SaveButton id={book.id} />
+				<ReadingButton slug={book.slug} />
+				<SaveButton slug={book.slug} />
 			</View>
 
 			<Flatlist
@@ -96,7 +96,7 @@ const Book: FC = () => {
 						variant='foreground'
 						size='md'
 						onPress={() => {
-							navigate('Genre', { id: genre.id, name: genre.name })
+							navigate('Genre', { slug: genre.slug, name: genre.name })
 						}}>
 						{genre.name}
 					</Button>

@@ -133,8 +133,8 @@ export class UserService {
 		})
 	}
 
-	async startReading(userId: number, id: number) {
-		await this.checkBookExist(id)
+	async startReading(userId: number, slug: string) {
+		const { id } = await this.checkBookExist(slug)
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect,
 			finishedBooks: idSelect
@@ -171,8 +171,8 @@ export class UserService {
 		})
 	}
 
-	async finishReading(userId: number, id: number) {
-		await this.checkBookExist(id)
+	async finishReading(userId: number, slug: string) {
+		const { id } = await this.checkBookExist(slug)
 		const user = await this.getUserById(+userId, {
 			readingBooks: idSelect
 		})
@@ -208,8 +208,8 @@ export class UserService {
 		})
 	}
 
-	async isSaved(userId: number, id: number) {
-		await this.checkBookExist(id)
+	async isSaved(userId: number, slug: string) {
+		const { id } = await this.checkBookExist(slug)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -222,8 +222,8 @@ export class UserService {
 		return user.savedBooks.some(book => book.id === id)
 	}
 
-	async toggleSave(userId: number, id: number) {
-		await this.checkBookExist(id)
+	async toggleSave(userId: number, slug: string) {
+		const { id } = await this.checkBookExist(slug)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -267,15 +267,18 @@ export class UserService {
 		return !isSavedExist
 	}
 
-	private async checkBookExist(id: number) {
+	private async checkBookExist(slug: string) {
 		const book = await this.prisma.book.findUnique({
-			where: { id, visible: true },
+			where: { slug, visible: true },
 			select: {
-				id: true
+				id: true,
+				title: true
 			}
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		return !!book
+		return {
+			id: book.id
+		}
 	}
 }

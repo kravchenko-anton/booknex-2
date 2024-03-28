@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
 	books: [] as NonNullable<
 		{
-			id: number
+			slug: string
 			latestProgress: {
 				scrollPosition: number
 				progress: number
@@ -20,10 +20,14 @@ const ReadingProgressSlice = createSlice({
 			state,
 			{
 				payload
-			}: PayloadAction<{ id: number; progress: number; scrollPosition: number }>
+			}: PayloadAction<{
+				slug: string
+				progress: number
+				scrollPosition: number
+			}>
 		) => {
 			console.log('updateReadingProgress', payload)
-			const book = state.books.find(value => value.id === payload.id)
+			const book = state.books.find(value => value.slug === payload.slug)
 			if (book)
 				book.latestProgress = {
 					progress: payload.progress,
@@ -32,7 +36,7 @@ const ReadingProgressSlice = createSlice({
 			state.books = [
 				...state.books,
 				{
-					id: payload.id,
+					slug: payload.slug,
 					latestProgress: {
 						progress: payload.progress,
 						scrollPosition: payload.scrollPosition

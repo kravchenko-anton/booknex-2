@@ -9,11 +9,11 @@ const CatalogList = ({
 }: {
 	disabledScroll?: boolean
 	data: {
-		id: number
+		slug: string
 		title: string
 		picture: string
 	}[]
-	onElementPress?: (id: number) => void
+	onElementPress?: (slug: string) => void
 }) => (
 	<Flatlist
 		scrollEnabled={!disabledScroll}
@@ -32,7 +32,7 @@ const CatalogList = ({
 		renderItem={({ item: book }) => (
 			<AnimatedPress
 				className='mb-4 w-[44%]'
-				onPress={() => onElementPress(book.id)}>
+				onPress={() => onElementPress(book.slug)}>
 				<Image
 					className='mb-1 w-full'
 					height={settings.height.md * 1.1}

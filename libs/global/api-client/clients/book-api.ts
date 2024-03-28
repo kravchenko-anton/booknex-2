@@ -22,13 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { AdminInfoByIdOutput } from '../models';
+import { AdminBookInfoOutput } from '../models';
+// @ts-ignore
+import { BookInfoOutput } from '../models';
 // @ts-ignore
 import { CatalogOutput } from '../models';
 // @ts-ignore
 import { CreateBookDto } from '../models';
-// @ts-ignore
-import { InfoByIdOutput } from '../models';
 // @ts-ignore
 import { UpdateBookDto } from '../models';
 /**
@@ -39,11 +39,11 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
-         * @param {number} slug 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminInfoBySlug: async (slug: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminInfoBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('adminInfoBySlug', 'slug', slug)
             const localVarPath = `/api/book/admin-info/by-slug/{slug}`
@@ -236,12 +236,12 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {number} slug 
+         * @param {string} slug 
          * @param {UpdateBookDto} updateBookDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        update: async (slug: number, updateBookDto: UpdateBookDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        update: async (slug: string, updateBookDto: UpdateBookDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('update', 'slug', slug)
             // verify required parameter 'updateBookDto' is not null or undefined
@@ -289,11 +289,11 @@ export const BookApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {number} slug 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminInfoBySlug(slug: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminInfoByIdOutput>> {
+        async adminInfoBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminBookInfoOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminInfoBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookApi.adminInfoBySlug']?.[localVarOperationServerIndex]?.url;
@@ -330,7 +330,7 @@ export const BookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async infoBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InfoByIdOutput>> {
+        async infoBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookInfoOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.infoBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookApi.infoBySlug']?.[localVarOperationServerIndex]?.url;
@@ -350,12 +350,12 @@ export const BookApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {number} slug 
+         * @param {string} slug 
          * @param {UpdateBookDto} updateBookDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async update(slug: number, updateBookDto: UpdateBookDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async update(slug: string, updateBookDto: UpdateBookDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.update(slug, updateBookDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookApi.update']?.[localVarOperationServerIndex]?.url;
@@ -373,11 +373,11 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @param {number} slug 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminInfoBySlug(slug: number, options?: any): AxiosPromise<AdminInfoByIdOutput> {
+        adminInfoBySlug(slug: string, options?: any): AxiosPromise<AdminBookInfoOutput> {
             return localVarFp.adminInfoBySlug(slug, options).then((request) => request(axios, basePath));
         },
         /**
@@ -405,7 +405,7 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        infoBySlug(slug: string, options?: any): AxiosPromise<InfoByIdOutput> {
+        infoBySlug(slug: string, options?: any): AxiosPromise<BookInfoOutput> {
             return localVarFp.infoBySlug(slug, options).then((request) => request(axios, basePath));
         },
         /**
@@ -419,12 +419,12 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @param {number} slug 
+         * @param {string} slug 
          * @param {UpdateBookDto} updateBookDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        update(slug: number, updateBookDto: UpdateBookDto, options?: any): AxiosPromise<void> {
+        update(slug: string, updateBookDto: UpdateBookDto, options?: any): AxiosPromise<void> {
             return localVarFp.update(slug, updateBookDto, options).then((request) => request(axios, basePath));
         },
     };
@@ -439,12 +439,12 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
 export class BookApi extends BaseAPI {
     /**
      * 
-     * @param {number} slug 
+     * @param {string} slug 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public adminInfoBySlug(slug: number, options?: RawAxiosRequestConfig) {
+    public adminInfoBySlug(slug: string, options?: RawAxiosRequestConfig) {
         return BookApiFp(this.configuration).adminInfoBySlug(slug, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -495,13 +495,13 @@ export class BookApi extends BaseAPI {
 
     /**
      * 
-     * @param {number} slug 
+     * @param {string} slug 
      * @param {UpdateBookDto} updateBookDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public update(slug: number, updateBookDto: UpdateBookDto, options?: RawAxiosRequestConfig) {
+    public update(slug: string, updateBookDto: UpdateBookDto, options?: RawAxiosRequestConfig) {
         return BookApiFp(this.configuration).update(slug, updateBookDto, options).then((request) => request(this.axios, this.basePath));
     }
 }

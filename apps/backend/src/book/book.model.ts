@@ -13,19 +13,18 @@ export class CatalogOutput extends BaseCatalogModel {
 	@Type(() => Book)
 	data: Book[]
 }
-export class InfoByIdOutput extends PickType(Book, [
+export class BookInfoOutput extends PickType(Book, [
 	'description',
-	'id',
 	'title',
 	'author',
 	'genres',
 	'picture',
 	'readingTime',
-
+	'slug',
 	'rating'
 ]) {}
 
-export class AdminInfoByIdOutput extends BookWithCount {
+export class AdminBookInfoOutput extends BookWithCount {
 	@ApiProperty({
 		type: [Activity],
 		description: 'book activities'

@@ -9,8 +9,8 @@ import { useLayoutEffect } from 'react'
 const Genre = () => {
 	const { params } = useTypedRoute<'Genre'>()
 	const { data: genre } = useQuery({
-		queryKey: ['genre', +params.id],
-		queryFn: () => api.genre.byId(+params.id),
+		queryKey: ['genre', params.slug],
+		queryFn: () => api.genre.bySlug(params.slug),
 		select: data => data.data
 	})
 	const { setOptions, navigate } = useTypedNavigation()
@@ -30,7 +30,7 @@ const Genre = () => {
 			<CatalogList
 				disabledScroll
 				data={genre.mainBooks}
-				onElementPress={id => navigate('Book', { id })}
+				onElementPress={slug => navigate('Book', { slug })}
 			/>
 		</ScrollLayout>
 	)

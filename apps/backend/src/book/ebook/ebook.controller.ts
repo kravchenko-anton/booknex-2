@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../../auth/decorators/auth.decorator'
 import { CurrentUser } from '../../auth/decorators/user.decorator'
-import { EbookByIdOutput, StoredEBook } from './ebook.model'
+import { EbookOutput, StoredEBook } from './ebook.model'
 import { EbookService } from './ebook.service'
 
 @Controller('ebook')
@@ -11,20 +11,22 @@ export class EbookController {
 	constructor(private readonly ebookService: EbookService) {}
 
 	@Auth()
-	@Get('/ebook/by-id/:id')
-	@ApiOkResponse({ type: EbookByIdOutput })
-	async ebookById(
-		@Param('id') bookId: number,
+	@Get('/ebook/by-slug/:slug')
+	@ApiOkResponse({ type: EbookOutput })
+	async ebookBySlug(
+		@Param('slug') bookSlug: string,
 		@CurrentUser('id') userId: string
-	): Promise<EbookByIdOutput> {
-		return this.ebookService.ebookById(+bookId, +userId)
+	): Promise<EbookOutput> {
+		return this.ebookService.ebookBySlug(bookSlug, +userId)
 	}
 
 	//  admin
 	@Auth('admin')
-	@Get('/admin/stored-ebook/:id')
+	@Get('/admin/stored-ebook/:slug')
 	@ApiOkResponse({ type: [StoredEBook] })
-	async storedEbook(@Param('id') bookId: number): Promise<StoredEBook[]> {
-		return this.ebookService.storedEbook(+bookId)
+	async storedEbookBySlug(
+		@Param('slug') bookSlug: string
+	): Promise<StoredEBook[]> {
+		return this.ebookService.storedEbook(bookSlug)
 	}
 }

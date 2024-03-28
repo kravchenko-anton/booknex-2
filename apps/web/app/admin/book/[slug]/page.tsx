@@ -10,7 +10,7 @@ import Loader from '@/components/ui/loader/loader'
 import api from '@/services/api'
 import { cn } from '@/utils'
 import { secureRoutes } from '@/utils/route'
-import { validateNumberParameter } from '@/utils/validate-parameter'
+import { validateStringParameter } from '@/utils/validate-parameter'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
 import Image from 'next/image'
@@ -21,16 +21,16 @@ const Page = () => {
 	const parameters = useParams()
 	const queryClient = useQueryClient()
 
-	const id = validateNumberParameter(parameters.id)
+	const slug = validateStringParameter(parameters.slug)
 
 	const { data: book } = useQuery({
-		queryKey: ['book-overview', id],
-		queryFn: () => api.book.adminInfoBySlug(id),
+		queryKey: ['book-overview', slug],
+		queryFn: () => api.book.adminInfoBySlug(slug),
 		select: data => data.data
 	})
 	const onUpdateSuccess = async () => {
 		await queryClient.invalidateQueries({
-			queryKey: ['book-overview', id]
+			queryKey: ['book-overview', slug]
 		})
 	}
 
@@ -59,7 +59,7 @@ const Page = () => {
 							<Button
 								size={'sm'}
 								className={cn('bg-warning rounded text-white')}
-								onClick={() => router.push(secureRoutes.bookUpdateRoute(id))}>
+								onClick={() => router.push(secureRoutes.bookUpdateRoute(slug))}>
 								Edit
 							</Button>
 							<RemoveButton id={book.id} onSuccess={onUpdateSuccess} />
@@ -88,7 +88,7 @@ const Page = () => {
 					<p className='mb-2 text-lg'>{book.description}</p>
 					<ActivityList data={book.activities} />
 
-					<BookOverview bookId={book.id} />
+					<BookOverview bookSlug={book.slug} />
 					<ReviewTable review={book.review} />
 				</div>
 			</div>

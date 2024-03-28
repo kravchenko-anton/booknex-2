@@ -22,7 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { EbookByIdOutput } from '../models';
+import { EbookOutput } from '../models';
 // @ts-ignore
 import { StoredEBook } from '../models';
 /**
@@ -33,15 +33,15 @@ export const EbookApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ebookById: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('ebookById', 'id', id)
-            const localVarPath = `/api/ebook/ebook/by-id/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        ebookBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('ebookBySlug', 'slug', slug)
+            const localVarPath = `/api/ebook/ebook/by-slug/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -66,15 +66,15 @@ export const EbookApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storedEbook: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('storedEbook', 'id', id)
-            const localVarPath = `/api/ebook/admin/stored-ebook/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        storedEbookBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('storedEbookBySlug', 'slug', slug)
+            const localVarPath = `/api/ebook/admin/stored-ebook/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -109,26 +109,26 @@ export const EbookApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ebookById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EbookByIdOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.ebookById(id, options);
+        async ebookBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EbookOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ebookBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EbookApi.ebookById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EbookApi.ebookBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storedEbook(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoredEBook>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.storedEbook(id, options);
+        async storedEbookBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoredEBook>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storedEbookBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EbookApi.storedEbook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EbookApi.storedEbookBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -143,21 +143,21 @@ export const EbookApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ebookById(id: number, options?: any): AxiosPromise<EbookByIdOutput> {
-            return localVarFp.ebookById(id, options).then((request) => request(axios, basePath));
+        ebookBySlug(slug: string, options?: any): AxiosPromise<EbookOutput> {
+            return localVarFp.ebookBySlug(slug, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storedEbook(id: number, options?: any): AxiosPromise<Array<StoredEBook>> {
-            return localVarFp.storedEbook(id, options).then((request) => request(axios, basePath));
+        storedEbookBySlug(slug: string, options?: any): AxiosPromise<Array<StoredEBook>> {
+            return localVarFp.storedEbookBySlug(slug, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -171,24 +171,24 @@ export const EbookApiFactory = function (configuration?: Configuration, basePath
 export class EbookApi extends BaseAPI {
     /**
      * 
-     * @param {number} id 
+     * @param {string} slug 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EbookApi
      */
-    public ebookById(id: number, options?: RawAxiosRequestConfig) {
-        return EbookApiFp(this.configuration).ebookById(id, options).then((request) => request(this.axios, this.basePath));
+    public ebookBySlug(slug: string, options?: RawAxiosRequestConfig) {
+        return EbookApiFp(this.configuration).ebookBySlug(slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {number} id 
+     * @param {string} slug 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EbookApi
      */
-    public storedEbook(id: number, options?: RawAxiosRequestConfig) {
-        return EbookApiFp(this.configuration).storedEbook(id, options).then((request) => request(this.axios, this.basePath));
+    public storedEbookBySlug(slug: string, options?: RawAxiosRequestConfig) {
+        return EbookApiFp(this.configuration).storedEbookBySlug(slug, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

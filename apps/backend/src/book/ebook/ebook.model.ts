@@ -92,7 +92,7 @@ class OutputChapter {
 	children: OutputChapterChild[]
 }
 
-export class EbookByIdOutput extends PickType(ShortBook, ['title', 'picture']) {
+export class EbookOutput extends PickType(ShortBook, ['title', 'picture']) {
 	@ApiProperty({ type: [String], description: 'book file' })
 	@IsArray()
 	@IsString({ each: true })

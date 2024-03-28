@@ -12,9 +12,9 @@ import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import {
-	AdminInfoByIdOutput,
-	CatalogOutput,
-	InfoByIdOutput
+	AdminBookInfoOutput,
+	BookInfoOutput,
+	CatalogOutput
 } from './book.model'
 import { BookService } from './book.service'
 import { CreateBookDto } from './dto/create.book.dto'
@@ -28,21 +28,21 @@ export class BookController {
 
 	@Auth()
 	@Get('/info/by-slug/:slug')
-	@ApiOkResponse({ type: InfoByIdOutput })
+	@ApiOkResponse({ type: BookInfoOutput })
 	async infoBySlug(
 		@Param('slug') bookSlug: string,
 		@CurrentUser('id') userId: string
-	): Promise<InfoByIdOutput> {
-		return this.bookService.infoById(bookSlug, +userId)
+	): Promise<BookInfoOutput> {
+		return this.bookService.infoBySlug(bookSlug, +userId)
 	}
 
 	@Auth('admin')
 	@Get('/admin-info/by-slug/:slug')
-	@ApiOkResponse({ type: AdminInfoByIdOutput })
+	@ApiOkResponse({ type: AdminBookInfoOutput })
 	async adminInfoBySlug(
-		@Param('slug') slug: number
-	): Promise<AdminInfoByIdOutput> {
-		return this.bookService.infoByIdAdmin(+slug)
+		@Param('slug') slug: string
+	): Promise<AdminBookInfoOutput> {
+		return this.bookService.infoBySlugAdmin(slug)
 	}
 
 	@Auth('admin')
@@ -69,8 +69,8 @@ export class BookController {
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
 	@Put('admin/update/:slug')
-	async update(@Param('slug') bookId: number, @Body() dto: UpdateBookDto) {
-		return this.bookService.update(+bookId, dto)
+	async update(@Param('slug') bookSlug: string, @Body() dto: UpdateBookDto) {
+		return this.bookService.update(bookSlug, dto)
 	}
 
 	@Auth('admin')

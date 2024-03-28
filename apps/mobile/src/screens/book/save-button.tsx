@@ -6,20 +6,20 @@ import { Bookmarked } from 'icons'
 import type { FC } from 'react'
 
 interface SaveButtonProperties {
-	id: number
+	slug: string
 }
 
-const SaveButton: FC<SaveButtonProperties> = ({ id }) => {
+const SaveButton: FC<SaveButtonProperties> = ({ slug }) => {
 	const queryClient = useQueryClient()
 
 	const { mutateAsync: toggleSaved, isLoading: toggleSavedLoading } =
 		useMutation({
-			mutationKey: ['toggle-saved', id],
-			mutationFn: (id: number) => api.user.toggleSave(id),
+			mutationKey: ['toggle-saved', slug],
+			mutationFn: (slug: string) => api.user.toggleSave(slug),
 			onSuccess: async ({ data: isSave }) => {
 				successToast(`Book ${isSave ? 'saved' : 'removed from saved'}`)
 				await queryClient.invalidateQueries({
-					queryKey: ['is-saved', +id]
+					queryKey: ['is-saved', slug]
 				})
 				await queryClient.invalidateQueries({
 					queryKey: ['user-library']
@@ -28,8 +28,8 @@ const SaveButton: FC<SaveButtonProperties> = ({ id }) => {
 		})
 
 	const { data: isSaved } = useQuery({
-		queryKey: ['is-saved', +id],
-		queryFn: () => api.user.isSaved(+id),
+		queryKey: ['is-saved', slug],
+		queryFn: () => api.user.isSaved(slug),
 		select: data => data.data
 	})
 
@@ -42,7 +42,7 @@ const SaveButton: FC<SaveButtonProperties> = ({ id }) => {
 			size='md'
 			className='ml-3'
 			fill={!!isSaved}
-			onPress={() => toggleSaved(id)}
+			onPress={() => toggleSaved(slug)}
 		/>
 	)
 }

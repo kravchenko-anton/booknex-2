@@ -14,21 +14,16 @@ import api from '@/services/api'
 import { cn } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
+import { BaseFieldProperties } from 'global/types'
 import { Check } from 'icons'
-import type { FC } from 'react'
 
-import { Controller, type Control } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
-interface SelectGenresProperties {
-	disable?: boolean
-	control: Control<any>
-}
-
-const SelectGenres: FC<SelectGenresProperties> = ({
-	disable = false,
+const SelectGenres = <T extends Record<string, any>>({
 	control,
+	name,
 	...properties
-}) => {
+}: BaseFieldProperties<T>) => {
 	const { data: genres = [] } = useQuery({
 		queryKey: ['genres'],
 		queryFn: () => api.genre.catalog(),
@@ -38,9 +33,9 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 	return (
 		<Controller
 			control={control}
-			name='genres'
+			name={name}
 			render={({
-				field: { value = [], onChange: setGenre },
+				field: { value = [] as number[], onChange: setGenre },
 				fieldState: { error }
 			}) => {
 				return (
@@ -50,9 +45,7 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 								<PopoverTrigger className='w-full'>
 									<div
 										className={cn(
-											'border-bordered bg-foreground  rounded border-[1px] px-2 py-1',
-
-											disable && 'cursor-not-allowed'
+											'border-bordered bg-foreground  rounded border-[1px] px-2 py-1'
 										)}
 										{...properties}>
 										<div className='flex max-w-xl flex-nowrap gap-2 overflow-hidden'>

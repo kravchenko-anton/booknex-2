@@ -9,7 +9,7 @@ export const CreateBookValidation: z.ZodType<CreateBookDto> = z.object({
 	ebook: arrayOfEBookValidation,
 	rating: z.number().min(1).positive(),
 	picture: z.string(),
-	genres: z.array(z.number()).min(1)
+	genres: z.array(z.string()).min(1)
 })
 
 export type CreateBookValidationType = CreateBookDto

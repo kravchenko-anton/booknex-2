@@ -1,6 +1,6 @@
 import type { ClampPaletteType } from 'global/colors'
-import type { SizeProperties } from 'global/types'
-import type { Control, FieldPath, FieldValues } from 'react-hook-form'
+import { BaseFieldProperties, SizeProperties } from 'global/types'
+import type { FieldValues } from 'react-hook-form'
 import type { DefaultInputProperties } from '../base-components-types'
 
 export interface DropzoneProperties
@@ -27,7 +27,5 @@ export interface FormDropZoneProperties<T extends FieldValues>
 			| 'onFileDelete'
 			| 'onDropFile'
 			| 'defaultFiles'
-		> {
-	control: Control<T>
-	name: FieldPath<T>
-}
+		>,
+		BaseFieldProperties<T> {}

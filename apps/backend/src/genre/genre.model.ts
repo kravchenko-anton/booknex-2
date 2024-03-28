@@ -4,7 +4,7 @@ import { IsArray, ValidateNested } from 'class-validator'
 import { ShortBook } from '../book/book.entity'
 import { ShortGenre } from './genre.entity'
 
-export class GenreByIdOutput extends ShortGenre {
+export class FindOneGenreOutput extends ShortGenre {
 	@ApiProperty({ type: [ShortBook] })
 	@IsArray()
 	@ValidateNested()

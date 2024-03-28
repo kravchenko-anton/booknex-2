@@ -3,16 +3,16 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { ComponentType } from 'react'
 
 export type TypeRootStackParameterListType = {
-	Book: { id: number }
+	Book: { slug: string }
 	Featured: undefined
-	BookReview: { id: number }
-	Genre: { id: number; name: string }
+	BookReview: { slug: string }
+	Genre: { slug: string; name: string }
 	Library: undefined
 	Login: undefined
 	Register: undefined
 	Profile: undefined
 	Welcome: undefined
-	Reader: { id: number }
+	Reader: { slug: string }
 	UpdateRecommendation: undefined
 	Search: undefined
 	Settings: undefined

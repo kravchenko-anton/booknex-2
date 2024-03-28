@@ -54,7 +54,6 @@ const Page = () => {
 						variant='primary'
 						onClick={handleSubmit(onSubmit)}>
 						Login
-						
 					</Button>
 					<GoogleLogin
 						useOneTap
