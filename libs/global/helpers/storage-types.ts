@@ -1,3 +1,4 @@
+// use it types in global because we need it in web and backend
 export const storageFolder = {
 	ebooks: 'ebooks' as const,
 	booksCovers: 'booksCovers' as const

@@ -3,14 +3,14 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import sharp from 'sharp'
 import { adminErrors, globalErrors } from '../../../../libs/global/errors'
+import {
+	StorageFolderArray,
+	StorageFolderType,
+	storageFolder
+} from '../../../../libs/global/helpers/storage-types'
 import type { EnvironmentType } from '../utils/common/environment.config'
 import { serverError } from '../utils/helpers/call-error'
 import { optimizeFilename } from '../utils/helpers/string.functions'
-import {
-	StorageFolderArray,
-	storageFolder,
-	type StorageFolderType
-} from './storage.types'
 
 @Injectable()
 export class StorageService {

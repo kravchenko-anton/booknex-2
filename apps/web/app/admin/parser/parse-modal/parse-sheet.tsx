@@ -1,27 +1,29 @@
-import {
-	callParserValidation,
-	CallParserValidationType
-} from '@/app/admin/parser/parse-modal/call-parser.dto'
 import { defaultParserLinks } from '@/app/admin/parser/parse-modal/parse-links'
 import { Button, Field } from '@/components/ui'
 import type { DialogProperties } from '@/components/ui/base-components-types'
 import { SheetComponent, SheetHeader } from '@/components/ui/sheet'
 import { zodResolver } from '@hookform/resolvers/zod'
+import type { ParserDto } from 'global/api-client'
 
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 interface NewParserPopupProperties extends DialogProperties {
 	onSubmit: (data: { url: string; page: number }) => void
 	parseLoading: boolean
 }
+const parseValidation: z.ZodType<ParserDto> = z.object({
+	url: z.string(),
+	page: z.number().int()
+})
+
+type parseValidationType = ParserDto
 
 const CallParserDialog: FC<NewParserPopupProperties> = properties => {
-	const { control, handleSubmit, setValue } = useForm<CallParserValidationType>(
-		{
-			resolver: zodResolver(callParserValidation)
-		}
-	)
+	const { control, handleSubmit, setValue } = useForm<parseValidationType>({
+		resolver: zodResolver(parseValidation)
+	})
 	return (
 		<SheetComponent isOpen={properties.isOpen} onClose={properties.onClose}>
 			<SheetHeader className='pb-4'>

@@ -1,11 +1,11 @@
 'use client'
-import SelectGenres from '@/app/admin/book/[id]/_ui/select-genres'
-import { SelectPicture } from '@/app/admin/book/[id]/_ui/select-picture'
+import EbookEditor from '@/app/admin/book/_components/ebook-editor/editor'
+import SelectGenres from '@/app/admin/book/_components/select-genres'
+import { SelectPicture } from '@/app/admin/book/_components/select-picture'
 import {
 	UpdateBookValidation,
 	UpdateBookValidationType
 } from '@/app/admin/book/_validation/update.book.dto'
-import Editor from '@/components/book-editor/editor'
 import { Button, Field, FormTextArea } from '@/components/ui'
 import Loader from '@/components/ui/loader/loader'
 import api from '@/services/api'
@@ -18,7 +18,7 @@ import { PenNib, Star } from 'icons'
 import { useParams } from 'next/navigation'
 import { useEffect, type FC } from 'react'
 import { useForm } from 'react-hook-form'
-//TODO: доделать страницу чтобы картинка обновлялась
+
 const Page: FC = () => {
 	const parameters = useParams()
 	const bookId = validateNumberParameter(parameters.id)
@@ -34,8 +34,8 @@ const Page: FC = () => {
 	})
 
 	const { data: book } = useQuery({
-		queryKey: ['book-edit-info', bookId],
-		queryFn: () => api.book.adminInfoById(bookId),
+		queryKey: ['book-update-info', bookId],
+		queryFn: () => api.book.adminInfoBySlug(bookId),
 		select: data => data.data
 	})
 	const { data: ebook } = useQuery({
@@ -44,7 +44,7 @@ const Page: FC = () => {
 		select: data => data.data
 	})
 
-	const { mutateAsync: edit, isLoading: editLoading } = useMutation({
+	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
 		mutationKey: ['update-book'],
 		mutationFn: ({
 			id,
@@ -55,7 +55,7 @@ const Page: FC = () => {
 		}) => api.book.update(id, payload),
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({
-				queryKey: ['book-edit-info', bookId]
+				queryKey: ['book-update-info', bookId]
 			})
 		}
 	})
@@ -73,9 +73,9 @@ const Page: FC = () => {
 		})
 	}, [reset, book, bookId, ebook])
 
-	const handleEdit = handleSubmit(async (data: UpdateBookValidationType) => {
+	const handleUpdate = handleSubmit(async (data: UpdateBookValidationType) => {
 		console.log(dirtyValues(dirtyFields, data))
-		await edit({
+		await update({
 			id: bookId,
 			payload: dirtyValues(dirtyFields, data)
 		})
@@ -86,7 +86,7 @@ const Page: FC = () => {
 	return (
 		<div>
 			<h1 className='mb-4 text-center text-3xl font-medium'>
-				Edit <b>{book.title}</b> book
+				Update <b>{book.title}</b> book
 			</h1>
 			<div className='mb-4 justify-between gap-5  md:flex'>
 				<div>
@@ -101,9 +101,9 @@ const Page: FC = () => {
 							<Button
 								size={'sm'}
 								className={cn('', book.visible ? 'bg-success' : 'bg-warning')}
-								isLoading={editLoading}
+								isLoading={updateLoading}
 								onClick={async () => {
-									await edit({
+									await update({
 										id: book.id,
 										payload: {
 											visible: !book.visible
@@ -159,14 +159,15 @@ const Page: FC = () => {
 					/>
 				</div>
 			</div>
-			<Editor control={control} />
+
+			<EbookEditor control={control} />
 			<Button
 				size='sm'
-				isLoading={editLoading}
+				isLoading={updateLoading}
 				className='mt-4'
 				variant={Object.keys(errors).length > 0 ? 'danger' : 'foreground'}
-				onClick={handleEdit}>
-				Edit
+				onClick={handleUpdate}>
+				Update
 			</Button>
 		</div>
 	)

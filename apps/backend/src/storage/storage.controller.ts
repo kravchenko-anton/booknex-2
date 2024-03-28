@@ -16,11 +16,14 @@ import {
 	ApiParam,
 	ApiTags
 } from '@nestjs/swagger'
+import {
+	StorageFolderArray,
+	StorageFolderType
+} from '../../../../libs/global/helpers/storage-types'
 import { Auth } from '../auth/decorators/auth.decorator'
 import environment from '../utils/common/environment.config'
 import { UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
-import { StorageFolderArray, StorageFolderType } from './storage.types'
 
 @ApiTags('storage')
 @ApiBearerAuth()

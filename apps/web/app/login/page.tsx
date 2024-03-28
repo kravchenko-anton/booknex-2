@@ -46,13 +46,15 @@ const Page = () => {
 					type='password'
 					placeholder='Enter your password'
 				/>
-				<div className='flex h-full w-full items-center justify-center gap-2'>
+				<div className='flex h-8 w-full items-center justify-center gap-2'>
 					<Button
 						fullWidth
 						size='sm'
+						className='h-full'
 						variant='primary'
 						onClick={handleSubmit(onSubmit)}>
 						Login
+						
 					</Button>
 					<GoogleLogin
 						useOneTap

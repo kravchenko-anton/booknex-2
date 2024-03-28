@@ -1,7 +1,7 @@
 import api from '@/services/api'
 import { errorToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import { StorageFolderType } from '../../backend/src/storage/storage.types'
+import { StorageFolderType } from 'global/helpers/storage-types'
 
 interface UploadFileProperties {
 	folder: StorageFolderType

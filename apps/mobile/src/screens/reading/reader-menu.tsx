@@ -3,7 +3,7 @@ import { useReader } from '@/screens/reading/reader-context'
 import { AnimatedView } from '@/ui/animated-components'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
 import type { FunctionType } from 'global/types'
-import { ArrowLeft, CaseSenSitive, ListOrdered } from 'icons'
+import { ArrowLeft, CaseSensitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -62,7 +62,7 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 						color={colorScheme.colorPalette.text}
 						onPress={onChapterIconPress}
 					/>
-					<CaseSenSitive
+					<CaseSensitive
 						width={28}
 						height={28}
 						color={colorScheme.colorPalette.text}

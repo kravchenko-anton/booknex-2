@@ -43,16 +43,6 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 				field: { value = [], onChange: setGenre },
 				fieldState: { error }
 			}) => {
-				const selectGenreText =
-					value.length > 0
-						? value
-								.map((selectedGenre: number) => (
-									<span key={selectedGenre}>
-										{genres.find(genre => genre.id === selectedGenre)?.name}
-									</span>
-								))
-								.slice(0, 2)
-						: 'No genre selected'
 				return (
 					<>
 						<div>
@@ -66,7 +56,19 @@ const SelectGenres: FC<SelectGenresProperties> = ({
 										)}
 										{...properties}>
 										<div className='flex max-w-xl flex-nowrap gap-2 overflow-hidden'>
-											{selectGenreText}{' '}
+											{value.length > 0
+												? value
+														.map((selectedGenre: number) => (
+															<span key={selectedGenre}>
+																{
+																	genres.find(
+																		genre => genre.id === selectedGenre
+																	)?.name
+																}
+															</span>
+														))
+														.slice(0, 2)
+												: 'No genre selected'}{' '}
 											{value.length - 2 > 0 && `(${value.length - 2})`}
 										</div>
 									</div>

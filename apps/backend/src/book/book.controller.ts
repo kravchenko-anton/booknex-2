@@ -27,20 +27,22 @@ export class BookController {
 	constructor(private readonly bookService: BookService) {}
 
 	@Auth()
-	@Get('/info/by-id/:id')
+	@Get('/info/by-slug/:slug')
 	@ApiOkResponse({ type: InfoByIdOutput })
-	async infoById(
-		@Param('id') bookId: number,
+	async infoBySlug(
+		@Param('slug') bookSlug: string,
 		@CurrentUser('id') userId: string
 	): Promise<InfoByIdOutput> {
-		return this.bookService.infoById(+bookId, +userId)
+		return this.bookService.infoById(bookSlug, +userId)
 	}
 
 	@Auth('admin')
-	@Get('/admin-info/by-id/:id')
+	@Get('/admin-info/by-slug/:slug')
 	@ApiOkResponse({ type: AdminInfoByIdOutput })
-	async adminInfoById(@Param('id') id: number): Promise<AdminInfoByIdOutput> {
-		return this.bookService.infoByIdAdmin(+id)
+	async adminInfoBySlug(
+		@Param('slug') slug: number
+	): Promise<AdminInfoByIdOutput> {
+		return this.bookService.infoByIdAdmin(+slug)
 	}
 
 	@Auth('admin')
@@ -66,52 +68,15 @@ export class BookController {
 
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
-	@Put('admin/update/:id')
-	async update(@Param('id') bookId: number, @Body() dto: UpdateBookDto) {
+	@Put('admin/update/:slug')
+	async update(@Param('slug') bookId: number, @Body() dto: UpdateBookDto) {
 		return this.bookService.update(+bookId, dto)
 	}
-	//
-	// @Auth('admin')
-	// @ApiOkResponse({ type: null })
-	// @Put('admin/update-genre/:id')
-	// async updateGenre(@Param('id') bookId: number, @Body() dto: UpdateGenreDto) {
-	//   return this.bookService.updateGenre(+bookId, dto);
-	// }
-	//
-	// @Auth('admin')
-	// @ApiOkResponse({ type: null })
-	// @Put('admin/update-picture/:id')
-	// @ApiBody({ type: UpdatePictureDto })
-	// @UseInterceptors(FileInterceptor('picture'))
-	// @ApiConsumes('multipart/form-data')
-	// async updatePicture(
-	//   @UploadedFile(
-	//     new ParseFilePipe({
-	//       validators: [
-	//         new MaxFileSizeValidator({
-	//           maxSize: environment.MAX_UPLOAD_SIZE
-	//         })
-	//       ]
-	//     })
-	//   )
-	//   picture: Express.Multer.File,
-	//   @Param('id') bookId: number
-	// ) {
-	//   return this.bookService.updatePicture(+bookId, picture);
-	// }
-	//
-	// @Auth('admin')
-	// @ApiOkResponse({ type: null })
-	// @Post('admin/update-ebook/:id')
-	// @ApiBody({ type: [PayloadEBook] })
-	// async updateEbook(@Param('id') bookId: number, @Body() dto: PayloadEBook[]) {
-	//   return this.bookService.updateEbook(+bookId, dto);
-	// }
 
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
-	@Delete('admin/remove/:id')
-	async remove(@Param('id') bookId: number) {
+	@Delete('admin/remove/:slug')
+	async remove(@Param('slug') bookId: number) {
 		return this.bookService.remove(+bookId)
 	}
 }

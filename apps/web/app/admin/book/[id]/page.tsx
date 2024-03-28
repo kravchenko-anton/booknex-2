@@ -1,9 +1,9 @@
 'use client'
 
-import BookStatistic from '@/app/admin/book/[id]/_ui/book-statistic'
-import BookOverview from '@/app/admin/book/[id]/_ui/ebook-tabs'
-import { RemoveButton } from '@/app/admin/book/[id]/_ui/remove-button'
-import ReviewTable from '@/app/admin/book/[id]/_ui/review/review-table'
+import BookStatistic from '@/app/admin/book/_components/book-statistic'
+import BookOverview from '@/app/admin/book/_components/ebook-tabs'
+import { RemoveButton } from '@/app/admin/book/_components/remove-button'
+import ReviewTable from '@/app/admin/book/_components/review/review-table'
 import ActivityList from '@/components/activity-list'
 import { Button } from '@/components/ui'
 import Loader from '@/components/ui/loader/loader'
@@ -25,7 +25,7 @@ const Page = () => {
 
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', id],
-		queryFn: () => api.book.adminInfoById(id),
+		queryFn: () => api.book.adminInfoBySlug(id),
 		select: data => data.data
 	})
 	const onUpdateSuccess = async () => {
@@ -59,7 +59,7 @@ const Page = () => {
 							<Button
 								size={'sm'}
 								className={cn('bg-warning rounded text-white')}
-								onClick={() => router.push(secureRoutes.bookEditRoute(id))}>
+								onClick={() => router.push(secureRoutes.bookUpdateRoute(id))}>
 								Edit
 							</Button>
 							<RemoveButton id={book.id} onSuccess={onUpdateSuccess} />

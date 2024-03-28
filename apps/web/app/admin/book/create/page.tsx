@@ -1,14 +1,12 @@
 'use client'
 
-import SelectGenres from '@/app/admin/book/[id]/_ui/select-genres'
-import { SelectPicture } from '@/app/admin/book/[id]/_ui/select-picture'
+import EbookEditor from '@/app/admin/book/_components/ebook-editor/editor'
+import SelectGenres from '@/app/admin/book/_components/select-genres'
+import { SelectPicture } from '@/app/admin/book/_components/select-picture'
 import { useCreateForm } from '@/app/admin/book/create/useCreateForm'
-import Editor from '@/components/book-editor/editor'
-import { Button, ErrorMessage, Field, FormTextArea } from '@/components/ui'
-import type { PayloadEBook } from 'global/api-client'
+import { Button, Field, FormTextArea } from '@/components/ui'
 import { PenNib, Star } from 'icons'
 import type { FC } from 'react'
-//TODO: сдеалть всё на компонентах из [id]
 
 const Page: FC = () => {
 	const { control, ...form } = useCreateForm()
@@ -20,7 +18,11 @@ const Page: FC = () => {
 				<div>
 					<div>
 						<h1 className='mt-2  text-xl'>Cover</h1>
-						<SelectPicture control={control} bookTitle={form.watch('title')} />
+						<SelectPicture control={control} />
+
+						<h1 className='mb-2 mt-2  text-xl'>Genres</h1>
+
+						<SelectGenres control={control} />
 					</div>
 				</div>
 				<div className='w-11/12'>
@@ -65,16 +67,10 @@ const Page: FC = () => {
 						placeholder='Enter description'
 						className='h-[250px]'
 					/>
-					<h1 className='mb-2 mt-2  text-xl'>Genres</h1>
-
-					<SelectGenres control={control} />
 				</div>
 			</div>
 
-			<Editor
-				updateBooks={(books: PayloadEBook[]) => form.setValue('ebook', books)}
-			/>
-			<ErrorMessage name='ebook' errors={form.errors} />
+			<EbookEditor control={control} />
 			<Button
 				size='md'
 				isLoading={form.createLoading}

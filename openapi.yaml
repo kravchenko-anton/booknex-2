@@ -217,15 +217,15 @@ paths:
         - 🔖 genre
       security:
         - bearer: []
-  "/api/book/info/by-id/{id}":
+  "/api/book/info/by-slug/{slug}":
     get:
-      operationId: infoById
+      operationId: infoBySlug
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -237,11 +237,11 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin-info/by-id/{id}":
+  "/api/book/admin-info/by-slug/{slug}":
     get:
-      operationId: adminInfoById
+      operationId: adminInfoBySlug
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
@@ -300,11 +300,11 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/update/{id}":
+  "/api/book/admin/update/{slug}":
     put:
       operationId: update
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:
@@ -322,11 +322,11 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  "/api/book/admin/remove/{id}":
+  "/api/book/admin/remove/{slug}":
     delete:
       operationId: remove
       parameters:
-        - name: id
+        - name: slug
           required: true
           in: path
           schema:

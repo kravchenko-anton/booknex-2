@@ -1,14 +1,15 @@
+import { chapterNames } from '@/app/admin/book/_components/ebook-editor/chapterNames'
 import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import type { PayloadEBook } from 'global/api-client'
 
 export const useBookCompose = ({
-	books,
-	setBooks
+	ebooks: ebooks,
+	setEBooks: setEBooks
 }: {
-	books: PayloadEBook[] | undefined
-	setBooks: (books: PayloadEBook[]) => void
+	ebooks: PayloadEBook[] | undefined
+	setEBooks: (books: PayloadEBook[]) => void
 }) => {
 	const { mutateAsync: unfold, isLoading: unfoldLoading } = useMutation({
 		mutationKey: ['unfold'],
@@ -18,21 +19,58 @@ export const useBookCompose = ({
 	})
 
 	const deleteBook = ({ bookId }: { bookId: number }) => {
-		if (!books) return errorToast('Error deleting book')
-		setBooks(books?.filter(book => book.id !== bookId))
+		if (!ebooks) return errorToast('Error deleting book')
+		setEBooks(ebooks?.filter(book => book.id !== bookId))
 		successToast('Book deleted')
 	}
 
+	const trimmingEBookContent = ({
+		bookId,
+		startLine,
+		endLine
+	}: {
+		bookId: number
+		startLine: number
+		endLine: number
+	}) => {
+		if (!ebooks) return errorToast('Error trimming book')
+		setEBooks(
+			ebooks.map(book => {
+				if (book.id === bookId) {
+					return {
+						...book,
+						chapters: book.chapters.map(({ id, name, text }) => {
+							return {
+								id,
+								name,
+								text: text
+									.split('\n')
+									.filter(
+										(_, index) => index < startLine - 1 || index > endLine - 1
+									)
+									.join('\n')
+							}
+						})
+					}
+				}
+				return book
+			})
+		)
+		successToast('Book trimmed')
+	}
+
 	const generateChapterNames = ({ bookId }: { bookId: number }) => {
-		if (!books) return books
-		setBooks(
-			books.map(book => {
+		if (!ebooks) return ebooks
+
+		setEBooks(
+			ebooks.map(book => {
 				if (book.id === bookId) {
 					return {
 						...book,
 						chapters: book.chapters.map((content, index) => ({
 							...content,
-							name: `Chapter ${index + 1}`
+
+							name: `Chapter ${chapterNames[index]}`
 						}))
 					}
 				}
@@ -47,9 +85,9 @@ export const useBookCompose = ({
 		bookId: number
 		chapterId: number
 	}) => {
-		if (!books) return errorToast('Error adding new chapter')
-		setBooks(
-			books.map(book => {
+		if (!ebooks) return errorToast('Error adding new chapter')
+		setEBooks(
+			ebooks.map(book => {
 				if (book.id === bookId) {
 					const index = book.chapters.findIndex(
 						content => content.id === chapterId
@@ -79,9 +117,9 @@ export const useBookCompose = ({
 		bookId: number
 		chapterId: number
 	}) => {
-		if (!books) return errorToast('Error moving chapters')
-		const book = books.find(book => book.id === bookId)
-		if (!book) return books
+		if (!ebooks) return errorToast('Error moving chapters')
+		const book = ebooks.find(book => book.id === bookId)
+		if (!book) return ebooks
 		const index = book.chapters.findIndex(content => content.id === chapterId)
 		if (index <= 1) return errorToast('Error moving chapters')
 		const chapters = book.chapters.slice(index)
@@ -89,12 +127,12 @@ export const useBookCompose = ({
 			content => !chapters.some(chapter => chapter.id === content.id)
 		)
 		const newBook = {
-			id: books.length + 1,
-			title: `${books.length + 1} book`,
+			id: ebooks.length + 1,
+			title: `${ebooks.length + 1} book`,
 			chapters
 		}
-		return setBooks([
-			...books.map(book =>
+		return setEBooks([
+			...ebooks.map(book =>
 				book.id === bookId ? { ...book, chapters: oldBookChapters } : book
 			),
 			newBook
@@ -110,9 +148,9 @@ export const useBookCompose = ({
 		topChapterId: number
 		insertedContent: string
 	}) => {
-		if (!books) return books
-		return setBooks(
-			books.map(book => {
+		if (!ebooks) return ebooks
+		return setEBooks(
+			ebooks.map(book => {
 				if (book.id === bookId) {
 					const element = book.chapters.find(
 						content => content.id === topChapterId
@@ -149,9 +187,9 @@ export const useBookCompose = ({
 		value: string
 		bookId: number
 	}) => {
-		if (!books) return errorToast('Error updating book title')
-		setBooks(
-			books.map(book => {
+		if (!ebooks) return errorToast('Error updating book title')
+		setEBooks(
+			ebooks.map(book => {
 				if (book.id === bookId) {
 					return {
 						...book,
@@ -164,9 +202,9 @@ export const useBookCompose = ({
 	}
 
 	const removeChapter = (bookId: number, removedId: number) => {
-		if (!books) return errorToast('Error removing chapter')
-		setBooks(
-			books.map(book => {
+		if (!ebooks) return errorToast('Error removing chapter')
+		setEBooks(
+			ebooks.map(book => {
 				if (book.id === bookId) {
 					return {
 						...book,
@@ -191,9 +229,9 @@ export const useBookCompose = ({
 			text?: string
 		}
 	}) => {
-		if (!books) return books
-		setBooks(
-			books.map(book => {
+		if (!ebooks) return ebooks
+		setEBooks(
+			ebooks.map(book => {
 				if (book.id === bookId) {
 					return {
 						...book,
@@ -224,10 +262,10 @@ export const useBookCompose = ({
 			text: string
 		}[]
 	}) => {
-		const elementIndex = books?.length || 0
+		const elementIndex = ebooks?.length || 0
 
-		setBooks([
-			...(books || []),
+		setEBooks([
+			...(ebooks || []),
 			{
 				id: elementIndex + 1,
 				title: title || '',
@@ -251,8 +289,9 @@ export const useBookCompose = ({
 	return {
 		books: {
 			upload: unfoldWithUpload,
-			state: books || [],
+			state: ebooks || [],
 			unfoldLoading,
+			trimmingEBookContent,
 			generateChapterNames,
 			addNewCharacterAfterContent,
 			delete: deleteBook,

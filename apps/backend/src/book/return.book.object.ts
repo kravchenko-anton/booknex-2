@@ -4,9 +4,10 @@ import { defaultReturnObject } from '../utils/common/return.default.object'
 
 export const returnBookObject: Pick<
 	Prisma.BookSelect,
-	'title' | 'picture' | 'author' | keyof typeof defaultReturnObject
+	'title' | 'picture' | 'author' | 'slug' | keyof typeof defaultReturnObject
 > = {
 	id: true,
+	slug: true,
 	title: true,
 	picture: true,
 	author: true

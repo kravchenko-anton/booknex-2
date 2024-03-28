@@ -1,4 +1,5 @@
-import { useBookCompose } from '@/components/book-editor/useBookCompose'
+import { TrimContentMenu } from '@/app/admin/book/_components/ebook-editor/trim-content-menu'
+import { useBookCompose } from '@/app/admin/book/_components/ebook-editor/useBookCompose'
 import { DropZone, Input, TextArea } from '@/components/ui'
 import { errorToast } from '@/utils/toast'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
@@ -15,8 +16,8 @@ const EbookComposer: FC<EbookComposerProperties> = ({ control }) => (
 		name={'ebook'}
 		render={({ field: { value = [], onChange }, fieldState: { error } }) => {
 			const { books } = useBookCompose({
-				books: value,
-				setBooks: onChange
+				ebooks: value,
+				setEBooks: onChange
 			})
 
 			return (
@@ -48,7 +49,7 @@ const EbookComposer: FC<EbookComposerProperties> = ({ control }) => (
 									<div className='mb-2 flex h-9 items-center  justify-between gap-1'>
 										<Input
 											variant='muted'
-											className='h-full w-full flex-1'
+											className='mr-2 h-full w-full flex-1'
 											defaultValue={book.title}
 											onBlur={event =>
 												books.updateBookTitle({
@@ -58,17 +59,29 @@ const EbookComposer: FC<EbookComposerProperties> = ({ control }) => (
 											}
 										/>
 
-										<CaseSensitive
-											width={33}
-											height={33}
-											className='bg-muted border-bordered h-full w-[40px] cursor-pointer rounded border-[1px] p-1.5'
-											onClick={() => {
-												books.generateChapterNames({
-													bookId: book.id
-												})
-												console.log('generate chapters names')
-											}}
-										/>
+										<div className='flex items-center gap-2'>
+											<TrimContentMenu
+												onSubmit={data => {
+													books.trimmingEBookContent({
+														bookId: book.id,
+														startLine: data.startLine,
+														endLine: data.endLine
+													})
+												}}
+											/>
+
+											<CaseSensitive
+												width={33}
+												height={33}
+												className='bg-muted border-bordered h-full w-[35px] cursor-pointer rounded border-[1px] p-1.5'
+												onClick={() => {
+													books.generateChapterNames({
+														bookId: book.id
+													})
+													console.log('generate chapters names')
+												}}
+											/>
+										</div>
 									</div>
 									{book.chapters.map((chapter, index) => (
 										<div key={chapter.id} className='bg-muted mb-2 rounded p-2'>

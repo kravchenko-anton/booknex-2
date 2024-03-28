@@ -5,7 +5,6 @@ import { transformActivity } from '../../../../libs/global/utils/activity-transf
 import { slugify } from '../../../../libs/global/utils/slugify'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
-import { storageFolder } from '../storage/storage.types'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -80,9 +79,9 @@ export class BookService {
 		})
 	}
 
-	async infoById(id: number, userId: number) {
+	async infoById(slug: string, userId: number) {
 		const book = await this.findOne({
-			where: { id: +id, visible: true },
+			where: { slug, visible: true },
 			adminVisible: false,
 			select: {
 				description: true,
@@ -92,12 +91,14 @@ export class BookService {
 				genres: { select: ReturnGenreObject }
 			}
 		})
+		if (!book)
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 
 		await this.activityService.create({
 			type: Activities.visitBook,
 			importance: 1,
 			userId,
-			bookId: id
+			bookId: book.id
 		})
 
 		return book
@@ -192,10 +193,15 @@ export class BookService {
 	}
 
 	async update(id: number, dto: UpdateBookDto) {
-		await this.checkExist({
+		const book = await this.findOne({
+			where: { id },
 			adminVisible: true,
-			where: { id }
+			select: {
+				ebook: true
+			}
 		})
+		if (!book)
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		const { genres, ebook, ...rest } = dto
 
 		let updateData: UpdateBookDtoExtended = { ...rest }
@@ -203,9 +209,9 @@ export class BookService {
 		if (ebook) {
 			const { uploadedEbook, readingTime, chaptersCount } = useGetEbook(ebook)
 			const { name: ebookName } = await this.storageService.upload({
-				folder: storageFolder.ebooks,
+				folder: 'ebooks',
 				file: Buffer.from(JSON.stringify(uploadedEbook)),
-				fileName: `${rest.title}.json`
+				fileName: `${book.title}.json`
 			})
 
 			updateData = {
