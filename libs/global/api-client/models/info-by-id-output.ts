@@ -12,64 +12,62 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortGenre } from './short-genre';
+import { ShortGenre } from './short-genre'
 
 /**
- * 
+ *
  * @export
  * @interface InfoByIdOutput
  */
 export interface InfoByIdOutput {
-    /**
-     * book id
-     * @type {number}
-     * @memberof InfoByIdOutput
-     */
-    'id': number;
-    /**
-     * book title
-     * @type {string}
-     * @memberof InfoByIdOutput
-     */
-    'title': string;
-    /**
-     * book picture
-     * @type {string}
-     * @memberof InfoByIdOutput
-     */
-    'picture': string;
-    /**
-     * book author
-     * @type {string}
-     * @memberof InfoByIdOutput
-     */
-    'author': string;
-    /**
-     * book description
-     * @type {string}
-     * @memberof InfoByIdOutput
-     */
-    'description': string;
-    /**
-     * book readingTime
-     * @type {number}
-     * @memberof InfoByIdOutput
-     */
-    'readingTime': number;
-    /**
-     * book rating
-     * @type {number}
-     * @memberof InfoByIdOutput
-     */
-    'rating': number;
-    /**
-     * 
-     * @type {Array<ShortGenre>}
-     * @memberof InfoByIdOutput
-     */
-    'genres': Array<ShortGenre>;
+	/**
+	 * book id
+	 * @type {number}
+	 * @memberof InfoByIdOutput
+	 */
+	id: number
+	/**
+	 * book title
+	 * @type {string}
+	 * @memberof InfoByIdOutput
+	 */
+	title: string
+	/**
+	 * book picture
+	 * @type {string}
+	 * @memberof InfoByIdOutput
+	 */
+	picture: string
+	/**
+	 * book author
+	 * @type {string}
+	 * @memberof InfoByIdOutput
+	 */
+	author: string
+	/**
+	 * book description
+	 * @type {string}
+	 * @memberof InfoByIdOutput
+	 */
+	description: string
+	/**
+	 * book readingTime
+	 * @type {number}
+	 * @memberof InfoByIdOutput
+	 */
+	readingTime: number
+	/**
+	 * book rating
+	 * @type {number}
+	 * @memberof InfoByIdOutput
+	 */
+	rating: number
+	/**
+	 *
+	 * @type {Array<ShortGenre>}
+	 * @memberof InfoByIdOutput
+	 */
+	genres: Array<ShortGenre>
 }
-

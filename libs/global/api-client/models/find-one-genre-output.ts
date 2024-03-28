@@ -12,34 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortBook } from './short-book';
+import { ShortBook } from './short-book'
 
 /**
- * 
+ *
  * @export
  * @interface FindOneGenreOutput
  */
 export interface FindOneGenreOutput {
-    /**
-     * genre slug
-     * @type {string}
-     * @memberof FindOneGenreOutput
-     */
-    'slug': string;
-    /**
-     * genre name
-     * @type {string}
-     * @memberof FindOneGenreOutput
-     */
-    'name': string;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof FindOneGenreOutput
-     */
-    'mainBooks': Array<ShortBook>;
+	/**
+	 * genre slug
+	 * @type {string}
+	 * @memberof FindOneGenreOutput
+	 */
+	slug: string
+	/**
+	 * genre name
+	 * @type {string}
+	 * @memberof FindOneGenreOutput
+	 */
+	name: string
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof FindOneGenreOutput
+	 */
+	mainBooks: Array<ShortBook>
 }
-

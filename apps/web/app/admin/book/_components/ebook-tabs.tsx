@@ -8,7 +8,6 @@ interface EbookInfoProperties {
 	bookSlug: string
 }
 
-
 const BookOverview: FC<EbookInfoProperties> = ({ bookSlug }) => {
 	const { data: ebook } = useQuery({
 		queryKey: ['stored-ebook', bookSlug],

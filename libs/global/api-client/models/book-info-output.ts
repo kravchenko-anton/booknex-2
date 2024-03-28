@@ -12,64 +12,62 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortGenre } from './short-genre';
+import { ShortGenre } from './short-genre'
 
 /**
- * 
+ *
  * @export
  * @interface BookInfoOutput
  */
 export interface BookInfoOutput {
-    /**
-     * book slug
-     * @type {string}
-     * @memberof BookInfoOutput
-     */
-    'slug': string;
-    /**
-     * book title
-     * @type {string}
-     * @memberof BookInfoOutput
-     */
-    'title': string;
-    /**
-     * book picture
-     * @type {string}
-     * @memberof BookInfoOutput
-     */
-    'picture': string;
-    /**
-     * book author
-     * @type {string}
-     * @memberof BookInfoOutput
-     */
-    'author': string;
-    /**
-     * book description
-     * @type {string}
-     * @memberof BookInfoOutput
-     */
-    'description': string;
-    /**
-     * book readingTime
-     * @type {number}
-     * @memberof BookInfoOutput
-     */
-    'readingTime': number;
-    /**
-     * book rating
-     * @type {number}
-     * @memberof BookInfoOutput
-     */
-    'rating': number;
-    /**
-     * 
-     * @type {Array<ShortGenre>}
-     * @memberof BookInfoOutput
-     */
-    'genres': Array<ShortGenre>;
+	/**
+	 * book slug
+	 * @type {string}
+	 * @memberof BookInfoOutput
+	 */
+	slug: string
+	/**
+	 * book title
+	 * @type {string}
+	 * @memberof BookInfoOutput
+	 */
+	title: string
+	/**
+	 * book picture
+	 * @type {string}
+	 * @memberof BookInfoOutput
+	 */
+	picture: string
+	/**
+	 * book author
+	 * @type {string}
+	 * @memberof BookInfoOutput
+	 */
+	author: string
+	/**
+	 * book description
+	 * @type {string}
+	 * @memberof BookInfoOutput
+	 */
+	description: string
+	/**
+	 * book readingTime
+	 * @type {number}
+	 * @memberof BookInfoOutput
+	 */
+	readingTime: number
+	/**
+	 * book rating
+	 * @type {number}
+	 * @memberof BookInfoOutput
+	 */
+	rating: number
+	/**
+	 *
+	 * @type {Array<ShortGenre>}
+	 * @memberof BookInfoOutput
+	 */
+	genres: Array<ShortGenre>
 }
-

@@ -12,127 +12,125 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { Activity } from './activity';
+import { Activity } from './activity'
 // May contain unused imports in some cases
 // @ts-ignore
-import { BookCount } from './book-count';
+import { BookCount } from './book-count'
 // May contain unused imports in some cases
 // @ts-ignore
-import { Review } from './review';
+import { Review } from './review'
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortGenre } from './short-genre';
+import { ShortGenre } from './short-genre'
 
 /**
- * 
+ *
  * @export
  * @interface AdminBookInfoOutput
  */
 export interface AdminBookInfoOutput {
-    /**
-     * book slug
-     * @type {string}
-     * @memberof AdminBookInfoOutput
-     */
-    'slug': string;
-    /**
-     * book title
-     * @type {string}
-     * @memberof AdminBookInfoOutput
-     */
-    'title': string;
-    /**
-     * book picture
-     * @type {string}
-     * @memberof AdminBookInfoOutput
-     */
-    'picture': string;
-    /**
-     * book author
-     * @type {string}
-     * @memberof AdminBookInfoOutput
-     */
-    'author': string;
-    /**
-     * book id
-     * @type {number}
-     * @memberof AdminBookInfoOutput
-     */
-    'id': number;
-    /**
-     * book description
-     * @type {string}
-     * @memberof AdminBookInfoOutput
-     */
-    'description': string;
-    /**
-     * book readingTime
-     * @type {number}
-     * @memberof AdminBookInfoOutput
-     */
-    'readingTime': number;
-    /**
-     * book chapters count
-     * @type {number}
-     * @memberof AdminBookInfoOutput
-     */
-    'chapters': number;
-    /**
-     * book rating
-     * @type {number}
-     * @memberof AdminBookInfoOutput
-     */
-    'rating': number;
-    /**
-     * book visibility
-     * @type {boolean}
-     * @memberof AdminBookInfoOutput
-     */
-    'visible': boolean;
-    /**
-     * 
-     * @type {Array<ShortGenre>}
-     * @memberof AdminBookInfoOutput
-     */
-    'genres': Array<ShortGenre>;
-    /**
-     * book created at
-     * @type {string}
-     * @memberof AdminBookInfoOutput
-     */
-    'createdAt': string;
-    /**
-     * book updated at
-     * @type {string}
-     * @memberof AdminBookInfoOutput
-     */
-    'updatedAt': string;
-    /**
-     * book ebook
-     * @type {string}
-     * @memberof AdminBookInfoOutput
-     */
-    'ebook': string;
-    /**
-     * book count
-     * @type {BookCount}
-     * @memberof AdminBookInfoOutput
-     */
-    '_count': BookCount;
-    /**
-     * book activities
-     * @type {Array<Activity>}
-     * @memberof AdminBookInfoOutput
-     */
-    'activities': Array<Activity>;
-    /**
-     * book review
-     * @type {Array<Review>}
-     * @memberof AdminBookInfoOutput
-     */
-    'review': Array<Review>;
+	/**
+	 * book slug
+	 * @type {string}
+	 * @memberof AdminBookInfoOutput
+	 */
+	slug: string
+	/**
+	 * book title
+	 * @type {string}
+	 * @memberof AdminBookInfoOutput
+	 */
+	title: string
+	/**
+	 * book picture
+	 * @type {string}
+	 * @memberof AdminBookInfoOutput
+	 */
+	picture: string
+	/**
+	 * book author
+	 * @type {string}
+	 * @memberof AdminBookInfoOutput
+	 */
+	author: string
+	/**
+	 * book id
+	 * @type {number}
+	 * @memberof AdminBookInfoOutput
+	 */
+	id: number
+	/**
+	 * book description
+	 * @type {string}
+	 * @memberof AdminBookInfoOutput
+	 */
+	description: string
+	/**
+	 * book readingTime
+	 * @type {number}
+	 * @memberof AdminBookInfoOutput
+	 */
+	readingTime: number
+	/**
+	 * book chapters count
+	 * @type {number}
+	 * @memberof AdminBookInfoOutput
+	 */
+	chapters: number
+	/**
+	 * book rating
+	 * @type {number}
+	 * @memberof AdminBookInfoOutput
+	 */
+	rating: number
+	/**
+	 * book visibility
+	 * @type {boolean}
+	 * @memberof AdminBookInfoOutput
+	 */
+	visible: boolean
+	/**
+	 *
+	 * @type {Array<ShortGenre>}
+	 * @memberof AdminBookInfoOutput
+	 */
+	genres: Array<ShortGenre>
+	/**
+	 * book created at
+	 * @type {string}
+	 * @memberof AdminBookInfoOutput
+	 */
+	createdAt: string
+	/**
+	 * book updated at
+	 * @type {string}
+	 * @memberof AdminBookInfoOutput
+	 */
+	updatedAt: string
+	/**
+	 * book ebook
+	 * @type {string}
+	 * @memberof AdminBookInfoOutput
+	 */
+	ebook: string
+	/**
+	 * book count
+	 * @type {BookCount}
+	 * @memberof AdminBookInfoOutput
+	 */
+	_count: BookCount
+	/**
+	 * book activities
+	 * @type {Array<Activity>}
+	 * @memberof AdminBookInfoOutput
+	 */
+	activities: Array<Activity>
+	/**
+	 * book review
+	 * @type {Array<Review>}
+	 * @memberof AdminBookInfoOutput
+	 */
+	review: Array<Review>
 }
-

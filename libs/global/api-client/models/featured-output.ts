@@ -12,49 +12,47 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortBook } from './short-book';
+import { ShortBook } from './short-book'
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortGenre } from './short-genre';
+import { ShortGenre } from './short-genre'
 
 /**
- * 
+ *
  * @export
  * @interface FeaturedOutput
  */
 export interface FeaturedOutput {
-    /**
-     * 
-     * @type {Array<ShortGenre>}
-     * @memberof FeaturedOutput
-     */
-    'relatedGenres': Array<ShortGenre>;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof FeaturedOutput
-     */
-    'recommendations': Array<ShortBook>;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof FeaturedOutput
-     */
-    'popularBooks': Array<ShortBook>;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof FeaturedOutput
-     */
-    'bestSellingBooks': Array<ShortBook>;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof FeaturedOutput
-     */
-    'newReleases': Array<ShortBook>;
+	/**
+	 *
+	 * @type {Array<ShortGenre>}
+	 * @memberof FeaturedOutput
+	 */
+	relatedGenres: Array<ShortGenre>
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof FeaturedOutput
+	 */
+	recommendations: Array<ShortBook>
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof FeaturedOutput
+	 */
+	popularBooks: Array<ShortBook>
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof FeaturedOutput
+	 */
+	bestSellingBooks: Array<ShortBook>
+	/**
+	 *
+	 * @type {Array<ShortBook>}
+	 * @memberof FeaturedOutput
+	 */
+	newReleases: Array<ShortBook>
 }
-
