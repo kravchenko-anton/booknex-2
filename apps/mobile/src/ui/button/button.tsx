@@ -5,7 +5,7 @@ import { ActivityIndicator } from 'react-native'
 import Title from '../title/title'
 import { settings } from './settings'
 import type { ButtonProperties } from './types'
-
+//TODO сделать вместе с иконкой компонент кнопки и сделать чтобы можно было справа разместить, так-же сделать в genre отображение иконки исходя из url
 const Button = ({
 	size = 'lg',
 	variant = 'foreground',
@@ -20,7 +20,7 @@ const Button = ({
 	<AnimatedPress
 		disabled={disabled || isLoading}
 		className={cn(
-			'flex-row items-center justify-center rounded',
+			'flex-row items-center justify-center rounded-md',
 			settings.padding[size],
 
 			settings.colors[variant],
@@ -38,6 +38,7 @@ const Button = ({
 				}}
 			/>
 		) : null}
+
 		{!!Icon && !isLoading && (
 			<Icon
 				className='mr-2 mt-1'
@@ -46,6 +47,15 @@ const Button = ({
 				height={settings.iconSize[size]}
 			/>
 		)}
+		{/* {!!Icon && !isLoading && typeof Icon === 'string' && ( */}
+		{/* 	<SvgUri */}
+		{/* 		uri={Icon} */}
+		{/* 		width={settings.iconSize[size]} */}
+		{/* 		height={settings.iconSize[size]} */}
+		{/* 		color={InnerColor[variant]} */}
+		{/* 		className='mr-2 mt-1' */}
+		{/* 	/> */}
+		{/* )} */}
 		<Title
 			weight='semiBold'
 			color={InnerColor[variant]}

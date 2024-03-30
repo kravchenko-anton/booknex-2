@@ -13,6 +13,7 @@ import {
 import api from '@/services/api'
 import { cn } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
+import { ShortGenre } from 'global/api-client'
 import { Color } from 'global/colors'
 import { BaseFieldProperties } from 'global/types'
 import { Check } from 'icons'
@@ -35,7 +36,7 @@ const SelectGenres = <T extends Record<string, any>>({
 			control={control}
 			name={name}
 			render={({
-				field: { value = [] as number[], onChange: setGenre },
+				field: { value = [] as ShortGenre[], onChange: setGenre },
 				fieldState: { error }
 			}) => {
 				return (
@@ -51,12 +52,11 @@ const SelectGenres = <T extends Record<string, any>>({
 										<div className='flex max-w-xl flex-nowrap gap-2 overflow-hidden'>
 											{value.length > 0
 												? value
-														.map((selectedGenre: number) => (
-															<span key={selectedGenre}>
+														.map(({ slug }) => (
+															<span key={slug}>
 																{
-																	genres.find(
-																		genre => genre.id === selectedGenre
-																	)?.name
+																	genres.find(genre => genre.slug === slug)
+																		?.name
 																}
 															</span>
 														))
@@ -74,23 +74,24 @@ const SelectGenres = <T extends Record<string, any>>({
 										<CommandGroup>
 											{genres.map(genre => (
 												<CommandItem
-													key={genre.id}
+													key={genre.slug}
 													value={genre.name}
 													onSelect={() =>
 														setGenre(
-															value.includes(genre.id)
+															value.find(({ slug }) => slug === genre.slug)
 																? value.filter(
-																		(selectedGenre: number) =>
-																			selectedGenre !== genre.id
+																		({ slug }) => slug !== genre.slug
 																	)
-																: [...value, genre.id]
+																: [...value, genre]
 														)
 													}>
 													<Check
 														color={Color.white}
 														className={cn(
 															'mr-2 h-4 w-4',
-															Boolean(value.includes(genre.id))
+															Boolean(
+																value.find(({ slug }) => slug === genre.slug)
+															)
 																? 'opacity-100'
 																: 'opacity-0'
 														)}

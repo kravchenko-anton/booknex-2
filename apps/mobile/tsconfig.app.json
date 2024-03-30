@@ -13,6 +13,7 @@
 		"isolatedModules": true,
 		"baseUrl": ".",
 		"experimentalDecorators": true,
+		"strictNullChecks": true,
 		"emitDecoratorMetadata": true,
 		"paths": {
 			"@/*": ["./src/*"],

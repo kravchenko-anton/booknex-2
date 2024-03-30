@@ -1,4 +1,5 @@
 import api from '@/services/api'
+import { errorCatch } from 'global/helpers/catch-error'
 import Cookies from 'js-cookie'
 
 export const getAccessToken = () => {
@@ -41,16 +42,12 @@ export const getNewTokens = async () => {
 	console.log('refreshToken', refreshToken)
 	const { data: response } = await api.auth
 		.refreshToken({ refreshToken })
-		.catch(error => {
-			console.log('error in get New token', error)
-			return error
+		.catch((error: any) => {
+			if (errorCatch(error) === 'jwt expired') deleteTokensStorage()
+			if (errorCatch(error) === 'jwt malformed') deleteTokensStorage()
+			if (errorCatch(error) === 'jwt must be provided') deleteTokensStorage()
+			throw error
 		})
-	console.log(
-		'response',
-		response,
-		'response.accessToken',
-		response.accessToken
-	)
 	if (response.accessToken)
 		saveTokensStorage({
 			accessToken: response.accessToken,

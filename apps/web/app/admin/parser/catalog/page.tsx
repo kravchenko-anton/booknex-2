@@ -24,11 +24,12 @@ const Parser: FC = () => {
 	const table = useReactTable({
 		data: books?.data ?? [],
 		columns: columns({
-			remove: (id: number) => deleteTemplate(id),
+			remove: (slug: string) => deleteTemplate(slug),
 			removeLoading: deleteTemplateLoading,
-			useAsTemplate: id =>
-				router.push(secureRoutes.bookCreateWithTemplateRoute(id))
+			useAsTemplate: slug =>
+				router.push(secureRoutes.bookCreateWithTemplateRoute(slug))
 		}),
+
 		getCoreRowModel: getCoreRowModel()
 	})
 

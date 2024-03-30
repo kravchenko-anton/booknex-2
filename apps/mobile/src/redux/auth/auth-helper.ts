@@ -1,4 +1,5 @@
 import api from '@/api'
+import { errorCatch } from 'global/helpers/catch-error'
 
 import EncryptedStorage from 'react-native-encrypted-storage'
 
@@ -28,7 +29,14 @@ export const deleteTokensStorage = async () => {
 export const getNewTokens = async () => {
 	const refreshToken = await getRefreshToken()
 	if (!refreshToken) throw new Error('No refresh token')
-	const { data: response } = await api.auth.refreshToken({ refreshToken })
+	const { data: response } = await api.auth
+		.refreshToken({ refreshToken })
+		.catch((error: any) => {
+			if (errorCatch(error) === 'jwt expired') deleteTokensStorage()
+			if (errorCatch(error) === 'jwt malformed') deleteTokensStorage()
+			throw error
+		})
+
 	if (response.accessToken)
 		await saveTokensStorage({
 			accessToken: response.accessToken,

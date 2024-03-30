@@ -48,7 +48,7 @@ const Library = () => {
 						style={{
 							width: settings.width.sm * 1.2
 						}}
-						onPress={() => navigate('Reader', { id: book.id })}>
+						onPress={() => navigate('Reader', { slug: book.slug })}>
 						<Image
 							width={settings.width.sm * 1.2}
 							height={settings.height.sm * 1.3}
@@ -59,7 +59,7 @@ const Library = () => {
 						<ProgressBar
 							progress={
 								Number(
-									books.find(b => b.id === book.id)?.latestProgress.progress
+									books.find(b => b.slug === book.slug)?.latestProgress.progress
 								) / 100 ||
 								// small progress  with index
 								0
@@ -81,7 +81,7 @@ const Library = () => {
 						size='sm'
 						image={{ uri: book.picture }}
 						author={book.author}
-						onPress={() => navigate('Book', { id: book.id })}
+						onPress={() => navigate('Book', { slug: book.slug })}
 					/>
 				)}
 			/>
@@ -96,7 +96,7 @@ const Library = () => {
 						size='sm'
 						image={{ uri: book.picture }}
 						author={book.author}
-						onPress={() => navigate('Book', { id: book.id })}
+						onPress={() => navigate('Book', { slug: book.slug })}
 					/>
 				)}
 			/>

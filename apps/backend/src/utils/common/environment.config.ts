@@ -28,6 +28,6 @@ export default {
 	GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || '',
 	NODE_ENV: process.env.NODE_ENV || 'development',
 	SENTRY_DSN: process.env.SENTRY_DSN || '',
-	MAX_UPLOAD_SIZE: +process.env.MAX_UPLOAD_SIZE || 1024 * 1024 * 5,
+	MAX_UPLOAD_SIZE: process.env.MAX_UPLOAD_SIZE || 1024 * 1024 * 5,
 	PORT: process.env.PORT || '7777'
 } as EnvironmentType

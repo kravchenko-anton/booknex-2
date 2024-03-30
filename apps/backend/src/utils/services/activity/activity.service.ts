@@ -11,7 +11,20 @@ export class ActivityService {
 			data: {
 				type: createActivityDto.type,
 				importance: createActivityDto.importance,
-				...createActivityDto
+				...(createActivityDto.userId && {
+					user: {
+						connect: {
+							id: createActivityDto.userId
+						}
+					}
+				}),
+				...(createActivityDto.bookSlug && {
+					book: {
+						connect: {
+							slug: createActivityDto.bookSlug
+						}
+					}
+				})
 			}
 		})
 	}

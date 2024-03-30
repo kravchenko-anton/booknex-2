@@ -13,14 +13,14 @@ export class ReviewService {
 		private readonly activityService: ActivityService
 	) {}
 
-	async review(userId: number, bookId: number, dto: ReviewBookDto) {
-		await this.checkBookExist(bookId)
+	async review(userId: number, bookSlug: string, dto: ReviewBookDto) {
+		await this.checkBookExist(bookSlug)
 		await this.checkUserExist(userId)
 		await this.activityService.create({
 			type: Activities.reviewBook,
 			importance: 4,
 			userId,
-			bookId
+			bookSlug
 		})
 		await this.prisma.review.create({
 			data: {
@@ -34,16 +34,16 @@ export class ReviewService {
 				},
 				book: {
 					connect: {
-						id: bookId
+						slug: bookSlug
 					}
 				}
 			}
 		})
 	}
 
-	private async checkBookExist(id: number) {
+	private async checkBookExist(slug: string) {
 		const book = await this.prisma.book.findUnique({
-			where: { id: id, visible: true },
+			where: { slug, visible: true },
 			select: {
 				id: true
 			}

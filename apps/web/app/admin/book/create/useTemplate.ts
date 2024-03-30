@@ -30,7 +30,7 @@ export const useTemplate = ({
 			description: template.description,
 			author: template.author,
 			rating: template.rating,
-			genres: template.genres.map(genre => genre.slug)
+			genres: template.genres
 		})
 	}, [reset, template])
 

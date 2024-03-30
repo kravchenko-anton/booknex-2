@@ -22,6 +22,7 @@ export interface ListItemType
 
 export const Category = ({
 	title,
+
 	children,
 	className,
 	...properties
@@ -33,7 +34,7 @@ export const Category = ({
 		<Title size={'xxl'} weight='bold' className='mb-2'>
 			{title}
 		</Title>
-		<View className='bg-foreground border-bordered rounded border-[1px] p-1.5'>
+		<View className='bg-foreground border-bordered rounded  p-1.5'>
 			{children}
 		</View>
 	</View>
@@ -51,7 +52,7 @@ export const Item = ({
 		key={title}
 		className={cn(
 			'flex-row items-center justify-between px-2 py-2',
-			bordered && 'border-bordered border-b-[1px] pb-3',
+			bordered && 'border-bordered pb-3',
 			className
 		)}
 		onPress={onPress}

@@ -19,12 +19,10 @@ git_push.sh
 index.ts
 models/activity-item.ts
 models/activity.ts
-models/admin-book-info-output.ts
 models/auth-dto.ts
 models/auth-output.ts
 models/auth-user.ts
 models/book-count.ts
-models/book-info-output.ts
 models/book-template-catalog-output.ts
 models/book-template.ts
 models/book.ts
@@ -37,6 +35,7 @@ models/create-book-dto.ts
 models/ebook-output.ts
 models/featured-output.ts
 models/find-one-genre-output.ts
+models/full-book.ts
 models/google-auth-dto.ts
 models/index.ts
 models/output-chapter-child.ts

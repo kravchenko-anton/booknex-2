@@ -5,6 +5,7 @@ import {
 	IsNumber,
 	IsOptional,
 	IsPositive,
+	IsString,
 	Max,
 	Min
 } from 'class-validator'
@@ -27,10 +28,10 @@ export class CreateActivityDto {
 	userId?: number
 
 	@IsOptional()
-	@IsNumber()
+	@IsString()
 	@IsPositive()
 	@ApiProperty({ example: 1, minimum: 1, type: 'number', required: false })
-	bookId?: number
+	bookSlug?: string
 
 	@IsOptional()
 	@IsNumber()

@@ -11,15 +11,15 @@ import { ReviewService } from './review.service'
 export class ReviewController {
 	constructor(private readonly reviewService: ReviewService) {}
 
-	@Post('/review/:id')
+	@Post('/review/:slug')
 	@Auth()
 	@ApiOkResponse({ description: 'Review book' })
 	@ApiBody({ type: ReviewBookDto, required: true, description: 'Review book' })
 	async review(
 		@CurrentUser('id') userId: number,
-		@Param('id') bookId: number,
+		@Param('slug') bookSlug: string,
 		@Body() dto: ReviewBookDto
 	) {
-		return this.reviewService.review(+userId, +bookId, dto)
+		return this.reviewService.review(+userId, bookSlug, dto)
 	}
 }

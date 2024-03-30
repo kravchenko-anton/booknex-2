@@ -41,6 +41,9 @@ export const updatedContent = async (text: string) => {
 		if (element.tagName === 'SUP') element.remove()
 		if (element.tagName === 'SUB') element.remove()
 	}
+	if (!prettify.format) {
+		throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+	}
 	return prettify
 		.format(dom.window.document.body?.innerHTML || '', {
 			language: 'html',
@@ -61,7 +64,7 @@ export const getEbook = async (buffer: Buffer) =>
 							if (!chapter.id) return
 							epub.getChapter(chapter.id, async (error, text) => {
 								if (error) return null
-
+								if (!text) return null
 								const finalContent = await updatedContent(text)
 								resolve({
 									id: index + 1,

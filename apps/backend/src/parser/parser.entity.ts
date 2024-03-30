@@ -4,12 +4,9 @@ import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
 import { ShortGenre } from '../genre/genre.entity'
 
 export class BookTemplate {
-	@ApiProperty({
-		type: Number,
-		description: 'id of the book'
-	})
+	@ApiProperty({ example: 1, description: 'book template slug', type: String })
 	@IsNumber()
-	id: number
+	slug: string
 
 	@ApiProperty({
 		type: String,
@@ -46,7 +43,16 @@ export class BookTemplate {
 	@ValidateNested()
 	@Type(() => ShortGenre)
 	genres: {
-		id: number
+		slug: string
 		name: string
 	}[]
+}
+
+export class FullBookTemplate extends BookTemplate {
+	@ApiProperty({
+		type: Number,
+		description: 'id of the  book template'
+	})
+	@IsNumber()
+	id: number
 }

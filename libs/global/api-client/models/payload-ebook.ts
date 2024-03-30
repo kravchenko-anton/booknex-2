@@ -12,32 +12,34 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { PayloadChapter } from './payload-chapter'
+import { PayloadChapter } from './payload-chapter';
 
 /**
- *
+ * 
  * @export
  * @interface PayloadEBook
  */
 export interface PayloadEBook {
-	/**
-	 *
-	 * @type {number}
-	 * @memberof PayloadEBook
-	 */
-	id: number
-	/**
-	 *
-	 * @type {string}
-	 * @memberof PayloadEBook
-	 */
-	title: string
-	/**
-	 *
-	 * @type {Array<PayloadChapter>}
-	 * @memberof PayloadEBook
-	 */
-	chapters: Array<PayloadChapter>
+    /**
+     * 
+     * @type {number}
+     * @memberof PayloadEBook
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PayloadEBook
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<PayloadChapter>}
+     * @memberof PayloadEBook
+     */
+    'chapters': Array<PayloadChapter>;
 }
+

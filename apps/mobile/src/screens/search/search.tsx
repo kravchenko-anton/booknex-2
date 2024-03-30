@@ -66,7 +66,7 @@ const Search = () => {
 					) : books ? (
 						<CatalogList
 							data={books}
-							onElementPress={id => navigate('Book', { id })}
+							onElementPress={slug => navigate('Book', { slug: slug })}
 						/>
 					) : (
 						<NothingFount />

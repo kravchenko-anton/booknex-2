@@ -8,14 +8,14 @@ import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 
 interface BookVisibleButtonProperties {
-	id: number
+	slug: string
 	onSuccess: () => void
 }
 export const RemoveButton: FC<BookVisibleButtonProperties> = properties => {
 	const router = useRouter()
 	const { mutateAsync: remove, isLoading: removeLoading } = useMutation({
 		mutationKey: ['remove-book'],
-		mutationFn: (id: number) => api.book.remove(id),
+		mutationFn: (slug: string) => api.book.remove(slug),
 		onSuccess: () => {
 			successToast('Book removed')
 			router.push(secureRoutes.bookCatalogRoute)
@@ -30,7 +30,7 @@ export const RemoveButton: FC<BookVisibleButtonProperties> = properties => {
 				acceptToast('Are you sure you want to delete this book?', {
 					action: {
 						label: 'Delete',
-						onClick: () => remove(properties.id)
+						onClick: () => remove(properties.slug)
 					}
 				})
 			}>

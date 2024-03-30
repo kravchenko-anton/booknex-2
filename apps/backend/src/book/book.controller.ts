@@ -11,11 +11,8 @@ import {
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import {
-	AdminBookInfoOutput,
-	BookInfoOutput,
-	CatalogOutput
-} from './book.model'
+import { Book, FullBook } from './book.entity'
+import { CatalogOutput } from './book.model'
 import { BookService } from './book.service'
 import { CreateBookDto } from './dto/create.book.dto'
 import { UpdateBookDto } from './dto/update.book.dto'
@@ -28,20 +25,18 @@ export class BookController {
 
 	@Auth()
 	@Get('/info/by-slug/:slug')
-	@ApiOkResponse({ type: BookInfoOutput })
+	@ApiOkResponse({ type: Book })
 	async infoBySlug(
 		@Param('slug') bookSlug: string,
 		@CurrentUser('id') userId: string
-	): Promise<BookInfoOutput> {
+	): Promise<Book> {
 		return this.bookService.infoBySlug(bookSlug, +userId)
 	}
 
 	@Auth('admin')
 	@Get('/admin-info/by-slug/:slug')
-	@ApiOkResponse({ type: AdminBookInfoOutput })
-	async adminInfoBySlug(
-		@Param('slug') slug: string
-	): Promise<AdminBookInfoOutput> {
+	@ApiOkResponse({ type: FullBook })
+	async adminInfoBySlug(@Param('slug') slug: string): Promise<FullBook> {
 		return this.bookService.infoBySlugAdmin(slug)
 	}
 
@@ -57,7 +52,7 @@ export class BookController {
 
 	@Auth('admin')
 	@Post('admin/create')
-	@ApiOkResponse({ type: null })
+	@ApiOkResponse({ type: undefined })
 	@ApiBody({
 		type: CreateBookDto,
 		description: 'Create book'
@@ -76,7 +71,7 @@ export class BookController {
 	@Auth('admin')
 	@ApiOkResponse({ type: null })
 	@Delete('admin/remove/:slug')
-	async remove(@Param('slug') bookId: number) {
-		return this.bookService.remove(+bookId)
+	async remove(@Param('slug') slug: string) {
+		return this.bookService.remove(slug)
 	}
 }

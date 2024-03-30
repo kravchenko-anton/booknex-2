@@ -4,7 +4,6 @@ import {
 	ArrayMinSize,
 	IsArray,
 	IsNumber,
-	IsOptional,
 	IsString,
 	Validate,
 	ValidateNested
@@ -17,9 +16,7 @@ const htmlRegex = /<([A-Za-z][\dA-Za-z]*)\b[^>]*>(.*?)<\/\1>/
 export class Chapter {
 	@ApiProperty({ type: Number })
 	@IsNumber()
-	@IsOptional()
 	id: number
-
 	@ApiProperty({ type: String })
 	@IsString()
 	name: string
@@ -45,14 +42,13 @@ export class PayloadChapter extends PickType(Chapter, ['id', 'name', 'text']) {}
 export class EBookBase {
 	@ApiProperty({ type: Number })
 	@IsNumber()
-	@IsOptional()
 	id: number
 
 	@ApiProperty({ type: String })
-	@IsString()
 	@Validate((value: string) => !value.includes('epub'), {
 		message: 'Ebook cannot be an epub'
 	})
+	@IsString()
 	title: string
 }
 export class StoredEBook extends EBookBase {
@@ -66,7 +62,6 @@ export class StoredEBook extends EBookBase {
 
 export class PayloadEBook extends EBookBase {
 	@ApiProperty({ type: [PayloadChapter] })
-	@ValidateNested({ each: true })
 	@IsArray()
 	@ArrayMinSize(1)
 	@Type(() => PayloadChapter)

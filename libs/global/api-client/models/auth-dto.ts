@@ -12,22 +12,25 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface AuthDto
  */
 export interface AuthDto {
-	/**
-	 * User email
-	 * @type {string}
-	 * @memberof AuthDto
-	 */
-	email: string
-	/**
-	 * User password
-	 * @type {string}
-	 * @memberof AuthDto
-	 */
-	password: string
+    /**
+     * User email
+     * @type {string}
+     * @memberof AuthDto
+     */
+    'email': string;
+    /**
+     * User password
+     * @type {string}
+     * @memberof AuthDto
+     */
+    'password': string;
 }
+

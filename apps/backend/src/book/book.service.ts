@@ -9,6 +9,7 @@ import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
+import { Book } from './book.entity'
 import { UpdateBookDtoExtended } from './book.types'
 import type { CreateBookDto } from './dto/create.book.dto'
 
@@ -95,7 +96,7 @@ export class BookService {
 			type: Activities.visitBook,
 			importance: 1,
 			userId,
-			bookId: book.id
+			bookSlug: slug
 		})
 
 		return book
@@ -149,6 +150,7 @@ export class BookService {
 				}
 			}
 		})
+
 		const { activities, ...rest } = book
 
 		return {
@@ -248,17 +250,19 @@ export class BookService {
 		})
 	}
 
-	async remove(id: number) {
+	async remove(slug: string) {
 		await this.checkExist({
 			adminVisible: true,
-			where: { id }
+			where: { slug }
 		})
 		await this.prisma.review.deleteMany({
 			where: {
-				bookId: id
+				book: {
+					slug
+				}
 			}
 		})
-		await this.prisma.book.delete({ where: { id } })
+		await this.prisma.book.delete({ where: { slug } })
 	}
 
 	async update(slug: string, dto: UpdateBookDto) {
@@ -321,14 +325,15 @@ export class BookService {
 		await this.activityService.create({
 			type: Activities.updateBook,
 			importance: 7,
-			bookId: book.id
+			bookSlug: slug
 		})
 	}
-	async getGenres(genres: string[]) {
+
+	async getGenres(genres: Book['genres']) {
 		const mainGenre = await this.prisma.genre.findFirst({
 			where: {
 				slug: {
-					in: genres
+					in: genres.map(genre => genre.slug)
 				}
 			},
 			select: {
@@ -344,7 +349,7 @@ export class BookService {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		return {
 			mainGenreId: mainGenre.id,
-			genreIds: genres.map(slug => ({ slug }))
+			genreIds: genres.map(({ slug }) => ({ slug }))
 		}
 	}
 

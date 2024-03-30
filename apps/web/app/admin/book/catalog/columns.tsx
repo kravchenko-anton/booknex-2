@@ -13,12 +13,6 @@ export const columns = ({
 	preview: (slug: string) => void
 }): ColumnDef<Book, unknown>[] => [
 	{
-		id: 'id',
-		enableHiding: false,
-		header: () => <p className='text-center text-lg'>id</p>,
-		cell: ({ row }) => <p className='text-2xl'>{row.original.id}</p>
-	},
-	{
 		id: 'picture',
 		enableHiding: false,
 		header: () => <p className='text-center text-lg'>Picture</p>,

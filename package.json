@@ -109,6 +109,8 @@
 		"@nestjs/schematics": "^10.0.1",
 		"@nestjs/testing": "^10.0.2",
 		"@nrwl/workspace": "v17.2.5",
+		"@nx-tools/container-metadata": "^5.2.0",
+		"@nx-tools/nx-container": "^5.2.0",
 		"@nx/eslint": "v17.2.5",
 		"@nx/eslint-plugin": "^18.0.5",
 		"@nx/jest": "v17.2.5",

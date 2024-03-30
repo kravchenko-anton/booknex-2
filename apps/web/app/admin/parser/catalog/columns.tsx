@@ -9,35 +9,21 @@ import {
 import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { AxiosResponse } from 'axios'
+import { BookTemplate } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { MoreHorizontal } from 'icons'
 
-type ColumnType = ColumnDef<{
-	id: number
-	title: string
-	author: string
-	picture: string
-	description: string
-	rating: number
-	genres: { name: string }[]
-}>[]
+type ColumnType = ColumnDef<BookTemplate>[]
 
 export const columns = ({
 	remove,
 	useAsTemplate,
 	removeLoading
 }: {
-	remove: (id: number) => Promise<AxiosResponse<void, unknown>>
-	useAsTemplate: (id: number) => void
+	remove: (slug: string) => Promise<AxiosResponse<void, unknown>>
+	useAsTemplate: (slug: string) => void
 	removeLoading: boolean
 }): ColumnType => [
-	{
-		id: 'id',
-		enableHiding: false,
-
-		header: () => <p className='text-center text-lg'>id</p>,
-		cell: ({ row }) => <p className='text-2xl'>{row.original.id}</p>
-	},
 	{
 		id: 'picture',
 		enableHiding: false,
@@ -48,7 +34,7 @@ export const columns = ({
 				className='mx-auto w-[60px] cursor-pointer rounded'
 				src={getFileUrl(row.original.picture)}
 				onClick={() => {
-					useAsTemplate(row.original.id)
+					useAsTemplate(row.original.slug)
 				}}
 			/>
 		)
@@ -104,7 +90,7 @@ export const columns = ({
 				<DropdownMenuContent align='end'>
 					<DropdownMenuItem
 						onClick={() => {
-							useAsTemplate(row.original.id)
+							useAsTemplate(row.original.slug)
 						}}>
 						Use as template
 					</DropdownMenuItem>
@@ -117,7 +103,7 @@ export const columns = ({
 									label: 'Delete',
 
 									onClick: async () => {
-										await remove(row.original.id)
+										await remove(row.original.slug)
 									}
 								}
 							})

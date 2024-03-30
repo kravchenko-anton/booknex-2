@@ -64,7 +64,7 @@ const Page: FC = () => {
 			description: book.description,
 			author: book.author,
 			rating: book.rating,
-			genres: book.genres.map(genre => genre.id),
+			genres: book.genres,
 			picture: book.picture,
 			ebook: ebook
 		})

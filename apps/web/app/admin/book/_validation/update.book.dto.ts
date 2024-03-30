@@ -9,7 +9,16 @@ export const UpdateBookValidation: z.ZodType<UpdateBookDto> = z.object({
 	ebook: arrayOfEBookValidation.optional(),
 	rating: z.number().min(1).positive().optional(),
 	picture: z.string().optional(),
-	genres: z.array(z.number()).min(1).optional()
+	genres: z
+		.array(
+			z.object({
+				slug: z.string(),
+				name: z.string(),
+				icon: z.string()
+			})
+		)
+		.min(1)
+		.optional()
 })
 
 export type UpdateBookValidationType = UpdateBookDto

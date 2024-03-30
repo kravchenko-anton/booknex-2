@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface PayloadChapter
  */
 export interface PayloadChapter {
-	/**
-	 *
-	 * @type {number}
-	 * @memberof PayloadChapter
-	 */
-	id: number
-	/**
-	 *
-	 * @type {string}
-	 * @memberof PayloadChapter
-	 */
-	name: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof PayloadChapter
-	 */
-	text: string
+    /**
+     * 
+     * @type {number}
+     * @memberof PayloadChapter
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PayloadChapter
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PayloadChapter
+     */
+    'text': string;
 }
+

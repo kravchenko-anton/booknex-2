@@ -12,16 +12,8 @@ export class GoogleAuthDto {
 	})
 	socialId: string
 }
-export class AuthUser {
-	@ApiProperty({
-		description: 'User id',
-		example: 1
-	})
-	@IsString({
-		message: 'User id must be a number'
-	})
-	id: number
 
+export class AuthUser {
 	@ApiProperty({
 		description: 'User email',
 		example: 'test@gmail.com'

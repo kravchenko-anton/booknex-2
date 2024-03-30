@@ -12,32 +12,34 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { BookTemplate } from './book-template'
+import { BookTemplate } from './book-template';
 
 /**
- *
+ * 
  * @export
  * @interface BookTemplateCatalogOutput
  */
 export interface BookTemplateCatalogOutput {
-	/**
-	 * can load more
-	 * @type {boolean}
-	 * @memberof BookTemplateCatalogOutput
-	 */
-	canLoadMore: boolean
-	/**
-	 * total pages
-	 * @type {number}
-	 * @memberof BookTemplateCatalogOutput
-	 */
-	totalPages: number
-	/**
-	 * book template
-	 * @type {Array<BookTemplate>}
-	 * @memberof BookTemplateCatalogOutput
-	 */
-	data: Array<BookTemplate>
+    /**
+     * can load more
+     * @type {boolean}
+     * @memberof BookTemplateCatalogOutput
+     */
+    'canLoadMore': boolean;
+    /**
+     * total pages
+     * @type {number}
+     * @memberof BookTemplateCatalogOutput
+     */
+    'totalPages': number;
+    /**
+     * book template
+     * @type {Array<BookTemplate>}
+     * @memberof BookTemplateCatalogOutput
+     */
+    'data': Array<BookTemplate>;
 }
+

@@ -16,7 +16,8 @@
 				"main": "apps/backend/src/main.ts",
 				"tsConfig": "apps/backend/tsconfig.app.json",
 				"assets": ["apps/backend/src/assets"],
-				"webpackConfig": "apps/backend/webpack.config.js"
+				"webpackConfig": "apps/backend/webpack.config.js",
+				"generatePackageJson": true
 			},
 			"configurations": {
 				"development": {},
@@ -51,6 +52,28 @@
 			"options": {
 				"jestConfig": "apps/backend/jest.config.ts"
 			}
+		},
+		"container": {
+			"executor": "@nx-tools/nx-container:build",
+			"dependsOn": ["build"],
+			"options": {
+				"engine": "docker",
+				"metadata": {
+					"images": ["backend"],
+					"load": true,
+					"tags": [
+						"type=schedule",
+						"type=ref,event=branch",
+						"type=ref,event=tag",
+						"type=ref,event=pr",
+						"type=sha,prefix=sha-"
+					]
+				}
+			}
+		},
+		"docker-build": {
+			"dependsOn": ["build"],
+			"command": "docker build -f apps/backend/Dockerfile . -t backend"
 		}
 	}
 }

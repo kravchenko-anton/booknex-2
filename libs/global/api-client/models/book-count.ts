@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface BookCount
  */
 export interface BookCount {
-	/**
-	 * FinishedBy
-	 * @type {number}
-	 * @memberof BookCount
-	 */
-	finishedBy: number
-	/**
-	 * ReadingBy
-	 * @type {number}
-	 * @memberof BookCount
-	 */
-	readingBy: number
-	/**
-	 * SavedBy
-	 * @type {number}
-	 * @memberof BookCount
-	 */
-	savedBy: number
+    /**
+     * FinishedBy
+     * @type {number}
+     * @memberof BookCount
+     */
+    'finishedBy': number;
+    /**
+     * ReadingBy
+     * @type {number}
+     * @memberof BookCount
+     */
+    'readingBy': number;
+    /**
+     * SavedBy
+     * @type {number}
+     * @memberof BookCount
+     */
+    'savedBy': number;
 }
+

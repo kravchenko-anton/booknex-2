@@ -29,10 +29,12 @@ instance.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
+		console.log('error in interceptor', error)
 		if (error.response.status === 403) return deleteTokensStorage()
 		if (
 			(error.response.status === 401 ||
 				errorCatch(error) === 'jwt expired' ||
+				errorCatch(error) === 'jwt malformed' ||
 				errorCatch(error) === 'jwt must be provided') &&
 			error.config &&
 			!error.config._isRetry
@@ -51,7 +53,7 @@ instance.interceptors.response.use(
 				if (
 					errorCatch(error) === 'jwt expired' ||
 					errorCatch(error) === 'jwt must be provided' ||
-					errorCatch(error) === 'jwt must be provided'
+					errorCatch(error) === 'jwt malformed'
 				) {
 					return deleteTokensStorage()
 				}

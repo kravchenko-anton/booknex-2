@@ -28,16 +28,17 @@ model Genre {
 }
 
 model Activity {
-  id         Int        @id @default(autoincrement())
-  createdAt  DateTime   @default(now())
-  book       Book?      @relation(fields: [bookId], references: [id])
-  genre      Genre?     @relation(fields: [genreId], references: [id])
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  book      Book?    @relation(fields: [bookId], references: [id])
+  genre     Genre?   @relation(fields: [genreId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+
+  type       Activities
+  importance Int
   genreId    Int?
   bookId     Int?
   userId     Int?
-  type       Activities
-  importance Int
-  user       User?      @relation(fields: [userId], references: [id])
 }
 
 model Review {

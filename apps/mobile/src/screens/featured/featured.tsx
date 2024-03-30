@@ -1,5 +1,5 @@
 import api from '@/api'
-import { useTypedNavigation } from '@/hooks'
+import { useAuth, useTypedNavigation } from '@/hooks'
 import ManageRecommendationMenu from '@/screens/update-recommendation/manage-recommendation-menu'
 import { BookCard, Button, Flatlist, Loader, ScrollLayout } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
@@ -11,7 +11,9 @@ const Featured = () => {
 		queryFn: () => api.catalog.featured(),
 		select: data => data.data
 	})
+	const { user } = useAuth()
 	const { navigate } = useTypedNavigation()
+	console.log('featured', user, featured)
 	if (!featured) return <Loader />
 	return (
 		<ScrollLayout>
@@ -24,10 +26,11 @@ const Featured = () => {
 						image={{
 							uri: book.picture
 						}}
-						onPress={() => navigate('Book', { id: book.id })}
+						onPress={() => navigate('Book', { slug: book.slug })}
 					/>
 				)}
 			/>
+
 			<Flatlist
 				horizontal
 				data={featured.relatedGenres}
@@ -36,7 +39,7 @@ const Featured = () => {
 						size='md'
 						variant='foreground'
 						onPress={() => {
-							navigate('Genre', { id: genre.id, name: genre.name })
+							navigate('Genre', { slug: genre.slug, name: genre.name })
 						}}>
 						{genre.name}
 					</Button>
@@ -55,7 +58,7 @@ const Featured = () => {
 						image={{
 							uri: book.picture
 						}}
-						onPress={() => navigate('Book', { id: book.id })}
+						onPress={() => navigate('Book', { slug: book.slug })}
 					/>
 				)}
 			/>
@@ -69,7 +72,7 @@ const Featured = () => {
 						image={{
 							uri: book.picture
 						}}
-						onPress={() => navigate('Book', { id: book.id })}
+						onPress={() => navigate('Book', { slug: book.slug })}
 					/>
 				)}
 			/>
@@ -84,12 +87,13 @@ const Featured = () => {
 						image={{
 							uri: book.picture
 						}}
-						onPress={() => navigate('Book', { id: book.id })}
+						onPress={() => navigate('Book', { slug: book.slug })}
 					/>
 				)}
 			/>
+
 			{
-				// TODO: сделать колекцию, обновление своих рекомендаций, жанры относительно фаворитных жанров
+				// TODO: сделать колекцию,жанры относительно фаворитных жанров
 			}
 			<ManageRecommendationMenu
 				onManagePress={() => navigate('UpdateRecommendation')}

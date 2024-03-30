@@ -58,7 +58,7 @@ export class EbookService {
 			type: Activities.getEbook,
 			importance: 2,
 			userId,
-			bookId: book.id
+			bookSlug: slug
 		})
 
 		return {

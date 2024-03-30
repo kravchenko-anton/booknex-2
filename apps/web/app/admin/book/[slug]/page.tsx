@@ -62,7 +62,7 @@ const Page = () => {
 								onClick={() => router.push(secureRoutes.bookUpdateRoute(slug))}>
 								Edit
 							</Button>
-							<RemoveButton id={book.id} onSuccess={onUpdateSuccess} />
+							<RemoveButton slug={book.slug} onSuccess={onUpdateSuccess} />
 						</div>
 					</div>
 				</div>

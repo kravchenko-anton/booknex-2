@@ -22,8 +22,8 @@ export class ParserService {
 			data: await this.prisma.bookTemplate.findMany({
 				take: perPage,
 				select: {
-					...defaultReturnObject,
 					title: true,
+					slug: true,
 					rating: true,
 					description: true,
 					author: true,
@@ -84,6 +84,7 @@ export class ParserService {
 			select: {
 				...defaultReturnObject,
 				title: true,
+				slug: true,
 				rating: true,
 				description: true,
 				author: true,

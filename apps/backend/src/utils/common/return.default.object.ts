@@ -7,3 +7,9 @@ export const idSelect = {
 		id: true
 	}
 }
+
+export const slugSelect = {
+	select: {
+		slug: true
+	}
+}

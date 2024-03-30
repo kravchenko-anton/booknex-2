@@ -16,13 +16,6 @@ module.exports = {
 			success: '#4CAF50',
 			warning: '#f48c06',
 			transparent: colors.transparent
-		},
-		//TODO: пофиксить border radius и сделать зависимость
-		borderRadius: {
-			none: '0',
-			DEFAULT: '0.25rem',
-			md: '0.375rem',
-			full: '9999px'
 		}
 	},
 	plugins: []

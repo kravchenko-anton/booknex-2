@@ -63,6 +63,7 @@ export const columns = ({
 		header: () => <p className='text-center text-lg'>Activities</p>,
 		cell: ({ row }) => <ActivityList onlyGraph data={row.original.activities} />
 	},
+
 	{
 		id: 'Library',
 		enableHiding: false,
@@ -92,7 +93,7 @@ export const columns = ({
 						size='sm'
 						variant='muted'
 						className='mb-2 w-full'
-						key={genre.id}>
+						key={genre.slug}>
 						{genre.name}
 					</Button>
 				))}

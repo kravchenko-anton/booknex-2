@@ -2,7 +2,6 @@ import { formatYYYYMMDD } from '../helpers/time-format'
 
 export interface ActivitiesProperties {
 	importance: number
-	id: number
 	createdAt: Date
 	type: string
 	genreId: number | null

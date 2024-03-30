@@ -1,10 +1,8 @@
 import { ApiProperty, PartialType, PickType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import {
-	ArrayMaxSize,
 	ArrayMinSize,
 	IsArray,
-	IsNumber,
 	IsOptional,
 	ValidateNested
 } from 'class-validator'
@@ -16,24 +14,11 @@ export class UpdateBookPick extends PickType(Book, [
 	'description',
 	'title',
 	'visible',
-
+	'genres',
 	'rating',
 	'picture'
 ]) {}
 export class UpdateBookDto extends PartialType(UpdateBookPick) {
-	@ApiProperty({
-		description: 'Array of genres',
-		example: [1, 2, 3],
-		type: [Number],
-		required: false
-	})
-	@IsOptional()
-	@IsNumber({}, { each: true })
-	@IsArray()
-	@ArrayMinSize(1)
-	@ArrayMaxSize(3)
-	genres: string[]
-
 	@ApiProperty({ type: [PayloadEBook], required: false })
 	@IsOptional()
 	@IsArray()

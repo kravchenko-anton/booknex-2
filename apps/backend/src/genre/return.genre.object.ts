@@ -3,9 +3,10 @@ import { defaultReturnObject } from '../utils/common/return.default.object'
 
 export const ReturnGenreObject: Pick<
 	Prisma.GenreSelect,
-	'name' | 'slug' | keyof typeof defaultReturnObject
+	'name' | 'slug' | 'icon' | keyof typeof defaultReturnObject
 > = {
 	...defaultReturnObject,
 	name: true,
-	slug: true
+	slug: true,
+	icon: true
 }

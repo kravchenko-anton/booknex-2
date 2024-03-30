@@ -13,6 +13,8 @@ import {
 	ValidateNested
 } from 'class-validator'
 import { ShortGenre } from '../genre/genre.entity'
+import { Review } from '../review/review.entity'
+import { Activity } from '../utils/services/activity/activity.model'
 
 export class ShortBook {
 	@ApiProperty({ example: 1, description: 'book slug', type: String })
@@ -36,10 +38,6 @@ export class ShortBook {
 }
 
 export class Book extends ShortBook {
-	@ApiProperty({ example: 1, description: 'book id', type: Number })
-	@IsNumber()
-	id: number
-
 	@ApiProperty({
 		example: 'description',
 		description: 'book description',
@@ -79,9 +77,22 @@ export class Book extends ShortBook {
 	@ValidateNested()
 	@Type(() => ShortGenre)
 	genres: {
-		id: number
+		slug: string
 		name: string
 	}[]
+}
+export class BookCount {
+	@ApiProperty({ example: 1, description: 'FinishedBy', type: Number })
+	@IsNumber()
+	finishedBy: number
+
+	@ApiProperty({ example: 1, description: 'ReadingBy', type: Number })
+	@IsNumber()
+	readingBy: number
+
+	@ApiProperty({ example: 1, description: 'SavedBy', type: Number })
+	@IsNumber()
+	savedBy: number
 }
 
 export class FullBook extends Book {
@@ -104,22 +115,7 @@ export class FullBook extends Book {
 	@ApiProperty({ example: 'ebook', description: 'book ebook', type: String })
 	@IsString()
 	ebook: string
-}
-export class BookCount {
-	@ApiProperty({ example: 1, description: 'FinishedBy', type: Number })
-	@IsNumber()
-	finishedBy: number
 
-	@ApiProperty({ example: 1, description: 'ReadingBy', type: Number })
-	@IsNumber()
-	readingBy: number
-
-	@ApiProperty({ example: 1, description: 'SavedBy', type: Number })
-	@IsNumber()
-	savedBy: number
-}
-
-export class BookWithCount extends FullBook {
 	@ApiProperty({
 		type: BookCount,
 		description: 'book count'
@@ -127,4 +123,21 @@ export class BookWithCount extends FullBook {
 	@ValidateNested()
 	@Type(() => BookCount)
 	_count: BookCount
+
+	@ApiProperty({
+		type: [Activity],
+		description: 'book activities'
+	})
+	@IsArray()
+	@ValidateNested({ each: true })
+	@Type(() => Activity)
+	activities: Activity[]
+	@ApiProperty({
+		type: [Review],
+		description: 'book review'
+	})
+	@IsArray()
+	@ValidateNested({ each: true })
+	@Type(() => Review)
+	review: Review[]
 }

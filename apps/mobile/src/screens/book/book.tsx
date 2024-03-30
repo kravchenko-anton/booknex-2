@@ -34,18 +34,18 @@ const Book: FC = () => {
 	if (!book) return <Loader />
 	return (
 		<ScrollLayout>
-			<View className='overflow-hid5en z-50 items-center justify-between rounded-b-none rounded-t-2xl px-2 pb-4 pt-2'>
+			<View className='z-50 items-center justify-between overflow-hidden rounded-b-none rounded-t-2xl px-2 pb-4 pt-2'>
 				<View className='mt-1 w-full flex-row items-start justify-between'>
 					<AnimatedIcon
 						variant='foreground'
 						icon={ArrowLeft}
-						size='md'
+						size='sm'
 						onPress={() => goBack()}
 					/>
 					<AnimatedIcon
 						variant='foreground'
 						icon={Share}
-						size='md'
+						size='sm'
 						onPress={() =>
 							share(`${book.title} is a great book! Check it on ${appName}!`)
 						}
@@ -82,7 +82,7 @@ const Book: FC = () => {
 				</Title>
 			</View>
 
-			<View className='flex-row justify-between px-2 pt-4'>
+			<View className='flex-row justify-between px-1 pt-4'>
 				<ReadingButton slug={book.slug} />
 				<SaveButton slug={book.slug} />
 			</View>
@@ -94,7 +94,7 @@ const Book: FC = () => {
 				renderItem={({ item: genre }) => (
 					<Button
 						variant='foreground'
-						size='md'
+						size='sm'
 						onPress={() => {
 							navigate('Genre', { slug: genre.slug, name: genre.name })
 						}}>

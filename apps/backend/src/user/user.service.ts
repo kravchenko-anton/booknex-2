@@ -4,7 +4,7 @@ import { globalErrors } from '../../../../libs/global/errors'
 import { transformActivity } from '../../../../libs/global/utils/activity-transformer'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
-import { idSelect } from '../utils/common/return.default.object'
+import { slugSelect } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -31,9 +31,9 @@ export class UserService {
 		return user
 	}
 
-	async library(id: number) {
+	async library(userId: number) {
 		const library = await this.prisma.user.findUnique({
-			where: { id },
+			where: { id: userId },
 			select: {
 				readingBooks: {
 					select: returnBookObject
@@ -56,8 +56,8 @@ export class UserService {
 		}
 	}
 
-	async profile(id: number) {
-		return await this.getUserById(id, {
+	async profile(userId: number) {
+		return await this.getUserById(userId, {
 			...returnUserObject
 		})
 	}
@@ -134,37 +134,37 @@ export class UserService {
 	}
 
 	async startReading(userId: number, slug: string) {
-		const { id } = await this.checkBookExist(slug)
+		await this.checkBookExist(slug)
 		const user = await this.getUserById(+userId, {
-			readingBooks: idSelect,
-			finishedBooks: idSelect
+			readingBooks: slugSelect,
+			finishedBooks: slugSelect
 		})
 
-		const isReadingExist = user.readingBooks.some(book => book.id === id)
+		const isReadingExist = user.readingBooks.some(book => book.slug === slug)
 		if (isReadingExist) return
 
 		await this.activityService.create({
 			type: Activities.startedReading,
 			importance: 2,
 			userId,
-			bookId: id
+			bookSlug: slug
 		})
 		await this.prisma.user.update({
 			where: { id: user.id },
 			data: {
 				readingBooks: {
 					connect: {
-						id
+						slug
 					}
 				},
 				savedBooks: {
 					disconnect: {
-						id
+						slug
 					}
 				},
 				finishedBooks: {
 					disconnect: {
-						id
+						slug
 					}
 				}
 			}
@@ -172,18 +172,17 @@ export class UserService {
 	}
 
 	async finishReading(userId: number, slug: string) {
-		const { id } = await this.checkBookExist(slug)
+		await this.checkBookExist(slug)
 		const user = await this.getUserById(+userId, {
-			readingBooks: idSelect
+			readingBooks: slugSelect
 		})
-		const isReadingExist = user.readingBooks.some(book => book.id === id)
+		const isReadingExist = user.readingBooks.some(book => book.slug === slug)
 		if (!isReadingExist) return
 
 		await this.activityService.create({
 			type: Activities.finishedReading,
 			importance: 3,
-			userId,
-			bookId: id
+			userId
 		})
 
 		await this.prisma.user.update({
@@ -191,17 +190,17 @@ export class UserService {
 			data: {
 				readingBooks: {
 					disconnect: {
-						id
+						slug
 					}
 				},
 				savedBooks: {
 					disconnect: {
-						id
+						slug
 					}
 				},
 				finishedBooks: {
 					connect: {
-						id
+						slug
 					}
 				}
 			}
@@ -209,55 +208,55 @@ export class UserService {
 	}
 
 	async isSaved(userId: number, slug: string) {
-		const { id } = await this.checkBookExist(slug)
+		await this.checkBookExist(slug)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
 				id: true,
-				savedBooks: idSelect
+				savedBooks: slugSelect
 			}
 		})
 		if (!user)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		return user.savedBooks.some(book => book.id === id)
+		return user.savedBooks.some(book => book.slug === slug)
 	}
 
 	async toggleSave(userId: number, slug: string) {
-		const { id } = await this.checkBookExist(slug)
+		await this.checkBookExist(slug)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
 				id: true,
-				savedBooks: idSelect
+				savedBooks: slugSelect
 			}
 		})
 		if (!user)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		const isSavedExist = user.savedBooks.some(book => book.id === id)
+		const isSavedExist = user.savedBooks.some(book => book.slug === slug)
 
 		await this.activityService.create({
 			type: isSavedExist ? Activities.removeFromSaved : Activities.savedBook,
 			importance: 1,
 			userId,
-			bookId: id
+			bookSlug: slug
 		})
 		await this.prisma.user.update({
 			where: { id: user.id },
 			data: {
 				savedBooks: {
 					[isSavedExist ? 'disconnect' : 'connect']: {
-						id
+						slug
 					}
 				},
 				...(!isSavedExist && {
 					readingBooks: {
 						disconnect: {
-							id
+							slug
 						}
 					},
 					finishedBooks: {
 						disconnect: {
-							id
+							slug
 						}
 					}
 				})
@@ -277,8 +276,6 @@ export class UserService {
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		return {
-			id: book.id
-		}
+		return !!book
 	}
 }
