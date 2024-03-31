@@ -6,17 +6,19 @@
 	"targets": {
 		"build": {
 			"executor": "@nx/next:build",
-			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
-			"generatePackageJson": true,
-			"options": {
-				"outputPath": "dist/apps/web"
-			},
 			"configurations": {
 				"development": {
 					"outputPath": "apps/web"
 				},
-				"production": {}
+				"production": {
+					"outputPath": "dist/apps/web",
+					"generateLockfile": true,
+					"generatePackageJson": true,
+					"dev": false,
+					"optimization": true,
+					"profile": false
+				}
 			}
 		},
 		"serve": {
@@ -75,6 +77,6 @@
 				}
 			}
 		}
-	},
-	"tags": ["web"]
+	
+	}
 }

@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { Activities, Role, type User } from '@prisma/client'
+import { Activities, Role, User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { OAuth2Client } from 'google-auth-library'
 import { authErrors, globalErrors } from '../../../../libs/global/errors'
@@ -12,8 +12,6 @@ import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { AuthDto, GoogleAuthDto } from './dto/auth.dto'
-
-export type RoleType = keyof typeof Role
 
 @Injectable()
 export class AuthService {
