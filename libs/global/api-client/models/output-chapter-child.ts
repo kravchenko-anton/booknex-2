@@ -12,25 +12,22 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface OutputChapterChild
  */
 export interface OutputChapterChild {
-    /**
-     * chapter child name
-     * @type {string}
-     * @memberof OutputChapterChild
-     */
-    'name': string;
-    /**
-     * chapter child link
-     * @type {string}
-     * @memberof OutputChapterChild
-     */
-    'link': string;
+	/**
+	 * chapter child name
+	 * @type {string}
+	 * @memberof OutputChapterChild
+	 */
+	name: string
+	/**
+	 * chapter child link
+	 * @type {string}
+	 * @memberof OutputChapterChild
+	 */
+	link: string
 }
-
