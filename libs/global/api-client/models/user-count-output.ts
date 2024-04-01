@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface UserCountOutput
  */
 export interface UserCountOutput {
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserCountOutput
-	 */
-	savedBooks: number
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserCountOutput
-	 */
-	finishedBooks: number
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserCountOutput
-	 */
-	readingBooks: number
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCountOutput
+     */
+    'savedBooks': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCountOutput
+     */
+    'finishedBooks': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCountOutput
+     */
+    'readingBooks': number;
 }
+

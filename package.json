@@ -105,7 +105,6 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.0",
-		"@babel/plugin-proposal-decorators": "^7.24.0",
 		"@babel/runtime": "^7.20.0",
 		"@eslint/eslintrc": "^2.1.1",
 		"@nestjs/cli": "^10.0.0",

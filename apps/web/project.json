@@ -13,8 +13,6 @@
 				},
 				"production": {
 					"outputPath": "dist/apps/web",
-					"generateLockfile": true,
-					"generatePackageJson": true,
 					"dev": false,
 					"optimization": true,
 					"profile": false

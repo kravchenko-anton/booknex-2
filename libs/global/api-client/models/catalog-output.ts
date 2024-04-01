@@ -12,32 +12,34 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { Book } from './book'
+import { Book } from './book';
 
 /**
- *
+ * 
  * @export
  * @interface CatalogOutput
  */
 export interface CatalogOutput {
-	/**
-	 * can load more
-	 * @type {boolean}
-	 * @memberof CatalogOutput
-	 */
-	canLoadMore: boolean
-	/**
-	 * total pages
-	 * @type {number}
-	 * @memberof CatalogOutput
-	 */
-	totalPages: number
-	/**
-	 *
-	 * @type {Array<Book>}
-	 * @memberof CatalogOutput
-	 */
-	data: Array<Book>
+    /**
+     * can load more
+     * @type {boolean}
+     * @memberof CatalogOutput
+     */
+    'canLoadMore': boolean;
+    /**
+     * total pages
+     * @type {number}
+     * @memberof CatalogOutput
+     */
+    'totalPages': number;
+    /**
+     * 
+     * @type {Array<Book>}
+     * @memberof CatalogOutput
+     */
+    'data': Array<Book>;
 }
+

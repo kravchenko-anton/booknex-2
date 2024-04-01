@@ -5,7 +5,7 @@ dist
 tmp
 /out-tsc
 apps/backend/.env
-apps/backend/.env.production  # Production environment variables
+apps/backend/.env.production
 apps/web/.env.local
 apps/mobile/.env
 # dependencies
