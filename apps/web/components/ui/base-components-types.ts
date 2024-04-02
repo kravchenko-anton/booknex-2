@@ -1,8 +1,3 @@
-export interface DialogProperties {
-	isOpen: boolean
-	onClose: FunctionType
-}
-
 import type { FunctionType } from 'global/types'
 import type {
 	ButtonHTMLAttributes,
@@ -11,6 +6,10 @@ import type {
 	TextareaHTMLAttributes
 } from 'react'
 
+export interface DialogProperties {
+	isOpen: boolean
+	onClose: FunctionType
+}
 export type DefaultButtonProperties = Pick<
 	DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
 	'onClick' | 'type' | 'disabled' | 'children' | 'className' | 'style'

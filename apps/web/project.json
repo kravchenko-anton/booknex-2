@@ -6,7 +6,12 @@
 	"targets": {
 		"build": {
 			"executor": "@nx/next:build",
+			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
+			"generatePackageJson": true,
+			"options": {
+				"outputPath": "dist/"
+			},
 			"configurations": {
 				"development": {
 					"outputPath": "apps/web"
@@ -74,6 +79,11 @@
 					]
 				}
 			}
+		},
+		"docker-build": {
+			"dependsOn": ["build"],
+			"command": "docker build -f apps/web/Dockerfile . -t web"
 		}
-	}
+	},
+	"tags": ["web"]
 }

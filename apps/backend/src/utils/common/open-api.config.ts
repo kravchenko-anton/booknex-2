@@ -11,6 +11,7 @@ export const openApiSwaggerConfig = {
 		enabled: environment.NODE_ENV === 'development',
 		outputFilePath: './openapi.yaml' // or ./openapi.json
 	},
+
 	clientGeneratorOptions: {
 		enabled: environment.NODE_ENV === 'development',
 		type: 'typescript-axios',

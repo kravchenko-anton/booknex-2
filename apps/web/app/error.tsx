@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui'
 import { Color } from 'global/colors'
+import { FunctionType } from 'global/types'
 import { NothingFound } from 'illustrations'
 import { useEffect } from 'react'
 //TODO: сделать с показом полной ошибки
@@ -10,7 +11,7 @@ export default function Error({
 	reset
 }: {
 	error: Error & { digest?: string }
-	reset: () => void
+	reset: FunctionType
 }) {
 	useEffect(() => {
 		console.error(error)

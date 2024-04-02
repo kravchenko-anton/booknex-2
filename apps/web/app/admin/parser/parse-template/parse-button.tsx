@@ -1,4 +1,4 @@
-import CallParserDialog from '@/app/admin/parser/parse-modal/parse-sheet'
+import CallParserDialog from '@/app/admin/parser/parse-template/parse-template'
 import { Button } from '@/components/ui'
 import type { DialogProperties } from '@/components/ui/base-components-types'
 import api from '@/services/api'

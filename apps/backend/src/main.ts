@@ -8,10 +8,7 @@ import { AppModule } from './app.module'
 import { checkEnvironmentSet } from './utils/common/check-environment-set'
 import environment from './utils/common/environment.config'
 import { HttpExceptionFilter } from './utils/common/http-exception.filter'
-import {
-	openApiConfig,
-	openApiSwaggerConfig
-} from './utils/common/open-api.config'
+import { openApiConfig } from './utils/common/open-api.config'
 import { SentryFilter } from './utils/common/sentry'
 
 async function bootstrap() {
@@ -29,7 +26,26 @@ async function bootstrap() {
 	)
 	appV1.use(json({ limit: '10mb' })) // For load ebook
 
-	await OpenApiNestFactory.configure(appV1, openApiConfig, openApiSwaggerConfig)
+	await OpenApiNestFactory.configure(appV1, openApiConfig, {
+		webServerOptions: {
+			enabled: environment.NODE_ENV === 'development',
+			path: 'api-docs'
+		},
+		fileGeneratorOptions: {
+			enabled: environment.NODE_ENV === 'development',
+			outputFilePath: './openapi.yaml' // or ./openapi.json
+		},
+
+		clientGeneratorOptions: {
+			enabled: environment.NODE_ENV === 'development',
+			type: 'typescript-axios',
+			outputFolderPath: './libs/global/api-client',
+			additionalProperties:
+				'apiPackage=clients,modelPackage=models,withoutPrefixEnums=true,withSeparateModelsAndApi=true',
+			openApiFilePath: './openapi.yaml',
+			skipValidation: true
+		}
+	})
 	Sentry.init({
 		dsn: environment.SENTRY_DSN,
 		environment: environment.NODE_ENV

@@ -7,7 +7,6 @@ export interface SizeProperties {
 }
 
 export type FunctionType = () => void
-
 export interface BaseFieldProperties<T extends FieldValues> {
 	control: Control<T>
 	name: FieldPath<T>

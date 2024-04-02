@@ -2,7 +2,7 @@
 
 import { columns } from '@/app/admin/parser/catalog/columns'
 import { useQueries } from '@/app/admin/parser/catalog/useQueries'
-import ParseButton from '@/app/admin/parser/parse-modal/parse-button'
+import ParseButton from '@/app/admin/parser/parse-template/parse-button'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'
 import { useTableParameters } from '@/hooks/useTableParameters'

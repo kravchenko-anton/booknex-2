@@ -12,65 +12,67 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { PayloadEBook } from './payload-ebook'
+import { PayloadEBook } from './payload-ebook';
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortGenre } from './short-genre'
+import { ShortGenre } from './short-genre';
 
 /**
- *
+ * 
  * @export
  * @interface UpdateBookDto
  */
 export interface UpdateBookDto {
-	/**
-	 * book title
-	 * @type {string}
-	 * @memberof UpdateBookDto
-	 */
-	title?: string
-	/**
-	 * book picture
-	 * @type {string}
-	 * @memberof UpdateBookDto
-	 */
-	picture?: string
-	/**
-	 * book author
-	 * @type {string}
-	 * @memberof UpdateBookDto
-	 */
-	author?: string
-	/**
-	 * book description
-	 * @type {string}
-	 * @memberof UpdateBookDto
-	 */
-	description?: string
-	/**
-	 * book rating
-	 * @type {number}
-	 * @memberof UpdateBookDto
-	 */
-	rating?: number
-	/**
-	 * book visibility
-	 * @type {boolean}
-	 * @memberof UpdateBookDto
-	 */
-	visible?: boolean
-	/**
-	 *
-	 * @type {Array<ShortGenre>}
-	 * @memberof UpdateBookDto
-	 */
-	genres?: Array<ShortGenre>
-	/**
-	 *
-	 * @type {Array<PayloadEBook>}
-	 * @memberof UpdateBookDto
-	 */
-	ebook?: Array<PayloadEBook>
+    /**
+     * book title
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'title'?: string;
+    /**
+     * book picture
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'picture'?: string;
+    /**
+     * book author
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'author'?: string;
+    /**
+     * book description
+     * @type {string}
+     * @memberof UpdateBookDto
+     */
+    'description'?: string;
+    /**
+     * book rating
+     * @type {number}
+     * @memberof UpdateBookDto
+     */
+    'rating'?: number;
+    /**
+     * book visibility
+     * @type {boolean}
+     * @memberof UpdateBookDto
+     */
+    'visible'?: boolean;
+    /**
+     * 
+     * @type {Array<ShortGenre>}
+     * @memberof UpdateBookDto
+     */
+    'genres'?: Array<ShortGenre>;
+    /**
+     * 
+     * @type {Array<PayloadEBook>}
+     * @memberof UpdateBookDto
+     */
+    'ebook'?: Array<PayloadEBook>;
 }
+
