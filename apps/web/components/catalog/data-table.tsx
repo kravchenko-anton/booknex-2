@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/table'
 import type { useReactTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
+import Link from 'next/link'
 import type { FC } from 'react'
 
 export interface DataTableProperties {
@@ -64,12 +65,12 @@ const DataTable: FC<DataTableProperties> = ({
 				{currentPage} page of {totalPages} pages
 			</div>
 			<div className='flex space-x-2'>
-				<a href={currentPage >= 1 ? `?page=${currentPage - 1}` : undefined}>
+				<Link href={currentPage >= 1 ? `?page=${currentPage - 1}` : ''}>
 					<Button size='sm' disabled={currentPage < 1}>
 						Previous
 					</Button>
-				</a>
-				<a href={canLoadMore ? `?page=${currentPage + 1}` : undefined}>
+				</Link>
+				<a href={canLoadMore ? `?page=${currentPage + 1}` : ''}>
 					<Button size='sm' disabled={!canLoadMore}>
 						Next
 					</Button>

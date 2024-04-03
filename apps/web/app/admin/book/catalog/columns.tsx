@@ -1,42 +1,41 @@
 import { Button } from '@/components/ui'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { cn } from '@/utils'
+import { secureRoutes } from '@/utils/route'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { Book } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { minutesToTime } from 'global/helpers/time-converter'
 import Image from 'next/image'
+import Link from 'next/link'
 
-export const columns = ({
-	preview
-}: {
-	preview: (slug: string) => void
-}): ColumnDef<Book, unknown>[] => [
+export const columns = (): ColumnDef<Book, unknown>[] => [
 	{
 		id: 'picture',
 		enableHiding: false,
 		header: () => <p className='text-center text-lg'>Picture</p>,
 		cell: ({ row }) => (
-			<Image
-				alt={row.original.title}
-				className=' mx-auto w-[60px] cursor-pointer rounded'
-				src={getFileUrl(row.original.picture)}
-				width={200}
-				height={250}
-				onClick={() => preview(row.original.slug)}
-			/>
+			<Link href={secureRoutes.bookOverviewRoute(row.original.slug)}>
+				<Image
+					alt={row.original.title}
+					className=' mx-auto w-[60px] cursor-pointer rounded'
+					src={getFileUrl(row.original.picture)}
+					width={200}
+					height={250}
+				/>
+			</Link>
 		)
 	},
 	{
 		id: 'Information',
 		header: () => <p className='text-center text-lg'>Information</p>,
 		cell: ({ row }) => (
-			<button
-				className='items-start justify-start text-left'
-				onClick={() => preview(row.original.slug)}>
-				<h3 className='mb-1 text-xl'>{row.original.title}</h3>
-				<p>{row.original.author}</p>
-			</button>
+			<Link href={secureRoutes.bookOverviewRoute(row.original.slug)}>
+				<button className='items-start justify-start text-left'>
+					<h3 className='mb-1 text-xl'>{row.original.title}</h3>
+					<p>{row.original.author}</p>
+				</button>
+			</Link>
 		)
 	},
 

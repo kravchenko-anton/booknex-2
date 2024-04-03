@@ -21,7 +21,7 @@ const Page = () => {
 	const parameters = useParams()
 	const queryClient = useQueryClient()
 
-	const slug = validateStringParameter(parameters.slug)
+	const slug = validateStringParameter(parameters['slug'])
 
 	const { data: book } = useQuery({
 		queryKey: ['book-overview', slug],

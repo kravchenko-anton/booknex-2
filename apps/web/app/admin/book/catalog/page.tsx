@@ -1,5 +1,4 @@
 'use client'
-
 import { columns } from '@/app/admin/book/catalog/columns'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'
@@ -10,6 +9,7 @@ import { generateParameters } from '@/utils/generate-parameters'
 import { secureRoutes } from '@/utils/route'
 import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 
@@ -23,13 +23,9 @@ const Page: FC = () => {
 	})
 	const table = useReactTable({
 		data: books?.data ?? [],
-		columns: columns({
-			preview: slug => router.push(secureRoutes.bookOverviewRoute(slug))
-		}),
+		columns: columns(),
 		getCoreRowModel: getCoreRowModel()
 	})
-
-	const onCreateButtonClick = () => router.push(secureRoutes.bookCreateRoute)
 
 	return (
 		<div className='w-full'>
@@ -43,9 +39,11 @@ const Page: FC = () => {
 						})
 					)
 				}}>
-				<Button size='sm' variant='muted' onClick={onCreateButtonClick}>
-					Create
-				</Button>
+				<Link href={secureRoutes.bookCreateRoute}>
+					<Button size='sm' variant='muted'>
+						Create
+					</Button>
+				</Link>
 			</DataTableHeader>
 			<DataTable
 				table={table}

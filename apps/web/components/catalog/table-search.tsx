@@ -21,7 +21,7 @@ const DataTableHeader: FC<PropsWithChildren<DataTableHeaderProperties>> = ({
 	})
 
 	return (
-		<div className=' flex w-full items-center justify-between  pb-2'>
+		<div className='flex w-full items-center justify-between  pb-2'>
 			<div>
 				<h1 className='hidden text-3xl font-medium sm:block'>{title}</h1>
 			</div>

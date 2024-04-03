@@ -45,7 +45,7 @@ export const transformActivity = (
 				count: 0,
 				activities: []
 			}
-			accumulator[date].activities.push({
+			accumulator[date]?.activities.push({
 				importance: activity.importance,
 				message:
 					activity.type +

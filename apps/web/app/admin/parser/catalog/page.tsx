@@ -61,7 +61,7 @@ const Parser: FC = () => {
 				table={table}
 				totalPages={books?.totalPages ?? 0}
 				currentPage={page}
-				canLoadMore={books?.canLoadMore}
+				canLoadMore={!!books?.canLoadMore}
 			/>
 		</div>
 	)

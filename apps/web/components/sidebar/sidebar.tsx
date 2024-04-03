@@ -11,6 +11,7 @@ import { secureRoutes } from '@/utils/route'
 import { Color } from 'global/colors'
 import { appName } from 'global/utils'
 import { Book, Graph, Logout, MoreHorizontal, Settings, User } from 'icons'
+import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import type { FC } from 'react'
 
@@ -40,7 +41,7 @@ export const Sidebar: FC = () => {
 				<ul className='hidden xl:block'>
 					{iconsList.map(icon => (
 						<li className='w-full' key={icon.link}>
-							<a
+							<Link
 								href={icon.link}
 								className={cn(
 									'my-2 flex items-center p-2 duration-100  ease-linear xl:gap-3'
@@ -60,7 +61,7 @@ export const Sidebar: FC = () => {
 									}}>
 									{icon.name}
 								</span>
-							</a>
+							</Link>
 						</li>
 					))}
 				</ul>

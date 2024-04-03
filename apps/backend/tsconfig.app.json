@@ -10,8 +10,6 @@
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"strictPropertyInitialization": false,
-		"strict": true,
-		"strictNullChecks": false,
 		"downlevelIteration": true,
 		"experimentalDecorators": true
 	},

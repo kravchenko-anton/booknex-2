@@ -18,7 +18,7 @@ const Providers = ({ children }: PropsWithChildren) => {
 		}
 	})
 
-	const googleAuthClientID = process.env.CLIENT_ID
+	const googleAuthClientID = process.env['CLIENT_ID']
 	if (!googleAuthClientID)
 		throw new Error(
 			`${globalErrors.somethingWrong}, ${adminErrors.someConfigMissing}`
