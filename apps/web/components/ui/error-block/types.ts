@@ -1,5 +1,5 @@
 import type { ComponentType, ReactElement } from 'react'
-import type { FieldErrors, FieldName, Message } from 'react-hook-form'
+import type { FieldErrors, Message } from 'react-hook-form'
 import { JSX } from 'react/jsx-runtime'
 import IntrinsicElements = JSX.IntrinsicElements
 
@@ -23,7 +23,7 @@ type AsProperties<TAsType> = TAsType extends null
 export type Properties<TFieldErrorsType extends FieldErrors> = Assign<
 	{
 		errors?: TFieldErrorsType
-		name: FieldName<FieldValuesFromFieldErrors<TFieldErrorsType>>
+		name: string
 		message?: Message
 	},
 	AsProperties<null>

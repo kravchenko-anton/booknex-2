@@ -14,5 +14,5 @@ export class UpdateBookDtoExtended extends PickType(UpdateBookDto, [
 	readingTime?: number
 	chapters?: number
 	genres?: { set: { slug: string }[] }
-	mainGenre?: { connect: { id: number } }
+	mainGenre?: { connect: { slug: string } }
 }

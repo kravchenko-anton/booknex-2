@@ -60,7 +60,7 @@ export const useBookCompose = ({
 	}
 
 	const generateChapterNames = ({ bookId }: { bookId: number }) => {
-		if (!ebooks) return ebooks
+		if (!ebooks) return errorToast('Error generating chapter names')
 
 		setEBooks(
 			ebooks.map(book => {
@@ -148,7 +148,7 @@ export const useBookCompose = ({
 		topChapterId: number
 		insertedContent: string
 	}) => {
-		if (!ebooks) return ebooks
+		if (!ebooks) return errorToast('Error merging content')
 		return setEBooks(
 			ebooks.map(book => {
 				if (book.id === bookId) {
@@ -229,7 +229,7 @@ export const useBookCompose = ({
 			text?: string
 		}
 	}) => {
-		if (!ebooks) return ebooks
+		if (!ebooks) return errorToast('Error updating chapter')
 		setEBooks(
 			ebooks.map(book => {
 				if (book.id === bookId) {

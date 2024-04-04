@@ -18,6 +18,9 @@ export class Chapter {
 	@IsNumber()
 	id: number
 	@ApiProperty({ type: String })
+	@Validate((value: string) => !value.includes('epub'), {
+		message: 'Chapter cannot be an epub'
+	})
 	@IsString()
 	name: string
 
@@ -43,10 +46,9 @@ export class EBookBase {
 	@ApiProperty({ type: Number })
 	@IsNumber()
 	id: number
-
 	@ApiProperty({ type: String })
 	@Validate((value: string) => !value.includes('epub'), {
-		message: 'Ebook cannot be an epub'
+		message: 'EBook cannot be an epub'
 	})
 	@IsString()
 	title: string
@@ -63,6 +65,7 @@ export class StoredEBook extends EBookBase {
 export class PayloadEBook extends EBookBase {
 	@ApiProperty({ type: [PayloadChapter] })
 	@IsArray()
+	@ValidateNested({ each: true })
 	@ArrayMinSize(1)
 	@Type(() => PayloadChapter)
 	chapters: PayloadChapter[]

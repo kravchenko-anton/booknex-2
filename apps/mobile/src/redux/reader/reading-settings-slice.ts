@@ -35,8 +35,8 @@ export const ReaderFont = [
 const initialState = {
 	colorScheme: themePack[0],
 	font: {
-		title: ReaderFont[0].title,
-		fontFamily: ReaderFont[0].fontFamily
+		title: ReaderFont[0]?.title,
+		fontFamily: ReaderFont[0]?.fontFamily
 	},
 	fontSize: fontSizeSettings.min,
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
@@ -49,7 +49,7 @@ const ReadingUiSlice = createSlice({
 	reducers: {
 		changeTheme: (state, { payload }: PayloadAction<ThemePackType['slug']>) => {
 			const theme = themePack.find(value => value.slug === payload)
-			if (payload === state.colorScheme.slug || !theme) return
+			if (payload === state.colorScheme?.slug || !theme) return
 			state.colorScheme = theme
 		},
 		changeLineHeight: (state, { payload }: PayloadAction<1.3 | 1.5 | 1.8>) => {

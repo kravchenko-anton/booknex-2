@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form'
 const Page: FC = () => {
 	const parameters = useParams()
 
-	const bookSlug = validateStringParameter(parameters.slug)
+	const bookSlug = validateStringParameter(parameters['slug'])
 	const queryClient = useQueryClient()
 
 	const {

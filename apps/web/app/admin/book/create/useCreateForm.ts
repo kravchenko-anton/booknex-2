@@ -13,7 +13,7 @@ import type { CreateBookDto } from 'global/api-client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-
+//TODO: пофиксить полностью создание книги чтобы работало без багов
 export const useCreateForm = () => {
 	const parameters = useSearchParams()
 	const templateSlug = validateStringParameter(parameters.get('template'))

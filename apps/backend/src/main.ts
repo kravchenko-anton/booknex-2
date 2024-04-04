@@ -1,9 +1,12 @@
 import { ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
+import { SwaggerModule } from '@nestjs/swagger'
 import * as Sentry from '@sentry/node'
 import { json } from 'express'
+import fs from 'fs'
 import helmet from 'helmet'
-import { OpenApiNestFactory } from 'nest-openapi-tools'
+import openapiTS, { astToString } from 'openapi-typescript'
+import * as path from 'path'
 import { AppModule } from './app.module'
 import { checkEnvironmentSet } from './utils/common/check-environment-set'
 import environment from './utils/common/environment.config'
@@ -12,48 +15,52 @@ import { openApiConfig } from './utils/common/open-api.config'
 import { SentryFilter } from './utils/common/sentry'
 
 async function bootstrap() {
-	const appV1 = await NestFactory.create(AppModule)
-	const { httpAdapter } = appV1.get(HttpAdapterHost)
-	appV1.setGlobalPrefix('/api/v1')
-	appV1.useGlobalFilters(new HttpExceptionFilter())
-	appV1.enableCors({})
-	appV1.use(helmet())
+	const app = await NestFactory.create(AppModule)
+	const { httpAdapter } = app.get(HttpAdapterHost)
+	app.setGlobalPrefix('/api')
+	app.useGlobalFilters(new HttpExceptionFilter())
+	app.enableCors({})
+	app.use(helmet())
 
-	appV1.useGlobalPipes(
+	app.useGlobalPipes(
 		new ValidationPipe({
 			stopAtFirstError: true
 		})
 	)
-	appV1.use(json({ limit: '10mb' })) // For load ebook
+	app.use(json({ limit: '10mb' })) // For load ebook
 
-	await OpenApiNestFactory.configure(appV1, openApiConfig, {
-		webServerOptions: {
-			enabled: environment.NODE_ENV === 'development',
-			path: 'api-docs'
-		},
-		fileGeneratorOptions: {
-			enabled: environment.NODE_ENV === 'development',
-			outputFilePath: './openapi.yaml' // or ./openapi.json
-		},
+	const document = SwaggerModule.createDocument(app, openApiConfig)
+	SwaggerModule.setup('api', app, document)
 
-		clientGeneratorOptions: {
-			enabled: environment.NODE_ENV === 'development',
-			type: 'typescript-axios',
-			outputFolderPath: './libs/global/api-client',
-			additionalProperties:
-				'apiPackage=clients,modelPackage=models,withoutPrefixEnums=true,withSeparateModelsAndApi=true',
-			openApiFilePath: './openapi.yaml',
-			skipValidation: true
-		}
-	})
 	Sentry.init({
 		dsn: environment.SENTRY_DSN,
 		environment: environment.NODE_ENV
 	}) // Sentry configuration
-	appV1.useGlobalFilters(new SentryFilter(httpAdapter))
+	app.useGlobalFilters(new SentryFilter(httpAdapter))
 
 	checkEnvironmentSet()
-	await appV1.listen(environment.PORT)
+	await app.listen(environment.PORT)
+
+	const ast = await openapiTS(
+		new URL(`http://localhost:${environment.PORT}/api-yaml`, import.meta.url)
+	)
+	const contents = astToString(ast)
+
+	if (environment.NODE_ENV === 'development') {
+		try {
+			const directoryPath = '.\\libs\\global\\api-client'
+			const filename = 'schema.d.ts'
+			const filePath = path.join(directoryPath, filename)
+			// check file exist and if exist rewrite
+			if (!fs.existsSync(directoryPath)) {
+				fs.mkdirSync(directoryPath, { recursive: true })
+			}
+			fs.writeFileSync(filePath, contents)
+			console.log('👍 api-client file written successfully to', filePath)
+		} catch (e) {
+			console.error("Can't write api-client file", e)
+		}
+	}
 }
 
 bootstrap() // eslint-disable-line unicorn/prefer-top-level-await

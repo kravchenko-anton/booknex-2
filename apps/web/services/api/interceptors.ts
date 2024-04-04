@@ -24,12 +24,11 @@ instance.interceptors.request.use(async config => {
 	return config
 })
 //TODO: переделать тут чтобы если токен не валидный ошибка была по нормальному
-
 instance.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
-		console.log('error in interceptor', error)
+		console.log('error in intercept or', error)
 		if (error.response.status === 403) return deleteTokensStorage()
 		if (
 			(error.response.status === 401 ||

@@ -202,7 +202,7 @@ export class BookService {
 	}
 
 	async create(dto: CreateBookDto) {
-		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
+		const { genreIds, mainGenreSlug } = await this.getGenres(dto.genres)
 		const { readingTime, uploadedEbook, chaptersCount } = useGetEbook(dto.ebook)
 
 		const { name: ebookName } = await this.storageService.upload({
@@ -243,7 +243,7 @@ export class BookService {
 				},
 				mainGenre: {
 					connect: {
-						id: mainGenreId
+						slug: mainGenreSlug
 					}
 				}
 			}
@@ -297,7 +297,7 @@ export class BookService {
 		}
 
 		if (genres) {
-			const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
+			const { genreIds, mainGenreSlug } = await this.getGenres(dto.genres)
 			updateData = {
 				...updateData,
 				genres: {
@@ -305,7 +305,7 @@ export class BookService {
 				},
 				mainGenre: {
 					connect: {
-						id: mainGenreId
+						slug: mainGenreSlug
 					}
 				}
 			}
@@ -337,7 +337,7 @@ export class BookService {
 				}
 			},
 			select: {
-				id: true
+				slug: true
 			},
 			orderBy: {
 				mainBooks: {
@@ -348,7 +348,7 @@ export class BookService {
 		if (genres.length < 2 || !mainGenre)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		return {
-			mainGenreId: mainGenre.id,
+			mainGenreSlug: mainGenre.slug,
 			genreIds: genres.map(({ slug }) => ({ slug }))
 		}
 	}

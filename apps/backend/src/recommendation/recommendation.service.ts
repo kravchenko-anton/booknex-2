@@ -86,7 +86,7 @@ export class RecommendationService {
 		await this.checkUserExist(id)
 		const selectedGenres = await this.prisma.genre.findMany({
 			where: {
-				id: {
+				slug: {
 					in: dto.genres
 				}
 			},

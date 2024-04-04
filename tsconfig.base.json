@@ -9,7 +9,7 @@
 		"noEmit": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		
+
 		"alwaysStrict": true,
 		"noImplicitAny": true,
 		"strictNullChecks": false,
@@ -23,7 +23,7 @@
 		"noImplicitReturns": true,
 		"noImplicitOverride": true,
 		"forceConsistentCasingInFileNames": true,
-		
+
 		"noFallthroughCasesInSwitch": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,

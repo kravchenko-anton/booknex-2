@@ -22,9 +22,9 @@
 export interface UpdateRecommendationDto {
     /**
      * new genres for recommendation
-     * @type {Array<number>}
+     * @type {Array<string>}
      * @memberof UpdateRecommendationDto
      */
-    'genres': Array<number>;
+    'genres': Array<string>;
 }
 

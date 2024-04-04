@@ -1,6 +1,6 @@
 import { TrimContentMenu } from '@/app/admin/book/_components/ebook-editor/trim-content-menu'
 import { useBookCompose } from '@/app/admin/book/_components/ebook-editor/useBookCompose'
-import { DropZone, Input, TextArea } from '@/components/ui'
+import { DropZone, ErrorMessage, Input, TextArea } from '@/components/ui'
 import { errorToast } from '@/utils/toast'
 import { BaseFieldProperties } from 'global/types'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
@@ -36,7 +36,7 @@ const EbookComposer = <T extends Record<string, any>>({
 									}}
 									onFileDelete={(_file, index) => {
 										books.delete({
-											bookId: books.state[index].id
+											bookId: Number(books.state[index]?.id)
 										})
 									}}
 								/>
@@ -108,15 +108,16 @@ const EbookComposer = <T extends Record<string, any>>({
 															height={34}
 															className='bg-foreground border-bordered cursor-pointer rounded border-[1px] p-1.5'
 															onClick={() => {
-																if (!book.chapters[index - 1])
-																	return errorToast("Can't move up")
+																if (!book.chapters[index - 1]?.id)
+																	return errorToast('Cannot move chapter up')
 																books.mergeContentWithTopCharacter({
 																	bookId: book.id,
 																	insertedContent: chapter.text,
 
-																	topChapterId: book.chapters[index - 1].id
+																	topChapterId: Number(
+																		book.chapters[index - 1]?.id
+																	)
 																})
-																console.log('merge with top character')
 															}}
 														/>
 														<ChevronDown
@@ -176,6 +177,7 @@ const EbookComposer = <T extends Record<string, any>>({
 							</div>
 						</div>
 					</div>
+					<ErrorMessage name={name} errors={errors} />
 				</>
 			)
 		}}
