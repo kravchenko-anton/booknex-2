@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 const Featured = () => {
 	const { data: featured } = useQuery({
 		queryKey: ['featured'],
-		queryFn: () => api.catalog.featured(),
+		queryFn: () => api.catalog.catalogControllerFeatured(),
 		select: data => data.data
 	})
 	const { user } = useAuth()

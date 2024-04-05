@@ -1,12 +1,9 @@
 import { ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
-import { SwaggerModule } from '@nestjs/swagger'
 import * as Sentry from '@sentry/node'
 import { json } from 'express'
-import fs from 'fs'
 import helmet from 'helmet'
-import openapiTS, { astToString } from 'openapi-typescript'
-import * as path from 'path'
+import { OpenApiNestFactory } from 'nest-openapi-tools'
 import { AppModule } from './app.module'
 import { checkEnvironmentSet } from './utils/common/check-environment-set'
 import environment from './utils/common/environment.config'
@@ -17,21 +14,33 @@ import { SentryFilter } from './utils/common/sentry'
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 	const { httpAdapter } = app.get(HttpAdapterHost)
-	app.setGlobalPrefix('/api')
 	app.useGlobalFilters(new HttpExceptionFilter())
 	app.enableCors({})
 	app.use(helmet())
 
-	app.useGlobalPipes(
-		new ValidationPipe({
-			stopAtFirstError: true
-		})
-	)
+	app.useGlobalPipes(new ValidationPipe({}))
 	app.use(json({ limit: '10mb' })) // For load ebook
 
-	const document = SwaggerModule.createDocument(app, openApiConfig)
-	SwaggerModule.setup('api', app, document)
+	await OpenApiNestFactory.configure(app, openApiConfig, {
+		webServerOptions: {
+			enabled: environment.NODE_ENV === 'development',
+			path: 'api-docs'
+		},
+		fileGeneratorOptions: {
+			enabled: environment.NODE_ENV === 'development',
+			outputFilePath: './openapi.yaml' // or ./openapi.json
+		},
 
+		clientGeneratorOptions: {
+			enabled: environment.NODE_ENV === 'development',
+			type: 'typescript-axios',
+			outputFolderPath: './libs/global/api-client',
+			additionalProperties:
+				'apiPackage=clients,modelPackage=models,withoutPrefixEnums=true,withSeparateModelsAndApi=true',
+			openApiFilePath: './openapi.yaml',
+			skipValidation: true
+		}
+	})
 	Sentry.init({
 		dsn: environment.SENTRY_DSN,
 		environment: environment.NODE_ENV
@@ -40,27 +49,6 @@ async function bootstrap() {
 
 	checkEnvironmentSet()
 	await app.listen(environment.PORT)
-
-	const ast = await openapiTS(
-		new URL(`http://localhost:${environment.PORT}/api-yaml`, import.meta.url)
-	)
-	const contents = astToString(ast)
-
-	if (environment.NODE_ENV === 'development') {
-		try {
-			const directoryPath = '.\\libs\\global\\api-client'
-			const filename = 'schema.d.ts'
-			const filePath = path.join(directoryPath, filename)
-			// check file exist and if exist rewrite
-			if (!fs.existsSync(directoryPath)) {
-				fs.mkdirSync(directoryPath, { recursive: true })
-			}
-			fs.writeFileSync(filePath, contents)
-			console.log('👍 api-client file written successfully to', filePath)
-		} catch (e) {
-			console.error("Can't write api-client file", e)
-		}
-	}
 }
 
 bootstrap() // eslint-disable-line unicorn/prefer-top-level-await

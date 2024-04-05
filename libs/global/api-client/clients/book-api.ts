@@ -46,7 +46,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         adminInfoBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('adminInfoBySlug', 'slug', slug)
-            const localVarPath = `/api/v1/book/admin-info/by-slug/{slug}`
+            const localVarPath = `/book/admin-info/by-slug/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -86,7 +86,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('catalog', 'searchTerm', searchTerm)
             // verify required parameter 'page' is not null or undefined
             assertParamExists('catalog', 'page', page)
-            const localVarPath = `/api/v1/book/admin/catalog`;
+            const localVarPath = `/book/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -130,7 +130,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         create: async (createBookDto: CreateBookDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createBookDto' is not null or undefined
             assertParamExists('create', 'createBookDto', createBookDto)
-            const localVarPath = `/api/v1/book/admin/create`;
+            const localVarPath = `/book/admin/create`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -169,7 +169,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         infoBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('infoBySlug', 'slug', slug)
-            const localVarPath = `/api/v1/book/info/by-slug/{slug}`
+            const localVarPath = `/book/info/by-slug/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -206,7 +206,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         remove: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('remove', 'slug', slug)
-            const localVarPath = `/api/v1/book/admin/remove/{slug}`
+            const localVarPath = `/book/admin/remove/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -246,7 +246,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('update', 'slug', slug)
             // verify required parameter 'updateBookDto' is not null or undefined
             assertParamExists('update', 'updateBookDto', updateBookDto)
-            const localVarPath = `/api/v1/book/admin/update/{slug}`
+            const localVarPath = `/book/admin/update/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

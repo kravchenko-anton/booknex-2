@@ -75,7 +75,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
 		useMutation({
 			mutationKey: ['finish-reading', slug],
-			mutationFn: (slug: string) => api.user.finishReading(slug)
+			mutationFn: (slug: string) => api.user.userControllerFinishReading(slug)
 		})
 	const { books } = useTypedSelector(state => state.readingProgress)
 	const { navigate } = useTypedNavigation()

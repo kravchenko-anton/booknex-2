@@ -40,7 +40,7 @@ export const EbookApiAxiosParamCreator = function (configuration?: Configuration
         ebookBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('ebookBySlug', 'slug', slug)
-            const localVarPath = `/api/v1/ebook/ebook/by-slug/{slug}`
+            const localVarPath = `/ebook/ebook/by-slug/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,7 +73,7 @@ export const EbookApiAxiosParamCreator = function (configuration?: Configuration
         storedEbookBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('storedEbookBySlug', 'slug', slug)
-            const localVarPath = `/api/v1/ebook/admin/stored-ebook/{slug}`
+            const localVarPath = `/ebook/admin/stored-ebook/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

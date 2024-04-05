@@ -1,4 +1,3 @@
-import instance from '@/api/interceptors'
 import {
 	AuthApi,
 	BookApi,
@@ -7,92 +6,47 @@ import {
 	GenreApi,
 	ParserApi,
 	RecommendationApi,
+	ReviewApi,
 	StorageApi,
 	UserApi
 } from 'global/api-client'
-import { ReviewApi } from 'global/api-client/clients/review-api'
-import { emulatorServerURL } from 'global/api-config'
-import 'react-native-url-polyfill/auto'
+import { serverURL } from 'global/api-config'
+import { instance } from './interceptors'
+
+const baseParams = {
+	basePath: serverURL,
+	isJsonMime: () => true
+}
+
+const auth = new AuthApi(baseParams, serverURL, undefined)
+
+const book = new BookApi(baseParams, serverURL, instance)
+
+const catalog = new CatalogApi(baseParams, serverURL, instance)
+
+const ebook = new EbookApi(baseParams, serverURL, instance)
+
+const genre = new GenreApi(baseParams, serverURL, instance)
+
+const parser = new ParserApi(baseParams, serverURL, instance)
+
+const recommendation = new RecommendationApi(baseParams, serverURL, instance)
+
+const review = new ReviewApi(baseParams, serverURL, instance)
+
+const storage = new StorageApi(baseParams, serverURL, instance)
+
+const user = new UserApi(baseParams, serverURL, instance)
 
 export default {
-	auth: new AuthApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		undefined
-	),
-	ebook: new EbookApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	),
-	book: new BookApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	),
-	genre: new GenreApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	),
-	parser: new ParserApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	),
-	catalog: new CatalogApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	),
-	storage: new StorageApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	),
-	user: new UserApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	),
-	review: new ReviewApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	),
-	recommendation: new RecommendationApi(
-		{
-			basePath: emulatorServerURL,
-			isJsonMime: () => false
-		},
-		undefined,
-		instance
-	)
+	auth,
+	book,
+	catalog,
+	ebook,
+	genre,
+	parser,
+	recommendation,
+	review,
+	storage,
+	user
 }

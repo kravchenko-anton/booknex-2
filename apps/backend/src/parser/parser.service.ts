@@ -1,7 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { adminErrors } from '../../../../libs/global/errors'
 import { slugify } from '../../../../libs/global/utils/slugify'
-import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { ParserDto } from './dto/parser.dto'
@@ -82,7 +81,6 @@ export class ParserService {
 				slug
 			},
 			select: {
-				...defaultReturnObject,
 				title: true,
 				slug: true,
 				rating: true,

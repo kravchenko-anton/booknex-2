@@ -61,7 +61,7 @@ export interface UpdateBookDto {
      * @type {boolean}
      * @memberof UpdateBookDto
      */
-    'visible'?: boolean;
+    'isPublic'?: boolean;
     /**
      * 
      * @type {Array<ShortGenre>}

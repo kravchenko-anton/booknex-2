@@ -39,7 +39,7 @@ export const StorageApiAxiosParamCreator = function (configuration?: Configurati
         upload: async (folder: UploadFolderEnum, file?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'folder' is not null or undefined
             assertParamExists('upload', 'folder', folder)
-            const localVarPath = `/api/v1/storage/{folder}`
+            const localVarPath = `/storage/{folder}`
                 .replace(`{${"folder"}}`, encodeURIComponent(String(folder)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

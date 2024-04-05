@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { acceptToast, infoToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
-import type { CatalogUserOutput } from 'global/api-client/models/catalog-user-output'
+import { CatalogUserOutput } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { timeAgo } from 'global/helpers/time-format'
 import { MoreHorizontal } from 'icons'

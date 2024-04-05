@@ -42,7 +42,7 @@ export class EbookService {
 
 	async ebookBySlug(slug: string, userId: number) {
 		const book = await this.prisma.book.findUnique({
-			where: { slug, visible: true },
+			where: { slug, isPublic: true },
 			select: {
 				id: true,
 				title: true,

@@ -62,19 +62,20 @@ model Book {
   picture     String
   ebook       String
   // Minutes
-  readingTime Int      @default(0)
+
+  readingTime Int @default(0)
   // Chapters count
-  chapters    Int      @default(0)
+  chapters    Int @default(0)
 
   rating      Float      @default(0)
-  visible     Boolean    @default(false)
+  isPublic    Boolean    @default(false)
+  mainGenreId Int
   mainGenre   Genre      @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres      Genre[]    @relation("BookGenre")
   review      Review[]
   finishedBy  User[]     @relation("FinishedBooks")
   savedBy     User[]     @relation("SavedBooks")
   readingBy   User[]     @relation("ReadingBooks")
-  mainGenreId Int
   activities  Activity[]
 }
 

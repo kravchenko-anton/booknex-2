@@ -85,7 +85,7 @@ export interface FullBook {
      * @type {boolean}
      * @memberof FullBook
      */
-    'visible': boolean;
+    'isPublic': boolean;
     /**
      * 
      * @type {Array<ShortGenre>}

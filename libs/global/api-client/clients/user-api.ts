@@ -45,7 +45,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('catalog', 'searchTerm', searchTerm)
             // verify required parameter 'page' is not null or undefined
             assertParamExists('catalog', 'page', page)
-            const localVarPath = `/api/v1/user/admin/catalog`;
+            const localVarPath = `/user/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -89,7 +89,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         finishReading: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('finishReading', 'slug', slug)
-            const localVarPath = `/api/v1/user/finish-reading/{slug}`
+            const localVarPath = `/user/finish-reading/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -126,7 +126,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         isSaved: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('isSaved', 'slug', slug)
-            const localVarPath = `/api/v1/user/is-saved/{slug}`
+            const localVarPath = `/user/is-saved/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -160,7 +160,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @throws {RequiredError}
          */
         library: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/user/library`;
+            const localVarPath = `/user/library`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -193,7 +193,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @throws {RequiredError}
          */
         profile: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/user/profile`;
+            const localVarPath = `/user/profile`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -229,7 +229,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         remove: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('remove', 'id', id)
-            const localVarPath = `/api/v1/user/admin/remove/{id}`
+            const localVarPath = `/user/admin/remove/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -266,7 +266,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         startReading: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('startReading', 'slug', slug)
-            const localVarPath = `/api/v1/user/start-reading/{slug}`
+            const localVarPath = `/user/start-reading/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -303,7 +303,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         toggleSave: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('toggleSave', 'slug', slug)
-            const localVarPath = `/api/v1/user/toggle-save/{slug}`
+            const localVarPath = `/user/toggle-save/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

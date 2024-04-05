@@ -13,7 +13,7 @@ export class UpdateBookPick extends PickType(Book, [
 	'author',
 	'description',
 	'title',
-	'visible',
+	'isPublic',
 	'genres',
 	'rating',
 	'picture'
@@ -23,7 +23,7 @@ export class UpdateBookDto extends PartialType(UpdateBookPick) {
 	@IsOptional()
 	@IsArray()
 	@ArrayMinSize(1)
-	@ValidateNested()
+	@ValidateNested({ each: true })
 	@Type(() => PayloadEBook)
 	ebook: PayloadEBook[]
 }

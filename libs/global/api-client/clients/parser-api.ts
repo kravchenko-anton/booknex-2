@@ -44,7 +44,7 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
         bySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('bySlug', 'slug', slug)
-            const localVarPath = `/api/v1/parser/admin/by-slug/{slug}`
+            const localVarPath = `/parser/admin/by-slug/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -80,7 +80,7 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         catalog: async (searchTerm?: string, page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/parser/admin/catalog`;
+            const localVarPath = `/parser/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -124,7 +124,7 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
         parse: async (parserDto: ParserDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'parserDto' is not null or undefined
             assertParamExists('parse', 'parserDto', parserDto)
-            const localVarPath = `/api/v1/parser/admin/parse`;
+            const localVarPath = `/parser/admin/parse`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -163,7 +163,7 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
         remove: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('remove', 'slug', slug)
-            const localVarPath = `/api/v1/parser/admin/remove/{slug}`
+            const localVarPath = `/parser/admin/remove/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -198,7 +198,7 @@ export const ParserApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         unfold: async (file?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/parser/admin/unfold`;
+            const localVarPath = `/parser/admin/unfold`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;

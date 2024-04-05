@@ -58,6 +58,8 @@ export class BookController {
 		description: 'Create book'
 	})
 	async create(@Body() dto: CreateBookDto) {
+		throw new Error('Method not implemented.')
+		// @ts-ignore
 		return this.bookService.create(dto)
 	}
 

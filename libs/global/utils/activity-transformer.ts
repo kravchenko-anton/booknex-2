@@ -52,7 +52,7 @@ export const transformActivity = (
 					` (${activity.bookId ? `book: ${activity.bookId}; ` : ''}${activity.genreId ? `genre: ${activity.genreId}; ` : ''}${activity.userId ? `user: ${activity.userId}` : ''})`,
 				time: timeFormat(activity.createdAt)
 			})
-			accumulator[date].count++
+			accumulator[date].count++	
 			return accumulator
 		},
 		{}

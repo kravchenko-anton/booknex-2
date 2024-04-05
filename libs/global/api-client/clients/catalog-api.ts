@@ -37,7 +37,7 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         featured: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/catalog/featured`;
+            const localVarPath = `/catalog/featured`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -73,7 +73,7 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
         search: async (query: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
             assertParamExists('search', 'query', query)
-            const localVarPath = `/api/v1/catalog/search/{query}`
+            const localVarPath = `/catalog/search/{query}`
                 .replace(`{${"query"}}`, encodeURIComponent(String(query)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

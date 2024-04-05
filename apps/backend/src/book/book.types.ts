@@ -4,7 +4,7 @@ import { UpdateBookDto } from './dto/update.book.dto'
 export class UpdateBookDtoExtended extends PickType(UpdateBookDto, [
 	'title',
 	'description',
-	'visible',
+	'isPublic',
 	'author',
 	'picture',
 	'rating'

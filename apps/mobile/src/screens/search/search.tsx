@@ -14,7 +14,6 @@ import { debounce } from 'throttle-debounce'
 const Search = () => {
 	const { searchTerm, books, booksLoading, control, clearSearch } = useSearch()
 	const { navigate, goBack } = useTypedNavigation()
-	console.log('books', books)
 	return (
 		<Layout className='h-full p-0'>
 			<Controller

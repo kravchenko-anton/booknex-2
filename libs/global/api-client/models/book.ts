@@ -76,7 +76,7 @@ export interface Book {
      * @type {boolean}
      * @memberof Book
      */
-    'visible': boolean;
+    'isPublic': boolean;
     /**
      * 
      * @type {Array<ShortGenre>}

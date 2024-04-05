@@ -7,7 +7,7 @@ import { Book } from './book.entity'
 export class CatalogOutput extends BaseCatalogModel {
 	@ApiProperty({ type: [Book] })
 	@IsArray()
-	@ValidateNested()
+	@ValidateNested({ each: true })
 	@Type(() => Book)
 	data: Book[]
 }

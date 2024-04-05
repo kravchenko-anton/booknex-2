@@ -2,7 +2,6 @@ import { isArray } from 'class-validator'
 import { globalErrors } from '../errors'
 
 export const errorCatch = (error: any): string => {
-	console.log('error in catch', error)
 	if (typeof error === 'string') return error
 	if (typeof error?.response?.data?.message === 'string')
 		return error.response.data.message

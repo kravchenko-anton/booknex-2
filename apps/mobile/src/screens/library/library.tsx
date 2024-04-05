@@ -23,7 +23,6 @@ const Library = () => {
 	})
 	const { navigate } = useTypedNavigation()
 	const { books } = useTypedSelector(state => state.readingProgress)
-	console.log(books)
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&

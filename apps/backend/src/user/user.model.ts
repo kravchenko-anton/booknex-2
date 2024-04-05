@@ -27,8 +27,9 @@ export class CatalogUserOutput extends User {
 	@ValidateNested()
 	@Type(() => ShortGenre)
 	selectedGenres: {
-		id: number
+		slug: string
 		name: string
+		icon: string
 	}[]
 
 	@IsArray()

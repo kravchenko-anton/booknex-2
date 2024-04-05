@@ -1,6 +1,6 @@
 import { TrimContentMenu } from '@/app/admin/book/_components/ebook-editor/trim-content-menu'
 import { useBookCompose } from '@/app/admin/book/_components/ebook-editor/useBookCompose'
-import { DropZone, ErrorMessage, Input, TextArea } from '@/components/ui'
+import { DropZone, Input, TextArea } from '@/components/ui'
 import { errorToast } from '@/utils/toast'
 import { BaseFieldProperties } from 'global/types'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
@@ -13,13 +13,11 @@ const EbookComposer = <T extends Record<string, any>>({
 	<Controller
 		control={control}
 		name={name}
-		render={({ field: { value = [], onChange }, formState: { errors } }) => {
-			console.log(errors)
+		render={({ field: { value = [], onChange }, fieldState: { error } }) => {
 			const { books } = useBookCompose({
 				ebooks: value,
 				setEBooks: onChange
 			})
-
 			return (
 				<>
 					<div className='md:w-max md:overflow-y-scroll '>
@@ -177,7 +175,15 @@ const EbookComposer = <T extends Record<string, any>>({
 							</div>
 						</div>
 					</div>
-					<ErrorMessage name={name} errors={errors} />
+					{!!error && !Array.isArray(error) && (
+						<p className='text-danger mt-0.5 text-xs italic'>{error.message}</p>
+					)}
+					{Array.isArray(error) &&
+						error.map((error, index) => (
+							<p key={index} className='text-danger mt-0.5 text-xs italic'>
+								{error.message}
+							</p>
+						))}
 				</>
 			)
 		}}

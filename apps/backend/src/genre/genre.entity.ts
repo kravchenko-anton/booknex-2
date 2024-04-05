@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber, IsString } from 'class-validator'
+import { IsString } from 'class-validator'
 
 export class ShortGenre {
 	@ApiProperty({ example: 1, description: 'genre slug', type: String })
-	@IsNumber()
+	@IsString()
 	slug: string
 
 	@ApiProperty({ example: 'name', description: 'genre name', type: String })

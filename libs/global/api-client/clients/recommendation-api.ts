@@ -37,7 +37,7 @@ export const RecommendationApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         currentRecommendation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/recommendation/recommendation-genre`;
+            const localVarPath = `/recommendation/recommendation-genre`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -73,7 +73,7 @@ export const RecommendationApiAxiosParamCreator = function (configuration?: Conf
         updateRecommendation: async (updateRecommendationDto: UpdateRecommendationDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'updateRecommendationDto' is not null or undefined
             assertParamExists('updateRecommendation', 'updateRecommendationDto', updateRecommendationDto)
-            const localVarPath = `/api/v1/recommendation/update-recommendation`;
+            const localVarPath = `/recommendation/update-recommendation`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;

@@ -69,12 +69,12 @@ export class Book extends ShortBook {
 
 	@ApiProperty({ example: true, description: 'book visibility', type: Boolean })
 	@IsBoolean()
-	visible: boolean
+	isPublic: boolean
 
 	@ApiProperty({ type: [ShortGenre] })
 	@IsArray()
 	@ArrayMinSize(1)
-	@ValidateNested()
+	@ValidateNested({ each: true })
 	@Type(() => ShortGenre)
 	genres: {
 		slug: string
@@ -120,7 +120,7 @@ export class FullBook extends Book {
 		type: BookCount,
 		description: 'book count'
 	})
-	@ValidateNested()
+	@ValidateNested({ each: true })
 	@Type(() => BookCount)
 	_count: BookCount
 

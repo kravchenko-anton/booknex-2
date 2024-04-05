@@ -1,7 +1,7 @@
 import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import type { AuthDto, AuthOutput } from 'global/api-client'
+import { AuthDto, AuthOutput } from 'global/api-client'
 import { globalErrors } from 'global/errors'
 
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
@@ -38,7 +38,9 @@ export const googleLogin = createAsyncThunk<
 	}
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
-		const { data: loginResponse } = await api.auth.googleSign({ socialId })
+		const { data: loginResponse } = await api.auth.googleSign({
+			socialId
+		})
 		console.log(loginResponse)
 
 		if (loginResponse.user.role !== 'admin')

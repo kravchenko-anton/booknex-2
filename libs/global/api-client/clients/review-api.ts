@@ -41,7 +41,7 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             assertParamExists('review', 'slug', slug)
             // verify required parameter 'reviewBookDto' is not null or undefined
             assertParamExists('review', 'reviewBookDto', reviewBookDto)
-            const localVarPath = `/api/v1/review/review/{slug}`
+            const localVarPath = `/review/review/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

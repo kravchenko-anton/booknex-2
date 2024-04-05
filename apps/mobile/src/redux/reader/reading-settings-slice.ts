@@ -33,10 +33,10 @@ export const ReaderFont = [
 ]
 
 const initialState = {
-	colorScheme: themePack[0],
+	colorScheme: themePack[0] as ThemePackType,
 	font: {
-		title: ReaderFont[0]?.title,
-		fontFamily: ReaderFont[0]?.fontFamily
+		title: ReaderFont[0]?.title as string,
+		fontFamily: ReaderFont[0]?.fontFamily as string
 	},
 	fontSize: fontSizeSettings.min,
 	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,

@@ -8,6 +8,7 @@ import {
 	Validate,
 	ValidateNested
 } from 'class-validator'
+import 'reflect-metadata'
 import { ShortBook } from '../book.entity'
 
 const htmlRegex = /<([A-Za-z][\dA-Za-z]*)\b[^>]*>(.*?)<\/\1>/
@@ -17,18 +18,19 @@ export class Chapter {
 	@ApiProperty({ type: Number })
 	@IsNumber()
 	id: number
-	@ApiProperty({ type: String })
-	@Validate((value: string) => !value.includes('epub'), {
+
+	@Validate((value: string) => !value.includes('epub') || !value, {
 		message: 'Chapter cannot be an epub'
 	})
+	@ApiProperty({ type: String })
 	@IsString()
 	name: string
 
-	@ApiProperty({ type: String })
-	@IsString()
 	@Validate((value: string) => htmlRegex.test(value), {
 		message: 'Invalid HTML string'
 	})
+	@ApiProperty({ type: String })
+	@IsString()
 	text: string
 
 	@ApiProperty({ type: String })
@@ -46,9 +48,10 @@ export class EBookBase {
 	@ApiProperty({ type: Number })
 	@IsNumber()
 	id: number
+
 	@ApiProperty({ type: String })
-	@Validate((value: string) => !value.includes('epub'), {
-		message: 'EBook cannot be an epub'
+	@Validate((value: string) => !value.includes('epub') || !value, {
+		message: 'Chapter cannot be an epub'
 	})
 	@IsString()
 	title: string
@@ -56,7 +59,7 @@ export class EBookBase {
 export class StoredEBook extends EBookBase {
 	@ApiProperty({ type: [Chapter] })
 	@ValidateNested({ each: true })
-	@IsArray()
+	@IsArray({ each: true })
 	@ArrayMinSize(1)
 	@Type(() => Chapter)
 	chapters: Chapter[]

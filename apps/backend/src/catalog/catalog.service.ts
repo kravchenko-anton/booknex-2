@@ -32,7 +32,7 @@ export class CatalogService {
 	search(query: string) {
 		return this.prisma.book.findMany({
 			where: {
-				visible: true,
+				isPublic: true,
 				OR: [
 					{
 						title: {
@@ -59,7 +59,7 @@ export class CatalogService {
 		return this.prisma.book.findMany({
 			take: 10,
 			where: {
-				visible: true
+				isPublic: true
 			},
 			orderBy: {
 				rating: 'desc'
@@ -71,7 +71,7 @@ export class CatalogService {
 		return this.prisma.book.findMany({
 			take: 10,
 			where: {
-				visible: true
+				isPublic: true
 			},
 			orderBy: {
 				rating: 'desc'
@@ -83,7 +83,7 @@ export class CatalogService {
 		return this.prisma.book.findMany({
 			take: 10,
 			where: {
-				visible: true
+				isPublic: true
 			},
 			orderBy: {
 				updatedAt: 'desc'

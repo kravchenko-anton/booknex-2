@@ -5,7 +5,6 @@ import { transformActivity } from '../../../../libs/global/utils/activity-transf
 import { slugify } from '../../../../libs/global/utils/slugify'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
-import { defaultReturnObject } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -36,7 +35,7 @@ export class BookService {
 	}) {
 		const book = await this.prisma.book.findUnique({
 			where: {
-				...(adminVisible ? {} : { visible: true }),
+				...(adminVisible ? {} : { isPublic: true }),
 				...where
 			},
 			select: {
@@ -65,7 +64,7 @@ export class BookService {
 	}) {
 		return this.prisma.book.findMany({
 			where: {
-				...(adminVisible ? {} : { visible: true }),
+				...(adminVisible ? {} : { isPublic: true }),
 				...where
 			},
 			take,
@@ -79,7 +78,7 @@ export class BookService {
 
 	async infoBySlug(slug: string, userId: number) {
 		const book = await this.findOne({
-			where: { slug, visible: true },
+			where: { slug, isPublic: true },
 			adminVisible: false,
 			select: {
 				description: true,
@@ -115,10 +114,9 @@ export class BookService {
 				genres: { select: ReturnGenreObject },
 				ebook: true,
 				description: true,
-				visible: true,
+				isPublic: true,
 				review: {
 					select: {
-						...defaultReturnObject,
 						tags: true,
 						text: true,
 						rating: true,
@@ -171,14 +169,14 @@ export class BookService {
 					genres: { select: ReturnGenreObject },
 					readingTime: true,
 					rating: true,
-					visible: true,
+					isPublic: true,
 					description: true,
 					mainGenre: {
 						select: ReturnGenreObject
 					}
 				},
 				orderBy: {
-					visible: 'asc' as const
+					isPublic: 'asc' as const
 				},
 				...(page && {
 					skip: page * perPage
@@ -361,7 +359,7 @@ export class BookService {
 		adminVisible?: boolean
 	}) {
 		const exist = await this.prisma.book.findUnique({
-			where: { ...where, ...(adminVisible ? {} : { visible: true }) },
+			where: { ...where, ...(adminVisible ? {} : { isPublic: true }) },
 			select: {
 				id: true
 			}

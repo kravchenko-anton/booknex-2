@@ -12,7 +12,9 @@ export const googleLogin = createAsyncThunk<
 >('auth/googleLogin', async ({ socialId }, thunkAPI) => {
 	try {
 		console.log('socialId', socialId)
-		const { data: loginResponse } = await api.auth.googleSign({ socialId })
+		const { data: loginResponse } = await api.auth.googleSign({
+			socialId
+		})
 
 		console.log('loginResponse', loginResponse)
 		if (!loginResponse.accessToken)

@@ -268,7 +268,7 @@ export class UserService {
 
 	private async checkBookExist(slug: string) {
 		const book = await this.prisma.book.findUnique({
-			where: { slug, visible: true },
+			where: { slug, isPublic: true },
 			select: {
 				id: true,
 				title: true

@@ -33,7 +33,7 @@ export class RecommendationService {
 			take: 10,
 			orderBy: { rating: 'desc' },
 			where: {
-				visible: true,
+				isPublic: true,
 				genres: {
 					some: {
 						name: {

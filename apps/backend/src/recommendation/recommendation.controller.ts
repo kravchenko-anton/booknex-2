@@ -17,10 +17,10 @@ export class RecommendationController {
 	@ApiOkResponse({ description: 'Recommendation updated' })
 	@ApiBody({ type: UpdateRecommendationDto })
 	async updateRecommendation(
-		@CurrentUser('id') id: number,
+		@CurrentUser('id') userId: number,
 		@Body() dto: UpdateRecommendationDto
 	) {
-		return this.recommendationService.updateRecommendation(+id, dto)
+		return this.recommendationService.updateRecommendation(+userId, dto)
 	}
 
 	@Auth()

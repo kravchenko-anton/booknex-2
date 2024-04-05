@@ -47,12 +47,3 @@ export class BookTemplate {
 		name: string
 	}[]
 }
-
-export class FullBookTemplate extends BookTemplate {
-	@ApiProperty({
-		type: Number,
-		description: 'id of the  book template'
-	})
-	@IsNumber()
-	id: number
-}

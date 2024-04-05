@@ -1,0 +1,1612 @@
+openapi: 3.0.0
+paths:
+  /user/profile:
+    get:
+      operationId: profile
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileOutput"
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
+  /user/library:
+    get:
+      operationId: library
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLibraryOutput"
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
+  "/user/start-reading/{slug}":
+    patch:
+      operationId: startReading
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
+  "/user/finish-reading/{slug}":
+    patch:
+      operationId: finishReading
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
+  "/user/toggle-save/{slug}":
+    patch:
+      operationId: toggleSave
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
+  "/user/is-saved/{slug}":
+    get:
+      operationId: isSaved
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
+  /user/admin/catalog:
+    get:
+      operationId: catalog
+      parameters:
+        - name: searchTerm
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCatalogOutput"
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
+  "/user/admin/remove/{id}":
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
+  "/catalog/search/{query}":
+    get:
+      operationId: search
+      parameters:
+        - name: query
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShortBook"
+      tags:
+        - 📚 catalog
+      security:
+        - bearer: []
+  /catalog/featured:
+    get:
+      operationId: featured
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeaturedOutput"
+      tags:
+        - 📚 catalog
+      security:
+        - bearer: []
+  /genre:
+    get:
+      operationId: catalog
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShortGenre"
+      tags:
+        - 🔖 genre
+      security:
+        - bearer: []
+  "/genre/by-slug/{slug}":
+    get:
+      operationId: bySlug
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindOneGenreOutput"
+      tags:
+        - 🔖 genre
+      security:
+        - bearer: []
+  "/book/info/by-slug/{slug}":
+    get:
+      operationId: infoBySlug
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  "/book/admin-info/by-slug/{slug}":
+    get:
+      operationId: adminInfoBySlug
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FullBook"
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  /book/admin/catalog:
+    get:
+      operationId: catalog
+      parameters:
+        - name: searchTerm
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CatalogOutput"
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  /book/admin/create:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        description: Create book
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  "/book/admin/update/{slug}":
+    put:
+      operationId: update
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBookDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  "/book/admin/remove/{slug}":
+    delete:
+      operationId: remove
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📙 book
+      security:
+        - bearer: []
+  /auth/google-sign:
+    post:
+      operationId: googleSign
+      parameters: []
+      requestBody:
+        required: true
+        description: Sign in with google account
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GoogleAuthDto"
+      responses:
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthOutput"
+      tags:
+        - 🔐 auth
+  /auth/mail-register:
+    post:
+      operationId: mailRegister
+      parameters: []
+      requestBody:
+        required: true
+        description: Register new user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthDto"
+      responses:
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthOutput"
+      tags:
+        - 🔐 auth
+  /auth/mail-login:
+    post:
+      operationId: mailLogin
+      parameters: []
+      requestBody:
+        required: true
+        description: Login user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthDto"
+      responses:
+        "200":
+          description: Return access and refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthOutput"
+      tags:
+        - 🔐 auth
+  /auth/refresh:
+    post:
+      operationId: refreshToken
+      parameters: []
+      requestBody:
+        required: true
+        description: Refresh access token
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshDto"
+      responses:
+        "200":
+          description: Return access token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthOutput"
+      tags:
+        - 🔐 auth
+  "/storage/{folder}":
+    post:
+      operationId: upload
+      parameters:
+        - name: folder
+          required: true
+          in: path
+          schema:
+            enum:
+              - ebooks
+              - booksCovers
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: File uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadOutputDto"
+      tags:
+        - storage
+      security:
+        - bearer: []
+  /parser/admin/catalog:
+    get:
+      operationId: catalog
+      parameters:
+        - name: searchTerm
+          required: false
+          in: query
+          example: The Hobbit
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          example: 1
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookTemplateCatalogOutput"
+      tags:
+        - 📦 parser
+      security:
+        - bearer: []
+  "/parser/admin/by-slug/{slug}":
+    get:
+      operationId: bySlug
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookTemplate"
+      tags:
+        - 📦 parser
+      security:
+        - bearer: []
+  /parser/admin/parse:
+    post:
+      operationId: parse
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ParserDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - 📦 parser
+      security:
+        - bearer: []
+  /parser/admin/unfold:
+    post:
+      operationId: unfold
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Unfolded book content
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UnfoldOutput"
+      tags:
+        - 📦 parser
+      security:
+        - bearer: []
+  "/parser/admin/remove/{slug}":
+    delete:
+      operationId: remove
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📦 parser
+      security:
+        - bearer: []
+  "/review/review/{slug}":
+    post:
+      operationId: review
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Review book
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewBookDto"
+      responses:
+        "200":
+          description: Review book
+      tags:
+        - ⭐ review
+      security:
+        - bearer: []
+  /recommendation/update-recommendation:
+    post:
+      operationId: updateRecommendation
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRecommendationDto"
+      responses:
+        "200":
+          description: Recommendation updated
+      tags:
+        - 📨 recommendation
+      security:
+        - bearer: []
+  /recommendation/recommendation-genre:
+    get:
+      operationId: currentRecommendation
+      parameters: []
+      responses:
+        "200":
+          description: Recommendation genres
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShortGenre"
+      tags:
+        - 📨 recommendation
+      security:
+        - bearer: []
+  /health:
+    get:
+      operationId: check
+      parameters: []
+      responses:
+        "200":
+          description: Health check
+          content:
+            application/json:
+              schema:
+                type: object
+        "503":
+          description: The Health Check is not successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  info:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example:
+                      redis:
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                      redis:
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+      tags:
+        - ❤️ health
+  "/ebook/ebook/by-slug/{slug}":
+    get:
+      operationId: ebookBySlug
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EbookOutput"
+      tags:
+        - 📙 ebook
+  "/ebook/admin/stored-ebook/{slug}":
+    get:
+      operationId: storedEbookBySlug
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StoredEBook"
+      tags:
+        - 📙 ebook
+info:
+  title: Booknex
+  description: ""
+  version: "1.0"
+  contact:
+    name: Booknex
+    url: https://github.com/kravchenko-anton/booknex-2-monorepo
+    email: Github repository
+tags:
+  - name: 👤 user
+    description: user service
+  - name: 🔐 auth
+    description: auth service
+  - name: 📙 book
+    description: book service
+  - name: 📚 catalog
+    description: catalog service
+  - name: ❤️ health
+    description: health service
+  - name: 🔖 genre
+    description: genre service
+  - name: 📁 storage
+    description: storage service
+  - name: ⭐ review
+    description: review service
+  - name: 📨 recommendation
+    description: recommendation service
+  - name: 📦 parser
+    description: parser service
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    UserProfileOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        email:
+          type: string
+          example: email
+      required:
+        - id
+        - email
+    ShortBook:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: 1
+          description: book slug
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+      required:
+        - slug
+        - title
+        - picture
+        - author
+    UserLibraryOutput:
+      type: object
+      properties:
+        readingBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+        finishedBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+        savedBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+      required:
+        - readingBooks
+        - finishedBooks
+        - savedBooks
+    ShortGenre:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: 1
+          description: genre slug
+        name:
+          type: string
+          example: name
+          description: genre name
+        icon:
+          type: string
+          example: icon
+          description: genre icon
+      required:
+        - slug
+        - name
+        - icon
+    ActivityItem:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Activity message
+          example: startedReading
+        time:
+          type: string
+          description: Active time
+          example: 2021-07-01T10:00:00
+        importance:
+          type: number
+          description: Activity importance
+          example: 1
+      required:
+        - message
+        - time
+        - importance
+    Activity:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Active date
+          example: 2021-07-01
+        count:
+          type: number
+          description: Active count
+          example: 10
+        level:
+          type: number
+          description: Active level
+          example: 10
+        activities:
+          description: List of activities
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivityItem"
+      required:
+        - date
+        - count
+        - level
+        - activities
+    UserCountOutput:
+      type: object
+      properties:
+        savedBooks:
+          type: number
+          example: 1
+        finishedBooks:
+          type: number
+          example: 1
+        readingBooks:
+          type: number
+          example: 1
+      required:
+        - savedBooks
+        - finishedBooks
+        - readingBooks
+    CatalogUserOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: user id
+        createdAt:
+          format: date-time
+          type: string
+          example: 2021-07-01
+          description: user created at
+        email:
+          type: string
+          example: email
+          description: user email
+        socialId:
+          type: string
+          example: socialId
+          description: user social id
+        password:
+          type: string
+          example: password
+          description: user password
+        picture:
+          type: string
+          example: picture
+          description: user picture
+        fullName:
+          type: string
+          example: fullName
+          description: user full name
+        location:
+          type: string
+          example: location
+          description: user location
+        selectedGenres:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortGenre"
+        activities:
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+        _count:
+          description: Count of books finished, reading and saved by the user
+          allOf:
+            - $ref: "#/components/schemas/UserCountOutput"
+      required:
+        - id
+        - createdAt
+        - email
+        - socialId
+        - password
+        - picture
+        - fullName
+        - location
+        - selectedGenres
+        - activities
+        - _count
+    UserCatalogOutput:
+      type: object
+      properties:
+        canLoadMore:
+          type: boolean
+          example: true
+          description: can load more
+        totalPages:
+          type: number
+          example: 1
+          description: total pages
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CatalogUserOutput"
+      required:
+        - canLoadMore
+        - totalPages
+        - data
+    FeaturedOutput:
+      type: object
+      properties:
+        relatedGenres:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortGenre"
+        recommendations:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+        popularBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+        bestSellingBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+        newReleases:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+      required:
+        - relatedGenres
+        - recommendations
+        - popularBooks
+        - bestSellingBooks
+        - newReleases
+    FindOneGenreOutput:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: 1
+          description: genre slug
+        name:
+          type: string
+          example: name
+          description: genre name
+        icon:
+          type: string
+          example: icon
+          description: genre icon
+        mainBooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortBook"
+      required:
+        - slug
+        - name
+        - icon
+        - mainBooks
+    Book:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: 1
+          description: book slug
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        readingTime:
+          type: number
+          example: 100
+          description: book readingTime
+        chapters:
+          type: number
+          example: 100
+          description: book chapters count
+        rating:
+          type: number
+          example: 5
+          description: book rating
+        isPublic:
+          type: boolean
+          example: true
+          description: book visibility
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortGenre"
+      required:
+        - slug
+        - title
+        - picture
+        - author
+        - description
+        - readingTime
+        - chapters
+        - rating
+        - isPublic
+        - genres
+    BookCount:
+      type: object
+      properties:
+        finishedBy:
+          type: number
+          example: 1
+          description: FinishedBy
+        readingBy:
+          type: number
+          example: 1
+          description: ReadingBy
+        savedBy:
+          type: number
+          example: 1
+          description: SavedBy
+      required:
+        - finishedBy
+        - readingBy
+        - savedBy
+    Review:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: review id
+        tags:
+          example: tags
+          description: review tags
+          type: array
+          items:
+            type: string
+        text:
+          type: string
+          example: text
+          description: review text
+        rating:
+          type: number
+          example: 1
+          description: review rating
+      required:
+        - id
+        - tags
+        - text
+        - rating
+    FullBook:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: 1
+          description: book slug
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        readingTime:
+          type: number
+          example: 100
+          description: book readingTime
+        chapters:
+          type: number
+          example: 100
+          description: book chapters count
+        rating:
+          type: number
+          example: 5
+          description: book rating
+        isPublic:
+          type: boolean
+          example: true
+          description: book visibility
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortGenre"
+        createdAt:
+          type: string
+          example: 2021-07-01
+          description: book created at
+        updatedAt:
+          type: string
+          example: 2021-07-01
+          description: book updated at
+        ebook:
+          type: string
+          example: ebook
+          description: book ebook
+        _count:
+          description: book count
+          allOf:
+            - $ref: "#/components/schemas/BookCount"
+        activities:
+          description: book activities
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+        review:
+          description: book review
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
+      required:
+        - slug
+        - title
+        - picture
+        - author
+        - description
+        - readingTime
+        - chapters
+        - rating
+        - isPublic
+        - genres
+        - createdAt
+        - updatedAt
+        - ebook
+        - _count
+        - activities
+        - review
+    CatalogOutput:
+      type: object
+      properties:
+        canLoadMore:
+          type: boolean
+          example: true
+          description: can load more
+        totalPages:
+          type: number
+          example: 1
+          description: total pages
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Book"
+      required:
+        - canLoadMore
+        - totalPages
+        - data
+    PayloadChapter:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        text:
+          type: string
+      required:
+        - id
+        - name
+        - text
+    PayloadEBook:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        chapters:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayloadChapter"
+      required:
+        - id
+        - title
+        - chapters
+    CreateBookDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        rating:
+          type: number
+          example: 5
+          description: book rating
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortGenre"
+        ebook:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayloadEBook"
+      required:
+        - title
+        - picture
+        - author
+        - description
+        - rating
+        - genres
+        - ebook
+    UpdateBookDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        author:
+          type: string
+          example: author
+          description: book author
+        description:
+          type: string
+          example: description
+          description: book description
+        rating:
+          type: number
+          example: 5
+          description: book rating
+        isPublic:
+          type: boolean
+          example: true
+          description: book visibility
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortGenre"
+        ebook:
+          type: array
+          items:
+            $ref: "#/components/schemas/PayloadEBook"
+    GoogleAuthDto:
+      type: object
+      properties:
+        socialId:
+          type: string
+          description: Social id
+          example: "1234567890"
+      required:
+        - socialId
+    AuthUser:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email
+          example: test@gmail.com
+        role:
+          type: string
+          description: User role
+          example: user
+          enum:
+            - user
+            - admin
+      required:
+        - email
+        - role
+    AuthOutput:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Access token
+          example: "1234567890"
+        refreshToken:
+          type: string
+          description: Refresh token
+          example: "1234567890"
+        type:
+          type: string
+          description: type of auth
+          example: login
+        user:
+          description: User data
+          allOf:
+            - $ref: "#/components/schemas/AuthUser"
+      required:
+        - accessToken
+        - refreshToken
+        - type
+        - user
+    AuthDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email
+          example: test@gmail.com
+        password:
+          type: string
+          description: User password
+          example: password
+      required:
+        - email
+        - password
+    RefreshDto:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          description: Refresh token
+          example: "1234567890"
+      required:
+        - refreshToken
+    UploadOutputDto:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    BookTemplate:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: 1
+          description: book template slug
+        title:
+          type: string
+          description: title of the book
+        author:
+          type: string
+          description: author of the book
+        description:
+          type: string
+          description: description of the book
+        picture:
+          type: string
+          description: picture of the book
+        rating:
+          type: number
+          description: rating of the book
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShortGenre"
+      required:
+        - slug
+        - title
+        - author
+        - description
+        - picture
+        - rating
+        - genres
+    BookTemplateCatalogOutput:
+      type: object
+      properties:
+        canLoadMore:
+          type: boolean
+          example: true
+          description: can load more
+        totalPages:
+          type: number
+          example: 1
+          description: total pages
+        data:
+          description: book template
+          type: array
+          items:
+            $ref: "#/components/schemas/BookTemplate"
+      required:
+        - canLoadMore
+        - totalPages
+        - data
+    ParserDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: url of the parser
+        page:
+          type: number
+          description: page of the parser
+      required:
+        - url
+        - page
+    UnfoldOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          description: id of the chapter
+        name:
+          type: string
+          description: name of the chapter
+        text:
+          type: string
+          description: text of the chapter
+      required:
+        - id
+        - name
+        - text
+    ReviewBookDto:
+      type: object
+      properties:
+        rating:
+          type: number
+          example: 5
+          description: rating
+        tags:
+          description: tags
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+          example: comment
+          description: comment
+      required:
+        - rating
+        - tags
+    UpdateRecommendationDto:
+      type: object
+      properties:
+        genres:
+          description: new genres for recommendation
+          type: array
+          items:
+            type: string
+      required:
+        - genres
+    OutputChapterChild:
+      type: object
+      properties:
+        name:
+          type: string
+          example: name
+          description: chapter child name
+        link:
+          type: string
+          example: link
+          description: chapter child link
+      required:
+        - name
+        - link
+    OutputChapter:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+          description: chapter title
+        children:
+          description: chapter children
+          type: array
+          items:
+            $ref: "#/components/schemas/OutputChapterChild"
+      required:
+        - title
+        - children
+    EbookOutput:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+          description: book title
+        picture:
+          type: string
+          example: picture
+          description: book picture
+        file:
+          description: book file
+          type: array
+          items:
+            type: string
+        chapters:
+          description: book chapters
+          type: array
+          items:
+            $ref: "#/components/schemas/OutputChapter"
+      required:
+        - title
+        - picture
+        - file
+        - chapters
+    Chapter:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        text:
+          type: string
+        romanNumber:
+          type: string
+        readingTime:
+          type: number
+      required:
+        - id
+        - name
+        - text
+        - romanNumber
+        - readingTime
+    StoredEBook:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        chapters:
+          type: array
+          items:
+            $ref: "#/components/schemas/Chapter"
+      required:
+        - id
+        - title
+        - chapters

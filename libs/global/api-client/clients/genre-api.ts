@@ -40,7 +40,7 @@ export const GenreApiAxiosParamCreator = function (configuration?: Configuration
         bySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('bySlug', 'slug', slug)
-            const localVarPath = `/api/v1/genre/by-slug/{slug}`
+            const localVarPath = `/genre/by-slug/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -74,7 +74,7 @@ export const GenreApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         catalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/genre`;
+            const localVarPath = `/genre`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
