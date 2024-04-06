@@ -1,12 +1,12 @@
-import { UpdateBookDto } from 'global/api-client'
 import { z } from 'zod'
-import { arrayOfEBookValidation } from './ebook.dto'
+import { EBookPayloadSchema } from './ebook.dto'
 
-export const UpdateBookValidation: z.ZodType<UpdateBookDto> = z.object({
+export const UpdateBookValidation = z.object({
 	title: z.string().optional(),
 	author: z.string().optional(),
 	description: z.string().max(1000).min(10).optional(),
-	ebook: arrayOfEBookValidation.optional(),
+	ebook: z.array(EBookPayloadSchema).min(1).optional(),
+	isPublic: z.boolean().optional(),
 	rating: z.number().min(1).positive().optional(),
 	picture: z.string().optional(),
 	genres: z
@@ -21,4 +21,4 @@ export const UpdateBookValidation: z.ZodType<UpdateBookDto> = z.object({
 		.optional()
 })
 
-export type UpdateBookValidationType = UpdateBookDto
+export type UpdateBookValidationType = z.infer<typeof UpdateBookValidation>

@@ -21,25 +21,25 @@
  */
 export interface ShortBook {
     /**
-     * book slug
+     * 
      * @type {string}
      * @memberof ShortBook
      */
     'slug': string;
     /**
-     * book title
+     * 
      * @type {string}
      * @memberof ShortBook
      */
     'title': string;
     /**
-     * book picture
+     * 
      * @type {string}
      * @memberof ShortBook
      */
     'picture': string;
     /**
-     * book author
+     * 
      * @type {string}
      * @memberof ShortBook
      */

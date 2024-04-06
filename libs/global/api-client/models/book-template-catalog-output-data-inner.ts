@@ -20,68 +20,50 @@ import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-ou
 /**
  * 
  * @export
- * @interface Book
+ * @interface BookTemplateCatalogOutputDataInner
  */
-export interface Book {
+export interface BookTemplateCatalogOutputDataInner {
     /**
      * 
      * @type {string}
-     * @memberof Book
-     */
-    'description': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Book
-     */
-    'readingTime': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Book
-     */
-    'chapters': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Book
-     */
-    'rating': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Book
-     */
-    'isPublic': boolean;
-    /**
-     * 
-     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
-     * @memberof Book
-     */
-    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof Book
+     * @memberof BookTemplateCatalogOutputDataInner
      */
     'slug': string;
     /**
      * 
      * @type {string}
-     * @memberof Book
+     * @memberof BookTemplateCatalogOutputDataInner
      */
     'title': string;
     /**
      * 
      * @type {string}
-     * @memberof Book
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'author': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookTemplateCatalogOutputDataInner
      */
     'picture': string;
     /**
      * 
-     * @type {string}
-     * @memberof Book
+     * @type {number}
+     * @memberof BookTemplateCatalogOutputDataInner
      */
-    'author': string;
+    'rating': number;
+    /**
+     * 
+     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
 }
 

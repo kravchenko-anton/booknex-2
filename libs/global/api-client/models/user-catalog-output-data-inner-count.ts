@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface ShortGenre
+ * @interface UserCatalogOutputDataInnerCount
  */
-export interface ShortGenre {
+export interface UserCatalogOutputDataInnerCount {
     /**
      * 
-     * @type {string}
-     * @memberof ShortGenre
+     * @type {number}
+     * @memberof UserCatalogOutputDataInnerCount
      */
-    'slug': string;
+    'savedBooks'?: number;
     /**
      * 
-     * @type {string}
-     * @memberof ShortGenre
+     * @type {number}
+     * @memberof UserCatalogOutputDataInnerCount
      */
-    'name': string;
+    'finishedBooks'?: number;
     /**
      * 
-     * @type {string}
-     * @memberof ShortGenre
+     * @type {number}
+     * @memberof UserCatalogOutputDataInnerCount
      */
-    'icon': string;
+    'readingBooks'?: number;
 }
 

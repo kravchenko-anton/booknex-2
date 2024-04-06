@@ -1,9 +1,8 @@
-import { PayloadEBook } from 'global/api-client'
 import { z } from 'zod'
 
 const htmlValidationRegex = /<([a-z][a-z0-9]*)\b[^>]*>(.*?)<\/\1>/g
 
-export const EBookValidation: z.ZodType<PayloadEBook> = z.object({
+export const EBookPayloadSchema = z.object({
 	title: z
 		.string()
 		.max(100)
@@ -40,5 +39,3 @@ export const EBookValidation: z.ZodType<PayloadEBook> = z.object({
 		})
 	)
 })
-
-export const arrayOfEBookValidation = z.array(EBookValidation).min(1)

@@ -15,16 +15,16 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Activity } from './activity';
+import { FullBookCount } from './full-book-count';
 // May contain unused imports in some cases
 // @ts-ignore
-import { BookCount } from './book-count';
+import { FullBookReviewInner } from './full-book-review-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { Review } from './review';
+import { UserCatalogOutputDataInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortGenre } from './short-genre';
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 
 /**
  * 
@@ -33,100 +33,100 @@ import { ShortGenre } from './short-genre';
  */
 export interface FullBook {
     /**
-     * book slug
-     * @type {string}
-     * @memberof FullBook
-     */
-    'slug': string;
-    /**
-     * book title
-     * @type {string}
-     * @memberof FullBook
-     */
-    'title': string;
-    /**
-     * book picture
-     * @type {string}
-     * @memberof FullBook
-     */
-    'picture': string;
-    /**
-     * book author
-     * @type {string}
-     * @memberof FullBook
-     */
-    'author': string;
-    /**
-     * book description
+     * 
      * @type {string}
      * @memberof FullBook
      */
     'description': string;
     /**
-     * book readingTime
+     * 
      * @type {number}
      * @memberof FullBook
      */
     'readingTime': number;
     /**
-     * book chapters count
+     * 
      * @type {number}
      * @memberof FullBook
      */
     'chapters': number;
     /**
-     * book rating
+     * 
      * @type {number}
      * @memberof FullBook
      */
     'rating': number;
     /**
-     * book visibility
+     * 
      * @type {boolean}
      * @memberof FullBook
      */
     'isPublic': boolean;
     /**
      * 
-     * @type {Array<ShortGenre>}
+     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof FullBook
      */
-    'genres': Array<ShortGenre>;
+    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
     /**
-     * book created at
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'slug': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'picture': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'author': string;
+    /**
+     * 
      * @type {string}
      * @memberof FullBook
      */
     'createdAt': string;
     /**
-     * book updated at
+     * 
      * @type {string}
      * @memberof FullBook
      */
     'updatedAt': string;
     /**
-     * book ebook
+     * 
      * @type {string}
      * @memberof FullBook
      */
     'ebook': string;
     /**
-     * book count
-     * @type {BookCount}
+     * 
+     * @type {FullBookCount}
      * @memberof FullBook
      */
-    '_count': BookCount;
+    '_count': FullBookCount;
     /**
-     * book activities
-     * @type {Array<Activity>}
+     * 
+     * @type {Array<UserCatalogOutputDataInnerActivitiesInner>}
      * @memberof FullBook
      */
-    'activities': Array<Activity>;
+    'activities': Array<UserCatalogOutputDataInnerActivitiesInner>;
     /**
-     * book review
-     * @type {Array<Review>}
+     * 
+     * @type {Array<FullBookReviewInner>}
      * @memberof FullBook
      */
-    'review': Array<Review>;
+    'review': Array<FullBookReviewInner>;
 }
 

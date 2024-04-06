@@ -1,57 +1,25 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { Role } from '@prisma/client'
-import { IsEmail, IsEnum, IsString, MinLength } from 'class-validator'
+import { z } from 'zod'
+import { AuthSchema } from '../../../../../libs/global/validation/auth/auth.dto'
 
-export class GoogleAuthDto {
-	@ApiProperty({
-		description: 'Social id',
-		example: '1234567890'
-	})
-	@IsString({
-		message: 'Social id must be a string'
-	})
-	socialId: string
-}
+extendZodWithOpenApi(z)
 
-export class AuthUser {
-	@ApiProperty({
-		description: 'User email',
-		example: 'test@gmail.com'
-	})
-	@IsEmail()
-	email: string
-	@ApiProperty({
-		description: 'User role',
-		example: 'user',
-		enum: Role
-	})
-	@IsEnum(Role)
-	role: keyof typeof Role
-}
+export const GoogleAuthSchema = z.object({
+	socialId: z.string()
+})
 
-export class RefreshDto {
-	@ApiProperty({
-		description: 'Refresh token',
-		example: '1234567890'
-	})
-	@IsString({
-		message: 'Refresh token must be a string'
-	})
-	refreshToken: string
-}
+export const AuthUserSchema = z.object({
+	email: z.string().email(),
+	role: z.nativeEnum(Role)
+})
 
-export class AuthDto {
-	@ApiProperty({
-		description: 'User email',
-		example: 'test@gmail.com'
-	})
-	@IsEmail()
-	email: string
+export const RefreshSchema = z.object({
+	refreshToken: z.string()
+})
 
-	@ApiProperty({
-		description: 'User password',
-		example: 'password'
-	})
-	@MinLength(8)
-	password: string
-}
+export class GoogleAuthDto extends createZodDto(GoogleAuthSchema) {}
+export class AuthUserDto extends createZodDto(AuthUserSchema) {}
+export class RefreshDto extends createZodDto(RefreshSchema) {}
+export class AuthDto extends createZodDto(AuthSchema) {}

@@ -17,26 +17,32 @@
 /**
  * 
  * @export
- * @interface ShortGenre
+ * @interface UserLibraryOutputReadingBooksInner
  */
-export interface ShortGenre {
+export interface UserLibraryOutputReadingBooksInner {
     /**
      * 
      * @type {string}
-     * @memberof ShortGenre
+     * @memberof UserLibraryOutputReadingBooksInner
      */
     'slug': string;
     /**
      * 
      * @type {string}
-     * @memberof ShortGenre
+     * @memberof UserLibraryOutputReadingBooksInner
      */
-    'name': string;
+    'title': string;
     /**
      * 
      * @type {string}
-     * @memberof ShortGenre
+     * @memberof UserLibraryOutputReadingBooksInner
      */
-    'icon': string;
+    'picture': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserLibraryOutputReadingBooksInner
+     */
+    'author': string;
 }
 

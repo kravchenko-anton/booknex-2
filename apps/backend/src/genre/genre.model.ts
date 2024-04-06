@@ -1,13 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import { IsArray, ValidateNested } from 'class-validator'
-import { ShortBook } from '../book/book.entity'
-import { ShortGenre } from './genre.entity'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { ShortBookSchema } from '../book/book.entity'
+import { shortGenreSchema } from './genre.entity'
 
-export class FindOneGenreOutput extends ShortGenre {
-	@ApiProperty({ type: [ShortBook] })
-	@IsArray()
-	@ValidateNested()
-	@Type(() => ShortBook)
-	mainBooks: ShortBook[]
-}
+extendZodWithOpenApi(z)
+
+export const FindOneGenreOutputSchema = z
+	.object({
+		mainBooks: z.array(ShortBookSchema)
+	})
+	.merge(shortGenreSchema)
+
+export class FindOneGenreOutput extends createZodDto(
+	FindOneGenreOutputSchema
+) {}

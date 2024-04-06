@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { PayloadEBook } from './payload-ebook';
+import { CreateBookDtoEbookInner } from './create-book-dto-ebook-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortGenre } from './short-genre';
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 
 /**
  * 
@@ -27,52 +27,52 @@ import { ShortGenre } from './short-genre';
  */
 export interface UpdateBookDto {
     /**
-     * book title
+     * 
      * @type {string}
      * @memberof UpdateBookDto
      */
     'title'?: string;
     /**
-     * book picture
-     * @type {string}
-     * @memberof UpdateBookDto
-     */
-    'picture'?: string;
-    /**
-     * book author
+     * 
      * @type {string}
      * @memberof UpdateBookDto
      */
     'author'?: string;
     /**
-     * book description
+     * 
      * @type {string}
      * @memberof UpdateBookDto
      */
     'description'?: string;
     /**
-     * book rating
-     * @type {number}
+     * 
+     * @type {Array<CreateBookDtoEbookInner>}
      * @memberof UpdateBookDto
      */
-    'rating'?: number;
+    'ebook'?: Array<CreateBookDtoEbookInner>;
     /**
-     * book visibility
+     * 
      * @type {boolean}
      * @memberof UpdateBookDto
      */
     'isPublic'?: boolean;
     /**
      * 
-     * @type {Array<ShortGenre>}
+     * @type {number}
      * @memberof UpdateBookDto
      */
-    'genres'?: Array<ShortGenre>;
+    'rating'?: number;
     /**
      * 
-     * @type {Array<PayloadEBook>}
+     * @type {string}
      * @memberof UpdateBookDto
      */
-    'ebook'?: Array<PayloadEBook>;
+    'picture'?: string;
+    /**
+     * 
+     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
+     * @memberof UpdateBookDto
+     */
+    'genres'?: Array<UserCatalogOutputDataInnerSelectedGenresInner>;
 }
 

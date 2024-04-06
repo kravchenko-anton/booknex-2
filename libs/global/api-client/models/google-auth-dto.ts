@@ -21,7 +21,7 @@
  */
 export interface GoogleAuthDto {
     /**
-     * Social id
+     * 
      * @type {string}
      * @memberof GoogleAuthDto
      */

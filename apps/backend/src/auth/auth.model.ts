@@ -1,34 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import { IsObject, IsString, ValidateNested } from 'class-validator'
-import { AuthUser } from './dto/auth.dto'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { AuthUserSchema } from './dto/auth.dto'
 
-export class AuthOutput {
-	@ApiProperty({
-		description: 'Access token',
-		example: '1234567890'
-	})
-	@IsString()
-	accessToken: string
-	@ApiProperty({
-		description: 'Refresh token',
-		example: '1234567890'
-	})
-	@IsString()
-	refreshToken: string
-	@ApiProperty({
-		description: 'type of auth',
-		example: 'login'
-	})
-	@IsString()
-	type?: string
+extendZodWithOpenApi(z)
 
-	@ApiProperty({
-		type: AuthUser,
-		description: 'User data'
-	})
-	@IsObject()
-	@ValidateNested()
-	@Type(() => AuthUser)
-	user: AuthUser
-}
+export const AuthOutputSchema = z.object({
+	accessToken: z.string(),
+	refreshToken: z.string(),
+	type: z.string().optional(),
+	user: AuthUserSchema
+})
+
+export class AuthOutput extends createZodDto(AuthOutputSchema) {}

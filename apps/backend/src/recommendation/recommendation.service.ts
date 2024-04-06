@@ -85,7 +85,7 @@ export class RecommendationService {
 		const selectedGenres = await this.prisma.genre.findMany({
 			where: {
 				slug: {
-					in: dto.genres
+					in: dto.genreSlugs
 				}
 			},
 			select: {

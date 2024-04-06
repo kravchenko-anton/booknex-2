@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Book } from './book';
+import { CatalogOutputDataInner } from './catalog-output-data-inner';
 
 /**
  * 
@@ -24,22 +24,22 @@ import { Book } from './book';
  */
 export interface CatalogOutput {
     /**
-     * can load more
+     * 
+     * @type {Array<CatalogOutputDataInner>}
+     * @memberof CatalogOutput
+     */
+    'data': Array<CatalogOutputDataInner>;
+    /**
+     * 
      * @type {boolean}
      * @memberof CatalogOutput
      */
     'canLoadMore': boolean;
     /**
-     * total pages
+     * 
      * @type {number}
      * @memberof CatalogOutput
      */
     'totalPages': number;
-    /**
-     * 
-     * @type {Array<Book>}
-     * @memberof CatalogOutput
-     */
-    'data': Array<Book>;
 }
 

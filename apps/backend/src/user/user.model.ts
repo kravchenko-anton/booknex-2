@@ -1,86 +1,44 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
-import { ShortBook } from '../book/book.entity'
-import { ShortGenre } from '../genre/genre.entity'
-import { BaseCatalogModel } from '../utils/common/base-catalog.model'
-import { Activity } from '../utils/services/activity/activity.model'
-import { User } from './user.entity'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { ShortBookSchema } from '../book/book.entity'
+import { baseCatalogModel } from '../utils/common/base-catalog.model'
+import { ActivitySchema } from '../utils/services/activity/activity.model'
+import { UserSchema } from './user.entity'
 
-export class UserCountOutput {
-	@IsNumber()
-	@ApiProperty({ example: 1, type: Number })
-	savedBooks: number
+extendZodWithOpenApi(z)
 
-	@IsNumber()
-	@ApiProperty({ example: 1, type: Number })
-	finishedBooks: number
-
-	@IsNumber()
-	@ApiProperty({ example: 1, type: Number })
-	readingBooks: number
-}
-
-export class CatalogUserOutput extends User {
-	@ApiProperty({ type: [ShortGenre] })
-	@IsArray()
-	@ValidateNested()
-	@Type(() => ShortGenre)
-	selectedGenres: {
-		slug: string
-		name: string
-		icon: string
-	}[]
-
-	@IsArray()
-	@ApiProperty({ type: [Activity] })
-	@ValidateNested({ each: true })
-	@Type(() => Activity)
-	activities: Activity[]
-
-	@ApiProperty({
-		type: UserCountOutput,
-		description: 'Count of books finished, reading and saved by the user'
+export const CatalogUserOutputSchema = z
+	.object({
+		id: z.number(),
+		email: z.string(),
+		selectedGenres: z.array(
+			z.object({
+				slug: z.string(),
+				name: z.string(),
+				icon: z.string()
+			})
+		),
+		activities: z.array(ActivitySchema),
+		_count: z.object({
+			savedBooks: z.number(),
+			finishedBooks: z.number(),
+			readingBooks: z.number()
+		})
 	})
-	@ValidateNested()
-	@Type(() => UserCountOutput)
-	_count: UserCountOutput
-}
+	.merge(UserSchema)
 
-export class UserCatalogOutput extends BaseCatalogModel {
-	@IsArray()
-	@ApiProperty({ type: [CatalogUserOutput] })
-	@ValidateNested({ each: true })
-	@Type(() => CatalogUserOutput)
-	data: CatalogUserOutput[]
-}
+export const UserCatalogOutputSchema = z
+	.object({
+		data: z.array(CatalogUserOutputSchema)
+	})
+	.merge(baseCatalogModel)
 
-export class UserLibraryOutput {
-	@IsArray()
-	@ValidateNested({ each: true })
-	@ApiProperty({ type: [ShortBook] })
-	@Type(() => ShortBook)
-	readingBooks: ShortBook[]
+export const UserLibraryOutputSchema = z.object({
+	readingBooks: z.array(ShortBookSchema),
+	finishedBooks: z.array(ShortBookSchema),
+	savedBooks: z.array(ShortBookSchema)
+})
+export class UserCatalogOutput extends createZodDto(UserCatalogOutputSchema) {}
 
-	@IsArray()
-	@ApiProperty({ type: [ShortBook] })
-	@ValidateNested({ each: true })
-	@Type(() => ShortBook)
-	finishedBooks: ShortBook[]
-
-	@IsArray()
-	@ApiProperty({ type: [ShortBook] })
-	@ValidateNested({ each: true })
-	@Type(() => ShortBook)
-	savedBooks: ShortBook[]
-}
-
-export class UserProfileOutput {
-	@IsNumber()
-	@ApiProperty({ example: 1, type: Number })
-	id: number
-
-	@IsString()
-	@ApiProperty({ example: 'email', type: String })
-	email: string
-}
+export class UserLibraryOutput extends createZodDto(UserLibraryOutputSchema) {}

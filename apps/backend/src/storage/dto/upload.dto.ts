@@ -1,8 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsString } from 'class-validator'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
 
-export class UploadOutputDto {
-	@ApiProperty({ type: 'string' })
-	@IsString()
-	name: string
-}
+extendZodWithOpenApi(z)
+
+export const UploadOutputDtoSchema = z.object({
+	name: z.string()
+})
+
+export class UploadOutputDto extends createZodDto(UploadOutputDtoSchema) {}

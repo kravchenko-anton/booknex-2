@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface ShortGenre
+ * @interface FullBookCount
  */
-export interface ShortGenre {
+export interface FullBookCount {
     /**
      * 
-     * @type {string}
-     * @memberof ShortGenre
+     * @type {number}
+     * @memberof FullBookCount
      */
-    'slug': string;
+    'finishedBy'?: number;
     /**
      * 
-     * @type {string}
-     * @memberof ShortGenre
+     * @type {number}
+     * @memberof FullBookCount
      */
-    'name': string;
+    'readingBy'?: number;
     /**
      * 
-     * @type {string}
-     * @memberof ShortGenre
+     * @type {number}
+     * @memberof FullBookCount
      */
-    'icon': string;
+    'savedBy'?: number;
 }
 

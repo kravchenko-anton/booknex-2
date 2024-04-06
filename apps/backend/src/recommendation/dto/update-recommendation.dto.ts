@@ -1,11 +1,13 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { ArrayMinSize, IsArray, IsInt, Min } from 'class-validator'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
 
-export class UpdateRecommendationDto {
-	@IsArray()
-	@ArrayMinSize(1)
-	@ApiProperty({ type: [String], description: 'new genres for recommendation' })
-	@IsInt({ each: true })
-	@Min(1, { each: true })
-	genres: string[]
-}
+extendZodWithOpenApi(z)
+
+export const UpdateRecommendationDtoSchema = z.object({
+	genreSlugs: z.array(z.string()).min(1)
+})
+
+export class UpdateRecommendationDto extends createZodDto(
+	UpdateRecommendationDtoSchema
+) {}

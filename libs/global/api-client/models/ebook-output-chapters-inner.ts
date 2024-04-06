@@ -15,31 +15,25 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CreateBookDtoTestEbookInnerChaptersInner } from './create-book-dto-test-ebook-inner-chapters-inner';
+import { EbookOutputChaptersInnerChildrenInner } from './ebook-output-chapters-inner-children-inner';
 
 /**
  * 
  * @export
- * @interface CreateBookDtoTestEbookInner
+ * @interface EbookOutputChaptersInner
  */
-export interface CreateBookDtoTestEbookInner {
+export interface EbookOutputChaptersInner {
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDtoTestEbookInner
+     * @memberof EbookOutputChaptersInner
      */
     'title': string;
     /**
      * 
-     * @type {number}
-     * @memberof CreateBookDtoTestEbookInner
+     * @type {Array<EbookOutputChaptersInnerChildrenInner>}
+     * @memberof EbookOutputChaptersInner
      */
-    'id': number;
-    /**
-     * 
-     * @type {Array<CreateBookDtoTestEbookInnerChaptersInner>}
-     * @memberof CreateBookDtoTestEbookInner
-     */
-    'chapters': Array<CreateBookDtoTestEbookInnerChaptersInner>;
+    'children': Array<EbookOutputChaptersInnerChildrenInner>;
 }
 

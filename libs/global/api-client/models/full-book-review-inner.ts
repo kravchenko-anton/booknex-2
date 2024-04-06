@@ -17,26 +17,32 @@
 /**
  * 
  * @export
- * @interface ShortGenre
+ * @interface FullBookReviewInner
  */
-export interface ShortGenre {
+export interface FullBookReviewInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof FullBookReviewInner
+     */
+    'id': number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FullBookReviewInner
+     */
+    'tags': Array<string>;
     /**
      * 
      * @type {string}
-     * @memberof ShortGenre
+     * @memberof FullBookReviewInner
      */
-    'slug': string;
+    'text'?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof ShortGenre
+     * @type {number}
+     * @memberof FullBookReviewInner
      */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ShortGenre
-     */
-    'icon': string;
+    'rating': number;
 }
 

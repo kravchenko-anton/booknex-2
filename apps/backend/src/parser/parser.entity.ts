@@ -1,49 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
-import { ShortGenre } from '../genre/genre.entity'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { shortGenreSchema } from '../genre/genre.entity'
 
-export class BookTemplate {
-	@ApiProperty({ example: 1, description: 'book template slug', type: String })
-	@IsNumber()
-	slug: string
+extendZodWithOpenApi(z)
 
-	@ApiProperty({
-		type: String,
-		description: 'title of the book'
-	})
-	@IsString()
-	title: string
-	@ApiProperty({
-		type: String,
-		description: 'author of the book'
-	})
-	@IsString()
-	author: string
-	@ApiProperty({
-		type: String,
-		description: 'description of the book'
-	})
-	@IsString()
-	description: string
-	@ApiProperty({
-		type: String,
-		description: 'picture of the book'
-	})
-	@IsString()
-	picture: string
-	@ApiProperty({
-		type: Number,
-		description: 'rating of the book'
-	})
-	@IsNumber()
-	rating: number
-	@ApiProperty({ type: [ShortGenre] })
-	@IsArray()
-	@ValidateNested()
-	@Type(() => ShortGenre)
-	genres: {
-		slug: string
-		name: string
-	}[]
-}
+export const BookTemplateSchema = z.object({
+	slug: z.string(),
+	title: z.string(),
+	author: z.string(),
+	description: z.string(),
+	picture: z.string(),
+	rating: z.number(),
+	genres: z.array(shortGenreSchema)
+})
+export class BookTemplate extends createZodDto(BookTemplateSchema) {}

@@ -51,8 +51,6 @@
 		"argon2": "^0.30.3",
 		"axios": "1.6.2",
 		"cache-manager": "^5.2.3",
-		"class-transformer": "^0.5.1",
-		"class-validator": "^0.14.1",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.0",
 		"cmdk": "^0.2.0",

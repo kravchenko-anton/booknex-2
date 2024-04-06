@@ -1,105 +1,61 @@
-import { ApiProperty, PickType } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import {
-	ArrayMinSize,
-	IsArray,
-	IsNumber,
-	IsString,
-	Validate,
-	ValidateNested
-} from 'class-validator'
-import 'reflect-metadata'
-import { ShortBook } from '../book.entity'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { ShortBookSchema } from '../book.entity'
+
+extendZodWithOpenApi(z)
 
 const htmlRegex = /<([A-Za-z][\dA-Za-z]*)\b[^>]*>(.*?)<\/\1>/
 
-/* Payload */
-export class Chapter {
-	@ApiProperty({ type: Number })
-	@IsNumber()
-	id: number
-
-	@Validate((value: string) => !value.includes('epub') || !value, {
+export const ChapterSchema = z.object({
+	id: z.number(),
+	name: z.string().refine(value => !value.includes('epub'), {
 		message: 'Chapter cannot be an epub'
-	})
-	@ApiProperty({ type: String })
-	@IsString()
-	name: string
-
-	@Validate((value: string) => htmlRegex.test(value), {
+	}),
+	text: z.string().refine(value => htmlRegex.test(value), {
 		message: 'Invalid HTML string'
-	})
-	@ApiProperty({ type: String })
-	@IsString()
-	text: string
+	}),
+	romanNumber: z.string(),
+	readingTime: z.number()
+})
 
-	@ApiProperty({ type: String })
-	@IsString()
-	romanNumber: string
-
-	@ApiProperty({ type: Number })
-	@IsNumber()
-	readingTime: number
-}
-
-export class PayloadChapter extends PickType(Chapter, ['id', 'name', 'text']) {}
-
-export class EBookBase {
-	@ApiProperty({ type: Number })
-	@IsNumber()
-	id: number
-
-	@ApiProperty({ type: String })
-	@Validate((value: string) => !value.includes('epub') || !value, {
+export const PayloadChapterSchema = ChapterSchema.pick({
+	id: true,
+	name: true,
+	text: true
+})
+export const EBookBaseSchema = z.object({
+	id: z.number(),
+	title: z.string().refine(value => !value.includes('epub'), {
 		message: 'Chapter cannot be an epub'
 	})
-	@IsString()
-	title: string
-}
-export class StoredEBook extends EBookBase {
-	@ApiProperty({ type: [Chapter] })
-	@ValidateNested({ each: true })
-	@IsArray({ each: true })
-	@ArrayMinSize(1)
-	@Type(() => Chapter)
-	chapters: Chapter[]
-}
+})
 
-export class PayloadEBook extends EBookBase {
-	@ApiProperty({ type: [PayloadChapter] })
-	@IsArray()
-	@ValidateNested({ each: true })
-	@ArrayMinSize(1)
-	@Type(() => PayloadChapter)
-	chapters: PayloadChapter[]
-}
+export const StoredEBookSchema = EBookBaseSchema.merge(
+	z.object({
+		chapters: z.array(ChapterSchema).min(1)
+	})
+)
+export const PayloadEBookSchema = EBookBaseSchema.merge(
+	z.object({
+		chapters: z.array(PayloadChapterSchema).min(1)
+	})
+)
+export const OutputChapterChildSchema = z.object({
+	name: z.string(),
+	link: z.string()
+})
+export const OutputChapterSchema = z.object({
+	title: z.string(),
+	children: z.array(OutputChapterChildSchema)
+})
+export const EbookOutputSchema = z
+	.object({
+		file: z.array(z.string()),
+		chapters: z.array(OutputChapterSchema)
+	})
+	.merge(ShortBookSchema.pick({ title: true, picture: true }))
 
-class OutputChapterChild {
-	@ApiProperty({ example: 'name', description: 'chapter child name' })
-	@IsString()
-	name: string
-	@ApiProperty({ example: 'link', description: 'chapter child link' })
-	@IsString()
-	link: string
-}
-
-class OutputChapter {
-	@ApiProperty({ example: 'title', description: 'chapter title' })
-	@IsString()
-	title: string
-	@ApiProperty({ type: [OutputChapterChild], description: 'chapter children' })
-	@ValidateNested({ each: true })
-	@Type(() => OutputChapterChild)
-	children: OutputChapterChild[]
-}
-
-export class EbookOutput extends PickType(ShortBook, ['title', 'picture']) {
-	@ApiProperty({ type: [String], description: 'book file' })
-	@IsArray()
-	@IsString({ each: true })
-	file: string[]
-	@ApiProperty({ type: [OutputChapter], description: 'book chapters' })
-	@ValidateNested({ each: true })
-	@Type(() => OutputChapter)
-	chapters: OutputChapter[]
-}
+export class StoredEBook extends createZodDto(StoredEBookSchema) {}
+export class PayloadEBook extends createZodDto(PayloadEBookSchema) {}
+export class EbookOutput extends createZodDto(EbookOutputSchema) {}

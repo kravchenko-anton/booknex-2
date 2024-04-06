@@ -20,67 +20,67 @@ import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-ou
 /**
  * 
  * @export
- * @interface Book
+ * @interface CatalogOutputDataInner
  */
-export interface Book {
+export interface CatalogOutputDataInner {
     /**
      * 
      * @type {string}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'description': string;
     /**
      * 
      * @type {number}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'readingTime': number;
     /**
      * 
      * @type {number}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'chapters': number;
     /**
      * 
      * @type {number}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'rating': number;
     /**
      * 
      * @type {boolean}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'isPublic': boolean;
     /**
      * 
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
     /**
      * 
      * @type {string}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'slug': string;
     /**
      * 
      * @type {string}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'title': string;
     /**
      * 
      * @type {string}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'picture': string;
     /**
      * 
      * @type {string}
-     * @memberof Book
+     * @memberof CatalogOutputDataInner
      */
     'author': string;
 }

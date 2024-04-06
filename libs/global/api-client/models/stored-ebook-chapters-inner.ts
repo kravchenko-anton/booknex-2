@@ -17,26 +17,38 @@
 /**
  * 
  * @export
- * @interface ShortGenre
+ * @interface StoredEBookChaptersInner
  */
-export interface ShortGenre {
+export interface StoredEBookChaptersInner {
     /**
      * 
-     * @type {string}
-     * @memberof ShortGenre
+     * @type {number}
+     * @memberof StoredEBookChaptersInner
      */
-    'slug': string;
+    'id': number;
     /**
      * 
      * @type {string}
-     * @memberof ShortGenre
+     * @memberof StoredEBookChaptersInner
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof ShortGenre
+     * @memberof StoredEBookChaptersInner
      */
-    'icon': string;
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoredEBookChaptersInner
+     */
+    'romanNumber': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoredEBookChaptersInner
+     */
+    'readingTime': number;
 }
 

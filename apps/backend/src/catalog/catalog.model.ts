@@ -1,33 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import { IsArray, ValidateNested } from 'class-validator'
-import { ShortBook } from '../book/book.entity'
-import { ShortGenre } from '../genre/genre.entity'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { ShortBookSchema } from '../book/book.entity'
+import { shortGenreSchema } from '../genre/genre.entity'
 
-export class FeaturedOutput {
-	@ApiProperty({ type: [ShortGenre] })
-	@ValidateNested({ each: true })
-	@Type(() => ShortGenre)
-	relatedGenres: ShortGenre[]
+extendZodWithOpenApi(z)
 
-	@ApiProperty({ type: [ShortBook] })
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => ShortBook)
-	recommendations: ShortBook[]
-	@ApiProperty({ type: [ShortBook] })
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => ShortBook)
-	popularBooks: ShortBook[]
-	@ApiProperty({ type: [ShortBook] })
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => ShortBook)
-	bestSellingBooks: ShortBook[]
-	@ApiProperty({ type: [ShortBook] })
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => ShortBook)
-	newReleases: ShortBook[]
-}
+export const FeaturedOutputSchema = z.object({
+	relatedGenres: z.array(shortGenreSchema),
+	recommendations: z.array(ShortBookSchema),
+	popularBooks: z.array(ShortBookSchema),
+	bestSellingBooks: z.array(ShortBookSchema),
+	newReleases: z.array(ShortBookSchema)
+})
+
+export class FeaturedOutput extends createZodDto(FeaturedOutputSchema) {}

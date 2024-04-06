@@ -1,39 +1,24 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
-import { BaseCatalogModel } from '../utils/common/base-catalog.model'
-import { BookTemplate } from './parser.entity'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { baseCatalogModel } from '../utils/common/base-catalog.model'
+import { BookTemplateSchema } from './parser.entity'
 
-export class UnfoldOutput {
-	@ApiProperty({
-		type: Number,
-		description: 'id of the chapter'
-	})
-	@IsNumber()
-	id: number
+extendZodWithOpenApi(z)
 
-	@ApiProperty({
-		type: String,
-		description: 'name of the chapter'
-	})
-	@IsString()
-	name: string
+export const UnfoldOutputSchema = z.object({
+	id: z.number(),
+	name: z.string(),
+	text: z.string()
+})
 
-	@ApiProperty({
-		type: String,
-		description: 'text of the chapter'
+export const BookTemplateCatalogOutputSchema = z
+	.object({
+		data: z.array(BookTemplateSchema)
 	})
-	@IsString()
-	text: string
-}
+	.merge(baseCatalogModel)
 
-export class BookTemplateCatalogOutput extends BaseCatalogModel {
-	@IsArray()
-	@ApiProperty({
-		type: [BookTemplate],
-		description: 'book template'
-	})
-	@ValidateNested({ each: true })
-	@Type(() => BookTemplate)
-	data: BookTemplate[]
-}
+export class UnfoldOutput extends createZodDto(UnfoldOutputSchema) {}
+export class BookTemplateCatalogOutput extends createZodDto(
+	BookTemplateCatalogOutputSchema
+) {}

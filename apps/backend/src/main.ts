@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common'
+import { ZodValidationPipe } from '@anatine/zod-nestjs'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import * as Sentry from '@sentry/node'
 import { json } from 'express'
@@ -18,7 +18,7 @@ async function bootstrap() {
 	app.enableCors({})
 	app.use(helmet())
 
-	app.useGlobalPipes(new ValidationPipe({}))
+	app.useGlobalPipes(new ZodValidationPipe({}))
 	app.use(json({ limit: '10mb' })) // For load ebook
 
 	await OpenApiNestFactory.configure(app, openApiConfig, {

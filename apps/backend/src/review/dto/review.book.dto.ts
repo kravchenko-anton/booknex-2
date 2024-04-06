@@ -1,38 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger'
-import {
-	IsArray,
-	IsNumber,
-	IsOptional,
-	IsString,
-	Max,
-	Min
-} from 'class-validator'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { ReviewBookDtoSchema } from '../../../../../libs/global/validation/review/review.book.dto'
 
-export class ReviewBookDto {
-	@IsNumber()
-	@Min(1)
-	@Max(5)
-	@ApiProperty({
-		example: 5,
-		description: 'rating'
-	})
-	rating: number
+extendZodWithOpenApi(z)
 
-	@IsOptional()
-	@IsArray()
-	@ApiProperty({
-		type: [String],
-		description: 'tags'
-	})
-	@IsString({ each: true })
-	tags?: string[]
-
-	@IsOptional()
-	@ApiProperty({
-		example: 'comment',
-		description: 'comment',
-		required: false
-	})
-	@IsString()
-	comment?: string
-}
+export class ReviewBookDto extends createZodDto(ReviewBookDtoSchema) {}

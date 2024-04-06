@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Chapter } from './chapter';
+import { StoredEBookChaptersInner } from './stored-ebook-chapters-inner';
 
 /**
  * 
@@ -37,9 +37,9 @@ export interface StoredEBook {
     'title': string;
     /**
      * 
-     * @type {Array<Chapter>}
+     * @type {Array<StoredEBookChaptersInner>}
      * @memberof StoredEBook
      */
-    'chapters': Array<Chapter>;
+    'chapters': Array<StoredEBookChaptersInner>;
 }
 

@@ -21,10 +21,10 @@
  */
 export interface UpdateRecommendationDto {
     /**
-     * new genres for recommendation
+     * 
      * @type {Array<string>}
      * @memberof UpdateRecommendationDto
      */
-    'genres': Array<string>;
+    'genreSlugs': Array<string>;
 }
 

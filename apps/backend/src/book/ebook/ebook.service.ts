@@ -1,14 +1,12 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
-import { plainToClassFromExist } from 'class-transformer'
-import { validate } from 'class-validator'
 import { getFileUrl } from '../../../../../libs/global/api-config'
 import { globalErrors } from '../../../../../libs/global/errors'
 import { getServerBookHtml } from '../../../../../libs/global/helpers/getBookHtml'
 import { serverError } from '../../utils/helpers/call-error'
 import { ActivityService } from '../../utils/services/activity/activity.service'
 import { PrismaService } from '../../utils/services/prisma.service'
-import { PayloadEBook, type StoredEBook } from './ebook.model'
+import { PayloadEBookSchema, type StoredEBook } from './ebook.model'
 
 @Injectable()
 export class EbookService {
@@ -33,8 +31,8 @@ export class EbookService {
 		if (!ebook) {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
 		}
-		const errors = await validate(plainToClassFromExist(PayloadEBook, ebook))
-		if (errors.length > 0) {
+		const errors = PayloadEBookSchema.safeParse(ebook)
+		if (!errors.success) {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		}
 		return ebook

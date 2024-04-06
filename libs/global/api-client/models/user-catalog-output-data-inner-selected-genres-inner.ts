@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface CreateBookDtoTestEbookInnerChaptersInner
+ * @interface UserCatalogOutputDataInnerSelectedGenresInner
  */
-export interface CreateBookDtoTestEbookInnerChaptersInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof CreateBookDtoTestEbookInnerChaptersInner
-     */
-    'id': number;
+export interface UserCatalogOutputDataInnerSelectedGenresInner {
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDtoTestEbookInnerChaptersInner
+     * @memberof UserCatalogOutputDataInnerSelectedGenresInner
+     */
+    'slug': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCatalogOutputDataInnerSelectedGenresInner
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDtoTestEbookInnerChaptersInner
+     * @memberof UserCatalogOutputDataInnerSelectedGenresInner
      */
-    'text': string;
+    'icon': string;
 }
 

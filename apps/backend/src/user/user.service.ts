@@ -56,12 +56,6 @@ export class UserService {
 		}
 	}
 
-	async profile(userId: number) {
-		return await this.getUserById(userId, {
-			...returnUserObject
-		})
-	}
-
 	async catalog(searchTerm: string, page: number) {
 		const perPage = 20
 		const data = await this.prisma.user.findMany({

@@ -1,13 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import { IsArray, ValidateNested } from 'class-validator'
-import { BaseCatalogModel } from '../utils/common/base-catalog.model'
-import { Book } from './book.entity'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { baseCatalogModel } from '../utils/common/base-catalog.model'
+import { BookSchema } from './book.entity'
 
-export class CatalogOutput extends BaseCatalogModel {
-	@ApiProperty({ type: [Book] })
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => Book)
-	data: Book[]
-}
+extendZodWithOpenApi(z)
+export const CatalogOutputSchema = z
+	.object({
+		data: z.array(BookSchema)
+	})
+	.merge(baseCatalogModel)
+
+export class CatalogOutput extends createZodDto(CatalogOutputSchema) {}

@@ -1,7 +1,7 @@
-import { CreateBookValidationType } from '@/app/admin/book/_validation/create.book.dto'
 import api from '@/services/api'
 import { errorToast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { CreateBookValidationType } from 'global/validation/book/create.book.dto'
 import { useLayoutEffect } from 'react'
 import type { UseFormReset } from 'react-hook-form'
 

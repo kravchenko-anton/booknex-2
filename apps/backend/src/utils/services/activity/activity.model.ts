@@ -1,56 +1,19 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
 
-class ActivityItem {
-	@ApiProperty({
-		description: 'Activity message',
-		example: 'startedReading'
-	})
-	@IsString()
-	message: string
+extendZodWithOpenApi(z)
 
-	@ApiProperty({
-		description: 'Active time',
-		example: '2021-07-01T10:00:00'
-	})
-	@IsString()
-	time: string
+export const ActivityItemSchema = z.object({
+	message: z.string(),
+	time: z.string(),
+	importance: z.number()
+})
+export const ActivitySchema = z.object({
+	date: z.string(),
+	count: z.number(),
+	level: z.number(),
+	activities: z.array(ActivityItemSchema)
+})
 
-	@ApiProperty({
-		description: 'Activity importance',
-		example: 1
-	})
-	@IsNumber()
-	importance: number
-}
-
-export class Activity {
-	@ApiProperty({
-		description: 'Active date',
-		example: '2021-07-01'
-	})
-	@IsString()
-	date: string
-
-	@ApiProperty({
-		description: 'Active count',
-		example: 10
-	})
-	@IsNumber()
-	count: number
-
-	@ApiProperty({
-		description: 'Active level',
-		example: 10
-	})
-	@IsNumber()
-	level: number
-
-	@ApiProperty({
-		type: [ActivityItem],
-		description: 'List of activities'
-	})
-	@IsArray()
-	@ValidateNested({ each: true })
-	activities: ActivityItem[]
-}
+export class Activity extends createZodDto(ActivitySchema) {}

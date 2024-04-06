@@ -18,7 +18,7 @@
 import { CreateBookDtoEbookInner } from './create-book-dto-ebook-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { CreateBookDtoGenresInner } from './create-book-dto-genres-inner';
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 
 /**
  * 
@@ -64,9 +64,9 @@ export interface CreateBookDto {
     'picture': string;
     /**
      * 
-     * @type {Array<CreateBookDtoGenresInner>}
+     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof CreateBookDto
      */
-    'genres': Array<CreateBookDtoGenresInner>;
+    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
 }
 

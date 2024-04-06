@@ -1,11 +1,15 @@
-import { CreateBookValidationType } from '@/app/admin/book/_validation/create.book.dto'
 import { useTemplate } from '@/app/admin/book/create/useTemplate'
 import api from '@/services/api'
 import { secureRoutes } from '@/utils/route'
 import { successToast } from '@/utils/toast'
 import { validateStringParameter } from '@/utils/validate-parameter'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import type { CreateBookDto } from 'global/api-client'
+import {
+	CreateBookSchema,
+	CreateBookValidationType
+} from 'global/validation/book/create.book.dto'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -23,8 +27,8 @@ export const useCreateForm = () => {
 		getValues,
 		formState: { errors }
 	} = useForm<CreateBookValidationType>({
-		// resolver: zodResolver(CreateBookValidation),
-		// mode: 'onBlur'
+		resolver: zodResolver(CreateBookSchema),
+		mode: 'onBlur'
 	})
 
 	const { deleteTemplate } = useTemplate({ templateSlug, reset })

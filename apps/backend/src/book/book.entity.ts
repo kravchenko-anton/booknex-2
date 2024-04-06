@@ -1,144 +1,45 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer'
-import {
-	ArrayMinSize,
-	IsArray,
-	IsBoolean,
-	IsNumber,
-	IsString,
-	Max,
-	MaxLength,
-	Min,
-	MinLength,
-	ValidateNested
-} from 'class-validator'
-import { ShortGenre } from '../genre/genre.entity'
-import { Review } from '../review/review.entity'
-import { Activity } from '../utils/services/activity/activity.model'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
+import { shortGenreSchema } from '../genre/genre.entity'
+import { ReviewSchema } from '../review/review.entity'
+import { ActivitySchema } from '../utils/services/activity/activity.model'
 
-export class ShortBook {
-	@ApiProperty({ example: 1, description: 'book slug', type: String })
-	@IsNumber()
-	slug: string
+extendZodWithOpenApi(z)
 
-	@ApiProperty({ example: 'title', description: 'book title', type: String })
-	@IsString()
-	title: string
-	@ApiProperty({
-		example: 'picture',
-		description: 'book picture',
-		type: String
+export const ShortBookSchema = z.object({
+	slug: z.string(),
+	title: z.string(),
+	picture: z.string(),
+	author: z.string()
+})
+export const BookSchema = z
+	.object({
+		description: z.string(),
+		readingTime: z.number(),
+		chapters: z.number(),
+		rating: z.number(),
+		isPublic: z.boolean(),
+		genres: z.array(shortGenreSchema)
 	})
-	@IsString()
-	picture: string
+	.merge(ShortBookSchema)
 
-	@ApiProperty({ example: 'author', description: 'book author', type: String })
-	@IsString()
-	author: string
-}
-
-export class Book extends ShortBook {
-	@ApiProperty({
-		example: 'description',
-		description: 'book description',
-		type: String
+export const FullBookSchema = BookSchema.merge(
+	z.object({
+		createdAt: z.date(),
+		updatedAt: z.date(),
+		ebook: z.string(),
+		_count: z.object({
+			finishedBy: z.number(),
+			readingBy: z.number(),
+			savedBy: z.number()
+		}),
+		activities: z.array(ActivitySchema),
+		review: z.array(ReviewSchema)
 	})
-	@IsString()
-	@MinLength(10)
-	@MaxLength(1000)
-	description: string
+)
+export class ShortBook extends createZodDto(ShortBookSchema) {}
 
-	@ApiProperty({ example: 100, description: 'book readingTime', type: Number })
-	@IsNumber()
-	readingTime: number
+export class Book extends createZodDto(BookSchema) {}
 
-	@ApiProperty({
-		example: 100,
-		description: 'book chapters count',
-		type: Number
-	})
-	@IsNumber()
-	@Min(1)
-	chapters: number
-
-	@ApiProperty({ example: 5, description: 'book rating', type: Number })
-	@IsNumber()
-	@Min(1)
-	@Max(5)
-	rating: number
-
-	@ApiProperty({ example: true, description: 'book visibility', type: Boolean })
-	@IsBoolean()
-	isPublic: boolean
-
-	@ApiProperty({ type: [ShortGenre] })
-	@IsArray()
-	@ArrayMinSize(1)
-	@ValidateNested({ each: true })
-	@Type(() => ShortGenre)
-	genres: {
-		slug: string
-		name: string
-		icon: string
-	}[]
-}
-export class BookCount {
-	@ApiProperty({ example: 1, description: 'FinishedBy', type: Number })
-	@IsNumber()
-	finishedBy: number
-
-	@ApiProperty({ example: 1, description: 'ReadingBy', type: Number })
-	@IsNumber()
-	readingBy: number
-
-	@ApiProperty({ example: 1, description: 'SavedBy', type: Number })
-	@IsNumber()
-	savedBy: number
-}
-
-export class FullBook extends Book {
-	@ApiProperty({
-		example: '2021-07-01',
-		description: 'book created at',
-		type: String
-	})
-	@IsString()
-	createdAt: Date
-
-	@ApiProperty({
-		example: '2021-07-01',
-		description: 'book updated at',
-		type: String
-	})
-	@IsString()
-	updatedAt: Date
-
-	@ApiProperty({ example: 'ebook', description: 'book ebook', type: String })
-	@IsString()
-	ebook: string
-
-	@ApiProperty({
-		type: BookCount,
-		description: 'book count'
-	})
-	@ValidateNested({ each: true })
-	@Type(() => BookCount)
-	_count: BookCount
-
-	@ApiProperty({
-		type: [Activity],
-		description: 'book activities'
-	})
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => Activity)
-	activities: Activity[]
-	@ApiProperty({
-		type: [Review],
-		description: 'book review'
-	})
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => Review)
-	review: Review[]
-}
+export class FullBook extends createZodDto(FullBookSchema) {}

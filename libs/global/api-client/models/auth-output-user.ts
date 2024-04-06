@@ -12,18 +12,33 @@
  * Do not edit the class manually.
  */
 
-/**
- *
- * @export
- * @interface HealthControllerCheck503ResponseInfoValue
- */
-export interface HealthControllerCheck503ResponseInfoValue {
-	[key: string]: any
 
-	/**
-	 *
-	 * @type {string}
-	 * @memberof HealthControllerCheck503ResponseInfoValue
-	 */
-	status: string
+
+/**
+ * 
+ * @export
+ * @interface AuthOutputUser
+ */
+export interface AuthOutputUser {
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthOutputUser
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthOutputUser
+     */
+    'role'?: RoleEnum;
 }
+
+export const RoleEnum = {
+    User: 'user',
+    Admin: 'admin'
+} as const;
+
+export type RoleEnum = typeof RoleEnum[keyof typeof RoleEnum];
+
+

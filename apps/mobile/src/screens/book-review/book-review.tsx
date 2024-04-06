@@ -1,9 +1,6 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
-import {
-	ReviewValidation,
-	ReviewValidationType
-} from '@/screens/book-review/book-review.dto.ts'
+
 import { Button, Field, Icon, ScrollView, Title } from '@/ui'
 import { successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,6 +8,10 @@ import { useMutation } from '@tanstack/react-query'
 import { ReviewBookDto } from 'global/api-client'
 import { Color } from 'global/colors'
 import { reviewTags } from 'global/utils/review-tags'
+import {
+	ReviewBookDtoSchema,
+	ReviewBookDtoType
+} from 'global/validation/review/review.book.dto'
 import { Close, Star } from 'icons'
 import { FinishBook } from 'illustrations'
 import { useState, type FC } from 'react'
@@ -22,11 +23,12 @@ const BookReview: FC = () => {
 	const { params } = useTypedRoute<'BookReview'>()
 	const [selectedStars, setSelectedStars] = useState(0)
 	const { navigate } = useTypedNavigation()
-	const { control, setValue, handleSubmit, watch } =
-		useForm<ReviewValidationType>({
+	const { control, setValue, handleSubmit, watch } = useForm<ReviewBookDtoType>(
+		{
 			mode: 'onSubmit',
-			resolver: zodResolver(ReviewValidation)
-		})
+			resolver: zodResolver(ReviewBookDtoSchema)
+		}
+	)
 
 	const selectedTags = watch('tags') || []
 	const setSelectedTags = (tags: string[]) => setValue('tags', tags)

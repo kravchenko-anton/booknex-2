@@ -1,4 +1,3 @@
-import { ZodValidationPipe } from '@anatine/zod-nestjs'
 import {
 	Body,
 	Controller,
@@ -7,8 +6,7 @@ import {
 	Param,
 	Post,
 	Put,
-	Query,
-	UsePipes
+	Query
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
@@ -54,7 +52,6 @@ export class BookController {
 
 	@Auth('admin')
 	@Post('admin/create')
-	@UsePipes(ZodValidationPipe)
 	@ApiOkResponse({ type: undefined })
 	@ApiBody({
 		type: CreateBookDto,

@@ -2,11 +2,7 @@ import { Controller, Delete, Get, Param, Patch, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import {
-	UserCatalogOutput,
-	UserLibraryOutput,
-	UserProfileOutput
-} from './user.model'
+import { UserCatalogOutput, UserLibraryOutput } from './user.model'
 import { UserService } from './user.service'
 
 @ApiBearerAuth()
@@ -14,12 +10,6 @@ import { UserService } from './user.service'
 @ApiTags('👤 user')
 export class UserController {
 	constructor(private readonly usersService: UserService) {}
-	@Auth()
-	@Get('/profile')
-	@ApiOkResponse({ type: UserProfileOutput })
-	async profile(@CurrentUser('id') id: number) {
-		return this.usersService.profile(+id)
-	}
 
 	@Auth()
 	@Get('/library')

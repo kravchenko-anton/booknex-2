@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CatalogUserOutput } from './catalog-user-output';
+import { UserCatalogOutputDataInner } from './user-catalog-output-data-inner';
 
 /**
  * 
@@ -24,22 +24,22 @@ import { CatalogUserOutput } from './catalog-user-output';
  */
 export interface UserCatalogOutput {
     /**
-     * can load more
+     * 
+     * @type {Array<UserCatalogOutputDataInner>}
+     * @memberof UserCatalogOutput
+     */
+    'data': Array<UserCatalogOutputDataInner>;
+    /**
+     * 
      * @type {boolean}
      * @memberof UserCatalogOutput
      */
     'canLoadMore': boolean;
     /**
-     * total pages
+     * 
      * @type {number}
      * @memberof UserCatalogOutput
      */
     'totalPages': number;
-    /**
-     * 
-     * @type {Array<CatalogUserOutput>}
-     * @memberof UserCatalogOutput
-     */
-    'data': Array<CatalogUserOutput>;
 }
 

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ShortBook } from './short-book';
+import { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
 
 /**
  * 
@@ -24,28 +24,28 @@ import { ShortBook } from './short-book';
  */
 export interface FindOneGenreOutput {
     /**
-     * genre slug
+     * 
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @memberof FindOneGenreOutput
+     */
+    'mainBooks': Array<UserLibraryOutputReadingBooksInner>;
+    /**
+     * 
      * @type {string}
      * @memberof FindOneGenreOutput
      */
     'slug': string;
     /**
-     * genre name
+     * 
      * @type {string}
      * @memberof FindOneGenreOutput
      */
     'name': string;
     /**
-     * genre icon
+     * 
      * @type {string}
      * @memberof FindOneGenreOutput
      */
     'icon': string;
-    /**
-     * 
-     * @type {Array<ShortBook>}
-     * @memberof FindOneGenreOutput
-     */
-    'mainBooks': Array<ShortBook>;
 }
 

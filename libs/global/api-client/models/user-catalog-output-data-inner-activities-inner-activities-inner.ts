@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface CreateBookDtoTestGenresInner
+ * @interface UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
  */
-export interface CreateBookDtoTestGenresInner {
+export interface UserCatalogOutputDataInnerActivitiesInnerActivitiesInner {
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDtoTestGenresInner
+     * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
      */
-    'slug': string;
+    'message': string;
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDtoTestGenresInner
+     * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
      */
-    'name': string;
+    'time': string;
     /**
      * 
-     * @type {string}
-     * @memberof CreateBookDtoTestGenresInner
+     * @type {number}
+     * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
      */
-    'icon': string;
+    'importance': number;
 }
 

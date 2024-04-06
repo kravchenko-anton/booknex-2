@@ -1,21 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber, IsString, MaxLength, Min, MinLength } from 'class-validator'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { z } from 'zod'
 
-export class ParserDto {
-	@ApiProperty({
-		type: String,
-		description: 'url of the parser'
-	})
-	@IsString()
-	@MinLength(1)
-	@MaxLength(255)
-	url: string
+extendZodWithOpenApi(z)
 
-	@IsNumber()
-	@ApiProperty({
-		type: Number,
-		description: 'page of the parser'
-	})
-	@Min(0)
-	page: number
-}
+export const ParserDtoSchema = z.object({
+	url: z.string().min(1).max(255),
+	page: z.number().int().min(0)
+})
+
+export class ParserDto extends createZodDto(ParserDtoSchema) {}

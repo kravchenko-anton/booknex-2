@@ -12,28 +12,25 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
- * @interface StoredChapterBase
+ * @interface EbookOutputChaptersInnerChildrenInner
  */
-export interface StoredChapterBase {
-	/**
-	 *
-	 * @type {number}
-	 * @memberof StoredChapterBase
-	 */
-	id: number
-	/**
-	 *
-	 * @type {string}
-	 * @memberof StoredChapterBase
-	 */
-	name: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof StoredChapterBase
-	 */
-	text: string
+export interface EbookOutputChaptersInnerChildrenInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof EbookOutputChaptersInnerChildrenInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EbookOutputChaptersInnerChildrenInner
+     */
+    'link': string;
 }
+

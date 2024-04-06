@@ -1,57 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber, IsString } from 'class-validator'
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 
-export class UserInReview {
-	@ApiProperty({
-		example: 1,
-		description: 'user id'
-	})
-	@IsNumber()
-	id: number
+import { z } from 'zod'
 
-	@ApiProperty({
-		example: 'email',
-		description: 'user email'
-	})
-	@IsString()
-	email: string
-}
+extendZodWithOpenApi(z)
 
-export class Review {
-	@ApiProperty({
-		example: 1,
-		description: 'review id'
-	})
-	@IsNumber()
-	id: number
+export const ReviewSchema = z.object({
+	id: z.number(),
+	tags: z.array(z.string()),
+	text: z.string().optional().nullable(),
+	rating: z.number()
+})
 
-	@ApiProperty({
-		example: 'tags',
-		description: 'review tags'
-	})
-	@IsString({ each: true })
-	tags: string[]
-
-	@ApiProperty({
-		example: 'text',
-		description: 'review text',
-		required: false
-	})
-	@IsString()
-	text: string | null
-
-	@ApiProperty({
-		example: 1,
-		description: 'review rating'
-	})
-	@IsNumber()
-	rating: number
-	//  TODO: пофиксить тут чтобы типы возвращали юзера и я мог его получить
-	// @ApiProperty({
-	// 	type: UserInReview,
-	// 	description: 'review user'
-	// })
-	// @IsObject()
-	// @Type(() => UserInReview)
-	// user: UserInReview
-}
+export class Review extends createZodDto(ReviewSchema) {}

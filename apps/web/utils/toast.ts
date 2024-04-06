@@ -3,15 +3,14 @@ import type { ExternalToast } from 'sonner'
 import { toast } from 'sonner'
 
 export const errorToast = (error: unknown, data?: ExternalToast) => {
-	toast.error(errorCatch(error), data)
+	toast.error('An error occurred, please try again later', {
+		...data,
+		description: errorCatch(error)
+	})
 }
 
 export const successToast = (message: string, data?: ExternalToast) => {
 	toast.success(message, data)
-}
-
-export const loadingToast = (message: string, data?: ExternalToast) => {
-	toast.loading(message, data)
 }
 
 export const infoToast = (message: string, data?: ExternalToast) => {
