@@ -12,43 +12,40 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface StoredChapter
  */
 export interface StoredChapter {
-    /**
-     * 
-     * @type {number}
-     * @memberof StoredChapter
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoredChapter
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoredChapter
-     */
-    'text': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoredChapter
-     */
-    'romanNumber': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoredChapter
-     */
-    'readingTime': number;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof StoredChapter
+	 */
+	id: number
+	/**
+	 *
+	 * @type {string}
+	 * @memberof StoredChapter
+	 */
+	name: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof StoredChapter
+	 */
+	text: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof StoredChapter
+	 */
+	romanNumber: string
+	/**
+	 *
+	 * @type {number}
+	 * @memberof StoredChapter
+	 */
+	readingTime: number
 }
-

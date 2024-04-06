@@ -15,58 +15,58 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CreateBookDtoEbookInner } from './create-book-dto-ebook-inner';
+import { CreateBookDtoTestEbookInner } from './create-book-dto-test-ebook-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { CreateBookDtoGenresInner } from './create-book-dto-genres-inner';
+import { CreateBookDtoTestGenresInner } from './create-book-dto-test-genres-inner';
 
 /**
  * 
  * @export
- * @interface CreateBookDto
+ * @interface CreateBookDtoTest
  */
-export interface CreateBookDto {
+export interface CreateBookDtoTest {
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDto
+     * @memberof CreateBookDtoTest
      */
     'title': string;
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDto
+     * @memberof CreateBookDtoTest
      */
     'author': string;
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDto
+     * @memberof CreateBookDtoTest
      */
     'description': string;
     /**
      * 
-     * @type {Array<CreateBookDtoEbookInner>}
-     * @memberof CreateBookDto
+     * @type {Array<CreateBookDtoTestEbookInner>}
+     * @memberof CreateBookDtoTest
      */
-    'ebook': Array<CreateBookDtoEbookInner>;
+    'ebook': Array<CreateBookDtoTestEbookInner>;
     /**
      * 
      * @type {number}
-     * @memberof CreateBookDto
+     * @memberof CreateBookDtoTest
      */
     'rating': number;
     /**
      * 
      * @type {string}
-     * @memberof CreateBookDto
+     * @memberof CreateBookDtoTest
      */
     'picture': string;
     /**
      * 
-     * @type {Array<CreateBookDtoGenresInner>}
-     * @memberof CreateBookDto
+     * @type {Array<CreateBookDtoTestGenresInner>}
+     * @memberof CreateBookDtoTest
      */
-    'genres': Array<CreateBookDtoGenresInner>;
+    'genres': Array<CreateBookDtoTestGenresInner>;
 }
 

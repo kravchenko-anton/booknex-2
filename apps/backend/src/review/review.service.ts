@@ -15,6 +15,7 @@ export class ReviewService {
 
 	async review(userId: number, bookSlug: string, dto: ReviewBookDto) {
 		await this.checkBookExist(bookSlug)
+
 		await this.checkUserExist(userId)
 		await this.activityService.create({
 			type: Activities.reviewBook,

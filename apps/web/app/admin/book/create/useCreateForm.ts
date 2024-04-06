@@ -22,14 +22,16 @@ export const useCreateForm = () => {
 		setValue,
 		getValues,
 		formState: { errors }
-	} = useForm<CreateBookValidationType>({})
+	} = useForm<CreateBookValidationType>({
+		// resolver: zodResolver(CreateBookValidation),
+		// mode: 'onBlur'
+	})
 
 	const { deleteTemplate } = useTemplate({ templateSlug, reset })
 
 	const { mutateAsync: create, isLoading: createLoading } = useMutation({
 		mutationKey: ['create-book'],
-		mutationFn: (payload: CreateBookDto) =>
-			api.book.create(payload),
+		mutationFn: (payload: CreateBookDto) => api.book.create(payload),
 		onSuccess: async data => {
 			console.log('data  in success', data)
 			if (templateSlug) {
@@ -43,7 +45,7 @@ export const useCreateForm = () => {
 	const handleCreate = handleSubmit(async (data: CreateBookValidationType) => {
 		await create(data)
 	})
-
+	console.log(watch('genres'))
 	return {
 		watch,
 		control,

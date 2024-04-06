@@ -12,21 +12,18 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface HealthControllerCheck503ResponseInfoValue
  */
 export interface HealthControllerCheck503ResponseInfoValue {
-    [key: string]: any;
+	[key: string]: any
 
-    /**
-     * 
-     * @type {string}
-     * @memberof HealthControllerCheck503ResponseInfoValue
-     */
-    'status': string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof HealthControllerCheck503ResponseInfoValue
+	 */
+	status: string
 }
-

@@ -79,6 +79,7 @@ export class Book extends ShortBook {
 	genres: {
 		slug: string
 		name: string
+		icon: string
 	}[]
 }
 export class BookCount {

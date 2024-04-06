@@ -17,32 +17,26 @@
 /**
  * 
  * @export
- * @interface Review
+ * @interface CreateBookDtoTestGenresInner
  */
-export interface Review {
+export interface CreateBookDtoTestGenresInner {
     /**
-     * review id
-     * @type {number}
-     * @memberof Review
+     * 
+     * @type {string}
+     * @memberof CreateBookDtoTestGenresInner
      */
-    'id': number;
+    'slug': string;
     /**
-     * review tags
-     * @type {Array<string>}
-     * @memberof Review
+     * 
+     * @type {string}
+     * @memberof CreateBookDtoTestGenresInner
      */
-    'tags': Array<string>;
+    'name': string;
     /**
-     * review text
-     * @type {object}
-     * @memberof Review
+     * 
+     * @type {string}
+     * @memberof CreateBookDtoTestGenresInner
      */
-    'text'?: object;
-    /**
-     * review rating
-     * @type {number}
-     * @memberof Review
-     */
-    'rating': number;
+    'icon': string;
 }
 

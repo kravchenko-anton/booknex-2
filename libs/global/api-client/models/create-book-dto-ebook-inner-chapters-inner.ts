@@ -17,32 +17,26 @@
 /**
  * 
  * @export
- * @interface Review
+ * @interface CreateBookDtoEbookInnerChaptersInner
  */
-export interface Review {
+export interface CreateBookDtoEbookInnerChaptersInner {
     /**
-     * review id
+     * 
      * @type {number}
-     * @memberof Review
+     * @memberof CreateBookDtoEbookInnerChaptersInner
      */
     'id': number;
     /**
-     * review tags
-     * @type {Array<string>}
-     * @memberof Review
+     * 
+     * @type {string}
+     * @memberof CreateBookDtoEbookInnerChaptersInner
      */
-    'tags': Array<string>;
+    'name': string;
     /**
-     * review text
-     * @type {object}
-     * @memberof Review
+     * 
+     * @type {string}
+     * @memberof CreateBookDtoEbookInnerChaptersInner
      */
-    'text'?: object;
-    /**
-     * review rating
-     * @type {number}
-     * @memberof Review
-     */
-    'rating': number;
+    'text': string;
 }
 

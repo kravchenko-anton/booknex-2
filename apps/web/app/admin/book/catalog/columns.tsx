@@ -65,9 +65,9 @@ export const columns = (): ColumnDef<Book, unknown>[] => [
 				<b
 					className={cn(
 						'items-center font-bold',
-						row.original.visible ? 'text-success' : 'text-danger'
+						row.original.isPublic ? 'text-success' : 'text-danger'
 					)}>
-					{row.original.visible ? 'Visible' : 'Hidden'}
+					{row.original.isPublic ? 'Is Public' : 'Hidden'}
 				</b>
 			</p>
 		)

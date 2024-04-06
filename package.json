@@ -10,6 +10,8 @@
 		"run:commit": "npx eslint --fix && npx prettier . --write"
 	},
 	"dependencies": {
+		"@anatine/zod-nestjs": "^2.0.8",
+		"@anatine/zod-openapi": "^2.2.5",
 		"@aws-sdk/client-s3": "^3.405.0",
 		"@gorhom/bottom-sheet": "^4.6.0",
 		"@hookform/resolvers": "^3.3.2",

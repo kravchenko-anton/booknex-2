@@ -6,6 +6,8 @@
 		"types": ["node", "express", "multer"],
 		"lib": ["es5", "es6", "dom", "dom.iterable"],
 		"emitDecoratorMetadata": true,
+		"strict": true,
+		"strictNullChecks": true,
 		"target": "es2021",
 		"isolatedModules": true,
 		"esModuleInterop": true,

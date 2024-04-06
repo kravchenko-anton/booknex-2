@@ -24,7 +24,7 @@ export class User {
 	@IsOptional()
 	@IsString()
 	@ApiProperty({ example: 'socialId', description: 'user social id' })
-	socialId?: string
+	socialId?: string | null
 
 	@IsOptional()
 	@IsString()

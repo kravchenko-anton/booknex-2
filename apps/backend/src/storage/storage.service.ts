@@ -9,6 +9,7 @@ import {
 	storageFolder
 } from '../../../../libs/global/helpers/storage-types'
 import type { EnvironmentType } from '../utils/common/environment.config'
+import environments from '../utils/common/environment.config'
 import { serverError } from '../utils/helpers/call-error'
 import { optimizeFilename } from '../utils/helpers/string.functions'
 
@@ -16,11 +17,16 @@ import { optimizeFilename } from '../utils/helpers/string.functions'
 export class StorageService {
 	constructor(private readonly configService: ConfigService<EnvironmentType>) {}
 	private readonly s3 = new S3Client({
-		endpoint: this.configService.get('AWS_ENDPOINT'),
-		region: this.configService.get('AWS_REGION'),
+		endpoint:
+			this.configService.get('AWS_ENDPOINT') || environments.AWS_ENDPOINT,
+		region: this.configService.get('AWS_REGION') || environments.AWS_REGION,
 		credentials: {
-			accessKeyId: this.configService.get('AWS_ACCESS_KEY_ID'),
-			secretAccessKey: this.configService.get('AWS_SECRET_ACCESS_KEY')
+			accessKeyId:
+				this.configService.get('AWS_ACCESS_KEY_ID') ||
+				environments.AWS_ACCESS_KEY_ID,
+			secretAccessKey:
+				this.configService.get('AWS_SECRET_ACCESS_KEY') ||
+				environments.AWS_SECRET_ACCESS_KEY
 		}
 	})
 

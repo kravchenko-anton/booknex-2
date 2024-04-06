@@ -8,7 +8,7 @@ export interface ActivitiesProperties {
 	bookId: number | null
 	userId: number | null
 }
-
+//TODO: обернуть всё тестами
 export interface ActivitiesOutput {
 	date: string
 	count: number
@@ -52,7 +52,8 @@ export const transformActivity = (
 					` (${activity.bookId ? `book: ${activity.bookId}; ` : ''}${activity.genreId ? `genre: ${activity.genreId}; ` : ''}${activity.userId ? `user: ${activity.userId}` : ''})`,
 				time: timeFormat(activity.createdAt)
 			})
-			accumulator[date].count++	
+			// @ts-ignore - count is always defined
+			accumulator[date].count++
 			return accumulator
 		},
 		{}

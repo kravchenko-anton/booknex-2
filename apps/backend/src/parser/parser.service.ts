@@ -76,7 +76,7 @@ export class ParserService {
 		return getEbook(file.buffer)
 	}
 	async bySlug(slug: string) {
-		return this.prisma.bookTemplate.findUnique({
+		const book = await this.prisma.bookTemplate.findUnique({
 			where: {
 				slug
 			},
@@ -90,6 +90,9 @@ export class ParserService {
 				genres: true
 			}
 		})
+		if (!book)
+			throw serverError(HttpStatus.BAD_REQUEST, adminErrors.bookNotFound)
+		return book
 	}
 	async parse(dto: ParserDto) {
 		try {

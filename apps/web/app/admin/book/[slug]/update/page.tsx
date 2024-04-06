@@ -94,14 +94,14 @@ const Page: FC = () => {
 							<h1 className=''>Visibility</h1>
 							<Button
 								size={'sm'}
-								className={cn('', book.visible ? 'bg-success' : 'bg-warning')}
+								className={cn('', book.isPublic ? 'bg-success' : 'bg-warning')}
 								isLoading={updateLoading}
 								onClick={async () => {
 									await update({
-										visible: !book.visible
+										isPublic: !book.isPublic
 									})
 								}}>
-								{book.visible ? 'Hide' : 'Show'}
+								{book.isPublic ? 'Hide' : 'Show'}
 							</Button>
 						</div>
 					</div>

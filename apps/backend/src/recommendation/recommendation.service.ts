@@ -14,20 +14,18 @@ export class RecommendationService {
 	) {}
 
 	async recommendations(userId: number) {
-		const selectedGenres = await this.prisma.user
-			.findUnique({
-				where: {
-					id: userId
-				},
-				select: {
-					selectedGenres: {
-						select: {
-							name: true
-						}
+		const selectedGenres = await this.prisma.genre.findMany({
+			where: {
+				users: {
+					some: {
+						id: userId
 					}
 				}
-			})
-			.selectedGenres()
+			},
+			select: {
+				slug: true
+			}
+		})
 
 		return this.prisma.book.findMany({
 			take: 10,
@@ -36,8 +34,8 @@ export class RecommendationService {
 				isPublic: true,
 				genres: {
 					some: {
-						name: {
-							in: selectedGenres.map(genre => genre.name)
+						slug: {
+							in: selectedGenres.map(genre => genre.slug)
 						}
 					}
 				},

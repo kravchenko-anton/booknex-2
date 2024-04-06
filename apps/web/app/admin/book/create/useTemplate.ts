@@ -20,8 +20,7 @@ export const useTemplate = ({
 	})
 	const { mutateAsync: deleteTemplate } = useMutation({
 		mutationKey: ['delete-template'],
-		mutationFn: (templateSlug: string) =>
-			api.parser.remove(templateSlug),
+		mutationFn: (templateSlug: string) => api.parser.remove(templateSlug),
 		onError: () => errorToast('Error while removing template')
 	})
 	useLayoutEffect(() => {

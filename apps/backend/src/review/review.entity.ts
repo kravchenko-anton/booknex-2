@@ -34,10 +34,11 @@ export class Review {
 
 	@ApiProperty({
 		example: 'text',
-		description: 'review text'
+		description: 'review text',
+		required: false
 	})
 	@IsString()
-	text: string
+	text: string | null
 
 	@ApiProperty({
 		example: 1,

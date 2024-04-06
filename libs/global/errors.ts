@@ -36,6 +36,7 @@ export const adminErrors = {
 
 	//book
 
+	bookNotFound: 'Book not found',
 	bookAlreadyExist: 'Book already exist',
 	//user
 

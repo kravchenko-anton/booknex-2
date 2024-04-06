@@ -49,10 +49,10 @@ export interface CatalogUserOutput {
     'email': string;
     /**
      * user social id
-     * @type {string}
+     * @type {object}
      * @memberof CatalogUserOutput
      */
-    'socialId': string;
+    'socialId': object;
     /**
      * user password
      * @type {string}

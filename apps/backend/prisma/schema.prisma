@@ -44,11 +44,12 @@ model Review {
   updatedAt DateTime @updatedAt
   rating    Int
   tags      String[]
-  text      String
+  text      String?
   book      Book     @relation(fields: [bookId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
   bookId    Int
-  userId    Int
+
+  userId Int
 }
 
 model Book {

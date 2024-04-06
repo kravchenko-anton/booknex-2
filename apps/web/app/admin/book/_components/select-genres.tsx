@@ -30,7 +30,7 @@ const SelectGenres = <T extends Record<string, any>>({
 		queryFn: () => api.genre.catalog(),
 		select: data => data.data
 	})
-
+	console.log('genres', genres)
 	return (
 		<Controller
 			control={control}

@@ -12,31 +12,28 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface StoredChapterBase
  */
 export interface StoredChapterBase {
-    /**
-     * 
-     * @type {number}
-     * @memberof StoredChapterBase
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoredChapterBase
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoredChapterBase
-     */
-    'text': string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof StoredChapterBase
+	 */
+	id: number
+	/**
+	 *
+	 * @type {string}
+	 * @memberof StoredChapterBase
+	 */
+	name: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof StoredChapterBase
+	 */
+	text: string
 }
-

@@ -1,3 +1,4 @@
+import { ZodValidationPipe } from '@anatine/zod-nestjs'
 import {
 	Body,
 	Controller,
@@ -6,7 +7,8 @@ import {
 	Param,
 	Post,
 	Put,
-	Query
+	Query,
+	UsePipes
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
@@ -52,6 +54,7 @@ export class BookController {
 
 	@Auth('admin')
 	@Post('admin/create')
+	@UsePipes(ZodValidationPipe)
 	@ApiOkResponse({ type: undefined })
 	@ApiBody({
 		type: CreateBookDto,
@@ -64,14 +67,14 @@ export class BookController {
 	}
 
 	@Auth('admin')
-	@ApiOkResponse({ type: null })
+	@ApiOkResponse({ type: undefined })
 	@Put('admin/update/:slug')
 	async update(@Param('slug') bookSlug: string, @Body() dto: UpdateBookDto) {
 		return this.bookService.update(bookSlug, dto)
 	}
 
 	@Auth('admin')
-	@ApiOkResponse({ type: null })
+	@ApiOkResponse({ type: undefined })
 	@Delete('admin/remove/:slug')
 	async remove(@Param('slug') slug: string) {
 		return this.bookService.remove(slug)

@@ -72,7 +72,10 @@ export const parseBookTable = async (
 				link: `https://www.goodreads.com${link}`,
 				ratingAvg: ratingAvg?.textContent
 					? Number.parseFloat(
-							ratingAvg.textContent.split('—')[0].replaceAll('avg rating', '')
+							String(ratingAvg.textContent.split('—')[0]).replaceAll(
+								'avg rating',
+								''
+							)
 						)
 					: 2.5
 			}
