@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common'
 import { Role, type User } from '@prisma/client'
 import { adminErrors } from 'global/errors'
-import { serverError } from '../helpers/call-error'
+import { serverError } from '../helpers/server-error'
 
 @Injectable()
 export class AdminGuard implements CanActivate {

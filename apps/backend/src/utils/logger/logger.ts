@@ -1,6 +1,6 @@
 import { Injectable, Logger, type NestMiddleware } from '@nestjs/common'
 import type { NextFunction, Request, Response } from 'express'
-import { msToSec } from '../common/msToSec'
+import { msToSec } from '../helpers/msToSec'
 
 @Injectable()
 export class AppLoggerMiddleware implements NestMiddleware {

@@ -19,7 +19,6 @@ import {
 import type { StorageFolderType } from 'global/helpers/storage-types'
 import { StorageFolderArray } from 'global/helpers/storage-types'
 import { Auth } from '../auth/decorators/auth.decorator'
-import environment from '../utils/common/environment.config'
 import { UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
 
@@ -29,7 +28,6 @@ import { StorageService } from './storage.service'
 @Auth('admin')
 export class StorageController {
 	constructor(private readonly uploadService: StorageService) {}
-
 	@Post('/:folder')
 	@ApiParam({
 		name: 'folder',
@@ -54,7 +52,7 @@ export class StorageController {
 			new ParseFilePipe({
 				validators: [
 					new MaxFileSizeValidator({
-						maxSize: environment.MAX_UPLOAD_SIZE
+						maxSize: Number(process.env['MAX_FILE_SIZE'])
 					})
 				]
 			})

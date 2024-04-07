@@ -1,10 +1,10 @@
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
-import { z } from 'zod'
 import {
 	ChapterPayloadSchema,
 	EBookBaseSchema
-} from '../../../../../libs/global/validation/book/ebook.payload.dto'
+} from 'global/validation/book/ebook.payload.dto'
+import { z } from 'zod'
 import { ShortBookSchema } from '../book.entity'
 
 extendZodWithOpenApi(z)

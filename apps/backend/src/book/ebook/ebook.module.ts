@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
-import { ActivityService } from '../../utils/services/activity/activity.service'
 import { PrismaService } from '../../utils/services/prisma.service'
 import { EbookController } from './ebook.controller'
 import { EbookService } from './ebook.service'
+import {ActivityService} from "@/src/activity/activity.service";
 
 @Module({
 	controllers: [EbookController],

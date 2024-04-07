@@ -5,50 +5,26 @@ import { json } from 'express'
 import helmet from 'helmet'
 import { OpenApiNestFactory } from 'nest-openapi-tools'
 import { AppModule } from './app.module'
-import { checkEnvironmentSet } from './utils/common/check-environment-set'
-import environment from './utils/common/environment.config'
 import { HttpExceptionFilter } from './utils/common/http-exception.filter'
-import { openApiConfig } from './utils/common/open-api.config'
+import {openApiConfig, typesGeneratorConfig} from './utils/config/open-api.config'
 import { SentryFilter } from './utils/common/sentry'
-
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 	const { httpAdapter } = app.get(HttpAdapterHost)
 	app.useGlobalFilters(new HttpExceptionFilter())
 	app.enableCors({})
 	app.use(helmet())
-
 	app.useGlobalPipes(new ZodValidationPipe())
 	app.use(json({ limit: '10mb' })) // For load ebook
 
-	await OpenApiNestFactory.configure(app, openApiConfig, {
-		webServerOptions: {
-			enabled: environment.NODE_ENV === 'development',
-			path: 'api-docs'
-		},
-		fileGeneratorOptions: {
-			enabled: environment.NODE_ENV === 'development',
-			outputFilePath: './openapi.yaml' // or ./openapi.json
-		},
-
-		clientGeneratorOptions: {
-			enabled: environment.NODE_ENV === 'development',
-			type: 'typescript-axios',
-			outputFolderPath: './libs/global/api-client',
-			additionalProperties:
-				'apiPackage=clients,modelPackage=models,withoutPrefixEnums=true,withSeparateModelsAndApi=true',
-			openApiFilePath: './openapi.yaml',
-			skipValidation: true
-		}
-	})
+	await OpenApiNestFactory.configure(app, openApiConfig, typesGeneratorConfig)
 	Sentry.init({
-		dsn: environment.SENTRY_DSN,
-		environment: environment.NODE_ENV
+		dsn: process.env['SENTRY_DSN'],
+		environment: process.env['NODE_ENV'] || 'development'
 	}) // Sentry configuration
 	app.useGlobalFilters(new SentryFilter(httpAdapter))
 
-	checkEnvironmentSet()
-	await app.listen(environment.PORT)
+	await app.listen(process.env["PORT"] || 3000)
 }
 
 bootstrap() // eslint-disable-line unicorn/prefer-top-level-await

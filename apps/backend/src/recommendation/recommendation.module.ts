@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
-import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import { RecommendationController } from './recommendation.controller'
 import { RecommendationService } from './recommendation.service'
+import {ActivityService} from "@/src/activity/activity.service";
 
 @Module({
 	controllers: [RecommendationController],

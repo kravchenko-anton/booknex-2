@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { StorageService } from '../storage/storage.service'
-import { ActivityService } from '../utils/services/activity/activity.service'
+import { ActivityService } from '@/src/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import { BookController } from './book.controller'
 import { BookService } from './book.service'
@@ -12,7 +11,6 @@ import { BookService } from './book.service'
 		BookService,
 		PrismaService,
 		StorageService,
-		ConfigService,
 		ActivityService
 	],
 	exports: [BookService]

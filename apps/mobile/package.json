@@ -7,7 +7,6 @@
 		"CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-mobile -d Production --disable-duplicate-release-error",
 		"CodePush:deployementList": "appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex-mobile -k"
 	},
-
 	"dependencies": {
 		"@react-native-async-storage/async-storage": "*",
 		"react": "*",

@@ -4,8 +4,8 @@ import { z } from 'zod'
 import { ShortBookSchema } from '../book/book.entity'
 import { shortGenreSchema } from '../genre/genre.entity'
 import { baseCatalogModel } from '../utils/common/base-catalog.model'
-import { ActivitySchema } from '../utils/services/activity/activity.model'
 import { UserSchema } from './user.entity'
+import {ActivitySchema} from "@/src/activity/activity.model";
 
 extendZodWithOpenApi(z)
 

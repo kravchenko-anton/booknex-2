@@ -1,6 +1,5 @@
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module, type MiddlewareConsumer } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -16,13 +15,18 @@ import { RecommendationModule } from './recommendation/recommendation.module'
 import { ReviewModule } from './review/review.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
-import { AppLoggerMiddleware } from './utils/helpers/logger'
-import { ActivityModule } from './utils/services/activity/activity.module'
-
+import { AppLoggerMiddleware } from './utils/logger/logger'
+import {ActivityModule} from "@/src/activity/activity.module";
+import { ConfigModule } from '@nestjs/config';
+import {envConfigSchema} from "@/src/utils/config/env-config";
 @Module({
 	imports: [
 		UserModule,
 		CatalogModule,
+		ConfigModule.forRoot({
+			isGlobal: true,
+			validate: (config) => envConfigSchema.parse(config)
+		}),
 		GenreModule,
 		BookModule,
 		AuthModule,
@@ -46,7 +50,7 @@ import { ActivityModule } from './utils/services/activity/activity.module'
 		EbookModule
 	],
 	controllers: [AppController],
-	providers: [AppService, ConfigService]
+	providers: [AppService]
 })
 export class AppModule {
 	configure(consumer: MiddlewareConsumer) {

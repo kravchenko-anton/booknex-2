@@ -3,7 +3,7 @@ import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { z } from 'zod'
 import { shortGenreSchema } from '../genre/genre.entity'
 import { ReviewSchema } from '../review/review.entity'
-import { ActivitySchema } from '../utils/services/activity/activity.model'
+import {ActivitySchema} from "@/src/activity/activity.model";
 
 extendZodWithOpenApi(z)
 

@@ -4,7 +4,7 @@ import EPub from 'epub2'
 import { adminErrors, globalErrors } from 'global/errors'
 import { JSDOM } from 'jsdom'
 
-import { serverError } from '../../utils/helpers/call-error'
+import { serverError } from '../../utils/helpers/server-error'
 import type { UnfoldOutput } from '../parser.model'
 
 export interface ChapterType {

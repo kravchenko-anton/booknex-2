@@ -1,7 +1,7 @@
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { UpdateBookSchema } from 'global/validation/book/update.book.dto'
 import { z } from 'zod'
-import { UpdateBookSchema } from '../../../../../libs/global/validation/book/update.book.dto'
 
 extendZodWithOpenApi(z)
 

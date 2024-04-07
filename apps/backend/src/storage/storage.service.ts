@@ -1,3 +1,4 @@
+import { EnvConfig } from '@/src/utils/config/env-config'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
@@ -8,25 +9,18 @@ import {
 	storageFolder
 } from 'global/helpers/storage-types'
 import sharp from 'sharp'
-import type { EnvironmentType } from '../utils/common/environment.config'
-import environments from '../utils/common/environment.config'
-import { serverError } from '../utils/helpers/call-error'
+import { serverError } from '../utils/helpers/server-error'
 import { optimizeFilename } from '../utils/helpers/string.functions'
 
 @Injectable()
 export class StorageService {
-	constructor(private readonly configService: ConfigService<EnvironmentType>) {}
+	constructor(private readonly configService: ConfigService<EnvConfig>) {}
 	private readonly s3 = new S3Client({
-		endpoint:
-			this.configService.get('AWS_ENDPOINT') || environments.AWS_ENDPOINT,
-		region: this.configService.get('AWS_REGION') || environments.AWS_REGION,
+		endpoint: this.configService.get('AWS_ENDPOINT'),
+		region: this.configService.get('AWS_REGION'),
 		credentials: {
-			accessKeyId:
-				this.configService.get('AWS_ACCESS_KEY_ID') ||
-				environments.AWS_ACCESS_KEY_ID,
-			secretAccessKey:
-				this.configService.get('AWS_SECRET_ACCESS_KEY') ||
-				environments.AWS_SECRET_ACCESS_KEY
+			accessKeyId: this.configService.get('AWS_ACCESS_KEY_ID') as string,
+			secretAccessKey: this.configService.get('AWS_SECRET_ACCESS_KEY') as string
 		}
 	})
 

@@ -7,11 +7,11 @@ import { authErrors, globalErrors } from 'global/errors'
 import { OAuth2Client } from 'google-auth-library'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
-import environment from '../utils/common/environment.config'
-import { serverError } from '../utils/helpers/call-error'
-import { ActivityService } from '../utils/services/activity/activity.service'
+import { serverError } from '../utils/helpers/server-error'
+import { ActivityService } from '@/src/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { AuthDto, GoogleAuthDto } from './dto/auth.dto'
+import {EnvConfig} from "@/src/utils/config/env-config";
 
 @Injectable()
 export class AuthService {
@@ -20,7 +20,7 @@ export class AuthService {
 		private readonly prisma: PrismaService,
 		private readonly jwt: JwtService,
 		private readonly usersService: UserService,
-		private readonly configService: ConfigService,
+		private readonly configService: ConfigService<EnvConfig>,
 		private readonly activityService: ActivityService
 	) {
 		this.google = new OAuth2Client(
@@ -172,7 +172,7 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				expiresIn: environment.NODE_ENV === 'development' ? '10s' : '15m'
+				expiresIn: this.configService.get('NODE_ENV') === 'development' ? '10s' : '15m'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'

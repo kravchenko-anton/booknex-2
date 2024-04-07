@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
 import { RecommendationService } from '../recommendation/recommendation.service'
-import { ActivityService } from '../utils/services/activity/activity.service'
+import { ActivityService } from '@/src/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 
 @Injectable()
