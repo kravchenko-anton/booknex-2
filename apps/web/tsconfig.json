@@ -18,9 +18,6 @@
 			"icons": ["../../libs/global/icons/react/index.ts"],
 			"illustrations": ["../../libs/global/illustrations/react/index.ts"],
 			"global/*": ["../../libs/global/*"]
-			//      "backend/*": [
-			//        "../backend/*"
-			//      ]
 		},
 		"plugins": [
 			{

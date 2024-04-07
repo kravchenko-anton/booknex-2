@@ -1,8 +1,8 @@
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { Role } from '@prisma/client'
+import { AuthSchema } from 'global/validation/auth/auth.dto'
 import { z } from 'zod'
-import { AuthSchema } from '../../../../../libs/global/validation/auth/auth.dto'
 
 extendZodWithOpenApi(z)
 

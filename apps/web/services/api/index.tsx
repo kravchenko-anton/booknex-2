@@ -1,4 +1,3 @@
-import { instance } from '@/services/api/interceptors'
 import {
 	AuthApi,
 	BookApi,
@@ -12,6 +11,7 @@ import {
 	UserApi
 } from 'global/api-client'
 import { serverURL } from 'global/api-config'
+import { instance } from './interceptors'
 
 const baseParams = {
 	basePath: serverURL,

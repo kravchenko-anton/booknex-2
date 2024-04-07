@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { adminErrors } from '../../../../libs/global/errors'
-import { slugify } from '../../../../libs/global/utils/slugify'
+import { adminErrors } from 'global/errors'
+import { slugify } from 'global/utils/slugify'
 import { serverError } from '../utils/helpers/call-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { ParserDto } from './dto/parser.dto'

@@ -1,8 +1,8 @@
 import prettify from '@liquify/prettify'
 import { HttpStatus } from '@nestjs/common'
 import EPub from 'epub2'
+import { adminErrors, globalErrors } from 'global/errors'
 import { JSDOM } from 'jsdom'
-import { adminErrors, globalErrors } from '../../../../../libs/global/errors'
 
 import { serverError } from '../../utils/helpers/call-error'
 import type { UnfoldOutput } from '../parser.model'

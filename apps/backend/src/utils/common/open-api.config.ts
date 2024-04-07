@@ -1,5 +1,5 @@
 import { DocumentBuilder } from '@nestjs/swagger'
-import { appName } from '../../../../../libs/global/utils'
+import { appName } from 'global/utils'
 
 export const openApiConfig = new DocumentBuilder()
 	.setTitle(appName)

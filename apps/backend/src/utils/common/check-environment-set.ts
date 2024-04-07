@@ -1,4 +1,4 @@
-import { adminErrors } from '../../../../../libs/global/errors'
+import { adminErrors } from 'global/errors'
 import environment, { type EnvironmentType } from './environment.config'
 
 export const checkEnvironmentSet = (): void => {

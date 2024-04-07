@@ -13,7 +13,12 @@
 		"esModuleInterop": true,
 		"strictPropertyInitialization": false,
 		"downlevelIteration": true,
-		"experimentalDecorators": true
+		"baseUrl": ".",
+		"experimentalDecorators": true,
+		"paths": {
+			"@/*": ["./*"],
+			"global/*": ["../../libs/global/*"]
+		}
 	},
 	"exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
 	"include": ["src/**/*.ts"]

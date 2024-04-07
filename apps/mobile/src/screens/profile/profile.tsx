@@ -1,14 +1,6 @@
-import api from '@/api'
-import { Loader, ScrollLayout, Title } from '@/ui'
-import { useQuery } from '@tanstack/react-query'
+import { ScrollLayout, Title } from '@/ui'
 
 const Profile = () => {
-	const { data: profile } = useQuery({
-		queryKey: ['user-profile'],
-		queryFn: () => api.user.profile(),
-		select: data => data.data
-	})
-	if (!profile) return <Loader />
 	return (
 		<ScrollLayout className='px-2'>
 			<Title

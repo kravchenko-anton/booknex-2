@@ -7,6 +7,7 @@
 		"CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-mobile -d Production --disable-duplicate-release-error",
 		"CodePush:deployementList": "appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex-mobile -k"
 	},
+
 	"dependencies": {
 		"@react-native-async-storage/async-storage": "*",
 		"react": "*",
@@ -48,15 +49,6 @@
 		"tailwindcss": "*",
 		"@react-native/metro-config": "*",
 		"metro-react-native-babel-preset": "*",
-		"react-native-svg-transformer": "*",
-		"eslint": "*",
-		"eslint-define-config": "*",
-		"eslint-config-sheriff": "*",
-		"eslint-plugin-react": "*",
-		"eslint-plugin-react-hooks": "*",
-		"eslint-plugin-react-native": "*",
-		"eslint-plugin-react-native-globals": "*",
-		"@typescript-eslint/eslint-plugin": "*",
-		"@typescript-eslint/parser": "*"
+		"react-native-svg-transformer": "*"
 	}
 }

@@ -1,13 +1,13 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import sharp from 'sharp'
-import { adminErrors, globalErrors } from '../../../../libs/global/errors'
+import { adminErrors, globalErrors } from 'global/errors'
 import {
 	StorageFolderArray,
 	StorageFolderType,
 	storageFolder
-} from '../../../../libs/global/helpers/storage-types'
+} from 'global/helpers/storage-types'
+import sharp from 'sharp'
 import type { EnvironmentType } from '../utils/common/environment.config'
 import environments from '../utils/common/environment.config'
 import { serverError } from '../utils/helpers/call-error'

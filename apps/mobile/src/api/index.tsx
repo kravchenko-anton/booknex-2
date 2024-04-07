@@ -17,7 +17,6 @@ const baseParams = {
 	basePath: serverURL,
 	isJsonMime: () => true
 }
-
 const auth = new AuthApi(baseParams, serverURL, undefined)
 
 const book = new BookApi(baseParams, serverURL, instance)

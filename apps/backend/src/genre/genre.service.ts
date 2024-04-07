@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
-import { globalErrors } from '../../../../libs/global/errors'
+import { globalErrors } from 'global/errors'
 import { returnBookObject } from '../book/return.book.object'
 import { serverError } from '../utils/helpers/call-error'
 import { ActivityService } from '../utils/services/activity/activity.service'
