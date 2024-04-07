@@ -2,17 +2,18 @@ import { chapterNames } from '@/app/admin/book/_components/ebook-editor/chapterN
 import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import type { PayloadEBook } from 'global/api-client'
+import { EBookPayloadType } from 'global/validation/book/ebook.payload.dto'
 
 export const useBookCompose = ({
 	ebooks: ebooks,
 	setEBooks: setEBooks
 }: {
-	ebooks: PayloadEBook[] | undefined
-	setEBooks: (books: PayloadEBook[]) => void
+	ebooks: EBookPayloadType[] | undefined
+	setEBooks: (books: EBookPayloadType[]) => void
 }) => {
 	const { mutateAsync: unfold, isLoading: unfoldLoading } = useMutation({
 		mutationKey: ['unfold'],
+
 		mutationFn: (file: File) => api.parser.unfold(file),
 		onSuccess: () => successToast('File uploaded'),
 		onError: () => errorToast('Error while uploading book')

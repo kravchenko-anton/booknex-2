@@ -18,7 +18,7 @@ async function bootstrap() {
 	app.enableCors({})
 	app.use(helmet())
 
-	app.useGlobalPipes(new ZodValidationPipe({}))
+	app.useGlobalPipes(new ZodValidationPipe())
 	app.use(json({ limit: '10mb' })) // For load ebook
 
 	await OpenApiNestFactory.configure(app, openApiConfig, {

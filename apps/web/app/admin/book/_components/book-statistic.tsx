@@ -1,12 +1,9 @@
+import { FullBookCount } from 'global/api-client'
 import { minutesToTime } from 'global/helpers/time-converter'
 import type { FC } from 'react'
 
 interface InfoBlockProperties {
-	_count: {
-		finishedBy: number
-		savedBy: number
-		readingBy: number
-	}
+	_count: FullBookCount
 	createdAt: string
 	updatedAt: string
 	readingTime: number

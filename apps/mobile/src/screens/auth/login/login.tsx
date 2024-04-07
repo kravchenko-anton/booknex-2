@@ -2,7 +2,7 @@ import { useAction } from '@/hooks'
 import { useAuthorize } from '@/screens/auth/useAuthorize'
 import { Button, Field, ScrollLayout } from '@/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AuthDto, type AuthDtoType } from 'global/dto/auth/auth.dto'
+import { AuthDtoType, AuthSchema } from 'global/validation/auth/auth.dto'
 import { Mail, Password } from 'icons'
 import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
@@ -12,7 +12,7 @@ const Login = () => {
 	const { isLoading: authLoading } = useAuthorize()
 	const { control, handleSubmit } = useForm<AuthDtoType>({
 		mode: 'onSubmit',
-		resolver: zodResolver(AuthDto)
+		resolver: zodResolver(AuthSchema)
 	})
 
 	const onSubmit: SubmitHandler<AuthDtoType> = ({ password, email }) =>

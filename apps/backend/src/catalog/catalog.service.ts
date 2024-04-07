@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
-import { GenreService } from '../genre/genre.service'
 import { RecommendationService } from '../recommendation/recommendation.service'
 import { ActivityService } from '../utils/services/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -10,8 +9,7 @@ export class CatalogService {
 	constructor(
 		private readonly activityService: ActivityService,
 		private readonly prisma: PrismaService,
-		private readonly recommendationService: RecommendationService,
-		private readonly genreService: GenreService
+		private readonly recommendationService: RecommendationService
 	) {}
 
 	async featured(userId: number) {
@@ -21,8 +19,8 @@ export class CatalogService {
 			userId: userId
 		})
 		return {
-			relatedGenres: await this.relatedGenres(),
-			recommendations: await this.recommendationService.recommendations(userId),
+			interestedGenres: await this.interestedGenres(userId),
+			recommendation: await this.recommendationService.recommendation(userId),
 			popularBooks: await this.popularBooks(),
 			bestSellingBooks: await this.bestSellingBooks(),
 			newReleases: await this.newReleases()
@@ -51,8 +49,16 @@ export class CatalogService {
 		})
 	}
 
-	private async relatedGenres() {
-		return this.genreService.findMany({})
+	private async interestedGenres(userId: number) {
+		return this.prisma.genre.findMany({
+			where: {
+				users: {
+					every: {
+						id: userId
+					}
+				}
+			}
+		})
 	}
 
 	private popularBooks() {

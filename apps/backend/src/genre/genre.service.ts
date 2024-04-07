@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities, type Prisma } from '@prisma/client'
+import { Activities } from '@prisma/client'
 import { globalErrors } from '../../../../libs/global/errors'
 import { returnBookObject } from '../book/return.book.object'
 import { serverError } from '../utils/helpers/call-error'
@@ -31,7 +31,7 @@ export class GenreService {
 	//   });
 	// }
 
-	async findOne(slug: string, userId: number) {
+	async bySlug(slug: string, userId: number) {
 		await this.activityService.create({
 			type: Activities.visitGenre,
 			importance: 1,
@@ -52,24 +52,5 @@ export class GenreService {
 		if (!genre)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		return genre
-	}
-
-	async findMany({
-		where,
-		select,
-		orderBy,
-		take = 20
-	}: {
-		where?: Prisma.GenreWhereInput
-		select?: Prisma.GenreSelect
-		orderBy?: Prisma.GenreOrderByWithRelationInput
-		take?: number
-	}) {
-		return this.prisma.genre.findMany({
-			where,
-			select: select || ReturnGenreObject,
-			orderBy,
-			take
-		})
 	}
 }

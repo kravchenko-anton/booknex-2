@@ -22,12 +22,6 @@
 export interface FullBookReviewInner {
     /**
      * 
-     * @type {number}
-     * @memberof FullBookReviewInner
-     */
-    'id': number;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof FullBookReviewInner
      */

@@ -1,7 +1,7 @@
 import api from '@/services/api'
 import { errorToast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { CreateBookValidationType } from 'global/validation/book/create.book.dto'
+import { CreateBookSchemaType } from 'global/validation/book/create.book.dto'
 import { useLayoutEffect } from 'react'
 import type { UseFormReset } from 'react-hook-form'
 
@@ -10,7 +10,7 @@ export const useTemplate = ({
 	reset
 }: {
 	templateSlug: string
-	reset: UseFormReset<CreateBookValidationType>
+	reset: UseFormReset<CreateBookSchemaType>
 }) => {
 	const { data: template } = useQuery({
 		queryKey: ['book-template'],

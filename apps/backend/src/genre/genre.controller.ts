@@ -31,6 +31,6 @@ export class GenreController {
 		@Param('slug') genreSlug: string,
 		@CurrentUser('id') userId: number
 	): Promise<FindOneGenreOutput> {
-		return this.genreService.findOne(genreSlug, +userId)
+		return this.genreService.bySlug(genreSlug, +userId)
 	}
 }

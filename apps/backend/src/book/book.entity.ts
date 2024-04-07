@@ -25,18 +25,22 @@ export const BookSchema = z
 	.merge(ShortBookSchema)
 
 export const FullBookSchema = BookSchema.merge(
-	z.object({
-		createdAt: z.date(),
-		updatedAt: z.date(),
-		ebook: z.string(),
-		_count: z.object({
-			finishedBy: z.number(),
-			readingBy: z.number(),
-			savedBy: z.number()
-		}),
-		activities: z.array(ActivitySchema),
-		review: z.array(ReviewSchema)
-	})
+	z
+		.object({
+			createdAt: z.date(),
+			updatedAt: z.date(),
+			ebook: z.string(),
+			_count: z
+				.object({
+					finishedBy: z.number(),
+					readingBy: z.number(),
+					savedBy: z.number()
+				})
+				.strict(),
+			activities: z.array(ActivitySchema),
+			review: z.array(ReviewSchema)
+		})
+		.strict()
 )
 export class ShortBook extends createZodDto(ShortBookSchema) {}
 

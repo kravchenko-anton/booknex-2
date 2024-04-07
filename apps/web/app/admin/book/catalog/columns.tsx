@@ -67,7 +67,7 @@ export const columns = (): ColumnDef<Book, unknown>[] => [
 						'items-center font-bold',
 						row.original.isPublic ? 'text-success' : 'text-danger'
 					)}>
-					{row.original.isPublic ? 'Is Public' : 'Hidden'}
+					{row.original.isPublic ? 'Public' : 'Hidden'}
 				</b>
 			</p>
 		)

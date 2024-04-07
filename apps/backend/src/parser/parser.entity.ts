@@ -11,7 +11,7 @@ export const BookTemplateSchema = z.object({
 	author: z.string(),
 	description: z.string(),
 	picture: z.string(),
-	rating: z.number(),
+	rating: z.number().max(5).min(1),
 	genres: z.array(shortGenreSchema)
 })
 export class BookTemplate extends createZodDto(BookTemplateSchema) {}

@@ -20,6 +20,5 @@ export const RefreshSchema = z.object({
 })
 
 export class GoogleAuthDto extends createZodDto(GoogleAuthSchema) {}
-export class AuthUserDto extends createZodDto(AuthUserSchema) {}
 export class RefreshDto extends createZodDto(RefreshSchema) {}
 export class AuthDto extends createZodDto(AuthSchema) {}

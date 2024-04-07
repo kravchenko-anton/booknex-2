@@ -1,32 +1,11 @@
 import type { ColumnDef } from '@tanstack/react-table'
-import type { Review } from 'global/api-client'
+import { FullBookReviewInner } from 'global/api-client'
 import { Color } from 'global/colors'
 import { Star } from 'icons'
 import { useState } from 'react'
 
-export const reviewColumns = (): ColumnDef<Review, unknown>[] => [
-	{
-		id: 'id',
-		enableHiding: false,
-		header: () => <p className='text-center text-xl'>id</p>,
-		cell: ({ row }) => <p className='text-2xl'>{row.original.id}</p>
-	},
-	{
-		id: 'User',
-		enableHiding: false,
-		header: () => <p className='text-center text-xl'>User</p>,
-		cell: ({ row }) => (
-			//TODO: добавить тут нормальную инфу о пользователе
-			<h1 className='text-lg'>
-				{
-					row.original.id
-					//row.original.user.email
-				}
-				Сделать тут юзера
-			</h1>
-		)
-	},
-
+export const reviewColumns = (): ColumnDef<FullBookReviewInner, unknown>[] => [
+	//TODO: добавить информацию о пользователе
 	{
 		id: 'Rating',
 		header: () => <p className='text-center text-xl'>Rating</p>,
@@ -58,7 +37,7 @@ export const reviewColumns = (): ColumnDef<Review, unknown>[] => [
 					<button className=' text-sm' onClick={() => setShowMore(!showMore)}>
 						{showMore
 							? row.original.text
-							: row.original.text.slice(0, 250) + '...'}
+							: row.original.text?.slice(0, 250) + '...'}
 					</button>
 				</div>
 			)

@@ -2,6 +2,7 @@ import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { z } from 'zod'
 import { ShortBookSchema } from '../book/book.entity'
+import { shortGenreSchema } from '../genre/genre.entity'
 import { baseCatalogModel } from '../utils/common/base-catalog.model'
 import { ActivitySchema } from '../utils/services/activity/activity.model'
 import { UserSchema } from './user.entity'
@@ -12,19 +13,15 @@ export const CatalogUserOutputSchema = z
 	.object({
 		id: z.number(),
 		email: z.string(),
-		selectedGenres: z.array(
-			z.object({
-				slug: z.string(),
-				name: z.string(),
-				icon: z.string()
-			})
-		),
+		selectedGenres: z.array(shortGenreSchema),
 		activities: z.array(ActivitySchema),
-		_count: z.object({
-			savedBooks: z.number(),
-			finishedBooks: z.number(),
-			readingBooks: z.number()
-		})
+		_count: z
+			.object({
+				savedBooks: z.number(),
+				finishedBooks: z.number(),
+				readingBooks: z.number()
+			})
+			.strict()
 	})
 	.merge(UserSchema)
 

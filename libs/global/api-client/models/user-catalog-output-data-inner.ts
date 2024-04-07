@@ -70,7 +70,7 @@ export interface UserCatalogOutputDataInner {
      * @type {string}
      * @memberof UserCatalogOutputDataInner
      */
-    'socialId': string | null;
+    'socialId'?: string | null;
     /**
      * 
      * @type {string}

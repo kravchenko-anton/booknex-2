@@ -1,12 +1,13 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
+import { z } from 'zod'
 import { getFileUrl } from '../../../../../libs/global/api-config'
 import { globalErrors } from '../../../../../libs/global/errors'
 import { getServerBookHtml } from '../../../../../libs/global/helpers/getBookHtml'
 import { serverError } from '../../utils/helpers/call-error'
 import { ActivityService } from '../../utils/services/activity/activity.service'
 import { PrismaService } from '../../utils/services/prisma.service'
-import { PayloadEBookSchema, type StoredEBook } from './ebook.model'
+import { StoredEBookSchema, type StoredEBook } from './ebook.model'
 
 @Injectable()
 export class EbookService {
@@ -29,9 +30,11 @@ export class EbookService {
 			.then(result => result.json())
 			.catch(() => null)
 		if (!ebook) {
+			console.log('error', 'not found ebook' + slug)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
 		}
-		const errors = PayloadEBookSchema.safeParse(ebook)
+		console.log('ebook', ebook)
+		const errors = z.array(StoredEBookSchema).safeParse(ebook)
 		if (!errors.success) {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		}

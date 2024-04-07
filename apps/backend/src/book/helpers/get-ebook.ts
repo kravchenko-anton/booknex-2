@@ -1,5 +1,6 @@
+import { EBookPayloadType } from '../../../../../libs/global/validation/book/ebook.payload.dto'
 import { convertToRoman } from '../../utils/common/romanize-number'
-import type { PayloadEBook, StoredEBook } from '../ebook/ebook.model'
+import type { StoredEBook } from '../ebook/ebook.model'
 
 const calculateReadingTime = (text: string) => {
 	const wordsPerMinute = 200
@@ -8,8 +9,8 @@ const calculateReadingTime = (text: string) => {
 	return Math.ceil(minutes)
 }
 
-export const useGetEbook = (
-	ebooks: PayloadEBook[]
+export const useEbookCalculation = (
+	ebooks: EBookPayloadType[]
 ): {
 	readingTime: number
 	uploadedEbook: StoredEBook[]

@@ -7,8 +7,8 @@ import { shortGenreSchema } from '../genre/genre.entity'
 extendZodWithOpenApi(z)
 
 export const FeaturedOutputSchema = z.object({
-	relatedGenres: z.array(shortGenreSchema),
-	recommendations: z.array(ShortBookSchema),
+	interestedGenres: z.array(shortGenreSchema),
+	recommendation: z.array(ShortBookSchema),
 	popularBooks: z.array(ShortBookSchema),
 	bestSellingBooks: z.array(ShortBookSchema),
 	newReleases: z.array(ShortBookSchema)

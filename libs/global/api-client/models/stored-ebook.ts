@@ -25,6 +25,12 @@ import { StoredEBookChaptersInner } from './stored-ebook-chapters-inner';
 export interface StoredEBook {
     /**
      * 
+     * @type {Array<StoredEBookChaptersInner>}
+     * @memberof StoredEBook
+     */
+    'chapters': Array<StoredEBookChaptersInner>;
+    /**
+     * 
      * @type {number}
      * @memberof StoredEBook
      */
@@ -35,11 +41,5 @@ export interface StoredEBook {
      * @memberof StoredEBook
      */
     'title': string;
-    /**
-     * 
-     * @type {Array<StoredEBookChaptersInner>}
-     * @memberof StoredEBook
-     */
-    'chapters': Array<StoredEBookChaptersInner>;
 }
 

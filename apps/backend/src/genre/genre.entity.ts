@@ -10,13 +10,4 @@ export const shortGenreSchema = z.object({
 	icon: z.string()
 })
 
-export const genreSchema = shortGenreSchema.merge(
-	z.object({
-		createdAt: z.string(),
-		updatedAt: z.string(),
-		description: z.string()
-	})
-)
-
 export class ShortGenre extends createZodDto(shortGenreSchema) {}
-export class Genre extends createZodDto(genreSchema) {}

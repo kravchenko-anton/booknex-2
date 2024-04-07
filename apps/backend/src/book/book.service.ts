@@ -13,7 +13,8 @@ import { UpdateBookDtoExtended } from './book.types'
 import type { CreateBookDto } from './dto/create.book.dto'
 
 import type { UpdateBookDto } from './dto/update.book.dto'
-import { useGetEbook } from './helpers/get-ebook'
+
+import { useEbookCalculation } from './helpers/get-ebook'
 
 @Injectable()
 export class BookService {
@@ -79,7 +80,6 @@ export class BookService {
 				isPublic: true,
 				review: {
 					select: {
-						id: true,
 						tags: true,
 						text: true,
 						rating: true,
@@ -168,7 +168,9 @@ export class BookService {
 
 	async create(dto: CreateBookDto) {
 		const { genreIds, mainGenreSlug } = await this.getGenres(dto.genres)
-		const { readingTime, uploadedEbook, chaptersCount } = useGetEbook(dto.ebook)
+		const { readingTime, uploadedEbook, chaptersCount } = useEbookCalculation(
+			dto.ebook
+		)
 
 		const { name: ebookName } = await this.storageService.upload({
 			folder: 'ebooks',
@@ -246,7 +248,9 @@ export class BookService {
 		let updateData: UpdateBookDtoExtended = { ...rest }
 
 		if (ebook) {
-			const { uploadedEbook, readingTime, chaptersCount } = useGetEbook(ebook)
+			const { uploadedEbook, readingTime, chaptersCount } =
+				useEbookCalculation(ebook)
+
 			const { name: ebookName } = await this.storageService.upload({
 				folder: 'ebooks',
 				file: Buffer.from(JSON.stringify(uploadedEbook)),

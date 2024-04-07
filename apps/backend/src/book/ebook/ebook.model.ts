@@ -1,46 +1,27 @@
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { z } from 'zod'
+import {
+	ChapterPayloadSchema,
+	EBookBaseSchema
+} from '../../../../../libs/global/validation/book/ebook.payload.dto'
 import { ShortBookSchema } from '../book.entity'
 
 extendZodWithOpenApi(z)
 
-const htmlRegex = /<([A-Za-z][\dA-Za-z]*)\b[^>]*>(.*?)<\/\1>/
-
-export const ChapterSchema = z.object({
-	id: z.number(),
-	name: z.string().refine(value => !value.includes('epub'), {
-		message: 'Chapter cannot be an epub'
-	}),
-	text: z.string().refine(value => htmlRegex.test(value), {
-		message: 'Invalid HTML string'
-	}),
-	romanNumber: z.string(),
-	readingTime: z.number()
-})
-
-export const PayloadChapterSchema = ChapterSchema.pick({
-	id: true,
-	name: true,
-	text: true
-})
-export const EBookBaseSchema = z.object({
-	id: z.number(),
-	title: z.string().refine(value => !value.includes('epub'), {
-		message: 'Chapter cannot be an epub'
+export const ChapterSchema = z
+	.object({
+		romanNumber: z.string(),
+		readingTime: z.number()
 	})
-})
+	.merge(ChapterPayloadSchema)
 
-export const StoredEBookSchema = EBookBaseSchema.merge(
-	z.object({
+export const StoredEBookSchema = z
+	.object({
 		chapters: z.array(ChapterSchema).min(1)
 	})
-)
-export const PayloadEBookSchema = EBookBaseSchema.merge(
-	z.object({
-		chapters: z.array(PayloadChapterSchema).min(1)
-	})
-)
+	.merge(EBookBaseSchema)
+
 export const OutputChapterChildSchema = z.object({
 	name: z.string(),
 	link: z.string()
@@ -57,5 +38,4 @@ export const EbookOutputSchema = z
 	.merge(ShortBookSchema.pick({ title: true, picture: true }))
 
 export class StoredEBook extends createZodDto(StoredEBookSchema) {}
-export class PayloadEBook extends createZodDto(PayloadEBookSchema) {}
 export class EbookOutput extends createZodDto(EbookOutputSchema) {}

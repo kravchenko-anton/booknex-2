@@ -25,10 +25,10 @@ import { CreateBookDtoEbookInnerChaptersInner } from './create-book-dto-ebook-in
 export interface CreateBookDtoEbookInner {
     /**
      * 
-     * @type {string}
+     * @type {Array<CreateBookDtoEbookInnerChaptersInner>}
      * @memberof CreateBookDtoEbookInner
      */
-    'title': string;
+    'chapters': Array<CreateBookDtoEbookInnerChaptersInner>;
     /**
      * 
      * @type {number}
@@ -37,9 +37,9 @@ export interface CreateBookDtoEbookInner {
     'id': number;
     /**
      * 
-     * @type {Array<CreateBookDtoEbookInnerChaptersInner>}
+     * @type {string}
      * @memberof CreateBookDtoEbookInner
      */
-    'chapters': Array<CreateBookDtoEbookInnerChaptersInner>;
+    'title': string;
 }
 

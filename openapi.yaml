@@ -860,9 +860,12 @@ components:
                       required: true
                     count:
                       type: number
+                      minimum: 1
                       required: true
                     level:
                       type: number
+                      minimum: 1
+                      maximum: 10
                       required: true
                     activities:
                       type: array
@@ -877,6 +880,8 @@ components:
                             required: true
                           importance:
                             type: number
+                            minimum: 1
+                            maximum: 10
                             required: true
                         required:
                           - message
@@ -902,13 +907,14 @@ components:
                     type: number
                     required: true
                 required: true
+                additionalProperties: false
               createdAt:
                 type: string
                 format: date-time
                 required: true
               socialId:
                 type: string
-                required: true
+                required: false
                 nullable: true
               picture:
                 type: string
@@ -926,7 +932,6 @@ components:
               - activities
               - _count
               - createdAt
-              - socialId
               - picture
               - fullName
               - location
@@ -957,7 +962,7 @@ components:
     FeaturedOutput:
       type: object
       properties:
-        relatedGenres:
+        interestedGenres:
           type: array
           items:
             type: object
@@ -975,7 +980,7 @@ components:
               - slug
               - name
               - icon
-        recommendations:
+        recommendation:
           type: array
           items:
             type: object
@@ -1064,8 +1069,8 @@ components:
               - picture
               - author
       required:
-        - relatedGenres
-        - recommendations
+        - interestedGenres
+        - recommendation
         - popularBooks
         - bestSellingBooks
         - newReleases
@@ -1227,6 +1232,7 @@ components:
             savedBy:
               type: number
               required: true
+          additionalProperties: false
         activities:
           type: array
           items:
@@ -1237,9 +1243,12 @@ components:
                 required: true
               count:
                 type: number
+                minimum: 1
                 required: true
               level:
                 type: number
+                minimum: 1
+                maximum: 10
                 required: true
               activities:
                 type: array
@@ -1254,6 +1263,8 @@ components:
                       required: true
                     importance:
                       type: number
+                      minimum: 1
+                      maximum: 10
                       required: true
                   required:
                     - message
@@ -1270,9 +1281,6 @@ components:
           items:
             type: object
             properties:
-              id:
-                type: number
-                required: true
               tags:
                 type: array
                 items:
@@ -1286,7 +1294,6 @@ components:
                 type: number
                 required: true
             required:
-              - id
               - tags
               - rating
       required:
@@ -1395,15 +1402,6 @@ components:
           items:
             type: object
             properties:
-              title:
-                type: string
-                maxLength: 100
-                minLength: 3
-                required: true
-              id:
-                type: number
-                minimum: 1
-                required: true
               chapters:
                 type: array
                 items:
@@ -1423,11 +1421,21 @@ components:
                     - id
                     - name
                     - text
+                minItems: 1
+                required: true
+              id:
+                type: number
+                minimum: 1
+                required: true
+              title:
+                type: string
+                maxLength: 100
+                minLength: 3
                 required: true
             required:
-              - title
-              - id
               - chapters
+              - id
+              - title
           minItems: 1
         rating:
           type: number
@@ -1478,15 +1486,6 @@ components:
           items:
             type: object
             properties:
-              title:
-                type: string
-                maxLength: 100
-                minLength: 3
-                required: true
-              id:
-                type: number
-                minimum: 1
-                required: true
               chapters:
                 type: array
                 items:
@@ -1506,11 +1505,21 @@ components:
                     - id
                     - name
                     - text
+                minItems: 1
+                required: true
+              id:
+                type: number
+                minimum: 1
+                required: true
+              title:
+                type: string
+                maxLength: 100
+                minLength: 3
                 required: true
             required:
-              - title
-              - id
               - chapters
+              - id
+              - title
           minItems: 1
         isPublic:
           type: boolean
@@ -1623,6 +1632,8 @@ components:
                 required: true
               rating:
                 type: number
+                maximum: 5
+                minimum: 1
                 required: true
               genres:
                 type: array
@@ -1674,6 +1685,8 @@ components:
           type: string
         rating:
           type: number
+          maximum: 5
+          minimum: 1
         genres:
           type: array
           items:
@@ -1796,17 +1809,20 @@ components:
     StoredEBook:
       type: object
       properties:
-        id:
-          type: number
-        title:
-          type: string
         chapters:
           type: array
           items:
             type: object
             properties:
+              romanNumber:
+                type: string
+                required: true
+              readingTime:
+                type: number
+                required: true
               id:
                 type: number
+                minimum: 1
                 required: true
               name:
                 type: string
@@ -1814,20 +1830,21 @@ components:
               text:
                 type: string
                 required: true
-              romanNumber:
-                type: string
-                required: true
-              readingTime:
-                type: number
-                required: true
             required:
+              - romanNumber
+              - readingTime
               - id
               - name
               - text
-              - romanNumber
-              - readingTime
           minItems: 1
+        id:
+          type: number
+          minimum: 1
+        title:
+          type: string
+          maxLength: 100
+          minLength: 3
       required:
+        - chapters
         - id
         - title
-        - chapters

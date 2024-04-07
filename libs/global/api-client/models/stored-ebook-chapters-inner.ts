@@ -22,6 +22,18 @@
 export interface StoredEBookChaptersInner {
     /**
      * 
+     * @type {string}
+     * @memberof StoredEBookChaptersInner
+     */
+    'romanNumber': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoredEBookChaptersInner
+     */
+    'readingTime': number;
+    /**
+     * 
      * @type {number}
      * @memberof StoredEBookChaptersInner
      */
@@ -38,17 +50,5 @@ export interface StoredEBookChaptersInner {
      * @memberof StoredEBookChaptersInner
      */
     'text': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoredEBookChaptersInner
-     */
-    'romanNumber': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoredEBookChaptersInner
-     */
-    'readingTime': number;
 }
 

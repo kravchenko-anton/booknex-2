@@ -1,4 +1,5 @@
 'use client'
+
 import { columns } from '@/app/admin/book/catalog/columns'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'

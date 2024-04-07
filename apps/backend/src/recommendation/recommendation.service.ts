@@ -13,7 +13,7 @@ export class RecommendationService {
 		private activityService: ActivityService
 	) {}
 
-	async recommendations(userId: number) {
+	async recommendation(userId: number) {
 		const selectedGenres = await this.prisma.genre.findMany({
 			where: {
 				users: {

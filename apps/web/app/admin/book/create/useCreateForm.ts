@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 import type { CreateBookDto } from 'global/api-client'
 import {
 	CreateBookSchema,
-	CreateBookValidationType
+	CreateBookSchemaType
 } from 'global/validation/book/create.book.dto'
 
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -26,7 +26,7 @@ export const useCreateForm = () => {
 		setValue,
 		getValues,
 		formState: { errors }
-	} = useForm<CreateBookValidationType>({
+	} = useForm<CreateBookSchemaType>({
 		resolver: zodResolver(CreateBookSchema),
 		mode: 'onBlur'
 	})
@@ -46,7 +46,7 @@ export const useCreateForm = () => {
 		}
 	})
 
-	const handleCreate = handleSubmit(async (data: CreateBookValidationType) => {
+	const handleCreate = handleSubmit(async (data: CreateBookSchemaType) => {
 		await create(data)
 	})
 	console.log(watch('genres'))

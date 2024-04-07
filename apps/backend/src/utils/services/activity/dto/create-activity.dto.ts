@@ -10,7 +10,7 @@ export const CreateActivityDtoSchema = z.object({
 	importance: z.number().int().min(1).max(10),
 	userId: z.number().int().positive().optional(),
 	bookSlug: z.string().optional(),
-	genreId: z.number().int().positive().optional()
+	genreSlug: z.string().optional()
 })
 
 export class CreateActivityDto extends createZodDto(CreateActivityDtoSchema) {}

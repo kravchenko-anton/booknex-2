@@ -18,6 +18,13 @@ export class ActivityService {
 						}
 					}
 				}),
+				...(createActivityDto.genreSlug && {
+					genre: {
+						connect: {
+							slug: createActivityDto.genreSlug
+						}
+					}
+				}),
 				...(createActivityDto.bookSlug && {
 					book: {
 						connect: {

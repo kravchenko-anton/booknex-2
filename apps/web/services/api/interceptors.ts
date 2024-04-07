@@ -19,16 +19,15 @@ export const axiosRequestInstance = async (
 }
 export const axiosResponseInstance = async (error: any) => {
 	const originalRequest = error.config
-	console.log('error in intercept or', error, originalRequest)
-	console.log(error.config._isRetry)
-	if (error.response.status === 403) deleteTokensStorage()
+	console.log(originalRequest._isRetry)
+	if (error.response?.status === 403) deleteTokensStorage()
 	if (
-		(error.response.status === 401 ||
+		(error.response?.status === 401 ||
 			errorCatch(error) === 'jwt expired' ||
 			errorCatch(error) === 'jwt malformed' ||
 			errorCatch(error) === 'jwt must be provided') &&
-		error.config &&
-		!error.config._isRetry
+		originalRequest &&
+		!originalRequest._isRetry
 	) {
 		originalRequest._isRetry = true
 		try {
@@ -64,4 +63,6 @@ export const instance = axios.create({
 })
 
 instance.interceptors.request.use(axiosRequestInstance)
-instance.interceptors.response.use(response => response, axiosResponseInstance)
+
+if (window !== undefined)
+	instance.interceptors.response.use(undefined, axiosResponseInstance)

@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 const Featured = () => {
 	const { data: featured } = useQuery({
 		queryKey: ['featured'],
-		queryFn: () => api.catalog.catalogControllerFeatured(),
+		queryFn: () => api.catalog.featured(),
 		select: data => data.data
 	})
 	const { user } = useAuth()
@@ -19,7 +19,7 @@ const Featured = () => {
 		<ScrollLayout>
 			<BannerList
 				title='Recommended for you'
-				data={featured.recommendations}
+				data={featured.recommendation}
 				renderItem={({ item: book }) => (
 					<BookCard
 						size='md'
@@ -33,7 +33,7 @@ const Featured = () => {
 
 			<Flatlist
 				horizontal
-				data={featured.relatedGenres}
+				data={featured.interestedGenres}
 				renderItem={({ item: genre }) => (
 					<Button
 						size='md'

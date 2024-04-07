@@ -2,18 +2,20 @@
 import EbookEditor from '@/app/admin/book/_components/ebook-editor/editor'
 import SelectGenres from '@/app/admin/book/_components/select-genres'
 import { SelectPicture } from '@/app/admin/book/_components/select-picture'
-import {
-	UpdateBookValidation,
-	UpdateBookValidationType
-} from '@/app/admin/book/_validation/update.book.dto'
+
 import { Button, Field, FormTextArea } from '@/components/ui'
 import Loader from '@/components/ui/loader/loader'
 import api from '@/services/api'
 import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/getDirtyValues'
+import { errorToast } from '@/utils/toast'
 import { validateStringParameter } from '@/utils/validate-parameter'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+	UpdateBookSchema,
+	UpdateBookSchemaType
+} from 'global/validation/book/update.book.dto'
 import { PenNib, Star } from 'icons'
 import { useParams } from 'next/navigation'
 import { useEffect, type FC } from 'react'
@@ -21,7 +23,6 @@ import { useForm } from 'react-hook-form'
 
 const Page: FC = () => {
 	const parameters = useParams()
-
 	const bookSlug = validateStringParameter(parameters['slug'])
 	const queryClient = useQueryClient()
 
@@ -30,8 +31,8 @@ const Page: FC = () => {
 		reset,
 		handleSubmit,
 		formState: { errors, dirtyFields }
-	} = useForm<UpdateBookValidationType>({
-		resolver: zodResolver(UpdateBookValidation)
+	} = useForm<UpdateBookSchemaType>({
+		resolver: zodResolver(UpdateBookSchema)
 	})
 
 	const { data: book } = useQuery({
@@ -48,11 +49,11 @@ const Page: FC = () => {
 
 	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
 		mutationKey: ['update-book'],
-		mutationFn: (payload: UpdateBookValidationType) =>
+		mutationFn: (payload: UpdateBookSchemaType) =>
 			api.book.update(bookSlug, payload),
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({
-				queryKey: ['book-update-info', bookSlug]
+				queryKey: ['book-update-info', bookSlug, 'stored-ebook', bookSlug]
 			})
 		}
 	})
@@ -70,8 +71,9 @@ const Page: FC = () => {
 		})
 	}, [reset, book, bookSlug, ebook])
 
-	const handleUpdate = handleSubmit(async (data: UpdateBookValidationType) => {
-		console.log(dirtyValues(dirtyFields, data))
+	const handleUpdate = handleSubmit(async (data: UpdateBookSchemaType) => {
+		if (!Object.keys(dirtyValues(dirtyFields, data)).length)
+			return errorToast('Please fill some fields to update the book')
 		await update(dirtyValues(dirtyFields, data))
 	})
 

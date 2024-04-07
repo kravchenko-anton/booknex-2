@@ -31,13 +31,13 @@ export interface FeaturedOutput {
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof FeaturedOutput
      */
-    'relatedGenres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
+    'interestedGenres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
     /**
      * 
      * @type {Array<UserLibraryOutputReadingBooksInner>}
      * @memberof FeaturedOutput
      */
-    'recommendations': Array<UserLibraryOutputReadingBooksInner>;
+    'recommendation': Array<UserLibraryOutputReadingBooksInner>;
     /**
      * 
      * @type {Array<UserLibraryOutputReadingBooksInner>}
