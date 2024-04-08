@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { acceptToast, infoToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
-import { UserCatalogOutputDataInner } from 'global/api-client'
+import { UserCatalogOutput } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { timeAgo } from 'global/helpers/time-format'
 import { MoreHorizontal } from 'icons'
@@ -19,7 +19,7 @@ export const columns = ({
 }: {
 	remove: (id: number) => void
 	removeLoading: boolean
-}): ColumnDef<UserCatalogOutputDataInner, unknown>[] => [
+}): ColumnDef<UserCatalogOutput, unknown>[] => [
 	{
 		id: 'id',
 		enableHiding: false,

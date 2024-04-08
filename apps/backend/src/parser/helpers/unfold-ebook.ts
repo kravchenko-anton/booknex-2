@@ -1,3 +1,4 @@
+import { BaseChapter } from '@/src/book/ebook/ebook.model'
 import prettify from '@liquify/prettify'
 import { HttpStatus } from '@nestjs/common'
 import EPub from 'epub2'
@@ -5,13 +6,7 @@ import { adminErrors, globalErrors } from 'global/errors'
 import { JSDOM } from 'jsdom'
 
 import { serverError } from '../../utils/helpers/server-error'
-import type { UnfoldOutput } from '../parser.model'
 
-export interface ChapterType {
-	id: number
-	name: string
-	text: string
-}
 export const updatedContent = async (text: string) => {
 	const dom = new JSDOM(String(text))
 
@@ -57,9 +52,9 @@ export const getEbook = async (buffer: Buffer) =>
 	new Promise(resolve => {
 		const epub = new EPub(buffer as unknown as string)
 		epub.on('end', function () {
-			const flow: Promise<ChapterType | null>[] = epub.flow.map(
+			const flow: Promise<BaseChapter | null>[] = epub.flow.map(
 				(chapter, index) =>
-					new Promise<ChapterType | null>(resolve => {
+					new Promise<BaseChapter | null>(resolve => {
 						try {
 							if (!chapter.id) return
 							epub.getChapter(chapter.id, async (error, text) => {
@@ -82,7 +77,7 @@ export const getEbook = async (buffer: Buffer) =>
 					})
 			)
 			Promise.all(flow)
-				.then((chapters: (ChapterType | null)[]) => {
+				.then((chapters: (BaseChapter | null)[]) => {
 					const validChapters = chapters.filter(
 						chapter => chapter?.text !== null
 					)
@@ -100,4 +95,4 @@ export const getEbook = async (buffer: Buffer) =>
 				)
 		})
 		epub.parse()
-	}) as unknown as UnfoldOutput[]
+	}) as unknown as BaseChapter[]

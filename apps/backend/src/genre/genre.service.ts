@@ -1,9 +1,9 @@
+import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
 import { globalErrors } from 'global/errors'
 import { returnBookObject } from '../book/return.book.object'
 import { serverError } from '../utils/helpers/server-error'
-import { ActivityService } from '@/src/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import { ReturnGenreObject } from './return.genre.object'
 

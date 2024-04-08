@@ -1,7 +1,7 @@
+import { baseCatalogModel } from '@/src/utils/common/base-catalog.model'
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { z } from 'zod'
-import { baseCatalogModel } from '../utils/common/base-catalog.model'
 import { BookSchema } from './book.entity'
 
 extendZodWithOpenApi(z)

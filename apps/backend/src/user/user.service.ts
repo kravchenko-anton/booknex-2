@@ -1,3 +1,4 @@
+import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
@@ -6,7 +7,6 @@ import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { slugSelect } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/server-error'
-import { ActivityService } from '@/src/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import { returnUserObject } from './return.user.object'
 
@@ -60,7 +60,6 @@ export class UserService {
 		const perPage = 20
 		const data = await this.prisma.user.findMany({
 			take: perPage,
-
 			select: {
 				...returnUserObject,
 				picture: true,

@@ -13,7 +13,9 @@ export const envConfigSchema = z.object({
 	NODE_ENV: z.string(),
 	SENTRY_DSN: z.string(),
 	MAX_UPLOAD_SIZE: z.string().transform(v => parseInt(v)),
-	PORT: z.string().transform(v => parseInt(v))
+	PORT: z.string().transform(v => parseInt(v)),
+	SERVER_URL: z.string(),
+	STORAGE_URL: z.string()
 })
 
 export type EnvConfig = z.infer<typeof envConfigSchema>

@@ -27,6 +27,7 @@
 		"@nestjs/swagger": "^7.2.0",
 		"@nestjs/terminus": "^10.0.0",
 		"@nestjs/throttler": "^5.0.0",
+		"prisma": "^5.9.0",
 		"@prisma/client": "^5.9.0",
 		"@radix-ui/react-dialog": "^1.0.5",
 		"@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -177,18 +178,21 @@
 		"prettier": "^3.1.0",
 		"prettier-plugin-organize-imports": "^3.2.3",
 		"prettier-plugin-tailwindcss": "^0.5.7",
-		"prisma": "^5.9.0",
 		"prisma-json-types-generator": "^3.0.3",
 		"react-native-svg": "13.9.0",
 		"react-native-svg-transformer": "1.0.0",
 		"tailwindcss": "3.3.2",
 		"tailwindcss-animate": "^1.0.7",
-		"ts-jest": "^29.1.0",
 		"ts-loader": "^9.4.3",
 		"ts-node": "10.9.1",
 		"tsconfig-paths": "^4.2.0",
 		"tslib": "^2.6.2",
 		"typescript": "~5.3.2",
 		"url-loader": "^4.1.1"
+	},
+	"engines": {
+		    "node": "16.x",
+		    "npm": "7.x",
+				"yarn": ">=1.19.0 < 2.0.0"
 	}
 }

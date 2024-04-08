@@ -1,3 +1,4 @@
+import { CatalogOutput } from '@/src/book/book.model'
 import {
 	Body,
 	Controller,
@@ -12,7 +13,6 @@ import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import { Book, FullBook } from './book.entity'
-import { CatalogOutput } from './book.model'
 import { BookService } from './book.service'
 import { CreateBookDto } from './dto/create.book.dto'
 import { UpdateBookDto } from './dto/update.book.dto'

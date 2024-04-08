@@ -62,9 +62,9 @@ export class UserController {
 	@ApiOkResponse({ type: UserCatalogOutput })
 	async catalog(
 		@Query('searchTerm') searchTerm: string,
-		@Query('page') page: number
+		@Query('cursor') cursor: number
 	): Promise<UserCatalogOutput> {
-		return this.usersService.catalog(searchTerm || '', page || 1)
+		return this.usersService.catalog(searchTerm || '', cursor)
 	}
 
 	@Auth('admin')

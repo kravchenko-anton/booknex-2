@@ -1,3 +1,5 @@
+import { ActivityService } from '@/src/activity/activity.service'
+import { EnvConfig } from '@/src/utils/config/env-config'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
@@ -8,10 +10,8 @@ import { OAuth2Client } from 'google-auth-library'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { UserService } from '../user/user.service'
 import { serverError } from '../utils/helpers/server-error'
-import { ActivityService } from '@/src/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { AuthDto, GoogleAuthDto } from './dto/auth.dto'
-import {EnvConfig} from "@/src/utils/config/env-config";
 
 @Injectable()
 export class AuthService {
@@ -172,7 +172,8 @@ export class AuthService {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
-				expiresIn: this.configService.get('NODE_ENV') === 'development' ? '10s' : '15m'
+				expiresIn:
+					this.configService.get('NODE_ENV') === 'development' ? '10s' : '15m'
 			}),
 			refreshToken: this.jwt.sign(data, {
 				expiresIn: '10d'

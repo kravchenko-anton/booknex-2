@@ -1,3 +1,4 @@
+import { ActivityService } from '@/src/activity/activity.service'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
@@ -7,7 +8,6 @@ import { PrismaService } from '../utils/services/prisma.service'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { JwtStrategy } from './strategy/jwt.stategy'
-import {ActivityService} from "@/src/activity/activity.service";
 
 @Module({
 	controllers: [AuthController],

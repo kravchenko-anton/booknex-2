@@ -34,15 +34,15 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} searchTerm 
-         * @param {number} page 
+         * @param {number} cursor 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        catalog: async (searchTerm: string, page: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        catalog: async (searchTerm: string, cursor: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchTerm' is not null or undefined
             assertParamExists('catalog', 'searchTerm', searchTerm)
-            // verify required parameter 'page' is not null or undefined
-            assertParamExists('catalog', 'page', page)
+            // verify required parameter 'cursor' is not null or undefined
+            assertParamExists('catalog', 'cursor', cursor)
             const localVarPath = `/user/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,8 +63,8 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['searchTerm'] = searchTerm;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
             }
 
 
@@ -309,12 +309,12 @@ export const UserApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} searchTerm 
-         * @param {number} page 
+         * @param {number} cursor 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async catalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCatalogOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.catalog(searchTerm, page, options);
+        async catalog(searchTerm: string, cursor: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCatalogOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.catalog(searchTerm, cursor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.catalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -403,12 +403,12 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @param {string} searchTerm 
-         * @param {number} page 
+         * @param {number} cursor 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        catalog(searchTerm: string, page: number, options?: any): AxiosPromise<UserCatalogOutput> {
-            return localVarFp.catalog(searchTerm, page, options).then((request) => request(axios, basePath));
+        catalog(searchTerm: string, cursor: number, options?: any): AxiosPromise<UserCatalogOutput> {
+            return localVarFp.catalog(searchTerm, cursor, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -476,13 +476,13 @@ export class UserApi extends BaseAPI {
     /**
      * 
      * @param {string} searchTerm 
-     * @param {number} page 
+     * @param {number} cursor 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public catalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).catalog(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
+    public catalog(searchTerm: string, cursor: number, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).catalog(searchTerm, cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

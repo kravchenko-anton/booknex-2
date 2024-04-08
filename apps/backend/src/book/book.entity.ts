@@ -1,9 +1,9 @@
+import { ActivitySchema } from '@/src/activity/activity.model'
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { z } from 'zod'
 import { shortGenreSchema } from '../genre/genre.entity'
 import { ReviewSchema } from '../review/review.entity'
-import {ActivitySchema} from "@/src/activity/activity.model";
 
 extendZodWithOpenApi(z)
 

@@ -21,19 +21,18 @@ export const openApiConfig = new DocumentBuilder()
 	.addTag('📦 parser', 'parser service')
 	.addBearerAuth()
 
-
 export const typesGeneratorConfig = {
 	webServerOptions: {
-		enabled: process.env["NODE_ENV"] === 'development',
+		enabled: process.env['NODE_ENV'] === 'development',
 		path: 'api-docs'
 	},
 	fileGeneratorOptions: {
-		enabled: process.env["NODE_ENV"] === 'development',
+		enabled: process.env['NODE_ENV'] === 'development',
 		outputFilePath: './openapi.yaml' // or ./openapi.json
 	},
 
 	clientGeneratorOptions: {
-		enabled: process.env["NODE_ENV"] === 'development',
+		enabled: process.env['NODE_ENV'] === 'development',
 		type: 'typescript-axios',
 		outputFolderPath: './libs/global/api-client',
 		additionalProperties:

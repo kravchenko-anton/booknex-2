@@ -1,8 +1,8 @@
+import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
 import { adminErrors, globalErrors } from 'global/errors'
 import { serverError } from '../utils/helpers/server-error'
-import { ActivityService } from '@/src/activity/activity.service'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { ReviewBookDto } from './dto/review.book.dto'
 

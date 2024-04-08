@@ -20,7 +20,7 @@ const Page: FC = () => {
 	})
 
 	const table = useReactTable({
-		data: users?.data ?? [],
+		data: users ?? [],
 		columns: columns({
 			remove: deleteUser,
 			removeLoading: deleteUserLoading
@@ -40,12 +40,7 @@ const Page: FC = () => {
 					)
 				}}
 			/>
-			<DataTable
-				table={table}
-				totalPages={users?.totalPages ?? 0}
-				currentPage={page}
-				canLoadMore={users?.canLoadMore}
-			/>
+			<DataTable table={table} />
 		</div>
 	)
 }

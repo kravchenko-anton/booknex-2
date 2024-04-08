@@ -1,4 +1,8 @@
 import {
+	BookTemplateCatalogOutput,
+	UnfoldOutput
+} from '@/src/parser/parser.model'
+import {
 	Body,
 	Controller,
 	Delete,
@@ -24,7 +28,6 @@ import { Auth } from '../auth/decorators/auth.decorator'
 
 import { ParserDto } from './dto/parser.dto'
 import { BookTemplate } from './parser.entity'
-import { BookTemplateCatalogOutput, UnfoldOutput } from './parser.model'
 import { ParserService } from './parser.service'
 
 @Auth('admin')

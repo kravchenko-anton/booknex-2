@@ -6,12 +6,8 @@ declare global {
 	var prisma: PrismaService | null // eslint-disable-line no-var
 }
 
-
-@Injectable(
-	// inject config service here
-
-
-)
+@Injectable()
+// inject config service here
 export class PrismaService extends PrismaClient implements OnModuleInit {
 	private static instance: PrismaService
 
@@ -31,7 +27,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
 let prisma: PrismaService
 
-if (process.env["NODE_ENV"] === 'production') {
+if (process.env['NODE_ENV'] === 'production') {
 	prisma = new PrismaService()
 } else {
 	if (!global.prisma) {

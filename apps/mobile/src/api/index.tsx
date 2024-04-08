@@ -10,32 +10,36 @@ import {
 	StorageApi,
 	UserApi
 } from 'global/api-client'
-import { serverURL } from 'global/api-config'
+import { emulatorServerURL } from 'global/api-config'
 import { instance } from './interceptors'
 
 const baseParams = {
-	basePath: serverURL,
+	basePath: emulatorServerURL,
 	isJsonMime: () => true
 }
-const auth = new AuthApi(baseParams, serverURL, undefined)
+const auth = new AuthApi(baseParams, emulatorServerURL, undefined)
 
-const book = new BookApi(baseParams, serverURL, instance)
+const book = new BookApi(baseParams, emulatorServerURL, instance)
 
-const catalog = new CatalogApi(baseParams, serverURL, instance)
+const catalog = new CatalogApi(baseParams, emulatorServerURL, instance)
 
-const ebook = new EbookApi(baseParams, serverURL, instance)
+const ebook = new EbookApi(baseParams, emulatorServerURL, instance)
 
-const genre = new GenreApi(baseParams, serverURL, instance)
+const genre = new GenreApi(baseParams, emulatorServerURL, instance)
 
-const parser = new ParserApi(baseParams, serverURL, instance)
+const parser = new ParserApi(baseParams, emulatorServerURL, instance)
 
-const recommendation = new RecommendationApi(baseParams, serverURL, instance)
+const recommendation = new RecommendationApi(
+	baseParams,
+	emulatorServerURL,
+	instance
+)
 
-const review = new ReviewApi(baseParams, serverURL, instance)
+const review = new ReviewApi(baseParams, emulatorServerURL, instance)
 
-const storage = new StorageApi(baseParams, serverURL, instance)
+const storage = new StorageApi(baseParams, emulatorServerURL, instance)
 
-const user = new UserApi(baseParams, serverURL, instance)
+const user = new UserApi(baseParams, emulatorServerURL, instance)
 
 export default {
 	auth,

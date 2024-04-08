@@ -96,7 +96,7 @@ paths:
           in: query
           schema:
             type: string
-        - name: page
+        - name: cursor
           required: true
           in: query
           schema:
