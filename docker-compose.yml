@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  backend:
+    restart: always
+    build:
+      dockerfile: /apps/backend/Dockerfile
+    volumes:
+        - /apps/backend:/apps/backend
+    env_file:
+      - /apps/backend/.env.production
+  web:
+    restart: always
+    build:
+      dockerfile: /apps/web/Dockerfile
+    env_file:
+      - /apps/web/.env.local
