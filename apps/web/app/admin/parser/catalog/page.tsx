@@ -22,7 +22,7 @@ const Parser: FC = () => {
 	})
 
 	const table = useReactTable({
-		data: books ?? [],
+		data: books?.data ?? [],
 		columns: columns({
 			remove: (slug: string) => deleteTemplate(slug),
 			removeLoading: deleteTemplateLoading,
@@ -57,7 +57,12 @@ const Parser: FC = () => {
 					onClose={() => router.replace(secureRoutes.parserCatalogRoute)}
 				/>
 			</DataTableHeader>
-			<DataTable table={table} />
+			<DataTable
+				table={table}
+				totalPages={books?.totalPages ?? 0}
+				currentPage={page}
+				canLoadMore={!!books?.canLoadMore}
+			/>
 		</div>
 	)
 }

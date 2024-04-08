@@ -12,31 +12,28 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface UserCatalogOutputCount
  */
 export interface UserCatalogOutputCount {
-    /**
-     * 
-     * @type {number}
-     * @memberof UserCatalogOutputCount
-     */
-    'savedBooks'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserCatalogOutputCount
-     */
-    'finishedBooks'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserCatalogOutputCount
-     */
-    'readingBooks'?: number;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof UserCatalogOutputCount
+	 */
+	savedBooks?: number
+	/**
+	 *
+	 * @type {number}
+	 * @memberof UserCatalogOutputCount
+	 */
+	finishedBooks?: number
+	/**
+	 *
+	 * @type {number}
+	 * @memberof UserCatalogOutputCount
+	 */
+	readingBooks?: number
 }
-

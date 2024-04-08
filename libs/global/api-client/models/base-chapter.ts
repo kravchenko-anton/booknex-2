@@ -12,31 +12,28 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface BaseChapter
  */
 export interface BaseChapter {
-    /**
-     * 
-     * @type {number}
-     * @memberof BaseChapter
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseChapter
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseChapter
-     */
-    'text': string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof BaseChapter
+	 */
+	id: number
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BaseChapter
+	 */
+	name: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof BaseChapter
+	 */
+	text: string
 }
-

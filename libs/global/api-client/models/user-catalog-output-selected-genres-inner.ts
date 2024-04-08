@@ -12,31 +12,28 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface UserCatalogOutputSelectedGenresInner
  */
 export interface UserCatalogOutputSelectedGenresInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputSelectedGenresInner
-     */
-    'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputSelectedGenresInner
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputSelectedGenresInner
-     */
-    'icon': string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputSelectedGenresInner
+	 */
+	slug: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputSelectedGenresInner
+	 */
+	name: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputSelectedGenresInner
+	 */
+	icon: string
 }
-

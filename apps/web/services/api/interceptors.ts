@@ -63,6 +63,4 @@ export const instance = axios.create({
 })
 
 instance.interceptors.request.use(axiosRequestInstance)
-
-if (window !== undefined)
-	instance.interceptors.response.use(undefined, axiosResponseInstance)
+instance.interceptors.response.use(undefined, axiosResponseInstance)
