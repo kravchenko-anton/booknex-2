@@ -6,12 +6,15 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY nx.json ./
 COPY tsconfig.base.json ./
-
-RUN npm install -g husky
-RUN npm install --prod --legacy-peer-deps
-RUN npx nx build web
 COPY apps/web apps/web
 COPY libs libs
+
+RUN npm install --omit=dev
+RUN npm install -g husky
+RUN npm install nx
+RUN nx --version
+RUN npx nx build web
+
 # Production image, copy all the files and run nest
 FROM docker.io/node:lts-alpine as runner
 RUN apk add --no-cache dumb-init

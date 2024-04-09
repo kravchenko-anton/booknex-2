@@ -6,15 +6,17 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY nx.json ./
 COPY tsconfig.base.json ./
-
+COPY apps/backend apps/backend
+COPY libs libs
+RUN npm install --omit=dev
 RUN npm install -g husky
-RUN npm install --prod --legacy-peer-deps
+RUN npm install nx
 RUN npm install prisma --save-dev
 RUN npm install --include=optional sharp
 RUN npx prisma generate
+RUN nx --version
 RUN npx nx build backend
-COPY apps/backend apps/backend
-COPY libs libs
+
 # Production image, copy all the files and run nest
 FROM docker.io/node:lts-alpine as runner
 RUN apk add --no-cache dumb-init
