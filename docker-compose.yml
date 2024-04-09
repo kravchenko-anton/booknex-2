@@ -1,16 +1,16 @@
 version: '3'
 
 services:
-#  backend:
-#    restart: always
-#    build:
-#      dockerfile: /apps/backend/Dockerfile
-#    volumes:
-#      - /apps/backend:/apps/backend
-#    env_file:
-#      - /apps/backend/.env.production
-#    ports:
-#      - '3000:3000'
+  backend:
+    restart: always
+    build:
+      dockerfile: /apps/backend/Dockerfile
+    volumes:
+      - /apps/backend:/apps/backend
+    env_file:
+      - /apps/backend/.env.production
+    ports:
+      - '3000:3000'
   web:
     ports:
       - '80:80'
@@ -19,4 +19,3 @@ services:
       dockerfile: /apps/web/Dockerfile
     env_file:
       - /apps/web/.env.local
-

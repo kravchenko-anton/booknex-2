@@ -5,16 +5,16 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /usr/src/app
 COPY package*.json ./
 COPY nx.json ./
+COPY ../../package-lock.json ./
 COPY tsconfig.base.json ./
 COPY apps/backend apps/backend
 COPY libs libs
 RUN npm install -g husky
 RUN npm install -g nx
-RUN npm install --omit=dev
+RUN npm install 
 RUN npm install prisma --save-dev
 RUN npm install --include=optional sharp
 RUN npx prisma generate
-RUN nx --version
 RUN npx nx build backend
 
 # Production image, copy all the files and run nest

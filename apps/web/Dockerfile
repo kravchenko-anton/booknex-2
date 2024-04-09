@@ -3,6 +3,7 @@ FROM docker.io/node:lts-alpine as deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /usr/src/app
 COPY package*.json ./
+
 COPY nx.json ./
 COPY tsconfig.base.json ./
 COPY apps/web apps/web
