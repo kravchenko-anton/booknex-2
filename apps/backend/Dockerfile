@@ -8,9 +8,9 @@ COPY nx.json ./
 COPY tsconfig.base.json ./
 COPY apps/backend apps/backend
 COPY libs libs
-RUN npm install --omit=dev
 RUN npm install -g husky
-RUN npm install nx
+RUN npm install -g nx
+RUN npm install --omit=dev
 RUN npm install prisma --save-dev
 RUN npm install --include=optional sharp
 RUN npx prisma generate

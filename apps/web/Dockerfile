@@ -1,6 +1,5 @@
 # Install dependencies only when needed
 FROM docker.io/node:lts-alpine as deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /usr/src/app
 COPY package*.json ./
@@ -8,11 +7,9 @@ COPY nx.json ./
 COPY tsconfig.base.json ./
 COPY apps/web apps/web
 COPY libs libs
-
-RUN npm install --omit=dev
 RUN npm install -g husky
-RUN npm install nx
-RUN nx --version
+RUN npm install -g nx
+RUN npm install
 RUN npx nx build web
 
 # Production image, copy all the files and run nest
