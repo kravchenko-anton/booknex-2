@@ -12,19 +12,16 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface GoogleAuthDto
  */
 export interface GoogleAuthDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof GoogleAuthDto
-     */
-    'socialId': string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof GoogleAuthDto
+	 */
+	socialId: string
 }
-

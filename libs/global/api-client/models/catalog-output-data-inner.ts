@@ -12,76 +12,74 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner'
 
 /**
- * 
+ *
  * @export
  * @interface CatalogOutputDataInner
  */
 export interface CatalogOutputDataInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof CatalogOutputDataInner
-     */
-    'description': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof CatalogOutputDataInner
-     */
-    'readingTime': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CatalogOutputDataInner
-     */
-    'chapters': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CatalogOutputDataInner
-     */
-    'rating': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CatalogOutputDataInner
-     */
-    'isPublic': boolean;
-    /**
-     * 
-     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
-     * @memberof CatalogOutputDataInner
-     */
-    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof CatalogOutputDataInner
-     */
-    'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CatalogOutputDataInner
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CatalogOutputDataInner
-     */
-    'picture': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CatalogOutputDataInner
-     */
-    'author': string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof CatalogOutputDataInner
+	 */
+	description: string
+	/**
+	 *
+	 * @type {number}
+	 * @memberof CatalogOutputDataInner
+	 */
+	readingTime: number
+	/**
+	 *
+	 * @type {number}
+	 * @memberof CatalogOutputDataInner
+	 */
+	chapters: number
+	/**
+	 *
+	 * @type {number}
+	 * @memberof CatalogOutputDataInner
+	 */
+	rating: number
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof CatalogOutputDataInner
+	 */
+	isPublic: boolean
+	/**
+	 *
+	 * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
+	 * @memberof CatalogOutputDataInner
+	 */
+	genres: Array<UserCatalogOutputDataInnerSelectedGenresInner>
+	/**
+	 *
+	 * @type {string}
+	 * @memberof CatalogOutputDataInner
+	 */
+	slug: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof CatalogOutputDataInner
+	 */
+	title: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof CatalogOutputDataInner
+	 */
+	picture: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof CatalogOutputDataInner
+	 */
+	author: string
 }
-

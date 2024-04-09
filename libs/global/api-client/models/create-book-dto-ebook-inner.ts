@@ -12,34 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { CreateBookDtoEbookInnerChaptersInner } from './create-book-dto-ebook-inner-chapters-inner';
+import { CreateBookDtoEbookInnerChaptersInner } from './create-book-dto-ebook-inner-chapters-inner'
 
 /**
- * 
+ *
  * @export
  * @interface CreateBookDtoEbookInner
  */
 export interface CreateBookDtoEbookInner {
-    /**
-     * 
-     * @type {Array<CreateBookDtoEbookInnerChaptersInner>}
-     * @memberof CreateBookDtoEbookInner
-     */
-    'chapters': Array<CreateBookDtoEbookInnerChaptersInner>;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreateBookDtoEbookInner
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBookDtoEbookInner
-     */
-    'title': string;
+	/**
+	 *
+	 * @type {Array<CreateBookDtoEbookInnerChaptersInner>}
+	 * @memberof CreateBookDtoEbookInner
+	 */
+	chapters: Array<CreateBookDtoEbookInnerChaptersInner>
+	/**
+	 *
+	 * @type {number}
+	 * @memberof CreateBookDtoEbookInner
+	 */
+	id: number
+	/**
+	 *
+	 * @type {string}
+	 * @memberof CreateBookDtoEbookInner
+	 */
+	title: string
 }
-

@@ -12,82 +12,80 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner';
+import { UserCatalogOutputDataInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner'
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerCount } from './user-catalog-output-data-inner-count';
+import { UserCatalogOutputDataInnerCount } from './user-catalog-output-data-inner-count'
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner'
 
 /**
- * 
+ *
  * @export
  * @interface UserCatalogOutputDataInner
  */
 export interface UserCatalogOutputDataInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'email': string;
-    /**
-     * 
-     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'selectedGenres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
-    /**
-     * 
-     * @type {Array<UserCatalogOutputDataInnerActivitiesInner>}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'activities': Array<UserCatalogOutputDataInnerActivitiesInner>;
-    /**
-     * 
-     * @type {UserCatalogOutputDataInnerCount}
-     * @memberof UserCatalogOutputDataInner
-     */
-    '_count': UserCatalogOutputDataInnerCount;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'createdAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'socialId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'picture': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'fullName': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputDataInner
-     */
-    'location': string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	id: number
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	email: string
+	/**
+	 *
+	 * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	selectedGenres: Array<UserCatalogOutputDataInnerSelectedGenresInner>
+	/**
+	 *
+	 * @type {Array<UserCatalogOutputDataInnerActivitiesInner>}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	activities: Array<UserCatalogOutputDataInnerActivitiesInner>
+	/**
+	 *
+	 * @type {UserCatalogOutputDataInnerCount}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	_count: UserCatalogOutputDataInnerCount
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	createdAt: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	socialId?: string | null
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	picture: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	fullName: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserCatalogOutputDataInner
+	 */
+	location: string
 }
-

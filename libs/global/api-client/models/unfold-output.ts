@@ -12,31 +12,28 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface UnfoldOutput
  */
 export interface UnfoldOutput {
-    /**
-     * 
-     * @type {number}
-     * @memberof UnfoldOutput
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UnfoldOutput
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UnfoldOutput
-     */
-    'text': string;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof UnfoldOutput
+	 */
+	id: number
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UnfoldOutput
+	 */
+	name: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UnfoldOutput
+	 */
+	text: string
 }
-

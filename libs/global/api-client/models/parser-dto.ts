@@ -12,25 +12,22 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface ParserDto
  */
 export interface ParserDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ParserDto
-     */
-    'url': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ParserDto
-     */
-    'page': number;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ParserDto
+	 */
+	url: string
+	/**
+	 *
+	 * @type {number}
+	 * @memberof ParserDto
+	 */
+	page: number
 }
-

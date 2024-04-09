@@ -12,37 +12,34 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface UserLibraryOutputReadingBooksInner
  */
 export interface UserLibraryOutputReadingBooksInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserLibraryOutputReadingBooksInner
-     */
-    'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserLibraryOutputReadingBooksInner
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserLibraryOutputReadingBooksInner
-     */
-    'picture': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserLibraryOutputReadingBooksInner
-     */
-    'author': string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserLibraryOutputReadingBooksInner
+	 */
+	slug: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserLibraryOutputReadingBooksInner
+	 */
+	title: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserLibraryOutputReadingBooksInner
+	 */
+	picture: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserLibraryOutputReadingBooksInner
+	 */
+	author: string
 }
-

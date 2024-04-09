@@ -6,10 +6,14 @@ services:
     build:
       dockerfile: /apps/backend/Dockerfile
     volumes:
-        - /apps/backend:/apps/backend
+      - /apps/backend:/apps/backend
     env_file:
       - /apps/backend/.env.production
+    ports:
+      - "3000:3000"
   web:
+    ports:
+      - "80:80"
     restart: always
     build:
       dockerfile: /apps/web/Dockerfile

@@ -12,40 +12,38 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
+import { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner'
 
 /**
- * 
+ *
  * @export
  * @interface FindOneGenreOutput
  */
 export interface FindOneGenreOutput {
-    /**
-     * 
-     * @type {Array<UserLibraryOutputReadingBooksInner>}
-     * @memberof FindOneGenreOutput
-     */
-    'mainBooks': Array<UserLibraryOutputReadingBooksInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindOneGenreOutput
-     */
-    'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindOneGenreOutput
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindOneGenreOutput
-     */
-    'icon': string;
+	/**
+	 *
+	 * @type {Array<UserLibraryOutputReadingBooksInner>}
+	 * @memberof FindOneGenreOutput
+	 */
+	mainBooks: Array<UserLibraryOutputReadingBooksInner>
+	/**
+	 *
+	 * @type {string}
+	 * @memberof FindOneGenreOutput
+	 */
+	slug: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof FindOneGenreOutput
+	 */
+	name: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof FindOneGenreOutput
+	 */
+	icon: string
 }
-

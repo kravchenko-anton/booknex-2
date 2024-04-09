@@ -12,37 +12,34 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
- * 
+ *
  * @export
  * @interface ShortBook
  */
 export interface ShortBook {
-    /**
-     * 
-     * @type {string}
-     * @memberof ShortBook
-     */
-    'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ShortBook
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ShortBook
-     */
-    'picture': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ShortBook
-     */
-    'author': string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ShortBook
+	 */
+	slug: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ShortBook
+	 */
+	title: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ShortBook
+	 */
+	picture: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof ShortBook
+	 */
+	author: string
 }
-

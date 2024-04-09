@@ -12,76 +12,74 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner'
 
 /**
- * 
+ *
  * @export
  * @interface Book
  */
 export interface Book {
-    /**
-     * 
-     * @type {string}
-     * @memberof Book
-     */
-    'description': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Book
-     */
-    'readingTime': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Book
-     */
-    'chapters': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Book
-     */
-    'rating': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Book
-     */
-    'isPublic': boolean;
-    /**
-     * 
-     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
-     * @memberof Book
-     */
-    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof Book
-     */
-    'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Book
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Book
-     */
-    'picture': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Book
-     */
-    'author': string;
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Book
+	 */
+	description: string
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Book
+	 */
+	readingTime: number
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Book
+	 */
+	chapters: number
+	/**
+	 *
+	 * @type {number}
+	 * @memberof Book
+	 */
+	rating: number
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof Book
+	 */
+	isPublic: boolean
+	/**
+	 *
+	 * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
+	 * @memberof Book
+	 */
+	genres: Array<UserCatalogOutputDataInnerSelectedGenresInner>
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Book
+	 */
+	slug: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Book
+	 */
+	title: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Book
+	 */
+	picture: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof Book
+	 */
+	author: string
 }
-

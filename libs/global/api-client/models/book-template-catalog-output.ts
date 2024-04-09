@@ -12,34 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { BookTemplateCatalogOutputDataInner } from './book-template-catalog-output-data-inner';
+import { BookTemplateCatalogOutputDataInner } from './book-template-catalog-output-data-inner'
 
 /**
- * 
+ *
  * @export
  * @interface BookTemplateCatalogOutput
  */
 export interface BookTemplateCatalogOutput {
-    /**
-     * 
-     * @type {Array<BookTemplateCatalogOutputDataInner>}
-     * @memberof BookTemplateCatalogOutput
-     */
-    'data': Array<BookTemplateCatalogOutputDataInner>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BookTemplateCatalogOutput
-     */
-    'canLoadMore': boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof BookTemplateCatalogOutput
-     */
-    'totalPages': number;
+	/**
+	 *
+	 * @type {Array<BookTemplateCatalogOutputDataInner>}
+	 * @memberof BookTemplateCatalogOutput
+	 */
+	data: Array<BookTemplateCatalogOutputDataInner>
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof BookTemplateCatalogOutput
+	 */
+	canLoadMore: boolean
+	/**
+	 *
+	 * @type {number}
+	 * @memberof BookTemplateCatalogOutput
+	 */
+	totalPages: number
 }
-

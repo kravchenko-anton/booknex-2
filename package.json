@@ -95,7 +95,6 @@
 		"throttle-debounce": "^5.0.0",
 		"util": "^0.12.5",
 		"vaul": "^0.9.0",
-		"w3c-html-validator": "^1.7.0",
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
@@ -190,10 +189,5 @@
 		"tslib": "^2.6.2",
 		"typescript": "~5.3.2",
 		"url-loader": "^4.1.1"
-	},
-	"engines": {
-		"node": "16.x",
-		"npm": "7.x",
-		"yarn": ">=1.19.0 < 2.0.0"
 	}
 }

@@ -12,34 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 // May contain unused imports in some cases
 // @ts-ignore
-import { StoredEBookChaptersInner } from './stored-ebook-chapters-inner';
+import { StoredEBookChaptersInner } from './stored-ebook-chapters-inner'
 
 /**
- * 
+ *
  * @export
  * @interface StoredEBook
  */
 export interface StoredEBook {
-    /**
-     * 
-     * @type {Array<StoredEBookChaptersInner>}
-     * @memberof StoredEBook
-     */
-    'chapters': Array<StoredEBookChaptersInner>;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoredEBook
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoredEBook
-     */
-    'title': string;
+	/**
+	 *
+	 * @type {Array<StoredEBookChaptersInner>}
+	 * @memberof StoredEBook
+	 */
+	chapters: Array<StoredEBookChaptersInner>
+	/**
+	 *
+	 * @type {number}
+	 * @memberof StoredEBook
+	 */
+	id: number
+	/**
+	 *
+	 * @type {string}
+	 * @memberof StoredEBook
+	 */
+	title: string
 }
-
