@@ -1,19 +1,12 @@
 # Install dependencies only when needed
 FROM docker.io/node:lts-alpine as deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /usr/src/app
-COPY package*.json ./
+COPY dist/apps/web/package*.json ./
+RUN npm install --omit=dev
 
-COPY nx.json ./
-COPY tsconfig.base.json ./
-COPY apps/web apps/web
-COPY libs libs
-RUN npm install -g husky
-RUN npm install -g nx
-RUN npm install
-RUN npx nx build web
-
-# Production image, copy all the files and run nest
+# Production image, copy all the files and run next
 FROM docker.io/node:lts-alpine as runner
 RUN apk add --no-cache dumb-init
 ENV NODE_ENV production
@@ -21,8 +14,15 @@ ENV PORT 3000
 WORKDIR /usr/src/app
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY --from=deps /usr/src/app/package.json ./package.json
-COPY --from=deps /usr/src/app/dist/apps/web .
+COPY dist/apps/web/public ./public
+COPY dist/apps/web/.next ./.next
 RUN chown -R node:node .
 USER node
 EXPOSE 3000
-CMD ["dumb-init", "node", "main.js"]
+# COPY --chown=node:node ./tools/scripts/entrypoints/api.sh /usr/local/bin/docker-entrypoint.sh
+# ENTRYPOINT [ "docker-entrypoint.sh" ]
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry.
+ENV NEXT_TELEMETRY_DISABLED 1
+CMD ["dumb-init", "node_modules/.bin/next", "start"]

@@ -1,3 +1,7 @@
+// Import env need for zod validation all env set up
+
+import '../env-config'
+
 import Providers from '@/providers/app-provider'
 import { appName } from 'global/utils'
 import { Space_Grotesk } from 'next/font/google'

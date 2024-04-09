@@ -1,7 +1,11 @@
 import { z } from 'zod'
-import { shortGenreSchema } from '../../../../apps/backend/src/genre/genre.entity'
 import { EBookPayloadSchema } from './ebook.payload.dto'
 
+export const shortGenreSchema = z.object({
+	slug: z.string(),
+	name: z.string(),
+	icon: z.string()
+})
 export const UpdateBookSchema = z.object({
 	title: z.string().optional(),
 	author: z.string().optional(),
