@@ -41,7 +41,7 @@ testem.log
 Thumbs.db
 
 .nx/cache
-
+/dist
 # Expo
 node_modules/
 .expo/

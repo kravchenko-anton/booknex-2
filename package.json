@@ -7,8 +7,8 @@
 		"build:backend": "nx build backend",
 		"build:mobile": "nx build mobile",
 		"prepare": "husky",
-		"run:commit": "npx eslint --fix && nx build backend && nx build web",
-		"start:docker": "nx build web && nx build backend && docker-compose up --build"
+		"run:commit": "npx eslint --fix",
+		"build": "nx build backend && nx build web"
 	},
 	"dependencies": {
 		"@anatine/zod-nestjs": "^2.0.8",
@@ -71,7 +71,7 @@
 		"react-activity-calendar": "^2.2.7",
 		"react-dom": "18.2.0",
 		"react-hook-form": "^7.46.1",
-		"react-native": "0.72.6",
+		"react-native": "0.73.0",
 		"react-native-bootsplash": "^5.4.0",
 		"react-native-code-push": "^8.2.1",
 		"react-native-encrypted-storage": "^4.0.3",
