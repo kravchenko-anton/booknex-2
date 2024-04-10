@@ -16,6 +16,11 @@ export const metadata = {
 const font = Space_Grotesk({ subsets: ['latin'] })
 const RootLayout = ({ children }: { children: ReactNode }) => (
 	<html lang='en'>
+		<head>
+			<link rel='icon' href='/favicon.png' />
+			<meta charSet='utf-8' />
+			<title>${metadata.title}</title>
+		</head>
 		<body style={{ ...font.style }}>
 			<Providers>{children}</Providers>
 		</body>

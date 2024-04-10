@@ -7,6 +7,12 @@ import { errorToast } from '@/utils/toast'
 import axios, { InternalAxiosRequestConfig } from 'axios'
 import { errorCatch } from 'global/helpers/catch-error'
 
+export const instance = axios.create({
+	headers: {
+		'Content-Type': 'application/json'
+	}
+})
+
 export const axiosRequestInstance = async (
 	config: InternalAxiosRequestConfig<any>
 ) => {
@@ -55,12 +61,6 @@ export const axiosResponseInstance = async (error: any) => {
 	errorToast(error)
 	return Promise.reject(error)
 }
-
-export const instance = axios.create({
-	headers: {
-		'Content-Type': 'application/json'
-	}
-})
 
 instance.interceptors.request.use(axiosRequestInstance)
 instance.interceptors.response.use(undefined, axiosResponseInstance)

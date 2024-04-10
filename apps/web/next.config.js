@@ -27,7 +27,8 @@ const nextConfig = {
 		svgr: true
 	},
 	env: {
-		CLIENT_ID: process.env.CLIENT_ID
+		CLIENT_ID: process.env.CLIENT_ID,
+		SERVER_URL: process.env.SERVER_URL
 	}
 }
 
