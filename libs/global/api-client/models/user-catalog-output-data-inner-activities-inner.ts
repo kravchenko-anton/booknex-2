@@ -12,38 +12,40 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerActivitiesInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner-activities-inner'
+import { UserCatalogOutputDataInnerActivitiesInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner-activities-inner';
 
 /**
- *
+ * 
  * @export
  * @interface UserCatalogOutputDataInnerActivitiesInner
  */
 export interface UserCatalogOutputDataInnerActivitiesInner {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserCatalogOutputDataInnerActivitiesInner
-	 */
-	date: string
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserCatalogOutputDataInnerActivitiesInner
-	 */
-	count: number
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserCatalogOutputDataInnerActivitiesInner
-	 */
-	level: number
-	/**
-	 *
-	 * @type {Array<UserCatalogOutputDataInnerActivitiesInnerActivitiesInner>}
-	 * @memberof UserCatalogOutputDataInnerActivitiesInner
-	 */
-	activities: Array<UserCatalogOutputDataInnerActivitiesInnerActivitiesInner>
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCatalogOutputDataInnerActivitiesInner
+     */
+    'date': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCatalogOutputDataInnerActivitiesInner
+     */
+    'count': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCatalogOutputDataInnerActivitiesInner
+     */
+    'level': number;
+    /**
+     * 
+     * @type {Array<UserCatalogOutputDataInnerActivitiesInnerActivitiesInner>}
+     * @memberof UserCatalogOutputDataInnerActivitiesInner
+     */
+    'activities': Array<UserCatalogOutputDataInnerActivitiesInnerActivitiesInner>;
 }
+

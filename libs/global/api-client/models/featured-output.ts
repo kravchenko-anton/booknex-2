@@ -12,47 +12,49 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner'
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner'
+import { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
 
 /**
- *
+ * 
  * @export
  * @interface FeaturedOutput
  */
 export interface FeaturedOutput {
-	/**
-	 *
-	 * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
-	 * @memberof FeaturedOutput
-	 */
-	interestedGenres: Array<UserCatalogOutputDataInnerSelectedGenresInner>
-	/**
-	 *
-	 * @type {Array<UserLibraryOutputReadingBooksInner>}
-	 * @memberof FeaturedOutput
-	 */
-	recommendation: Array<UserLibraryOutputReadingBooksInner>
-	/**
-	 *
-	 * @type {Array<UserLibraryOutputReadingBooksInner>}
-	 * @memberof FeaturedOutput
-	 */
-	popularBooks: Array<UserLibraryOutputReadingBooksInner>
-	/**
-	 *
-	 * @type {Array<UserLibraryOutputReadingBooksInner>}
-	 * @memberof FeaturedOutput
-	 */
-	bestSellingBooks: Array<UserLibraryOutputReadingBooksInner>
-	/**
-	 *
-	 * @type {Array<UserLibraryOutputReadingBooksInner>}
-	 * @memberof FeaturedOutput
-	 */
-	newReleases: Array<UserLibraryOutputReadingBooksInner>
+    /**
+     * 
+     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
+     * @memberof FeaturedOutput
+     */
+    'interestedGenres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
+    /**
+     * 
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @memberof FeaturedOutput
+     */
+    'recommendation': Array<UserLibraryOutputReadingBooksInner>;
+    /**
+     * 
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @memberof FeaturedOutput
+     */
+    'popularBooks': Array<UserLibraryOutputReadingBooksInner>;
+    /**
+     * 
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @memberof FeaturedOutput
+     */
+    'bestSellingBooks': Array<UserLibraryOutputReadingBooksInner>;
+    /**
+     * 
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @memberof FeaturedOutput
+     */
+    'newReleases': Array<UserLibraryOutputReadingBooksInner>;
 }
+

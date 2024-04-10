@@ -12,32 +12,34 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { CatalogOutputDataInner } from './catalog-output-data-inner'
+import { CatalogOutputDataInner } from './catalog-output-data-inner';
 
 /**
- *
+ * 
  * @export
  * @interface CatalogOutput
  */
 export interface CatalogOutput {
-	/**
-	 *
-	 * @type {Array<CatalogOutputDataInner>}
-	 * @memberof CatalogOutput
-	 */
-	data: Array<CatalogOutputDataInner>
-	/**
-	 *
-	 * @type {boolean}
-	 * @memberof CatalogOutput
-	 */
-	canLoadMore: boolean
-	/**
-	 *
-	 * @type {number}
-	 * @memberof CatalogOutput
-	 */
-	totalPages: number
+    /**
+     * 
+     * @type {Array<CatalogOutputDataInner>}
+     * @memberof CatalogOutput
+     */
+    'data': Array<CatalogOutputDataInner>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CatalogOutput
+     */
+    'canLoadMore': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CatalogOutput
+     */
+    'totalPages': number;
 }
+

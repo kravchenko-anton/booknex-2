@@ -12,119 +12,121 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { FullBookCount } from './full-book-count'
+import { FullBookCount } from './full-book-count';
 // May contain unused imports in some cases
 // @ts-ignore
-import { FullBookReviewInner } from './full-book-review-inner'
+import { FullBookReviewInner } from './full-book-review-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner'
+import { UserCatalogOutputDataInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner'
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 
 /**
- *
+ * 
  * @export
  * @interface FullBook
  */
 export interface FullBook {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBook
-	 */
-	description: string
-	/**
-	 *
-	 * @type {number}
-	 * @memberof FullBook
-	 */
-	readingTime: number
-	/**
-	 *
-	 * @type {number}
-	 * @memberof FullBook
-	 */
-	chapters: number
-	/**
-	 *
-	 * @type {number}
-	 * @memberof FullBook
-	 */
-	rating: number
-	/**
-	 *
-	 * @type {boolean}
-	 * @memberof FullBook
-	 */
-	isPublic: boolean
-	/**
-	 *
-	 * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
-	 * @memberof FullBook
-	 */
-	genres: Array<UserCatalogOutputDataInnerSelectedGenresInner>
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBook
-	 */
-	slug: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBook
-	 */
-	title: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBook
-	 */
-	picture: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBook
-	 */
-	author: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBook
-	 */
-	createdAt: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBook
-	 */
-	updatedAt: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBook
-	 */
-	ebook: string
-	/**
-	 *
-	 * @type {FullBookCount}
-	 * @memberof FullBook
-	 */
-	_count: FullBookCount
-	/**
-	 *
-	 * @type {Array<UserCatalogOutputDataInnerActivitiesInner>}
-	 * @memberof FullBook
-	 */
-	activities: Array<UserCatalogOutputDataInnerActivitiesInner>
-	/**
-	 *
-	 * @type {Array<FullBookReviewInner>}
-	 * @memberof FullBook
-	 */
-	review: Array<FullBookReviewInner>
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullBook
+     */
+    'readingTime': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullBook
+     */
+    'chapters': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullBook
+     */
+    'rating': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullBook
+     */
+    'isPublic': boolean;
+    /**
+     * 
+     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
+     * @memberof FullBook
+     */
+    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'slug': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'picture': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'author': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBook
+     */
+    'ebook': string;
+    /**
+     * 
+     * @type {FullBookCount}
+     * @memberof FullBook
+     */
+    '_count': FullBookCount;
+    /**
+     * 
+     * @type {Array<UserCatalogOutputDataInnerActivitiesInner>}
+     * @memberof FullBook
+     */
+    'activities': Array<UserCatalogOutputDataInnerActivitiesInner>;
+    /**
+     * 
+     * @type {Array<FullBookReviewInner>}
+     * @memberof FullBook
+     */
+    'review': Array<FullBookReviewInner>;
 }
+

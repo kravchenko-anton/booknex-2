@@ -12,56 +12,58 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner'
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 
 /**
- *
+ * 
  * @export
  * @interface BookTemplateCatalogOutputDataInner
  */
 export interface BookTemplateCatalogOutputDataInner {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof BookTemplateCatalogOutputDataInner
-	 */
-	slug: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof BookTemplateCatalogOutputDataInner
-	 */
-	title: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof BookTemplateCatalogOutputDataInner
-	 */
-	author: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof BookTemplateCatalogOutputDataInner
-	 */
-	description: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof BookTemplateCatalogOutputDataInner
-	 */
-	picture: string
-	/**
-	 *
-	 * @type {number}
-	 * @memberof BookTemplateCatalogOutputDataInner
-	 */
-	rating: number
-	/**
-	 *
-	 * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
-	 * @memberof BookTemplateCatalogOutputDataInner
-	 */
-	genres: Array<UserCatalogOutputDataInnerSelectedGenresInner>
+    /**
+     * 
+     * @type {string}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'slug': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'author': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'picture': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'rating': number;
+    /**
+     * 
+     * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
+     * @memberof BookTemplateCatalogOutputDataInner
+     */
+    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
 }
+

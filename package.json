@@ -7,8 +7,8 @@
 		"build:backend": "nx build backend",
 		"build:mobile": "nx build mobile",
 		"prepare": "husky",
-		"run:commit": "npx eslint --fix && npx prettier . --write",
-		"build": "nx build backend && nx build web && docker-compose up --build"
+		"run:commit": "npx eslint --fix && nx build backend && nx build web",
+		"build": "nx build backend && nx build web"
 	},
 	"dependencies": {
 		"@anatine/zod-nestjs": "^2.0.8",

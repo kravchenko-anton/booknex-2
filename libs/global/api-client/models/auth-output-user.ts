@@ -12,29 +12,33 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface AuthOutputUser
  */
 export interface AuthOutputUser {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof AuthOutputUser
-	 */
-	email?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof AuthOutputUser
-	 */
-	role?: RoleEnum
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthOutputUser
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthOutputUser
+     */
+    'role'?: RoleEnum;
 }
 
 export const RoleEnum = {
-	User: 'user',
-	Admin: 'admin'
-} as const
+    User: 'user',
+    Admin: 'admin'
+} as const;
 
-export type RoleEnum = (typeof RoleEnum)[keyof typeof RoleEnum]
+export type RoleEnum = typeof RoleEnum[keyof typeof RoleEnum];
+
+

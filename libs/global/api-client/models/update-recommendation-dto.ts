@@ -12,16 +12,19 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface UpdateRecommendationDto
  */
 export interface UpdateRecommendationDto {
-	/**
-	 *
-	 * @type {Array<string>}
-	 * @memberof UpdateRecommendationDto
-	 */
-	genreSlugs: Array<string>
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateRecommendationDto
+     */
+    'genreSlugs': Array<string>;
 }
+

@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface FullBookCount
  */
 export interface FullBookCount {
-	/**
-	 *
-	 * @type {number}
-	 * @memberof FullBookCount
-	 */
-	finishedBy?: number
-	/**
-	 *
-	 * @type {number}
-	 * @memberof FullBookCount
-	 */
-	readingBy?: number
-	/**
-	 *
-	 * @type {number}
-	 * @memberof FullBookCount
-	 */
-	savedBy?: number
+    /**
+     * 
+     * @type {number}
+     * @memberof FullBookCount
+     */
+    'finishedBy'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullBookCount
+     */
+    'readingBy'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullBookCount
+     */
+    'savedBy'?: number;
 }
+

@@ -12,22 +12,25 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface EbookOutputChaptersInnerChildrenInner
  */
 export interface EbookOutputChaptersInnerChildrenInner {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof EbookOutputChaptersInnerChildrenInner
-	 */
-	name: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof EbookOutputChaptersInnerChildrenInner
-	 */
-	link: string
+    /**
+     * 
+     * @type {string}
+     * @memberof EbookOutputChaptersInnerChildrenInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EbookOutputChaptersInnerChildrenInner
+     */
+    'link': string;
 }
+

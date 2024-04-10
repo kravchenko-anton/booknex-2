@@ -1,5 +1,4 @@
-export const serverURL = 'http://localhost:7777'
-export const emulatorServerURL = 'http://10.0.2.2:7777'
+export const serverURL = 'https://booknex-server.up.railway.app/'
 
 export const getFileUrl = (path: string) => {
 	if (path?.startsWith('http')) return path

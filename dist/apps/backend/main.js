@@ -1874,8 +1874,7 @@ class EbookOutput extends (0,zod_nestjs_namespaceObject.createZodDto)(EbookOutpu
 }
 
 ;// CONCATENATED MODULE: ../../libs/global/api-config.ts
-const serverURL = 'http://localhost:7777';
-const emulatorServerURL = 'http://10.0.2.2:7777';
+const serverURL = 'https://booknex-server.up.railway.app/';
 const getFileUrl = (path) => {
     if (path?.startsWith('http'))
         return path;

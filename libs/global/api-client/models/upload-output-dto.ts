@@ -12,16 +12,19 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface UploadOutputDto
  */
 export interface UploadOutputDto {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UploadOutputDto
-	 */
-	name: string
+    /**
+     * 
+     * @type {string}
+     * @memberof UploadOutputDto
+     */
+    'name': string;
 }
+

@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
  */
 export interface UserCatalogOutputDataInnerActivitiesInnerActivitiesInner {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
-	 */
-	message: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
-	 */
-	time: string
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
-	 */
-	importance: number
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
+     */
+    'time': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCatalogOutputDataInnerActivitiesInnerActivitiesInner
+     */
+    'importance': number;
 }
+

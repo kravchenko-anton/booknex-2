@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface CreateBookDtoEbookInnerChaptersInner
  */
 export interface CreateBookDtoEbookInnerChaptersInner {
-	/**
-	 *
-	 * @type {number}
-	 * @memberof CreateBookDtoEbookInnerChaptersInner
-	 */
-	id: number
-	/**
-	 *
-	 * @type {string}
-	 * @memberof CreateBookDtoEbookInnerChaptersInner
-	 */
-	name: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof CreateBookDtoEbookInnerChaptersInner
-	 */
-	text: string
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBookDtoEbookInnerChaptersInner
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBookDtoEbookInnerChaptersInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBookDtoEbookInnerChaptersInner
+     */
+    'text': string;
 }
+

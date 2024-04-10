@@ -12,26 +12,28 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { EbookOutputChaptersInnerChildrenInner } from './ebook-output-chapters-inner-children-inner'
+import { EbookOutputChaptersInnerChildrenInner } from './ebook-output-chapters-inner-children-inner';
 
 /**
- *
+ * 
  * @export
  * @interface EbookOutputChaptersInner
  */
 export interface EbookOutputChaptersInner {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof EbookOutputChaptersInner
-	 */
-	title: string
-	/**
-	 *
-	 * @type {Array<EbookOutputChaptersInnerChildrenInner>}
-	 * @memberof EbookOutputChaptersInner
-	 */
-	children: Array<EbookOutputChaptersInnerChildrenInner>
+    /**
+     * 
+     * @type {string}
+     * @memberof EbookOutputChaptersInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<EbookOutputChaptersInnerChildrenInner>}
+     * @memberof EbookOutputChaptersInner
+     */
+    'children': Array<EbookOutputChaptersInnerChildrenInner>;
 }
+

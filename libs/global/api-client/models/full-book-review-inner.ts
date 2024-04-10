@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface FullBookReviewInner
  */
 export interface FullBookReviewInner {
-	/**
-	 *
-	 * @type {Array<string>}
-	 * @memberof FullBookReviewInner
-	 */
-	tags: Array<string>
-	/**
-	 *
-	 * @type {string}
-	 * @memberof FullBookReviewInner
-	 */
-	text?: string | null
-	/**
-	 *
-	 * @type {number}
-	 * @memberof FullBookReviewInner
-	 */
-	rating: number
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FullBookReviewInner
+     */
+    'tags': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullBookReviewInner
+     */
+    'text'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullBookReviewInner
+     */
+    'rating': number;
 }
+

@@ -12,32 +12,34 @@
  * Do not edit the class manually.
  */
 
+
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInner } from './user-catalog-output-data-inner'
+import { UserCatalogOutputDataInner } from './user-catalog-output-data-inner';
 
 /**
- *
+ * 
  * @export
  * @interface UserCatalogOutput
  */
 export interface UserCatalogOutput {
-	/**
-	 *
-	 * @type {Array<UserCatalogOutputDataInner>}
-	 * @memberof UserCatalogOutput
-	 */
-	data: Array<UserCatalogOutputDataInner>
-	/**
-	 *
-	 * @type {boolean}
-	 * @memberof UserCatalogOutput
-	 */
-	canLoadMore: boolean
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserCatalogOutput
-	 */
-	totalPages: number
+    /**
+     * 
+     * @type {Array<UserCatalogOutputDataInner>}
+     * @memberof UserCatalogOutput
+     */
+    'data': Array<UserCatalogOutputDataInner>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserCatalogOutput
+     */
+    'canLoadMore': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCatalogOutput
+     */
+    'totalPages': number;
 }
+

@@ -12,28 +12,31 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface ShortGenre
  */
 export interface ShortGenre {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof ShortGenre
-	 */
-	slug: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof ShortGenre
-	 */
-	name: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof ShortGenre
-	 */
-	icon: string
+    /**
+     * 
+     * @type {string}
+     * @memberof ShortGenre
+     */
+    'slug': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShortGenre
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShortGenre
+     */
+    'icon': string;
 }
+

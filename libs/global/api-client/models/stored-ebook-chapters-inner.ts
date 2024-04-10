@@ -12,40 +12,43 @@
  * Do not edit the class manually.
  */
 
+
+
 /**
- *
+ * 
  * @export
  * @interface StoredEBookChaptersInner
  */
 export interface StoredEBookChaptersInner {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof StoredEBookChaptersInner
-	 */
-	romanNumber: string
-	/**
-	 *
-	 * @type {number}
-	 * @memberof StoredEBookChaptersInner
-	 */
-	readingTime: number
-	/**
-	 *
-	 * @type {number}
-	 * @memberof StoredEBookChaptersInner
-	 */
-	id: number
-	/**
-	 *
-	 * @type {string}
-	 * @memberof StoredEBookChaptersInner
-	 */
-	name: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof StoredEBookChaptersInner
-	 */
-	text: string
+    /**
+     * 
+     * @type {string}
+     * @memberof StoredEBookChaptersInner
+     */
+    'romanNumber': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoredEBookChaptersInner
+     */
+    'readingTime': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StoredEBookChaptersInner
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoredEBookChaptersInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StoredEBookChaptersInner
+     */
+    'text': string;
 }
+
