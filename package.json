@@ -8,7 +8,8 @@
 		"build:mobile": "nx build mobile",
 		"prepare": "husky",
 		"run:commit": "npx eslint --fix",
-		"build": "nx build backend && nx build web"
+		"build": "nx build backend && nx build web",
+		"build:backend:prod": "nx build backend --prod --outputPath=dist/apps/backend && npx prisma generate"
 	},
 	"dependencies": {
 		"@anatine/zod-nestjs": "^2.0.8",
@@ -109,6 +110,7 @@
 		"@nestjs/testing": "^10.0.2",
 		"@nrwl/workspace": "v17.2.5",
 		"@nx-tools/nx-container": "^5.2.0",
+		"@nx-tools/nx-prisma": "^5.2.0",
 		"@nx/eslint": "v17.2.5",
 		"@nx/eslint-plugin": "^18.0.5",
 		"@nx/jest": "v17.2.5",

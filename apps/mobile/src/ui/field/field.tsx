@@ -25,7 +25,7 @@ const Field = <T extends Record<string, any>>({
 				<View
 					style={style}
 					className={cn(
-						'relative my-1 flex w-full justify-center rounded border-[1px] border-transparent px-2',
+						'relative my-1 flex w-full justify-center rounded-md border-[1px] border-transparent px-2',
 						error && 'border-danger',
 						Icon && 'pl-9',
 						settings.colors[variant],

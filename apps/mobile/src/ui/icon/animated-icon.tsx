@@ -18,7 +18,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 }) => (
 	<AnimatedPress
 		className={cn(
-			'items-center justify-center rounded-md',
+			'items-center justify-center rounded-lg',
 			properties.disabled && 'opacity-50',
 			noPadding ? 'p-0' : settings.padding[size],
 			settings.colors[variant],

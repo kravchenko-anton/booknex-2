@@ -16,7 +16,6 @@ export const axiosRequestInstance = async (
 	config: InternalAxiosRequestConfig<any>
 ) => {
 	const accessToken = getAccessToken()
-
 	if (config.headers && accessToken)
 		config.headers.Authorization = `Bearer ${accessToken}`
 
@@ -26,7 +25,7 @@ export const axiosResponseInstance = async (error: any) => {
 	const originalRequest = error.config
 	console.log('error in intercept or', error, originalRequest)
 	console.log(error.config._isRetry)
-	if (error.response.status === 403) deleteTokensStorage()
+	if (error.response.status === 403) await deleteTokensStorage()
 	if (
 		(error.response.status === 401 ||
 			errorCatch(error) === 'jwt expired' ||
@@ -42,7 +41,7 @@ export const axiosResponseInstance = async (error: any) => {
 				...originalRequest,
 				headers: {
 					...originalRequest.headers,
-					Authorization: `Bearer ${getAccessToken()}`
+					Authorization: `Bearer ${await getAccessToken()}`
 				}
 			})
 		} catch (error) {
