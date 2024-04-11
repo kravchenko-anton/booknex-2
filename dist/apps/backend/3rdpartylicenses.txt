@@ -1,2 +1,0 @@
-@booknex/source
-MIT

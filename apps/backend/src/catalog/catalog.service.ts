@@ -1,6 +1,6 @@
+import { Activities } from '@/prisma/generated'
 import { ActivityService } from '@/src/activity/activity.service'
 import { Injectable } from '@nestjs/common'
-import { Activities } from '@prisma/client'
 import { RecommendationService } from '../recommendation/recommendation.service'
 import { PrismaService } from '../utils/services/prisma.service'
 

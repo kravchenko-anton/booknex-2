@@ -1,6 +1,6 @@
+import { Activities, type Prisma } from '@/prisma/generated'
 import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
 import { transformActivity } from 'global/utils/activity-transformer'
 import { returnBookObject } from '../book/return.book.object'

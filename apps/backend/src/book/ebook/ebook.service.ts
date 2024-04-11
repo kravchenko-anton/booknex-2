@@ -1,6 +1,6 @@
+import { Activities } from '@/prisma/generated'
 import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities } from '@prisma/client'
 import { getFileUrl } from 'global/api-config'
 import { globalErrors } from 'global/errors'
 import { getServerBookHtml } from 'global/helpers/getBookHtml'

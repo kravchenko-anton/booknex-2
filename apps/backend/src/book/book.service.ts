@@ -1,6 +1,6 @@
+import { Activities, type Prisma } from '@/prisma/generated'
 import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities, type Prisma } from '@prisma/client'
 import { adminErrors, globalErrors } from 'global/errors'
 import { slugify } from 'global/helpers/slugify'
 import { transformActivity } from 'global/utils/activity-transformer'
