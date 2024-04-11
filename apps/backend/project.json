@@ -6,7 +6,7 @@
 	"tags": ["api"],
 	"targets": {
 		"build": {
-			"executor": "@nx/webpack:webpack",
+			"executor": "nx:run-commands",
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {
@@ -16,7 +16,9 @@
 				"main": "apps/backend/src/main.ts",
 				"tsConfig": "apps/backend/tsconfig.app.json",
 				"assets": ["apps/backend/src/assets"],
-				"webpackConfig": "apps/backend/webpack.config.js"
+				"webpackConfig": "apps/backend/webpack.config.js",
+				"commands": [
+					"npx prisma generate --schema apps/backend/prisma/schema.prisma"]
 			},
 			"configurations": {
 				"development": {},
