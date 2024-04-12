@@ -66,7 +66,7 @@ const Navigation: FC = () => {
 				<Stack.Navigator
 					initialRouteName={user ? 'Featured' : 'Welcome'}
 					screenOptions={{
-						animation: 'fade',
+						animation: 'simple_push',
 						presentation: 'transparentModal',
 						headerShown: false,
 						statusBarColor: Color.background
@@ -79,7 +79,8 @@ const Navigation: FC = () => {
 										contentStyle: {
 											backgroundColor: Color.background
 										},
-										...options
+										...options,
+										navigationBarColor: Color.background
 									}}
 									{...route}
 								/>

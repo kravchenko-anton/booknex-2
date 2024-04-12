@@ -1,5 +1,5 @@
 import PageMarginIcon from '@/screens/reading/reader-customization/helpers/icons/page-margin'
-import type { ThemePackType } from '@/screens/reading/reader-customization/helpers/theme-pack'
+import type { ThemePackType } from '@/screens/reading/theme-pack'
 import type { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import type { FC } from 'react'
 import { View } from 'react-native'

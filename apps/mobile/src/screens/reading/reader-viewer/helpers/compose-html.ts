@@ -30,8 +30,8 @@ export const finishBookButton = `
 				border: 0;
 				color: ${Color.white};
 				font-size: 16px;
-				border-radius: 12px;
-				padding: 6px 12px;
+				border-radius: 6px;
+				padding: 6px 19px;
 				"
 				>
 				Finish book
@@ -69,7 +69,8 @@ export const composeReaderViewHtml = ({
 					 src="${getFileUrl(picture)}" alt="${title}" />
 				<h1>${title}</h1>
 			</div>
-			${file}
+				${file}
+
 			${finishBookButton}
 				
 				<script>

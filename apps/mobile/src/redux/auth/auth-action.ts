@@ -15,6 +15,7 @@ export const googleLogin = createAsyncThunk<
 		const { data: loginResponse } = await api.auth.googleSign({
 			socialId
 		})
+		console.log('loginResponse', loginResponse)
 
 		console.log('loginResponse', loginResponse)
 		if (!loginResponse.accessToken)
@@ -27,6 +28,7 @@ export const googleLogin = createAsyncThunk<
 		successToast('Login successfully')
 		return loginResponse
 	} catch (error) {
+		console.error(error)
 		errorToast(error)
 		return thunkAPI.rejectWithValue(error)
 	}

@@ -1,12 +1,9 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedSelector } from '@/hooks'
-import type { ThemePackType } from '@/screens/reading/reader-customization/helpers/theme-pack'
-import {
-	getStyleTag,
-	injectStyle
-} from '@/screens/reading/reader-viewer/helpers/styles-injection'
+import { getStyleTag } from '@/screens/reading/reader-viewer/helpers/styles-injection'
 
 import { useSaveProgress } from '@/screens/reading/reader-viewer/helpers/useSaveProgress'
+import type { ThemePackType } from '@/screens/reading/theme-pack'
 
 import { successToast } from '@/utils/toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -14,14 +11,11 @@ import {
 	createContext,
 	useCallback,
 	useContext,
-	useEffect,
-	useRef,
 	useState,
 	type FC,
 	type PropsWithChildren
 } from 'react'
 
-import type WebView from 'react-native-webview'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
 //TODO: разнести контекст и максимально упростить
@@ -34,12 +28,11 @@ export const ReaderContext = createContext(
 			bookProgress: number
 			chapterProgress: number
 		}
-		reference: React.RefObject<WebView>
 		defaultProperties: {
 			defaultTheme: string
 			scrollPosition: number
 		}
-		changeChapter: (chapter: string) => void
+
 		padding: number
 		lineHeight: number
 		font: {
@@ -66,7 +59,6 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 	children,
 	slug
 }) => {
-	const viewerReference = useRef<WebView>(null)
 	const { colorScheme, padding, lineHeight, font, fontSize } = useTypedSelector(
 		state => state.readingUi
 	)
@@ -75,7 +67,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
 		useMutation({
 			mutationKey: ['finish-reading', slug],
-			mutationFn: (slug: string) => api.user.userControllerFinishReading(slug)
+			mutationFn: (slug: string) => api.user.finishReading(slug)
 		})
 	const { books } = useTypedSelector(state => state.readingProgress)
 	const { navigate } = useTypedNavigation()
@@ -138,24 +130,11 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		padding
 	})
 
-	useEffect(() => {
-		viewerReference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
-	}, [styleTag])
-
 	// eslint-disable-next-line  react/hook-use-state
 	const [defaultProperties] = useState({
 		defaultTheme: styleTag,
 		scrollPosition: scrollPosition
 	})
-
-	const changeChapter = useCallback((link: string) => {
-		console.log('changeChapter', link)
-		viewerReference.current?.injectJavaScript(
-			`
-			window.location.hash = '${link}'
-			`
-		)
-	}, [])
 
 	const value = {
 		colorScheme,
@@ -165,8 +144,6 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 			bookProgress: readingProgress.bookProgress,
 			chapterProgress: readingProgress.chapterProgress
 		},
-		reference: viewerReference,
-		changeChapter,
 		defaultProperties,
 		lineHeight,
 		padding,

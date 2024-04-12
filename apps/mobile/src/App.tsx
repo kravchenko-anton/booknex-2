@@ -11,6 +11,7 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { View } from 'react-native'
 import { default as codePush } from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import 'react-native-url-polyfill/auto'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 

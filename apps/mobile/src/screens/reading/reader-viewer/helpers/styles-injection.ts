@@ -1,10 +1,11 @@
+import type { ThemePackType } from '@/screens/reading/theme-pack'
+
 export const injectStyle = (style: string) => `
 	var style = document.createElement('style');
 	style.type = 'text/css';
 	style.innerHTML = \`${style}\`;
  document.head.appendChild(style);
 		`
-
 export const getStyleTag = ({
 	colorPalette,
 	fontFamily,
@@ -12,16 +13,7 @@ export const getStyleTag = ({
 	lineHeight,
 	padding
 }: {
-	colorPalette: {
-		text: string
-		background: {
-			normal: string
-			lighter: string
-			darker: string
-		}
-		primary: string
-		secondary: string
-	}
+	colorPalette: ThemePackType['colorPalette']
 	fontFamily: string
 	fontSize: number
 	lineHeight: number
@@ -41,6 +33,9 @@ export const getStyleTag = ({
 		font-family: ${fontFamily}-Regular !important;
 		font-size: ${fontSize}px;
 		line-height: ${lineHeight};
+		word-wrap: break-word !important;
+		max-width: 100% !important;
+		
 		padding: ${padding}px;
 		color: ${colorPalette.text};
 	}
@@ -84,7 +79,7 @@ export const getStyleTag = ({
 		color: ${colorPalette.primary} !important;
 	}
 	::selection {
-		background: ${colorPalette.background.lighter} !important;
+		background: ${colorPalette.textSelection} !important;
 		color: ${colorPalette.text} !important;
 	}
 	ul {
@@ -112,7 +107,7 @@ export const getStyleTag = ({
 	}
 	
 	.finish-book-button {
-		background: ${colorPalette.primary} !important;
+		background: ${colorPalette.background.lighter} !important;
 		color: ${colorPalette.text} !important;
 		
 	}

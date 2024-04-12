@@ -1,7 +1,4 @@
-import {
-	themePack,
-	type ThemePackType
-} from '@/screens/reading/reader-customization/helpers/theme-pack'
+import { themePack, type ThemePackType } from '@/screens/reading/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
 import { Color } from 'global/colors'
 import type { FC } from 'react'

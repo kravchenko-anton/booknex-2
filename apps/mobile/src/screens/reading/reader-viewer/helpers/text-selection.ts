@@ -24,7 +24,7 @@ export const textSelection = async (event: any, removeAllSelection: void) => {
 		//TODO: проверить работу ссылки, открывается ли в приложении
 
 		await Linking.openURL(
-			`https://translate.google.com/?sl=auto&text=${event.nativeEvent.selectedText}&op=translate`
+			`https://translate.google.com/?sl=auto&text=${event.nativeEvent.selectedText}`
 		)
 	}
 	return removeAllSelection

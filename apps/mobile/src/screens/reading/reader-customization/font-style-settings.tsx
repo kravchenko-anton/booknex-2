@@ -1,5 +1,5 @@
 import { ReaderFont } from '@/redux/reader/reading-settings-slice'
-import type { ThemePackType } from '@/screens/reading/reader-customization/helpers/theme-pack'
+import type { ThemePackType } from '@/screens/reading/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
 import { cn } from '@/utils'
 import { Color } from 'global/colors'

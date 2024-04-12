@@ -31,7 +31,7 @@ const Toast: FC = () => (
 				<BaseToast
 					text1NumberOfLines={2}
 					renderLeadingIcon={() => (
-						<OkHandEmoji className='ml-2' width={30} height={30} />
+						<OkHandEmoji className='ml-2 mr-2' width={25} height={25} />
 					)}
 					{...properties}
 					{...options()}
@@ -41,7 +41,7 @@ const Toast: FC = () => (
 				<BaseToast
 					text1NumberOfLines={2}
 					renderLeadingIcon={() => (
-						<ThumbDownEmoji className='ml-2' width={30} height={30} />
+						<ThumbDownEmoji className='ml-2 mr-2' width={25} height={25} />
 					)}
 					{...properties}
 					{...options()}

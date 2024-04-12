@@ -5,20 +5,22 @@ import {
 	BottomSheetModal,
 	BottomSheetSectionList
 } from '@gorhom/bottom-sheet'
-import type { OutputChapter } from 'global/api-client'
+import type { EbookOutputChaptersInner } from 'global/api-client'
 import { useMemo, type FC } from 'react'
 import { Pressable } from 'react-native'
 
 interface ReaderChaptersProperties {
 	sheetRef: React.RefObject<BottomSheetModal>
-	chapters: OutputChapter[]
+	chapters: EbookOutputChaptersInner[]
+	changeChapter: (link: string) => void
 }
 
 const ReaderChapters: FC<ReaderChaptersProperties> = ({
 	sheetRef,
-	chapters
+	chapters,
+	changeChapter
 }) => {
-	const { colorScheme, changeChapter } = useReader()
+	const { colorScheme } = useReader()
 	const sections = useMemo(
 		() =>
 			chapters.map(chapter => ({

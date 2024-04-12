@@ -8,6 +8,7 @@ export interface ThemePackType {
 	colorPalette: {
 		primary: string
 		secondary: string
+		textSelection: string
 		background: {
 			normal: string
 			lighter: string
@@ -35,6 +36,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#2b2b2b',
 				darker: '#1a1a1a'
 			},
+			textSelection: '#285943',
 			text: '#fff'
 		}
 	},
@@ -50,6 +52,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#f9f9f9',
 				darker: '#f2f2f2'
 			},
+			textSelection: '#317259',
 			text: Color.black
 		}
 	},
@@ -65,6 +68,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#f9f5f0',
 				darker: '#eae2d6'
 			},
+			textSelection: '#b3a07f',
 			text: '#2d2a32'
 		}
 	},
@@ -80,6 +84,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#272433',
 				darker: '#1a1928'
 			},
+			textSelection: '#4f3f6f',
 			text: '#d3cedc'
 		}
 	},
@@ -96,6 +101,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#222332',
 				darker: '#13131c'
 			},
+			textSelection: '#3d4d5f',
 			text: '#b7bcd9'
 		}
 	},
@@ -111,6 +117,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#003847',
 				darker: '#001f26'
 			},
+			textSelection: '#586e75',
 			text: '#a8b4b5'
 		}
 	},
@@ -126,6 +133,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#1a2533',
 				darker: '#0c111a'
 			},
+			textSelection: '#3d4d5f',
 			text: '#c2c8db'
 		}
 	},
@@ -141,6 +149,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#272732',
 				darker: '#1a1a22'
 			},
+			textSelection: '#4f3f6f',
 			text: '#dcd7ba'
 		}
 	},
@@ -156,6 +165,7 @@ export const themePack: ThemePackType[] = [
 				lighter: '#1b1825',
 				darker: '#0c0a12'
 			},
+			textSelection: '#3d4d5f',
 			text: '#dcd7ba'
 		}
 	}

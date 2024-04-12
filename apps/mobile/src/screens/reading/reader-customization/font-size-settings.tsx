@@ -1,5 +1,5 @@
 import { fontSizeSettings } from '@/redux/reader/reading-settings-slice'
-import type { ThemePackType } from '@/screens/reading/reader-customization/helpers/theme-pack'
+import type { ThemePackType } from '@/screens/reading/theme-pack'
 import { Title } from '@/ui'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'

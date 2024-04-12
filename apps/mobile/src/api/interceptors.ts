@@ -15,7 +15,8 @@ export const instance = axios.create({
 export const axiosRequestInstance = async (
 	config: InternalAxiosRequestConfig<any>
 ) => {
-	const accessToken = getAccessToken()
+	const accessToken = await getAccessToken()
+	console.log('config')
 	if (config.headers && accessToken)
 		config.headers.Authorization = `Bearer ${accessToken}`
 

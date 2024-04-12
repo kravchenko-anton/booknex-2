@@ -1,18 +1,17 @@
 import api from '@/api'
-import { useTypedNavigation, useTypedRoute } from '@/hooks'
+import { useTypedRoute } from '@/hooks'
 import ReaderChapters from '@/screens/reading/reader-chapters/reader-chapters'
 import { ReadingProvider } from '@/screens/reading/reader-context'
 import ReaderCustomization from '@/screens/reading/reader-customization/reader-customization'
 import ReaderMenu from '@/screens/reading/reader-menu'
 import ReaderViewer from '@/screens/reading/reader-viewer/reader-viewer'
+import { useReaderModal } from '@/screens/reading/useReaderModal'
 import { Loader } from '@/ui'
-import type { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { useQuery } from '@tanstack/react-query'
 import { useRef, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import type WebView from 'react-native-webview'
 
 const Reader = () => {
-	const { addListener } = useTypedNavigation()
 	const { params } = useTypedRoute<'Reader'>()
 	const slug = params.slug
 
@@ -22,44 +21,40 @@ const Reader = () => {
 		select: data => data.data
 	})
 	const [readerUiVisible, setReaderUiVisible] = useState(false)
-	const chaptersListModalReference = useRef<BottomSheetModal>(null)
-	const readingSettingsModalReference = useRef<BottomSheetModal>(null)
-	// closing all modals when leaving the screen
-	const unsubscribe = addListener('beforeRemove', () => {
-		setReaderUiVisible(false)
-		readingSettingsModalReference.current?.close()
-		chaptersListModalReference.current?.close()
+	const viewerReference = useRef<WebView>(null)
 
-		return () => unsubscribe()
-	})
+	const { chaptersListModalReference, readingSettingsModalReference } =
+		useReaderModal(setReaderUiVisible)
 	if (!ebook) return <Loader />
 	return (
 		<ReadingProvider slug={slug}>
-			<SafeAreaView className='flex-1'>
-				<ReaderViewer
-					title={ebook.title}
-					picture={ebook.picture}
-					file={ebook.file}
-					readerUiVisible={readerUiVisible}
-					handleDoublePress={() => setReaderUiVisible(!readerUiVisible)}
-				/>
-				<ReaderMenu
-					visible={readerUiVisible}
-					onChapterIconPress={() =>
-						chaptersListModalReference.current?.present()
-					}
-					onSelectThemeIconPress={() =>
-						readingSettingsModalReference.current?.present()
-					}
-				/>
+			<ReaderViewer
+				title={ebook.title}
+				picture={ebook.picture}
+				file={ebook.file}
+				ref={viewerReference}
+				readerUiVisible={readerUiVisible}
+				handleDoublePress={() => setReaderUiVisible(!readerUiVisible)}
+			/>
+			<ReaderMenu
+				visible={readerUiVisible}
+				onChapterIconPress={() => chaptersListModalReference.current?.present()}
+				onSelectThemeIconPress={() =>
+					readingSettingsModalReference.current?.present()
+				}
+			/>
 
-				<ReaderChapters
-					chapters={ebook.chapters}
-					sheetRef={chaptersListModalReference}
-				/>
+			<ReaderChapters
+				chapters={ebook.chapters}
+				sheetRef={chaptersListModalReference}
+				changeChapter={link =>
+					viewerReference.current?.injectJavaScript(
+						`window.location.hash = '${link}'`
+					)
+				}
+			/>
 
-				<ReaderCustomization sheetRef={readingSettingsModalReference} />
-			</SafeAreaView>
+			<ReaderCustomization sheetRef={readingSettingsModalReference} />
 		</ReadingProvider>
 	)
 }

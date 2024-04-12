@@ -4,7 +4,7 @@ module.exports = function (api) {
 		presets: ['module:metro-react-native-babel-preset'],
 		plugins: [
 			['nativewind/babel'],
-			['transform-remove-console'],
+
 			[
 				'module-resolver',
 				{
