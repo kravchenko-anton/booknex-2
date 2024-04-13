@@ -67,7 +67,7 @@ const Navigation: FC = () => {
 					initialRouteName={user ? 'Featured' : 'Welcome'}
 					screenOptions={{
 						animation: 'simple_push',
-						headerShown: true,
+						headerShown: false,
 						statusBarColor: Color.background
 					}}>
 					{user

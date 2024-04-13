@@ -34,6 +34,6 @@ window.addEventListener('scroll', function() {
  timerId = setTimeout(() => {
   ${loadCalculateProgress}
   
- }, 1000);
+ }, 500);
 });
 `

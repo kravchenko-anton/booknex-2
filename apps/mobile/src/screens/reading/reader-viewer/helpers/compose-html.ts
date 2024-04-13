@@ -72,7 +72,9 @@ export const composeReaderViewHtml = ({
 					 src="${getFileUrl(picture)}" alt="${title}" />
 				<h1>${title}</h1>
 			</div>
+			<div =="scroll-container">
 				${file}
+			</div>
 
 			${finishBookButton}
 				

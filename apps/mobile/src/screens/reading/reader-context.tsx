@@ -64,8 +64,6 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		state => state.readingUi
 	)
 	const queryClient = useQueryClient()
-	const { setOptions } = useTypedNavigation()
-
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
 		useMutation({
 			mutationKey: ['finish-reading', slug],
@@ -77,7 +75,8 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		books.find(book => book.slug === slug)?.latestProgress.scrollPosition || 1
 	)
 	const [readingProgress, setReadingProgress] = useState({
-		bookProgress: 0,
+		bookProgress:
+			books.find(book => book.slug === slug)?.latestProgress.progress || 0,
 		chapterProgress: 0
 	})
 
@@ -86,14 +85,14 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		scrollPosition,
 		progress: readingProgress.bookProgress
 	})
+	const { setOptions } = useTypedNavigation()
+
 	useEffect(() => {
 		setOptions({
 			navigationBarColor: colorScheme.colorPalette.background.normal,
 			navigationBarHidden: true,
 			statusBarTranslucent: true,
-			statusBarHidden: true,
-			statusBarColor: colorScheme.colorPalette.background.normal,
-			statusBarStyle: colorScheme.statusBar
+			statusBarHidden: true
 		})
 	}, [colorScheme, setOptions])
 

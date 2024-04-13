@@ -59,7 +59,7 @@ const ActivityList: FC<ActivityListProperties> = ({
 				{selectActivity ? (
 					<>
 						<SheetHeader className='pb-2'>
-							<h1 className='text-3xl font-medium'>
+							<h1 className='text-lg font-medium md:text-3xl'>
 								Activities: {new Date(selectActivity.date).toDateString()}
 							</h1>
 						</SheetHeader>
@@ -67,7 +67,9 @@ const ActivityList: FC<ActivityListProperties> = ({
 							{selectActivity.activities?.map(activity => (
 								<p
 									key={activity.time}
-									className={cn('text-success  font-mono text-lg')}>
+									className={cn(
+										'text-success  font-mono text-[10px] md:text-lg'
+									)}>
 									<b className='text-gray'>[{activity.time}]</b>{' '}
 									<b
 										className='font-mono'
