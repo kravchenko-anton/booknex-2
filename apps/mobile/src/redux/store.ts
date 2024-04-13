@@ -7,7 +7,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 const persistConfig = {
 	key: 'root',
 	storage: AsyncStorage,
-	whitelist: ['reading-ui', 'auth', 'reading-progress']
+	whitelist: ['readingUi', 'auth', 'readingProgress']
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)

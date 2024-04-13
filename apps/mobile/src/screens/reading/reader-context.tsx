@@ -11,6 +11,7 @@ import {
 	createContext,
 	useCallback,
 	useContext,
+	useEffect,
 	useState,
 	type FC,
 	type PropsWithChildren
@@ -63,6 +64,7 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		state => state.readingUi
 	)
 	const queryClient = useQueryClient()
+	const { setOptions } = useTypedNavigation()
 
 	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
 		useMutation({
@@ -84,6 +86,16 @@ export const ReadingProvider: FC<ReaderProviderProperties> = ({
 		scrollPosition,
 		progress: readingProgress.bookProgress
 	})
+	useEffect(() => {
+		setOptions({
+			navigationBarColor: colorScheme.colorPalette.background.normal,
+			navigationBarHidden: true,
+			statusBarTranslucent: true,
+			statusBarHidden: true,
+			statusBarColor: colorScheme.colorPalette.background.normal,
+			statusBarStyle: colorScheme.statusBar
+		})
+	}, [colorScheme, setOptions])
 
 	const onMessage = useCallback(
 		async (event: WebViewMessageEvent) => {

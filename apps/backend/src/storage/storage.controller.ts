@@ -16,8 +16,7 @@ import {
 	ApiParam,
 	ApiTags
 } from '@nestjs/swagger'
-import type { StorageFolderType } from 'global/helpers/storage-types'
-import { StorageFolderArray } from 'global/helpers/storage-types'
+import * as storageTypes from 'global/helpers/storage-types'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { UploadOutputDto } from './dto/upload.dto'
 import { StorageService } from './storage.service'
@@ -28,10 +27,11 @@ import { StorageService } from './storage.service'
 @Auth('admin')
 export class StorageController {
 	constructor(private readonly uploadService: StorageService) {}
+
 	@Post('/:folder')
 	@ApiParam({
 		name: 'folder',
-		enum: StorageFolderArray
+		enum: storageTypes.StorageFolderArray
 	})
 	@UseInterceptors(FileInterceptor('file'))
 	@ApiConsumes('multipart/form-data')
@@ -52,13 +52,13 @@ export class StorageController {
 			new ParseFilePipe({
 				validators: [
 					new MaxFileSizeValidator({
-						maxSize: Number(process.env['MAX_FILE_SIZE'])
+						maxSize: Number(process.env['MAX_UPLOAD_SIZE'])
 					})
 				]
 			})
 		)
 		file: Express.Multer.File,
-		@Param('folder') folder: StorageFolderType
+		@Param('folder') folder: storageTypes.StorageFolderType
 	): Promise<UploadOutputDto> {
 		return this.uploadService.upload({
 			file: file.buffer,

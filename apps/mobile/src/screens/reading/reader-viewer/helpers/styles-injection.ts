@@ -32,6 +32,7 @@ export const getStyleTag = ({
 		background: ${colorPalette.background.normal} !important;
 		font-family: ${fontFamily}-Regular !important;
 		font-size: ${fontSize}px;
+		scroll-behavior: smooth;
 		line-height: ${lineHeight};
 		word-wrap: break-word !important;
 		max-width: 100% !important;

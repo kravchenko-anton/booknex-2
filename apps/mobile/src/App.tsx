@@ -9,7 +9,7 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { View } from 'react-native'
-import { default as codePush } from 'react-native-code-push'
+import codePush from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-url-polyfill/auto'
 import { Provider } from 'react-redux'
@@ -72,4 +72,4 @@ const App = () => (
 	</Provider>
 )
 
-export default codePush(Sentry.wrap(App))
+export default Sentry.wrap(codePush(App))

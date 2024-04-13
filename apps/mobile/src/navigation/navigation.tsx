@@ -67,8 +67,7 @@ const Navigation: FC = () => {
 					initialRouteName={user ? 'Featured' : 'Welcome'}
 					screenOptions={{
 						animation: 'simple_push',
-						presentation: 'transparentModal',
-						headerShown: false,
+						headerShown: true,
 						statusBarColor: Color.background
 					}}>
 					{user
@@ -80,7 +79,8 @@ const Navigation: FC = () => {
 											backgroundColor: Color.background
 										},
 										...options,
-										navigationBarColor: Color.background
+										navigationBarColor: Color.background,
+										statusBarColor: Color.background
 									}}
 									{...route}
 								/>
@@ -92,7 +92,9 @@ const Navigation: FC = () => {
 										contentStyle: {
 											backgroundColor: Color.background
 										},
-										...options
+										...options,
+										navigationBarColor: Color.background,
+										statusBarColor: Color.background
 									}}
 									{...route}
 								/>

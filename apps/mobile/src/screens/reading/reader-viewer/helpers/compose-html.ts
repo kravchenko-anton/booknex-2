@@ -1,5 +1,8 @@
-import { calculateProgress } from '@/screens/reading/reader-viewer/helpers/calculate-progress'
 import { injectFont } from '@/screens/reading/reader-viewer/helpers/font-injection'
+import {
+	loadCalculateProgress,
+	scrollCalculateProgress
+} from '@/screens/reading/reader-viewer/helpers/load-calculate-progress'
 import { getFileUrl } from 'global/api-config'
 import { Color } from 'global/colors'
 
@@ -77,21 +80,9 @@ export const composeReaderViewHtml = ({
 					window.onload = function() {
 						window.scrollTo({
 							top: ${defaultProperties.scrollPosition}
-						}).then(() => {
-							${calculateProgress}
-						});
+						})
+						${loadCalculateProgress}
+						${scrollCalculateProgress}
 					}
 </script>
 	`
-
-export const readerActions = `
-let timerId;
-window.addEventListener('scroll', function() {
- clearTimeout(timerId);
-
- timerId = setTimeout(() => {
-  ${calculateProgress}
-  
- }, 1000);
-});
-`

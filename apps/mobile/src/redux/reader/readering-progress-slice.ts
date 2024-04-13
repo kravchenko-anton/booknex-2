@@ -13,7 +13,7 @@ const initialState = {
 	>
 }
 const ReadingProgressSlice = createSlice({
-	name: 'reading-progress',
+	name: 'readingProgress',
 	initialState,
 	reducers: {
 		updateReadingProgress: (

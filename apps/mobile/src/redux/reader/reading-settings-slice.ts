@@ -41,7 +41,7 @@ const initialState = {
 }
 
 const ReadingUiSlice = createSlice({
-	name: 'reading-ui',
+	name: 'readingUi',
 	initialState,
 	reducers: {
 		changeTheme: (state, { payload }: PayloadAction<ThemePackType['slug']>) => {

@@ -93,11 +93,7 @@ export const routes: IRouteType[] = [
 	},
 	{
 		name: 'Reader',
-		component: Reader,
-		options: {
-			headerShown: false,
-			statusBarHidden: true
-		}
+		component: Reader
 	},
 	{
 		name: 'Book',

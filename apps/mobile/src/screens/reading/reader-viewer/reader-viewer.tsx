@@ -1,9 +1,5 @@
-import { useTypedNavigation } from '@/hooks'
 import { useReader } from '@/screens/reading/reader-context'
-import {
-	composeReaderViewHtml,
-	readerActions
-} from '@/screens/reading/reader-viewer/helpers/compose-html'
+import { composeReaderViewHtml } from '@/screens/reading/reader-viewer/helpers/compose-html'
 import { handleDoublePress } from '@/screens/reading/reader-viewer/helpers/handleDoublePress'
 import { injectStyle } from '@/screens/reading/reader-viewer/helpers/styles-injection'
 import { textSelection } from '@/screens/reading/reader-viewer/helpers/text-selection'
@@ -23,23 +19,16 @@ export interface ReaderViewerProperties {
 
 const ReaderViewer = forwardRef(
 	(properties: ReaderViewerProperties, reference: any) => {
-		const { setOptions } = useTypedNavigation()
 		const { defaultProperties, onMessage, styleTag, colorScheme } = useReader()
+
 		useEffect(() => {
 			reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 		}, [styleTag])
 
-		useEffect(() => {
-			setOptions({
-				navigationBarColor: colorScheme.colorPalette.background.darker,
-				statusBarColor: colorScheme.colorPalette.background.darker,
-				statusBarHidden: true
-			})
-		}, [setOptions, colorScheme])
-		if (!defaultProperties) return <View />
+		if (!defaultProperties) return <View className='flex-1' />
 
 		return (
-			<View className='m-0 h-screen w-full items-center justify-center p-0'>
+			<View className='m-0 h-screen w-full flex-1 items-center justify-center p-0'>
 				<TouchableWithoutFeedback
 					onPress={() => handleDoublePress(properties.handleDoublePress)}>
 					<WebView
@@ -49,8 +38,7 @@ const ReaderViewer = forwardRef(
 						ref={reference}
 						originWhitelist={['*']}
 						showsVerticalScrollIndicator={false}
-						injectedJavaScriptBeforeContentLoaded={readerActions}
-						className='bottom-0 left-0 right-0 top-0 z-10  m-0 p-0'
+						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
 						renderLoading={() => (
 							<View
 								className='h-screen w-screen'

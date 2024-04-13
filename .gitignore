@@ -6,6 +6,12 @@ tmp
 apps/backend/.env
 apps/backend/.env.production
 apps/web/.env.local
+apps/web/.env
+apps/web/.env.production
+apps/web/.env.development
+apps/web/.env.test
+apps/web/.env.staging
+apps/application/package-lock.json
 apps/mobile/.env
 # dependencies
 node_modules

@@ -20,7 +20,7 @@ const Reader = () => {
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data
 	})
-	const [readerUiVisible, setReaderUiVisible] = useState(false)
+	const [readerUiVisible, setReaderUiVisible] = useState(true)
 	const viewerReference = useRef<WebView>(null)
 
 	const { chaptersListModalReference, readingSettingsModalReference } =
@@ -49,7 +49,9 @@ const Reader = () => {
 				sheetRef={chaptersListModalReference}
 				changeChapter={link =>
 					viewerReference.current?.injectJavaScript(
-						`window.location.hash = '${link}'`
+						`
+						window.location.hash = '${link}'
+						`
 					)
 				}
 			/>
