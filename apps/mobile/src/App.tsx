@@ -8,7 +8,8 @@ import * as Sentry from '@sentry/react-native'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { View } from 'react-native'
+import { Color } from 'global/colors'
+import { StatusBar, View } from 'react-native'
 import codePush from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-url-polyfill/auto'
@@ -19,7 +20,9 @@ const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			networkMode: 'offlineFirst',
-			refetchOnWindowFocus: false
+			refetchOnWindowFocus: false,
+			cacheTime: 1000 * 60 * 60,
+			staleTime: 1000 * 60 * 60
 		}
 	}
 })
@@ -69,6 +72,7 @@ const App = () => (
 				<Toast />
 			</PersistQueryClientProvider>
 		</PersistGate>
+		<StatusBar backgroundColor={Color.background} />
 	</Provider>
 )
 

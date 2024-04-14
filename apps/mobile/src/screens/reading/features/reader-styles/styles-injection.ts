@@ -1,4 +1,4 @@
-import type { ThemePackType } from '@/screens/reading/theme-pack'
+import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 
 export const injectStyle = (style: string) => `
 	var style = document.createElement('style');

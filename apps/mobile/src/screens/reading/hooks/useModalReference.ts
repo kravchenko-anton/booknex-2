@@ -2,7 +2,7 @@ import { useTypedNavigation } from '@/hooks'
 import type { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { useRef } from 'react'
 
-export const useReaderModal = (
+export const useModalReference = (
 	setReaderUiVisible: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
 	const { addListener } = useTypedNavigation()

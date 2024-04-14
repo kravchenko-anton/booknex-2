@@ -8,7 +8,7 @@
 		"build:mobile": "nx build mobile",
 		"prepare": "husky",
 		"run:commit": "npx eslint --fix",
-		"build": "nx build backend && nx build web",
+		"build": "nx build backend",
 		"build:backend:prod": "nx build backend --prod --outputPath=dist/apps/backend && npx prisma generate"
 	},
 	"dependencies": {

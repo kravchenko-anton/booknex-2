@@ -1,43 +1,107 @@
 import api from '@/api'
-import { useTypedRoute } from '@/hooks'
+import { useTypedRoute, useTypedSelector } from '@/hooks'
+import { useFinishBook } from '@/screens/reading/features/finish-book/useFinishBook'
+import { useReadingProgress } from '@/screens/reading/features/reader-progress/useReadingProgress'
+import { useModalReference } from '@/screens/reading/hooks/useModalReference'
+import { useReaderLoading } from '@/screens/reading/hooks/useReaderLoading'
+import { useStatusBarStyle } from '@/screens/reading/hooks/useStatusBarStyle'
+import { useStyleTag } from '@/screens/reading/hooks/useStyleTag'
 import ReaderChapters from '@/screens/reading/reader-chapters/reader-chapters'
-import { ReadingProvider } from '@/screens/reading/reader-context'
 import ReaderCustomization from '@/screens/reading/reader-customization/reader-customization'
-import ReaderMenu from '@/screens/reading/reader-menu'
+import ReaderHeader from '@/screens/reading/reader-header/reader-header'
 import ReaderViewer from '@/screens/reading/reader-viewer/reader-viewer'
-import { useReaderModal } from '@/screens/reading/useReaderModal'
+import { useReaderMessage } from '@/screens/reading/reader-viewer/useReaderMessage'
 import { Loader } from '@/ui'
+import { AnimatedView } from '@/ui/animated-components'
+import { screenHeight } from '@/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'
 import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
-
+//TODO: сделать нормальную историю чтения
 const Reader = () => {
-	const { params } = useTypedRoute<'Reader'>()
-	const slug = params.slug
-
+	const {
+		params: { slug }
+	} = useTypedRoute<'Reader'>()
 	const { data: ebook } = useQuery({
 		queryKey: ['e-books', slug],
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data
 	})
-	const [readerUiVisible, setReaderUiVisible] = useState(true)
+	const { loaderAnimation, setReaderLoading, readerLoading } =
+		useReaderLoading()
+	const { colorScheme, ...restUiProperties } = useTypedSelector(
+		state => state.readingUi
+	)
+	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
 	const viewerReference = useRef<WebView>(null)
 
+	const {
+		readingProgress,
+		scrollPosition,
+		setReadingProgress,
+		setScrollPosition,
+		clearProgress
+	} = useReadingProgress({ slug, readerLoading })
+
+	const { finishReadingLoading, onFinish } = useFinishBook({
+		slug,
+		onFinishComplete: clearProgress
+	})
+
 	const { chaptersListModalReference, readingSettingsModalReference } =
-		useReaderModal(setReaderUiVisible)
-	if (!ebook) return <Loader />
+		useModalReference(setReaderHeaderVisible)
+
+	useStatusBarStyle({ colorScheme, readerUiVisible: readerHeaderVisible })
+
+	const { onMessage } = useReaderMessage({
+		finishReadingLoading,
+		onFinishBookPress: onFinish,
+		onContentLoadEnd: () => setReaderLoading(false),
+		onScroll: payload => {
+			setScrollPosition(payload.scrollTop)
+			setReadingProgress({
+				bookProgress: payload.progress,
+				chapterProgress: payload.chapter.chapterProgress
+			})
+		}
+	})
+
+	const { defaultProperties, styleTag } = useStyleTag(
+		{ colorScheme, ...restUiProperties },
+		scrollPosition
+	)
+	if (!ebook)
+		return <Loader background={colorScheme.colorPalette.background.normal} />
 	return (
-		<ReadingProvider slug={slug}>
+		<>
+			<AnimatedView
+				pointerEvents='none'
+				className='absolute z-50 h-full w-full'
+				style={[
+					loaderAnimation,
+					{
+						backgroundColor: colorScheme.colorPalette.background.normal,
+						height: screenHeight
+					}
+				]}>
+				<Loader background={colorScheme.colorPalette.background.normal} />
+			</AnimatedView>
 			<ReaderViewer
+				colorScheme={colorScheme}
+				styleTag={styleTag}
+				defaultProperties={defaultProperties}
 				title={ebook.title}
 				picture={ebook.picture}
 				file={ebook.file}
 				ref={viewerReference}
-				readerUiVisible={readerUiVisible}
-				handleDoublePress={() => setReaderUiVisible(!readerUiVisible)}
+				readerUiVisible={readerHeaderVisible}
+				handleDoublePress={() => setReaderHeaderVisible(!readerHeaderVisible)}
+				onMessage={onMessage}
 			/>
-			<ReaderMenu
-				visible={readerUiVisible}
+			<ReaderHeader
+				colorScheme={colorScheme}
+				progress={readingProgress}
+				visible={readerHeaderVisible}
 				onChapterIconPress={() => chaptersListModalReference.current?.present()}
 				onSelectThemeIconPress={() =>
 					readingSettingsModalReference.current?.present()
@@ -45,19 +109,18 @@ const Reader = () => {
 			/>
 
 			<ReaderChapters
+				colorScheme={colorScheme}
 				chapters={ebook.chapters}
 				sheetRef={chaptersListModalReference}
 				changeChapter={link =>
 					viewerReference.current?.injectJavaScript(
-						`
-						window.location.hash = '${link}'
-						`
+						`window.location.hash = '${link}'`
 					)
 				}
 			/>
 
 			<ReaderCustomization sheetRef={readingSettingsModalReference} />
-		</ReadingProvider>
+		</>
 	)
 }
 

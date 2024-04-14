@@ -68,7 +68,9 @@ const Navigation: FC = () => {
 					screenOptions={{
 						animation: 'simple_push',
 						headerShown: false,
-						statusBarColor: Color.background
+						statusBarColor: Color.background,
+						statusBarTranslucent: false,
+						statusBarAnimation: 'fade'
 					}}>
 					{user
 						? routes.map(({ options, ...route }) => (
@@ -79,8 +81,7 @@ const Navigation: FC = () => {
 											backgroundColor: Color.background
 										},
 										...options,
-										navigationBarColor: Color.background,
-										statusBarColor: Color.background
+										navigationBarColor: Color.background
 									}}
 									{...route}
 								/>
@@ -93,8 +94,7 @@ const Navigation: FC = () => {
 											backgroundColor: Color.background
 										},
 										...options,
-										navigationBarColor: Color.background,
-										statusBarColor: Color.background
+										navigationBarColor: Color.background
 									}}
 									{...route}
 								/>

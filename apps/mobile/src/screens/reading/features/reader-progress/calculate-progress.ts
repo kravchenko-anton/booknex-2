@@ -1,4 +1,4 @@
-export const loadCalculateProgress = `
+export const calculateProgress = `
 	 let currentScrollPosition = document.body.scrollTop;
 	 let chapters = document.querySelectorAll('section');
 	 chapters = Array.from(chapters).filter(chapter => chapter.id);
@@ -20,9 +20,12 @@ export const loadCalculateProgress = `
    window.ReactNativeWebView.postMessage(JSON.stringify({
      type: "scroll",
      payload: {
-       scrollTop: currentScrollPosition ,
+       scrollTop: currentScrollPosition,
        progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight) * 100),
-       currentChapterProgress: currentChapterProgress
+       chapter: {
+        chapterLink: chapters[currentChapter].id,
+        chapterProgress: currentChapterProgress
+       }
      }
    }));
 `
@@ -32,7 +35,7 @@ window.addEventListener('scroll', function() {
  clearTimeout(timerId);
 
  timerId = setTimeout(() => {
-  ${loadCalculateProgress}
+  ${calculateProgress}
   
  }, 500);
 });

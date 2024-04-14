@@ -1,4 +1,7 @@
-import { themePack, type ThemePackType } from '@/screens/reading/theme-pack'
+import {
+	themePack,
+	type ThemePackType
+} from '@/screens/reading/features/reader-styles/theme-pack'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -29,15 +32,26 @@ export const ReaderFont = [
 	}
 ]
 
-const initialState = {
+export interface ReadingUiStateType {
+	colorScheme: ThemePackType
+	font: {
+		title: string
+		fontFamily: string
+	}
+	fontSize: number
+	lineHeight: 1.3 | 1.5 | 1.8
+	padding: 14 | 4 | 20
+}
+
+const initialState: ReadingUiStateType = {
 	colorScheme: themePack[0] as ThemePackType,
 	font: {
 		title: ReaderFont[0]?.title as string,
 		fontFamily: ReaderFont[0]?.fontFamily as string
 	},
 	fontSize: fontSizeSettings.min,
-	lineHeight: 1.3 as 1.3 | 1.5 | 1.8,
-	padding: 14 as 14 | 4 | 20
+	lineHeight: 1.3,
+	padding: 14
 }
 
 const ReadingUiSlice = createSlice({

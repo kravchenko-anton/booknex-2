@@ -1,10 +1,9 @@
 import { Color } from 'global/colors'
-import type { StatusBarStyle } from 'react-native/Libraries/Components/StatusBar/StatusBar'
 
 export interface ThemePackType {
 	title: string
 	slug: string
-	statusBar: StatusBarStyle
+	statusBar: 'light' | 'dark'
 	colorPalette: {
 		primary: string
 		secondary: string
@@ -19,8 +18,8 @@ export interface ThemePackType {
 }
 
 const statusBar = {
-	light: 'light-content' as const,
-	dark: 'dark-content' as const
+	light: 'light' as const,
+	dark: 'dark' as const
 }
 
 export const themePack: ThemePackType[] = [
@@ -43,7 +42,7 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Light',
 		slug: 'light',
-		statusBar: statusBar.light,
+		statusBar: statusBar.dark,
 		colorPalette: {
 			primary: Color.primary,
 			secondary: '#rb8e6d',

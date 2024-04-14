@@ -4,8 +4,8 @@ import Clipboard from '@react-native-clipboard/clipboard'
 import { Linking } from 'react-native'
 
 const textSelectionValidation = (selectedText: string) => {
-	if (selectedText.length < 3) return errorToast('Select more text')
-	if (selectedText.length > 800) return errorToast('Select less text')
+	if (selectedText.length < 3) return errorToast('Selected text is too short')
+	if (selectedText.length > 800) return errorToast('Selected text is too long')
 }
 
 export const textSelection = async (event: any, removeAllSelection: void) => {
@@ -21,7 +21,6 @@ export const textSelection = async (event: any, removeAllSelection: void) => {
 	}
 	if (event.nativeEvent.key === 'Translate') {
 		textSelectionValidation(event.nativeEvent.selectedText)
-		//TODO: проверить работу ссылки, открывается ли в приложении
 
 		await Linking.openURL(
 			`https://translate.google.com/?sl=auto&tl=ru&text=${event.nativeEvent.selectedText}`

@@ -2,31 +2,32 @@ import { useAction, useTypedNavigation } from '@/hooks'
 import { useEffect } from 'react'
 import { AppState } from 'react-native'
 
+interface SaveProgressProperties {
+	slug: string
+	scrollPosition: number
+	readerLoading: boolean
+}
 export const useSaveProgress = ({
 	slug,
-	progress,
-	scrollPosition
-}: {
-	slug: string
-	progress: number
-	scrollPosition: number
-}) => {
+	scrollPosition,
+	readerLoading
+}: SaveProgressProperties) => {
 	const { addListener } = useTypedNavigation()
 	const { updateReadingProgress } = useAction()
 
 	useEffect(() => {
 		const unsubscribe = addListener('beforeRemove', () => {
+			if (readerLoading) return
 			updateReadingProgress({
 				slug,
-				progress: progress,
 				scrollPosition: scrollPosition
 			})
 		})
 		const subscription = AppState.addEventListener('change', nextAppState => {
+			if (readerLoading) return
 			if (/inactive|background/.test(nextAppState)) {
 				updateReadingProgress({
 					slug,
-					progress: progress,
 					scrollPosition: scrollPosition
 				})
 			}
@@ -35,5 +36,5 @@ export const useSaveProgress = ({
 			unsubscribe()
 			subscription.remove()
 		}
-	}, [addListener, slug, progress, scrollPosition, updateReadingProgress])
+	}, [addListener, slug, scrollPosition, updateReadingProgress])
 }

@@ -1,4 +1,4 @@
-import { useReader } from '@/screens/reading/reader-context'
+import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import { Title } from '@/ui'
 import {
 	BottomSheetBackdrop,
@@ -9,18 +9,21 @@ import type { EbookOutputChaptersInner } from 'global/api-client'
 import { useMemo, type FC } from 'react'
 import { Pressable } from 'react-native'
 
-interface ReaderChaptersProperties {
+export interface ReaderChaptersProperties {
 	sheetRef: React.RefObject<BottomSheetModal>
 	chapters: EbookOutputChaptersInner[]
 	changeChapter: (link: string) => void
+	colorScheme: ThemePackType
 }
+
+//TODO: сделать нормальное отображение главы которую щас читаешь в списке
 
 const ReaderChapters: FC<ReaderChaptersProperties> = ({
 	sheetRef,
 	chapters,
-	changeChapter
+	changeChapter,
+	colorScheme
 }) => {
-	const { colorScheme } = useReader()
 	const sections = useMemo(
 		() =>
 			chapters.map(chapter => ({
@@ -44,7 +47,12 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 				backgroundColor: colorScheme.colorPalette.background.darker
 			}}
 			backdropComponent={backdropProperties => (
-				<BottomSheetBackdrop {...backdropProperties} enableTouchThrough />
+				<BottomSheetBackdrop
+					disappearsOnIndex={-1}
+					appearsOnIndex={0}
+					{...backdropProperties}
+					enableTouchThrough
+				/>
 			)}>
 			<BottomSheetSectionList
 				stickySectionHeadersEnabled

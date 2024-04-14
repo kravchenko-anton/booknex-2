@@ -1,10 +1,9 @@
-import { useAction } from '@/hooks'
-import { useReader } from '@/screens/reading/reader-context'
-import { FontSizeSettings } from '@/screens/reading/reader-customization/font-size-settings'
-import { FontStyleSettings } from '@/screens/reading/reader-customization/font-style-settings'
-import { LineHeightSettings } from '@/screens/reading/reader-customization/line-height-settings'
-import { PageMarginSettings } from '@/screens/reading/reader-customization/page-margin-settings'
-import { ThemeStyleSettings } from '@/screens/reading/reader-customization/theme-style-settings'
+import { useAction, useTypedSelector } from '@/hooks'
+import { FontSizeSettings } from '@/screens/reading/reader-customization/ui/font-size-settings'
+import { FontStyleSettings } from '@/screens/reading/reader-customization/ui/font-style-settings'
+import { LineHeightSettings } from '@/screens/reading/reader-customization/ui/line-height-settings'
+import { PageMarginSettings } from '@/screens/reading/reader-customization/ui/page-margin-settings'
+import { ThemeStyleSettings } from '@/screens/reading/reader-customization/ui/theme-style-settings'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import type { FC, RefObject } from 'react'
 import { Pressable, View } from 'react-native'
@@ -16,7 +15,9 @@ interface ReaderCustomizationProperties {
 const ReaderCustomization: FC<ReaderCustomizationProperties> = ({
 	sheetRef
 }) => {
-	const { colorScheme, font, fontSize, lineHeight, padding } = useReader()
+	const { colorScheme, font, fontSize, lineHeight, padding } = useTypedSelector(
+		state => state.readingUi
+	)
 	const {
 		changePadding,
 		changeTheme,

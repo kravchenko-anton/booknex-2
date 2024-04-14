@@ -1,13 +1,13 @@
-import { useReader } from '@/screens/reading/reader-context'
-import { composeReaderViewHtml } from '@/screens/reading/reader-viewer/helpers/compose-html'
-import { handleDoublePress } from '@/screens/reading/reader-viewer/helpers/handleDoublePress'
-import { injectStyle } from '@/screens/reading/reader-viewer/helpers/styles-injection'
-import { textSelection } from '@/screens/reading/reader-viewer/helpers/text-selection'
-import { windowHeight, windowWidth } from '@/utils/dimensions'
+import { injectStyle } from '@/screens/reading/features/reader-styles/styles-injection'
+import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
+import { textSelection } from '@/screens/reading/features/text-selection/text-selection'
+import { composeReaderViewHtml } from '@/screens/reading/reader-viewer/compose-html'
+import { windowWidth } from '@/utils/dimensions'
+import { doublePress } from '@/utils/handleDoublePress'
 import type { FunctionType } from 'global/types'
 import { forwardRef, useEffect } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
-import WebView from 'react-native-webview'
+import WebView, { type WebViewMessageEvent } from 'react-native-webview'
 
 export interface ReaderViewerProperties {
 	readerUiVisible: boolean
@@ -15,22 +15,36 @@ export interface ReaderViewerProperties {
 	file: string[]
 	picture: string
 	title: string
+	defaultProperties: {
+		scrollPosition: number
+		theme: string
+	}
+	styleTag: string
+	colorScheme: ThemePackType
+	onMessage: (event: WebViewMessageEvent) => Promise<void>
 }
 
 const ReaderViewer = forwardRef(
 	(properties: ReaderViewerProperties, reference: any) => {
-		const { defaultProperties, onMessage, styleTag, colorScheme } = useReader()
+		const {
+			defaultProperties,
+			styleTag,
+			handleDoublePress,
+			colorScheme,
+			title,
+			onMessage,
+			picture,
+			file
+		} = properties
 
 		useEffect(() => {
 			reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 		}, [styleTag])
 
 		if (!defaultProperties) return <View className='flex-1' />
-
 		return (
-			<View className='m-0 h-screen w-full flex-1 items-center justify-center p-0'>
-				<TouchableWithoutFeedback
-					onPress={() => handleDoublePress(properties.handleDoublePress)}>
+			<View className='m-0 h-screen w-screen flex-1 items-center justify-center p-0'>
+				<TouchableWithoutFeedback onPress={doublePress(handleDoublePress)}>
 					<WebView
 						scrollEnabled
 						javaScriptEnabled
@@ -60,16 +74,15 @@ const ReaderViewer = forwardRef(
 							html: composeReaderViewHtml({
 								defaultProperties: {
 									scrollPosition: defaultProperties.scrollPosition,
-									theme: defaultProperties.defaultTheme
+									theme: defaultProperties.theme
 								},
-								file: properties.file,
-								picture: properties.picture,
-								title: properties.title
+								file: file,
+								picture: picture,
+								title: title
 							})
 						}}
 						style={{
 							width: windowWidth,
-							height: windowHeight,
 							backgroundColor: colorScheme.colorPalette.background.normal
 						}}
 						onMessage={onMessage}
