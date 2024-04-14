@@ -38,8 +38,7 @@ const Reader = () => {
 	const {
 		readingProgress,
 		scrollPosition,
-		setReadingProgress,
-		setScrollPosition,
+		updateReadingProgress,
 		clearProgress
 	} = useReadingProgress({ slug, readerLoading })
 
@@ -57,13 +56,7 @@ const Reader = () => {
 		finishReadingLoading,
 		onFinishBookPress: onFinish,
 		onContentLoadEnd: () => setReaderLoading(false),
-		onScroll: payload => {
-			setScrollPosition(payload.scrollTop)
-			setReadingProgress({
-				bookProgress: payload.progress,
-				chapterProgress: payload.chapter.chapterProgress
-			})
-		}
+		onScroll: updateReadingProgress
 	})
 
 	const { defaultProperties, styleTag } = useStyleTag(
@@ -100,7 +93,7 @@ const Reader = () => {
 			/>
 			<ReaderHeader
 				colorScheme={colorScheme}
-				progress={readingProgress}
+				readingProgress={readingProgress}
 				visible={readerHeaderVisible}
 				onChapterIconPress={() => chaptersListModalReference.current?.present()}
 				onSelectThemeIconPress={() =>
@@ -109,12 +102,18 @@ const Reader = () => {
 			/>
 
 			<ReaderChapters
+				activeChapter={readingProgress.chapter}
 				colorScheme={colorScheme}
 				chapters={ebook.chapters}
 				sheetRef={chaptersListModalReference}
 				changeChapter={link =>
 					viewerReference.current?.injectJavaScript(
-						`window.location.hash = '${link}'`
+						`
+					document.getElementById('${link.replace('#', '')}')?.scrollIntoView({
+						behavior: 'smooth'
+					})
+	
+						`
 					)
 				}
 			/>

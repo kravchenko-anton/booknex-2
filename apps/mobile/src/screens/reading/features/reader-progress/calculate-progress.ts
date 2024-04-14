@@ -4,18 +4,21 @@ export const calculateProgress = `
 	 chapters = Array.from(chapters).filter(chapter => chapter.id);
 			 let currentChapterProgress = 0;
 			 let currentChapter = 0;
-			 
-			 for (let i = 0; i < chapters.length; i++) {
-				 const chapter = chapters[i];
-				 const chapterHeight = chapter.scrollHeight;
-				 const chapterTop = chapter.offsetTop;
-				 const chapterBottom = chapterTop + chapterHeight;
-				 if (currentScrollPosition >= chapterTop && currentScrollPosition <= chapterBottom) {
-					 currentChapterProgress = (currentScrollPosition - chapterTop) / chapterHeight * 100;
-					 currentChapter = i;
-					 break;
-				 }
-			 };
+			  let currentChapterLink = '';
+			  
+			  // just create array of objects with chapter where i been see start and end progress procent and find current chapter
+			  
+			  chapters.forEach((chapter, index) => {
+         const chapterStart = chapter.offsetTop - 1;
+         const chapterEnd = chapterStart + chapter.clientHeight;
+         const chapterProgress = (currentScrollPosition - chapterStart) / (chapterEnd - chapterStart) * 100;
+         
+         if (chapterProgress >= 0 && chapterProgress <= 100) {
+          currentChapterProgress = chapterProgress;
+          currentChapter = index;
+          currentChapterLink = chapter.id;
+         }
+        });
 	
    window.ReactNativeWebView.postMessage(JSON.stringify({
      type: "scroll",
@@ -23,7 +26,7 @@ export const calculateProgress = `
        scrollTop: currentScrollPosition,
        progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight) * 100),
        chapter: {
-        chapterLink: chapters[currentChapter].id,
+        chapterLink: "#" + chapters[currentChapter].id,
         chapterProgress: currentChapterProgress
        }
      }

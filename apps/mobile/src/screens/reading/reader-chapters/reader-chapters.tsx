@@ -1,3 +1,4 @@
+import type { ReadingProgressType } from '@/screens/reading/features/reader-progress/useReadingProgress'
 import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import { Title } from '@/ui'
 import {
@@ -14,6 +15,7 @@ export interface ReaderChaptersProperties {
 	chapters: EbookOutputChaptersInner[]
 	changeChapter: (link: string) => void
 	colorScheme: ThemePackType
+	activeChapter: ReadingProgressType['chapter']
 }
 
 //TODO: сделать нормальное отображение главы которую щас читаешь в списке
@@ -22,7 +24,8 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 	sheetRef,
 	chapters,
 	changeChapter,
-	colorScheme
+	colorScheme,
+	activeChapter
 }) => {
 	const sections = useMemo(
 		() =>
@@ -79,9 +82,12 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 				)}
 				renderItem={({ item: chapter }) => (
 					<Pressable
-						className=' w-full border-b-[1px] p-4'
+						className='w-full flex-row items-center justify-between border-b-[1px] p-4'
 						style={{
-							backgroundColor: colorScheme.colorPalette.background.lighter,
+							backgroundColor:
+								activeChapter?.link === chapter.link
+									? colorScheme.colorPalette.secondary
+									: colorScheme.colorPalette.background.lighter,
 							borderColor: colorScheme.colorPalette.background.normal
 						}}
 						onPress={() => {
@@ -97,6 +103,17 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 							}}>
 							{chapter.name}
 						</Title>
+						{chapter.link === activeChapter?.link && (
+							<Title
+								numberOfLines={2}
+								size={'lg'}
+								weight='semiBold'
+								style={{
+									color: colorScheme.colorPalette.text
+								}}>
+								{Number(activeChapter?.progress || 0).toFixed(1) + '%'}
+							</Title>
+						)}
 					</Pressable>
 				)}
 			/>

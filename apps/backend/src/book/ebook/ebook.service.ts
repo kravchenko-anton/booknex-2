@@ -81,7 +81,7 @@ export class EbookService {
 				title,
 				children: chapters.map(({ name }) => ({
 					name,
-					link: `#${name + ' ' + title}`
+					link: `${name + ' ' + title}`
 				}))
 			}))
 		}

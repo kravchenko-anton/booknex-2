@@ -1,4 +1,5 @@
 import { useTypedNavigation } from '@/hooks'
+import type { ReadingProgressType } from '@/screens/reading/features/reader-progress/useReadingProgress'
 import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import { AnimatedView } from '@/ui/animated-components'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
@@ -14,17 +15,14 @@ interface ReaderMenuProperties {
 	onChapterIconPress: FunctionType
 	onSelectThemeIconPress: FunctionType
 	colorScheme: ThemePackType
-	progress: {
-		bookProgress: number
-		chapterProgress: number
-	}
+	readingProgress: ReadingProgressType
 }
 
 const ReaderHeader: FC<ReaderMenuProperties> = ({
 	visible = false,
 	onChapterIconPress,
 	colorScheme,
-	progress,
+	readingProgress,
 	onSelectThemeIconPress
 }) => {
 	const { goBack } = useTypedNavigation()
@@ -57,12 +55,12 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 								className='mb-1.5'
 								tintColor={colorScheme.colorPalette.secondary}
 								trackTintColor={colorScheme.colorPalette.background.lighter}
-								progress={(progress.chapterProgress || 0) / 100}
+								progress={(readingProgress.chapter.progress || 0) / 100}
 							/>
 							<ProgressBar
 								tintColor={colorScheme.colorPalette.primary}
 								trackTintColor={colorScheme.colorPalette.background.lighter}
-								progress={progress.bookProgress / 100}
+								progress={readingProgress.progress / 100}
 							/>
 						</View>
 					</View>
