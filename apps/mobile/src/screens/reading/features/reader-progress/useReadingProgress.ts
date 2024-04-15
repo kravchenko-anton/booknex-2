@@ -34,6 +34,7 @@ export const useReadingProgress = ({
 
 	useSaveProgress({
 		slug,
+		progress: readingProgress.progress,
 		scrollPosition,
 		readerLoading
 	})

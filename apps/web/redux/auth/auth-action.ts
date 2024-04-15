@@ -1,7 +1,7 @@
 import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { AuthDto, AuthOutput } from 'global/api-client'
+import type { AuthDto, AuthOutput } from 'global/api-client'
 import { globalErrors } from 'global/errors'
 
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'

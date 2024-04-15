@@ -40,13 +40,7 @@ const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
 codePush.sync({
-	updateDialog: {
-		title: 'New update available',
-		mandatoryUpdateMessage: 'The app has been updated',
-		mandatoryContinueButtonLabel: 'Update',
-		optionalIgnoreButtonLabel: 'Later'
-	},
-	installMode: codePush.InstallMode.IMMEDIATE
+	installMode: codePush.InstallMode.ON_NEXT_RESUME
 })
 
 const App = () => (

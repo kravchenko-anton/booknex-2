@@ -1,3 +1,4 @@
+import { useDebounce } from '@/hooks/useDebounce'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -18,9 +19,14 @@ export const useSearchForm = () => {
 	}
 
 	const searchTerm = watch('searchTerm')
-
+	const debounceTerm = useDebounce(searchTerm, 500)
 	return useMemo(
-		() => ({ searchTerm, control, clearSearch }),
+		() => ({
+			searchTerm,
+			debouncedSearchTerm: debounceTerm,
+			control,
+			clearSearch
+		}),
 		[searchTerm, searchTerm]
 	)
 }

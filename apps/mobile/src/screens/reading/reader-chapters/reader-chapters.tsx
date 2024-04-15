@@ -86,7 +86,7 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 						style={{
 							backgroundColor:
 								activeChapter?.link === chapter.link
-									? colorScheme.colorPalette.secondary
+									? colorScheme.colorPalette.background.normal
 									: colorScheme.colorPalette.background.lighter,
 							borderColor: colorScheme.colorPalette.background.normal
 						}}

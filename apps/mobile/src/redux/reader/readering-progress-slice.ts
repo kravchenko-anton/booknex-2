@@ -7,6 +7,7 @@ const initialState = {
 			slug: string
 			latestProgress: {
 				scrollPosition: number
+				progress: number
 			}
 		}[]
 	>
@@ -21,6 +22,7 @@ const ReadingProgressSlice = createSlice({
 				payload
 			}: PayloadAction<{
 				slug: string
+				progress: number
 				scrollPosition: number
 			}>
 		) => {
@@ -28,6 +30,7 @@ const ReadingProgressSlice = createSlice({
 			const book = state.books.find(value => value.slug === payload.slug)
 			if (book)
 				book.latestProgress = {
+					progress: payload.progress,
 					scrollPosition: payload.scrollPosition
 				}
 			state.books = [
@@ -35,6 +38,7 @@ const ReadingProgressSlice = createSlice({
 				{
 					slug: payload.slug,
 					latestProgress: {
+						progress: payload.progress,
 						scrollPosition: payload.scrollPosition
 					}
 				}

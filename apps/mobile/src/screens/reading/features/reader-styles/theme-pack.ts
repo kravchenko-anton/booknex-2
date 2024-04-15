@@ -60,15 +60,15 @@ export const themePack: ThemePackType[] = [
 		slug: 'sepia',
 		statusBar: statusBar.dark,
 		colorPalette: {
-			primary: '#606c38',
-			secondary: '#684E32',
+			primary: '#c7a17a',
+			secondary: '#cf8e6d',
 			background: {
-				normal: '#f4eee8',
-				lighter: '#f9f5f0',
-				darker: '#eae2d6'
+				normal: '#f0e9d7',
+				lighter: '#f7f1e3',
+				darker: '#eae3cf'
 			},
-			textSelection: '#b3a07f',
-			text: '#2d2a32'
+			textSelection: '#7a5a3f',
+			text: '#5f4b32'
 		}
 	},
 	{
@@ -165,7 +165,88 @@ export const themePack: ThemePackType[] = [
 				darker: '#0c0a12'
 			},
 			textSelection: '#3d4d5f',
+			text: '#c2c8db'
+		}
+	},
+	{
+		title: 'Kanagawa Black',
+		slug: 'kanagawa-black',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#957fb8',
+			secondary: '#ff4848',
+			background: {
+				normal: '#000000',
+				lighter: '#121212',
+				darker: '#000000'
+			},
+			textSelection: '#223249',
 			text: '#dcd7ba'
+		}
+	},
+	{
+		title: 'Nord',
+		slug: 'nord',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#81a1c1',
+			secondary: '#bf616a',
+			background: {
+				normal: '#2e3440',
+				lighter: '#3b4252',
+				darker: '#242831'
+			},
+			textSelection: '#4f3f6f',
+			text: '#d8dee9'
+		}
+	},
+
+	{
+		title: 'Gruvbox',
+		slug: 'gruvbox',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#fb4934',
+			secondary: '#fabd2f',
+			background: {
+				normal: '#282828',
+				lighter: '#3c3836',
+				darker: '#1d2021'
+			},
+			textSelection: '#458588',
+			text: '#ebdbb2'
+		}
+	},
+	{
+		title: 'Twitch Dark',
+		slug: 'twitch-dark',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#b48fea',
+			secondary: '#e9c55a',
+			background: {
+				normal: '#232324',
+				lighter: '#181817',
+				darker: '#141416'
+			},
+			textSelection: '#333333',
+			text: '#e6e5e9'
+		}
+	},
+	{
+		title: 'Hiberbee',
+		slug: 'hiberbee',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#e7bf57',
+			secondary: '#ee7762',
+			background: {
+				normal: '#171615',
+				lighter: '#373635',
+				darker: '#121110'
+			},
+			textSelection: '#214283',
+			text: '#e6e1cf'
 		}
 	}
 ]

@@ -9,7 +9,6 @@ import { Color } from 'global/colors'
 import { Close } from 'icons'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
-import { debounce } from 'throttle-debounce'
 //TODO: проверить debounce
 const Search = () => {
 	const { searchTerm, books, booksLoading, control, clearSearch } = useSearch()
@@ -43,7 +42,7 @@ const Search = () => {
 										color: Color.white
 									}}
 									onBlur={onBlur}
-									onChangeText={debounce(300, onChange)}
+									onChangeText={onChange}
 								/>
 							</View>
 

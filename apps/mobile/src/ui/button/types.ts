@@ -7,7 +7,7 @@ import type { SvgProps } from 'react-native-svg'
 export type ButtonProperties = PressableDefaultProperties &
 	SizeProperties & {
 		textSize?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-		icon?: FC<SvgProps>
+		icon?: FC<SvgProps> | string
 		isLoading?: boolean
 		children?: any
 		isDisabled?: boolean

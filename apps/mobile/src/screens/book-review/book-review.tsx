@@ -5,12 +5,12 @@ import { Button, Field, Icon, ScrollView, Title } from '@/ui'
 import { successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import { ReviewBookDto } from 'global/api-client'
+import type { ReviewBookDto } from 'global/api-client'
 import { Color } from 'global/colors'
 import { reviewTags } from 'global/utils/review-tags'
 import {
 	ReviewBookDtoSchema,
-	ReviewBookDtoType
+	type ReviewBookDtoType
 } from 'global/validation/review/review.book.dto'
 import { Close, Star } from 'icons'
 import { FinishBook } from 'illustrations'

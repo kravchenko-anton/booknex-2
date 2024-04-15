@@ -26,7 +26,7 @@ export const calculateProgress = `
        scrollTop: currentScrollPosition,
        progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight) * 100),
        chapter: {
-        chapterLink: "#" + chapters[currentChapter].id,
+        chapterLink: chapters[currentChapter].id,
         chapterProgress: currentChapterProgress
        }
      }

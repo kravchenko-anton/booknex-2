@@ -25,7 +25,7 @@
 		"nativewind": "*",
 		"react": "18.2.0",
 		"react-hook-form": "*",
-		"react-native": "0.73.6",
+		"react-native": "*",
 		"react-native-bootsplash": "*",
 		"react-native-code-push": "*",
 		"react-native-encrypted-storage": "*",

@@ -4,11 +4,13 @@ import { AppState } from 'react-native'
 
 interface SaveProgressProperties {
 	slug: string
+	progress: number
 	scrollPosition: number
 	readerLoading: boolean
 }
 export const useSaveProgress = ({
 	slug,
+	progress,
 	scrollPosition,
 	readerLoading
 }: SaveProgressProperties) => {
@@ -20,6 +22,7 @@ export const useSaveProgress = ({
 			if (readerLoading) return
 			updateReadingProgress({
 				slug,
+				progress: progress,
 				scrollPosition: scrollPosition
 			})
 		})
@@ -28,6 +31,7 @@ export const useSaveProgress = ({
 			if (/inactive|background/.test(nextAppState)) {
 				updateReadingProgress({
 					slug,
+					progress: progress,
 					scrollPosition: scrollPosition
 				})
 			}
@@ -36,5 +40,5 @@ export const useSaveProgress = ({
 			unsubscribe()
 			subscription.remove()
 		}
-	}, [addListener, slug, scrollPosition, updateReadingProgress])
+	}, [addListener, slug, progress, scrollPosition, updateReadingProgress])
 }

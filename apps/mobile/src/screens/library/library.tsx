@@ -54,7 +54,6 @@ const Library = () => {
 							url={book.picture}
 							className='mb-2'
 						/>
-
 						<ProgressBar
 							progress={
 								Number(
@@ -64,7 +63,6 @@ const Library = () => {
 								0
 							}
 						/>
-
 						<Title numberOfLines={2} size='md' weight='medium' className='mt-1'>
 							{book.title}
 						</Title>

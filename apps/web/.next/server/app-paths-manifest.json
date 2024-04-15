@@ -1,0 +1,8 @@
+{
+  "/page": "app/page.js",
+  "/privacy-policy/page": "app/privacy-policy/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/book/catalog/page": "app/admin/book/catalog/page.js",
+  "/admin/book/[slug]/page": "app/admin/book/[slug]/page.js",
+  "/admin/user/catalog/page": "app/admin/user/catalog/page.js"
+}

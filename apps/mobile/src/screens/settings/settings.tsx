@@ -1,27 +1,36 @@
-import { useTypedNavigation } from '@/hooks'
+import { useAuth, useTypedNavigation } from '@/hooks'
 import { ScrollLayout } from '@/ui'
-import { Logout, MessageCircleQuestion } from 'icons'
 import { Linking } from 'react-native'
 import * as List from './settings-list'
 
 const Settings = () => {
 	const { navigate } = useTypedNavigation()
+	const { user } = useAuth()
 	return (
-		<ScrollLayout className='px-2'>
-			<List.Category title='Support' className='mt-4'>
-				<List.Item
-					title='Contact us'
-					icon={MessageCircleQuestion}
-					onPress={() => Linking.openURL('mailto:booknex.company@gmail.com')}
-				/>
-			</List.Category>
-			<List.Category title='Account'>
-				<List.Item
-					title='Sign out'
-					icon={Logout}
-					onPress={() => navigate('Logout')}
-				/>
-			</List.Category>
+		<ScrollLayout className='pt-4'>
+			<List.Item
+				title='Contact support'
+				onPress={() => Linking.openURL('mailto:booknex.company@gmail.com')}
+			/>
+			<List.Item
+				title='Privacy policy'
+				onPress={() =>
+					Linking.openURL('https://booknex.up.railway.app/privacy-policy')
+				}
+			/>
+			<List.Item
+				bordered
+				title='Terms of service'
+				onPress={() =>
+					Linking.openURL('https://booknex.up.railway.app/terms-of-service')
+				}
+			/>
+
+			<List.Item
+				description={user?.email}
+				title={`Sign out`}
+				onPress={() => navigate('Logout')}
+			/>
 		</ScrollLayout>
 	)
 }

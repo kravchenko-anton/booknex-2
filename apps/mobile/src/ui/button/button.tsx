@@ -47,15 +47,7 @@ const Button = ({
 				height={settings.iconSize[size]}
 			/>
 		)}
-		{/* {!!Icon && !isLoading && typeof Icon === 'string' && ( */}
-		{/* 	<SvgUri */}
-		{/* 		uri={Icon} */}
-		{/* 		width={settings.iconSize[size]} */}
-		{/* 		height={settings.iconSize[size]} */}
-		{/* 		color={InnerColor[variant]} */}
-		{/* 		className='mr-2 mt-1' */}
-		{/* 	/> */}
-		{/* )} */}
+
 		<Title
 			weight='semiBold'
 			color={InnerColor[variant]}

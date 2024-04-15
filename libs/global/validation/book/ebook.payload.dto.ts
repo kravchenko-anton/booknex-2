@@ -26,7 +26,7 @@ export const ChapterPayloadSchema = z.object({
 		}),
 	text: z.string().refine(
 		value => {
-			const regex = /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/
+			const regex = /<([A-Za-z][\dA-Za-z]*)\b[^>]*>(.*?)<\/\1>/
 			return regex.test(value)
 		},
 		{

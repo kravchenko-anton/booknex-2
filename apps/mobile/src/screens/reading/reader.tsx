@@ -109,7 +109,7 @@ const Reader = () => {
 				changeChapter={link =>
 					viewerReference.current?.injectJavaScript(
 						`
-					document.getElementById('${link.replace('#', '')}')?.scrollIntoView({
+					document.getElementById('${link}')?.scrollIntoView({
 						behavior: 'smooth'
 					})
 	
