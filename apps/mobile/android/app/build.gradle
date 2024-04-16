@@ -98,6 +98,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+						resValue 'string', 'CodePushDeploymentKey', 'ng2EKj_wP8in8FK-0FoDDymS2XVwknzo2Id_h'
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

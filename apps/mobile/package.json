@@ -4,8 +4,8 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-production -d Staging",
-		"CodePush:deployementList": "appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex-production -k"
+		"CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex -d Production -b app.bundle",
+		"CodePush:deployementList": "appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex -k"
 	},
 	"dependencies": {
 		"@gorhom/bottom-sheet": "*",

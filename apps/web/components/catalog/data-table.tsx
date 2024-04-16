@@ -62,7 +62,7 @@ const DataTable: FC<DataTableProperties> = ({
 		</Table>
 		<div className='flex items-center justify-end space-x-2 py-4'>
 			<div className='text-muted-foreground flex-1 text-sm'>
-				{currentPage} page of {totalPages} pages
+				{currentPage} page of {totalPages || 0} pages
 			</div>
 			<div className='flex space-x-2'>
 				<Link href={currentPage >= 1 ? `?page=${currentPage - 1}` : ''}>

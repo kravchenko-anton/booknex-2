@@ -15,7 +15,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-url-polyfill/auto'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-
+//TODO: повфиксить вылеты codepush после обновы
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {

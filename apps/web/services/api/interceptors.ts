@@ -4,8 +4,10 @@ import {
 	getNewTokens
 } from '@/redux/auth/auth-helper'
 import { errorToast } from '@/utils/toast'
-import axios, { InternalAxiosRequestConfig } from 'axios'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
 import { errorCatch } from 'global/helpers/catch-error'
+
+const componentType = typeof window === 'undefined' ? 'server' : 'client'
 
 export const instance = axios.create({
 	headers: {
@@ -53,13 +55,12 @@ export const axiosResponseInstance = async (error: any) => {
 			) {
 				return deleteTokensStorage()
 			}
-			errorToast(error)
+			if (componentType === 'client') errorToast(error)
 			return Promise.reject(error)
 		}
 	}
-
-	errorToast(error)
-	return Promise.reject(error)
+	if (componentType === 'client') errorToast(error)
+	throw error
 }
 
 instance.interceptors.request.use(axiosRequestInstance)

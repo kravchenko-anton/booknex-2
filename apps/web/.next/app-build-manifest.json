@@ -46,20 +46,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/admin/book/catalog/page.js"
     ],
-    "/admin/book/[slug]/page": [
+    "/admin/parser/catalog/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/book/[slug]/page.js"
+      "static/chunks/app/admin/parser/catalog/page.js"
     ],
-    "/privacy-policy/page": [
+    "/admin/book/create/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/privacy-policy/page.js"
-    ],
-    "/admin/user/catalog/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/admin/user/catalog/page.js"
+      "static/chunks/app/admin/book/create/page.js"
     ]
   }
 }

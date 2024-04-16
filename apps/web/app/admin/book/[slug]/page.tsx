@@ -1,5 +1,4 @@
 'use client'
-
 import BookStatistic from '@/app/admin/book/_components/book-statistic'
 import BookOverview from '@/app/admin/book/_components/ebook-tabs'
 import { RemoveButton } from '@/app/admin/book/_components/remove-button'

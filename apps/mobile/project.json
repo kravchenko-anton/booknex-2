@@ -8,7 +8,7 @@
 			"executor": "@nx/react-native:start",
 			"dependsOn": ["ensure-symlink", "pod-install"],
 			"options": {
-				"port": 8081,
+				"port": 8082,
 				"resetCache": true
 			}
 		},
@@ -47,7 +47,6 @@
 				"{projectRoot}/android/app/build/outputs/apk"
 			],
 			"dependsOn": ["ensure-symlink"],
-			"options": {}
 		},
 		"build-ios": {
 			"executor": "@nx/react-native:build-ios",
@@ -64,7 +63,7 @@
 			"dependsOn": ["ensure-symlink"],
 			"outputs": ["{options.bundleOutput}"],
 			"options": {
-				"entryFile": "src/main.tsx",
+				"entryFile": "index",
 				"platform": "android",
 				"bundleOutput": "dist/apps/mobile/android/main.jsbundle"
 			}

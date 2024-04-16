@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 import type { CreateBookDto } from 'global/api-client'
 import {
 	CreateBookSchema,
-	CreateBookSchemaType
+	type CreateBookSchemaType
 } from 'global/validation/book/create.book.dto'
 
 import { useRouter, useSearchParams } from 'next/navigation'
