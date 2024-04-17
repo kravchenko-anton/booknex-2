@@ -645,6 +645,12 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 .line-clamp-3 {
   overflow: hidden;
   display: -webkit-box;
@@ -704,6 +710,9 @@ video {
 }
 .h-\[60px\] {
   height: 60px;
+}
+.h-\[60vh\] {
+  height: 60vh;
 }
 .h-\[95\%\] {
   height: 95%;
@@ -855,6 +864,9 @@ video {
 }
 .items-start {
   align-items: flex-start;
+}
+.items-end {
+  align-items: flex-end;
 }
 .items-center {
   align-items: center;
@@ -1165,6 +1177,10 @@ video {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 .text-\[10px\] {
   font-size: 10px;

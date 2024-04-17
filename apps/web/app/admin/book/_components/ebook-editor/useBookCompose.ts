@@ -26,6 +26,18 @@ export const useBookCompose = ({
 		successToast('Book deleted')
 	}
 
+	const stashEBook = () => {
+		if (!ebooks) return errorToast('Error stashing book')
+		localStorage.setItem('ebooks', JSON.stringify(ebooks))
+		successToast('Book stashed')
+	}
+
+	const unStashEBook = () => {
+		const ebooks = JSON.parse(localStorage.getItem('ebooks') || '[]')
+		setEBooks(ebooks)
+		successToast('Book unstashed')
+	}
+
 	const trimmingEBookContent = ({
 		bookId,
 		startLine,
@@ -288,6 +300,8 @@ export const useBookCompose = ({
 
 	return {
 		books: {
+			stashEBook,
+			unStashEBook,
 			upload: unfoldWithUpload,
 			state: ebooks || [],
 			unfoldLoading,

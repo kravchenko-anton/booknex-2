@@ -23,6 +23,7 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookSlug }) => {
 			link: `#${name + ' ' + title}`
 		}))
 	)
+
 	return (
 		<div className='mt-4 p-2'>
 			<div className='border-bordered mb-4 h-[600px] min-h-[600px] w-full overflow-y-scroll rounded border-[1px] p-2'>

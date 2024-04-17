@@ -8,7 +8,7 @@ import Loader from '@/components/ui/loader/loader'
 import api from '@/services/api'
 import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/getDirtyValues'
-import { errorToast } from '@/utils/toast'
+import { errorToast, successToast } from '@/utils/toast'
 import { validateStringParameter } from '@/utils/validate-parameter'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -60,6 +60,7 @@ const Page: FC = () => {
 					QueryKeys.ebook.storedEbookBySlug(bookSlug)
 				]
 			})
+			successToast('Book updated')
 		}
 	})
 

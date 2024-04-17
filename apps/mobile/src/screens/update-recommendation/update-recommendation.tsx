@@ -2,6 +2,7 @@ import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { Button, Icon, Loader, ScrollLayout, Title } from '@/ui'
 import { cn } from '@/utils'
+import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { UpdateRecommendationDto } from 'global/api-client'
 
@@ -28,6 +29,7 @@ const UpdateRecommendation = () => {
 			await queryClient.invalidateQueries({
 				queryKey: QueryKeys.recommendationGenres
 			})
+			successToast('Recommendation updated')
 		}
 	})
 	const { navigate } = useTypedNavigation()

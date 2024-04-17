@@ -4,12 +4,13 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { adminErrors, globalErrors } from 'global/errors'
 import { slugify } from 'global/helpers/slugify'
 import { transformActivity } from 'global/utils/activity-transformer'
+import { checkHtmlValid } from 'global/utils/html-validation'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
-import { Book } from './book.entity'
-import { UpdateBookDtoExtended } from './book.types'
+import type { Book } from './book.entity'
+import type { UpdateBookDtoExtended } from './book.types'
 import type { CreateBookDto } from './dto/create.book.dto'
 
 import type { UpdateBookDto } from './dto/update.book.dto'
@@ -172,6 +173,16 @@ export class BookService {
 			dto.ebook
 		)
 
+		const { isValid, messages } = await checkHtmlValid(
+			uploadedEbook
+				.map(book =>
+					book.chapters.map(chapter => `${chapter.text}`.trim()).join('')
+				)
+				.join('')
+		)
+		console.log('isValid', isValid)
+		if (!isValid) throw serverError(HttpStatus.BAD_REQUEST, messages)
+
 		const { name: ebookName } = await this.storageService.upload({
 			folder: 'ebooks',
 			file: Buffer.from(JSON.stringify(uploadedEbook)),
@@ -250,6 +261,14 @@ export class BookService {
 		if (ebook) {
 			const { uploadedEbook, readingTime, chaptersCount } =
 				useEbookCalculation(ebook)
+			const { isValid, messages } = await checkHtmlValid(
+				uploadedEbook
+					.map(book =>
+						book.chapters.map(chapter => `${chapter.text}`.trim()).join('')
+					)
+					.join('')
+			)
+			if (!isValid) throw serverError(HttpStatus.BAD_REQUEST, messages)
 
 			const { name: ebookName } = await this.storageService.upload({
 				folder: 'ebooks',

@@ -24,15 +24,7 @@ export const ChapterPayloadSchema = z.object({
 		.refine(value => value !== 'undefined', {
 			message: 'Name cannot be empty'
 		}),
-	text: z.string().refine(
-		value => {
-			const regex = /<([A-Za-z][\dA-Za-z]*)\b[^>]*>(.*?)<\/\1>/
-			return regex.test(value)
-		},
-		{
-			message: 'Text should be in HTML format'
-		}
-	)
+	text: z.string()
 })
 
 export const EBookPayloadSchema = z

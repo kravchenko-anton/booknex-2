@@ -49,6 +49,21 @@ export class CatalogService {
 		})
 	}
 
+	//Picks of the week function for all users, where only one time per week data will be updated
+	async picksOfTheWeek() {
+		const date = new Date()
+		const day = date.getDay()
+		if (day === 0) {
+			const books = await this.prisma.book.findMany({
+				take: 10,
+				where: {
+					isPublic: true
+				}
+			})
+			return books
+		}
+		return []
+	}
 	private async interestedGenres(userId: number) {
 		return this.prisma.genre.findMany({
 			where: {
