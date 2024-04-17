@@ -2,7 +2,8 @@ import { chapterNames } from '@/app/admin/book/_components/ebook-editor/chapterN
 import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import { EBookPayloadType } from 'global/validation/book/ebook.payload.dto'
+import { MutationKeys } from 'global/utils/query-keys'
+import type { EBookPayloadType } from 'global/validation/book/ebook.payload.dto'
 
 export const useBookCompose = ({
 	ebooks: ebooks,
@@ -12,7 +13,7 @@ export const useBookCompose = ({
 	setEBooks: (books: EBookPayloadType[]) => void
 }) => {
 	const { mutateAsync: unfold, isLoading: unfoldLoading } = useMutation({
-		mutationKey: ['unfold'],
+		mutationKey: MutationKeys.bookTemplate.unfold,
 
 		mutationFn: (file: File) => api.parser.unfold(file),
 		onSuccess: () => successToast('File uploaded'),
@@ -40,18 +41,16 @@ export const useBookCompose = ({
 				if (book.id === bookId) {
 					return {
 						...book,
-						chapters: book.chapters.map(({ id, name, text }) => {
-							return {
-								id,
-								name,
-								text: text
-									.split('\n')
-									.filter(
-										(_, index) => index < startLine - 1 || index > endLine - 1
-									)
-									.join('\n')
-							}
-						})
+						chapters: book.chapters.map(({ id, name, text }) => ({
+							id,
+							name,
+							text: text
+								.split('\n')
+								.filter(
+									(_, index) => index < startLine - 1 || index > endLine - 1
+								)
+								.join('\n')
+						}))
 					}
 				}
 				return book

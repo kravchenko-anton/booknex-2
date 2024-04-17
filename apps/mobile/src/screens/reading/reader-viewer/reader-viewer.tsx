@@ -48,7 +48,9 @@ const ReaderViewer = forwardRef(
 					<WebView
 						scrollEnabled
 						javaScriptEnabled
+						androidHardwareAccelerationDisabled
 						startInLoadingState
+						decelerationRate={'normal'}
 						ref={reference}
 						originWhitelist={['*']}
 						showsVerticalScrollIndicator={false}
@@ -72,13 +74,10 @@ const ReaderViewer = forwardRef(
 						source={{
 							baseUrl: '',
 							html: composeReaderViewHtml({
-								defaultProperties: {
-									scrollPosition: defaultProperties.scrollPosition,
-									theme: defaultProperties.theme
-								},
-								file: file,
-								picture: picture,
-								title: title
+								defaultProperties,
+								file,
+								picture,
+								title
 							})
 						}}
 						style={{

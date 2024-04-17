@@ -6,6 +6,7 @@ import { validateStringParameter } from '@/utils/validate-parameter'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import type { CreateBookDto } from 'global/api-client'
+import { MutationKeys } from 'global/utils/query-keys'
 import {
 	CreateBookSchema,
 	type CreateBookSchemaType
@@ -34,7 +35,7 @@ export const useCreateForm = () => {
 	const { deleteTemplate } = useTemplate({ templateSlug, reset })
 
 	const { mutateAsync: create, isLoading: createLoading } = useMutation({
-		mutationKey: ['create-book'],
+		mutationKey: MutationKeys.book.createBook,
 		mutationFn: (payload: CreateBookDto) => api.book.create(payload),
 		onSuccess: async data => {
 			console.log('data  in success', data)

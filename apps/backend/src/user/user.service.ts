@@ -175,7 +175,8 @@ export class UserService {
 		await this.activityService.create({
 			type: Activities.finishedReading,
 			importance: 3,
-			userId
+			userId,
+			bookSlug: slug
 		})
 
 		await this.prisma.user.update({

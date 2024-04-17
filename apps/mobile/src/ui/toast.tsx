@@ -9,7 +9,7 @@ const options = () => ({
 		backgroundColor: Color.foreground,
 		alignItems: 'center' as const,
 		borderRadius: 12,
-		height: 45,
+		height: 50,
 		borderColor: Color.muted,
 
 		borderWidth: 1.5,

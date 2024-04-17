@@ -7,13 +7,14 @@ import {
 	validateStringParameter
 } from '@/utils/validate-parameter'
 import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from 'global/utils/query-keys'
 import type { FC } from 'react'
 
 const Page: FC<NextPageProps> = ({ searchParams }) => {
 	const searchTerm = validateStringParameter(searchParams?.searchTerm)
 	const page = validateNumberParameter(searchParams?.page)
 	const { data: books } = useQuery({
-		queryKey: ['books', searchTerm, page],
+		queryKey: QueryKeys.book.catalog(searchTerm, page),
 		queryFn: () => api.book.catalog(searchTerm, +page),
 		select: data => data.data
 	})

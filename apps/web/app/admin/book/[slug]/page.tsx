@@ -12,6 +12,7 @@ import { secureRoutes } from '@/utils/route'
 import { validateStringParameter } from '@/utils/validate-parameter'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
+import { QueryKeys } from 'global/utils/query-keys'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -20,16 +21,16 @@ const Page = () => {
 	const parameters = useParams()
 	const queryClient = useQueryClient()
 
-	const slug = validateStringParameter(parameters['slug'])
+	const slug = validateStringParameter(parameters.slug)
 
 	const { data: book } = useQuery({
-		queryKey: ['book-overview', slug],
+		queryKey: QueryKeys.book.overview.bySlug(slug),
 		queryFn: () => api.book.adminInfoBySlug(slug),
 		select: data => data.data
 	})
 	const onUpdateSuccess = async () => {
 		await queryClient.invalidateQueries({
-			queryKey: ['book-overview', slug]
+			queryKey: QueryKeys.book.overview.bySlug(slug)
 		})
 	}
 

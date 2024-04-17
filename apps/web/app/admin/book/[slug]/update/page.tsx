@@ -12,9 +12,10 @@ import { errorToast } from '@/utils/toast'
 import { validateStringParameter } from '@/utils/validate-parameter'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import {
 	UpdateBookSchema,
-	UpdateBookSchemaType
+	type UpdateBookSchemaType
 } from 'global/validation/book/update.book.dto'
 import { PenNib, Star } from 'icons'
 import { useParams } from 'next/navigation'
@@ -23,7 +24,7 @@ import { useForm } from 'react-hook-form'
 
 const Page: FC = () => {
 	const parameters = useParams()
-	const bookSlug = validateStringParameter(parameters['slug'])
+	const bookSlug = validateStringParameter(parameters.slug)
 	const queryClient = useQueryClient()
 
 	const {
@@ -36,24 +37,28 @@ const Page: FC = () => {
 	})
 
 	const { data: book } = useQuery({
-		queryKey: ['book-update-info', bookSlug],
+		queryKey: QueryKeys.book.adminInfoBySlug(bookSlug),
 		queryFn: () => api.book.adminInfoBySlug(bookSlug),
 		select: data => data.data
 	})
 	const { data: ebook } = useQuery({
-		queryKey: ['stored-ebook', bookSlug],
+		queryKey: QueryKeys.ebook.storedEbookBySlug(bookSlug),
 
 		queryFn: () => api.ebook.storedEbookBySlug(bookSlug),
 		select: data => data.data
 	})
 
 	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
-		mutationKey: ['update-book'],
+		mutationKey: MutationKeys.book.update,
 		mutationFn: (payload: UpdateBookSchemaType) =>
 			api.book.update(bookSlug, payload),
 		onSuccess: async () => {
+			//TODO: проверить работоспособность
 			await queryClient.invalidateQueries({
-				queryKey: ['book-update-info', bookSlug, 'stored-ebook', bookSlug]
+				queryKey: [
+					QueryKeys.book.infoBySlug(bookSlug),
+					QueryKeys.ebook.storedEbookBySlug(bookSlug)
+				]
 			})
 		}
 	})
@@ -72,7 +77,7 @@ const Page: FC = () => {
 	}, [reset, book, bookSlug, ebook])
 
 	const handleUpdate = handleSubmit(async (data: UpdateBookSchemaType) => {
-		if (!Object.keys(dirtyValues(dirtyFields, data)).length)
+		if (Object.keys(dirtyValues(dirtyFields, data)).length === 0)
 			return errorToast('Please fill some fields to update the book')
 		await update(dirtyValues(dirtyFields, data))
 	})

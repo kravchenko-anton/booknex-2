@@ -1,5 +1,7 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
+import { RatingSelect } from '@/screens/book-review/rating-select'
+import { TagsSelect } from '@/screens/book-review/tags-select'
 
 import { Button, Field, Icon, ScrollView, Title } from '@/ui'
 import { successToast } from '@/utils/toast'
@@ -7,57 +9,34 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import type { ReviewBookDto } from 'global/api-client'
 import { Color } from 'global/colors'
-import { reviewTags } from 'global/utils/review-tags'
+import { MutationKeys } from 'global/utils/query-keys'
 import {
 	ReviewBookDtoSchema,
 	type ReviewBookDtoType
 } from 'global/validation/review/review.book.dto'
-import { Close, Star } from 'icons'
+import { Close } from 'icons'
 import { FinishBook } from 'illustrations'
-import { useState, type FC } from 'react'
+import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
 //TODO: проверить эту страницу
 
 const BookReview: FC = () => {
 	const { params } = useTypedRoute<'BookReview'>()
-	const [selectedStars, setSelectedStars] = useState(0)
 	const { navigate } = useTypedNavigation()
-	const { control, setValue, handleSubmit, watch } = useForm<ReviewBookDtoType>(
-		{
-			mode: 'onSubmit',
-			resolver: zodResolver(ReviewBookDtoSchema)
-		}
-	)
-
-	const selectedTags = watch('tags') || []
-	const setSelectedTags = (tags: string[]) => setValue('tags', tags)
-	const mappedTags = (
-		tags: {
-			id: number
-			name: string
-		}[]
-	) =>
-		tags.map(tag => (
-			<Button
-				size='sm'
-				key={tag.id}
-				variant={selectedTags.includes(tag.name) ? 'primary' : 'muted'}
-				onPress={() => {
-					if (selectedTags.includes(tag.name)) {
-						setSelectedTags(
-							selectedTags.filter(selectedTag => selectedTag !== tag.name)
-						)
-					} else {
-						setSelectedTags([...selectedTags, tag.name])
-					}
-				}}>
-				{tag.name}
-			</Button>
-		))
-
-	const { mutateAsync: sendReview, isPending: reviewLoading } = useMutation({
-		mutationKey: ['send-review'],
+	const {
+		control,
+		handleSubmit,
+		watch,
+		formState: { errors }
+	} = useForm<ReviewBookDtoType>({
+		mode: 'onSubmit',
+		resolver: zodResolver(ReviewBookDtoSchema)
+	})
+	const rating = watch('rating')
+	console.log(errors)
+	const { mutateAsync: sendReview, isLoading: reviewLoading } = useMutation({
+		mutationKey: MutationKeys.review.sendReview,
 		mutationFn: ({ slug, dto }: { slug: string; dto: ReviewBookDto }) =>
 			api.review.review(slug, dto)
 	})
@@ -66,24 +45,31 @@ const BookReview: FC = () => {
 		await sendReview({
 			slug: params.slug,
 			dto: {
-				rating: selectedStars,
+				rating: data.rating,
 				comment: data.comment || 'No comment',
-				tags: selectedTags || []
+				tags: data.tags
 			}
 		}).then(() => {
 			successToast('thanks for review')
+			console.log({
+				rating: data.rating,
+				comment: data.comment || 'No comment',
+				tags: data.tags
+			})
 			navigate('Library')
 		})
 	}
 	return (
 		<ScrollView className='h-full px-2'>
-			<Icon
-				className='mt-2 w-[45px] items-start'
-				icon={Close}
-				size='md'
-				variant='muted'
-				onPress={() => navigate('Library')}
-			/>
+			<View className='items-start'>
+				<Icon
+					className='mt-2'
+					icon={Close}
+					size='md'
+					variant='muted'
+					onPress={() => navigate('Library')}
+				/>
+			</View>
 			<FinishBook className='mx-auto' height={200} width={250} />
 			<Title className='mt-8 text-center' size={'xxl'} weight='bold'>
 				Thanks for reading!
@@ -91,30 +77,17 @@ const BookReview: FC = () => {
 			<Title color={Color.gray} className='text-center' weight='regular'>
 				Your feedback is important to us
 			</Title>
-			<View className='w-full items-center justify-center pt-4'>
-				<View className=' flex-row items-center gap-5'>
-					{[1, 2, 3, 4, 5].map(star => (
-						<Star
-							width={35}
-							height={35}
-							key={star}
-							stroke={Color.warning}
-							fill={star <= selectedStars ? Color.warning : Color.transparent}
-							onPress={() => setSelectedStars(star)}
-						/>
-					))}
-				</View>
-			</View>
-			{selectedStars > 0 && (
-				<View className='w-full items-center justify-center pt-4'>
-					<Title size={'xl'} className='mb-2 mt-4 text-center' weight='bold'>
-						{`Thanks, Why ${selectedStars > 3 ? 'did' : "didn't"} you like the book?`}
+			<RatingSelect control={control} name='rating' />
+			{rating > 0 && (
+				<View className='w-full items-center justify-center'>
+					<Title size={'xl'} className='my-1.5 mb-0 text-center' weight='bold'>
+						{`Thanks, Why ${rating > 3 ? 'did' : "didn't"} you like the book?`}
 					</Title>
-					<View className='mb-2 w-full flex-row flex-wrap items-center justify-center gap-2 pt-4'>
-						{selectedStars > 3
-							? mappedTags(reviewTags.positive)
-							: mappedTags(reviewTags.negative)}
-					</View>
+					<TagsSelect
+						control={control}
+						name='tags'
+						currentRating={watch('rating')}
+					/>
 
 					<Field
 						isArea

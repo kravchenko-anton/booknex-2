@@ -4,7 +4,7 @@ import {
 } from '@/screens/reading/features/reader-styles/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
 import { Color } from 'global/colors'
-import type { FC } from 'react'
+import { useRef, type FC } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 
 interface ThemeStyleSettingsProperties {
@@ -14,34 +14,45 @@ interface ThemeStyleSettingsProperties {
 export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
 	changeTheme,
 	colorScheme
-}) => (
-	<FlatList
-		horizontal
-		className='mt-4'
-		showsHorizontalScrollIndicator={false}
-		data={themePack}
-		contentContainerStyle={{
-			paddingHorizontal: 8
-		}}
-		renderItem={({ item: theme }) => (
-			<AnimatedPress
-				key={`${theme.slug}-${theme.title}`}
-				className='mb-4 mr-2 rounded border-[1px] p-1 px-6'
-				style={{
-					backgroundColor: theme.colorPalette.background.darker,
-					borderColor:
-						colorScheme.slug === theme.slug
-							? colorScheme.colorPalette.primary
-							: Color.transparent
-				}}
-				onPress={() => changeTheme(theme.slug)}>
-				<Title
-					weight='semiBold'
-					size={'lg'}
-					style={{ color: theme.colorPalette.text }}>
-					{theme.title}
-				</Title>
-			</AnimatedPress>
-		)}
-	/>
-)
+}) => {
+	const reference = useRef<FlatList>(null)
+	return (
+		<FlatList
+			horizontal
+			ref={reference}
+			className='mt-4'
+			showsHorizontalScrollIndicator={false}
+			data={themePack}
+			contentContainerStyle={{
+				paddingHorizontal: 8
+			}}
+			renderItem={({ item: theme }) => (
+				<AnimatedPress
+					key={`${theme.slug}-${theme.title}`}
+					className='mb-4 mr-2 rounded border-[1px] p-1 px-6'
+					style={{
+						backgroundColor: theme.colorPalette.background.darker,
+						borderColor:
+							colorScheme.slug === theme.slug
+								? colorScheme.colorPalette.primary
+								: Color.transparent
+					}}
+					onPress={() => changeTheme(theme.slug)}>
+					<Title
+						weight='semiBold'
+						size={'lg'}
+						style={{ color: theme.colorPalette.text }}>
+						{theme.title}
+					</Title>
+				</AnimatedPress>
+			)}
+			onLayout={() => {
+				reference.current?.scrollToIndex({
+					index: themePack.findIndex(theme => theme.slug === colorScheme.slug),
+					animated: true,
+					viewPosition: 0.5
+				})
+			}}
+		/>
+	)
+}

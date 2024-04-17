@@ -4,12 +4,13 @@ import { Loader, ScrollLayout } from '@/ui'
 import CatalogList from '@/ui/book-lists/catalog-list'
 import Header from '@/ui/header/header'
 import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from 'global/utils/query-keys'
 import { useLayoutEffect } from 'react'
 
 const Genre = () => {
 	const { params } = useTypedRoute<'Genre'>()
 	const { data: genre } = useQuery({
-		queryKey: ['genre', params.slug],
+		queryKey: QueryKeys.genres.bySlug(params.slug),
 		queryFn: () => api.genre.bySlug(params.slug),
 		select: data => data.data
 	})

@@ -13,14 +13,8 @@ export const finishBookButton = `
 				height: 70px;
 				font-weight: bold;
 				">
-				<div style="
-				  display: flex;
-				  align-items: center;
-				  justify-content: space-between;
-					color: ${Color.white};
-				font-size: 15px;
-				width: 95%;
-				">Read it till the end?<div
+				<div
+					class="finish-book-text">Read it till the end?<div
 				class="finish-book-button"
 				onclick="window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finishBook' }))"
 				style="

@@ -2,6 +2,7 @@ import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { Button } from '@/ui'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Book } from 'icons'
 import type { FC } from 'react'
 
@@ -14,7 +15,7 @@ const ReadingButton: FC<BookReadingButtonProperties> = ({ slug }) => {
 	const queryClient = useQueryClient()
 	const { mutateAsync: startReading, isLoading: startReadingLoading } =
 		useMutation({
-			mutationKey: ['start-reading', slug],
+			mutationKey: MutationKeys.book.startReadingBySlug(slug),
 			mutationFn: (slug: string) => api.user.startReading(slug)
 		})
 
@@ -22,7 +23,7 @@ const ReadingButton: FC<BookReadingButtonProperties> = ({ slug }) => {
 		await startReading(slug)
 		await queryClient
 			.invalidateQueries({
-				queryKey: ['user-library']
+				queryKey: QueryKeys.library
 			})
 			.then(() => navigate('Reader', { slug }))
 	}

@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { UpdateRecommendationDto } from 'global/api-client'
 
 import { Color } from 'global/colors'
+import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Close } from 'icons'
 import { useState } from 'react'
 import { View } from 'react-native'
@@ -14,18 +15,18 @@ const UpdateRecommendation = () => {
 	const queryClient = useQueryClient()
 	const [selectedGenres, setSelectedGenres] = useState<string[]>([])
 	const { data: genres } = useQuery({
-		queryKey: ['genres'],
+		queryKey: QueryKeys.genres.key,
 		queryFn: () => api.genre.catalog(),
 		select: data => data.data
 	})
 
 	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
-		mutationKey: ['update-recommendation'],
+		mutationKey: MutationKeys.recommendation.update,
 		mutationFn: (dto: UpdateRecommendationDto) =>
 			api.recommendation.updateRecommendation(dto),
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({
-				queryKey: ['recommendation-genres']
+				queryKey: QueryKeys.recommendationGenres
 			})
 		}
 	})
@@ -87,7 +88,7 @@ const UpdateRecommendation = () => {
 					await update({ genreSlugs: selectedGenres })
 
 					await queryClient.invalidateQueries({
-						queryKey: ['featured']
+						queryKey: QueryKeys.featured
 					})
 					navigate('Featured')
 				}}>

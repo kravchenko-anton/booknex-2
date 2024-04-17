@@ -3,6 +3,7 @@ import { Button, Title } from '@/ui'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import type { FunctionType } from 'global/types'
+import { QueryKeys } from 'global/utils/query-keys'
 import type { FC } from 'react'
 import { View } from 'react-native'
 
@@ -14,7 +15,7 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
 	onManagePress
 }) => {
 	const { data: selectedGenres } = useQuery({
-		queryKey: ['recommendation-genres'],
+		queryKey: QueryKeys.recommendationGenres,
 		queryFn: () => api.recommendation.currentRecommendation(),
 		select: data => data.data
 	})

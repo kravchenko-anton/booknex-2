@@ -44,7 +44,10 @@ export const useReaderMessage = ({
 					chapterProgress: payload.chapter.chapterProgress
 				}
 			})
-		if (type === 'finishBook' && !finishReadingLoading) onFinishBookPress()
+		if (type === 'finishBook') {
+			if (finishReadingLoading) return
+			onFinishBookPress()
+		}
 	}
 
 	return {

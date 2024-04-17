@@ -1,7 +1,8 @@
 import api from '@/services/api'
 import { errorToast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { CreateBookSchemaType } from 'global/validation/book/create.book.dto'
+import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
+import type { CreateBookSchemaType } from 'global/validation/book/create.book.dto'
 import { useLayoutEffect } from 'react'
 import type { UseFormReset } from 'react-hook-form'
 
@@ -13,13 +14,13 @@ export const useTemplate = ({
 	reset: UseFormReset<CreateBookSchemaType>
 }) => {
 	const { data: template } = useQuery({
-		queryKey: ['book-template'],
+		queryKey: QueryKeys.bookTemplate.bySlug(templateSlug),
 		queryFn: () => api.parser.bySlug(templateSlug),
 		enabled: Boolean(templateSlug),
 		select: data => data.data
 	})
 	const { mutateAsync: deleteTemplate } = useMutation({
-		mutationKey: ['delete-template'],
+		mutationKey: MutationKeys.bookTemplate.deleteTemplate,
 		mutationFn: (templateSlug: string) => api.parser.remove(templateSlug),
 		onError: () => errorToast('Error while removing template')
 	})

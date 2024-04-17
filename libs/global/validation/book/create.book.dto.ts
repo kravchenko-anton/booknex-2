@@ -1,11 +1,7 @@
 import { z } from 'zod'
+import { shortGenreValidationSchema } from '../genre/short-genre'
 import { EBookPayloadSchema } from './ebook.payload.dto'
 
-export const shortGenreSchema = z.object({
-	slug: z.string(),
-	name: z.string(),
-	icon: z.string()
-})
 export const CreateBookSchema = z.object({
 	title: z.string(),
 	author: z.string(),
@@ -14,7 +10,7 @@ export const CreateBookSchema = z.object({
 	rating: z.number().min(1).positive(),
 	picture: z.string(),
 
-	genres: z.array(shortGenreSchema).min(1)
+	genres: z.array(shortGenreValidationSchema).min(1)
 })
 
 export type CreateBookSchemaType = z.infer<typeof CreateBookSchema>

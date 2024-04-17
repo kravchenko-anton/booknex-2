@@ -1,7 +1,8 @@
 import api from '@/services/api'
 import { errorToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import { StorageFolderType } from 'global/helpers/storage-types'
+import type { StorageFolderType } from 'global/helpers/storage-types'
+import { MutationKeys } from 'global/utils/query-keys'
 
 interface UploadFileProperties {
 	folder: StorageFolderType
@@ -10,7 +11,7 @@ interface UploadFileProperties {
 
 export const useUploadFile = () => {
 	const { mutateAsync: upload, isLoading: uploadLoading } = useMutation({
-		mutationKey: ['upload-file'],
+		mutationKey: MutationKeys.storage.uploadFile,
 		mutationFn: ({ folder, file }: UploadFileProperties) =>
 			api.storage.upload(folder, file),
 		onError: () =>

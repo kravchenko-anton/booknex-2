@@ -17,6 +17,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { minutesToTime } from 'global/helpers/time-converter'
 import { appName } from 'global/utils'
+import { QueryKeys } from 'global/utils/query-keys'
 import { ArrowLeft, Share } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -24,7 +25,7 @@ import { View } from 'react-native'
 const Book: FC = () => {
 	const { params } = useTypedRoute<'Book'>()
 	const { data: book } = useQuery({
-		queryKey: ['book', params.slug],
+		queryKey: QueryKeys.book.infoBySlug(params.slug),
 		queryFn: () => api.book.infoBySlug(params.slug),
 		select: data => data.data
 	})

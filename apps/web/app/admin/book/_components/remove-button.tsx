@@ -4,7 +4,8 @@ import { cn } from '@/utils'
 import { secureRoutes } from '@/utils/route'
 import { acceptToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
-import { FunctionType } from 'global/types'
+import type { FunctionType } from 'global/types'
+import { MutationKeys } from 'global/utils/query-keys'
 import { useRouter } from 'next/navigation'
 import type { FC } from 'react'
 
@@ -15,7 +16,7 @@ interface BookVisibleButtonProperties {
 export const RemoveButton: FC<BookVisibleButtonProperties> = properties => {
 	const router = useRouter()
 	const { mutateAsync: remove, isLoading: removeLoading } = useMutation({
-		mutationKey: ['remove-book'],
+		mutationKey: MutationKeys.book.removeBook,
 		mutationFn: (slug: string) => api.book.remove(slug),
 		onSuccess: () => {
 			successToast('Book removed')

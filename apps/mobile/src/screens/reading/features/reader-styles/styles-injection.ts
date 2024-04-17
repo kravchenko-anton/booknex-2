@@ -111,7 +111,14 @@ export const getStyleTag = ({
 	.finish-book-button {
 		background: ${colorPalette.background.lighter} !important;
 		color: ${colorPalette.text} !important;
-		
+	}
+	.finish-book-text {
+		color: ${colorPalette.text} !important;
+		display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+		font-size: 15px;
+		width: 95%;
 	}
 	.finish-book-button-container {
 		background: ${colorPalette.background.darker} !important;

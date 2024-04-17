@@ -1,23 +1,24 @@
 import api from '@/services/api'
 import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 
 export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
 	const { data: books } = useQuery({
-		queryKey: ['book-templates', searchTerm, page],
+		queryKey: QueryKeys.bookTemplate.catalog.action(searchTerm, page),
 		queryFn: () => api.parser.catalog(searchTerm, +page),
 		select: data => data.data
 	})
 
 	const { mutateAsync: deleteTemplate, isLoading: deleteTemplateLoading } =
 		useMutation({
-			mutationKey: ['delete-template'],
+			mutationKey: MutationKeys.bookTemplate.deleteTemplate,
 			mutationFn: (slug: string) => api.parser.remove(slug),
 			async onSuccess() {
 				successToast('Template deleted')
 				await queryClient.invalidateQueries({
-					queryKey: ['book-templates']
+					queryKey: QueryKeys.bookTemplate.catalog.key
 				})
 			}
 		})

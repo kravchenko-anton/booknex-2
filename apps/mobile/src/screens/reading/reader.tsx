@@ -15,6 +15,7 @@ import { Loader } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import { screenHeight } from '@/utils/dimensions'
 import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from 'global/utils/query-keys'
 import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 //TODO: сделать нормальную историю чтения
@@ -23,7 +24,7 @@ const Reader = () => {
 		params: { slug }
 	} = useTypedRoute<'Reader'>()
 	const { data: ebook } = useQuery({
-		queryKey: ['e-books', slug],
+		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data
 	})
@@ -51,7 +52,7 @@ const Reader = () => {
 		useModalReference(setReaderHeaderVisible)
 
 	useStatusBarStyle({ colorScheme, readerUiVisible: readerHeaderVisible })
-
+	console.log(finishReadingLoading)
 	const { onMessage } = useReaderMessage({
 		finishReadingLoading,
 		onFinishBookPress: onFinish,

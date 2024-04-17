@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { ParserDto } from 'global/api-client'
 import type { FunctionType } from 'global/types'
+import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import type { FC } from 'react'
 
 interface ParseButtonProperties extends DialogProperties {
@@ -17,12 +18,12 @@ const ParseButton: FC<ParseButtonProperties> = properties => {
 	const queryClient = useQueryClient()
 
 	const { mutateAsync: parse, isLoading: parseLoading } = useMutation({
-		mutationKey: ['parse-template'],
+		mutationKey: MutationKeys.bookTemplate.parse,
 		mutationFn: (dto: ParserDto) => api.parser.parse(dto),
 		onSuccess: async () => {
 			successToast('Books parsed')
 			await queryClient.invalidateQueries({
-				queryKey: ['book-templates']
+				queryKey: QueryKeys.bookTemplate.catalog.key
 			})
 		}
 	})

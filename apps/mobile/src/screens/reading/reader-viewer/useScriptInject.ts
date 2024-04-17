@@ -3,11 +3,11 @@ import {
 	scrollCalculateProgress
 } from '@/screens/reading/features/reader-progress/calculate-progress'
 
-export const useScriptInject = (startionScroll: number) => `
+export const useScriptInject = (startPosition: number) => `
 <script>
-window.onload = function() {
+						window.onload = function() {
 						window.scrollTo({
-							top: ${startionScroll}
+							top: ${startPosition}
 						})
 						${calculateProgress}
 						${scrollCalculateProgress}

@@ -1,24 +1,24 @@
 import api from '@/api'
-import { useAuth, useTypedNavigation } from '@/hooks'
+import { useTypedNavigation } from '@/hooks'
 import ManageRecommendationMenu from '@/screens/update-recommendation/manage-recommendation-menu'
 import { BookCard, Button, Flatlist, Loader, ScrollLayout } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
 import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from 'global/utils/query-keys'
 
 const Featured = () => {
 	const { data: featured } = useQuery({
-		queryKey: ['featured'],
+		queryKey: QueryKeys.featured,
 		queryFn: () => api.catalog.featured(),
 		select: data => data.data
 	})
-	const { user } = useAuth()
 	const { navigate } = useTypedNavigation()
-	console.log('featured', user, featured)
+	console.log('featured', featured?.recommendation)
 	if (!featured) return <Loader />
 	return (
 		<ScrollLayout>
 			<BannerList
-				title='Recommended for you'
+				title='Picks of the week'
 				data={featured.recommendation}
 				renderItem={({ item: book }) => (
 					<BookCard

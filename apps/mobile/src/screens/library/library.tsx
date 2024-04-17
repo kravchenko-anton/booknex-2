@@ -14,10 +14,11 @@ import BannerList from '@/ui/book-lists/banner-list'
 import NothingFount from '@/ui/nothing-fount'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
 import { useQuery } from '@tanstack/react-query'
+import { QueryKeys } from 'global/utils/query-keys'
 
 const Library = () => {
 	const { data: library } = useQuery({
-		queryKey: ['user-library'],
+		queryKey: QueryKeys.library,
 		queryFn: () => api.user.library(),
 		select: data => data.data
 	})
