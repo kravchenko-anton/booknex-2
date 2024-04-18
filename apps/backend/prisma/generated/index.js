@@ -22,7 +22,7 @@ const {
   defineDmmfProperty,
   Public,
   getRuntime
-} = require('./runtime/binary.js')
+} = require('./runtime/library.js')
 
 
 const Prisma = {}
@@ -223,7 +223,7 @@ const config = {
       "fromEnvVar": null
     },
     "config": {
-      "engineType": "binary"
+      "engineType": "library"
     },
     "binaryTargets": [
       {
@@ -252,7 +252,8 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
   },
   "relativePath": "..",
   "clientVersion": "5.12.1",
@@ -270,8 +271,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\r\n  provider      = \"prisma-client-js\"\r\n  engineType    = \"binary\"\r\n  binaryTargets = [\"linux-musl-openssl-3.0.x\", \"debian-openssl-1.1.x\", \"native\", \"windows\", \"debian-openssl-3.0.x\"]\r\n  output        = \"./generated\"\r\n}\r\n\r\ndatasource db {\r\n  provider = \"postgresql\"\r\n  url      = env(\"DATABASE_URL\")\r\n}\r\n\r\nmodel Genre {\r\n  id            Int            @id @default(autoincrement())\r\n  createdAt     DateTime       @default(now())\r\n  updatedAt     DateTime       @updatedAt\r\n  name          String         @unique\r\n  slug          String         @unique\r\n  icon          String         @default(\"\")\r\n  users         User[]\r\n  books         Book[]         @relation(\"BookGenre\")\r\n  mainBooks     Book[]         @relation(\"BookMajorGenre\")\r\n  similarBy     Genre[]        @relation(\"Similar\")\r\n  similar       Genre[]        @relation(\"Similar\")\r\n  bookTemplates BookTemplate[]\r\n  activities    Activity[]\r\n}\r\n\r\nmodel Activity {\r\n  id        Int      @id @default(autoincrement())\r\n  createdAt DateTime @default(now())\r\n  book      Book?    @relation(fields: [bookId], references: [id])\r\n  genre     Genre?   @relation(fields: [genreId], references: [id])\r\n  user      User?    @relation(fields: [userId], references: [id])\r\n\r\n  type       Activities\r\n  importance Int\r\n  genreId    Int?\r\n  bookId     Int?\r\n  userId     Int?\r\n}\r\n\r\nmodel Review {\r\n  id        Int      @id @default(autoincrement())\r\n  createdAt DateTime @default(now())\r\n  updatedAt DateTime @updatedAt\r\n  rating    Int\r\n  tags      String[]\r\n  text      String?\r\n  book      Book     @relation(fields: [bookId], references: [id])\r\n  user      User     @relation(fields: [userId], references: [id])\r\n  bookId    Int\r\n\r\n  userId Int\r\n}\r\n\r\nmodel Book {\r\n  id          Int      @id @default(autoincrement())\r\n  createdAt   DateTime @default(now())\r\n  updatedAt   DateTime @updatedAt\r\n  title       String   @unique\r\n  slug        String   @unique\r\n  author      String\r\n  description String\r\n  picture     String\r\n  ebook       String\r\n  // Minutes\r\n\r\n  readingTime Int @default(0)\r\n  // Chapters count\r\n  chapters    Int @default(0)\r\n\r\n  rating      Float      @default(0)\r\n  isPublic    Boolean    @default(false)\r\n  mainGenreId Int\r\n  mainGenre   Genre      @relation(\"BookMajorGenre\", fields: [mainGenreId], references: [id])\r\n  genres      Genre[]    @relation(\"BookGenre\")\r\n  review      Review[]\r\n  finishedBy  User[]     @relation(\"FinishedBooks\")\r\n  savedBy     User[]     @relation(\"SavedBooks\")\r\n  readingBy   User[]     @relation(\"ReadingBooks\")\r\n  activities  Activity[]\r\n}\r\n\r\nmodel BookTemplate {\r\n  id Int @id @default(autoincrement())\r\n\r\n  createdAt   DateTime @default(now())\r\n  updatedAt   DateTime @updatedAt\r\n  title       String   @unique\r\n  slug        String   @unique\r\n  author      String\r\n  description String\r\n  picture     String\r\n  rating      Float    @default(0)\r\n  genres      Genre[]\r\n}\r\n\r\nmodel User {\r\n  id        Int      @id @default(autoincrement())\r\n  createdAt DateTime @default(now())\r\n  updatedAt DateTime @updatedAt\r\n  email     String   @unique\r\n\r\n  socialId       String?    @unique\r\n  password       String?\r\n  selectedGenres Genre[]\r\n  picture        String     @default(\"fallback.png\")\r\n  fullName       String     @default(\"unknown\")\r\n  location       String     @default(\"unknown\")\r\n  role           Role       @default(user)\r\n  review         Review[]\r\n  savedBooks     Book[]     @relation(\"SavedBooks\")\r\n  finishedBooks  Book[]     @relation(\"FinishedBooks\")\r\n  readingBooks   Book[]     @relation(\"ReadingBooks\")\r\n  activity       Activity[]\r\n}\r\n\r\nenum Role {\r\n  user\r\n  admin\r\n}\r\n\r\nenum StorageFolderEnum {\r\n  ebooks\r\n  booksCovers\r\n}\r\n\r\nenum Activities {\r\n  startedReading\r\n  finishedReading\r\n  savedBook\r\n  removeFromSaved\r\n  checkCatalog\r\n  reviewBook\r\n  updatePicture\r\n  visitBook\r\n  createBook\r\n\r\n  updateBook\r\n  updateEBook\r\n  updateGenre\r\n  visitGenre\r\n  visitCollection\r\n  getEbook\r\n  updateRecommendations\r\n  registerNewUser\r\n  loginUser\r\n}\r\n",
-  "inlineSchemaHash": "ae4a1426657b939c94485c9d3142b9762c3a1c2ef0df195f0598aead46a29928",
+  "inlineSchema": "generator client {\r\n  provider      = \"prisma-client-js\"\r\n  binaryTargets = [\"linux-musl-openssl-3.0.x\", \"debian-openssl-1.1.x\", \"native\", \"windows\", \"debian-openssl-3.0.x\"]\r\n  output        = \"./generated\"\r\n}\r\n\r\ndatasource db {\r\n  provider = \"postgresql\"\r\n  url      = env(\"DATABASE_URL\")\r\n}\r\n\r\nmodel Genre {\r\n  id            Int            @id @default(autoincrement())\r\n  createdAt     DateTime       @default(now())\r\n  updatedAt     DateTime       @updatedAt\r\n  name          String         @unique\r\n  slug          String         @unique\r\n  icon          String         @default(\"\")\r\n  users         User[]\r\n  books         Book[]         @relation(\"BookGenre\")\r\n  mainBooks     Book[]         @relation(\"BookMajorGenre\")\r\n  similarBy     Genre[]        @relation(\"Similar\")\r\n  similar       Genre[]        @relation(\"Similar\")\r\n  bookTemplates BookTemplate[]\r\n  activities    Activity[]\r\n}\r\n\r\nmodel Activity {\r\n  id        Int      @id @default(autoincrement())\r\n  createdAt DateTime @default(now())\r\n  book      Book?    @relation(fields: [bookId], references: [id])\r\n  genre     Genre?   @relation(fields: [genreId], references: [id])\r\n  user      User?    @relation(fields: [userId], references: [id])\r\n\r\n  type       Activities\r\n  importance Int\r\n  genreId    Int?\r\n  bookId     Int?\r\n  userId     Int?\r\n}\r\n\r\nmodel Review {\r\n  id        Int      @id @default(autoincrement())\r\n  createdAt DateTime @default(now())\r\n  updatedAt DateTime @updatedAt\r\n  rating    Int\r\n  tags      String[]\r\n  text      String?\r\n  book      Book     @relation(fields: [bookId], references: [id])\r\n  user      User     @relation(fields: [userId], references: [id])\r\n  bookId    Int\r\n\r\n  userId Int\r\n}\r\n\r\nmodel Book {\r\n  id          Int      @id @default(autoincrement())\r\n  createdAt   DateTime @default(now())\r\n  updatedAt   DateTime @updatedAt\r\n  title       String   @unique\r\n  slug        String   @unique\r\n  author      String\r\n  description String\r\n  picture     String\r\n  ebook       String\r\n  // Minutes\r\n\r\n  readingTime Int @default(0)\r\n  // Chapters count\r\n  chapters    Int @default(0)\r\n\r\n  rating      Float      @default(0)\r\n  isPublic    Boolean    @default(false)\r\n  mainGenreId Int\r\n  mainGenre   Genre      @relation(\"BookMajorGenre\", fields: [mainGenreId], references: [id])\r\n  genres      Genre[]    @relation(\"BookGenre\")\r\n  review      Review[]\r\n  finishedBy  User[]     @relation(\"FinishedBooks\")\r\n  savedBy     User[]     @relation(\"SavedBooks\")\r\n  readingBy   User[]     @relation(\"ReadingBooks\")\r\n  activities  Activity[]\r\n}\r\n\r\nmodel BookTemplate {\r\n  id Int @id @default(autoincrement())\r\n\r\n  createdAt   DateTime @default(now())\r\n  updatedAt   DateTime @updatedAt\r\n  title       String   @unique\r\n  slug        String   @unique\r\n  author      String\r\n  description String\r\n  picture     String\r\n  rating      Float    @default(0)\r\n  genres      Genre[]\r\n}\r\n\r\nmodel User {\r\n  id        Int      @id @default(autoincrement())\r\n  createdAt DateTime @default(now())\r\n  updatedAt DateTime @updatedAt\r\n  email     String   @unique\r\n\r\n  socialId       String?    @unique\r\n  password       String?\r\n  selectedGenres Genre[]\r\n  picture        String     @default(\"fallback.png\")\r\n  fullName       String     @default(\"unknown\")\r\n  location       String     @default(\"unknown\")\r\n  role           Role       @default(user)\r\n  review         Review[]\r\n  savedBooks     Book[]     @relation(\"SavedBooks\")\r\n  finishedBooks  Book[]     @relation(\"FinishedBooks\")\r\n  readingBooks   Book[]     @relation(\"ReadingBooks\")\r\n  activity       Activity[]\r\n}\r\n\r\nenum Role {\r\n  user\r\n  admin\r\n}\r\n\r\nenum StorageFolderEnum {\r\n  ebooks\r\n  booksCovers\r\n}\r\n\r\nenum Activities {\r\n  startedReading\r\n  finishedReading\r\n  savedBook\r\n  removeFromSaved\r\n  checkCatalog\r\n  reviewBook\r\n  updatePicture\r\n  visitBook\r\n  createBook\r\n\r\n  updateBook\r\n  updateEBook\r\n  updateGenre\r\n  visitGenre\r\n  visitCollection\r\n  getEbook\r\n  updateRecommendations\r\n  registerNewUser\r\n  loginUser\r\n}\r\n",
+  "inlineSchemaHash": "3a5c28c375c79e5e17dc173f18d746072a3070fc9aa01ddbbcc0631128d09f1a",
   "copyEngine": true
 }
 
@@ -280,8 +281,8 @@ const fs = require('fs')
 config.dirname = __dirname
 if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   const alternativePaths = [
-    "apps/backend/prisma/generated",
-    "backend/prisma/generated",
+    "prisma/generated",
+    "generated",
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
@@ -297,7 +298,7 @@ defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 
 
-const { warnEnvConflicts } = require('./runtime/binary.js')
+const { warnEnvConflicts } = require('./runtime/library.js')
 
 warnEnvConflicts({
     rootEnvPath: config.relativeEnvPaths.rootEnvPath && path.resolve(config.dirname, config.relativeEnvPaths.rootEnvPath),
@@ -309,20 +310,20 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query-engine-linux-musl-openssl-3.0.x");
-path.join(process.cwd(), "apps/backend/prisma/generated/query-engine-linux-musl-openssl-3.0.x")
+path.join(__dirname, "libquery_engine-linux-musl-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/generated/libquery_engine-linux-musl-openssl-3.0.x.so.node")
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query-engine-debian-openssl-1.1.x");
-path.join(process.cwd(), "apps/backend/prisma/generated/query-engine-debian-openssl-1.1.x")
+path.join(__dirname, "libquery_engine-debian-openssl-1.1.x.so.node");
+path.join(process.cwd(), "prisma/generated/libquery_engine-debian-openssl-1.1.x.so.node")
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query-engine-windows");
-path.join(process.cwd(), "apps/backend/prisma/generated/query-engine-windows")
+path.join(__dirname, "query_engine-windows.dll.node");
+path.join(process.cwd(), "prisma/generated/query_engine-windows.dll.node")
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query-engine-debian-openssl-3.0.x");
-path.join(process.cwd(), "apps/backend/prisma/generated/query-engine-debian-openssl-3.0.x")
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/generated/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "apps/backend/prisma/generated/schema.prisma")
+path.join(process.cwd(), "prisma/generated/schema.prisma")

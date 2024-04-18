@@ -40,7 +40,7 @@ const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
 codePush.sync({
-	installMode: codePush.InstallMode.ON_NEXT_RESUME
+	installMode: codePush.InstallMode.ON_NEXT_RESTART
 })
 
 const App = () => (

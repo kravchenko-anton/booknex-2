@@ -13,7 +13,7 @@ const Index = () => (
 				{appName} is a mobile reading app that’s filled with thousands of books.
 			</p>
 			<Button variant='primary' className='mx-auto mt-2' size={'md'}>
-				Dowload now
+				Download now
 			</Button>
 		</div>
 	</div>

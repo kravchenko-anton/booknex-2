@@ -20,17 +20,6 @@ export class GenreService {
 		})
 	}
 
-	// async setupGenre() {
-	//   const genres = await this.prisma.genre.findMany();
-	//   if (genres.length > 0) {
-	//     throw serverError(HttpStatus.BAD_REQUEST, GenreErrors.genresAlreadyExist);
-	//   }
-	//
-	//   await this.prisma.genre.createMany({
-	//     data: setupGenres
-	//   });
-	// }
-
 	async bySlug(slug: string, userId: number) {
 		await this.activityService.create({
 			type: Activities.visitGenre,

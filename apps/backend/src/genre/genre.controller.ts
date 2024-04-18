@@ -19,11 +19,6 @@ export class GenreController {
 		return this.genreService.catalog()
 	}
 
-	// @Get('/setup')
-	// async setupGenre() {
-	//   return this.genreService.setupGenre();
-	// }
-
 	@Auth()
 	@Get('/by-slug/:slug')
 	@ApiOkResponse({ type: FindOneGenreOutput })

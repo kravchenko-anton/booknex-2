@@ -7,6 +7,7 @@ import { Color } from 'global/colors'
 import { useRef, type FC } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 
+//TODO: проверить на краши
 interface ThemeStyleSettingsProperties {
 	changeTheme: (slug: string) => void
 	colorScheme: ThemePackType
@@ -16,6 +17,7 @@ export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
 	colorScheme
 }) => {
 	const reference = useRef<FlatList>(null)
+
 	return (
 		<FlatList
 			horizontal
@@ -46,13 +48,6 @@ export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
 					</Title>
 				</AnimatedPress>
 			)}
-			onLayout={() => {
-				reference.current?.scrollToIndex({
-					index: themePack.findIndex(theme => theme.slug === colorScheme.slug),
-					animated: true,
-					viewPosition: 0.5
-				})
-			}}
 		/>
 	)
 }

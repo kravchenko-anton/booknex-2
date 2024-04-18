@@ -20,6 +20,7 @@ export const FontStyleSettings: FC<FontStyleSettingsProperties> = ({
 	colorScheme
 }) => {
 	const reference = useRef<FlatList>(null)
+
 	return (
 		<FlatList
 			horizontal
@@ -61,15 +62,6 @@ export const FontStyleSettings: FC<FontStyleSettingsProperties> = ({
 					</Title>
 				</AnimatedPress>
 			)}
-			onLayout={() => {
-				reference.current?.scrollToIndex({
-					index: ReaderFont.findIndex(
-						font => font.fontFamily === activeFont.fontFamily
-					),
-					viewPosition: 0.5,
-					animated: true
-				})
-			}}
 		/>
 	)
 }
