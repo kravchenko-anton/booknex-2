@@ -165,6 +165,23 @@ paths:
         - 📚 catalog
       security:
         - bearer: []
+  /catalog/picks-of-the-week:
+    get:
+      operationId: picksOfTheWeek
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShortBook"
+      tags:
+        - 📚 catalog
+      security:
+        - bearer: []
   /genre:
     get:
       operationId: catalog

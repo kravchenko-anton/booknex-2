@@ -1,5 +1,7 @@
 {
-  "/login/page": "app/login/page.js",
-  "/admin/dashboard/page": "app/admin/dashboard/page.js",
-  "/admin/book/catalog/page": "app/admin/book/catalog/page.js"
+  "/admin/book/catalog/page": "app/admin/book/catalog/page.js",
+  "/admin/user/catalog/page": "app/admin/user/catalog/page.js",
+  "/admin/book/[slug]/page": "app/admin/book/[slug]/page.js",
+  "/admin/book/[slug]/update/page": "app/admin/book/[slug]/update/page.js",
+  "/admin/parser/catalog/page": "app/admin/parser/catalog/page.js"
 }

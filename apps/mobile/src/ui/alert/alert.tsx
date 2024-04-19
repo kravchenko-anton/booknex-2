@@ -26,6 +26,9 @@ const Alert: FC<AlertProperties> = ({
 		statusBarTranslucent
 		visible
 		animationType='fade'
+		style={{
+			backgroundColor: `${Color.background}99`
+		}}
 		onRequestClose={onClose}>
 		<View
 			className='flex-1 items-center justify-center'

@@ -66,6 +66,7 @@ const Navigation: FC = () => {
 				<Stack.Navigator
 					initialRouteName={user ? 'Featured' : 'Welcome'}
 					screenOptions={{
+						presentation: 'containedTransparentModal',
 						animation: 'simple_push',
 						headerShown: false,
 						statusBarColor: Color.background,

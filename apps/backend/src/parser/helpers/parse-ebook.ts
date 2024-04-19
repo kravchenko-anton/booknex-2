@@ -25,9 +25,10 @@ const parseSelectors = {
 
 export const useParser = async () => {
 	const browser = await puppeteer.launch({
-		headless: true,
+		headless: false,
 		args: ['--no-sandbox', '--disable-setuid-sandbox'],
 		ignoreHTTPSErrors: true,
+		protocolTimeout: 0,
 		ignoreDefaultArgs: ['--disable-extensions']
 	})
 	const page = await browser.newPage()

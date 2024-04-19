@@ -1,4 +1,4 @@
-import { BaseChapter } from '@/src/book/ebook/ebook.model'
+import type { BaseChapter } from '@/src/book/ebook/ebook.model'
 import prettify from '@liquify/prettify'
 import { HttpStatus } from '@nestjs/common'
 import EPub from 'epub2'
@@ -35,6 +35,13 @@ export const updatedContent = async (text: string) => {
 		if (element.tagName === 'TABLE') element.remove()
 		if (element.tagName === 'SUP') element.remove()
 		if (element.tagName === 'SUB') element.remove()
+		// remove element but all children will be saved
+		if (element.tagName === 'a') {
+			const children = element.children
+			for (const child of children) {
+				element.replaceWith(child)
+			}
+		}
 	}
 	if (!prettify.format) {
 		throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
