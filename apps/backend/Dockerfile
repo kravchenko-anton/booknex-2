@@ -14,6 +14,7 @@ RUN npm config rm https-proxy
 RUN npm install -g husky
 RUN npm install -g nx
 RUN npm install --only=prod --force
+RUN npm install @nx/nx-linux-x64-musl --force
 
 COPY . .
 

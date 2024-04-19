@@ -31,7 +31,7 @@ export class RecommendationController {
 	})
 	async currentRecommendation(@CurrentUser('id') userId: number): Promise<
 		| {
-				id: number
+				slug: string
 				name: string
 		  }[]
 		| null
