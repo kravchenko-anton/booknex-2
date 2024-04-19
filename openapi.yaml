@@ -979,6 +979,28 @@ components:
     FeaturedOutput:
       type: object
       properties:
+        picksOfWeek:
+          type: array
+          items:
+            type: object
+            properties:
+              slug:
+                type: string
+                required: true
+              title:
+                type: string
+                required: true
+              picture:
+                type: string
+                required: true
+              author:
+                type: string
+                required: true
+            required:
+              - slug
+              - title
+              - picture
+              - author
         interestedGenres:
           type: array
           items:
@@ -997,50 +1019,6 @@ components:
               - slug
               - name
               - icon
-        recommendation:
-          type: array
-          items:
-            type: object
-            properties:
-              slug:
-                type: string
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - slug
-              - title
-              - picture
-              - author
-        popularBooks:
-          type: array
-          items:
-            type: object
-            properties:
-              slug:
-                type: string
-                required: true
-              title:
-                type: string
-                required: true
-              picture:
-                type: string
-                required: true
-              author:
-                type: string
-                required: true
-            required:
-              - slug
-              - title
-              - picture
-              - author
         bestSellingBooks:
           type: array
           items:
@@ -1085,12 +1063,36 @@ components:
               - title
               - picture
               - author
+        booksBySelectedGenres:
+          type: array
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                slug:
+                  type: string
+                  required: true
+                title:
+                  type: string
+                  required: true
+                picture:
+                  type: string
+                  required: true
+                author:
+                  type: string
+                  required: true
+              required:
+                - slug
+                - title
+                - picture
+                - author
       required:
+        - picksOfWeek
         - interestedGenres
-        - recommendation
-        - popularBooks
         - bestSellingBooks
         - newReleases
+        - booksBySelectedGenres
     ShortGenre:
       type: object
       properties:

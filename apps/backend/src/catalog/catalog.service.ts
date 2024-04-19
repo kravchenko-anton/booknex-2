@@ -16,21 +16,6 @@ export class CatalogService {
 		@Inject(CACHE_MANAGER) private cacheManager: cacheManagerType.Cache
 	) {}
 
-	async featured(userId: number) {
-		await this.activityService.create({
-			type: Activities.checkCatalog,
-			importance: 1,
-			userId: userId
-		})
-		return {
-			interestedGenres: await this.interestedGenres(userId),
-			recommendation: await this.recommendationService.recommendation(userId),
-			popularBooks: await this.popularBooks(),
-			bestSellingBooks: await this.bestSellingBooks(),
-			newReleases: await this.newReleases()
-		}
-	}
-
 	search(query: string) {
 		return this.prisma.book.findMany({
 			where: {
@@ -53,14 +38,77 @@ export class CatalogService {
 		})
 	}
 
-	async picksOfTheWeek() {
+	async featured(userId: number) {
+		await this.activityService.create({
+			type: Activities.checkCatalog,
+			importance: 1,
+			userId: userId
+		})
+
+		const alreadyUsedBookSlugs: string[] = []
+		const pushBooks = (books: ShortBook[]) => {
+			alreadyUsedBookSlugs.push(...books.map(book => book.slug))
+			return books
+		}
+		const userSelectedGenres =
+			await this.recommendationService.userSelectedGenresById(userId)
+		const booksBySelectedGenres = userSelectedGenres.map(genre =>
+			this.prisma.book.findMany({
+				take: 10,
+				where: {
+					isPublic: true,
+					genres: {
+						some: {
+							slug: genre.slug
+						}
+					},
+					slug: {
+						notIn: alreadyUsedBookSlugs
+					}
+				}
+			})
+		)
+
+		return {
+			picksOfWeek:
+				await this.picksOfTheWeek(alreadyUsedBookSlugs).then(pushBooks),
+			interestedGenres: await this.interestedGenres(userId),
+			bestSellingBooks:
+				await this.bestSellersBooks(alreadyUsedBookSlugs).then(pushBooks),
+			newReleases: await this.newReleases(alreadyUsedBookSlugs).then(pushBooks),
+			booksBySelectedGenres: await Promise.all(booksBySelectedGenres)
+		}
+	}
+
+	private async interestedGenres(userId: number) {
+		return this.prisma.genre.findMany({
+			where: {
+				slug: {
+					in: await this.recommendationService
+						.userSelectedGenresById(userId)
+						.then(genres => genres.map(genre => genre.slug))
+				}
+			},
+			select: {
+				slug: true,
+				id: true,
+				icon: true,
+				name: true
+			}
+		})
+	}
+
+	async picksOfTheWeek(skippedBookSlugs: string[] = []) {
 		const picksOfTheWeek: ShortBook[] | undefined =
 			await this.cacheManager.get('picksOfTheWeek')
 		if (picksOfTheWeek) return picksOfTheWeek
 		const picks = await this.prisma.book.findMany({
 			take: 10,
 			where: {
-				isPublic: true
+				isPublic: true,
+				slug: {
+					notIn: skippedBookSlugs
+				}
 			},
 			orderBy: {
 				rating: 'desc'
@@ -71,23 +119,14 @@ export class CatalogService {
 		return picks
 	}
 
-	private async interestedGenres(userId: number) {
-		return this.prisma.genre.findMany({
+	private bestSellersBooks(skippedBookSlugs: string[] = []) {
+		return this.prisma.book.findMany({
+			take: 10,
 			where: {
-				users: {
-					every: {
-						id: userId
-					}
+				isPublic: true,
+				slug: {
+					notIn: skippedBookSlugs
 				}
-			}
-		})
-	}
-
-	private popularBooks() {
-		return this.prisma.book.findMany({
-			take: 10,
-			where: {
-				isPublic: true
 			},
 			orderBy: {
 				rating: 'desc'
@@ -95,26 +134,17 @@ export class CatalogService {
 		})
 	}
 
-	private bestSellingBooks() {
+	private newReleases(skippedBookSlugs: string[] = []) {
 		return this.prisma.book.findMany({
 			take: 10,
 			where: {
-				isPublic: true
+				isPublic: true,
+				slug: {
+					notIn: skippedBookSlugs
+				}
 			},
 			orderBy: {
-				rating: 'desc'
-			}
-		})
-	}
-
-	private newReleases() {
-		return this.prisma.book.findMany({
-			take: 10,
-			where: {
-				isPublic: true
-			},
-			orderBy: {
-				updatedAt: 'desc'
+				createdAt: 'desc'
 			}
 		})
 	}

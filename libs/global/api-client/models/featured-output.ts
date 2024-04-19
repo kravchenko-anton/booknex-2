@@ -28,22 +28,16 @@ import { UserLibraryOutputReadingBooksInner } from './user-library-output-readin
 export interface FeaturedOutput {
     /**
      * 
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @memberof FeaturedOutput
+     */
+    'picksOfWeek': Array<UserLibraryOutputReadingBooksInner>;
+    /**
+     * 
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof FeaturedOutput
      */
     'interestedGenres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
-    /**
-     * 
-     * @type {Array<UserLibraryOutputReadingBooksInner>}
-     * @memberof FeaturedOutput
-     */
-    'recommendation': Array<UserLibraryOutputReadingBooksInner>;
-    /**
-     * 
-     * @type {Array<UserLibraryOutputReadingBooksInner>}
-     * @memberof FeaturedOutput
-     */
-    'popularBooks': Array<UserLibraryOutputReadingBooksInner>;
     /**
      * 
      * @type {Array<UserLibraryOutputReadingBooksInner>}
@@ -56,5 +50,11 @@ export interface FeaturedOutput {
      * @memberof FeaturedOutput
      */
     'newReleases': Array<UserLibraryOutputReadingBooksInner>;
+    /**
+     * 
+     * @type {Array<Array<UserLibraryOutputReadingBooksInner>>}
+     * @memberof FeaturedOutput
+     */
+    'booksBySelectedGenres': Array<Array<UserLibraryOutputReadingBooksInner>>;
 }
 

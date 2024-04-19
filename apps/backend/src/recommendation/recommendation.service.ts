@@ -13,74 +13,24 @@ export class RecommendationService {
 		private activityService: ActivityService
 	) {}
 
-	async recommendation(userId: number) {
-		const selectedGenres = await this.prisma.genre.findMany({
+	async userSelectedGenresById(userId: number) {
+		const userSelectedGenres = await this.prisma.user.findUnique({
 			where: {
-				users: {
-					some: {
-						id: userId
-					}
-				}
+				id: userId
 			},
 			select: {
-				slug: true
-			}
-		})
-
-		return this.prisma.book.findMany({
-			take: 10,
-			orderBy: { rating: 'desc' },
-			where: {
-				isPublic: true,
-				genres: {
-					some: {
-						slug: {
-							in: selectedGenres.map(genre => genre.slug)
-						}
-					}
-				},
-				AND: {
-					NOT: {
-						readingBy: {
-							some: {
-								id: userId
-							}
-						},
-						finishedBy: {
-							some: {
-								id: userId
-							}
-						},
-						savedBy: {
-							some: {
-								id: userId
-							}
-						}
+				selectedGenres: {
+					select: {
+						slug: true,
+						name: true
 					}
 				}
 			}
 		})
+		return userSelectedGenres?.selectedGenres || []
 	}
 
-	currentRecommendation(userId: number) {
-		return this.prisma.user
-			.findUnique({
-				where: {
-					id: userId
-				},
-				select: {
-					selectedGenres: {
-						select: {
-							id: true,
-							name: true
-						}
-					}
-				}
-			})
-			.selectedGenres()
-	}
-
-	async updateRecommendation(id: number, dto: UpdateRecommendationDto) {
+	async updateSelectedGenres(id: number, dto: UpdateRecommendationDto) {
 		await this.checkUserExist(id)
 		const selectedGenres = await this.prisma.genre.findMany({
 			where: {

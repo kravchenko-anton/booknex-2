@@ -7,7 +7,7 @@ interface BookHtmlType {
 	readingTime: number
 	romanNumber: string
 }
-// It here because i use it in multiple places (web(overview) and in backend)
+
 export const getServerBookHtml = ({
 	name,
 	title,

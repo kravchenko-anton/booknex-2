@@ -20,7 +20,7 @@ export class RecommendationController {
 		@CurrentUser('id') userId: number,
 		@Body() dto: UpdateRecommendationDto
 	) {
-		return this.recommendationService.updateRecommendation(+userId, dto)
+		return this.recommendationService.updateSelectedGenres(+userId, dto)
 	}
 
 	@Auth()
@@ -36,6 +36,6 @@ export class RecommendationController {
 		  }[]
 		| null
 	> {
-		return this.recommendationService.currentRecommendation(+userId)
+		return this.recommendationService.userSelectedGenresById(+userId)
 	}
 }

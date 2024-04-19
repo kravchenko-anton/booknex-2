@@ -7,19 +7,18 @@ import { FeaturedOutput } from './catalog.model'
 
 import { CatalogService } from './catalog.service'
 
-@Auth()
 @ApiTags('📚 catalog')
 @ApiBearerAuth()
 @Controller('catalog')
 export class CatalogController {
 	constructor(private readonly catalogService: CatalogService) {}
-
+	@Auth()
 	@Get('/search/:query')
 	@ApiOkResponse({ type: [ShortBook] })
 	async search(@Param('query') query: string): Promise<ShortBook[]> {
 		return this.catalogService.search(query)
 	}
-
+	@Auth()
 	@Get('/featured')
 	@ApiOkResponse({ type: FeaturedOutput })
 	async featured(@CurrentUser('id') userId: number): Promise<FeaturedOutput> {

@@ -25,6 +25,7 @@ export const updatedContent = async (text: string) => {
 		for (const attribute of attributes) {
 			element.removeAttribute(attribute)
 		}
+
 		if (element.tagName === 'image') element.remove()
 		if (element.tagName === 'img') element.remove()
 		if (element.tagName === 'svg') element.remove()
@@ -35,13 +36,8 @@ export const updatedContent = async (text: string) => {
 		if (element.tagName === 'TABLE') element.remove()
 		if (element.tagName === 'SUP') element.remove()
 		if (element.tagName === 'SUB') element.remove()
-		// remove element but all children will be saved
-		if (element.tagName === 'a') {
-			const children = element.children
-			for (const child of children) {
-				element.replaceWith(child)
-			}
-		}
+		if (element.tagName === 'hr') element.remove()
+		if (element.tagName === 'HR') element.remove()
 	}
 	if (!prettify.format) {
 		throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
