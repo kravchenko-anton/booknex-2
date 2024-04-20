@@ -5,12 +5,8 @@ import { NavigationBar } from '@/components/navigationBar/navigation-bar'
 import { Button } from '@/components/ui'
 import api from '@/services/api'
 import { appName, installAppLink } from 'global/utils'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
-	title: appName
-}
 const getData = async () => {
 	const { data } = await api.catalog.picksOfTheWeek()
 	return {
@@ -27,10 +23,10 @@ const Index = async () => {
 				className='bg-foreground flex h-[60vh] items-center justify-center p-4 text-center'
 				id='main'>
 				<div>
-					<h1 className='mb-4 line-clamp-2 text-4xl'>
+					<h1 className='mb-4 line-clamp-2 text-2xl md:text-4xl'>
 						The easiest way to enjoy books
 					</h1>
-					<p>
+					<p className='text-sm md:text-xl'>
 						{appName} is a mobile reading app that’s filled with thousands of
 						books.
 					</p>

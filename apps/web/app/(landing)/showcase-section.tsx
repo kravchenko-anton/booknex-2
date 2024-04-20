@@ -9,7 +9,7 @@ export interface PicksOfWeekListProperties {
 }
 export const ShowcaseSection = (properties: PicksOfWeekListProperties) => (
 	<div className='w-full py-4'>
-		<div className=' mx-auto w-4/5'>
+		<div className=' mx-auto px-2 md:w-4/5 md:px-0'>
 			<h1 className='mb-4 text-2xl'>Picks of the week</h1>
 			<div
 				id='picks of weeks'

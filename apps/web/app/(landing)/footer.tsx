@@ -15,16 +15,18 @@ export const footerNavigationLinks = [
 	}
 ]
 export const Footer = () => (
-	<footer className='bg-foreground py-6 text-white'>
-		<div className='mx-auto w-1/2'>
-			{footerNavigationLinks.map(link => (
-				<Link
-					href={link.href}
-					className='text-gray mx-2 cursor-pointer transition-all duration-75 hover:text-white'
-					key={link.name}>
-					{link.name}
-				</Link>
-			))}
+	<footer className='bg-foreground px-2 py-6 text-white '>
+		<div className='mx-auto w-full md:w-1/2'>
+			<div className={'flex flex-wrap items-center  gap-2'}>
+				{footerNavigationLinks.map(link => (
+					<Link
+						href={link.href}
+						className='text-gray mr-2 cursor-pointer transition-all duration-75 hover:text-white'
+						key={link.name}>
+						{link.name}
+					</Link>
+				))}
+			</div>
 			<Link href={installAppLink}>
 				<Button variant='foreground' className=' mt-4' size={'sm'}>
 					Download now
