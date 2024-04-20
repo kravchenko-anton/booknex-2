@@ -1,4 +1,5 @@
 import { useAuth, useTypedNavigation } from '@/hooks'
+import { mailLink } from 'global/utils'
 import { Linking, View } from 'react-native'
 import * as List from './settings-list'
 
@@ -11,7 +12,7 @@ const Settings = () => {
 			<View className='pt-4'>
 				<List.Item
 					title='Contact support'
-					onPress={() => Linking.openURL('mailto:booknex.company@gmail.com')}
+					onPress={() => Linking.openURL(mailLink)}
 				/>
 				<List.Item
 					title='Privacy policy'

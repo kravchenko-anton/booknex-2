@@ -1001,7 +1001,7 @@ components:
               - title
               - picture
               - author
-        interestedGenres:
+        genres:
           type: array
           items:
             type: object
@@ -1089,7 +1089,7 @@ components:
                 - author
       required:
         - picksOfWeek
-        - interestedGenres
+        - genres
         - bestSellingBooks
         - newReleases
         - booksBySelectedGenres

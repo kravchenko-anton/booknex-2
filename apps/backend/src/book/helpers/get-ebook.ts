@@ -1,4 +1,4 @@
-import { EBookPayloadType } from 'global/validation/book/ebook.payload.dto'
+import type { EBookPayloadType } from 'global/validation/book/ebook.payload.dto'
 import { convertToRoman } from '../../utils/helpers/romanize-number'
 import type { StoredEBook } from '../ebook/ebook.model'
 

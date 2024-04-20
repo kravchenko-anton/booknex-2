@@ -37,7 +37,7 @@ export interface FeaturedOutput {
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof FeaturedOutput
      */
-    'interestedGenres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
+    'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
     /**
      * 
      * @type {Array<UserLibraryOutputReadingBooksInner>}

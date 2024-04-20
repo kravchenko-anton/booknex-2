@@ -14,33 +14,33 @@ import { instance } from './interceptors'
 
 export const mobileServerURL = 'https://booknex-server.up.railway.app'
 
-const baseParams = {
+const baseParameters = {
 	basePath: mobileServerURL,
 	isJsonMime: () => true
 }
-const auth = new AuthApi(baseParams, mobileServerURL, undefined)
+const auth = new AuthApi(baseParameters, mobileServerURL, undefined)
 
-const book = new BookApi(baseParams, mobileServerURL, instance)
+const book = new BookApi(baseParameters, mobileServerURL, instance)
 
-const catalog = new CatalogApi(baseParams, mobileServerURL, instance)
+const catalog = new CatalogApi(baseParameters, mobileServerURL, instance)
 
-const ebook = new EbookApi(baseParams, mobileServerURL, instance)
+const ebook = new EbookApi(baseParameters, mobileServerURL, instance)
 
-const genre = new GenreApi(baseParams, mobileServerURL, instance)
+const genre = new GenreApi(baseParameters, mobileServerURL, instance)
 
-const parser = new ParserApi(baseParams, mobileServerURL, instance)
+const parser = new ParserApi(baseParameters, mobileServerURL, instance)
 
 const recommendation = new RecommendationApi(
-	baseParams,
+	baseParameters,
 	mobileServerURL,
 	instance
 )
 
-const review = new ReviewApi(baseParams, mobileServerURL, instance)
+const review = new ReviewApi(baseParameters, mobileServerURL, instance)
 
-const storage = new StorageApi(baseParams, mobileServerURL, instance)
+const storage = new StorageApi(baseParameters, mobileServerURL, instance)
 
-const user = new UserApi(baseParams, mobileServerURL, instance)
+const user = new UserApi(baseParameters, mobileServerURL, instance)
 
 export default {
 	auth,

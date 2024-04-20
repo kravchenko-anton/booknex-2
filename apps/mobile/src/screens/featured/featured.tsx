@@ -13,13 +13,13 @@ const Featured = () => {
 		select: data => data.data
 	})
 	const { navigate } = useTypedNavigation()
-	console.log('featured', featured?.recommendation)
+	console.log('featured', featured)
 	if (!featured) return <Loader />
 	return (
 		<ScrollLayout>
 			<BannerList
 				title='Picks of the week'
-				data={featured.recommendation}
+				data={featured.picksOfWeek}
 				renderItem={({ item: book }) => (
 					<BookCard
 						size='md'
@@ -48,8 +48,8 @@ const Featured = () => {
 			<BannerList
 				horizontal
 				mt={5}
-				title='Popular books'
-				data={featured.popularBooks}
+				title='Best selling books'
+				data={featured.bestSellingBooks}
 				renderItem={({ item: book }) => (
 					<BookCard
 						size='md'
@@ -76,21 +76,24 @@ const Featured = () => {
 					/>
 				)}
 			/>
-			<BannerList
-				className='mb-4'
-				title='Best selling books'
-				data={featured.bestSellingBooks}
-				renderItem={({ item: book }) => (
-					<BookCard
-						author={book.author}
-						size='md'
-						image={{
-							uri: book.picture
-						}}
-						onPress={() => navigate('Book', { slug: book.slug })}
-					/>
-				)}
-			/>
+			{featured.booksBySelectedGenres.map(list => (
+				<BannerList
+					key={list.length + Math.random()}
+					className='mb-4'
+					title='Best selling books'
+					data={list}
+					renderItem={({ item: book }) => (
+						<BookCard
+							author={book.author}
+							size='md'
+							image={{
+								uri: book.picture
+							}}
+							onPress={() => navigate('Book', { slug: book.slug })}
+						/>
+					)}
+				/>
+			))}
 
 			{
 				// TODO: сделать колекцию,жанры относительно фаворитных жанров

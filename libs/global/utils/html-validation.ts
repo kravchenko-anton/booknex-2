@@ -1,5 +1,14 @@
 import axios from 'axios'
 
+type HtmlValidationMessageType = {
+	message: string
+	extract: string
+	lastLine: number
+	lastColumn: number
+	firstColumn: number
+	hiliteStart: number
+	hiliteLength: number
+}
 export const checkHtmlValid = async (html: string) => {
 	const postProcessingHtml = `
 		<!DOCTYPE html>
@@ -23,19 +32,20 @@ export const checkHtmlValid = async (html: string) => {
 		}
 	})
 
-	return {
-		messages: request.data.messages.map(
-			(message: {
-				message: string
-				extract: string
-				lastLine: number
-				lastColumn: number
-				firstColumn: number
-				hiliteStart: number
-				hiliteLength: number
-			}) =>
+	const skippedErrors = ['Element “dl” is missing a required child element']
+	const messages = request.data.messages
+		.filter(
+			(message: HtmlValidationMessageType) =>
+				!skippedErrors.some(error =>
+					message.message.toLowerCase().includes(error.toLowerCase())
+				)
+		)
+		.map(
+			(message: HtmlValidationMessageType) =>
 				`${message.message} at line ${message.lastLine} column ${message.lastColumn}:\n${message.extract}`
-		),
-		isValid: request.data.messages.length === 0
+		)
+	return {
+		messages: messages,
+		isValid: messages.length === 0
 	}
 }

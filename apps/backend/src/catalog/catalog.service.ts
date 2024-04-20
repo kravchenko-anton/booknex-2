@@ -72,30 +72,12 @@ export class CatalogService {
 		return {
 			picksOfWeek:
 				await this.picksOfTheWeek(alreadyUsedBookSlugs).then(pushBooks),
-			interestedGenres: await this.interestedGenres(userId),
+			genres: await this.prisma.genre.findMany({}),
 			bestSellingBooks:
 				await this.bestSellersBooks(alreadyUsedBookSlugs).then(pushBooks),
 			newReleases: await this.newReleases(alreadyUsedBookSlugs).then(pushBooks),
 			booksBySelectedGenres: await Promise.all(booksBySelectedGenres)
 		}
-	}
-
-	private async interestedGenres(userId: number) {
-		return this.prisma.genre.findMany({
-			where: {
-				slug: {
-					in: await this.recommendationService
-						.userSelectedGenresById(userId)
-						.then(genres => genres.map(genre => genre.slug))
-				}
-			},
-			select: {
-				slug: true,
-				id: true,
-				icon: true,
-				name: true
-			}
-		})
 	}
 
 	async picksOfTheWeek(skippedBookSlugs: string[] = []) {

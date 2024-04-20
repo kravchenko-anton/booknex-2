@@ -5,6 +5,7 @@ export const QueryKeys = {
 	searchByTerm: (searchTerm: string) => ['search-by-term', searchTerm],
 
 	book: {
+		picksOfTheWeek: ['picks-of-the-week'],
 		key: ['book'],
 		infoBySlug: (slug: string) => ['book', slug],
 		adminInfoBySlug: (slug: string) => ['admin-info-by-slug', slug],
