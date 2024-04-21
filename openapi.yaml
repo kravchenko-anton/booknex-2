@@ -723,6 +723,15 @@ paths:
                   $ref: "#/components/schemas/StoredEBook"
       tags:
         - 📙 ebook
+  /ebook/admin/fix-ebook-structure:
+    get:
+      operationId: fixEBookStructure
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 📙 ebook
 info:
   title: Booknex
   description: ""
@@ -1300,6 +1309,19 @@ components:
           items:
             type: object
             properties:
+              user:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    required: true
+                  picture:
+                    type: string
+                    required: true
+                  email:
+                    type: string
+                    required: true
+                required: true
               tags:
                 type: array
                 items:
@@ -1313,6 +1335,7 @@ components:
                 type: number
                 required: true
             required:
+              - user
               - tags
               - rating
       required:

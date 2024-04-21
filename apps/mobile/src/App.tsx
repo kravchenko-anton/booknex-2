@@ -40,7 +40,8 @@ const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
 codePush.sync({
-	installMode: codePush.InstallMode.ON_NEXT_RESTART
+	installMode: codePush.InstallMode.IMMEDIATE,
+	deploymentKey: 'ng2EKj_wP8in8FK-0FoDDymS2XVwknzo2Id_h'
 })
 
 const App = () => (

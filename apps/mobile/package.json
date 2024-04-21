@@ -9,6 +9,7 @@
 	},
 	"dependencies": {
 		"@gorhom/bottom-sheet": "*",
+		"react-native-device-info": "*",
 		"@hookform/resolvers": "*",
 		"@react-native-async-storage/async-storage": "*",
 		"@react-native-clipboard/clipboard": "*",

@@ -29,4 +29,9 @@ export class EbookController {
 	): Promise<StoredEBook[]> {
 		return this.ebookService.storedEbook(bookSlug)
 	}
+
+	@Get('/admin/fix-ebook-structure/')
+	async fixEBookStructure() {
+		return this.ebookService.fixEBookStructure()
+	}
 }

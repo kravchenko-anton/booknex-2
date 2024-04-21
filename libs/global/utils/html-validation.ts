@@ -9,8 +9,7 @@ type HtmlValidationMessageType = {
 	hiliteStart: number
 	hiliteLength: number
 }
-export const checkHtmlValid = async (html: string) => {
-	const postProcessingHtml = `
+export const postProcessingHtml = (html: string) => `
 		<!DOCTYPE html>
 		<html lang="en">
 			<head>
@@ -22,11 +21,12 @@ export const checkHtmlValid = async (html: string) => {
 		</html>
 	
 	`
-
+export const checkHtmlValid = async (html: string) => {
 	const request = await axios.request({
 		method: 'POST',
+		// do extrack more that 20 words
 		url: 'https://validator.w3.org/nu/?out=json',
-		data: postProcessingHtml,
+		data: postProcessingHtml(html),
 		headers: {
 			'Content-Type': 'text/html; charset=utf-8'
 		}
@@ -44,6 +44,7 @@ export const checkHtmlValid = async (html: string) => {
 			(message: HtmlValidationMessageType) =>
 				`${message.message} at line ${message.lastLine} column ${message.lastColumn}:\n${message.extract}`
 		)
+	console.log('html-validation', request)
 	return {
 		messages: messages,
 		isValid: messages.length === 0

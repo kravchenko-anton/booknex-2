@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { FullBookReviewInnerUser } from './full-book-review-inner-user';
 
 /**
  * 
@@ -20,6 +23,12 @@
  * @interface FullBookReviewInner
  */
 export interface FullBookReviewInner {
+    /**
+     * 
+     * @type {FullBookReviewInnerUser}
+     * @memberof FullBookReviewInner
+     */
+    'user': FullBookReviewInnerUser;
     /**
      * 
      * @type {Array<string>}

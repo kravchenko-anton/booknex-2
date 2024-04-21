@@ -1,21 +1,27 @@
 import { useEffect, useState } from 'react'
 import codePush from 'react-native-code-push'
+import DeviceInfo from 'react-native-device-info'
 
 async function getOTAVersion() {
 	try {
 		const update = await codePush.getUpdateMetadata()
+
 		return update ? update.label : null
 	} catch {
 		return null
 	}
 }
 
-export function useAppVersion() {
-	const [version, setVersion] = useState<string | null>(null)
+export function useOTAVersion() {
+	const [appVersion, setAppVersion] = useState(DeviceInfo.getReadableVersion())
 
 	useEffect(() => {
-		getOTAVersion().then(setVersion)
+		getOTAVersion().then(OTAVersion => {
+			if (OTAVersion) {
+				setAppVersion(`${appVersion}/${OTAVersion}`)
+			}
+		})
 	}, [])
 
-	return version
+	return { appVersion }
 }

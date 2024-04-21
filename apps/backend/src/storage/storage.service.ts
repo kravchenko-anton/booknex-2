@@ -1,12 +1,12 @@
-import { EnvConfig } from '@/src/utils/config/env-config'
+import type { EnvConfig } from '@/src/utils/config/env-config'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { adminErrors, globalErrors } from 'global/errors'
 import {
 	StorageFolderArray,
-	StorageFolderType,
-	storageFolder
+	storageFolder,
+	type StorageFolderType
 } from 'global/helpers/storage-types'
 import sharp from 'sharp'
 import { serverError } from '../utils/helpers/server-error'

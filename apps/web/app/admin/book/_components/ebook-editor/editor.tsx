@@ -3,8 +3,9 @@ import { useBookCompose } from '@/app/admin/book/_components/ebook-editor/useBoo
 import { DropZone, Input, TextArea } from '@/components/ui'
 import ErrorMessage from '@/components/ui/error-message/error-message'
 import { errorToast } from '@/utils/toast'
-import { HardDriveDownload, HardDriveUpload } from 'global/icons/react'
+import { Copy, HardDriveDownload, HardDriveUpload } from 'global/icons/react'
 import type { BaseFieldProperties } from 'global/types'
+import { postProcessingHtml } from 'global/utils/html-validation'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
 import { Controller } from 'react-hook-form'
 
@@ -48,6 +49,27 @@ const EbookComposer = <T extends Record<string, any>>({
 									className='bg-foreground border-bordered cursor-pointer rounded border-[1px] p-1.5'
 									onClick={books.unStashEBook}
 								/>
+								<Copy
+									width={33}
+									height={33}
+									title='download ebook (for validation)'
+									className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
+									onClick={() => {
+										navigator.clipboard.writeText(
+											JSON.stringify(
+												postProcessingHtml(
+													books.state
+														.map(book =>
+															book.chapters
+																.map(chapter => `${chapter.text}`.trim())
+																.join('')
+														)
+														.join('')
+												)
+											)
+										)
+									}}
+								/>
 								<div
 								// after hover add shash title in popover
 								>
@@ -84,6 +106,17 @@ const EbookComposer = <T extends Record<string, any>>({
 											/>
 											<ErrorMessage message={bookError?.title?.message} />
 											<div className='flex items-center gap-2'>
+												<Close
+													width={33}
+													height={33}
+													className='bg-muted border-bordered h-full w-[35px] cursor-pointer rounded border-[1px] p-1.5'
+													onClick={() => {
+														books.delete({
+															bookId: book.id
+														})
+													}}
+												/>
+
 												<TrimContentMenu
 													onSubmit={data => {
 														books.trimmingEBookContent({

@@ -4,40 +4,56 @@ import { HttpStatus } from '@nestjs/common'
 import EPub from 'epub2'
 import { adminErrors, globalErrors } from 'global/errors'
 import { JSDOM } from 'jsdom'
-
 import { serverError } from '../../utils/helpers/server-error'
+
+export const clearHtmlElement = (element: Element) => {
+	if (
+		element.textContent === '' ||
+		element.textContent === ' ' ||
+		element.textContent === '\n' ||
+		!element.textContent ||
+		element.textContent === '\n\n'
+	) {
+		element.remove()
+	}
+	const attributes = element.getAttributeNames()
+	for (const attribute of attributes) {
+		element.removeAttribute(attribute)
+	}
+
+	if (element.tagName === 'image') element.remove()
+	if (element.tagName === 'img') element.remove()
+	if (element.tagName === 'svg') element.remove()
+	if (element.tagName === 'iframe') element.remove()
+	if (element.tagName === 'script') element.remove()
+	if (element.tagName === 'style') element.remove()
+	if (element.tagName === 'table') element.remove()
+	if (element.tagName === 'TABLE') element.remove()
+	if (element.tagName === 'SUP') element.remove()
+	if (element.tagName === 'SUB') element.remove()
+	if (element.tagName === 'hr') element.remove()
+	if (element.tagName === 'HR') element.remove()
+
+	return element
+}
 
 export const updatedContent = async (text: string) => {
 	const dom = new JSDOM(String(text))
 
-	const elements = dom.window.document.querySelectorAll('*')
+	const clearElements = dom.window.document.querySelectorAll('*')
+	const elements = [...clearElements].map(element => clearHtmlElement(element))
 	for (const element of elements) {
 		if (
-			element.textContent === '' ||
-			element.textContent === ' ' ||
-			element.textContent === '\n' ||
-			!element.textContent ||
-			element.textContent === '\n\n'
+			(element.tagName === 'a' ||
+				element.tagName === 'A' ||
+				element.tagName === 'p' ||
+				element.tagName === 'P') &&
+			element.childElementCount > 1
 		) {
-			element.remove()
+			const div = dom.window.document.createElement('div')
+			div.innerHTML = element.innerHTML
+			element.replaceWith(div)
 		}
-		const attributes = element.getAttributeNames()
-		for (const attribute of attributes) {
-			element.removeAttribute(attribute)
-		}
-
-		if (element.tagName === 'image') element.remove()
-		if (element.tagName === 'img') element.remove()
-		if (element.tagName === 'svg') element.remove()
-		if (element.tagName === 'iframe') element.remove()
-		if (element.tagName === 'script') element.remove()
-		if (element.tagName === 'style') element.remove()
-		if (element.tagName === 'table') element.remove()
-		if (element.tagName === 'TABLE') element.remove()
-		if (element.tagName === 'SUP') element.remove()
-		if (element.tagName === 'SUB') element.remove()
-		if (element.tagName === 'hr') element.remove()
-		if (element.tagName === 'HR') element.remove()
 	}
 	if (!prettify.format) {
 		throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)

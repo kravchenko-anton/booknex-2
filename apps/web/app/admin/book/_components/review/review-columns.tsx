@@ -1,11 +1,25 @@
+import { Button } from '@/components/ui'
 import type { ColumnDef } from '@tanstack/react-table'
-import { FullBookReviewInner } from 'global/api-client'
+import type { FullBookReviewInner } from 'global/api-client'
 import { Color } from 'global/colors'
 import { Star } from 'icons'
 import { useState } from 'react'
 
 export const reviewColumns = (): ColumnDef<FullBookReviewInner, unknown>[] => [
-	//TODO: добавить информацию о пользователе
+	{
+		id: 'user',
+		header: () => <p className='text-center text-xl'>User</p>,
+		cell: ({ row }) => (
+			<div className='flex items-center justify-center'>
+				<img
+					src={row.original.user.picture}
+					alt={row.original.user.email}
+					className='h-8 w-8 rounded-full'
+				/>
+				<p className='ml-2'>{row.original.user.email}</p>
+			</div>
+		)
+	},
 	{
 		id: 'Rating',
 		header: () => <p className='text-center text-xl'>Rating</p>,
@@ -13,7 +27,7 @@ export const reviewColumns = (): ColumnDef<FullBookReviewInner, unknown>[] => [
 			console.log(row.original.rating, 'row.original.rating')
 			return (
 				<div className='flex  items-center justify-center'>
-					{Array.from({ length: 5 - row.original.rating }).map(star => (
+					{Array.from({ length: row.original.rating }).map(star => (
 						<Star
 							className='mx-1 cursor-pointer'
 							width={22}
@@ -50,9 +64,9 @@ export const reviewColumns = (): ColumnDef<FullBookReviewInner, unknown>[] => [
 		cell: ({ row }) => (
 			<div className='flex flex-wrap items-center justify-center gap-1.5'>
 				{row.original.tags.map(tag => (
-					<p key={tag} className='bg-foreground rounded p-1.5 font-light'>
-						<b className='font-bold text-white'>{tag}</b>
-					</p>
+					<Button size={'sm'} key={tag} variant='muted'>
+						{tag}
+					</Button>
 				))}
 			</div>
 		)

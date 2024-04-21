@@ -47,7 +47,7 @@ export const getStyleTag = ({
 		font-family: ${fontFamily}-Regular !important;
 	}
 	a {
-		color: ${colorPalette.secondary} !important;
+				color: ${colorPalette.text} !important;
 		font-family: ${fontFamily}-Bold !important;
 	}
 	h1 {

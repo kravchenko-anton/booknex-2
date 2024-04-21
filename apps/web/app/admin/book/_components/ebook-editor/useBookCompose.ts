@@ -14,7 +14,6 @@ export const useBookCompose = ({
 }) => {
 	const { mutateAsync: unfold, isLoading: unfoldLoading } = useMutation({
 		mutationKey: MutationKeys.bookTemplate.unfold,
-
 		mutationFn: (file: File) => api.parser.unfold(file),
 		onSuccess: () => successToast('File uploaded'),
 		onError: () => errorToast('Error while uploading book')

@@ -13,7 +13,7 @@ import {
 	getCoreRowModel,
 	useReactTable
 } from '@tanstack/react-table'
-import { FullBook } from 'global/api-client'
+import type { FullBook } from 'global/api-client'
 import type { FC } from 'react'
 
 interface ReviewTableProperties {

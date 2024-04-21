@@ -652,6 +652,9 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.ml-2 {
+  margin-left: 0.5rem;
+}
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -804,6 +807,9 @@ video {
 }
 .w-2\/4 {
   width: 50%;
+}
+.w-8 {
+  width: 2rem;
 }
 .min-w-\[8rem\] {
   min-width: 8rem;

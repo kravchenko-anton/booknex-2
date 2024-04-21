@@ -87,7 +87,8 @@ export class BookService {
 						user: {
 							select: {
 								id: true,
-								email: true
+								email: true,
+								picture: true
 							}
 						}
 					}

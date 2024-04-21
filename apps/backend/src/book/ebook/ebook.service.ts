@@ -1,5 +1,7 @@
 import { Activities } from '@/prisma/generated'
 import { ActivityService } from '@/src/activity/activity.service'
+import { updatedContent } from '@/src/parser/helpers/unfold-ebook'
+import { StorageService } from '@/src/storage/storage.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { getFileUrl } from 'global/api-config'
 import { globalErrors } from 'global/errors'
@@ -13,7 +15,8 @@ import { StoredEBookSchema, type StoredEBook } from './ebook.model'
 export class EbookService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService
+		private readonly activityService: ActivityService,
+		private readonly storageService: StorageService
 	) {}
 	async storedEbook(slug: string) {
 		const book = await this.prisma.book.findUnique({
@@ -33,12 +36,67 @@ export class EbookService {
 			console.log('error', 'not found ebook' + slug)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
 		}
-		console.log('ebook', ebook)
 		const errors = z.array(StoredEBookSchema).safeParse(ebook)
 		if (!errors.success) {
+			console.log('error', 'not valid ebook' + slug, errors.error)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		}
+
 		return ebook
+	}
+
+	async fixEBookStructure() {
+		const books = await this.prisma.book.findMany({
+			select: {
+				ebook: true,
+				title: true,
+				slug: true
+			}
+		})
+		for (const book of books) {
+			if (!book) {
+				throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
+			}
+			console.log('link', getFileUrl(book.ebook))
+
+			const ebook: StoredEBook[] = await fetch(getFileUrl(book.ebook))
+				.then(result => result.json())
+				.catch(() => null)
+
+			if (!ebook) {
+				console.log('error', 'not found ebook ' + book.slug)
+				throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
+			}
+
+			const errors = z.array(StoredEBookSchema).safeParse(ebook)
+			if (!errors.success) {
+				throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+			}
+
+			const newEbook: StoredEBook[] = []
+			for (const { chapters, ...newChapter } of ebook) {
+				const newChapters = []
+				for (const { text, ...rest } of chapters) {
+					const finalContent = await updatedContent(text)
+					newChapters.push({
+						...rest,
+						text: finalContent
+					})
+				}
+				newEbook.push({ ...newChapter, chapters: newChapters })
+			}
+			const { name: ebookName } = await this.storageService.upload({
+				folder: 'ebooks',
+				file: Buffer.from(JSON.stringify(newEbook)),
+				fileName: `${book.title}.json`
+			})
+			await this.prisma.book.update({
+				where: { slug: book.slug },
+				data: {
+					ebook: ebookName
+				}
+			})
+		}
 	}
 
 	async ebookBySlug(slug: string, userId: number) {
