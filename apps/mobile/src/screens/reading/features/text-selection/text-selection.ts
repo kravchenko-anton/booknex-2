@@ -4,7 +4,6 @@ import Clipboard from '@react-native-clipboard/clipboard'
 import { Linking } from 'react-native'
 
 const textSelectionValidation = (selectedText: string) => {
-	if (selectedText.length < 3) return errorToast('Selected text is too short')
 	if (selectedText.length > 800) return errorToast('Selected text is too long')
 
 	return true
@@ -32,3 +31,11 @@ export const textSelection = async (event: any, removeAllSelection: void) => {
 	}
 	return removeAllSelection
 }
+export const selectTextLimitScript = `
+ document.addEventListener('selectionchange', function() {
+	const selection = window.getSelection()
+	if (selection.toString().length > 700) {
+		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selection-limit-fail', payload: { message: 'Too much text is highlighted' } }))
+		selection.removeAllRanges()
+	}
+`

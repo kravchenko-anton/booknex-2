@@ -5,7 +5,7 @@ export interface WebviewMessageType {
 		| 'scroll'
 		| 'finishBook'
 		| 'textSelect'
-		| 'textSelectFail'
+		| 'selection-limit-fail'
 		| 'finish-loading'
 	payload: {
 		scrollTop: number
@@ -35,6 +35,7 @@ export const useReaderMessage = ({
 		const { type, payload } = parsedEvent
 		console.log(type, payload)
 		if (type === 'finish-loading') onContentLoadEnd()
+		if (type === 'selection-limit-fail') console.log('Text select fail')
 		if (type === 'scroll')
 			onScroll({
 				scrollTop: payload.scrollTop,
