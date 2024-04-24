@@ -13,7 +13,6 @@ const Featured = () => {
 		select: data => data.data
 	})
 	const { navigate } = useTypedNavigation()
-	console.log('featured', featured)
 	if (!featured) return <Loader />
 	return (
 		<ScrollLayout>
@@ -33,7 +32,7 @@ const Featured = () => {
 
 			<Flatlist
 				horizontal
-				data={featured.interestedGenres}
+				data={featured.genres}
 				renderItem={({ item: genre }) => (
 					<Button
 						size='md'

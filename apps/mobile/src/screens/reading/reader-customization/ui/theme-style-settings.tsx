@@ -1,10 +1,7 @@
-import {
-	themePack,
-	type ThemePackType
-} from '@/screens/reading/features/reader-styles/theme-pack'
+import { themePack, type ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
 import { Color } from 'global/colors'
-import { useRef, type FC } from 'react'
+import { type FC, useRef } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 
 //TODO: проверить на краши
@@ -25,6 +22,7 @@ export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
 			className='mt-4'
 			showsHorizontalScrollIndicator={false}
 			data={themePack}
+		
 			contentContainerStyle={{
 				paddingHorizontal: 8
 			}}

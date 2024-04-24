@@ -1,10 +1,16 @@
 import type { WebViewMessageEvent } from 'react-native-webview'
 
+export enum ReaderMessageType {
+	Scroll = 'scroll',
+	TextSelect = 'textSelect',
+	SelectionLimitFail = 'selection-limit-fail',
+	FinishLoading = 'finish-loading'
+
+}
 export interface WebviewMessageType {
 	type:
 		| 'scroll'
 		| 'finishBook'
-		| 'textSelect'
 		| 'selection-limit-fail'
 		| 'finish-loading'
 	payload: {
@@ -34,7 +40,10 @@ export const useReaderMessage = ({
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessageType
 		const { type, payload } = parsedEvent
 		console.log(type, payload)
-		if (type === 'finish-loading') onContentLoadEnd()
+		if (type === 'finish-loading') {
+				console.log('Finish loading')
+			onContentLoadEnd()
+		}
 		if (type === 'selection-limit-fail') console.log('Text select fail')
 		if (type === 'scroll')
 			onScroll({

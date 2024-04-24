@@ -1,9 +1,5 @@
 import { useTypedNavigation } from '@/hooks'
-import type {
-	PressableDefaultProperties,
-	TextDefaultProperties,
-	ViewDefaultProperties
-} from '@/types/component-types'
+import type { PressableDefaultProperties, TextDefaultProperties, ViewDefaultProperties } from '@/types/component-types'
 import BaseButton from '@/ui/button/button'
 import type { ButtonProperties } from '@/ui/button/types'
 import type { IconProperties } from '@/ui/icon/types'
@@ -67,13 +63,13 @@ export const Logo: FC<Omit<TextDefaultProperties, 'onPress'>> = ({
 )
 export const Button: FC<
 	Pick<ButtonProperties, 'variant' | 'children' | 'onPress'>
-> = ({ onPress, variant = 'foreground' }) => (
+> = ({ onPress, variant = 'foreground', children }) => (
 	<BaseButton
 		size='sm'
 		variant={variant}
 		className='my-2 mr-2 py-1.5'
 		onPress={onPress}>
-		Sign in
+		{children}
 	</BaseButton>
 )
 export const Icon: FC<

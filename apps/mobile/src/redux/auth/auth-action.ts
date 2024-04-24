@@ -3,6 +3,8 @@ import { errorToast, successToast } from '@/utils/toast'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import type { AuthDto, AuthOutput } from 'global/api-client'
 import { deleteTokensStorage, saveTokensStorage } from './auth-helper'
+import { globalErrors } from 'global/errors'
+//TODO: переределать авторизацию на zustand
 
 export const googleLogin = createAsyncThunk<
 	AuthOutput,
@@ -19,7 +21,7 @@ export const googleLogin = createAsyncThunk<
 
 		console.log('loginResponse', loginResponse)
 		if (!loginResponse.accessToken)
-			return thunkAPI.rejectWithValue('No response')
+			return thunkAPI.rejectWithValue(globalErrors.somethingWrong)
 		await saveTokensStorage({
 			accessToken: loginResponse.accessToken,
 			refreshToken: loginResponse.refreshToken
@@ -37,33 +39,53 @@ export const googleLogin = createAsyncThunk<
 export const mailRegister = createAsyncThunk<AuthOutput, AuthDto>(
 	'auth/mailRegister',
 	async (properties, thunkAPI) => {
+	try {
 		const { data: registerResponse } = await api.auth.mailRegister(properties)
 		if (!registerResponse.accessToken)
-			return thunkAPI.rejectWithValue({
-				message: 'No response'
-			})
+			return thunkAPI.rejectWithValue(globalErrors.somethingWrong)
 		await saveTokensStorage({
 			accessToken: registerResponse.accessToken,
 			refreshToken: registerResponse.refreshToken
 		})
 		return registerResponse
 	}
+	catch (error) {
+		console.error(error)
+		errorToast(error)
+		return thunkAPI.rejectWithValue(error)
+		}
+	}
 )
 
 export const mailLogin = createAsyncThunk<AuthOutput, AuthDto>(
 	'auth/mailLogin',
 	async ({ email, password }, thunkAPI) => {
-		const { data: loginResponse } = await api.auth.mailLogin({
-			email,
-			password
-		})
-		if (!loginResponse.accessToken)
-			return thunkAPI.rejectWithValue('No response')
-		await saveTokensStorage({
-			accessToken: loginResponse.accessToken,
-			refreshToken: loginResponse.refreshToken
-		})
-		return loginResponse
+		try {
+			console.log('email', email, 'password', password)
+			const { data: loginResponse } = await api.auth.mailLogin({
+				email,
+				password
+			}).catch(
+				(error: any) => {
+					console.error(JSON.stringify(error))
+					errorToast(error)
+		throw error
+				}
+			)
+		console.log('loginResponse', loginResponse)
+			if (!loginResponse.accessToken)
+				return thunkAPI.rejectWithValue(globalErrors.somethingWrong)
+			await saveTokensStorage({
+				accessToken: loginResponse.accessToken,
+				refreshToken: loginResponse.refreshToken
+			})
+			return loginResponse
+		}
+		catch (error) {
+			console.error(error, 'asdsdaasdasd')
+			errorToast(error)
+			return thunkAPI.rejectWithValue(error)
+		}
 	}
 )
 

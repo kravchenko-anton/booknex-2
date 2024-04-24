@@ -2,6 +2,7 @@ import type { FunctionType } from 'global/types'
 import type {
 	ButtonHTMLAttributes,
 	DetailedHTMLProps,
+	HTMLAttributes,
 	InputHTMLAttributes,
 	TextareaHTMLAttributes
 } from 'react'
@@ -13,6 +14,11 @@ export interface DialogProperties {
 export type DefaultButtonProperties = Pick<
 	DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
 	'onClick' | 'type' | 'disabled' | 'children' | 'className' | 'style'
+>
+
+export type DefaultDivProperties = Pick<
+	DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+	'onClick' | 'className' | 'style'
 >
 
 export type DefaultInputProperties = Pick<

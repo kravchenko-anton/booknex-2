@@ -7,9 +7,12 @@ export const secureRoutes = {
 	bookOverviewRoute: (slug: string) => '/admin/book/' + slug,
 	parserCatalogRoute: '/admin/parser' + '/catalog',
 	userCatalogRoute: '/admin/user' + '/catalog',
-	dashboard: '/admin/dashboard'
+	dashboard: '/admin/dashboard',
 }
 
 export const publicRoutes = {
-	login: '/login'
+	login: '/login',
+	dashboard: '/admin/dashboard',
+	bookBySlug: (slug: string) => '/' + slug,
+
 }

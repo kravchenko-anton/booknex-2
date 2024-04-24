@@ -49,7 +49,7 @@ export class AuthService {
 				password: await hash(dto.password),
 				selectedGenres: {
 					connect: popularGenres.map(genre => ({
-						slug: genre['slug']
+						slug: genre.slug
 					}))
 				}
 			}
@@ -114,7 +114,7 @@ export class AuthService {
 				socialId: data.sub,
 				selectedGenres: {
 					connect: popularGenres.map(genre => ({
-						slug: genre['slug']
+						slug: genre.slug
 					}))
 				},
 				role: Role.user,
@@ -187,10 +187,10 @@ export class AuthService {
 			}
 		})
 		if (!user?.password)
-			throw serverError(HttpStatus.NOT_FOUND, authErrors.passwordOrEmailInvalid)
+			throw serverError(HttpStatus.BAD_REQUEST, authErrors.passwordOrEmailInvalid)
 		const isPasswordValid = await verify(user.password, dto.password)
 		if (!isPasswordValid)
-			throw serverError(HttpStatus.NOT_FOUND, authErrors.passwordOrEmailInvalid)
+			throw serverError(HttpStatus.BAD_REQUEST, authErrors.passwordOrEmailInvalid)
 
 		return user
 	}

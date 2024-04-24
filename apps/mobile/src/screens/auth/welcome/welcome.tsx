@@ -6,7 +6,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { Color } from 'global/colors'
 import { Google, Mail } from 'icons'
 import { Welcome as WelcomeIllustration } from 'illustrations'
-import { useLayoutEffect, type FC } from 'react'
+import { type FC, useLayoutEffect } from 'react'
 import { View } from 'react-native'
 
 const Welcome: FC = () => {
@@ -15,7 +15,6 @@ const Welcome: FC = () => {
 
 	useLayoutEffect(() => {
 		GoogleSignin.configure({
-			scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
 			webClientId:
 				'390949311214-hqfqvic7p47pt3elpne00es58k99nonh.apps.googleusercontent.com'
 		})
@@ -24,7 +23,9 @@ const Welcome: FC = () => {
 	const signIn = async () => {
 		try {
 			await GoogleSignin.hasPlayServices()
-			const userInfo = await GoogleSignin.signIn()
+			const userInfo = await GoogleSignin.signIn().catch(
+				(e) => console.log(e)
+			)
 			if (!userInfo.idToken) return errorToast('Something went wrong')
 			googleLogin({
 				socialId: userInfo.idToken

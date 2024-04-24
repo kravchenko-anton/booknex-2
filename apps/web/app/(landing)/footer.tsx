@@ -15,8 +15,10 @@ export const footerNavigationLinks = [
 	}
 ]
 export const Footer = () => (
-	<footer className='bg-foreground px-2 py-6 text-white '>
-		<div className='mx-auto w-full md:w-1/2'>
+	<footer className='bg-foreground px-2 py-6 h-36 text-white' style={{
+		//
+	}}>
+		<div className='mx-auto  w-full md:w-1/2 '>
 			<div className={'flex flex-wrap items-center  gap-2'}>
 				{footerNavigationLinks.map(link => (
 					<Link

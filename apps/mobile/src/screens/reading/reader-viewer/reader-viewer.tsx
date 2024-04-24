@@ -85,7 +85,7 @@ const ReaderViewer = forwardRef(
 							backgroundColor: colorScheme.colorPalette.background.normal
 						}}
 						onMessage={onMessage}
-						onCustomMenuSelection={async (event: never) => {
+						onCustomMenuSelection={async (event: any) => {
 							await textSelection(
 								event,
 								reference?.current?.injectJavaScript(`

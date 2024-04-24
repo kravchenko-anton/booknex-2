@@ -47,8 +47,8 @@ export const getStyleTag = ({
 		font-family: ${fontFamily}-Regular !important;
 	}
 	a {
-				color: ${colorPalette.text} !important;
-		font-family: ${fontFamily}-Bold !important;
+		color: ${colorPalette.text} !important;
+		font-family: ${fontFamily} !important;
 	}
 	h1 {
 		font-size: ${fontSize * 1.6}px !important;
@@ -56,28 +56,28 @@ export const getStyleTag = ({
 		color: ${colorPalette.primary} !important;
 	}
 	h2 {
-		font-weight: bold !important;
+		font-family: ${fontFamily}-Bold !important;
 		color: ${colorPalette.primary} !important;
 		font-size: ${fontSize * 1.5}px !important;
 	}
 	h3 {
-		font-weight: bold !important;
+		font-family: ${fontFamily}-Bold !important;
 		color: ${colorPalette.primary} !important;
 		font-size: ${fontSize * 1.4}px !important;
 	}
 	h4 {
-		font-weight: bold !important;
+		font-family: ${fontFamily}-Bold !important;
 		color: ${colorPalette.primary} !important;
 		font-size: ${fontSize * 1.3}px !important;
 	}
 	h5 {
-		font-weight: bold !important;
+		font-family: ${fontFamily}-Bold !important;
 		font-size: ${fontSize * 1.2}px !important;
 		color: ${colorPalette.primary} !important;
 	}
 	h6 {
+		font-family: ${fontFamily}-Bold !important;
 		font-size: ${fontSize * 1.1}px !important;
-		font-weight: bold !important;
 		color: ${colorPalette.primary} !important;
 	}
 	::selection {
@@ -97,11 +97,11 @@ export const getStyleTag = ({
 	}
 	b {
 		font-weight: bold !important;
-		color: ${colorPalette.primary} !important;
+		color: ${colorPalette.secondary} !important;
 	}
 	strong {
 		font-weight: bold !important;
-		color: ${colorPalette.primary} !important;
+		color: ${colorPalette.text} !important;
 	}
 	i {
 		font-style: italic !important;

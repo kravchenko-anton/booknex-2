@@ -6,8 +6,6 @@ export const calculateProgress = `
 			 let currentChapter = 0;
 			  let currentChapterLink = '';
 			  
-			  // just create array of objects with chapter where i been see start and end progress procent and find current chapter
-			  
 			  chapters.forEach((chapter, index) => {
          const chapterStart = chapter.offsetTop - 1;
          const chapterEnd = chapterStart + chapter.clientHeight;

@@ -1,13 +1,9 @@
 import type { ReadingProgressType } from '@/screens/reading/features/reader-progress/useReadingProgress'
 import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import { Title } from '@/ui'
-import {
-	BottomSheetBackdrop,
-	BottomSheetModal,
-	BottomSheetSectionList
-} from '@gorhom/bottom-sheet'
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetSectionList } from '@gorhom/bottom-sheet'
 import type { EbookOutputChaptersInner } from 'global/api-client'
-import { useMemo, type FC } from 'react'
+import { type FC, useMemo } from 'react'
 import { Pressable } from 'react-native'
 
 export interface ReaderChaptersProperties {
@@ -63,6 +59,7 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 				sections={sections}
 				showsVerticalScrollIndicator={false}
 				className='mt-2 h-full px-4'
+		
 				style={{
 					backgroundColor: colorScheme.colorPalette.background.darker
 				}}

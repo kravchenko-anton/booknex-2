@@ -11,8 +11,8 @@ export const useScriptInject = (startPosition: number) => `
 							top: ${startPosition}
 						})
 						${calculateProgress}
-						${scrollCalculateProgress}
 						${selectTextLimitScript}
+						${scrollCalculateProgress}
 						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading'}))
 }
 </script>

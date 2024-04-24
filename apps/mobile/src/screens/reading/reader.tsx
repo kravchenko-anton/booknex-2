@@ -26,8 +26,10 @@ const Reader = () => {
 	const { data: ebook } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
-		select: data => data.data
+		select: data => data.data,
+		enabled: !!slug
 	})
+
 	const { loaderAnimation, setReaderLoading, readerLoading } =
 		useReaderLoading()
 	const { colorScheme, ...restUiProperties } = useTypedSelector(
@@ -52,7 +54,6 @@ const Reader = () => {
 		useModalReference(setReaderHeaderVisible)
 
 	useStatusBarStyle({ colorScheme, readerUiVisible: readerHeaderVisible })
-	console.log(finishReadingLoading)
 	const { onMessage } = useReaderMessage({
 		finishReadingLoading,
 		onFinishBookPress: onFinish,

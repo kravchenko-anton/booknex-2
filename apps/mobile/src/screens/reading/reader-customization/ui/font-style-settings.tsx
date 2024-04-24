@@ -3,7 +3,7 @@ import type { ThemePackType } from '@/screens/reading/features/reader-styles/the
 import { AnimatedPress, Title } from '@/ui'
 import { cn } from '@/utils'
 import { Color } from 'global/colors'
-import { useRef, type FC } from 'react'
+import { type FC, useRef } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 
 interface FontStyleSettingsProperties {
@@ -29,6 +29,7 @@ export const FontStyleSettings: FC<FontStyleSettingsProperties> = ({
 			contentContainerStyle={{
 				paddingHorizontal: 8
 			}}
+			
 			data={ReaderFont.map(font => ({
 				value: font.fontFamily,
 				label: font.title

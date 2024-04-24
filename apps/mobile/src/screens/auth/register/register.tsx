@@ -3,9 +3,9 @@ import { useAuthorize } from '@/screens/auth/useAuthorize'
 
 import { Button, Field, ScrollLayout } from '@/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AuthDtoType, AuthSchema } from 'global/validation/auth/auth.dto'
+import { type AuthDtoType, AuthSchema } from 'global/validation/auth/auth.dto'
 import { Mail, Password } from 'icons'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 const Register = () => {
 	const { isLoading: authLoading } = useAuthorize()

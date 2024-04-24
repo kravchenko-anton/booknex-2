@@ -1,7 +1,5 @@
-import { Footer } from '@/app/(landing)/footer'
 import { ScreensDemoSection } from '@/app/(landing)/screens-demo-section'
 import { ShowcaseSection } from '@/app/(landing)/showcase-section'
-import { NavigationBar } from '@/components/navigationBar/navigation-bar'
 import { Button } from '@/components/ui'
 import api from '@/services/api'
 import { appName, installAppLink } from 'global/utils'
@@ -18,7 +16,6 @@ const Index = async () => {
 	const { picksOfTheWeek } = await getData()
 	return (
 		<div>
-			<NavigationBar />
 			<div
 				className='bg-foreground flex h-[60vh] items-center justify-center p-4 text-center'
 				id='main'>
@@ -39,10 +36,9 @@ const Index = async () => {
 			</div>
 
 			<ShowcaseSection
-				picksOfTheWeek={picksOfTheWeek.map(book => book.picture)}
+				picksOfTheWeek={picksOfTheWeek}
 			/>
 			<ScreensDemoSection />
-			<Footer />
 		</div>
 	)
 }

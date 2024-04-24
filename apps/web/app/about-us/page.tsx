@@ -1,13 +1,13 @@
-import { NavigationBar } from '@/components/navigationBar/navigation-bar'
 import { Button } from '@/components/ui'
 import { appName, mailLink, socialLinks } from 'global/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import DeveloperLogo from '../../public/dev-logo.png'
+import { Header } from '@/app/(landing)/header'
 
 const Page = () => (
 	<div>
-		<NavigationBar />
+		<Header/>
 		<div className='px-2 pt-8 md:mx-auto md:w-[40%] md:px-0'>
 			<h1 className='text-2xl font-light md:text-3xl'>About {appName}</h1>
 

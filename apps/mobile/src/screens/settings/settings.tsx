@@ -41,7 +41,7 @@ const Settings = () => {
 				/>
 			</View>
 			<Title size='sm' className='mb-4 mt-auto text-center'>
-				{`Version: ${appVersion}`}
+				Version: {appVersion}
 			</Title>
 		</View>
 	)
