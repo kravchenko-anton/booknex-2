@@ -1,5 +1,5 @@
 import { AnimatedPress, Flatlist, Image, Title } from '@/ui'
-import { settings } from '@/ui/book-card/settings'
+import { windowWidth } from '@/utils/dimensions'
 import { Color } from 'global/colors'
 
 const CatalogList = ({
@@ -20,29 +20,29 @@ const CatalogList = ({
 		mt={10}
 		className='w-full px-4'
 		data={data}
-		numColumns={
-			2 
-		}
+		numColumns={2}
 		ListEmptyComponent={() => (
 			<Title className='mx-auto' size={'md'} color={Color.gray} weight='medium'>
 				It's quiet, too quiet
 			</Title>
 		)}
 		columnWrapperStyle={{
-			justifyContent: 'space-between',
-			flex: 1,
-			gap	: 20
+			justifyContent: 'space-between'
 		}}
 		renderItem={({ item: book }) => (
 			<AnimatedPress
-				className='mb-4  w-1/2'
+				className='mb-4 w-[46%]'
 				onPress={() => onElementPress(book.slug)}>
 				<Image
 					className='mb-1 w-full'
-					height={settings.height.md * 1.25}
 					url={book.picture}
+					height={windowWidth / 3}
 				/>
-				<Title color={Color.gray} size={'md'} numberOfLines={2} weight='semiBold'>
+				<Title
+					color={Color.gray}
+					size={'md'}
+					numberOfLines={2}
+					weight='semiBold'>
 					{book.title}
 				</Title>
 			</AnimatedPress>

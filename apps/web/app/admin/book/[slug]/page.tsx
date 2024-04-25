@@ -43,7 +43,7 @@ const Page = () => {
 				<div>
 					<div className='mt-4 px-0.5'>
 						<Image
-							width={250}
+							width={240}
 							height={140}
 							alt={book.title}
 							src={getFileUrl(book.picture)}

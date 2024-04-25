@@ -1,5 +1,5 @@
 import { useAction, useTypedNavigation } from '@/hooks'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { AppState } from 'react-native'
 
 interface SaveProgressProperties {
@@ -12,27 +12,36 @@ export const useSaveProgress = ({
 	slug,
 	progress,
 	scrollPosition,
+
 	readerLoading
 }: SaveProgressProperties) => {
+	const [startReadingDate] = useState(new Date()) // eslint-disable-line
+
 	const { addListener } = useTypedNavigation()
-	const { updateReadingProgress } = useAction()
+	const { addHistory } = useAction()
 
 	useEffect(() => {
 		const unsubscribe = addListener('beforeRemove', () => {
 			if (readerLoading) return
-			updateReadingProgress({
+			addHistory({
 				slug,
 				progress: progress,
-				scrollPosition: scrollPosition
+				scrollPosition: scrollPosition,
+				endDate: new Date(),
+				startDate: startReadingDate,
+				readTimeMs: new Date().getTime() - startReadingDate.getTime()
 			})
 		})
 		const subscription = AppState.addEventListener('change', nextAppState => {
 			if (readerLoading) return
 			if (/inactive|background/.test(nextAppState)) {
-				updateReadingProgress({
+				addHistory({
 					slug,
 					progress: progress,
-					scrollPosition: scrollPosition
+					scrollPosition: scrollPosition,
+					endDate: new Date(),
+					startDate: startReadingDate,
+					readTimeMs: new Date().getTime() - startReadingDate.getTime()
 				})
 			}
 		})
@@ -40,5 +49,5 @@ export const useSaveProgress = ({
 			unsubscribe()
 			subscription.remove()
 		}
-	}, [addListener, slug, progress, scrollPosition, updateReadingProgress])
+	}, [addListener, slug, progress, scrollPosition, addHistory])
 }

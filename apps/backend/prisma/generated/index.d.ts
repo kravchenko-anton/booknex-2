@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/binary.js';
+import * as runtime from './runtime/library.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -43,6 +43,11 @@ export type BookTemplate = $Result.DefaultSelection<Prisma.$BookTemplatePayload>
  * 
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model ReadingHistory
+ * 
+ */
+export type ReadingHistory = $Result.DefaultSelection<Prisma.$ReadingHistoryPayload>
 
 /**
  * Enums
@@ -126,7 +131,7 @@ export class PrismaClient<
    */
 
   constructor(optionsArg ?: Prisma.Subset<T, Prisma.PrismaClientOptions>);
-  $on<V extends (U | 'beforeExit')>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : V extends 'beforeExit' ? () => $Utils.JsPromise<void> : Prisma.LogEvent) => void): void;
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): void;
 
   /**
    * Connect with the database
@@ -270,6 +275,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs>;
+
+  /**
+   * `prisma.readingHistory`: Exposes CRUD operations for the **ReadingHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ReadingHistories
+    * const readingHistories = await prisma.readingHistory.findMany()
+    * ```
+    */
+  get readingHistory(): Prisma.ReadingHistoryDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -327,8 +342,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.12.1
-   * Query Engine version: 473ed3124229e22d881cb7addf559799debae1ab
+   * Prisma Client JS version: 5.13.0
+   * Query Engine version: b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
    */
   export type PrismaVersion = {
     client: string
@@ -455,6 +470,11 @@ export namespace Prisma {
     include: any
   }
 
+  type SelectAndOmit = {
+    select: any
+    omit: any
+  }
+
   /**
    * Get the type of the value, that the Promise holds.
    */
@@ -503,7 +523,9 @@ export namespace Prisma {
   } &
     (T extends SelectAndInclude
       ? 'Please either choose `select` or `include`.'
-      : {})
+      : T extends SelectAndOmit
+        ? 'Please either choose `select` or `omit`.'
+        : {})
 
   /**
    * Subset + Intersection
@@ -745,7 +767,8 @@ export namespace Prisma {
     Review: 'Review',
     Book: 'Book',
     BookTemplate: 'BookTemplate',
-    User: 'User'
+    User: 'User',
+    ReadingHistory: 'ReadingHistory'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -762,7 +785,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'genre' | 'activity' | 'review' | 'book' | 'bookTemplate' | 'user'
+      modelProps: 'genre' | 'activity' | 'review' | 'book' | 'bookTemplate' | 'user' | 'readingHistory'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -1162,6 +1185,72 @@ export namespace Prisma {
           }
         }
       }
+      ReadingHistory: {
+        payload: Prisma.$ReadingHistoryPayload<ExtArgs>
+        fields: Prisma.ReadingHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReadingHistoryFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReadingHistoryFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.ReadingHistoryFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReadingHistoryFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.ReadingHistoryFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.ReadingHistoryCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.ReadingHistoryCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.ReadingHistoryDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload>
+          }
+          update: {
+            args: Prisma.ReadingHistoryUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReadingHistoryDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReadingHistoryUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.ReadingHistoryUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ReadingHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.ReadingHistoryAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateReadingHistory>
+          }
+          groupBy: {
+            args: Prisma.ReadingHistoryGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<ReadingHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReadingHistoryCountArgs<ExtArgs>,
+            result: $Utils.Optional<ReadingHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1341,7 +1430,6 @@ export namespace Prisma {
   }
 
   // Custom InputTypes
-
   /**
    * GenreCountOutputType without action
    */
@@ -1352,14 +1440,12 @@ export namespace Prisma {
     select?: GenreCountOutputTypeSelect<ExtArgs> | null
   }
 
-
   /**
    * GenreCountOutputType without action
    */
   export type GenreCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
   }
-
 
   /**
    * GenreCountOutputType without action
@@ -1368,14 +1454,12 @@ export namespace Prisma {
     where?: BookWhereInput
   }
 
-
   /**
    * GenreCountOutputType without action
    */
   export type GenreCountOutputTypeCountMainBooksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BookWhereInput
   }
-
 
   /**
    * GenreCountOutputType without action
@@ -1384,14 +1468,12 @@ export namespace Prisma {
     where?: GenreWhereInput
   }
 
-
   /**
    * GenreCountOutputType without action
    */
   export type GenreCountOutputTypeCountSimilarArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GenreWhereInput
   }
-
 
   /**
    * GenreCountOutputType without action
@@ -1400,14 +1482,12 @@ export namespace Prisma {
     where?: BookTemplateWhereInput
   }
 
-
   /**
    * GenreCountOutputType without action
    */
   export type GenreCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ActivityWhereInput
   }
-
 
 
   /**
@@ -1421,6 +1501,7 @@ export namespace Prisma {
     savedBy: number
     readingBy: number
     activities: number
+    ReadingHistory: number
   }
 
   export type BookCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1430,10 +1511,10 @@ export namespace Prisma {
     savedBy?: boolean | BookCountOutputTypeCountSavedByArgs
     readingBy?: boolean | BookCountOutputTypeCountReadingByArgs
     activities?: boolean | BookCountOutputTypeCountActivitiesArgs
+    ReadingHistory?: boolean | BookCountOutputTypeCountReadingHistoryArgs
   }
 
   // Custom InputTypes
-
   /**
    * BookCountOutputType without action
    */
@@ -1444,14 +1525,12 @@ export namespace Prisma {
     select?: BookCountOutputTypeSelect<ExtArgs> | null
   }
 
-
   /**
    * BookCountOutputType without action
    */
   export type BookCountOutputTypeCountGenresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GenreWhereInput
   }
-
 
   /**
    * BookCountOutputType without action
@@ -1460,14 +1539,12 @@ export namespace Prisma {
     where?: ReviewWhereInput
   }
 
-
   /**
    * BookCountOutputType without action
    */
   export type BookCountOutputTypeCountFinishedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
   }
-
 
   /**
    * BookCountOutputType without action
@@ -1476,14 +1553,12 @@ export namespace Prisma {
     where?: UserWhereInput
   }
 
-
   /**
    * BookCountOutputType without action
    */
   export type BookCountOutputTypeCountReadingByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
   }
-
 
   /**
    * BookCountOutputType without action
@@ -1492,6 +1567,12 @@ export namespace Prisma {
     where?: ActivityWhereInput
   }
 
+  /**
+   * BookCountOutputType without action
+   */
+  export type BookCountOutputTypeCountReadingHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReadingHistoryWhereInput
+  }
 
 
   /**
@@ -1507,7 +1588,6 @@ export namespace Prisma {
   }
 
   // Custom InputTypes
-
   /**
    * BookTemplateCountOutputType without action
    */
@@ -1518,14 +1598,12 @@ export namespace Prisma {
     select?: BookTemplateCountOutputTypeSelect<ExtArgs> | null
   }
 
-
   /**
    * BookTemplateCountOutputType without action
    */
   export type BookTemplateCountOutputTypeCountGenresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GenreWhereInput
   }
-
 
 
   /**
@@ -1539,6 +1617,7 @@ export namespace Prisma {
     finishedBooks: number
     readingBooks: number
     activity: number
+    ReadingHistory: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1548,10 +1627,10 @@ export namespace Prisma {
     finishedBooks?: boolean | UserCountOutputTypeCountFinishedBooksArgs
     readingBooks?: boolean | UserCountOutputTypeCountReadingBooksArgs
     activity?: boolean | UserCountOutputTypeCountActivityArgs
+    ReadingHistory?: boolean | UserCountOutputTypeCountReadingHistoryArgs
   }
 
   // Custom InputTypes
-
   /**
    * UserCountOutputType without action
    */
@@ -1562,14 +1641,12 @@ export namespace Prisma {
     select?: UserCountOutputTypeSelect<ExtArgs> | null
   }
 
-
   /**
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountSelectedGenresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GenreWhereInput
   }
-
 
   /**
    * UserCountOutputType without action
@@ -1578,14 +1655,12 @@ export namespace Prisma {
     where?: ReviewWhereInput
   }
 
-
   /**
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountSavedBooksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BookWhereInput
   }
-
 
   /**
    * UserCountOutputType without action
@@ -1594,14 +1669,12 @@ export namespace Prisma {
     where?: BookWhereInput
   }
 
-
   /**
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountReadingBooksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BookWhereInput
   }
-
 
   /**
    * UserCountOutputType without action
@@ -1610,6 +1683,12 @@ export namespace Prisma {
     where?: ActivityWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReadingHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReadingHistoryWhereInput
+  }
 
 
   /**
@@ -1840,6 +1919,7 @@ export namespace Prisma {
     slug?: boolean
     icon?: boolean
   }
+
 
   export type GenreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Genre$usersArgs<ExtArgs>
@@ -2288,7 +2368,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Genre findUnique
    */
@@ -2298,7 +2377,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2306,7 +2385,6 @@ export namespace Prisma {
      */
     where: GenreWhereUniqueInput
   }
-
 
   /**
    * Genre findUniqueOrThrow
@@ -2317,7 +2395,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2325,7 +2403,6 @@ export namespace Prisma {
      */
     where: GenreWhereUniqueInput
   }
-
 
   /**
    * Genre findFirst
@@ -2336,7 +2413,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2374,7 +2451,6 @@ export namespace Prisma {
      */
     distinct?: GenreScalarFieldEnum | GenreScalarFieldEnum[]
   }
-
 
   /**
    * Genre findFirstOrThrow
@@ -2385,7 +2461,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2424,7 +2500,6 @@ export namespace Prisma {
     distinct?: GenreScalarFieldEnum | GenreScalarFieldEnum[]
   }
 
-
   /**
    * Genre findMany
    */
@@ -2434,7 +2509,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2468,7 +2543,6 @@ export namespace Prisma {
     distinct?: GenreScalarFieldEnum | GenreScalarFieldEnum[]
   }
 
-
   /**
    * Genre create
    */
@@ -2478,7 +2552,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2486,7 +2560,6 @@ export namespace Prisma {
      */
     data: XOR<GenreCreateInput, GenreUncheckedCreateInput>
   }
-
 
   /**
    * Genre createMany
@@ -2499,7 +2572,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Genre update
    */
@@ -2509,7 +2581,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2521,7 +2593,6 @@ export namespace Prisma {
      */
     where: GenreWhereUniqueInput
   }
-
 
   /**
    * Genre updateMany
@@ -2537,7 +2608,6 @@ export namespace Prisma {
     where?: GenreWhereInput
   }
 
-
   /**
    * Genre upsert
    */
@@ -2547,7 +2617,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2564,7 +2634,6 @@ export namespace Prisma {
     update: XOR<GenreUpdateInput, GenreUncheckedUpdateInput>
   }
 
-
   /**
    * Genre delete
    */
@@ -2574,7 +2643,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     /**
@@ -2582,7 +2651,6 @@ export namespace Prisma {
      */
     where: GenreWhereUniqueInput
   }
-
 
   /**
    * Genre deleteMany
@@ -2594,7 +2662,6 @@ export namespace Prisma {
     where?: GenreWhereInput
   }
 
-
   /**
    * Genre.users
    */
@@ -2604,7 +2671,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
@@ -2615,7 +2682,6 @@ export namespace Prisma {
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
-
   /**
    * Genre.books
    */
@@ -2625,7 +2691,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     where?: BookWhereInput
@@ -2635,7 +2701,6 @@ export namespace Prisma {
     skip?: number
     distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
   }
-
 
   /**
    * Genre.mainBooks
@@ -2646,7 +2711,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     where?: BookWhereInput
@@ -2657,7 +2722,6 @@ export namespace Prisma {
     distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
   }
 
-
   /**
    * Genre.similarBy
    */
@@ -2667,7 +2731,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     where?: GenreWhereInput
@@ -2677,7 +2741,6 @@ export namespace Prisma {
     skip?: number
     distinct?: GenreScalarFieldEnum | GenreScalarFieldEnum[]
   }
-
 
   /**
    * Genre.similar
@@ -2688,7 +2751,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     where?: GenreWhereInput
@@ -2699,7 +2762,6 @@ export namespace Prisma {
     distinct?: GenreScalarFieldEnum | GenreScalarFieldEnum[]
   }
 
-
   /**
    * Genre.bookTemplates
    */
@@ -2709,7 +2771,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     where?: BookTemplateWhereInput
@@ -2720,7 +2782,6 @@ export namespace Prisma {
     distinct?: BookTemplateScalarFieldEnum | BookTemplateScalarFieldEnum[]
   }
 
-
   /**
    * Genre.activities
    */
@@ -2730,7 +2791,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     where?: ActivityWhereInput
@@ -2741,7 +2802,6 @@ export namespace Prisma {
     distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
-
   /**
    * Genre without action
    */
@@ -2751,11 +2811,10 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -3002,6 +3061,7 @@ export namespace Prisma {
     bookId?: boolean
     userId?: boolean
   }
+
 
   export type ActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     book?: boolean | Activity$bookArgs<ExtArgs>
@@ -3435,7 +3495,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Activity findUnique
    */
@@ -3445,7 +3504,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3453,7 +3512,6 @@ export namespace Prisma {
      */
     where: ActivityWhereUniqueInput
   }
-
 
   /**
    * Activity findUniqueOrThrow
@@ -3464,7 +3522,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3472,7 +3530,6 @@ export namespace Prisma {
      */
     where: ActivityWhereUniqueInput
   }
-
 
   /**
    * Activity findFirst
@@ -3483,7 +3540,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3521,7 +3578,6 @@ export namespace Prisma {
      */
     distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
-
 
   /**
    * Activity findFirstOrThrow
@@ -3532,7 +3588,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3571,7 +3627,6 @@ export namespace Prisma {
     distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
-
   /**
    * Activity findMany
    */
@@ -3581,7 +3636,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3615,7 +3670,6 @@ export namespace Prisma {
     distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
-
   /**
    * Activity create
    */
@@ -3625,7 +3679,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3633,7 +3687,6 @@ export namespace Prisma {
      */
     data: XOR<ActivityCreateInput, ActivityUncheckedCreateInput>
   }
-
 
   /**
    * Activity createMany
@@ -3646,7 +3699,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Activity update
    */
@@ -3656,7 +3708,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3668,7 +3720,6 @@ export namespace Prisma {
      */
     where: ActivityWhereUniqueInput
   }
-
 
   /**
    * Activity updateMany
@@ -3684,7 +3735,6 @@ export namespace Prisma {
     where?: ActivityWhereInput
   }
 
-
   /**
    * Activity upsert
    */
@@ -3694,7 +3744,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3711,7 +3761,6 @@ export namespace Prisma {
     update: XOR<ActivityUpdateInput, ActivityUncheckedUpdateInput>
   }
 
-
   /**
    * Activity delete
    */
@@ -3721,7 +3770,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     /**
@@ -3729,7 +3778,6 @@ export namespace Prisma {
      */
     where: ActivityWhereUniqueInput
   }
-
 
   /**
    * Activity deleteMany
@@ -3741,7 +3789,6 @@ export namespace Prisma {
     where?: ActivityWhereInput
   }
 
-
   /**
    * Activity.book
    */
@@ -3751,12 +3798,11 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     where?: BookWhereInput
   }
-
 
   /**
    * Activity.genre
@@ -3767,12 +3813,11 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     where?: GenreWhereInput
   }
-
 
   /**
    * Activity.user
@@ -3783,12 +3828,11 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
   }
-
 
   /**
    * Activity without action
@@ -3799,11 +3843,10 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -4050,6 +4093,7 @@ export namespace Prisma {
     bookId?: boolean
     userId?: boolean
   }
+
 
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     book?: boolean | BookDefaultArgs<ExtArgs>
@@ -4481,7 +4525,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Review findUnique
    */
@@ -4491,7 +4534,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4499,7 +4542,6 @@ export namespace Prisma {
      */
     where: ReviewWhereUniqueInput
   }
-
 
   /**
    * Review findUniqueOrThrow
@@ -4510,7 +4552,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4518,7 +4560,6 @@ export namespace Prisma {
      */
     where: ReviewWhereUniqueInput
   }
-
 
   /**
    * Review findFirst
@@ -4529,7 +4570,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4567,7 +4608,6 @@ export namespace Prisma {
      */
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
-
 
   /**
    * Review findFirstOrThrow
@@ -4578,7 +4618,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4617,7 +4657,6 @@ export namespace Prisma {
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
-
   /**
    * Review findMany
    */
@@ -4627,7 +4666,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4661,7 +4700,6 @@ export namespace Prisma {
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
-
   /**
    * Review create
    */
@@ -4671,7 +4709,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4679,7 +4717,6 @@ export namespace Prisma {
      */
     data: XOR<ReviewCreateInput, ReviewUncheckedCreateInput>
   }
-
 
   /**
    * Review createMany
@@ -4692,7 +4729,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Review update
    */
@@ -4702,7 +4738,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4714,7 +4750,6 @@ export namespace Prisma {
      */
     where: ReviewWhereUniqueInput
   }
-
 
   /**
    * Review updateMany
@@ -4730,7 +4765,6 @@ export namespace Prisma {
     where?: ReviewWhereInput
   }
 
-
   /**
    * Review upsert
    */
@@ -4740,7 +4774,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4757,7 +4791,6 @@ export namespace Prisma {
     update: XOR<ReviewUpdateInput, ReviewUncheckedUpdateInput>
   }
 
-
   /**
    * Review delete
    */
@@ -4767,7 +4800,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     /**
@@ -4775,7 +4808,6 @@ export namespace Prisma {
      */
     where: ReviewWhereUniqueInput
   }
-
 
   /**
    * Review deleteMany
@@ -4787,7 +4819,6 @@ export namespace Prisma {
     where?: ReviewWhereInput
   }
 
-
   /**
    * Review without action
    */
@@ -4797,11 +4828,10 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -5097,6 +5127,7 @@ export namespace Prisma {
     savedBy?: boolean | Book$savedByArgs<ExtArgs>
     readingBy?: boolean | Book$readingByArgs<ExtArgs>
     activities?: boolean | Book$activitiesArgs<ExtArgs>
+    ReadingHistory?: boolean | Book$ReadingHistoryArgs<ExtArgs>
     _count?: boolean | BookCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["book"]>
 
@@ -5117,6 +5148,7 @@ export namespace Prisma {
     mainGenreId?: boolean
   }
 
+
   export type BookInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mainGenre?: boolean | GenreDefaultArgs<ExtArgs>
     genres?: boolean | Book$genresArgs<ExtArgs>
@@ -5125,6 +5157,7 @@ export namespace Prisma {
     savedBy?: boolean | Book$savedByArgs<ExtArgs>
     readingBy?: boolean | Book$readingByArgs<ExtArgs>
     activities?: boolean | Book$activitiesArgs<ExtArgs>
+    ReadingHistory?: boolean | Book$ReadingHistoryArgs<ExtArgs>
     _count?: boolean | BookCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -5139,6 +5172,7 @@ export namespace Prisma {
       savedBy: Prisma.$UserPayload<ExtArgs>[]
       readingBy: Prisma.$UserPayload<ExtArgs>[]
       activities: Prisma.$ActivityPayload<ExtArgs>[]
+      ReadingHistory: Prisma.$ReadingHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5534,6 +5568,8 @@ export namespace Prisma {
 
     activities<T extends Book$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Book$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    ReadingHistory<T extends Book$ReadingHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Book$ReadingHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5580,7 +5616,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Book findUnique
    */
@@ -5590,7 +5625,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5598,7 +5633,6 @@ export namespace Prisma {
      */
     where: BookWhereUniqueInput
   }
-
 
   /**
    * Book findUniqueOrThrow
@@ -5609,7 +5643,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5617,7 +5651,6 @@ export namespace Prisma {
      */
     where: BookWhereUniqueInput
   }
-
 
   /**
    * Book findFirst
@@ -5628,7 +5661,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5666,7 +5699,6 @@ export namespace Prisma {
      */
     distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
   }
-
 
   /**
    * Book findFirstOrThrow
@@ -5677,7 +5709,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5716,7 +5748,6 @@ export namespace Prisma {
     distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
   }
 
-
   /**
    * Book findMany
    */
@@ -5726,7 +5757,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5760,7 +5791,6 @@ export namespace Prisma {
     distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
   }
 
-
   /**
    * Book create
    */
@@ -5770,7 +5800,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5778,7 +5808,6 @@ export namespace Prisma {
      */
     data: XOR<BookCreateInput, BookUncheckedCreateInput>
   }
-
 
   /**
    * Book createMany
@@ -5791,7 +5820,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Book update
    */
@@ -5801,7 +5829,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5813,7 +5841,6 @@ export namespace Prisma {
      */
     where: BookWhereUniqueInput
   }
-
 
   /**
    * Book updateMany
@@ -5829,7 +5856,6 @@ export namespace Prisma {
     where?: BookWhereInput
   }
 
-
   /**
    * Book upsert
    */
@@ -5839,7 +5865,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5856,7 +5882,6 @@ export namespace Prisma {
     update: XOR<BookUpdateInput, BookUncheckedUpdateInput>
   }
 
-
   /**
    * Book delete
    */
@@ -5866,7 +5891,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     /**
@@ -5874,7 +5899,6 @@ export namespace Prisma {
      */
     where: BookWhereUniqueInput
   }
-
 
   /**
    * Book deleteMany
@@ -5886,7 +5910,6 @@ export namespace Prisma {
     where?: BookWhereInput
   }
 
-
   /**
    * Book.genres
    */
@@ -5896,7 +5919,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     where?: GenreWhereInput
@@ -5907,7 +5930,6 @@ export namespace Prisma {
     distinct?: GenreScalarFieldEnum | GenreScalarFieldEnum[]
   }
 
-
   /**
    * Book.review
    */
@@ -5917,7 +5939,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     where?: ReviewWhereInput
@@ -5928,7 +5950,6 @@ export namespace Prisma {
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
-
   /**
    * Book.finishedBy
    */
@@ -5938,7 +5959,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
@@ -5948,7 +5969,6 @@ export namespace Prisma {
     skip?: number
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
-
 
   /**
    * Book.savedBy
@@ -5959,7 +5979,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
@@ -5969,7 +5989,6 @@ export namespace Prisma {
     skip?: number
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
-
 
   /**
    * Book.readingBy
@@ -5980,7 +5999,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
@@ -5991,7 +6010,6 @@ export namespace Prisma {
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
-
   /**
    * Book.activities
    */
@@ -6001,7 +6019,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     where?: ActivityWhereInput
@@ -6012,6 +6030,25 @@ export namespace Prisma {
     distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
+  /**
+   * Book.ReadingHistory
+   */
+  export type Book$ReadingHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    where?: ReadingHistoryWhereInput
+    orderBy?: ReadingHistoryOrderByWithRelationInput | ReadingHistoryOrderByWithRelationInput[]
+    cursor?: ReadingHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReadingHistoryScalarFieldEnum | ReadingHistoryScalarFieldEnum[]
+  }
 
   /**
    * Book without action
@@ -6022,11 +6059,10 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -6278,6 +6314,7 @@ export namespace Prisma {
     picture?: boolean
     rating?: boolean
   }
+
 
   export type BookTemplateInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     genres?: boolean | BookTemplate$genresArgs<ExtArgs>
@@ -6708,7 +6745,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * BookTemplate findUnique
    */
@@ -6718,7 +6754,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -6726,7 +6762,6 @@ export namespace Prisma {
      */
     where: BookTemplateWhereUniqueInput
   }
-
 
   /**
    * BookTemplate findUniqueOrThrow
@@ -6737,7 +6772,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -6745,7 +6780,6 @@ export namespace Prisma {
      */
     where: BookTemplateWhereUniqueInput
   }
-
 
   /**
    * BookTemplate findFirst
@@ -6756,7 +6790,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -6794,7 +6828,6 @@ export namespace Prisma {
      */
     distinct?: BookTemplateScalarFieldEnum | BookTemplateScalarFieldEnum[]
   }
-
 
   /**
    * BookTemplate findFirstOrThrow
@@ -6805,7 +6838,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -6844,7 +6877,6 @@ export namespace Prisma {
     distinct?: BookTemplateScalarFieldEnum | BookTemplateScalarFieldEnum[]
   }
 
-
   /**
    * BookTemplate findMany
    */
@@ -6854,7 +6886,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -6888,7 +6920,6 @@ export namespace Prisma {
     distinct?: BookTemplateScalarFieldEnum | BookTemplateScalarFieldEnum[]
   }
 
-
   /**
    * BookTemplate create
    */
@@ -6898,7 +6929,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -6906,7 +6937,6 @@ export namespace Prisma {
      */
     data: XOR<BookTemplateCreateInput, BookTemplateUncheckedCreateInput>
   }
-
 
   /**
    * BookTemplate createMany
@@ -6919,7 +6949,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * BookTemplate update
    */
@@ -6929,7 +6958,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -6941,7 +6970,6 @@ export namespace Prisma {
      */
     where: BookTemplateWhereUniqueInput
   }
-
 
   /**
    * BookTemplate updateMany
@@ -6957,7 +6985,6 @@ export namespace Prisma {
     where?: BookTemplateWhereInput
   }
 
-
   /**
    * BookTemplate upsert
    */
@@ -6967,7 +6994,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -6984,7 +7011,6 @@ export namespace Prisma {
     update: XOR<BookTemplateUpdateInput, BookTemplateUncheckedUpdateInput>
   }
 
-
   /**
    * BookTemplate delete
    */
@@ -6994,7 +7020,7 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
     /**
@@ -7002,7 +7028,6 @@ export namespace Prisma {
      */
     where: BookTemplateWhereUniqueInput
   }
-
 
   /**
    * BookTemplate deleteMany
@@ -7014,7 +7039,6 @@ export namespace Prisma {
     where?: BookTemplateWhereInput
   }
 
-
   /**
    * BookTemplate.genres
    */
@@ -7024,7 +7048,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     where?: GenreWhereInput
@@ -7035,7 +7059,6 @@ export namespace Prisma {
     distinct?: GenreScalarFieldEnum | GenreScalarFieldEnum[]
   }
 
-
   /**
    * BookTemplate without action
    */
@@ -7045,11 +7068,10 @@ export namespace Prisma {
      */
     select?: BookTemplateSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookTemplateInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -7296,6 +7318,7 @@ export namespace Prisma {
     finishedBooks?: boolean | User$finishedBooksArgs<ExtArgs>
     readingBooks?: boolean | User$readingBooksArgs<ExtArgs>
     activity?: boolean | User$activityArgs<ExtArgs>
+    ReadingHistory?: boolean | User$ReadingHistoryArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -7312,6 +7335,7 @@ export namespace Prisma {
     role?: boolean
   }
 
+
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     selectedGenres?: boolean | User$selectedGenresArgs<ExtArgs>
     review?: boolean | User$reviewArgs<ExtArgs>
@@ -7319,6 +7343,7 @@ export namespace Prisma {
     finishedBooks?: boolean | User$finishedBooksArgs<ExtArgs>
     readingBooks?: boolean | User$readingBooksArgs<ExtArgs>
     activity?: boolean | User$activityArgs<ExtArgs>
+    ReadingHistory?: boolean | User$ReadingHistoryArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -7332,6 +7357,7 @@ export namespace Prisma {
       finishedBooks: Prisma.$BookPayload<ExtArgs>[]
       readingBooks: Prisma.$BookPayload<ExtArgs>[]
       activity: Prisma.$ActivityPayload<ExtArgs>[]
+      ReadingHistory: Prisma.$ReadingHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -7721,6 +7747,8 @@ export namespace Prisma {
 
     activity<T extends User$activityArgs<ExtArgs> = {}>(args?: Subset<T, User$activityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    ReadingHistory<T extends User$ReadingHistoryArgs<ExtArgs> = {}>(args?: Subset<T, User$ReadingHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7763,7 +7791,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * User findUnique
    */
@@ -7773,7 +7800,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -7781,7 +7808,6 @@ export namespace Prisma {
      */
     where: UserWhereUniqueInput
   }
-
 
   /**
    * User findUniqueOrThrow
@@ -7792,7 +7818,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -7800,7 +7826,6 @@ export namespace Prisma {
      */
     where: UserWhereUniqueInput
   }
-
 
   /**
    * User findFirst
@@ -7811,7 +7836,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -7849,7 +7874,6 @@ export namespace Prisma {
      */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
-
 
   /**
    * User findFirstOrThrow
@@ -7860,7 +7884,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -7899,7 +7923,6 @@ export namespace Prisma {
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
-
   /**
    * User findMany
    */
@@ -7909,7 +7932,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -7943,7 +7966,6 @@ export namespace Prisma {
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
-
   /**
    * User create
    */
@@ -7953,7 +7975,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -7961,7 +7983,6 @@ export namespace Prisma {
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
-
 
   /**
    * User createMany
@@ -7974,7 +7995,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * User update
    */
@@ -7984,7 +8004,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -7996,7 +8016,6 @@ export namespace Prisma {
      */
     where: UserWhereUniqueInput
   }
-
 
   /**
    * User updateMany
@@ -8012,7 +8031,6 @@ export namespace Prisma {
     where?: UserWhereInput
   }
 
-
   /**
    * User upsert
    */
@@ -8022,7 +8040,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8039,7 +8057,6 @@ export namespace Prisma {
     update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
   }
 
-
   /**
    * User delete
    */
@@ -8049,7 +8066,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8057,7 +8074,6 @@ export namespace Prisma {
      */
     where: UserWhereUniqueInput
   }
-
 
   /**
    * User deleteMany
@@ -8069,7 +8085,6 @@ export namespace Prisma {
     where?: UserWhereInput
   }
 
-
   /**
    * User.selectedGenres
    */
@@ -8079,7 +8094,7 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
     where?: GenreWhereInput
@@ -8090,7 +8105,6 @@ export namespace Prisma {
     distinct?: GenreScalarFieldEnum | GenreScalarFieldEnum[]
   }
 
-
   /**
    * User.review
    */
@@ -8100,7 +8114,7 @@ export namespace Prisma {
      */
     select?: ReviewSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
     where?: ReviewWhereInput
@@ -8111,7 +8125,6 @@ export namespace Prisma {
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
-
   /**
    * User.savedBooks
    */
@@ -8121,7 +8134,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     where?: BookWhereInput
@@ -8131,7 +8144,6 @@ export namespace Prisma {
     skip?: number
     distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
   }
-
 
   /**
    * User.finishedBooks
@@ -8142,7 +8154,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     where?: BookWhereInput
@@ -8152,7 +8164,6 @@ export namespace Prisma {
     skip?: number
     distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
   }
-
 
   /**
    * User.readingBooks
@@ -8163,7 +8174,7 @@ export namespace Prisma {
      */
     select?: BookSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: BookInclude<ExtArgs> | null
     where?: BookWhereInput
@@ -8174,7 +8185,6 @@ export namespace Prisma {
     distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
   }
 
-
   /**
    * User.activity
    */
@@ -8184,7 +8194,7 @@ export namespace Prisma {
      */
     select?: ActivitySelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
     where?: ActivityWhereInput
@@ -8195,6 +8205,25 @@ export namespace Prisma {
     distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
+  /**
+   * User.ReadingHistory
+   */
+  export type User$ReadingHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    where?: ReadingHistoryWhereInput
+    orderBy?: ReadingHistoryOrderByWithRelationInput | ReadingHistoryOrderByWithRelationInput[]
+    cursor?: ReadingHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReadingHistoryScalarFieldEnum | ReadingHistoryScalarFieldEnum[]
+  }
 
   /**
    * User without action
@@ -8205,11 +8234,1014 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
   }
 
+
+  /**
+   * Model ReadingHistory
+   */
+
+  export type AggregateReadingHistory = {
+    _count: ReadingHistoryCountAggregateOutputType | null
+    _avg: ReadingHistoryAvgAggregateOutputType | null
+    _sum: ReadingHistorySumAggregateOutputType | null
+    _min: ReadingHistoryMinAggregateOutputType | null
+    _max: ReadingHistoryMaxAggregateOutputType | null
+  }
+
+  export type ReadingHistoryAvgAggregateOutputType = {
+    id: number | null
+    readingTimeMs: number | null
+    scrollPosition: number | null
+    bookId: number | null
+    userId: number | null
+  }
+
+  export type ReadingHistorySumAggregateOutputType = {
+    id: number | null
+    readingTimeMs: number | null
+    scrollPosition: number | null
+    bookId: number | null
+    userId: number | null
+  }
+
+  export type ReadingHistoryMinAggregateOutputType = {
+    id: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    startDate: Date | null
+    endDate: Date | null
+    readingTimeMs: number | null
+    scrollPosition: number | null
+    bookId: number | null
+    userId: number | null
+  }
+
+  export type ReadingHistoryMaxAggregateOutputType = {
+    id: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    startDate: Date | null
+    endDate: Date | null
+    readingTimeMs: number | null
+    scrollPosition: number | null
+    bookId: number | null
+    userId: number | null
+  }
+
+  export type ReadingHistoryCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    startDate: number
+    endDate: number
+    readingTimeMs: number
+    scrollPosition: number
+    bookId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type ReadingHistoryAvgAggregateInputType = {
+    id?: true
+    readingTimeMs?: true
+    scrollPosition?: true
+    bookId?: true
+    userId?: true
+  }
+
+  export type ReadingHistorySumAggregateInputType = {
+    id?: true
+    readingTimeMs?: true
+    scrollPosition?: true
+    bookId?: true
+    userId?: true
+  }
+
+  export type ReadingHistoryMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    startDate?: true
+    endDate?: true
+    readingTimeMs?: true
+    scrollPosition?: true
+    bookId?: true
+    userId?: true
+  }
+
+  export type ReadingHistoryMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    startDate?: true
+    endDate?: true
+    readingTimeMs?: true
+    scrollPosition?: true
+    bookId?: true
+    userId?: true
+  }
+
+  export type ReadingHistoryCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    startDate?: true
+    endDate?: true
+    readingTimeMs?: true
+    scrollPosition?: true
+    bookId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type ReadingHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReadingHistory to aggregate.
+     */
+    where?: ReadingHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReadingHistories to fetch.
+     */
+    orderBy?: ReadingHistoryOrderByWithRelationInput | ReadingHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReadingHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReadingHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReadingHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ReadingHistories
+    **/
+    _count?: true | ReadingHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ReadingHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ReadingHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReadingHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReadingHistoryMaxAggregateInputType
+  }
+
+  export type GetReadingHistoryAggregateType<T extends ReadingHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateReadingHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReadingHistory[P]>
+      : GetScalarType<T[P], AggregateReadingHistory[P]>
+  }
+
+
+
+
+  export type ReadingHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReadingHistoryWhereInput
+    orderBy?: ReadingHistoryOrderByWithAggregationInput | ReadingHistoryOrderByWithAggregationInput[]
+    by: ReadingHistoryScalarFieldEnum[] | ReadingHistoryScalarFieldEnum
+    having?: ReadingHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReadingHistoryCountAggregateInputType | true
+    _avg?: ReadingHistoryAvgAggregateInputType
+    _sum?: ReadingHistorySumAggregateInputType
+    _min?: ReadingHistoryMinAggregateInputType
+    _max?: ReadingHistoryMaxAggregateInputType
+  }
+
+  export type ReadingHistoryGroupByOutputType = {
+    id: number
+    createdAt: Date
+    updatedAt: Date
+    startDate: Date
+    endDate: Date
+    readingTimeMs: number
+    scrollPosition: number
+    bookId: number
+    userId: number
+    _count: ReadingHistoryCountAggregateOutputType | null
+    _avg: ReadingHistoryAvgAggregateOutputType | null
+    _sum: ReadingHistorySumAggregateOutputType | null
+    _min: ReadingHistoryMinAggregateOutputType | null
+    _max: ReadingHistoryMaxAggregateOutputType | null
+  }
+
+  type GetReadingHistoryGroupByPayload<T extends ReadingHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReadingHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReadingHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReadingHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], ReadingHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReadingHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    readingTimeMs?: boolean
+    scrollPosition?: boolean
+    bookId?: boolean
+    userId?: boolean
+    book?: boolean | BookDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["readingHistory"]>
+
+  export type ReadingHistorySelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    readingTimeMs?: boolean
+    scrollPosition?: boolean
+    bookId?: boolean
+    userId?: boolean
+  }
+
+
+  export type ReadingHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    book?: boolean | BookDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+
+  export type $ReadingHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ReadingHistory"
+    objects: {
+      book: Prisma.$BookPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      createdAt: Date
+      updatedAt: Date
+      startDate: Date
+      endDate: Date
+      readingTimeMs: number
+      scrollPosition: number
+      bookId: number
+      userId: number
+    }, ExtArgs["result"]["readingHistory"]>
+    composites: {}
+  }
+
+
+  type ReadingHistoryGetPayload<S extends boolean | null | undefined | ReadingHistoryDefaultArgs> = $Result.GetResult<Prisma.$ReadingHistoryPayload, S>
+
+  type ReadingHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ReadingHistoryFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ReadingHistoryCountAggregateInputType | true
+    }
+
+  export interface ReadingHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ReadingHistory'], meta: { name: 'ReadingHistory' } }
+    /**
+     * Find zero or one ReadingHistory that matches the filter.
+     * @param {ReadingHistoryFindUniqueArgs} args - Arguments to find a ReadingHistory
+     * @example
+     * // Get one ReadingHistory
+     * const readingHistory = await prisma.readingHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends ReadingHistoryFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, ReadingHistoryFindUniqueArgs<ExtArgs>>
+    ): Prisma__ReadingHistoryClient<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one ReadingHistory that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {ReadingHistoryFindUniqueOrThrowArgs} args - Arguments to find a ReadingHistory
+     * @example
+     * // Get one ReadingHistory
+     * const readingHistory = await prisma.readingHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ReadingHistoryFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, ReadingHistoryFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__ReadingHistoryClient<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first ReadingHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReadingHistoryFindFirstArgs} args - Arguments to find a ReadingHistory
+     * @example
+     * // Get one ReadingHistory
+     * const readingHistory = await prisma.readingHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends ReadingHistoryFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, ReadingHistoryFindFirstArgs<ExtArgs>>
+    ): Prisma__ReadingHistoryClient<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first ReadingHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReadingHistoryFindFirstOrThrowArgs} args - Arguments to find a ReadingHistory
+     * @example
+     * // Get one ReadingHistory
+     * const readingHistory = await prisma.readingHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ReadingHistoryFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, ReadingHistoryFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__ReadingHistoryClient<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more ReadingHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReadingHistoryFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ReadingHistories
+     * const readingHistories = await prisma.readingHistory.findMany()
+     * 
+     * // Get first 10 ReadingHistories
+     * const readingHistories = await prisma.readingHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const readingHistoryWithIdOnly = await prisma.readingHistory.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends ReadingHistoryFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ReadingHistoryFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a ReadingHistory.
+     * @param {ReadingHistoryCreateArgs} args - Arguments to create a ReadingHistory.
+     * @example
+     * // Create one ReadingHistory
+     * const ReadingHistory = await prisma.readingHistory.create({
+     *   data: {
+     *     // ... data to create a ReadingHistory
+     *   }
+     * })
+     * 
+    **/
+    create<T extends ReadingHistoryCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, ReadingHistoryCreateArgs<ExtArgs>>
+    ): Prisma__ReadingHistoryClient<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many ReadingHistories.
+     *     @param {ReadingHistoryCreateManyArgs} args - Arguments to create many ReadingHistories.
+     *     @example
+     *     // Create many ReadingHistories
+     *     const readingHistory = await prisma.readingHistory.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends ReadingHistoryCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ReadingHistoryCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ReadingHistory.
+     * @param {ReadingHistoryDeleteArgs} args - Arguments to delete one ReadingHistory.
+     * @example
+     * // Delete one ReadingHistory
+     * const ReadingHistory = await prisma.readingHistory.delete({
+     *   where: {
+     *     // ... filter to delete one ReadingHistory
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends ReadingHistoryDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, ReadingHistoryDeleteArgs<ExtArgs>>
+    ): Prisma__ReadingHistoryClient<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one ReadingHistory.
+     * @param {ReadingHistoryUpdateArgs} args - Arguments to update one ReadingHistory.
+     * @example
+     * // Update one ReadingHistory
+     * const readingHistory = await prisma.readingHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends ReadingHistoryUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, ReadingHistoryUpdateArgs<ExtArgs>>
+    ): Prisma__ReadingHistoryClient<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more ReadingHistories.
+     * @param {ReadingHistoryDeleteManyArgs} args - Arguments to filter ReadingHistories to delete.
+     * @example
+     * // Delete a few ReadingHistories
+     * const { count } = await prisma.readingHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends ReadingHistoryDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ReadingHistoryDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReadingHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReadingHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ReadingHistories
+     * const readingHistory = await prisma.readingHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends ReadingHistoryUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, ReadingHistoryUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ReadingHistory.
+     * @param {ReadingHistoryUpsertArgs} args - Arguments to update or create a ReadingHistory.
+     * @example
+     * // Update or create a ReadingHistory
+     * const readingHistory = await prisma.readingHistory.upsert({
+     *   create: {
+     *     // ... data to create a ReadingHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ReadingHistory we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends ReadingHistoryUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, ReadingHistoryUpsertArgs<ExtArgs>>
+    ): Prisma__ReadingHistoryClient<$Result.GetResult<Prisma.$ReadingHistoryPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of ReadingHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReadingHistoryCountArgs} args - Arguments to filter ReadingHistories to count.
+     * @example
+     * // Count the number of ReadingHistories
+     * const count = await prisma.readingHistory.count({
+     *   where: {
+     *     // ... the filter for the ReadingHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReadingHistoryCountArgs>(
+      args?: Subset<T, ReadingHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReadingHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ReadingHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReadingHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReadingHistoryAggregateArgs>(args: Subset<T, ReadingHistoryAggregateArgs>): Prisma.PrismaPromise<GetReadingHistoryAggregateType<T>>
+
+    /**
+     * Group by ReadingHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReadingHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReadingHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReadingHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: ReadingHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReadingHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReadingHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ReadingHistory model
+   */
+  readonly fields: ReadingHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ReadingHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReadingHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    book<T extends BookDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BookDefaultArgs<ExtArgs>>): Prisma__BookClient<$Result.GetResult<Prisma.$BookPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the ReadingHistory model
+   */ 
+  interface ReadingHistoryFieldRefs {
+    readonly id: FieldRef<"ReadingHistory", 'Int'>
+    readonly createdAt: FieldRef<"ReadingHistory", 'DateTime'>
+    readonly updatedAt: FieldRef<"ReadingHistory", 'DateTime'>
+    readonly startDate: FieldRef<"ReadingHistory", 'DateTime'>
+    readonly endDate: FieldRef<"ReadingHistory", 'DateTime'>
+    readonly readingTimeMs: FieldRef<"ReadingHistory", 'Int'>
+    readonly scrollPosition: FieldRef<"ReadingHistory", 'Int'>
+    readonly bookId: FieldRef<"ReadingHistory", 'Int'>
+    readonly userId: FieldRef<"ReadingHistory", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ReadingHistory findUnique
+   */
+  export type ReadingHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ReadingHistory to fetch.
+     */
+    where: ReadingHistoryWhereUniqueInput
+  }
+
+  /**
+   * ReadingHistory findUniqueOrThrow
+   */
+  export type ReadingHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ReadingHistory to fetch.
+     */
+    where: ReadingHistoryWhereUniqueInput
+  }
+
+  /**
+   * ReadingHistory findFirst
+   */
+  export type ReadingHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ReadingHistory to fetch.
+     */
+    where?: ReadingHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReadingHistories to fetch.
+     */
+    orderBy?: ReadingHistoryOrderByWithRelationInput | ReadingHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReadingHistories.
+     */
+    cursor?: ReadingHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReadingHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReadingHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReadingHistories.
+     */
+    distinct?: ReadingHistoryScalarFieldEnum | ReadingHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ReadingHistory findFirstOrThrow
+   */
+  export type ReadingHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ReadingHistory to fetch.
+     */
+    where?: ReadingHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReadingHistories to fetch.
+     */
+    orderBy?: ReadingHistoryOrderByWithRelationInput | ReadingHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReadingHistories.
+     */
+    cursor?: ReadingHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReadingHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReadingHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReadingHistories.
+     */
+    distinct?: ReadingHistoryScalarFieldEnum | ReadingHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ReadingHistory findMany
+   */
+  export type ReadingHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ReadingHistories to fetch.
+     */
+    where?: ReadingHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReadingHistories to fetch.
+     */
+    orderBy?: ReadingHistoryOrderByWithRelationInput | ReadingHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ReadingHistories.
+     */
+    cursor?: ReadingHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReadingHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReadingHistories.
+     */
+    skip?: number
+    distinct?: ReadingHistoryScalarFieldEnum | ReadingHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ReadingHistory create
+   */
+  export type ReadingHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ReadingHistory.
+     */
+    data: XOR<ReadingHistoryCreateInput, ReadingHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * ReadingHistory createMany
+   */
+  export type ReadingHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ReadingHistories.
+     */
+    data: ReadingHistoryCreateManyInput | ReadingHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReadingHistory update
+   */
+  export type ReadingHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ReadingHistory.
+     */
+    data: XOR<ReadingHistoryUpdateInput, ReadingHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which ReadingHistory to update.
+     */
+    where: ReadingHistoryWhereUniqueInput
+  }
+
+  /**
+   * ReadingHistory updateMany
+   */
+  export type ReadingHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ReadingHistories.
+     */
+    data: XOR<ReadingHistoryUpdateManyMutationInput, ReadingHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which ReadingHistories to update
+     */
+    where?: ReadingHistoryWhereInput
+  }
+
+  /**
+   * ReadingHistory upsert
+   */
+  export type ReadingHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ReadingHistory to update in case it exists.
+     */
+    where: ReadingHistoryWhereUniqueInput
+    /**
+     * In case the ReadingHistory found by the `where` argument doesn't exist, create a new ReadingHistory with this data.
+     */
+    create: XOR<ReadingHistoryCreateInput, ReadingHistoryUncheckedCreateInput>
+    /**
+     * In case the ReadingHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReadingHistoryUpdateInput, ReadingHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * ReadingHistory delete
+   */
+  export type ReadingHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which ReadingHistory to delete.
+     */
+    where: ReadingHistoryWhereUniqueInput
+  }
+
+  /**
+   * ReadingHistory deleteMany
+   */
+  export type ReadingHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReadingHistories to delete
+     */
+    where?: ReadingHistoryWhereInput
+  }
+
+  /**
+   * ReadingHistory without action
+   */
+  export type ReadingHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReadingHistory
+     */
+    select?: ReadingHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReadingHistoryInclude<ExtArgs> | null
+  }
 
 
   /**
@@ -8314,6 +9346,21 @@ export namespace Prisma {
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const ReadingHistoryScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    readingTimeMs: 'readingTimeMs',
+    scrollPosition: 'scrollPosition',
+    bookId: 'bookId',
+    userId: 'userId'
+  };
+
+  export type ReadingHistoryScalarFieldEnum = (typeof ReadingHistoryScalarFieldEnum)[keyof typeof ReadingHistoryScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8692,6 +9739,7 @@ export namespace Prisma {
     savedBy?: UserListRelationFilter
     readingBy?: UserListRelationFilter
     activities?: ActivityListRelationFilter
+    ReadingHistory?: ReadingHistoryListRelationFilter
   }
 
   export type BookOrderByWithRelationInput = {
@@ -8716,6 +9764,7 @@ export namespace Prisma {
     savedBy?: UserOrderByRelationAggregateInput
     readingBy?: UserOrderByRelationAggregateInput
     activities?: ActivityOrderByRelationAggregateInput
+    ReadingHistory?: ReadingHistoryOrderByRelationAggregateInput
   }
 
   export type BookWhereUniqueInput = Prisma.AtLeast<{
@@ -8743,6 +9792,7 @@ export namespace Prisma {
     savedBy?: UserListRelationFilter
     readingBy?: UserListRelationFilter
     activities?: ActivityListRelationFilter
+    ReadingHistory?: ReadingHistoryListRelationFilter
   }, "id" | "title" | "slug">
 
   export type BookOrderByWithAggregationInput = {
@@ -8884,6 +9934,7 @@ export namespace Prisma {
     finishedBooks?: BookListRelationFilter
     readingBooks?: BookListRelationFilter
     activity?: ActivityListRelationFilter
+    ReadingHistory?: ReadingHistoryListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8903,6 +9954,7 @@ export namespace Prisma {
     finishedBooks?: BookOrderByRelationAggregateInput
     readingBooks?: BookOrderByRelationAggregateInput
     activity?: ActivityOrderByRelationAggregateInput
+    ReadingHistory?: ReadingHistoryOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8925,6 +9977,7 @@ export namespace Prisma {
     finishedBooks?: BookListRelationFilter
     readingBooks?: BookListRelationFilter
     activity?: ActivityListRelationFilter
+    ReadingHistory?: ReadingHistoryListRelationFilter
   }, "id" | "email" | "socialId">
 
   export type UserOrderByWithAggregationInput = {
@@ -8959,6 +10012,86 @@ export namespace Prisma {
     fullName?: StringWithAggregatesFilter<"User"> | string
     location?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+  }
+
+  export type ReadingHistoryWhereInput = {
+    AND?: ReadingHistoryWhereInput | ReadingHistoryWhereInput[]
+    OR?: ReadingHistoryWhereInput[]
+    NOT?: ReadingHistoryWhereInput | ReadingHistoryWhereInput[]
+    id?: IntFilter<"ReadingHistory"> | number
+    createdAt?: DateTimeFilter<"ReadingHistory"> | Date | string
+    updatedAt?: DateTimeFilter<"ReadingHistory"> | Date | string
+    startDate?: DateTimeFilter<"ReadingHistory"> | Date | string
+    endDate?: DateTimeFilter<"ReadingHistory"> | Date | string
+    readingTimeMs?: IntFilter<"ReadingHistory"> | number
+    scrollPosition?: IntFilter<"ReadingHistory"> | number
+    bookId?: IntFilter<"ReadingHistory"> | number
+    userId?: IntFilter<"ReadingHistory"> | number
+    book?: XOR<BookRelationFilter, BookWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type ReadingHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    readingTimeMs?: SortOrder
+    scrollPosition?: SortOrder
+    bookId?: SortOrder
+    userId?: SortOrder
+    book?: BookOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ReadingHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ReadingHistoryWhereInput | ReadingHistoryWhereInput[]
+    OR?: ReadingHistoryWhereInput[]
+    NOT?: ReadingHistoryWhereInput | ReadingHistoryWhereInput[]
+    createdAt?: DateTimeFilter<"ReadingHistory"> | Date | string
+    updatedAt?: DateTimeFilter<"ReadingHistory"> | Date | string
+    startDate?: DateTimeFilter<"ReadingHistory"> | Date | string
+    endDate?: DateTimeFilter<"ReadingHistory"> | Date | string
+    readingTimeMs?: IntFilter<"ReadingHistory"> | number
+    scrollPosition?: IntFilter<"ReadingHistory"> | number
+    bookId?: IntFilter<"ReadingHistory"> | number
+    userId?: IntFilter<"ReadingHistory"> | number
+    book?: XOR<BookRelationFilter, BookWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ReadingHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    readingTimeMs?: SortOrder
+    scrollPosition?: SortOrder
+    bookId?: SortOrder
+    userId?: SortOrder
+    _count?: ReadingHistoryCountOrderByAggregateInput
+    _avg?: ReadingHistoryAvgOrderByAggregateInput
+    _max?: ReadingHistoryMaxOrderByAggregateInput
+    _min?: ReadingHistoryMinOrderByAggregateInput
+    _sum?: ReadingHistorySumOrderByAggregateInput
+  }
+
+  export type ReadingHistoryScalarWhereWithAggregatesInput = {
+    AND?: ReadingHistoryScalarWhereWithAggregatesInput | ReadingHistoryScalarWhereWithAggregatesInput[]
+    OR?: ReadingHistoryScalarWhereWithAggregatesInput[]
+    NOT?: ReadingHistoryScalarWhereWithAggregatesInput | ReadingHistoryScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ReadingHistory"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"ReadingHistory"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ReadingHistory"> | Date | string
+    startDate?: DateTimeWithAggregatesFilter<"ReadingHistory"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"ReadingHistory"> | Date | string
+    readingTimeMs?: IntWithAggregatesFilter<"ReadingHistory"> | number
+    scrollPosition?: IntWithAggregatesFilter<"ReadingHistory"> | number
+    bookId?: IntWithAggregatesFilter<"ReadingHistory"> | number
+    userId?: IntWithAggregatesFilter<"ReadingHistory"> | number
   }
 
   export type GenreCreateInput = {
@@ -9205,6 +10338,7 @@ export namespace Prisma {
     savedBy?: UserCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateInput = {
@@ -9228,6 +10362,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserUncheckedCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityUncheckedCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookUpdateInput = {
@@ -9250,6 +10385,7 @@ export namespace Prisma {
     savedBy?: UserUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateInput = {
@@ -9273,6 +10409,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUncheckedUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookCreateManyInput = {
@@ -9425,6 +10562,7 @@ export namespace Prisma {
     finishedBooks?: BookCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookCreateNestedManyWithoutReadingByInput
     activity?: ActivityCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -9444,6 +10582,7 @@ export namespace Prisma {
     finishedBooks?: BookUncheckedCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookUncheckedCreateNestedManyWithoutReadingByInput
     activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -9462,6 +10601,7 @@ export namespace Prisma {
     finishedBooks?: BookUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -9481,6 +10621,7 @@ export namespace Prisma {
     finishedBooks?: BookUncheckedUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUncheckedUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9519,6 +10660,85 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  }
+
+  export type ReadingHistoryCreateInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    book: BookCreateNestedOneWithoutReadingHistoryInput
+    user: UserCreateNestedOneWithoutReadingHistoryInput
+  }
+
+  export type ReadingHistoryUncheckedCreateInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    bookId: number
+    userId: number
+  }
+
+  export type ReadingHistoryUpdateInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    book?: BookUpdateOneRequiredWithoutReadingHistoryNestedInput
+    user?: UserUpdateOneRequiredWithoutReadingHistoryNestedInput
+  }
+
+  export type ReadingHistoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    bookId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReadingHistoryCreateManyInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    bookId: number
+    userId: number
+  }
+
+  export type ReadingHistoryUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReadingHistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    bookId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -9924,7 +11144,17 @@ export namespace Prisma {
     none?: ReviewWhereInput
   }
 
+  export type ReadingHistoryListRelationFilter = {
+    every?: ReadingHistoryWhereInput
+    some?: ReadingHistoryWhereInput
+    none?: ReadingHistoryWhereInput
+  }
+
   export type ReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ReadingHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10127,6 +11357,58 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type ReadingHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    readingTimeMs?: SortOrder
+    scrollPosition?: SortOrder
+    bookId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ReadingHistoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    readingTimeMs?: SortOrder
+    scrollPosition?: SortOrder
+    bookId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ReadingHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    readingTimeMs?: SortOrder
+    scrollPosition?: SortOrder
+    bookId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ReadingHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    readingTimeMs?: SortOrder
+    scrollPosition?: SortOrder
+    bookId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ReadingHistorySumOrderByAggregateInput = {
+    id?: SortOrder
+    readingTimeMs?: SortOrder
+    scrollPosition?: SortOrder
+    bookId?: SortOrder
+    userId?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutSelectedGenresInput = {
@@ -10564,6 +11846,13 @@ export namespace Prisma {
     connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
   }
 
+  export type ReadingHistoryCreateNestedManyWithoutBookInput = {
+    create?: XOR<ReadingHistoryCreateWithoutBookInput, ReadingHistoryUncheckedCreateWithoutBookInput> | ReadingHistoryCreateWithoutBookInput[] | ReadingHistoryUncheckedCreateWithoutBookInput[]
+    connectOrCreate?: ReadingHistoryCreateOrConnectWithoutBookInput | ReadingHistoryCreateOrConnectWithoutBookInput[]
+    createMany?: ReadingHistoryCreateManyBookInputEnvelope
+    connect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+  }
+
   export type GenreUncheckedCreateNestedManyWithoutBooksInput = {
     create?: XOR<GenreCreateWithoutBooksInput, GenreUncheckedCreateWithoutBooksInput> | GenreCreateWithoutBooksInput[] | GenreUncheckedCreateWithoutBooksInput[]
     connectOrCreate?: GenreCreateOrConnectWithoutBooksInput | GenreCreateOrConnectWithoutBooksInput[]
@@ -10600,6 +11889,13 @@ export namespace Prisma {
     connectOrCreate?: ActivityCreateOrConnectWithoutBookInput | ActivityCreateOrConnectWithoutBookInput[]
     createMany?: ActivityCreateManyBookInputEnvelope
     connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+  }
+
+  export type ReadingHistoryUncheckedCreateNestedManyWithoutBookInput = {
+    create?: XOR<ReadingHistoryCreateWithoutBookInput, ReadingHistoryUncheckedCreateWithoutBookInput> | ReadingHistoryCreateWithoutBookInput[] | ReadingHistoryUncheckedCreateWithoutBookInput[]
+    connectOrCreate?: ReadingHistoryCreateOrConnectWithoutBookInput | ReadingHistoryCreateOrConnectWithoutBookInput[]
+    createMany?: ReadingHistoryCreateManyBookInputEnvelope
+    connect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -10702,6 +11998,20 @@ export namespace Prisma {
     deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
   }
 
+  export type ReadingHistoryUpdateManyWithoutBookNestedInput = {
+    create?: XOR<ReadingHistoryCreateWithoutBookInput, ReadingHistoryUncheckedCreateWithoutBookInput> | ReadingHistoryCreateWithoutBookInput[] | ReadingHistoryUncheckedCreateWithoutBookInput[]
+    connectOrCreate?: ReadingHistoryCreateOrConnectWithoutBookInput | ReadingHistoryCreateOrConnectWithoutBookInput[]
+    upsert?: ReadingHistoryUpsertWithWhereUniqueWithoutBookInput | ReadingHistoryUpsertWithWhereUniqueWithoutBookInput[]
+    createMany?: ReadingHistoryCreateManyBookInputEnvelope
+    set?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    disconnect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    delete?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    connect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    update?: ReadingHistoryUpdateWithWhereUniqueWithoutBookInput | ReadingHistoryUpdateWithWhereUniqueWithoutBookInput[]
+    updateMany?: ReadingHistoryUpdateManyWithWhereWithoutBookInput | ReadingHistoryUpdateManyWithWhereWithoutBookInput[]
+    deleteMany?: ReadingHistoryScalarWhereInput | ReadingHistoryScalarWhereInput[]
+  }
+
   export type GenreUncheckedUpdateManyWithoutBooksNestedInput = {
     create?: XOR<GenreCreateWithoutBooksInput, GenreUncheckedCreateWithoutBooksInput> | GenreCreateWithoutBooksInput[] | GenreUncheckedCreateWithoutBooksInput[]
     connectOrCreate?: GenreCreateOrConnectWithoutBooksInput | GenreCreateOrConnectWithoutBooksInput[]
@@ -10782,6 +12092,20 @@ export namespace Prisma {
     deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
   }
 
+  export type ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput = {
+    create?: XOR<ReadingHistoryCreateWithoutBookInput, ReadingHistoryUncheckedCreateWithoutBookInput> | ReadingHistoryCreateWithoutBookInput[] | ReadingHistoryUncheckedCreateWithoutBookInput[]
+    connectOrCreate?: ReadingHistoryCreateOrConnectWithoutBookInput | ReadingHistoryCreateOrConnectWithoutBookInput[]
+    upsert?: ReadingHistoryUpsertWithWhereUniqueWithoutBookInput | ReadingHistoryUpsertWithWhereUniqueWithoutBookInput[]
+    createMany?: ReadingHistoryCreateManyBookInputEnvelope
+    set?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    disconnect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    delete?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    connect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    update?: ReadingHistoryUpdateWithWhereUniqueWithoutBookInput | ReadingHistoryUpdateWithWhereUniqueWithoutBookInput[]
+    updateMany?: ReadingHistoryUpdateManyWithWhereWithoutBookInput | ReadingHistoryUpdateManyWithWhereWithoutBookInput[]
+    deleteMany?: ReadingHistoryScalarWhereInput | ReadingHistoryScalarWhereInput[]
+  }
+
   export type GenreCreateNestedManyWithoutBookTemplatesInput = {
     create?: XOR<GenreCreateWithoutBookTemplatesInput, GenreUncheckedCreateWithoutBookTemplatesInput> | GenreCreateWithoutBookTemplatesInput[] | GenreUncheckedCreateWithoutBookTemplatesInput[]
     connectOrCreate?: GenreCreateOrConnectWithoutBookTemplatesInput | GenreCreateOrConnectWithoutBookTemplatesInput[]
@@ -10858,6 +12182,13 @@ export namespace Prisma {
     connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
   }
 
+  export type ReadingHistoryCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReadingHistoryCreateWithoutUserInput, ReadingHistoryUncheckedCreateWithoutUserInput> | ReadingHistoryCreateWithoutUserInput[] | ReadingHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReadingHistoryCreateOrConnectWithoutUserInput | ReadingHistoryCreateOrConnectWithoutUserInput[]
+    createMany?: ReadingHistoryCreateManyUserInputEnvelope
+    connect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+  }
+
   export type GenreUncheckedCreateNestedManyWithoutUsersInput = {
     create?: XOR<GenreCreateWithoutUsersInput, GenreUncheckedCreateWithoutUsersInput> | GenreCreateWithoutUsersInput[] | GenreUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: GenreCreateOrConnectWithoutUsersInput | GenreCreateOrConnectWithoutUsersInput[]
@@ -10894,6 +12225,13 @@ export namespace Prisma {
     connectOrCreate?: ActivityCreateOrConnectWithoutUserInput | ActivityCreateOrConnectWithoutUserInput[]
     createMany?: ActivityCreateManyUserInputEnvelope
     connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+  }
+
+  export type ReadingHistoryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReadingHistoryCreateWithoutUserInput, ReadingHistoryUncheckedCreateWithoutUserInput> | ReadingHistoryCreateWithoutUserInput[] | ReadingHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReadingHistoryCreateOrConnectWithoutUserInput | ReadingHistoryCreateOrConnectWithoutUserInput[]
+    createMany?: ReadingHistoryCreateManyUserInputEnvelope
+    connect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -10980,6 +12318,20 @@ export namespace Prisma {
     deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
   }
 
+  export type ReadingHistoryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReadingHistoryCreateWithoutUserInput, ReadingHistoryUncheckedCreateWithoutUserInput> | ReadingHistoryCreateWithoutUserInput[] | ReadingHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReadingHistoryCreateOrConnectWithoutUserInput | ReadingHistoryCreateOrConnectWithoutUserInput[]
+    upsert?: ReadingHistoryUpsertWithWhereUniqueWithoutUserInput | ReadingHistoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReadingHistoryCreateManyUserInputEnvelope
+    set?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    disconnect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    delete?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    connect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    update?: ReadingHistoryUpdateWithWhereUniqueWithoutUserInput | ReadingHistoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReadingHistoryUpdateManyWithWhereWithoutUserInput | ReadingHistoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReadingHistoryScalarWhereInput | ReadingHistoryScalarWhereInput[]
+  }
+
   export type GenreUncheckedUpdateManyWithoutUsersNestedInput = {
     create?: XOR<GenreCreateWithoutUsersInput, GenreUncheckedCreateWithoutUsersInput> | GenreCreateWithoutUsersInput[] | GenreUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: GenreCreateOrConnectWithoutUsersInput | GenreCreateOrConnectWithoutUsersInput[]
@@ -11058,6 +12410,48 @@ export namespace Prisma {
     update?: ActivityUpdateWithWhereUniqueWithoutUserInput | ActivityUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ActivityUpdateManyWithWhereWithoutUserInput | ActivityUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
+  }
+
+  export type ReadingHistoryUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReadingHistoryCreateWithoutUserInput, ReadingHistoryUncheckedCreateWithoutUserInput> | ReadingHistoryCreateWithoutUserInput[] | ReadingHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReadingHistoryCreateOrConnectWithoutUserInput | ReadingHistoryCreateOrConnectWithoutUserInput[]
+    upsert?: ReadingHistoryUpsertWithWhereUniqueWithoutUserInput | ReadingHistoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReadingHistoryCreateManyUserInputEnvelope
+    set?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    disconnect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    delete?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    connect?: ReadingHistoryWhereUniqueInput | ReadingHistoryWhereUniqueInput[]
+    update?: ReadingHistoryUpdateWithWhereUniqueWithoutUserInput | ReadingHistoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReadingHistoryUpdateManyWithWhereWithoutUserInput | ReadingHistoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReadingHistoryScalarWhereInput | ReadingHistoryScalarWhereInput[]
+  }
+
+  export type BookCreateNestedOneWithoutReadingHistoryInput = {
+    create?: XOR<BookCreateWithoutReadingHistoryInput, BookUncheckedCreateWithoutReadingHistoryInput>
+    connectOrCreate?: BookCreateOrConnectWithoutReadingHistoryInput
+    connect?: BookWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReadingHistoryInput = {
+    create?: XOR<UserCreateWithoutReadingHistoryInput, UserUncheckedCreateWithoutReadingHistoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReadingHistoryInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BookUpdateOneRequiredWithoutReadingHistoryNestedInput = {
+    create?: XOR<BookCreateWithoutReadingHistoryInput, BookUncheckedCreateWithoutReadingHistoryInput>
+    connectOrCreate?: BookCreateOrConnectWithoutReadingHistoryInput
+    upsert?: BookUpsertWithoutReadingHistoryInput
+    connect?: BookWhereUniqueInput
+    update?: XOR<XOR<BookUpdateToOneWithWhereWithoutReadingHistoryInput, BookUpdateWithoutReadingHistoryInput>, BookUncheckedUpdateWithoutReadingHistoryInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutReadingHistoryNestedInput = {
+    create?: XOR<UserCreateWithoutReadingHistoryInput, UserUncheckedCreateWithoutReadingHistoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReadingHistoryInput
+    upsert?: UserUpsertWithoutReadingHistoryInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReadingHistoryInput, UserUpdateWithoutReadingHistoryInput>, UserUncheckedUpdateWithoutReadingHistoryInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -11301,6 +12695,7 @@ export namespace Prisma {
     finishedBooks?: BookCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookCreateNestedManyWithoutReadingByInput
     activity?: ActivityCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSelectedGenresInput = {
@@ -11319,6 +12714,7 @@ export namespace Prisma {
     finishedBooks?: BookUncheckedCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookUncheckedCreateNestedManyWithoutReadingByInput
     activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSelectedGenresInput = {
@@ -11345,6 +12741,7 @@ export namespace Prisma {
     savedBy?: UserCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutGenresInput = {
@@ -11367,6 +12764,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserUncheckedCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityUncheckedCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutGenresInput = {
@@ -11393,6 +12791,7 @@ export namespace Prisma {
     savedBy?: UserCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutMainGenreInput = {
@@ -11415,6 +12814,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserUncheckedCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityUncheckedCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutMainGenreInput = {
@@ -11757,6 +13157,7 @@ export namespace Prisma {
     finishedBy?: UserCreateNestedManyWithoutFinishedBooksInput
     savedBy?: UserCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserCreateNestedManyWithoutReadingBooksInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutActivitiesInput = {
@@ -11779,6 +13180,7 @@ export namespace Prisma {
     finishedBy?: UserUncheckedCreateNestedManyWithoutFinishedBooksInput
     savedBy?: UserUncheckedCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserUncheckedCreateNestedManyWithoutReadingBooksInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutActivitiesInput = {
@@ -11835,6 +13237,7 @@ export namespace Prisma {
     savedBooks?: BookCreateNestedManyWithoutSavedByInput
     finishedBooks?: BookCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookCreateNestedManyWithoutReadingByInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivityInput = {
@@ -11853,6 +13256,7 @@ export namespace Prisma {
     savedBooks?: BookUncheckedCreateNestedManyWithoutSavedByInput
     finishedBooks?: BookUncheckedCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookUncheckedCreateNestedManyWithoutReadingByInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivityInput = {
@@ -11890,6 +13294,7 @@ export namespace Prisma {
     finishedBy?: UserUpdateManyWithoutFinishedBooksNestedInput
     savedBy?: UserUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUpdateManyWithoutReadingBooksNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutActivitiesInput = {
@@ -11912,6 +13317,7 @@ export namespace Prisma {
     finishedBy?: UserUncheckedUpdateManyWithoutFinishedBooksNestedInput
     savedBy?: UserUncheckedUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUncheckedUpdateManyWithoutReadingBooksNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type GenreUpsertWithoutActivitiesInput = {
@@ -11980,6 +13386,7 @@ export namespace Prisma {
     savedBooks?: BookUpdateManyWithoutSavedByNestedInput
     finishedBooks?: BookUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUpdateManyWithoutReadingByNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityInput = {
@@ -11998,6 +13405,7 @@ export namespace Prisma {
     savedBooks?: BookUncheckedUpdateManyWithoutSavedByNestedInput
     finishedBooks?: BookUncheckedUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUncheckedUpdateManyWithoutReadingByNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BookCreateWithoutReviewInput = {
@@ -12019,6 +13427,7 @@ export namespace Prisma {
     savedBy?: UserCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutReviewInput = {
@@ -12041,6 +13450,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserUncheckedCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityUncheckedCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutReviewInput = {
@@ -12063,6 +13473,7 @@ export namespace Prisma {
     finishedBooks?: BookCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookCreateNestedManyWithoutReadingByInput
     activity?: ActivityCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewInput = {
@@ -12081,6 +13492,7 @@ export namespace Prisma {
     finishedBooks?: BookUncheckedCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookUncheckedCreateNestedManyWithoutReadingByInput
     activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewInput = {
@@ -12118,6 +13530,7 @@ export namespace Prisma {
     savedBy?: UserUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutReviewInput = {
@@ -12140,6 +13553,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUncheckedUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type UserUpsertWithoutReviewInput = {
@@ -12168,6 +13582,7 @@ export namespace Prisma {
     finishedBooks?: BookUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewInput = {
@@ -12186,6 +13601,7 @@ export namespace Prisma {
     finishedBooks?: BookUncheckedUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUncheckedUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type GenreCreateWithoutMainBooksInput = {
@@ -12300,6 +13716,7 @@ export namespace Prisma {
     savedBooks?: BookCreateNestedManyWithoutSavedByInput
     readingBooks?: BookCreateNestedManyWithoutReadingByInput
     activity?: ActivityCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFinishedBooksInput = {
@@ -12318,6 +13735,7 @@ export namespace Prisma {
     savedBooks?: BookUncheckedCreateNestedManyWithoutSavedByInput
     readingBooks?: BookUncheckedCreateNestedManyWithoutReadingByInput
     activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFinishedBooksInput = {
@@ -12340,6 +13758,7 @@ export namespace Prisma {
     finishedBooks?: BookCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookCreateNestedManyWithoutReadingByInput
     activity?: ActivityCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSavedBooksInput = {
@@ -12358,6 +13777,7 @@ export namespace Prisma {
     finishedBooks?: BookUncheckedCreateNestedManyWithoutFinishedByInput
     readingBooks?: BookUncheckedCreateNestedManyWithoutReadingByInput
     activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSavedBooksInput = {
@@ -12380,6 +13800,7 @@ export namespace Prisma {
     savedBooks?: BookCreateNestedManyWithoutSavedByInput
     finishedBooks?: BookCreateNestedManyWithoutFinishedByInput
     activity?: ActivityCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReadingBooksInput = {
@@ -12398,6 +13819,7 @@ export namespace Prisma {
     savedBooks?: BookUncheckedCreateNestedManyWithoutSavedByInput
     finishedBooks?: BookUncheckedCreateNestedManyWithoutFinishedByInput
     activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReadingBooksInput = {
@@ -12429,6 +13851,37 @@ export namespace Prisma {
 
   export type ActivityCreateManyBookInputEnvelope = {
     data: ActivityCreateManyBookInput | ActivityCreateManyBookInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReadingHistoryCreateWithoutBookInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    user: UserCreateNestedOneWithoutReadingHistoryInput
+  }
+
+  export type ReadingHistoryUncheckedCreateWithoutBookInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    userId: number
+  }
+
+  export type ReadingHistoryCreateOrConnectWithoutBookInput = {
+    where: ReadingHistoryWhereUniqueInput
+    create: XOR<ReadingHistoryCreateWithoutBookInput, ReadingHistoryUncheckedCreateWithoutBookInput>
+  }
+
+  export type ReadingHistoryCreateManyBookInputEnvelope = {
+    data: ReadingHistoryCreateManyBookInput | ReadingHistoryCreateManyBookInput[]
     skipDuplicates?: boolean
   }
 
@@ -12582,6 +14035,37 @@ export namespace Prisma {
     data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyWithoutBookInput>
   }
 
+  export type ReadingHistoryUpsertWithWhereUniqueWithoutBookInput = {
+    where: ReadingHistoryWhereUniqueInput
+    update: XOR<ReadingHistoryUpdateWithoutBookInput, ReadingHistoryUncheckedUpdateWithoutBookInput>
+    create: XOR<ReadingHistoryCreateWithoutBookInput, ReadingHistoryUncheckedCreateWithoutBookInput>
+  }
+
+  export type ReadingHistoryUpdateWithWhereUniqueWithoutBookInput = {
+    where: ReadingHistoryWhereUniqueInput
+    data: XOR<ReadingHistoryUpdateWithoutBookInput, ReadingHistoryUncheckedUpdateWithoutBookInput>
+  }
+
+  export type ReadingHistoryUpdateManyWithWhereWithoutBookInput = {
+    where: ReadingHistoryScalarWhereInput
+    data: XOR<ReadingHistoryUpdateManyMutationInput, ReadingHistoryUncheckedUpdateManyWithoutBookInput>
+  }
+
+  export type ReadingHistoryScalarWhereInput = {
+    AND?: ReadingHistoryScalarWhereInput | ReadingHistoryScalarWhereInput[]
+    OR?: ReadingHistoryScalarWhereInput[]
+    NOT?: ReadingHistoryScalarWhereInput | ReadingHistoryScalarWhereInput[]
+    id?: IntFilter<"ReadingHistory"> | number
+    createdAt?: DateTimeFilter<"ReadingHistory"> | Date | string
+    updatedAt?: DateTimeFilter<"ReadingHistory"> | Date | string
+    startDate?: DateTimeFilter<"ReadingHistory"> | Date | string
+    endDate?: DateTimeFilter<"ReadingHistory"> | Date | string
+    readingTimeMs?: IntFilter<"ReadingHistory"> | number
+    scrollPosition?: IntFilter<"ReadingHistory"> | number
+    bookId?: IntFilter<"ReadingHistory"> | number
+    userId?: IntFilter<"ReadingHistory"> | number
+  }
+
   export type GenreCreateWithoutBookTemplatesInput = {
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12714,6 +14198,7 @@ export namespace Prisma {
     finishedBy?: UserCreateNestedManyWithoutFinishedBooksInput
     readingBy?: UserCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutSavedByInput = {
@@ -12736,6 +14221,7 @@ export namespace Prisma {
     finishedBy?: UserUncheckedCreateNestedManyWithoutFinishedBooksInput
     readingBy?: UserUncheckedCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityUncheckedCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutSavedByInput = {
@@ -12762,6 +14248,7 @@ export namespace Prisma {
     savedBy?: UserCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutFinishedByInput = {
@@ -12784,6 +14271,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedCreateNestedManyWithoutSavedBooksInput
     readingBy?: UserUncheckedCreateNestedManyWithoutReadingBooksInput
     activities?: ActivityUncheckedCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutFinishedByInput = {
@@ -12810,6 +14298,7 @@ export namespace Prisma {
     finishedBy?: UserCreateNestedManyWithoutFinishedBooksInput
     savedBy?: UserCreateNestedManyWithoutSavedBooksInput
     activities?: ActivityCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutReadingByInput = {
@@ -12832,6 +14321,7 @@ export namespace Prisma {
     finishedBy?: UserUncheckedCreateNestedManyWithoutFinishedBooksInput
     savedBy?: UserUncheckedCreateNestedManyWithoutSavedBooksInput
     activities?: ActivityUncheckedCreateNestedManyWithoutBookInput
+    ReadingHistory?: ReadingHistoryUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutReadingByInput = {
@@ -12863,6 +14353,37 @@ export namespace Prisma {
 
   export type ActivityCreateManyUserInputEnvelope = {
     data: ActivityCreateManyUserInput | ActivityCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReadingHistoryCreateWithoutUserInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    book: BookCreateNestedOneWithoutReadingHistoryInput
+  }
+
+  export type ReadingHistoryUncheckedCreateWithoutUserInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    bookId: number
+  }
+
+  export type ReadingHistoryCreateOrConnectWithoutUserInput = {
+    where: ReadingHistoryWhereUniqueInput
+    create: XOR<ReadingHistoryCreateWithoutUserInput, ReadingHistoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReadingHistoryCreateManyUserInputEnvelope = {
+    data: ReadingHistoryCreateManyUserInput | ReadingHistoryCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -12962,6 +14483,218 @@ export namespace Prisma {
     data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type ReadingHistoryUpsertWithWhereUniqueWithoutUserInput = {
+    where: ReadingHistoryWhereUniqueInput
+    update: XOR<ReadingHistoryUpdateWithoutUserInput, ReadingHistoryUncheckedUpdateWithoutUserInput>
+    create: XOR<ReadingHistoryCreateWithoutUserInput, ReadingHistoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReadingHistoryUpdateWithWhereUniqueWithoutUserInput = {
+    where: ReadingHistoryWhereUniqueInput
+    data: XOR<ReadingHistoryUpdateWithoutUserInput, ReadingHistoryUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ReadingHistoryUpdateManyWithWhereWithoutUserInput = {
+    where: ReadingHistoryScalarWhereInput
+    data: XOR<ReadingHistoryUpdateManyMutationInput, ReadingHistoryUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BookCreateWithoutReadingHistoryInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    title: string
+    slug: string
+    author: string
+    description: string
+    picture: string
+    ebook: string
+    readingTime?: number
+    chapters?: number
+    rating?: number
+    isPublic?: boolean
+    mainGenre: GenreCreateNestedOneWithoutMainBooksInput
+    genres?: GenreCreateNestedManyWithoutBooksInput
+    review?: ReviewCreateNestedManyWithoutBookInput
+    finishedBy?: UserCreateNestedManyWithoutFinishedBooksInput
+    savedBy?: UserCreateNestedManyWithoutSavedBooksInput
+    readingBy?: UserCreateNestedManyWithoutReadingBooksInput
+    activities?: ActivityCreateNestedManyWithoutBookInput
+  }
+
+  export type BookUncheckedCreateWithoutReadingHistoryInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    title: string
+    slug: string
+    author: string
+    description: string
+    picture: string
+    ebook: string
+    readingTime?: number
+    chapters?: number
+    rating?: number
+    isPublic?: boolean
+    mainGenreId: number
+    genres?: GenreUncheckedCreateNestedManyWithoutBooksInput
+    review?: ReviewUncheckedCreateNestedManyWithoutBookInput
+    finishedBy?: UserUncheckedCreateNestedManyWithoutFinishedBooksInput
+    savedBy?: UserUncheckedCreateNestedManyWithoutSavedBooksInput
+    readingBy?: UserUncheckedCreateNestedManyWithoutReadingBooksInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutBookInput
+  }
+
+  export type BookCreateOrConnectWithoutReadingHistoryInput = {
+    where: BookWhereUniqueInput
+    create: XOR<BookCreateWithoutReadingHistoryInput, BookUncheckedCreateWithoutReadingHistoryInput>
+  }
+
+  export type UserCreateWithoutReadingHistoryInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    email: string
+    socialId?: string | null
+    password?: string | null
+    picture?: string
+    fullName?: string
+    location?: string
+    role?: $Enums.Role
+    selectedGenres?: GenreCreateNestedManyWithoutUsersInput
+    review?: ReviewCreateNestedManyWithoutUserInput
+    savedBooks?: BookCreateNestedManyWithoutSavedByInput
+    finishedBooks?: BookCreateNestedManyWithoutFinishedByInput
+    readingBooks?: BookCreateNestedManyWithoutReadingByInput
+    activity?: ActivityCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutReadingHistoryInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    email: string
+    socialId?: string | null
+    password?: string | null
+    picture?: string
+    fullName?: string
+    location?: string
+    role?: $Enums.Role
+    selectedGenres?: GenreUncheckedCreateNestedManyWithoutUsersInput
+    review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    savedBooks?: BookUncheckedCreateNestedManyWithoutSavedByInput
+    finishedBooks?: BookUncheckedCreateNestedManyWithoutFinishedByInput
+    readingBooks?: BookUncheckedCreateNestedManyWithoutReadingByInput
+    activity?: ActivityUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutReadingHistoryInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReadingHistoryInput, UserUncheckedCreateWithoutReadingHistoryInput>
+  }
+
+  export type BookUpsertWithoutReadingHistoryInput = {
+    update: XOR<BookUpdateWithoutReadingHistoryInput, BookUncheckedUpdateWithoutReadingHistoryInput>
+    create: XOR<BookCreateWithoutReadingHistoryInput, BookUncheckedCreateWithoutReadingHistoryInput>
+    where?: BookWhereInput
+  }
+
+  export type BookUpdateToOneWithWhereWithoutReadingHistoryInput = {
+    where?: BookWhereInput
+    data: XOR<BookUpdateWithoutReadingHistoryInput, BookUncheckedUpdateWithoutReadingHistoryInput>
+  }
+
+  export type BookUpdateWithoutReadingHistoryInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    picture?: StringFieldUpdateOperationsInput | string
+    ebook?: StringFieldUpdateOperationsInput | string
+    readingTime?: IntFieldUpdateOperationsInput | number
+    chapters?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    mainGenre?: GenreUpdateOneRequiredWithoutMainBooksNestedInput
+    genres?: GenreUpdateManyWithoutBooksNestedInput
+    review?: ReviewUpdateManyWithoutBookNestedInput
+    finishedBy?: UserUpdateManyWithoutFinishedBooksNestedInput
+    savedBy?: UserUpdateManyWithoutSavedBooksNestedInput
+    readingBy?: UserUpdateManyWithoutReadingBooksNestedInput
+    activities?: ActivityUpdateManyWithoutBookNestedInput
+  }
+
+  export type BookUncheckedUpdateWithoutReadingHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    author?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    picture?: StringFieldUpdateOperationsInput | string
+    ebook?: StringFieldUpdateOperationsInput | string
+    readingTime?: IntFieldUpdateOperationsInput | number
+    chapters?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    mainGenreId?: IntFieldUpdateOperationsInput | number
+    genres?: GenreUncheckedUpdateManyWithoutBooksNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutBookNestedInput
+    finishedBy?: UserUncheckedUpdateManyWithoutFinishedBooksNestedInput
+    savedBy?: UserUncheckedUpdateManyWithoutSavedBooksNestedInput
+    readingBy?: UserUncheckedUpdateManyWithoutReadingBooksNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutBookNestedInput
+  }
+
+  export type UserUpsertWithoutReadingHistoryInput = {
+    update: XOR<UserUpdateWithoutReadingHistoryInput, UserUncheckedUpdateWithoutReadingHistoryInput>
+    create: XOR<UserCreateWithoutReadingHistoryInput, UserUncheckedCreateWithoutReadingHistoryInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReadingHistoryInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReadingHistoryInput, UserUncheckedUpdateWithoutReadingHistoryInput>
+  }
+
+  export type UserUpdateWithoutReadingHistoryInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    socialId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    picture?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    selectedGenres?: GenreUpdateManyWithoutUsersNestedInput
+    review?: ReviewUpdateManyWithoutUserNestedInput
+    savedBooks?: BookUpdateManyWithoutSavedByNestedInput
+    finishedBooks?: BookUpdateManyWithoutFinishedByNestedInput
+    readingBooks?: BookUpdateManyWithoutReadingByNestedInput
+    activity?: ActivityUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReadingHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    socialId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    picture?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    selectedGenres?: GenreUncheckedUpdateManyWithoutUsersNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    savedBooks?: BookUncheckedUpdateManyWithoutSavedByNestedInput
+    finishedBooks?: BookUncheckedUpdateManyWithoutFinishedByNestedInput
+    readingBooks?: BookUncheckedUpdateManyWithoutReadingByNestedInput
+    activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type BookCreateManyMainGenreInput = {
     id?: number
     createdAt?: Date | string
@@ -13002,6 +14735,7 @@ export namespace Prisma {
     finishedBooks?: BookUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSelectedGenresInput = {
@@ -13020,6 +14754,7 @@ export namespace Prisma {
     finishedBooks?: BookUncheckedUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUncheckedUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutSelectedGenresInput = {
@@ -13054,6 +14789,7 @@ export namespace Prisma {
     savedBy?: UserUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutGenresInput = {
@@ -13076,6 +14812,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUncheckedUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateManyWithoutGenresInput = {
@@ -13114,6 +14851,7 @@ export namespace Prisma {
     savedBy?: UserUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutMainGenreInput = {
@@ -13136,6 +14874,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUncheckedUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateManyWithoutMainGenreInput = {
@@ -13310,6 +15049,17 @@ export namespace Prisma {
     userId?: number | null
   }
 
+  export type ReadingHistoryCreateManyBookInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    userId: number
+  }
+
   export type GenreUpdateWithoutBooksInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13392,6 +15142,7 @@ export namespace Prisma {
     savedBooks?: BookUpdateManyWithoutSavedByNestedInput
     readingBooks?: BookUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFinishedBooksInput = {
@@ -13410,6 +15161,7 @@ export namespace Prisma {
     savedBooks?: BookUncheckedUpdateManyWithoutSavedByNestedInput
     readingBooks?: BookUncheckedUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutFinishedBooksInput = {
@@ -13440,6 +15192,7 @@ export namespace Prisma {
     finishedBooks?: BookUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSavedBooksInput = {
@@ -13458,6 +15211,7 @@ export namespace Prisma {
     finishedBooks?: BookUncheckedUpdateManyWithoutFinishedByNestedInput
     readingBooks?: BookUncheckedUpdateManyWithoutReadingByNestedInput
     activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutSavedBooksInput = {
@@ -13488,6 +15242,7 @@ export namespace Prisma {
     savedBooks?: BookUpdateManyWithoutSavedByNestedInput
     finishedBooks?: BookUpdateManyWithoutFinishedByNestedInput
     activity?: ActivityUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReadingBooksInput = {
@@ -13506,6 +15261,7 @@ export namespace Prisma {
     savedBooks?: BookUncheckedUpdateManyWithoutSavedByNestedInput
     finishedBooks?: BookUncheckedUpdateManyWithoutFinishedByNestedInput
     activity?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutReadingBooksInput = {
@@ -13545,6 +15301,38 @@ export namespace Prisma {
     importance?: IntFieldUpdateOperationsInput | number
     genreId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReadingHistoryUpdateWithoutBookInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutReadingHistoryNestedInput
+  }
+
+  export type ReadingHistoryUncheckedUpdateWithoutBookInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReadingHistoryUncheckedUpdateManyWithoutBookInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type GenreUpdateWithoutBookTemplatesInput = {
@@ -13602,6 +15390,17 @@ export namespace Prisma {
     importance: number
     genreId?: number | null
     bookId?: number | null
+  }
+
+  export type ReadingHistoryCreateManyUserInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startDate: Date | string
+    endDate: Date | string
+    readingTimeMs: number
+    scrollPosition: number
+    bookId: number
   }
 
   export type GenreUpdateWithoutUsersInput = {
@@ -13690,6 +15489,7 @@ export namespace Prisma {
     finishedBy?: UserUpdateManyWithoutFinishedBooksNestedInput
     readingBy?: UserUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutSavedByInput = {
@@ -13712,6 +15512,7 @@ export namespace Prisma {
     finishedBy?: UserUncheckedUpdateManyWithoutFinishedBooksNestedInput
     readingBy?: UserUncheckedUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateManyWithoutSavedByInput = {
@@ -13750,6 +15551,7 @@ export namespace Prisma {
     savedBy?: UserUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutFinishedByInput = {
@@ -13772,6 +15574,7 @@ export namespace Prisma {
     savedBy?: UserUncheckedUpdateManyWithoutSavedBooksNestedInput
     readingBy?: UserUncheckedUpdateManyWithoutReadingBooksNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateManyWithoutFinishedByInput = {
@@ -13810,6 +15613,7 @@ export namespace Prisma {
     finishedBy?: UserUpdateManyWithoutFinishedBooksNestedInput
     savedBy?: UserUpdateManyWithoutSavedBooksNestedInput
     activities?: ActivityUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutReadingByInput = {
@@ -13832,6 +15636,7 @@ export namespace Prisma {
     finishedBy?: UserUncheckedUpdateManyWithoutFinishedBooksNestedInput
     savedBy?: UserUncheckedUpdateManyWithoutSavedBooksNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutBookNestedInput
+    ReadingHistory?: ReadingHistoryUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateManyWithoutReadingByInput = {
@@ -13875,6 +15680,38 @@ export namespace Prisma {
     importance?: IntFieldUpdateOperationsInput | number
     genreId?: NullableIntFieldUpdateOperationsInput | number | null
     bookId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReadingHistoryUpdateWithoutUserInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    book?: BookUpdateOneRequiredWithoutReadingHistoryNestedInput
+  }
+
+  export type ReadingHistoryUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    bookId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReadingHistoryUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    readingTimeMs?: IntFieldUpdateOperationsInput | number
+    scrollPosition?: IntFieldUpdateOperationsInput | number
+    bookId?: IntFieldUpdateOperationsInput | number
   }
 
 
@@ -13922,6 +15759,10 @@ export namespace Prisma {
      * @deprecated Use UserDefaultArgs instead
      */
     export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ReadingHistoryDefaultArgs instead
+     */
+    export type ReadingHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ReadingHistoryDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

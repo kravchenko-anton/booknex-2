@@ -4,15 +4,13 @@ export enum ReaderMessageType {
 	Scroll = 'scroll',
 	TextSelect = 'textSelect',
 	SelectionLimitFail = 'selection-limit-fail',
-	FinishLoading = 'finish-loading'
+	FinishLoading = 'finish-loading',
+	FinishBook = 'finishBook'
 
 }
 export interface WebviewMessageType {
 	type:
-		| 'scroll'
-		| 'finishBook'
-		| 'selection-limit-fail'
-		| 'finish-loading'
+		ReaderMessageType
 	payload: {
 		scrollTop: number
 		progress: number
@@ -40,12 +38,12 @@ export const useReaderMessage = ({
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessageType
 		const { type, payload } = parsedEvent
 		console.log(type, payload)
-		if (type === 'finish-loading') {
+		if (type === ReaderMessageType.FinishLoading) {
 				console.log('Finish loading')
 			onContentLoadEnd()
 		}
-		if (type === 'selection-limit-fail') console.log('Text select fail')
-		if (type === 'scroll')
+		if (type === ReaderMessageType.SelectionLimitFail) console.log('Text select fail')
+		if (type === ReaderMessageType.Scroll)
 			onScroll({
 				scrollTop: payload.scrollTop,
 				progress: payload.progress,
@@ -54,7 +52,7 @@ export const useReaderMessage = ({
 					chapterProgress: payload.chapter.chapterProgress
 				}
 			})
-		if (type === 'finishBook') {
+		if (type === ReaderMessageType.FinishBook) {
 			if (finishReadingLoading) return
 			onFinishBookPress()
 		}

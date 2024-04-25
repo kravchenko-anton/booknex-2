@@ -36,48 +36,51 @@ const Page = () => {
 							height={140}
 							alt={book.title}
 							src={getFileUrl(book.picture)}
-							className='bg-muted cursor-pointer mb-2 rounded'
+							className='bg-muted cursor-pointer mb-2 border-2 border-bordered rounded-md'
 						/>
 					</div>
 
-				<div className='md:w-5/6'>
-					<div className=" items-center gap-5">
-						<h1 className="mb-1 text-3xl">{book.title}</h1>
-						<h1 className="text-gray text-xl">{book.author}</h1>
-						<div className='flex gap-2 my-2'>
-								<Link href={installAppLink}>
-							<Button
-								size={'md'} variant={'primary'}>Start reading</Button>
-								</Link>
+						<div className='md:w-5/6'>
+							<div className=" items-center gap-5">
+								<h1 className="mb-1 text-3xl">{book.title}</h1>
+								<div className='flex gap-4'>
+									<h1 className="text-gray text-xl">{book.author}</h1>
+									<p className="text-warning border-bordered text-lg">
+										★ {book.rating}
+									</p>
+								</div>
+								<div className="flex gap-2 my-4">
+									<Link href={installAppLink}>
+										<Button
+											size={'md'} variant={'primary'}>Start reading</Button>
+									</Link>
 
-							<Button
-									size={'md'}
-								variant={'foreground'} onClick={
-								() => {
-									navigator.clipboard.writeText(window.location.href)
-									successToast('Link copied to clipboard')
-								}
+									<Button
+										size={'md'}
+
+										variant={'foreground'} onClick={
+										() => {
+											navigator.clipboard.writeText(window.location.href)
+											successToast('Link copied to clipboard')
+										}
 									}>Share</Button>
+								</div>
+
 							</div>
-						<div className="flex items-center  my-4 gap-2">
-							<p className="text-warning border-bordered border-r-2 pr-4 text-lg">
-								★ {book.rating}
-							</p>
+
+
+							<p className="mb-2 text-md">{book.description}</p>
+							<h4 className="text-lg font-bold mt-4 mb-2">Genres</h4>
 							<div className="text-gray items-center flex gap-2">
-								Genres:{' '}
+
 								{
 									book.genres.map((genre,) => (
-										<Button size='sm'>{genre.name}</Button>
+										<Button size='sm' variant='muted'>{genre.name}</Button>
 									))}
 							</div>
 						</div>
-					</div>
-
-
-					<p className="mb-2 text-md">{book.description}</p>
-				</div>
-			</div>  :
-			<Loader className='mx-auto'/>
+					</div> :
+					<Loader className='mx-auto' />
 			}
 
 		</div>

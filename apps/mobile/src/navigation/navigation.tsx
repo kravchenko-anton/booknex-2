@@ -1,4 +1,4 @@
-import { useAction, useAuth } from '@/hooks'
+import { useAction, useAuth, useTypedSelector } from '@/hooks'
 import { authRoutes } from '@/navigation/auth-routes'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
 import { modalRoutes } from '@/navigation/modal-routes'
@@ -28,6 +28,9 @@ const noBottomMenuRoutes = new Set(['Reader', 'BookReview', 'Search'])
 const Navigation: FC = () => {
 	const { user } = useAuth()
 	const { logout } = useAction()
+	const { history = [] } = useTypedSelector(state => state.readingProgress)
+	const latestHistory = history.find(historyItem => !historyItem.endDate)
+	console.log('latestHistory', latestHistory)
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)

@@ -36,6 +36,7 @@ export const UserLibraryOutputSchema = z.object({
 	finishedBooks: z.array(ShortBookSchema),
 	savedBooks: z.array(ShortBookSchema)
 })
+
 export class UserCatalogOutput extends createZodDto(UserCatalogOutputSchema) {}
 
 export class UserLibraryOutput extends createZodDto(UserLibraryOutputSchema) {}

@@ -27,6 +27,7 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'unicorn/prefer-date-now': 'off',
 		'unicorn/no-abusive-eslint-disable': 'off',
 		'react/jsx-no-leaked-render': 2,
 		'react/jsx-no-bind': [
@@ -122,7 +123,6 @@ module.exports = {
 		'unicorn/throw-new-error': 2,
 		'unicorn/no-useless-length-check': 2,
 		'unicorn/prefer-prototype-methods': 2,
-		'unicorn/prefer-date-now': 2,
 		'unicorn/prefer-export-from': [2, { ignoreUsedVariables: true }],
 		'unicorn/no-new-buffer': 2,
 		'unicorn/prefer-query-selector': 2,

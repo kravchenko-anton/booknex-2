@@ -1,7 +1,13 @@
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
 import Clipboard from '@react-native-clipboard/clipboard'
-import { Linking } from 'react-native'
+import { Linking, NativeModules, Platform } from 'react-native'
+
+const deviceLanguage =
+	Platform.OS === 'ios'
+		? NativeModules.SettingsManager.settings.AppleLocale // iOS
+		: NativeModules.I18nManager.localeIdentifier; // Android
+
 
 export const textSElectionLimit = 1200
 
@@ -28,7 +34,7 @@ export const textSelection = async (event: any, removeAllSelection: void) => {
 		if (!textSelectionValidation(event.nativeEvent.selectedText)) return
 
 		await Linking.openURL(
-			`https://translate.google.com/?sl=auto&tl=ru&text=${event.nativeEvent.selectedText}`
+			`https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${event.nativeEvent.selectedText}`
 		)
 	}
 	return removeAllSelection

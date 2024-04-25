@@ -22,6 +22,7 @@ export * from './full-book-count';
 export * from './full-book-review-inner';
 export * from './full-book-review-inner-user';
 export * from './google-auth-dto';
+export * from './history';
 export * from './parser-dto';
 export * from './refresh-dto';
 export * from './review-book-dto';

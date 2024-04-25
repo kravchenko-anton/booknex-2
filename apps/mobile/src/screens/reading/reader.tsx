@@ -1,70 +1,29 @@
-import api from '@/api'
-import { useTypedRoute, useTypedSelector } from '@/hooks'
-import { useFinishBook } from '@/screens/reading/features/finish-book/useFinishBook'
-import { useReadingProgress } from '@/screens/reading/features/reader-progress/useReadingProgress'
-import { useModalReference } from '@/screens/reading/hooks/useModalReference'
-import { useReaderLoading } from '@/screens/reading/hooks/useReaderLoading'
-import { useStatusBarStyle } from '@/screens/reading/hooks/useStatusBarStyle'
-import { useStyleTag } from '@/screens/reading/hooks/useStyleTag'
+import { useTypedRoute } from '@/hooks'
+import { useReader } from '@/screens/reading/hooks/useReader'
 import ReaderChapters from '@/screens/reading/reader-chapters/reader-chapters'
 import ReaderCustomization from '@/screens/reading/reader-customization/reader-customization'
 import ReaderHeader from '@/screens/reading/reader-header/reader-header'
 import ReaderViewer from '@/screens/reading/reader-viewer/reader-viewer'
-import { useReaderMessage } from '@/screens/reading/reader-viewer/useReaderMessage'
 import { Loader } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import { screenHeight } from '@/utils/dimensions'
-import { useQuery } from '@tanstack/react-query'
-import { QueryKeys } from 'global/utils/query-keys'
-import { useRef, useState } from 'react'
-import type WebView from 'react-native-webview'
 //TODO: сделать нормальную историю чтения
 const Reader = () => {
+	const { params } = useTypedRoute<'Reader'>()
 	const {
-		params: { slug }
-	} = useTypedRoute<'Reader'>()
-	const { data: ebook } = useQuery({
-		queryKey: QueryKeys.ebook.bySlug(slug),
-		queryFn: () => api.ebook.ebookBySlug(slug),
-		select: data => data.data,
-		enabled: !!slug
-	})
-
-	const { loaderAnimation, setReaderLoading, readerLoading } =
-		useReaderLoading()
-	const { colorScheme, ...restUiProperties } = useTypedSelector(
-		state => state.readingUi
-	)
-	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
-	const viewerReference = useRef<WebView>(null)
-
-	const {
+		colorScheme,
+		setReaderHeaderVisible,
+		chaptersListModalReference,
+		defaultProperties,
+		ebook,
+		loaderAnimation,
+		onMessage,
+		readerHeaderVisible,
 		readingProgress,
-		scrollPosition,
-		updateReadingProgress,
-		clearProgress
-	} = useReadingProgress({ slug, readerLoading })
-
-	const { finishReadingLoading, onFinish } = useFinishBook({
-		slug,
-		onFinishComplete: clearProgress
-	})
-
-	const { chaptersListModalReference, readingSettingsModalReference } =
-		useModalReference(setReaderHeaderVisible)
-
-	useStatusBarStyle({ colorScheme, readerUiVisible: readerHeaderVisible })
-	const { onMessage } = useReaderMessage({
-		finishReadingLoading,
-		onFinishBookPress: onFinish,
-		onContentLoadEnd: () => setReaderLoading(false),
-		onScroll: updateReadingProgress
-	})
-
-	const { defaultProperties, styleTag } = useStyleTag(
-		{ colorScheme, ...restUiProperties },
-		scrollPosition
-	)
+		readingSettingsModalReference,
+		styleTag,
+		viewerReference
+	} = useReader(params.slug)
 	if (!ebook)
 		return <Loader background={colorScheme.colorPalette.background.normal} />
 	return (
@@ -110,12 +69,7 @@ const Reader = () => {
 				sheetRef={chaptersListModalReference}
 				changeChapter={link =>
 					viewerReference.current?.injectJavaScript(
-						`
-					document.getElementById('${link}')?.scrollIntoView({
-						behavior: 'smooth'
-					})
-	
-						`
+						`document.getElementById('${link}')?.scrollIntoView({ behavior: 'smooth' })`
 					)
 				}
 			/>

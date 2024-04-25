@@ -20,9 +20,9 @@ export const useReadingProgress = ({
 	readerLoading,
 	slug
 }: ReadingProgressProperties) => {
-	const { books } = useTypedSelector(state => state.readingProgress)
+	const { history = [] } = useTypedSelector(state => state.readingProgress)
 	const [scrollPosition, setScrollPosition] = useState(
-		books.find(book => book.slug === slug)?.latestProgress.scrollPosition || 1
+		history.find(book => book.slug === slug)?.scrollPosition || 1
 	)
 	const [readingProgress, setReadingProgress] = useState<ReadingProgressType>({
 		progress: 0,
@@ -31,7 +31,6 @@ export const useReadingProgress = ({
 			progress: 0
 		}
 	})
-
 	useSaveProgress({
 		slug,
 		progress: readingProgress.progress,

@@ -128,6 +128,25 @@ paths:
         - 👤 user
       security:
         - bearer: []
+  /history/sync:
+    post:
+      operationId: sync
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/History"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/History"
+      tags:
+        - 📚 history
   /catalog/search/{query}:
     get:
       operationId: search
@@ -969,6 +988,27 @@ components:
         - data
         - canLoadMore
         - totalPages
+    History:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        readingTimeMs:
+          type: number
+        scrollPosition:
+          type: number
+        bookSlug:
+          type: string
+      required:
+        - startDate
+        - endDate
+        - readingTimeMs
+        - scrollPosition
+        - bookSlug
     ShortBook:
       type: object
       properties:

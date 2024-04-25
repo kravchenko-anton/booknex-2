@@ -1,50 +1,31 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
+export interface ReadingHistoryType {
+	slug: string
+	progress: number
+	scrollPosition: number
+	startDate: Date
+	endDate: Date
+	readTimeMs: number
+
+}
 const initialState = {
-	books: [] as NonNullable<
-		{
-			slug: string
-			latestProgress: {
-				scrollPosition: number
-				progress: number
-			}
-		}[]
-	>
+	history: [] as ReadingHistoryType[],
 }
 const ReadingProgressSlice = createSlice({
 	name: 'readingProgress',
 	initialState,
 	reducers: {
-		updateReadingProgress: (
-			state,
-			{
-				payload
-			}: PayloadAction<{
-				slug: string
-				progress: number
-				scrollPosition: number
-			}>
-		) => {
-			console.log('updateReadingProgress', payload)
-			const book = state.books.find(value => value.slug === payload.slug)
-			if (book)
-				book.latestProgress = {
-					progress: payload.progress,
-					scrollPosition: payload.scrollPosition
-				}
-			state.books = [
-				...state.books,
-				{
-					slug: payload.slug,
-					latestProgress: {
-						progress: payload.progress,
-						scrollPosition: payload.scrollPosition
-					}
-				}
-			]
+		addHistory(state, action: PayloadAction<ReadingHistoryType>) {
+			console.log('addHistory', action.payload)
+			state.history.push(action.payload)
+		},
+		removeHistory(state, action: PayloadAction<string>) {
+			state.history = state.history.filter((item) => item.slug !== action.payload)
+		},
+
 		}
-	}
 })
 export const {
 	reducer: ReadingProgressReducer,

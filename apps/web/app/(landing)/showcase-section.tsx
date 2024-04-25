@@ -25,7 +25,7 @@ export const ShowcaseSection = (properties: PicksOfWeekListProperties) => {
 						<Image
 							src={getFileUrl(book.picture)}
 							alt={'book'}
-							className='bg-foreground cursor-pointer rounded-md h-full w-full'
+							className='bg-foreground border-2 border-bordered cursor-pointer rounded-md h-full w-full'
 							width={150}
 							height={150}
 							onClick={() => router.push(publicRoutes.bookBySlug(book.slug))}

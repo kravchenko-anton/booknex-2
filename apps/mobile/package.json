@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-production -d Production -t 1.3.8",
+		"CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-production -d Production",
 		"CodePush:deployementList": "appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex -k"
 	},
 	"dependencies": {

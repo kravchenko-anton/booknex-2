@@ -45,8 +45,8 @@ const asyncStoragePersist = createAsyncStoragePersister({
 const App = () => {
 	useEffect(() => {
 		codePush.sync({
-			updateDialog: true,
-			deploymentKey: "lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG"
+			deploymentKey: "lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG",
+			installMode: codePush.InstallMode.IMMEDIATE,
 		})
 
 	}, [])

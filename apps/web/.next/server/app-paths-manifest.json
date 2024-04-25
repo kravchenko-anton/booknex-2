@@ -1,7 +1,1 @@
-{
-  "/[book-slug]/page": "app/[book-slug]/page.js",
-  "/(landing)/page": "app/(landing)/page.js",
-  "/admin/book/[slug]/page": "app/admin/book/[slug]/page.js",
-  "/(landing)/privacy-policy/page": "app/(landing)/privacy-policy/page.js",
-  "/(landing)/terms-of-service/page": "app/(landing)/terms-of-service/page.js"
-}
+{}

@@ -23,7 +23,8 @@ const Library = () => {
 		select: data => data.data
 	})
 	const { navigate } = useTypedNavigation()
-	const { books } = useTypedSelector(state => state.readingProgress)
+	const { history = [] } = useTypedSelector(state => state.readingProgress)
+
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&
@@ -57,9 +58,8 @@ const Library = () => {
 						/>
 						<ProgressBar
 							progress={
-								Number(
-									books.find(b => b.slug === book.slug)?.latestProgress.progress
-								) / 100 ||
+								Number(history.find(b => b.slug === book.slug)?.progress) /
+									100 ||
 								// small progress  with index
 								0
 							}
