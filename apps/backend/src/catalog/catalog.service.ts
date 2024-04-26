@@ -1,7 +1,7 @@
-import { Activities } from '@/prisma/generated'
 import { ActivityService } from '@/src/activity/activity.service'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable } from '@nestjs/common'
+import { Activities } from '@prisma/client'
 import * as cacheManagerType from 'cache-manager'
 import type { ShortBook } from 'global/api-client'
 import { RecommendationService } from '../recommendation/recommendation.service'

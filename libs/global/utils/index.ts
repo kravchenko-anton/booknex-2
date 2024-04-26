@@ -1,3 +1,5 @@
+import { getFileUrl } from '../api-config'
+
 export const appName = 'Booknex'
 export const mailLink = 'mailto:booknex.company@gmail.com'
 export const socialLinks = {
@@ -5,5 +7,4 @@ export const socialLinks = {
 	github: 'https://github.com/kravchenko-anton'
 }
 
-export const installAppLink =
-	'https://install.appcenter.ms/users/antonkzavcenco05-gmail.com/apps/booknex-production'
+export const installAppLink = getFileUrl('booknex.apk')

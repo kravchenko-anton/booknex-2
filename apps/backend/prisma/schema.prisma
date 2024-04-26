@@ -1,10 +1,6 @@
 generator client {
-  provider   = "prisma-client-js"
-  // Problem: if youre need generate prisma schema for client, you need remove this and after generate add 
-  engineType = "binary"
-
+  provider      = "prisma-client-js"
   binaryTargets = ["linux-musl-openssl-3.0.x", "debian-openssl-1.1.x", "native", "windows", "debian-openssl-3.0.x"]
-  output        = "./generated"
 }
 
 datasource db {
@@ -57,17 +53,19 @@ model Review {
 }
 
 model Book {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String   @unique
-  slug        String   @unique
-  author      String
-  description String
-  picture     String
-  ebook       String
-  // Minutes
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  title         String   @unique
+  slug          String   @unique
+  author        String
+  description   String
+  recommendable Boolean  @default(true)
 
+  picture String
+  ebook   String
+
+  // Minutes
   readingTime Int @default(0)
   // Chapters count
   chapters    Int @default(0)
@@ -83,6 +81,9 @@ model Book {
   readingBy      User[]           @relation("ReadingBooks")
   activities     Activity[]
   ReadingHistory ReadingHistory[]
+
+  similarBooks Book[] @relation("SimilarBooks")
+  similarBy    Book[] @relation("SimilarBooks")
 }
 
 model BookTemplate {

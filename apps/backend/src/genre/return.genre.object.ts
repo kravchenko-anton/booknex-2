@@ -1,4 +1,4 @@
-import type { Prisma } from '@/prisma/generated'
+import type { Prisma } from '@prisma/client'
 
 export const ReturnGenreObject: Pick<
 	Prisma.GenreSelect,

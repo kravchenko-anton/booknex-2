@@ -1,9 +1,9 @@
-import { Activities, Role, User } from '@/prisma/generated'
 import { ActivityService } from '@/src/activity/activity.service'
-import { EnvConfig } from '@/src/utils/config/env-config'
+import type { EnvConfig } from '@/src/utils/config/env-config'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
+import { Activities, Role, type User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { authErrors, globalErrors } from 'global/errors'
 import { OAuth2Client } from 'google-auth-library'
@@ -143,8 +143,8 @@ export class AuthService {
 	async refresh(refreshToken: string) {
 		const result: { id: number } = await this.jwt
 			.verifyAsync(refreshToken)
-			.catch(reason => {
-				throw serverError(HttpStatus.BAD_REQUEST, reason.message)
+			.catch(error => {
+				throw serverError(HttpStatus.BAD_REQUEST, error.message)
 			})
 		if (!result)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.invalidValue)
@@ -187,10 +187,16 @@ export class AuthService {
 			}
 		})
 		if (!user?.password)
-			throw serverError(HttpStatus.BAD_REQUEST, authErrors.passwordOrEmailInvalid)
+			throw serverError(
+				HttpStatus.BAD_REQUEST,
+				authErrors.passwordOrEmailInvalid
+			)
 		const isPasswordValid = await verify(user.password, dto.password)
 		if (!isPasswordValid)
-			throw serverError(HttpStatus.BAD_REQUEST, authErrors.passwordOrEmailInvalid)
+			throw serverError(
+				HttpStatus.BAD_REQUEST,
+				authErrors.passwordOrEmailInvalid
+			)
 
 		return user
 	}

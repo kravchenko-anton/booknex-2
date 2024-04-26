@@ -1,6 +1,6 @@
-import { PrismaClient } from '@/prisma/generated'
 import type { OnModuleInit } from '@nestjs/common'
 import { Injectable } from '@nestjs/common'
+import { PrismaClient } from '@prisma/client'
 
 declare global {
 	var prisma: PrismaService | null // eslint-disable-line no-var
