@@ -8,7 +8,8 @@
 		"prisma:generate": {
 			"executor": "@nx-tools/nx-prisma:generate",
 			"options": {
-				"schema": "apps/backend/prisma/schema.prisma"
+				"schema": "apps/backend/prisma/schema.prisma",
+				"output": "apps/backend/generated"
 			}
 		},
 		"build": {

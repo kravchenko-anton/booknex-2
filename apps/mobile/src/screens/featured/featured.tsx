@@ -1,8 +1,9 @@
 import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import ManageRecommendationMenu from '@/screens/update-recommendation/manage-recommendation-menu'
-import { BookCard, Button, Flatlist, Loader, ScrollLayout } from '@/ui'
+import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
+import { GenreElement } from '@/ui/genre-element'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 
@@ -34,14 +35,13 @@ const Featured = () => {
 				horizontal
 				data={featured.genres}
 				renderItem={({ item: genre }) => (
-					<Button
-						size='md'
-						variant='foreground'
-						onPress={() => {
+					<GenreElement
+						svgUri={genre.icon}
+						title={genre.name}
+						onPress={() =>
 							navigate('Genre', { slug: genre.slug, name: genre.name })
-						}}>
-						{genre.name}
-					</Button>
+						}
+					/>
 				)}
 			/>
 			<BannerList

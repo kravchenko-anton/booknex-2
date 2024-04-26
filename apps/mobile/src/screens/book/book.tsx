@@ -4,7 +4,6 @@ import ReadingButton from '@/screens/book/reading-button'
 import SaveButton from '@/screens/book/save-button'
 import {
 	AnimatedIcon,
-	Button,
 	Description,
 	Flatlist,
 	Image,
@@ -12,6 +11,7 @@ import {
 	ScrollLayout,
 	Title
 } from '@/ui'
+import { GenreElement } from '@/ui/genre-element'
 import { share } from '@/utils/share-function'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
@@ -93,14 +93,13 @@ const Book: FC = () => {
 				title='Explore categories'
 				data={book.genres}
 				renderItem={({ item: genre }) => (
-					<Button
-						variant='foreground'
-						size='sm'
-						onPress={() => {
+					<GenreElement
+						svgUri={genre.icon}
+						title={genre.name}
+						onPress={() =>
 							navigate('Genre', { slug: genre.slug, name: genre.name })
-						}}>
-						{genre.name}
-					</Button>
+						}
+					/>
 				)}
 			/>
 			<Title size='xl' weight='bold' className='mt-4 px-2'>
