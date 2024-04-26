@@ -15,7 +15,6 @@ apps/web/.env.staging
 apps/application/package-lock.json
 apps/mobile/.env
 # dependencies
-apps/backend/prisma/generated
 node_modules
 
 # IDEs and editors

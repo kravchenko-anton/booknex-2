@@ -18,7 +18,7 @@ RUN npm install @nx/nx-linux-x64-musl --force
 RUN npm install @anatine/zod-nestjs  --force
 
 COPY . .
-
+RUN npx nx prisma:generate backend
 RUN npx nx build backend --prod
 
 FROM node:18
