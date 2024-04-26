@@ -15,6 +15,7 @@ RUN npm install -g husky
 RUN npm install -g nx
 RUN npm install --only=prod --force
 RUN npm install @nx/nx-linux-x64-musl --force
+RUN npm install @anatine/zod-nestjs  --force
 
 COPY . .
 
@@ -22,6 +23,6 @@ RUN npx nx build backend --prod
 
 FROM node:18
 WORKDIR /app
-COPY --from=backend /app/dist/apps/backend /app
+COPY --from=backend /app/dist/apps/backend .
 
-CMD ["node", "app/main.js"]
+CMD ["node", "main.js"]
