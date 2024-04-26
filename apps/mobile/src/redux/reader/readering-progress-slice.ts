@@ -8,10 +8,10 @@ export interface ReadingHistoryType {
 	startDate: Date
 	endDate: Date
 	readTimeMs: number
-
 }
 const initialState = {
 	history: [] as ReadingHistoryType[],
+	startFromReadingScreen: false as boolean
 }
 const ReadingProgressSlice = createSlice({
 	name: 'readingProgress',
@@ -22,10 +22,12 @@ const ReadingProgressSlice = createSlice({
 			state.history.push(action.payload)
 		},
 		removeHistory(state, action: PayloadAction<string>) {
-			state.history = state.history.filter((item) => item.slug !== action.payload)
+			state.history = state.history.filter(item => item.slug !== action.payload)
 		},
-
+		setStartFromReadingScreen(state, action: PayloadAction<boolean>) {
+			state.startFromReadingScreen = action.payload
 		}
+	}
 })
 export const {
 	reducer: ReadingProgressReducer,

@@ -1,9 +1,14 @@
 import type { ReadingProgressType } from '@/screens/reading/features/reader-progress/useReadingProgress'
 import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import { Title } from '@/ui'
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetSectionList } from '@gorhom/bottom-sheet'
+import {
+	BottomSheetBackdrop,
+	BottomSheetModal,
+	BottomSheetSectionList,
+	type BottomSheetSectionListMethods
+} from '@gorhom/bottom-sheet'
 import type { EbookOutputChaptersInner } from 'global/api-client'
-import { type FC, useMemo } from 'react'
+import { useEffect, useMemo, useRef, type FC } from 'react'
 import { Pressable } from 'react-native'
 
 export interface ReaderChaptersProperties {
@@ -32,6 +37,20 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 		[chapters]
 	)
 
+	const bottomSheetSectionListReference =
+		useRef<BottomSheetSectionListMethods>(null)
+	useEffect(() => {
+		// scroll to active chapter
+		const activeChapterIndex = chapters.findIndex(chapter =>
+			chapter.children.find(child => child.link === activeChapter?.link)
+		)
+		if (activeChapterIndex !== -1) {
+			bottomSheetSectionListReference.current?.scrollToLocation({
+				sectionIndex: activeChapterIndex,
+				itemIndex: 0
+			})
+		}
+	}, [bottomSheetSectionListReference])
 	return (
 		<BottomSheetModal
 			enableContentPanningGesture
@@ -57,9 +76,9 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 				stickySectionHeadersEnabled
 				scrollToOverflowEnabled
 				sections={sections}
+				ref={bottomSheetSectionListReference}
 				showsVerticalScrollIndicator={false}
 				className='mt-2 h-full px-4'
-		
 				style={{
 					backgroundColor: colorScheme.colorPalette.background.darker
 				}}

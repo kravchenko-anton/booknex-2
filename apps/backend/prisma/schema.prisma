@@ -1,5 +1,8 @@
 generator client {
-  provider      = "prisma-client-js"
+  provider   = "prisma-client-js"
+  // Problem: if youre need generate prisma schema for client, you need remove this and after generate add 
+  engineType = "binary"
+
   binaryTargets = ["linux-musl-openssl-3.0.x", "debian-openssl-1.1.x", "native", "windows", "debian-openssl-3.0.x"]
   output        = "./generated"
 }

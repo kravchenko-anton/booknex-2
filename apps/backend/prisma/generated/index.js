@@ -22,7 +22,7 @@ const {
   defineDmmfProperty,
   Public,
   getRuntime
-} = require('./runtime/library.js')
+} = require('./runtime/binary.js')
 
 
 const Prisma = {}
@@ -236,7 +236,7 @@ const config = {
       "fromEnvVar": null
     },
     "config": {
-      "engineType": "library"
+      "engineType": "binary"
     },
     "binaryTargets": [
       {
@@ -311,7 +311,7 @@ defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 
 
-const { warnEnvConflicts } = require('./runtime/library.js')
+const { warnEnvConflicts } = require('./runtime/binary.js')
 
 warnEnvConflicts({
     rootEnvPath: config.relativeEnvPaths.rootEnvPath && path.resolve(config.dirname, config.relativeEnvPaths.rootEnvPath),
@@ -323,20 +323,20 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-linux-musl-openssl-3.0.x.so.node");
-path.join(process.cwd(), "prisma/generated/libquery_engine-linux-musl-openssl-3.0.x.so.node")
+path.join(__dirname, "query-engine-linux-musl-openssl-3.0.x");
+path.join(process.cwd(), "prisma/generated/query-engine-linux-musl-openssl-3.0.x")
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-debian-openssl-1.1.x.so.node");
-path.join(process.cwd(), "prisma/generated/libquery_engine-debian-openssl-1.1.x.so.node")
+path.join(__dirname, "query-engine-debian-openssl-1.1.x");
+path.join(process.cwd(), "prisma/generated/query-engine-debian-openssl-1.1.x")
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "prisma/generated/query_engine-windows.dll.node")
+path.join(__dirname, "query-engine-windows");
+path.join(process.cwd(), "prisma/generated/query-engine-windows")
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
-path.join(process.cwd(), "prisma/generated/libquery_engine-debian-openssl-3.0.x.so.node")
+path.join(__dirname, "query-engine-debian-openssl-3.0.x");
+path.join(process.cwd(), "prisma/generated/query-engine-debian-openssl-3.0.x")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/schema.prisma")

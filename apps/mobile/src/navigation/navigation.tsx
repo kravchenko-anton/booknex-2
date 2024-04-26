@@ -12,8 +12,7 @@ import {
 } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Color } from 'global/colors'
-import type { FC } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type FC } from 'react'
 import BootSplash from 'react-native-bootsplash'
 import {
 	SafeAreaProvider,
@@ -28,9 +27,9 @@ const noBottomMenuRoutes = new Set(['Reader', 'BookReview', 'Search'])
 const Navigation: FC = () => {
 	const { user } = useAuth()
 	const { logout } = useAction()
-	const { history = [] } = useTypedSelector(state => state.readingProgress)
-	const latestHistory = history.find(historyItem => !historyItem.endDate)
-	console.log('latestHistory', latestHistory)
+	const { history = [], startFromReadingScreen } = useTypedSelector(
+		state => state.readingProgress
+	)
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)
@@ -42,7 +41,8 @@ const Navigation: FC = () => {
 		if (!refreshToken && user) logout()
 	}
 
-	const navReference = useNavigationContainerRef()
+	const navReference =
+		useNavigationContainerRef<TypeRootStackParameterListType>()
 
 	useEffect(() => {
 		const listener = navReference.addListener('state', () => {
@@ -65,7 +65,15 @@ const Navigation: FC = () => {
 			<NavigationContainer
 				ref={navReference}
 				fallback={<Loader />}
-				onReady={() => BootSplash.hide({ fade: true })}>
+				onReady={() => {
+					const latestHistory = history.find(
+						historyItem => !historyItem.endDate
+					)
+					if (user && startFromReadingScreen && latestHistory) {
+						navReference.navigate('Reader', { slug: latestHistory.slug })
+					}
+					BootSplash.hide({ fade: true })
+				}}>
 				<Stack.Navigator
 					initialRouteName={user ? 'Featured' : 'Welcome'}
 					screenOptions={{
