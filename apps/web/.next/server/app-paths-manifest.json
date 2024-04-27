@@ -1,3 +1,6 @@
 {
-  "/(landing)/page": "app/(landing)/page.js"
+  "/login/page": "app/login/page.js",
+  "/(landing)/page": "app/(landing)/page.js",
+  "/admin/book/catalog/page": "app/admin/book/catalog/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js"
 }

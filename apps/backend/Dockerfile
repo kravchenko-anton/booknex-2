@@ -15,7 +15,7 @@ RUN npm install -g husky
 RUN npm install -g nx
 RUN npm install --only=prod --force
 RUN npm install @nx/nx-linux-x64-musl --force
-RUN npm install @anatine/zod-nestjs  --force
+RUN npm install @anatine/zod-nestjs  --legacy-peer-deps
 
 COPY . .
 RUN npx nx prisma:generate backend
@@ -25,4 +25,5 @@ FROM node:18
 WORKDIR /app
 COPY --from=backend /app/dist/apps/backend .
 
+EXPOSE 3333
 CMD ["node", "main.js"]
