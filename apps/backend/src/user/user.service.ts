@@ -36,13 +36,22 @@ export class UserService {
 			where: { id: userId },
 			select: {
 				readingBooks: {
-					select: returnBookObject
+					select: returnBookObject,
+					where: {
+						isPublic: true
+					}
 				},
 				finishedBooks: {
-					select: returnBookObject
+					select: returnBookObject,
+					where: {
+						isPublic: true
+					}
 				},
 				savedBooks: {
-					select: returnBookObject
+					select: returnBookObject,
+					where: {
+						isPublic: true
+					}
 				}
 			}
 		})

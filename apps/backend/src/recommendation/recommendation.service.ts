@@ -22,7 +22,8 @@ export class RecommendationService {
 				selectedGenres: {
 					select: {
 						slug: true,
-						name: true
+						name: true,
+						icon: true
 					}
 				}
 			}

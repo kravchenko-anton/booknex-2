@@ -11,6 +11,7 @@ const getData = async () => {
 		picksOfTheWeek: data
 	}
 }
+export const revalidate = 3600
 
 const Index = async () => {
 	const { picksOfTheWeek } = await getData()
@@ -35,9 +36,7 @@ const Index = async () => {
 				</div>
 			</div>
 
-			<ShowcaseSection
-				picksOfTheWeek={picksOfTheWeek}
-			/>
+			<ShowcaseSection picksOfTheWeek={picksOfTheWeek} />
 			<ScreensDemoSection />
 		</div>
 	)

@@ -9,13 +9,13 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { Color } from 'global/colors'
+import { useEffect } from 'react'
 import { StatusBar, View } from 'react-native'
 import codePush from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-url-polyfill/auto'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { useEffect } from 'react'
 //TODO: повфиксить вылеты codepush после обновы
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -41,21 +41,19 @@ const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
 
-
 const App = () => {
 	useEffect(() => {
 		codePush.sync({
-			deploymentKey: "lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG",
-			installMode: codePush.InstallMode.IMMEDIATE,
+			deploymentKey: 'lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG',
+			installMode: codePush.InstallMode.ON_NEXT_RESTART
 		})
-
 	}, [])
 	return (
 		<Provider store={store}>
 			<PersistGate
 				persistor={persistor}
 				loading={
-					<View className="bg-background h-screen w-screen">
+					<View className='bg-background h-screen w-screen'>
 						<Loader />
 					</View>
 				}>

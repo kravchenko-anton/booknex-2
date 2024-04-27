@@ -11,6 +11,7 @@ import {
 	openApiConfig,
 	typesGeneratorConfig
 } from './utils/config/open-api.config'
+
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 	const { httpAdapter } = app.get(HttpAdapterHost)
@@ -22,12 +23,12 @@ async function bootstrap() {
 
 	await OpenApiNestFactory.configure(app, openApiConfig, typesGeneratorConfig)
 	Sentry.init({
-		dsn: process.env['SENTRY_DSN'],
-		environment: process.env['NODE_ENV'] || 'development'
+		dsn: process.env.SENTRY_DSN,
+		environment: process.env.NODE_ENV || 'development'
 	}) // Sentry configuration
 	app.useGlobalFilters(new SentryFilter(httpAdapter))
 
-	await app.listen(process.env['PORT'] || 3000)
+	await app.listen(process.env.PORT || 3000)
 }
 
 bootstrap() // eslint-disable-line unicorn/prefer-top-level-await

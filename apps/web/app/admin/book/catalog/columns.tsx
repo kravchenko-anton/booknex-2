@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
+import GenreElement from '@/components/ui/genre-element'
 import { cn } from '@/utils'
 import { secureRoutes } from '@/utils/route'
 import type { ColumnDef } from '@tanstack/react-table'
@@ -103,15 +103,9 @@ export const columns = (): ColumnDef<Book, unknown>[] => [
 		enableHiding: false,
 		header: () => <p className='text-center text-lg'>Genres</p>,
 		cell: ({ row }) => (
-			<div className=' max-w-[110px] items-center justify-center gap-1'>
+			<div className=' max-w-[150px] items-center justify-center gap-1'>
 				{row.original.genres.map(genre => (
-					<Button
-						size='sm'
-						variant='muted'
-						className='mb-2 w-full'
-						key={genre.slug}>
-						{genre.name}
-					</Button>
+					<GenreElement title={genre.name} svgUri={genre.icon} />
 				))}
 			</div>
 		)

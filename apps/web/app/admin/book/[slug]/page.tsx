@@ -5,6 +5,7 @@ import { RemoveButton } from '@/app/admin/book/_components/remove-button'
 import ReviewTable from '@/app/admin/book/_components/review/review-table'
 import ActivityList from '@/components/activity-list'
 import { Button } from '@/components/ui'
+import GenreElement from '@/components/ui/genre-element'
 import Loader from '@/components/ui/loader/loader'
 import api from '@/services/api'
 import { cn } from '@/utils'
@@ -71,21 +72,19 @@ const Page = () => {
 					<div className='flex items-center gap-5'>
 						<h1 className='mb-1 text-3xl'>{book.title}</h1>
 						<div className='flex items-center gap-2'>
-							<p className='text-warning border-bordered border-r-2 pr-4 text-lg'>
-								★ {book.rating}
-							</p>
-							<p className='text-gray text-lg'>
-								Genres:{' '}
-								<b className='font-normal text-white'>
-									{book.genres.map(genre => genre.name).join(', ')}
-								</b>
-							</p>
+							<p className='text-warning  text-lg'>★ {book.rating}</p>
 						</div>
 					</div>
 
-					<h1 className='text-gray mb-8 text-xl'>{book.author}</h1>
-
+					<h1 className='text-gray text-xl'>{book.author}</h1>
+					<h4 className='mb-2 mt-4 text-lg font-bold'>Genres</h4>
+					<div className='text-gray mb-8 flex items-center gap-2 overflow-auto'>
+						{book.genres.map(genre => (
+							<GenreElement title={genre.name} svgUri={genre.icon} />
+						))}
+					</div>
 					<p className='mb-2 text-lg'>{book.description}</p>
+
 					<ActivityList data={book.activities} />
 
 					<BookOverview bookSlug={book.slug} />

@@ -20,12 +20,11 @@ export const useSaveProgress = ({
 	const { addHistory, setStartFromReadingScreen } = useAction()
 
 	useLayoutEffect(() => {
-		console.log('setStartFromReadingScreen')
 		setStartFromReadingScreen(true)
 	}, [])
 
 	useEffect(() => {
-		const unsubscribe = addListener('beforeRemove', () => {
+		const screenLeaveListener = addListener('beforeRemove', () => {
 			if (readerLoading) return
 			addHistory({
 				slug,
@@ -37,22 +36,25 @@ export const useSaveProgress = ({
 			})
 			setStartFromReadingScreen(false)
 		})
-		const subscription = AppState.addEventListener('change', nextAppState => {
-			if (readerLoading) return
-			if (/inactive|background/.test(nextAppState)) {
-				addHistory({
-					slug,
-					progress: progress,
-					scrollPosition: scrollPosition,
-					endDate: new Date(),
-					startDate: startReadingDate,
-					readTimeMs: new Date().getTime() - startReadingDate.getTime()
-				})
+		const appLeaveListener = AppState.addEventListener(
+			'change',
+			nextAppState => {
+				if (readerLoading) return
+				if (/inactive|background/.test(nextAppState)) {
+					addHistory({
+						slug,
+						progress: progress,
+						scrollPosition: scrollPosition,
+						endDate: new Date(),
+						startDate: startReadingDate,
+						readTimeMs: new Date().getTime() - startReadingDate.getTime()
+					})
+				}
 			}
-		})
+		)
 		return () => {
-			unsubscribe()
-			subscription.remove()
+			screenLeaveListener()
+			appLeaveListener.remove()
 		}
 	}, [
 		addListener,

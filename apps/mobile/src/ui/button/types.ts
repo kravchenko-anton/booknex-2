@@ -1,12 +1,12 @@
 import type { PressableDefaultProperties } from '@/types/component-types'
 import type { VividPaletteType } from 'global/colors'
-import type { SizeProperties } from 'global/types'
+import type { SizeProperties, SizeType } from 'global/types'
 import type { FC } from 'react'
 import type { SvgProps } from 'react-native-svg'
 
 export type ButtonProperties = PressableDefaultProperties &
 	SizeProperties & {
-		textSize?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+		textSize?: SizeType | ('xl' | 'xxl')
 		icon?: FC<SvgProps> | string
 		isLoading?: boolean
 		children?: any

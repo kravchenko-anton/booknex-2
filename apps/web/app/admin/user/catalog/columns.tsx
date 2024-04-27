@@ -6,9 +6,10 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import GenreElement from '@/components/ui/genre-element'
 import { acceptToast, infoToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
-import { UserCatalogOutputDataInner } from 'global/api-client'
+import type { UserCatalogOutputDataInner } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { timeAgo } from 'global/helpers/time-format'
 import { MoreHorizontal } from 'icons'
@@ -89,13 +90,7 @@ export const columns = ({
 		cell: ({ row }) => (
 			<div className=' max-w-[110px] items-center justify-center gap-1'>
 				{row.original.selectedGenres.map(genre => (
-					<Button
-						size='sm'
-						variant='muted'
-						className='mb-2 w-full'
-						key={genre.slug}>
-						{genre.name}
-					</Button>
+					<GenreElement title={genre.name} svgUri={genre.icon} />
 				))}
 			</div>
 		)

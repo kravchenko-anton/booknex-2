@@ -1,6 +1,7 @@
 // @ts-nocheck
 export { ReactComponent as Book } from '../book-open-text.svg'
 export { ReactComponent as CaseSensitive } from '../case-sensitive.svg'
+
 export { ReactComponent as Check } from '../check.svg'
 export { ReactComponent as ChevronDown } from '../chevron-down.svg'
 export { ReactComponent as ChevronRight } from '../chevron-right.svg'

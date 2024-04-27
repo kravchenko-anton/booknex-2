@@ -29,9 +29,15 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
 			<Title weight='light' className='mb-4' numberOfLines={2} size={'md'}>
 				To get new recommendations, you need to adjust your goals
 			</Title>
-			<View className='mb-4 flex flex-row flex-wrap gap-2'>
+			<View className='mb-4 flex flex-row flex-wrap'>
 				{selectedGenres.map(genre => (
-					<GenreElement svgUri={genre.icon} title={genre.name} />
+					<GenreElement
+						size='sm'
+						className='mr-2'
+						key={genre.slug}
+						svgUri={genre.icon}
+						title={genre.name}
+					/>
 				))}
 			</View>
 

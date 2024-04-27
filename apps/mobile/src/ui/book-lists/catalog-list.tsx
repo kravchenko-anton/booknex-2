@@ -1,5 +1,4 @@
 import { AnimatedPress, Flatlist, Image, Title } from '@/ui'
-import { windowWidth } from '@/utils/dimensions'
 import { Color } from 'global/colors'
 
 const CatalogList = ({
@@ -33,11 +32,7 @@ const CatalogList = ({
 			<AnimatedPress
 				className='mb-4 w-[46%]'
 				onPress={() => onElementPress(book.slug)}>
-				<Image
-					className='mb-1 w-full'
-					url={book.picture}
-					height={windowWidth / 3}
-				/>
+				<Image className='mb-1 w-full' url={book.picture} height={250} />
 				<Title
 					color={Color.gray}
 					size={'md'}

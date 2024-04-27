@@ -1,42 +1,43 @@
+import type { PressableDefaultProperties } from '@/types/component-types'
 import { settings } from '@/ui/button/settings'
 import { AnimatedPress } from '@/ui/index'
 import Title from '@/ui/title/title'
 import { cn } from '@/utils'
+import { getFileUrl } from 'global/api-config'
 import { InnerColor } from 'global/colors'
 import { SvgUri } from 'react-native-svg'
 
-interface GenreElementProperties {
+interface GenreElementProperties extends PressableDefaultProperties {
 	svgUri: string
 	title: string
-	onPress?: () => void
+	size?: 'sm' | 'md' | 'lg'
 }
 
 export const GenreElement = ({
-	onPress,
 	svgUri,
-	title
+	title,
+	size = 'md',
+	...rest
 }: GenreElementProperties) => (
 	<AnimatedPress
 		className={cn(
 			'flex-row items-center justify-center rounded-md',
-			settings.padding.md,
-
+			settings.padding[size],
 			settings.colors.muted
 		)}
-		onPress={onPress}>
-		<SvgUri
-			uri={svgUri}
-			className='mr-2 mt-1'
-			color={InnerColor.muted}
-			width={settings.iconSize.md}
-			height={settings.iconSize.md}
-		/>
-
+		{...rest}>
 		<Title
 			weight='semiBold'
 			color={InnerColor.muted}
-			size={settings.titleSize.md}>
+			size={settings.titleSize[size]}>
 			{title}
 		</Title>
+		<SvgUri
+			uri={getFileUrl(svgUri)}
+			className='ml-2'
+			color={InnerColor.muted}
+			width={settings.iconSize[size]}
+			height={settings.iconSize[size]}
+		/>
 	</AnimatedPress>
 )

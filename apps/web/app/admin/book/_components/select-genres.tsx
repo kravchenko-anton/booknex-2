@@ -75,7 +75,7 @@ const SelectGenres = <T extends Record<string, any>>({
 												value={genre.name}
 												onSelect={() =>
 													setGenre(
-														value.find(({ slug }) => slug === genre.slug)
+														value.some(({ slug }) => slug === genre.slug)
 															? value.filter(({ slug }) => slug !== genre.slug)
 															: [...value, genre]
 													)
@@ -85,7 +85,7 @@ const SelectGenres = <T extends Record<string, any>>({
 													className={cn(
 														'mr-2 h-4 w-4',
 														Boolean(
-															value.find(({ slug }) => slug === genre.slug)
+															value.some(({ slug }) => slug === genre.slug)
 														)
 															? 'opacity-100'
 															: 'opacity-0'
