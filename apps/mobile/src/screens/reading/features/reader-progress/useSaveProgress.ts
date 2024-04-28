@@ -24,18 +24,6 @@ export const useSaveProgress = ({
 	}, [])
 
 	useEffect(() => {
-		const screenLeaveListener = addListener('beforeRemove', () => {
-			if (readerLoading) return
-			addHistory({
-				slug,
-				progress: progress,
-				scrollPosition: scrollPosition,
-				endDate: new Date(),
-				startDate: startReadingDate,
-				readTimeMs: new Date().getTime() - startReadingDate.getTime()
-			})
-			setStartFromReadingScreen(false)
-		})
 		const appLeaveListener = AppState.addEventListener(
 			'change',
 			nextAppState => {
@@ -52,8 +40,21 @@ export const useSaveProgress = ({
 				}
 			}
 		)
+		const unsubscribe = addListener('beforeRemove', () => {
+			if (readerLoading) return
+			addHistory({
+				slug,
+				progress: progress,
+				scrollPosition: scrollPosition,
+				endDate: new Date(),
+				startDate: startReadingDate,
+				readTimeMs: new Date().getTime() - startReadingDate.getTime()
+			})
+			setStartFromReadingScreen(false)
+		})
+
 		return () => {
-			screenLeaveListener()
+			unsubscribe()
 			appLeaveListener.remove()
 		}
 	}, [
@@ -64,6 +65,7 @@ export const useSaveProgress = ({
 		addHistory,
 		setStartFromReadingScreen,
 		readerLoading,
-		startReadingDate
+		startReadingDate,
+		AppState
 	])
 }

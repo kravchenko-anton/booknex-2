@@ -1,6 +1,6 @@
 import api from '@/api'
 import { Button, Title } from '@/ui'
-import { GenreElement } from '@/ui/genre-element'
+import { GenreElement } from '@/ui/genre-element/genre-element'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import type { FunctionType } from 'global/types'

@@ -3,7 +3,7 @@ import type { ThemePackType } from '@/screens/reading/features/reader-styles/the
 import { AnimatedPress, Title } from '@/ui'
 import { cn } from '@/utils'
 import { Color } from 'global/colors'
-import { type FC, useRef } from 'react'
+import { useEffect, useRef, type FC } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 
 interface FontStyleSettingsProperties {
@@ -20,7 +20,18 @@ export const FontStyleSettings: FC<FontStyleSettingsProperties> = ({
 	colorScheme
 }) => {
 	const reference = useRef<FlatList>(null)
-
+	useEffect(() => {
+		// scroll to active font
+		const activeFontIndex = ReaderFont.findIndex(
+			font => font.fontFamily === activeFont.fontFamily
+		)
+		if (activeFontIndex !== -1) {
+			reference.current?.scrollToIndex({
+				index: activeFontIndex,
+				animated: true
+			})
+		}
+	}, [reference])
 	return (
 		<FlatList
 			horizontal
@@ -29,7 +40,6 @@ export const FontStyleSettings: FC<FontStyleSettingsProperties> = ({
 			contentContainerStyle={{
 				paddingHorizontal: 8
 			}}
-			
 			data={ReaderFont.map(font => ({
 				value: font.fontFamily,
 				label: font.title
@@ -63,6 +73,16 @@ export const FontStyleSettings: FC<FontStyleSettingsProperties> = ({
 					</Title>
 				</AnimatedPress>
 			)}
+			onScrollToIndexFailed={info => {
+				const wait = new Promise(resolve => setTimeout(resolve, 500))
+				wait.then(() => {
+					reference.current?.scrollToIndex({
+						index: info.index,
+						animated: true,
+						viewPosition: 0.5
+					})
+				})
+			}}
 		/>
 	)
 }

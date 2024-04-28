@@ -11,6 +11,7 @@
 		"@gorhom/bottom-sheet": "*",
 		"react-native-device-info": "*",
 		"@hookform/resolvers": "*",
+		"@react-native-community/netinfo": "*",
 		"@react-native-async-storage/async-storage": "*",
 		"@react-native-clipboard/clipboard": "*",
 		"@react-native-google-signin/google-signin": "*",

@@ -6,6 +6,7 @@ import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { UpdateRecommendationDto } from 'global/api-client'
 
+import { GenreElement } from '@/ui/genre-element/genre-element'
 import { Color } from 'global/colors'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Close } from 'icons'
@@ -57,9 +58,11 @@ const UpdateRecommendation = () => {
 						Select 3 genres for better recommendations
 					</Title>
 				</View>
-				<View className='flex w-full flex-row flex-wrap'>
+				<View className='flex w-full flex-row flex-wrap justify-around'>
 					{genres.map(genre => (
-						<Button
+						<GenreElement
+							title={genre.name}
+							svgUri={genre.icon}
 							key={genre.slug}
 							size='md'
 							className='mb-2.5 mr-2.5'
@@ -73,9 +76,8 @@ const UpdateRecommendation = () => {
 										)
 									: selectedGenres.length < 3 &&
 										setSelectedGenres([...selectedGenres, genre.slug])
-							}}>
-							{genre.name}
-						</Button>
+							}}
+						/>
 					))}
 				</View>
 			</ScrollLayout>

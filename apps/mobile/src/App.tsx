@@ -16,7 +16,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-url-polyfill/auto'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-//TODO: повфиксить вылеты codepush после обновы
+
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -45,7 +45,8 @@ const App = () => {
 	useEffect(() => {
 		codePush.sync({
 			deploymentKey: 'lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG',
-			installMode: codePush.InstallMode.ON_NEXT_RESTART
+			installMode: codePush.InstallMode.IMMEDIATE,
+			mandatoryInstallMode: codePush.InstallMode.IMMEDIATE
 		})
 	}, [])
 	return (

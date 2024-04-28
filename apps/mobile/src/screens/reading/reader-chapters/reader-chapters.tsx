@@ -47,7 +47,7 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 		if (activeChapterIndex !== -1) {
 			bottomSheetSectionListReference.current?.scrollToLocation({
 				sectionIndex: activeChapterIndex,
-				itemIndex: 0
+				itemIndex: activeChapterIndex
 			})
 		}
 	}, [bottomSheetSectionListReference])

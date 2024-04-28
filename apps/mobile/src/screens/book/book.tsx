@@ -11,7 +11,7 @@ import {
 	ScrollLayout,
 	Title
 } from '@/ui'
-import { GenreElement } from '@/ui/genre-element'
+import { GenreElement } from '@/ui/genre-element/genre-element'
 import { share } from '@/utils/share-function'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
@@ -94,6 +94,7 @@ const Book: FC = () => {
 				data={book.genres}
 				renderItem={({ item: genre }) => (
 					<GenreElement
+						size='md'
 						svgUri={genre.icon}
 						title={genre.name}
 						onPress={() =>

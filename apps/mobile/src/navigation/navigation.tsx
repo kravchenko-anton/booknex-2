@@ -27,9 +27,10 @@ const noBottomMenuRoutes = new Set(['Reader', 'BookReview', 'Search'])
 const Navigation: FC = () => {
 	const { user } = useAuth()
 	const { logout } = useAction()
-	const { history = [], startFromReadingScreen } = useTypedSelector(
+	const { history, startFromReadingScreen } = useTypedSelector(
 		state => state.readingProgress
 	)
+	console.log('history', history, startFromReadingScreen)
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)
@@ -69,6 +70,7 @@ const Navigation: FC = () => {
 					const latestHistory = history.find(
 						historyItem => !historyItem.endDate
 					)
+					console.log('latestHistory', latestHistory)
 					if (user && startFromReadingScreen && latestHistory) {
 						navReference.navigate('Reader', { slug: latestHistory.slug })
 					}

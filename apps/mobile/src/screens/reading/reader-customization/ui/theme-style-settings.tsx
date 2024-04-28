@@ -1,7 +1,10 @@
-import { themePack, type ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
+import {
+	themePack,
+	type ThemePackType
+} from '@/screens/reading/features/reader-styles/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
 import { Color } from 'global/colors'
-import { type FC, useRef } from 'react'
+import { useEffect, useRef, type FC } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 
 //TODO: проверить на краши
@@ -14,7 +17,18 @@ export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
 	colorScheme
 }) => {
 	const reference = useRef<FlatList>(null)
-
+	useEffect(() => {
+		// scroll to active theme
+		const activeThemeIndex = themePack.findIndex(
+			theme => theme.slug === colorScheme.slug
+		)
+		if (activeThemeIndex !== -1) {
+			reference.current?.scrollToIndex({
+				index: activeThemeIndex,
+				animated: true
+			})
+		}
+	}, [reference])
 	return (
 		<FlatList
 			horizontal
@@ -22,7 +36,6 @@ export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
 			className='mt-4'
 			showsHorizontalScrollIndicator={false}
 			data={themePack}
-		
 			contentContainerStyle={{
 				paddingHorizontal: 8
 			}}
@@ -46,6 +59,16 @@ export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
 					</Title>
 				</AnimatedPress>
 			)}
+			onScrollToIndexFailed={info => {
+				const wait = new Promise(resolve => setTimeout(resolve, 500))
+				wait.then(() => {
+					reference.current?.scrollToIndex({
+						index: info.index,
+						animated: true,
+						viewPosition: 0.5
+					})
+				})
+			}}
 		/>
 	)
 }

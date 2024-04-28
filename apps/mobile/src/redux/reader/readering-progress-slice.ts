@@ -20,10 +20,9 @@ const ReadingProgressSlice = createSlice({
 		addHistory(state, action: PayloadAction<ReadingHistoryType>) {
 			console.log('addHistory', action.payload)
 			state.history.push(action.payload)
+			console.log('state.history', state.history)
 		},
-		removeHistory(state, action: PayloadAction<string>) {
-			state.history = state.history.filter(item => item.slug !== action.payload)
-		},
+
 		setStartFromReadingScreen(state, action: PayloadAction<boolean>) {
 			state.startFromReadingScreen = action.payload
 		}

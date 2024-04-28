@@ -64,18 +64,20 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 							/>
 						</View>
 					</View>
-					<ListOrdered
-						width={28}
-						height={28}
-						color={colorScheme.colorPalette.text}
-						onPress={onChapterIconPress}
-					/>
-					<CaseSensitive
-						width={28}
-						height={28}
-						color={colorScheme.colorPalette.text}
-						onPress={onSelectThemeIconPress}
-					/>
+					<View className='flex-row items-center gap-6'>
+						<ListOrdered
+							width={28}
+							height={28}
+							color={colorScheme.colorPalette.text}
+							onPress={onChapterIconPress}
+						/>
+						<CaseSensitive
+							width={28}
+							height={28}
+							color={colorScheme.colorPalette.text}
+							onPress={onSelectThemeIconPress}
+						/>
+					</View>
 				</View>
 			</AnimatedView>
 		</View>
