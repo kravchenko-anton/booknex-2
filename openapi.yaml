@@ -1202,6 +1202,8 @@ components:
           type: number
         rating:
           type: number
+        isPublic:
+          type: boolean
         genres:
           type: array
           items:
@@ -1255,6 +1257,7 @@ components:
         - readingTime
         - chapters
         - rating
+        - isPublic
         - genres
         - slug
         - title
@@ -1272,6 +1275,8 @@ components:
           type: number
         rating:
           type: number
+        isPublic:
+          type: boolean
         genres:
           type: array
           items:
@@ -1308,8 +1313,6 @@ components:
           type: boolean
         ebook:
           type: string
-        isPublic:
-          type: boolean
         _count:
           type: object
           properties:
@@ -1405,6 +1408,7 @@ components:
         - readingTime
         - chapters
         - rating
+        - isPublic
         - genres
         - slug
         - title
@@ -1414,7 +1418,6 @@ components:
         - updatedAt
         - recommendable
         - ebook
-        - isPublic
         - _count
         - activities
         - review
@@ -1437,6 +1440,9 @@ components:
                 required: true
               rating:
                 type: number
+                required: true
+              isPublic:
+                type: boolean
                 required: true
               genres:
                 type: array
@@ -1474,6 +1480,7 @@ components:
               - readingTime
               - chapters
               - rating
+              - isPublic
               - genres
               - slug
               - title

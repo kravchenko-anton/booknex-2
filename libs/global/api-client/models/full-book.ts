@@ -58,6 +58,12 @@ export interface FullBook {
     'rating': number;
     /**
      * 
+     * @type {boolean}
+     * @memberof FullBook
+     */
+    'isPublic': boolean;
+    /**
+     * 
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof FullBook
      */
@@ -110,12 +116,6 @@ export interface FullBook {
      * @memberof FullBook
      */
     'ebook': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FullBook
-     */
-    'isPublic': boolean;
     /**
      * 
      * @type {FullBookCount}

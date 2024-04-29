@@ -52,6 +52,12 @@ export interface InfoBySlug {
     'rating': number;
     /**
      * 
+     * @type {boolean}
+     * @memberof InfoBySlug
+     */
+    'isPublic': boolean;
+    /**
+     * 
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof InfoBySlug
      */

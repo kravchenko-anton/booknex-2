@@ -3,13 +3,13 @@ import GenreElement from '@/components/ui/genre-element'
 import { cn } from '@/utils'
 import { secureRoutes } from '@/utils/route'
 import type { ColumnDef } from '@tanstack/react-table'
-import type { Book } from 'global/api-client'
+import type { CatalogOutputDataInner } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { minutesToTime } from 'global/helpers/time-converter'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const columns = (): ColumnDef<Book, unknown>[] => [
+export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	{
 		id: 'picture',
 		enableHiding: false,

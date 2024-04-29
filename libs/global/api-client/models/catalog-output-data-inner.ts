@@ -49,6 +49,12 @@ export interface CatalogOutputDataInner {
     'rating': number;
     /**
      * 
+     * @type {boolean}
+     * @memberof CatalogOutputDataInner
+     */
+    'isPublic': boolean;
+    /**
+     * 
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof CatalogOutputDataInner
      */

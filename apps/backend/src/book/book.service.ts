@@ -31,6 +31,7 @@ export class BookService {
 			where: { slug, isPublic: true },
 			select: {
 				title: true,
+				isPublic: true,
 				slug: true,
 				chapters: true,
 				picture: true,
