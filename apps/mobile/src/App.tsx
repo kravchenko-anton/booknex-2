@@ -9,7 +9,6 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 import { QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { Color } from 'global/colors'
-import { useEffect } from 'react'
 import { StatusBar, View } from 'react-native'
 import codePush from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -40,41 +39,36 @@ Sentry.init({
 const asyncStoragePersist = createAsyncStoragePersister({
 	storage: AsyncStorage
 })
-
-const App = () => {
-	useEffect(() => {
-		codePush.sync({
-			deploymentKey: 'lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG',
-			installMode: codePush.InstallMode.IMMEDIATE,
-			mandatoryInstallMode: codePush.InstallMode.IMMEDIATE
-		})
-	}, [])
-	return (
-		<Provider store={store}>
-			<PersistGate
-				persistor={persistor}
-				loading={
-					<View className='bg-background h-screen w-screen'>
-						<Loader />
-					</View>
-				}>
-				<PersistQueryClientProvider
-					client={queryClient}
-					persistOptions={{ persister: asyncStoragePersist }}>
-					<GestureHandlerRootView
-						style={{
-							flex: 1
-						}}>
-						<BottomSheetModalProvider>
-							<Navigation />
-						</BottomSheetModalProvider>
-					</GestureHandlerRootView>
-					<Toast />
-				</PersistQueryClientProvider>
-			</PersistGate>
-			<StatusBar backgroundColor={Color.background} />
-		</Provider>
-	)
-}
+codePush.sync({
+	deploymentKey: 'lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG',
+	installMode: codePush.InstallMode.IMMEDIATE,
+	mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART
+})
+const App = () => (
+	<Provider store={store}>
+		<PersistGate
+			persistor={persistor}
+			loading={
+				<View className='bg-background h-screen w-screen'>
+					<Loader />
+				</View>
+			}>
+			<PersistQueryClientProvider
+				client={queryClient}
+				persistOptions={{ persister: asyncStoragePersist }}>
+				<GestureHandlerRootView
+					style={{
+						flex: 1
+					}}>
+					<BottomSheetModalProvider>
+						<Navigation />
+					</BottomSheetModalProvider>
+				</GestureHandlerRootView>
+				<Toast />
+			</PersistQueryClientProvider>
+		</PersistGate>
+		<StatusBar backgroundColor={Color.background} />
+	</Provider>
+)
 
 export default Sentry.wrap(codePush(App))

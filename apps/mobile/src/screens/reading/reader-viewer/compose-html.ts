@@ -39,5 +39,4 @@ export const composeReaderViewHtml = ({
 
 			${finishBookButton}
 			${useScriptInject(defaultProperties.scrollPosition)}
-			
 	`

@@ -49,12 +49,6 @@ export interface Book {
     'rating': number;
     /**
      * 
-     * @type {boolean}
-     * @memberof Book
-     */
-    'isPublic': boolean;
-    /**
-     * 
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
      * @memberof Book
      */

@@ -18,11 +18,14 @@ export const QueryKeys = {
 			key: ['book-update-info'],
 			bySlug: (slug: string) => ['book-update-info', slug]
 		},
-		catalog: (searchTerm: string, page: number) => [
-			'books-catalog',
-			searchTerm,
-			page
-		]
+		catalog: {
+			key: ['books-catalog'],
+			action: (searchTerm: string, page: number) => [
+				'books-catalog',
+				searchTerm,
+				page
+			]
+		}
 	},
 
 	genres: {

@@ -17,5 +17,3 @@ export const useScriptInject = (startPosition: number) => `
 }
 </script>
 					`
-
-

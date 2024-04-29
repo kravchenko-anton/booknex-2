@@ -1,7 +1,6 @@
 export * from './auth-dto';
 export * from './auth-output';
 export * from './auth-output-user';
-export * from './book';
 export * from './book-template';
 export * from './book-template-catalog-output';
 export * from './book-template-catalog-output-data-inner';
@@ -23,6 +22,7 @@ export * from './full-book-review-inner';
 export * from './full-book-review-inner-user';
 export * from './google-auth-dto';
 export * from './history';
+export * from './info-by-slug';
 export * from './parser-dto';
 export * from './refresh-dto';
 export * from './review-book-dto';

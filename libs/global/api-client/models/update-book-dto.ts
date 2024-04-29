@@ -58,6 +58,12 @@ export interface UpdateBookDto {
     'isPublic'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof UpdateBookDto
+     */
+    'recommendable'?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof UpdateBookDto
      */

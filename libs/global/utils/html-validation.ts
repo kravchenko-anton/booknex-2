@@ -22,15 +22,20 @@ export const postProcessingHtml = (html: string) => `
 	
 	`
 export const checkHtmlValid = async (html: string) => {
-	const request = await axios.request({
-		method: 'POST',
-		// do extrack more that 20 words
-		url: 'https://validator.w3.org/nu/?out=json',
-		data: postProcessingHtml(html),
-		headers: {
-			'Content-Type': 'text/html; charset=utf-8'
-		}
-	})
+	const request = await axios
+		.request({
+			method: 'POST',
+			// do extrack more that 20 words
+			url: 'https://validator.w3.org/nu/?out=json',
+			data: postProcessingHtml(html),
+			headers: {
+				'Content-Type': 'text/html; charset=utf-8'
+			}
+		})
+		.catch(error => {
+			console.log('html-validation error', error)
+			throw new Error('Html validation error')
+		})
 
 	const skippedErrors = ['Element “dl” is missing a required child element']
 	const messages = request.data.messages

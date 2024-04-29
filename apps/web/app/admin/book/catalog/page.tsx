@@ -14,7 +14,7 @@ const Page: FC<NextPageProps> = ({ searchParams }) => {
 	const searchTerm = validateStringParameter(searchParams?.searchTerm)
 	const page = validateNumberParameter(searchParams?.page)
 	const { data: books } = useQuery({
-		queryKey: QueryKeys.book.catalog(searchTerm, page),
+		queryKey: QueryKeys.book.catalog.action(searchTerm, page),
 		queryFn: () => api.book.catalog(searchTerm, +page),
 		select: data => data.data
 	})

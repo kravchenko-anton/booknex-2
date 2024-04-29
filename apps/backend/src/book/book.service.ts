@@ -15,6 +15,7 @@ import type { CreateBookDto } from './dto/create.book.dto'
 
 import type { UpdateBookDto } from './dto/update.book.dto'
 
+import { returnBookObject } from '@/src/book/return.book.object'
 import { useEbookCalculation } from './helpers/get-ebook'
 
 @Injectable()
@@ -32,7 +33,6 @@ export class BookService {
 				title: true,
 				slug: true,
 				chapters: true,
-				isPublic: true,
 				picture: true,
 				author: true,
 				description: true,
@@ -52,7 +52,16 @@ export class BookService {
 			bookSlug: slug
 		})
 
-		return book
+		return {
+			...book,
+			fromSameAuthor: await this.prisma.book.findMany({
+				where: {
+					isPublic: true,
+					author: book.author
+				},
+				select: returnBookObject
+			})
+		}
 	}
 
 	async infoBySlugAdmin(slug: string) {
@@ -63,6 +72,7 @@ export class BookService {
 				chapters: true,
 				title: true,
 				picture: true,
+				recommendable: true,
 				author: true,
 				slug: true,
 				createdAt: true,

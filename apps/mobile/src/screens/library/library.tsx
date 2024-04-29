@@ -15,7 +15,7 @@ import NothingFount from '@/ui/nothing-fount'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
-
+//TODO: сделать сихнронную историю
 const Library = () => {
 	const { data: library } = useQuery({
 		queryKey: QueryKeys.library,
@@ -47,12 +47,12 @@ const Library = () => {
 				renderItem={({ item: book }) => (
 					<AnimatedPress
 						style={{
-							width: settings.width.sm * 1.2
+							width: settings.width.md
 						}}
 						onPress={() => navigate('Reader', { slug: book.slug })}>
 						<Image
-							width={settings.width.sm * 1.2}
-							height={settings.height.sm * 1.3}
+							width={settings.width.md}
+							height={settings.height.md}
 							url={book.picture}
 							className='mb-2'
 						/>

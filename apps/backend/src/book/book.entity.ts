@@ -19,7 +19,6 @@ export const BookSchema = z
 		readingTime: z.number(),
 		chapters: z.number(),
 		rating: z.number(),
-		isPublic: z.boolean(),
 		genres: z.array(shortGenreSchema)
 	})
 	.merge(ShortBookSchema)
@@ -29,7 +28,9 @@ export const FullBookSchema = BookSchema.merge(
 		.object({
 			createdAt: z.date(),
 			updatedAt: z.date(),
+			recommendable: z.boolean(),
 			ebook: z.string(),
+			isPublic: z.boolean(),
 			_count: z
 				.object({
 					finishedBy: z.number(),

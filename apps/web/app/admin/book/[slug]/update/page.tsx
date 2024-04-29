@@ -6,7 +6,6 @@ import { SelectPicture } from '@/app/admin/book/_components/select-picture'
 import { Button, Field, FormTextArea } from '@/components/ui'
 import Loader from '@/components/ui/loader/loader'
 import api from '@/services/api'
-import { cn } from '@/utils'
 import { dirtyValues } from '@/utils/getDirtyValues'
 import { errorToast, successToast } from '@/utils/toast'
 import { validateStringParameter } from '@/utils/validate-parameter'
@@ -53,12 +52,14 @@ const Page: FC = () => {
 		mutationFn: (payload: UpdateBookSchemaType) =>
 			api.book.update(bookSlug, payload),
 		onSuccess: async () => {
-			//TODO: проверить работоспособность
 			await queryClient.invalidateQueries({
-				queryKey: [
-					QueryKeys.book.infoBySlug(bookSlug),
-					QueryKeys.ebook.storedEbookBySlug(bookSlug)
-				]
+				queryKey: QueryKeys.book.adminInfoBySlug(bookSlug)
+			})
+			await queryClient.invalidateQueries({
+				queryKey: QueryKeys.book.catalog.key
+			})
+			await queryClient.invalidateQueries({
+				queryKey: QueryKeys.book.overview.bySlug(bookSlug)
 			})
 			successToast('Book updated')
 		}
@@ -102,7 +103,7 @@ const Page: FC = () => {
 							<h1 className=''>Visibility</h1>
 							<Button
 								size={'sm'}
-								className={cn('', book.isPublic ? 'bg-success' : 'bg-warning')}
+								variant={book.recommendable ? 'success' : 'warning'}
 								isLoading={updateLoading}
 								onClick={async () => {
 									await update({
@@ -112,9 +113,23 @@ const Page: FC = () => {
 								{book.isPublic ? 'Hide' : 'Show'}
 							</Button>
 						</div>
+						<div className='mt-2 flex items-center justify-between'>
+							<h1 className=''>Recommendable</h1>
+							<Button
+								size={'sm'}
+								isLoading={updateLoading}
+								variant={book.recommendable ? 'muted' : 'danger'}
+								onClick={async () => {
+									await update({
+										recommendable: !book.recommendable
+									})
+								}}>
+								{book.recommendable ? 'Disable' : 'Enable'}
+							</Button>
+						</div>
 					</div>
 				</div>
-				<div className='w-11/12'>
+				<div className='w-10/12'>
 					<div className='mt-2 gap-3 md:flex'>
 						<div className=' md:w-1/2'>
 							<h1 className='my-2'>Title</h1>

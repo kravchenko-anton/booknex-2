@@ -1,4 +1,4 @@
-import { CatalogOutput } from '@/src/book/book.model'
+import { CatalogOutput, InfoBySlug } from '@/src/book/book.model'
 import {
 	Body,
 	Controller,
@@ -12,7 +12,7 @@ import {
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { Book, FullBook } from './book.entity'
+import { FullBook } from './book.entity'
 import { BookService } from './book.service'
 import { CreateBookDto } from './dto/create.book.dto'
 import { UpdateBookDto } from './dto/update.book.dto'
@@ -25,11 +25,11 @@ export class BookController {
 
 	@Auth()
 	@Get('/info/by-slug/:slug')
-	@ApiOkResponse({ type: Book })
+	@ApiOkResponse({ type: InfoBySlug })
 	async infoBySlug(
 		@Param('slug') bookSlug: string,
 		@CurrentUser('id') userId: string
-	): Promise<Book> {
+	): Promise<InfoBySlug> {
 		return this.bookService.infoBySlug(bookSlug, +userId)
 	}
 

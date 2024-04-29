@@ -4,6 +4,7 @@ import ReadingButton from '@/screens/book/reading-button'
 import SaveButton from '@/screens/book/save-button'
 import {
 	AnimatedIcon,
+	BookCard,
 	Description,
 	Flatlist,
 	Image,
@@ -11,6 +12,7 @@ import {
 	ScrollLayout,
 	Title
 } from '@/ui'
+import BannerList from '@/ui/book-lists/banner-list'
 import { GenreElement } from '@/ui/genre-element/genre-element'
 import { share } from '@/utils/share-function'
 import { useQuery } from '@tanstack/react-query'
@@ -109,6 +111,20 @@ const Book: FC = () => {
 			<Description size={18} className='mt-2 px-2 pb-8' weight='light'>
 				{book.description}
 			</Description>
+
+			<BannerList
+				title='From the same author'
+				data={book.fromSameAuthor}
+				renderItem={({ item: book }) => (
+					<BookCard
+						size='md'
+						image={{
+							uri: book.picture
+						}}
+						onPress={() => navigate('Book', { slug: book.slug })}
+					/>
+				)}
+			/>
 		</ScrollLayout>
 	)
 }

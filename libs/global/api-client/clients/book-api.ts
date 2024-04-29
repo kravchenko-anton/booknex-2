@@ -22,13 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { Book } from '../models';
-// @ts-ignore
 import { CatalogOutput } from '../models';
 // @ts-ignore
 import { CreateBookDto } from '../models';
 // @ts-ignore
 import { FullBook } from '../models';
+// @ts-ignore
+import { InfoBySlug } from '../models';
 // @ts-ignore
 import { UpdateBookDto } from '../models';
 /**
@@ -330,7 +330,7 @@ export const BookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async infoBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Book>> {
+        async infoBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InfoBySlug>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.infoBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookApi.infoBySlug']?.[localVarOperationServerIndex]?.url;
@@ -405,7 +405,7 @@ export const BookApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        infoBySlug(slug: string, options?: any): AxiosPromise<Book> {
+        infoBySlug(slug: string, options?: any): AxiosPromise<InfoBySlug> {
             return localVarFp.infoBySlug(slug, options).then((request) => request(axios, basePath));
         },
         /**

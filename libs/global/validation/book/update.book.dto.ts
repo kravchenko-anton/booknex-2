@@ -8,6 +8,7 @@ export const UpdateBookSchema = z.object({
 	description: z.string().max(1000).min(10).optional(),
 	ebook: z.array(EBookPayloadSchema).min(1).optional(),
 	isPublic: z.boolean().optional(),
+	recommendable: z.boolean().optional(),
 	rating: z.number().min(1).positive().optional(),
 	picture: z.string().optional(),
 	genres: z.array(shortGenreValidationSchema).min(1).optional()

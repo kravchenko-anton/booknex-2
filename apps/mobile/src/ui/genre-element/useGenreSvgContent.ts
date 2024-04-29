@@ -6,19 +6,18 @@ export const useGenreSvgContent = (svgUri: string) => {
 	const [svgContent, setSvgContent] = useState<string | null>(null)
 	useLayoutEffect(() => {
 		const getFromAsyncStorageSvgGenre = async () => {
-			const svg = await AsyncStorage.getItem('svgGenre' + svgUri)
+			const svg = await AsyncStorage.getItem('svg-genre' + svgUri)
 			if (svg) {
 				console.log('svg from async storage ' + svgUri)
 				setSvgContent(svg)
-				return
-			} else {
+			}
+			if (!svg) {
 				const svg = await fetch(getFileUrl(svgUri)).then(response =>
 					response.text()
 				)
 				if (!svg) return
-				await AsyncStorage.setItem('svgGenre' + svgUri, svg)
-				console.log('svg from fetch ' + svgUri)
-				return svg
+				await AsyncStorage.setItem('svg-genre' + svgUri, svg)
+				setSvgContent(svg)
 			}
 		}
 		getFromAsyncStorageSvgGenre()

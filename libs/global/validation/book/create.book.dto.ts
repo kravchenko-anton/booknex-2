@@ -9,7 +9,6 @@ export const CreateBookSchema = z.object({
 	ebook: z.array(EBookPayloadSchema).min(1),
 	rating: z.number().min(1).positive(),
 	picture: z.string(),
-
 	genres: z.array(shortGenreValidationSchema).min(1)
 })
 

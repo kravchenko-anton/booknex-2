@@ -24,7 +24,6 @@ models/auth-output.ts
 models/book-template-catalog-output-data-inner.ts
 models/book-template-catalog-output.ts
 models/book-template.ts
-models/book.ts
 models/catalog-output-data-inner.ts
 models/catalog-output.ts
 models/check503-response-info-value.ts
@@ -44,6 +43,7 @@ models/full-book.ts
 models/google-auth-dto.ts
 models/history.ts
 models/index.ts
+models/info-by-slug.ts
 models/parser-dto.ts
 models/refresh-dto.ts
 models/review-book-dto.ts
