@@ -1,7 +1,1 @@
-{
-  "/admin/book/catalog/page": "app/admin/book/catalog/page.js",
-  "/admin/parser/catalog/page": "app/admin/parser/catalog/page.js",
-  "/admin/book/create/page": "app/admin/book/create/page.js",
-  "/admin/book/[slug]/page": "app/admin/book/[slug]/page.js",
-  "/admin/book/[slug]/update/page": "app/admin/book/[slug]/update/page.js"
-}
+{}

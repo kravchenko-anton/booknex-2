@@ -32,10 +32,30 @@ export const UserCatalogOutputSchema = z
 	.merge(baseCatalogModel)
 
 export const UserLibraryOutputSchema = z.object({
-	readingBooks: z.array(ShortBookSchema),
+	readingBooks: z.array(
+		ShortBookSchema.merge(
+			z.object({
+				readingHistory: z.object({
+					progress: z.number(),
+					scrollPosition: z.number()
+				})
+			})
+		)
+	),
 	finishedBooks: z.array(ShortBookSchema),
 	savedBooks: z.array(ShortBookSchema)
 })
+
+export const HistorySchema = z.object({
+	startDate: z.date(),
+	endDate: z.date(),
+	progress: z.number(),
+	readingTimeMs: z.number(),
+	scrollPosition: z.number(),
+	bookSlug: z.string()
+})
+
+export class ReadingHistory extends createZodDto(HistorySchema) {}
 
 export class UserCatalogOutput extends createZodDto(UserCatalogOutputSchema) {}
 

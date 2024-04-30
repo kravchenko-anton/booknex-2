@@ -1,5 +1,5 @@
 import api from '@/api'
-import { useTypedNavigation, useTypedSelector } from '@/hooks'
+import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
 import {
 	AnimatedPress,
 	BookCard,
@@ -13,17 +13,32 @@ import { settings } from '@/ui/book-card/settings'
 import BannerList from '@/ui/book-lists/banner-list'
 import NothingFount from '@/ui/nothing-fount'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
+import { useNetInfo } from '@react-native-community/netinfo'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 //TODO: сделать сихнронную историю
 const Library = () => {
+	const { history = [] } = useTypedSelector(state => state.readingProgress)
+	const { clearHistory } = useAction()
 	const { data: library } = useQuery({
 		queryKey: QueryKeys.library,
-		queryFn: () => api.user.library(),
-		select: data => data.data
+		queryFn: () =>
+			api.user.library(
+				history.map(b => ({
+					bookSlug: b.slug,
+					progress: b.progress,
+					endDate: b.endDate as unknown as string,
+					readingTimeMs: b.readTimeMs,
+					scrollPosition: b.scrollPosition,
+					startDate: b.startDate as unknown as string
+				}))
+			),
+		select: data => data.data,
+		staleTime: 0,
+		onSuccess: () => clearHistory()
 	})
+	const { isConnected } = useNetInfo()
 	const { navigate } = useTypedNavigation()
-	const { history = [] } = useTypedSelector(state => state.readingProgress)
 
 	if (!library) return <Loader />
 	if (
@@ -44,31 +59,46 @@ const Library = () => {
 			<BannerList
 				title='Continue reading'
 				data={library.readingBooks}
-				renderItem={({ item: book }) => (
-					<AnimatedPress
-						style={{
-							width: settings.width.md
-						}}
-						onPress={() => navigate('Reader', { slug: book.slug })}>
-						<Image
-							width={settings.width.md}
-							height={settings.height.md}
-							url={book.picture}
-							className='mb-2'
-						/>
-						<ProgressBar
-							progress={
-								Number(history.find(b => b.slug === book.slug)?.progress) /
-									100 ||
-								// small progress  with index
-								0
-							}
-						/>
-						<Title numberOfLines={2} size='md' weight='medium' className='mt-1'>
-							{book.title}
-						</Title>
-					</AnimatedPress>
-				)}
+				renderItem={({ item: book }) => {
+					const progress =
+						isConnected && !history.some(b => b.slug === book.slug)
+							? Number(book.readingHistory.progress) / 100
+							: Number(history.find(b => b.slug === book.slug)?.progress) /
+									100 || 0
+					const scrollPosition =
+						isConnected && !history.some(b => b.slug === book.slug)
+							? Number(book.readingHistory.scrollPosition)
+							: Number(
+									history.find(b => b.slug === book.slug)?.scrollPosition
+								) || 0
+					return (
+						<AnimatedPress
+							style={{
+								width: settings.width.md
+							}}
+							onPress={() =>
+								navigate('Reader', {
+									slug: book.slug,
+									initialScrollPosition: scrollPosition
+								})
+							}>
+							<Image
+								width={settings.width.md}
+								height={settings.height.md}
+								url={book.picture}
+								className='mb-2'
+							/>
+							<ProgressBar progress={progress} />
+							<Title
+								numberOfLines={2}
+								size='md'
+								weight='medium'
+								className='mt-1'>
+								{book.title}
+							</Title>
+						</AnimatedPress>
+					)
+				}}
 			/>
 			<Flatlist
 				horizontal

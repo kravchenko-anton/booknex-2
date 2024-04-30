@@ -23,7 +23,7 @@ const Reader = () => {
 		readingSettingsModalReference,
 		styleTag,
 		viewerReference
-	} = useReader(params.slug)
+	} = useReader(params.slug, params.initialScrollPosition)
 	if (!ebook)
 		return <Loader background={colorScheme.colorPalette.background.normal} />
 	return (

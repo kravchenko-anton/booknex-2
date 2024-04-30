@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
+import { UserLibraryOutputFinishedBooksInner } from './user-library-output-finished-books-inner';
 
 /**
  * 
@@ -25,10 +25,10 @@ import { UserLibraryOutputReadingBooksInner } from './user-library-output-readin
 export interface FindOneGenreOutput {
     /**
      * 
-     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @type {Array<UserLibraryOutputFinishedBooksInner>}
      * @memberof FindOneGenreOutput
      */
-    'mainBooks': Array<UserLibraryOutputReadingBooksInner>;
+    'mainBooks': Array<UserLibraryOutputFinishedBooksInner>;
     /**
      * 
      * @type {string}

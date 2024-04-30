@@ -1,6 +1,6 @@
-import { Activities } from '@/prisma/generated'
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
+import { Activities } from '@prisma/client'
 import { z } from 'zod'
 
 extendZodWithOpenApi(z)

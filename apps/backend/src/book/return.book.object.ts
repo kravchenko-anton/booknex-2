@@ -1,4 +1,4 @@
-import type { Prisma } from '@/prisma/generated'
+import type { Prisma } from '@prisma/client'
 
 export const returnBookObject: Pick<
 	Prisma.BookSelect,

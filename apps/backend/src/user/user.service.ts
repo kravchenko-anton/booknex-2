@@ -1,6 +1,7 @@
-import { Activities, type Prisma } from '@/prisma/generated'
 import { ActivityService } from '@/src/activity/activity.service'
+import type { ReadingHistory } from '@/src/user/user.model'
 import { HttpStatus, Injectable } from '@nestjs/common'
+import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
 import { transformActivity } from 'global/utils/activity-transformer'
 import { returnBookObject } from '../book/return.book.object'
@@ -31,12 +32,41 @@ export class UserService {
 		return user
 	}
 
+	async syncHistory(dto: ReadingHistory[], userId: number) {
+		if (dto.length === 0) return
+		await this.prisma.readingHistory.createMany({
+			skipDuplicates: true,
+			data: dto.map(history => ({
+				readingTimeMs: history.readingTimeMs,
+				endDate: history.endDate,
+				progress: history.progress,
+
+				scrollPosition: history.scrollPosition,
+				startDate: history.startDate,
+				userId: userId,
+				bookSlug: history.bookSlug
+			}))
+		})
+	}
+
 	async library(userId: number) {
 		const library = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
 				readingBooks: {
-					select: returnBookObject,
+					select: {
+						...returnBookObject,
+						readingHistory: {
+							select: {
+								progress: true,
+								scrollPosition: true
+							},
+							orderBy: {
+								endDate: 'desc'
+							},
+							take: 1
+						}
+					},
 					where: {
 						isPublic: true
 					}
@@ -58,6 +88,7 @@ export class UserService {
 		if (!library)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		const { readingBooks, finishedBooks, savedBooks } = library
+
 		return {
 			readingBooks,
 			finishedBooks,

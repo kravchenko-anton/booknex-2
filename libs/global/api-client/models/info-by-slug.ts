@@ -18,7 +18,7 @@
 import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
+import { UserLibraryOutputFinishedBooksInner } from './user-library-output-finished-books-inner';
 
 /**
  * 
@@ -88,9 +88,9 @@ export interface InfoBySlug {
     'author': string;
     /**
      * 
-     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @type {Array<UserLibraryOutputFinishedBooksInner>}
      * @memberof InfoBySlug
      */
-    'fromSameAuthor': Array<UserLibraryOutputReadingBooksInner>;
+    'fromSameAuthor': Array<UserLibraryOutputFinishedBooksInner>;
 }
 

@@ -18,7 +18,7 @@
 import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
+import { UserLibraryOutputFinishedBooksInner } from './user-library-output-finished-books-inner';
 
 /**
  * 
@@ -28,10 +28,10 @@ import { UserLibraryOutputReadingBooksInner } from './user-library-output-readin
 export interface FeaturedOutput {
     /**
      * 
-     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @type {Array<UserLibraryOutputFinishedBooksInner>}
      * @memberof FeaturedOutput
      */
-    'picksOfWeek': Array<UserLibraryOutputReadingBooksInner>;
+    'picksOfWeek': Array<UserLibraryOutputFinishedBooksInner>;
     /**
      * 
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
@@ -40,21 +40,21 @@ export interface FeaturedOutput {
     'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
     /**
      * 
-     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @type {Array<UserLibraryOutputFinishedBooksInner>}
      * @memberof FeaturedOutput
      */
-    'bestSellingBooks': Array<UserLibraryOutputReadingBooksInner>;
+    'bestSellingBooks': Array<UserLibraryOutputFinishedBooksInner>;
     /**
      * 
-     * @type {Array<UserLibraryOutputReadingBooksInner>}
+     * @type {Array<UserLibraryOutputFinishedBooksInner>}
      * @memberof FeaturedOutput
      */
-    'newReleases': Array<UserLibraryOutputReadingBooksInner>;
+    'newReleases': Array<UserLibraryOutputFinishedBooksInner>;
     /**
      * 
-     * @type {Array<Array<UserLibraryOutputReadingBooksInner>>}
+     * @type {Array<Array<UserLibraryOutputFinishedBooksInner>>}
      * @memberof FeaturedOutput
      */
-    'booksBySelectedGenres': Array<Array<UserLibraryOutputReadingBooksInner>>;
+    'booksBySelectedGenres': Array<Array<UserLibraryOutputFinishedBooksInner>>;
 }
 

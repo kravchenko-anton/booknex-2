@@ -12,7 +12,7 @@ export type TypeRootStackParameterListType = {
 	Register: undefined
 	Profile: undefined
 	Welcome: undefined
-	Reader: { slug: string }
+	Reader: { slug: string; initialScrollPosition: number }
 	UpdateRecommendation: undefined
 	Search: undefined
 	Settings: undefined

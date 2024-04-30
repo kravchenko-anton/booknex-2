@@ -12,7 +12,7 @@ import { QueryKeys } from 'global/utils/query-keys'
 import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
-export const useReader = (slug: string) => {
+export const useReader = (slug: string, initialScrollPosition: number) => {
 	const { data: ebook } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
@@ -36,7 +36,8 @@ export const useReader = (slug: string) => {
 		clearProgress
 	} = useReadingProgress({
 		slug,
-		readerLoading
+		readerLoading,
+		initialScrollPosition: initialScrollPosition
 	})
 
 	const { finishReadingLoading, onFinish } = useFinishBook({

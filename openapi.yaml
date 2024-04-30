@@ -1,9 +1,17 @@
 openapi: 3.0.0
 paths:
   /user/library:
-    get:
+    post:
       operationId: library
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/ReadingHistory"
       responses:
         "200":
           description: ""
@@ -128,25 +136,6 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  /history/sync:
-    post:
-      operationId: sync
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/History"
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/History"
-      tags:
-        - 📚 history
   /catalog/search/{query}:
     get:
       operationId: search
@@ -788,6 +777,30 @@ components:
       bearerFormat: JWT
       type: http
   schemas:
+    ReadingHistory:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        progress:
+          type: number
+        readingTimeMs:
+          type: number
+        scrollPosition:
+          type: number
+        bookSlug:
+          type: string
+      required:
+        - startDate
+        - endDate
+        - progress
+        - readingTimeMs
+        - scrollPosition
+        - bookSlug
     UserLibraryOutput:
       type: object
       properties:
@@ -808,11 +821,22 @@ components:
               author:
                 type: string
                 required: true
+              readingHistory:
+                type: object
+                properties:
+                  progress:
+                    type: number
+                    required: true
+                  scrollPosition:
+                    type: number
+                    required: true
+                required: true
             required:
               - slug
               - title
               - picture
               - author
+              - readingHistory
         finishedBooks:
           type: array
           items:
@@ -988,27 +1012,6 @@ components:
         - data
         - canLoadMore
         - totalPages
-    History:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
-        readingTimeMs:
-          type: number
-        scrollPosition:
-          type: number
-        bookSlug:
-          type: string
-      required:
-        - startDate
-        - endDate
-        - readingTimeMs
-        - scrollPosition
-        - bookSlug
     ShortBook:
       type: object
       properties:

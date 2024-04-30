@@ -1,8 +1,5 @@
 generator client {
-  provider      = "prisma-client-js"
-  output        = "./generated"
-  engineType    = "binary"
-  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -20,8 +17,6 @@ model Genre {
   users         User[]
   books         Book[]         @relation("BookGenre")
   mainBooks     Book[]         @relation("BookMajorGenre")
-  similarBy     Genre[]        @relation("Similar")
-  similar       Genre[]        @relation("Similar")
   bookTemplates BookTemplate[]
   activities    Activity[]
 }
@@ -82,7 +77,7 @@ model Book {
   savedBy        User[]           @relation("SavedBooks")
   readingBy      User[]           @relation("ReadingBooks")
   activities     Activity[]
-  ReadingHistory ReadingHistory[]
+  readingHistory ReadingHistory[]
 
   similarBooks Book[] @relation("SimilarBooks")
   similarBy    Book[] @relation("SimilarBooks")
@@ -120,7 +115,7 @@ model User {
   finishedBooks  Book[]           @relation("FinishedBooks")
   readingBooks   Book[]           @relation("ReadingBooks")
   activity       Activity[]
-  ReadingHistory ReadingHistory[]
+  readingHistory ReadingHistory[]
 }
 
 model ReadingHistory {
@@ -132,9 +127,10 @@ model ReadingHistory {
   endDate        DateTime
   readingTimeMs  Int
   scrollPosition Int
-  book           Book     @relation(fields: [bookId], references: [id])
+  progress       Float
+  book           Book     @relation(fields: [bookSlug], references: [slug])
   user           User     @relation(fields: [userId], references: [id])
-  bookId         Int
+  bookSlug       String
   userId         Int
 }
 

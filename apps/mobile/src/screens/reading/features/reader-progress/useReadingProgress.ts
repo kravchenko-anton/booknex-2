@@ -1,4 +1,3 @@
-import { useTypedSelector } from '@/hooks'
 import { useSaveProgress } from '@/screens/reading/features/reader-progress/useSaveProgress'
 import type { WebviewMessageType } from '@/screens/reading/reader-viewer/useReaderMessage'
 import { useState } from 'react'
@@ -6,6 +5,7 @@ import { useState } from 'react'
 interface ReadingProgressProperties {
 	slug: string
 	readerLoading: boolean
+	initialScrollPosition: number
 }
 
 export interface ReadingProgressType {
@@ -18,11 +18,11 @@ export interface ReadingProgressType {
 
 export const useReadingProgress = ({
 	readerLoading,
-	slug
+	slug,
+	initialScrollPosition
 }: ReadingProgressProperties) => {
-	const { history = [] } = useTypedSelector(state => state.readingProgress)
 	const [scrollPosition, setScrollPosition] = useState(
-		history.find(book => book.slug === slug)?.scrollPosition || 1
+		initialScrollPosition || 1
 	)
 	const [readingProgress, setReadingProgress] = useState<ReadingProgressType>({
 		progress: 0,

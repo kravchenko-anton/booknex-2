@@ -22,7 +22,9 @@ const ReadingProgressSlice = createSlice({
 			state.history.push(action.payload)
 			console.log('state.history', state.history)
 		},
-
+		clearHistory(state) {
+			state.history = []
+		},
 		setStartFromReadingScreen(state, action: PayloadAction<boolean>) {
 			state.startFromReadingScreen = action.payload
 		}

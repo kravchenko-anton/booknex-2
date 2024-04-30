@@ -1,8 +1,21 @@
-import { Controller, Delete, Get, Param, Patch, Query } from '@nestjs/common'
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Patch,
+	Post,
+	Query
+} from '@nestjs/common'
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { UserCatalogOutput, UserLibraryOutput } from './user.model'
+import {
+	ReadingHistory,
+	UserCatalogOutput,
+	UserLibraryOutput
+} from './user.model'
 import { UserService } from './user.service'
 
 @ApiBearerAuth()
@@ -12,10 +25,16 @@ export class UserController {
 	constructor(private readonly usersService: UserService) {}
 
 	@Auth()
-	@Get('/library')
+	@Post('/library')
 	@ApiOkResponse({ type: UserLibraryOutput })
-	async library(@CurrentUser('id') id: number) {
-		return this.usersService.library(+id)
+	@ApiBody({ type: [ReadingHistory] })
+	async library(
+		@CurrentUser('id') userId: number,
+
+		@Body() dto: ReadingHistory[]
+	) {
+		await this.usersService.syncHistory(dto, userId)
+		return this.usersService.library(+userId)
 	}
 
 	@Auth()

@@ -8,7 +8,6 @@ clients/catalog-api.ts
 clients/ebook-api.ts
 clients/genre-api.ts
 clients/health-api.ts
-clients/history-api.ts
 clients/parser-api.ts
 clients/recommendation-api.ts
 clients/review-api.ts
@@ -41,10 +40,10 @@ models/full-book-review-inner-user.ts
 models/full-book-review-inner.ts
 models/full-book.ts
 models/google-auth-dto.ts
-models/history.ts
 models/index.ts
 models/info-by-slug.ts
 models/parser-dto.ts
+models/reading-history.ts
 models/refresh-dto.ts
 models/review-book-dto.ts
 models/short-book.ts
@@ -61,5 +60,7 @@ models/user-catalog-output-data-inner-count.ts
 models/user-catalog-output-data-inner-selected-genres-inner.ts
 models/user-catalog-output-data-inner.ts
 models/user-catalog-output.ts
+models/user-library-output-finished-books-inner.ts
+models/user-library-output-reading-books-inner-reading-history.ts
 models/user-library-output-reading-books-inner.ts
 models/user-library-output.ts

@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { UserLibraryOutputReadingBooksInnerReadingHistory } from './user-library-output-reading-books-inner-reading-history';
 
 /**
  * 
@@ -44,5 +47,11 @@ export interface UserLibraryOutputReadingBooksInner {
      * @memberof UserLibraryOutputReadingBooksInner
      */
     'author': string;
+    /**
+     * 
+     * @type {UserLibraryOutputReadingBooksInnerReadingHistory}
+     * @memberof UserLibraryOutputReadingBooksInner
+     */
+    'readingHistory': UserLibraryOutputReadingBooksInnerReadingHistory;
 }
 

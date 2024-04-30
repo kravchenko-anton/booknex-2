@@ -21,9 +21,9 @@ export * from './full-book-count';
 export * from './full-book-review-inner';
 export * from './full-book-review-inner-user';
 export * from './google-auth-dto';
-export * from './history';
 export * from './info-by-slug';
 export * from './parser-dto';
+export * from './reading-history';
 export * from './refresh-dto';
 export * from './review-book-dto';
 export * from './short-book';
@@ -41,4 +41,6 @@ export * from './user-catalog-output-data-inner-activities-inner-activities-inne
 export * from './user-catalog-output-data-inner-count';
 export * from './user-catalog-output-data-inner-selected-genres-inner';
 export * from './user-library-output';
+export * from './user-library-output-finished-books-inner';
 export * from './user-library-output-reading-books-inner';
+export * from './user-library-output-reading-books-inner-reading-history';
