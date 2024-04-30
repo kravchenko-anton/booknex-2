@@ -18,19 +18,16 @@ import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 //TODO: сделать сихнронную историю
 const Library = () => {
-	const { history = [] } = useTypedSelector(state => state.readingProgress)
 	const { clearHistory } = useAction()
+	const { history } = useTypedSelector(state => state.readingProgress)
 	const { data: library } = useQuery({
 		queryKey: QueryKeys.library,
 		queryFn: () =>
 			api.user.library(
 				history.map(b => ({
-					bookSlug: b.slug,
-					progress: b.progress,
-					endDate: b.endDate as unknown as string,
-					readingTimeMs: b.readTimeMs,
-					scrollPosition: b.scrollPosition,
-					startDate: b.startDate as unknown as string
+					...b,
+					startDate: b.startDate as unknown as string,
+					endDate: b.endDate as unknown as string
 				}))
 			),
 		select: data => data.data,
@@ -39,7 +36,7 @@ const Library = () => {
 	})
 	const { isConnected } = useNetInfo()
 	const { navigate } = useTypedNavigation()
-
+	console.log('library', library)
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&
@@ -60,17 +57,18 @@ const Library = () => {
 				title='Continue reading'
 				data={library.readingBooks}
 				renderItem={({ item: book }) => {
+					const readingHistory = book.readingHistory[0]
+					console.log('readingHistory', readingHistory)
 					const progress =
-						isConnected && !history.some(b => b.slug === book.slug)
-							? Number(book.readingHistory.progress) / 100
-							: Number(history.find(b => b.slug === book.slug)?.progress) /
-									100 || 0
+						isConnected && !history.some(b => b.bookSlug === book.slug)
+							? readingHistory?.progress || 0 / 100
+							: history.find(b => b.bookSlug === book.slug)?.progress ||
+								0 / 100 ||
+								0
 					const scrollPosition =
-						isConnected && !history.some(b => b.slug === book.slug)
-							? Number(book.readingHistory.scrollPosition)
-							: Number(
-									history.find(b => b.slug === book.slug)?.scrollPosition
-								) || 0
+						isConnected && !history.some(b => b.bookSlug === book.slug)
+							? readingHistory?.scrollPosition
+							: history.find(b => b.bookSlug === book.slug)?.scrollPosition || 0
 					return (
 						<AnimatedPress
 							style={{
@@ -79,7 +77,7 @@ const Library = () => {
 							onPress={() =>
 								navigate('Reader', {
 									slug: book.slug,
-									initialScrollPosition: scrollPosition
+									initialScrollPosition: scrollPosition || 0
 								})
 							}>
 							<Image

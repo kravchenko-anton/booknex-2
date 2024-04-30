@@ -90,7 +90,10 @@ export class UserService {
 		const { readingBooks, finishedBooks, savedBooks } = library
 
 		return {
-			readingBooks,
+			readingBooks: readingBooks.map(book => ({
+				...book,
+				readingHistory: book.readingHistory[0]
+			})),
 			finishedBooks,
 			savedBooks
 		}

@@ -30,12 +30,12 @@ export const useSaveProgress = ({
 				if (readerLoading) return
 				if (/inactive|background/.test(nextAppState)) {
 					addHistory({
-						slug,
+						bookSlug: slug,
 						progress: progress,
 						scrollPosition: scrollPosition,
 						endDate: new Date(),
 						startDate: startReadingDate,
-						readTimeMs: new Date().getTime() - startReadingDate.getTime()
+						readingTimeMs: new Date().getTime() - startReadingDate.getTime()
 					})
 				}
 			}
@@ -43,12 +43,12 @@ export const useSaveProgress = ({
 		const unsubscribe = addListener('beforeRemove', () => {
 			if (readerLoading) return
 			addHistory({
-				slug,
+				bookSlug: slug,
 				progress: progress,
 				scrollPosition: scrollPosition,
 				endDate: new Date(),
 				startDate: startReadingDate,
-				readTimeMs: new Date().getTime() - startReadingDate.getTime()
+				readingTimeMs: new Date().getTime() - startReadingDate.getTime()
 			})
 			setStartFromReadingScreen(false)
 		})

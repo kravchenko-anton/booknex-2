@@ -2,12 +2,12 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface ReadingHistoryType {
-	slug: string
+	bookSlug: string
 	progress: number
 	scrollPosition: number
 	startDate: Date
 	endDate: Date
-	readTimeMs: number
+	readingTimeMs: number
 }
 const initialState = {
 	history: [] as ReadingHistoryType[],
