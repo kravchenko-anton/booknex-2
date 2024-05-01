@@ -1,6 +1,5 @@
 import api from '@/api'
 import { AnimatedIcon } from '@/ui'
-import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Bookmarked } from 'icons'
@@ -17,9 +16,7 @@ const SaveButton: FC<SaveButtonProperties> = ({ slug }) => {
 		{
 			mutationKey: MutationKeys.book.toggleSaveBySlug(slug),
 			mutationFn: (slug: string) => api.user.toggleSave(slug),
-			onSuccess: async ({ data: isSave }) => {
-				successToast(`Book ${isSave ? 'saved' : 'removed from saved'}`)
-				//TODO: проверить работоспособность и пофиксить
+			onSuccess: async () => {
 				await queryClient.invalidateQueries({
 					queryKey: QueryKeys.book.isSaved(slug)
 				})

@@ -82,7 +82,7 @@ const Navigation: FC = () => {
 					initialRouteName={user ? 'Featured' : 'Welcome'}
 					screenOptions={{
 						presentation: 'containedTransparentModal',
-						animation: 'simple_push',
+						animation: 'fade',
 						headerShown: false,
 						statusBarColor: Color.background,
 						statusBarTranslucent: false,
