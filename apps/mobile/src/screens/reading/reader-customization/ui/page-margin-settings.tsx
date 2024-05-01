@@ -1,15 +1,12 @@
 import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import PageMarginIcon from '@/screens/reading/reader-customization/ui/icons/page-margin'
-import type { ActionCreatorWithPayload } from '@reduxjs/toolkit'
+import type { CustomizationStoreActionsType } from '@/screens/reading/store/customization-store'
 import type { FC } from 'react'
 import { View } from 'react-native'
 
 interface PageMarginSettingsProperties {
 	padding: number
-	changePadding: ActionCreatorWithPayload<
-		4 | 14 | 20,
-		'readingUi/changePadding'
-	>
+	changePadding: CustomizationStoreActionsType['changePadding']
 	colorScheme: ThemePackType
 }
 

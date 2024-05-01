@@ -2,8 +2,8 @@ import Navigation from '@/navigation/navigation'
 import { persistor, store } from '@/redux/store'
 import Loader from '@/ui/loader/loader'
 import Toast from '@/ui/toast'
+import { reduxStorage } from '@/utils/mmkv-wrapper'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Sentry from '@sentry/react-native'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
@@ -12,6 +12,7 @@ import { Color } from 'global/colors'
 import { StatusBar, View } from 'react-native'
 import codePush from 'react-native-code-push'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { MMKV } from 'react-native-mmkv'
 import 'react-native-url-polyfill/auto'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -27,6 +28,10 @@ const queryClient = new QueryClient({
 	}
 })
 
+export const storage = new MMKV({
+	id: 'app'
+})
+
 Sentry.init({
 	dsn: 'https://5b4c8cc2dc0a1223669dbfe7284599f1@o4506886163267584.ingest.us.sentry.io/4506886443630592',
 
@@ -36,8 +41,8 @@ Sentry.init({
 	tracesSampleRate: 1
 })
 
-const asyncStoragePersist = createAsyncStoragePersister({
-	storage: AsyncStorage
+const storagePersist = createAsyncStoragePersister({
+	storage: reduxStorage
 })
 codePush.sync({
 	deploymentKey: 'lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG',
@@ -55,7 +60,7 @@ const App = () => (
 			}>
 			<PersistQueryClientProvider
 				client={queryClient}
-				persistOptions={{ persister: asyncStoragePersist }}>
+				persistOptions={{ persister: storagePersist }}>
 				<GestureHandlerRootView
 					style={{
 						flex: 1

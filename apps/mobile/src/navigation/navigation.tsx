@@ -1,10 +1,11 @@
-import { useAction, useAuth, useTypedSelector } from '@/hooks'
+import { useAction, useAuth } from '@/hooks'
 import { authRoutes } from '@/navigation/auth-routes'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
 import { modalRoutes } from '@/navigation/modal-routes'
 import type { TypeRootStackParameterListType } from '@/navigation/navigation-types'
 import { routes } from '@/navigation/user-routes'
 import { getRefreshToken } from '@/redux/auth/auth-helper'
+import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { Loader } from '@/ui'
 import {
 	NavigationContainer,
@@ -27,9 +28,7 @@ const noBottomMenuRoutes = new Set(['Reader', 'BookReview', 'Search'])
 const Navigation: FC = () => {
 	const { user } = useAuth()
 	const { logout } = useAction()
-	const { history, startFromReadingScreen } = useTypedSelector(
-		state => state.readingProgress
-	)
+	const { history, startFromReadingScreen } = useReadingProgressStore()
 	console.log('history', history, startFromReadingScreen)
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
@@ -72,7 +71,10 @@ const Navigation: FC = () => {
 					)
 					console.log('latestHistory', latestHistory)
 					if (user && startFromReadingScreen && latestHistory) {
-						navReference.navigate('Reader', { slug: latestHistory.slug })
+						navReference.navigate('Reader', {
+							slug: latestHistory.bookSlug,
+							initialScrollPosition: latestHistory.scrollPosition
+						})
 					}
 					BootSplash.hide({ fade: true })
 				}}>

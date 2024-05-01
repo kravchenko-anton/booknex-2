@@ -1,9 +1,9 @@
-import type { ReadingUiStateType } from '@/redux/reader/reading-settings-slice'
 import { getStyleTag } from '@/screens/reading/features/reader-styles/styles-injection'
+import type { CustomizationStoreType } from '@/screens/reading/store/customization-store'
 import { useState } from 'react'
 
 export const useStyleTag = (
-	properties: ReadingUiStateType,
+	properties: CustomizationStoreType,
 	scrollPosition: number
 ) => {
 	const { lineHeight, fontSize, font, colorScheme, padding } = properties

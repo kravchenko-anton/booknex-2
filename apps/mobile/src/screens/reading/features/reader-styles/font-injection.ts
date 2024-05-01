@@ -1,4 +1,4 @@
-import { ReaderFont } from '@/redux/reader/reading-settings-slice'
+import { ReaderFont } from '@/screens/reading/store/customization-store'
 import { Platform } from 'react-native'
 
 export const injectFont = () => {

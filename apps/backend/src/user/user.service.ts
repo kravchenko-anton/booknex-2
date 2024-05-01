@@ -59,7 +59,8 @@ export class UserService {
 						readingHistory: {
 							select: {
 								progress: true,
-								scrollPosition: true
+								scrollPosition: true,
+								endDate: true
 							},
 							orderBy: {
 								endDate: 'desc'
@@ -90,10 +91,19 @@ export class UserService {
 		const { readingBooks, finishedBooks, savedBooks } = library
 
 		return {
-			readingBooks: readingBooks.map(book => ({
-				...book,
-				readingHistory: book.readingHistory[0]
-			})),
+			readingBooks: readingBooks
+				.map(book => ({
+					...book,
+					readingHistory: book.readingHistory[0]
+				}))
+				.sort((a, b) => {
+					if (!a.readingHistory) return 1
+					if (!b.readingHistory) return -1
+					return (
+						new Date(b.readingHistory.endDate).getTime() -
+						new Date(a.readingHistory.endDate).getTime()
+					)
+				}),
 			finishedBooks,
 			savedBooks
 		}

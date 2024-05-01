@@ -1,15 +1,12 @@
 import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import LineHeightIcon from '@/screens/reading/reader-customization/ui/icons/line-height'
-import type { ActionCreatorWithPayload } from '@reduxjs/toolkit'
+import type { CustomizationStoreActionsType } from '@/screens/reading/store/customization-store'
 import type { FC } from 'react'
 import { View } from 'react-native'
 
 interface LineHeightSettingsProperties {
 	lineHeight: number
-	changeLineHeight: ActionCreatorWithPayload<
-		1.3 | 1.5 | 1.8,
-		'readingUi/changeLineHeight'
-	>
+	changeLineHeight: CustomizationStoreActionsType['changeLineHeight']
 	colorScheme: ThemePackType
 }
 export const LineHeightSettings: FC<LineHeightSettingsProperties> = ({

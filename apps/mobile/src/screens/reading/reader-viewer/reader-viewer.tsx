@@ -1,5 +1,6 @@
 import { injectStyle } from '@/screens/reading/features/reader-styles/styles-injection'
 import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
+import { selectTextMenu } from '@/screens/reading/features/text-selection/text-select-menu'
 import { textSelection } from '@/screens/reading/features/text-selection/text-selection'
 import { composeReaderViewHtml } from '@/screens/reading/reader-viewer/compose-html'
 import { windowWidth } from '@/utils/dimensions'
@@ -48,13 +49,12 @@ const ReaderViewer = forwardRef(
 					<WebView
 						scrollEnabled
 						javaScriptEnabled
-						androidHardwareAccelerationDisabled
 						startInLoadingState
-						decelerationRate={'normal'}
 						ref={reference}
 						originWhitelist={['*']}
 						showsVerticalScrollIndicator={false}
 						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
+						menuItems={selectTextMenu}
 						renderLoading={() => (
 							<View
 								className='h-screen w-screen'
@@ -63,14 +63,6 @@ const ReaderViewer = forwardRef(
 								}}
 							/>
 						)}
-						menuItems={[
-							{ label: 'Copy', key: 'copy' },
-							{
-								label: 'Share',
-								key: 'share'
-							},
-							{ label: 'Translate', key: 'Translate' }
-						]}
 						source={{
 							baseUrl: '',
 							html: composeReaderViewHtml({

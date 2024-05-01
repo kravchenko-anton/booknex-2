@@ -1,9 +1,9 @@
-import { useAction, useTypedSelector } from '@/hooks'
 import { FontSizeSettings } from '@/screens/reading/reader-customization/ui/font-size-settings'
 import { FontStyleSettings } from '@/screens/reading/reader-customization/ui/font-style-settings'
 import { LineHeightSettings } from '@/screens/reading/reader-customization/ui/line-height-settings'
 import { PageMarginSettings } from '@/screens/reading/reader-customization/ui/page-margin-settings'
 import { ThemeStyleSettings } from '@/screens/reading/reader-customization/ui/theme-style-settings'
+import { useCustomizationStore } from '@/screens/reading/store/customization-store'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import type { FC, RefObject } from 'react'
 import { Pressable, View } from 'react-native'
@@ -15,16 +15,18 @@ interface ReaderCustomizationProperties {
 const ReaderCustomization: FC<ReaderCustomizationProperties> = ({
 	sheetRef
 }) => {
-	const { colorScheme, font, fontSize, lineHeight, padding } = useTypedSelector(
-		state => state.readingUi
-	)
 	const {
+		colorScheme,
+		font,
+		fontSize,
+		lineHeight,
+		padding,
 		changePadding,
 		changeTheme,
 		changeLineHeight,
 		changeFontFamily,
 		changeFontSize
-	} = useAction()
+	} = useCustomizationStore(state => state)
 	return (
 		<BottomSheetModal
 			enableContentPanningGesture

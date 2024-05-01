@@ -1,5 +1,4 @@
 import api from '@/api'
-import { useTypedSelector } from '@/hooks'
 import { useFinishBook } from '@/screens/reading/features/finish-book/useFinishBook'
 import { useReadingProgress } from '@/screens/reading/features/reader-progress/useReadingProgress'
 import { useModalReference } from '@/screens/reading/hooks/useModalReference'
@@ -7,6 +6,7 @@ import { useReaderLoading } from '@/screens/reading/hooks/useReaderLoading'
 import { useStatusBarStyle } from '@/screens/reading/hooks/useStatusBarStyle'
 import { useStyleTag } from '@/screens/reading/hooks/useStyleTag'
 import { useReaderMessage } from '@/screens/reading/reader-viewer/useReaderMessage'
+import { useCustomizationStore } from '@/screens/reading/store/customization-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useRef, useState } from 'react'
@@ -20,8 +20,8 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		enabled: !!slug
 	})
 
-	const { colorScheme, ...restUiProperties } = useTypedSelector(
-		state => state.readingUi
+	const { colorScheme, ...restUiProperties } = useCustomizationStore(
+		state => state
 	)
 	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
 	const viewerReference = useRef<WebView>(null)

@@ -5,15 +5,16 @@
 	"private": true,
 	"scripts": {
 		"CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-production -d Production",
-		"CodePush:deployementList": "appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex -k"
+		"CodePush:deployementList": "appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex -k",
+		"boothSplash:android": "yarn react-native generate-bootsplash assets/logo.png  \\\n  --background-color=111113 \\\n  --logo-width=100 \\\n  --assets-path=assets \\\n"
 	},
 	"dependencies": {
 		"@gorhom/bottom-sheet": "*",
 		"react-native-device-info": "*",
 		"@hookform/resolvers": "*",
 		"@react-native-community/netinfo": "*",
-		"@react-native-async-storage/async-storage": "*",
 		"@react-native-clipboard/clipboard": "*",
+		"react-native-mmkv": "*",
 		"@react-native-google-signin/google-signin": "*",
 		"@react-navigation/native": "*",
 		"@react-navigation/native-stack": "*",

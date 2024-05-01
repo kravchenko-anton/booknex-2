@@ -1,4 +1,5 @@
-import { useAction, useTypedNavigation } from '@/hooks'
+import { useTypedNavigation } from '@/hooks'
+import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { AppState } from 'react-native'
 
@@ -17,31 +18,14 @@ export const useSaveProgress = ({
 }: SaveProgressProperties) => {
 	const [startReadingDate] = useState(new Date()) // eslint-disable-line
 	const { addListener } = useTypedNavigation()
-	const { addHistory, setStartFromReadingScreen } = useAction()
-
+	const { addHistory, setStartFromReadingScreen } = useReadingProgressStore()
 	useLayoutEffect(() => {
 		setStartFromReadingScreen(true)
-	}, [])
+	}, [setStartFromReadingScreen])
 
 	useEffect(() => {
-		const appLeaveListener = AppState.addEventListener(
-			'change',
-			nextAppState => {
-				if (readerLoading) return
-				if (/inactive|background/.test(nextAppState)) {
-					addHistory({
-						bookSlug: slug,
-						progress: progress,
-						scrollPosition: scrollPosition,
-						endDate: new Date(),
-						startDate: startReadingDate,
-						readingTimeMs: new Date().getTime() - startReadingDate.getTime()
-					})
-				}
-			}
-		)
+		if (readerLoading) return
 		const unsubscribe = addListener('beforeRemove', () => {
-			if (readerLoading) return
 			addHistory({
 				bookSlug: slug,
 				progress: progress,
@@ -53,18 +37,28 @@ export const useSaveProgress = ({
 			setStartFromReadingScreen(false)
 		})
 
+		const subscription = AppState.addEventListener('change', nextAppState => {
+			if (nextAppState === 'active') return
+			addHistory({
+				bookSlug: slug,
+				progress: progress,
+				scrollPosition: scrollPosition,
+				endDate: new Date(),
+				startDate: startReadingDate,
+				readingTimeMs: new Date().getTime() - startReadingDate.getTime()
+			})
+			setStartFromReadingScreen(true)
+		})
 		return () => {
 			unsubscribe()
-			appLeaveListener.remove()
+			subscription.remove()
 		}
 	}, [
 		addListener,
-		slug,
 		progress,
 		scrollPosition,
 		addHistory,
-		setStartFromReadingScreen,
-		readerLoading,
+		slug,
 		startReadingDate,
 		AppState
 	])

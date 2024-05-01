@@ -1,10 +1,10 @@
-import { fontSizeSettings } from '@/redux/reader/reading-settings-slice'
 import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
 import { Title } from '@/ui'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 
+import { fontSizeSettings } from '@/screens/reading/store/customization-store'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface FontSizeSettingsProperties {

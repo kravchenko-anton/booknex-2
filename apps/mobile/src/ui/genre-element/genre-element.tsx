@@ -1,10 +1,10 @@
+import { storage } from '@/App'
 import { AnimatedPress } from '@/ui'
 import { settings } from '@/ui/button/settings'
 import type { ButtonProperties } from '@/ui/button/types'
 import { useGenreSvgContent } from '@/ui/genre-element/useGenreSvgContent'
 import Title from '@/ui/title/title'
 import { cn } from '@/utils'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { InnerColor } from 'global/colors'
 import { SvgXml } from 'react-native-svg'
 
@@ -44,7 +44,7 @@ export const GenreElement = ({
 				className='ml-2 mt-0.5'
 				width={settings.iconSize[size]}
 				height={settings.iconSize[size]}
-				onError={() => AsyncStorage.removeItem('svgGenre' + svgUri)}
+				onError={() => storage.delete('svgGenre' + svgUri)}
 			/>
 		</AnimatedPress>
 	)

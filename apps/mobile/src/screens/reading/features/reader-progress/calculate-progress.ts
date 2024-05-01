@@ -32,12 +32,13 @@ export const calculateProgress = `
 `
 export const scrollCalculateProgress = `
 let timerId;
+
+  
 window.addEventListener('scroll', function() {
  clearTimeout(timerId);
 
  timerId = setTimeout(() => {
   ${calculateProgress}
-  
  }, 500);
 });
 `

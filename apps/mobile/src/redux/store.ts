@@ -1,12 +1,12 @@
 import { rtkQueryErrorLogger } from '@/redux/middlewares/error.middleware'
 import { reducers } from '@/redux/root-reducer'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { reduxStorage } from '@/utils/mmkv-wrapper'
 import { configureStore } from '@reduxjs/toolkit'
 import { persistReducer, persistStore } from 'redux-persist'
 
 const persistConfig = {
 	key: 'root',
-	storage: AsyncStorage,
+	storage: reduxStorage,
 	whitelist: ['readingUi', 'readingProgress', 'auth']
 }
 

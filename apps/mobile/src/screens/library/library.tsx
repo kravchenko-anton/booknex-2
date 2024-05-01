@@ -1,5 +1,6 @@
 import api from '@/api'
-import { useAction, useTypedNavigation, useTypedSelector } from '@/hooks'
+import { useTypedNavigation } from '@/hooks'
+import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import {
 	AnimatedPress,
 	BookCard,
@@ -18,9 +19,9 @@ import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 //TODO: сделать сихнронную историю
 const Library = () => {
-	const { clearHistory } = useAction()
-	const { history } = useTypedSelector(state => state.readingProgress)
-	const { data: library } = useQuery({
+	const { history, clearHistory } = useReadingProgressStore()
+	console.log('actual history', history)
+	const { data: library, isLoading } = useQuery({
 		queryKey: QueryKeys.library,
 		queryFn: () =>
 			api.user.library(
@@ -32,11 +33,17 @@ const Library = () => {
 			),
 		select: data => data.data,
 		staleTime: 0,
-		onSuccess: () => clearHistory()
+		refetchOnWindowFocus: true,
+		refetchOnMount: true,
+		retry: history.length > 0,
+		onSuccess: () => {
+			console.log('sync success, clear history', history)
+			clearHistory()
+		}
 	})
+	console.log('isLoading', isLoading, 'library')
 	const { isConnected } = useNetInfo()
 	const { navigate } = useTypedNavigation()
-	console.log('library', library)
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&
@@ -57,18 +64,16 @@ const Library = () => {
 				title='Continue reading'
 				data={library.readingBooks}
 				renderItem={({ item: book }) => {
-					const readingHistory = book.readingHistory[0]
-					console.log('readingHistory', readingHistory)
 					const progress =
 						isConnected && !history.some(b => b.bookSlug === book.slug)
-							? readingHistory?.progress || 0 / 100
-							: history.find(b => b.bookSlug === book.slug)?.progress ||
-								0 / 100 ||
-								0
+							? (book.readingHistory?.progress || 0) / 100
+							: (history.find(b => b.bookSlug === book.slug)?.progress || 0) /
+								100
 					const scrollPosition =
 						isConnected && !history.some(b => b.bookSlug === book.slug)
-							? readingHistory?.scrollPosition
+							? book.readingHistory?.scrollPosition
 							: history.find(b => b.bookSlug === book.slug)?.scrollPosition || 0
+					console.log(`progress from ${book.title} |`, progress, scrollPosition)
 					return (
 						<AnimatedPress
 							style={{
