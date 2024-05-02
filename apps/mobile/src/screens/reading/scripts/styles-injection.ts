@@ -1,4 +1,4 @@
-import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
+import type { ThemePackType } from '@/screens/reading/utils/theme-pack'
 
 export const injectStyle = (style: string) => `
 	var style = document.createElement('style');
@@ -77,7 +77,7 @@ export const getStyleTag = ({
 	h6 {
 		font-family: ${fontFamily}-Bold !important;
 		font-size: ${fontSize * 1.1}px !important;
-		color: ${colorPalette.primary} !important;
+		color: ${colorPalette.secondary} !important;
 	}
 	::selection {
 		background: ${colorPalette.textSelection} !important;
@@ -91,15 +91,16 @@ export const getStyleTag = ({
 	color: ${colorPalette.text} !important;
 	list-style-type: none;
 	}
+	
 	em {
 		font-style: italic !important;
 	}
 	b {
-		font-weight: bold !important;
 		color: ${colorPalette.secondary} !important;
+		font-family: ${fontFamily}-Bold !important;
+		
 	}
 	strong {
-		font-weight: bold !important;
 		color: ${colorPalette.text} !important;
 	}
 	i {

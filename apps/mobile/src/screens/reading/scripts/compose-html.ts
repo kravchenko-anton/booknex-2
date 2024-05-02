@@ -1,6 +1,6 @@
-import { finishBookButton } from '@/screens/reading/features/finish-book/finish-book-html'
-import { injectFont } from '@/screens/reading/features/reader-styles/font-injection'
-import { useScriptInject } from '@/screens/reading/reader-viewer/useScriptInject'
+import { finishBookButton } from '@/screens/reading/scripts/finish-book-html'
+import { injectFont } from '@/screens/reading/scripts/font-injection'
+import { injectStartScripts } from '@/screens/reading/scripts/injectStartScripts'
 import { getFileUrl } from 'global/api-config'
 
 interface ComposeReaderViewHtmlProperties {
@@ -38,5 +38,5 @@ export const composeReaderViewHtml = ({
 			</div>
 
 			${finishBookButton}
-			${useScriptInject(defaultProperties.scrollPosition)}
+			${injectStartScripts(defaultProperties.scrollPosition)}
 	`

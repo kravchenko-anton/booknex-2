@@ -1,6 +1,6 @@
 import { useTypedRoute } from '@/hooks'
+import ReaderChapters from '@/screens/reading/chapters-modal/reader-chapters'
 import { useReader } from '@/screens/reading/hooks/useReader'
-import ReaderChapters from '@/screens/reading/reader-chapters/reader-chapters'
 import ReaderCustomization from '@/screens/reading/reader-customization/reader-customization'
 import ReaderHeader from '@/screens/reading/reader-header/reader-header'
 import ReaderViewer from '@/screens/reading/reader-viewer/reader-viewer'
@@ -26,6 +26,7 @@ const Reader = () => {
 	} = useReader(params.slug, params.initialScrollPosition)
 	if (!ebook)
 		return <Loader background={colorScheme.colorPalette.background.normal} />
+	console.log('ebook')
 	return (
 		<>
 			<AnimatedView
@@ -67,11 +68,13 @@ const Reader = () => {
 				colorScheme={colorScheme}
 				chapters={ebook.chapters}
 				sheetRef={chaptersListModalReference}
-				changeChapter={link =>
+				changeChapter={link => {
+					console.log('link', link)
 					viewerReference.current?.injectJavaScript(
-						`document.getElementById('${link}')?.scrollIntoView({ behavior: 'smooth' })`
+						`
+						document.getElementById('${link}')?.scrollIntoView({ behavior: 'smooth' })`
 					)
-				}
+				}}
 			/>
 
 			<ReaderCustomization sheetRef={readingSettingsModalReference} />

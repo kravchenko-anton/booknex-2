@@ -1,4 +1,4 @@
-import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
+import type { ThemePackType } from '@/screens/reading/utils/theme-pack'
 import { Title } from '@/ui'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'

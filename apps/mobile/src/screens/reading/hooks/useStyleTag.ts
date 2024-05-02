@@ -1,4 +1,4 @@
-import { getStyleTag } from '@/screens/reading/features/reader-styles/styles-injection'
+import { getStyleTag } from '@/screens/reading/scripts/styles-injection'
 import type { CustomizationStoreType } from '@/screens/reading/store/customization-store'
 import { useState } from 'react'
 

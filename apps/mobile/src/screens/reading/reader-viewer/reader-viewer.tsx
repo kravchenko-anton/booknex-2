@@ -1,8 +1,8 @@
-import { injectStyle } from '@/screens/reading/features/reader-styles/styles-injection'
-import type { ThemePackType } from '@/screens/reading/features/reader-styles/theme-pack'
-import { selectTextMenu } from '@/screens/reading/features/text-selection/text-select-menu'
-import { textSelection } from '@/screens/reading/features/text-selection/text-selection'
-import { composeReaderViewHtml } from '@/screens/reading/reader-viewer/compose-html'
+import { onTextSelection } from '@/screens/reading/functions/on-text-selection'
+import { composeReaderViewHtml } from '@/screens/reading/scripts/compose-html'
+import { injectStyle } from '@/screens/reading/scripts/styles-injection'
+import { selectTextMenu } from '@/screens/reading/utils/text-select-menu'
+import type { ThemePackType } from '@/screens/reading/utils/theme-pack'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
 import type { FunctionType } from 'global/types'
@@ -78,7 +78,7 @@ const ReaderViewer = forwardRef(
 						}}
 						onMessage={onMessage}
 						onCustomMenuSelection={async (event: any) => {
-							await textSelection(
+							await onTextSelection(
 								event,
 								reference?.current?.injectJavaScript(`
 							document.getSelection().removeAllRanges()

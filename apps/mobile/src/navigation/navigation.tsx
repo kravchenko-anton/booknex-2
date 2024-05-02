@@ -28,8 +28,8 @@ const noBottomMenuRoutes = new Set(['Reader', 'BookReview', 'Search'])
 const Navigation: FC = () => {
 	const { user } = useAuth()
 	const { logout } = useAction()
-	const { history, startFromReadingScreen } = useReadingProgressStore()
-	console.log('history', history, startFromReadingScreen)
+	const { history } = useReadingProgressStore()
+	console.log('history', history)
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)
@@ -66,16 +66,14 @@ const Navigation: FC = () => {
 				ref={navReference}
 				fallback={<Loader />}
 				onReady={() => {
-					const latestHistory = history.find(
-						historyItem => !historyItem.endDate
-					)
-					console.log('latestHistory', latestHistory)
-					if (user && startFromReadingScreen && latestHistory) {
+					const latestHistory = history
+						.sort((a, b) => b.endDate.getTime() - a.endDate.getTime())
+						.find(h => h.startFromReadingScreen)
+					if (user && latestHistory)
 						navReference.navigate('Reader', {
 							slug: latestHistory.bookSlug,
 							initialScrollPosition: latestHistory.scrollPosition
 						})
-					}
 					BootSplash.hide({ fade: true })
 				}}>
 				<Stack.Navigator

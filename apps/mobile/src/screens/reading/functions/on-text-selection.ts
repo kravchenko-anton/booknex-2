@@ -17,7 +17,7 @@ const textSelectionValidation = (selectedText: string) => {
 	return true
 }
 
-export const textSelection = async (event: any, removeAllSelection: void) => {
+export const onTextSelection = async (event: any, removeAllSelection: void) => {
 	if (event.nativeEvent.key === 'copy') {
 		if (!event.nativeEvent.selectedText) return
 		if (!textSelectionValidation(event.nativeEvent.selectedText)) return
@@ -33,17 +33,10 @@ export const textSelection = async (event: any, removeAllSelection: void) => {
 	if (event.nativeEvent.key === 'Translate') {
 		if (!textSelectionValidation(event.nativeEvent.selectedText)) return
 		await Linking.openURL(
-			`https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${event.nativeEvent.selectedText}`
+			//popup open with translation
+			`https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${event.nativeEvent.selectedText}?utm_source=reader&utm_medium=share&utm_campaign=translate
+			`
 		)
 	}
 	return removeAllSelection
 }
-export const selectTextLimitScript = `
-document.addEventListener('selectionchange', function() {
-	const selectedText = window.getSelection().toString()
-	if (selectedText.length > ${textSElectionLimit}) {
-		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selection-limit-fail'}))
-		window.getSelection().removeAllRanges()
-	}
-});
-`

@@ -1,10 +1,10 @@
 import {
 	calculateProgress,
 	scrollCalculateProgress
-} from '@/screens/reading/features/reader-progress/calculate-progress'
-import { selectTextLimitScript } from '@/screens/reading/features/text-selection/text-selection'
+} from '@/screens/reading/scripts/calculate-progress'
+import { selectTextLimitScript } from '@/screens/reading/scripts/text-selection-limit'
 
-export const useScriptInject = (startPosition: number) => `
+export const injectStartScripts = (startPosition: number) => `
 <script>
 						window.onload = function() {
 						window.scrollTo({

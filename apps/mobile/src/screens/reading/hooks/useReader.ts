@@ -1,11 +1,11 @@
 import api from '@/api'
-import { useFinishBook } from '@/screens/reading/features/finish-book/useFinishBook'
-import { useReadingProgress } from '@/screens/reading/features/reader-progress/useReadingProgress'
+import { useFinishBook } from '@/screens/reading/hooks/useFinishBook'
 import { useModalReference } from '@/screens/reading/hooks/useModalReference'
 import { useReaderLoading } from '@/screens/reading/hooks/useReaderLoading'
+import { useReaderMessage } from '@/screens/reading/hooks/useReaderMessage'
+import { useReadingProgress } from '@/screens/reading/hooks/useReadingProgress'
 import { useStatusBarStyle } from '@/screens/reading/hooks/useStatusBarStyle'
 import { useStyleTag } from '@/screens/reading/hooks/useStyleTag'
-import { useReaderMessage } from '@/screens/reading/reader-viewer/useReaderMessage'
 import { useCustomizationStore } from '@/screens/reading/store/customization-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
@@ -13,11 +13,15 @@ import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
 export const useReader = (slug: string, initialScrollPosition: number) => {
+	const [readingSessionKey] = useState(slug + Math.random() * 1000)
+
 	const { data: ebook } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data,
-		enabled: !!slug
+		enabled: !!slug,
+		cacheTime: 0,
+		staleTime: 0
 	})
 
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(
@@ -37,7 +41,8 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	} = useReadingProgress({
 		slug,
 		readerLoading,
-		initialScrollPosition: initialScrollPosition
+		initialScrollPosition: initialScrollPosition,
+		readingSessionKey
 	})
 
 	const { finishReadingLoading, onFinish } = useFinishBook({

@@ -1,10 +1,10 @@
 import {
 	themePack,
 	type ThemePackType
-} from '@/screens/reading/features/reader-styles/theme-pack'
+} from '@/screens/reading/utils/theme-pack'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
 import { create } from 'zustand'
-import { createJSONStorage, devtools, persist } from 'zustand/middleware'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 export const fontSizeSettings = {
 	min: 18,
@@ -65,37 +65,32 @@ export const initialState: CustomizationStoreType = {
 export const useCustomizationStore = create<
 	CustomizationStoreType & CustomizationStoreActionsType
 >()(
-	devtools(
-		persist(
-			set => ({
-				...initialState,
-				changeTheme: (payload: ThemePackType['slug']) =>
-					set(state => ({
-						...state,
-						colorScheme: themePack.find(
-							theme => theme.slug === payload
-						) as ThemePackType
-					})),
-				changeLineHeight: (payload: 1.3 | 1.5 | 1.8) =>
-					set(state => ({ ...state, lineHeight: payload })),
-				changePadding: (payload: 14 | 4 | 20) =>
-					set(state => ({ ...state, padding: payload })),
-				changeFontFamily: (payload: (typeof ReaderFont)[number]) =>
-					set(state => ({ ...state, font: payload })),
-				changeFontSize: (payload: number) =>
-					set(state => {
-						if (
-							payload < fontSizeSettings.min ||
-							payload > fontSizeSettings.max
-						)
-							return state
-						return { ...state, fontSize: payload }
-					})
-			}),
-			{
-				name: 'customization-store',
-				storage: createJSONStorage(() => zustandStorage)
-			}
-		)
+	persist(
+		set => ({
+			...initialState,
+			changeTheme: (payload: ThemePackType['slug']) =>
+				set(state => ({
+					...state,
+					colorScheme: themePack.find(
+						theme => theme.slug === payload
+					) as ThemePackType
+				})),
+			changeLineHeight: (payload: 1.3 | 1.5 | 1.8) =>
+				set(state => ({ ...state, lineHeight: payload })),
+			changePadding: (payload: 14 | 4 | 20) =>
+				set(state => ({ ...state, padding: payload })),
+			changeFontFamily: (payload: (typeof ReaderFont)[number]) =>
+				set(state => ({ ...state, font: payload })),
+			changeFontSize: (payload: number) =>
+				set(state => {
+					if (payload < fontSizeSettings.min || payload > fontSizeSettings.max)
+						return state
+					return { ...state, fontSize: payload }
+				})
+		}),
+		{
+			name: 'customization-store',
+			storage: createJSONStorage(() => zustandStorage)
+		}
 	)
 )
