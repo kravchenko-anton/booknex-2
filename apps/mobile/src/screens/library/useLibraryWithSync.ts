@@ -2,10 +2,15 @@ import api from '@/api'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
+import { useShallow } from 'zustand/react/shallow'
 
 export const useLibraryWithSync = () => {
-	const clearHistory = useReadingProgressStore(state => state.clearHistory)
-	const history = useReadingProgressStore(state => state.history)
+	const { history, clearHistory } = useReadingProgressStore(
+		useShallow(state => ({
+			history: state.history,
+			clearHistory: state.clearHistory
+		}))
+	)
 	console.log('actual history in library', history)
 	const { data: library, isLoading } = useQuery({
 		queryKey: QueryKeys.library,

@@ -43,7 +43,9 @@ export const useReadingProgress = ({
 	})
 	useEffect(() => {
 		if (readerLoading) return
+
 		return addListener('beforeRemove', () => {
+			console.log('beforeRemove', readingSessionKey, readingProgress.progress)
 			updateStartFromReadingScreen({
 				id: readingSessionKey,
 				startFromReadingScreen: false
@@ -53,7 +55,9 @@ export const useReadingProgress = ({
 		addListener,
 		readingSessionKey,
 		readerLoading,
-		updateStartFromReadingScreen
+		updateStartFromReadingScreen,
+		startReadingDate,
+		slug
 	])
 
 	const clearProgress = () => {

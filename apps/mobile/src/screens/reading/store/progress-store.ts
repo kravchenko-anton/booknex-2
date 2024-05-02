@@ -38,6 +38,11 @@ export const useReadingProgressStore = create<
 				set(state => {
 					if (state.history.some(h => h.id === newHistory.id)) {
 						// update info in old history
+						console.log(
+							'update info in old history',
+							newHistory.id,
+							newHistory.progress
+						)
 						return {
 							...state,
 							history: state.history.map(history =>
@@ -45,6 +50,7 @@ export const useReadingProgressStore = create<
 							)
 						}
 					}
+					console.log('add new history', newHistory.id, newHistory.progress)
 					return { ...state, history: [...state.history, newHistory] }
 				})
 			},
@@ -54,7 +60,7 @@ export const useReadingProgressStore = create<
 			) =>
 				set(state => ({
 					...state,
-					history: state.history.map(h =>
+					history: state.history.map(({ ...h }) =>
 						h.id === data.id
 							? { ...h, startFromReadingScreen: data.startFromReadingScreen }
 							: h
