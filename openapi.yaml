@@ -23,6 +23,29 @@ paths:
         - 👤 user
       security:
         - bearer: []
+  /user/statistics:
+    post:
+      operationId: statistics
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/ReadingHistory"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserStatistics"
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
   /user/start-reading/{slug}:
     patch:
       operationId: startReading
@@ -731,15 +754,6 @@ paths:
                   $ref: "#/components/schemas/StoredEBook"
       tags:
         - 📙 ebook
-  /ebook/admin/fix-ebook-structure:
-    get:
-      operationId: fixEBookStructure
-      parameters: []
-      responses:
-        "200":
-          description: ""
-      tags:
-        - 📙 ebook
 info:
   title: Booknex
   description: ""
@@ -885,6 +899,35 @@ components:
         - readingBooks
         - finishedBooks
         - savedBooks
+    UserStatistics:
+      type: object
+      properties:
+        progressByLastWeek:
+          type: array
+          items:
+            type: object
+            properties:
+              day:
+                type: string
+                required: true
+              isReadMoreThatGoal:
+                type: boolean
+                required: true
+              readingTimeMs:
+                type: number
+                required: true
+            required:
+              - day
+              - isReadMoreThatGoal
+              - readingTimeMs
+        pepTalk:
+          type: string
+        userSteak:
+          type: number
+      required:
+        - progressByLastWeek
+        - pepTalk
+        - userSteak
     UserCatalogOutput:
       type: object
       properties:
@@ -1161,7 +1204,7 @@ components:
     FindOneGenreOutput:
       type: object
       properties:
-        mainBooks:
+        books:
           type: array
           items:
             type: object
@@ -1190,7 +1233,7 @@ components:
         icon:
           type: string
       required:
-        - mainBooks
+        - books
         - slug
         - name
         - icon

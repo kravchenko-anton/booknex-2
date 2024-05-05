@@ -1,5 +1,6 @@
 export const QueryKeys = {
 	library: ['user-library'],
+	userStatistics: ['user-statisticds'],
 	featured: ['featured'],
 	recommendationGenres: ['recommendation-genres'],
 	searchByTerm: (searchTerm: string) => ['search-by-term', searchTerm],

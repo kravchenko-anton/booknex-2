@@ -69,14 +69,14 @@ const Page = () => {
 				</div>
 
 				<div className='md:w-5/6'>
+					<h1 className='mb-1 text-3xl'>{book.title}</h1>
+
 					<div className='flex items-center gap-5'>
-						<h1 className='mb-1 text-3xl'>{book.title}</h1>
+						<h1 className='text-gray text-xl'>{book.author}</h1>
 						<div className='flex items-center gap-2'>
 							<p className='text-warning  text-lg'>★ {book.rating}</p>
 						</div>
 					</div>
-
-					<h1 className='text-gray text-xl'>{book.author}</h1>
 					<h4 className='mb-2 mt-4 text-lg font-bold'>Genres</h4>
 					<div className='text-gray mb-8 flex items-center gap-2 overflow-auto'>
 						{book.genres.map(genre => (

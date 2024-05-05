@@ -33,7 +33,7 @@ export class GenreService {
 			},
 			select: {
 				...ReturnGenreObject,
-				mainBooks: {
+				books: {
 					select: returnBookObject,
 					where: {
 						isPublic: true

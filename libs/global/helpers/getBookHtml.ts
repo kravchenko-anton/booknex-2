@@ -16,17 +16,12 @@ export const getServerBookHtml = ({
 	readingTime,
 	romanNumber
 }: BookHtmlType) => `<section id="${slugify(name + ' ' + title)}">
-	<div style="
-	width: 100%;
-	height: 90px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;">
-	<div>
+
 	<h4 style="margin: 0; padding: 0; font-size: 18px; margin-bottom:4px">${name}</h4>
-	<em style="margin: 0; padding: 0; ">${minutesToTime(readingTime)}</em>
-  </div>
+	<div style=" gap: 10px; display: flex; align-items: center;">
 	<h6 style="margin: 0; padding: 0;">${romanNumber}</h6>
-	</div>
+	<em style="margin: 0; padding: 0;">${minutesToTime(readingTime)}</em>
+
+</div>
  ${text}
 </section>`

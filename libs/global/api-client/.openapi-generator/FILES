@@ -64,3 +64,5 @@ models/user-library-output-finished-books-inner.ts
 models/user-library-output-reading-books-inner-reading-history.ts
 models/user-library-output-reading-books-inner.ts
 models/user-library-output.ts
+models/user-statistics-progress-by-last-week-inner.ts
+models/user-statistics.ts

@@ -1,5 +1,5 @@
 import type { ReadingHistoryType } from '@/screens/reading/store/progress-store'
-import { AnimatedPress, Image, Title } from '@/ui'
+import { Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
 import type { UserLibraryOutputReadingBooksInner } from 'global/api-client'
@@ -35,7 +35,10 @@ export const ReadingList: FC<ReadingListProperties> = ({
 		</View>
 		<Animated.FlatList
 			horizontal
+			showsHorizontalScrollIndicator={false}
 			layout={JumpingTransition}
+			bounces={false}
+			alwaysBounceHorizontal={false}
 			data={data}
 			ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
 			contentContainerStyle={{
@@ -53,17 +56,18 @@ export const ReadingList: FC<ReadingListProperties> = ({
 				const scrollPosition = history.some(b => b.bookSlug === book.slug)
 					? history.find(b => b.bookSlug === book.slug)?.scrollPosition || 0
 					: book.readingHistory?.scrollPosition
+				console.log(`progress from ${book.title} |`, progress, scrollPosition)
 				return (
-					<AnimatedPress
+					<Animated.View
 						style={{
 							width: settings.width.md
 						}}
-						onPress={() =>
+						onTouchEnd={() => {
 							navigate('Reader', {
 								slug: book.slug,
 								initialScrollPosition: scrollPosition || 0
 							})
-						}>
+						}}>
 						<Image
 							width={settings.width.md}
 							height={settings.height.md}
@@ -74,7 +78,7 @@ export const ReadingList: FC<ReadingListProperties> = ({
 						<Title numberOfLines={2} size='md' weight='medium' className='mt-1'>
 							{book.title}
 						</Title>
-					</AnimatedPress>
+					</Animated.View>
 				)
 			}}
 		/>

@@ -14,7 +14,8 @@ import { CurrentUser } from '../auth/decorators/user.decorator'
 import {
 	ReadingHistory,
 	UserCatalogOutput,
-	UserLibraryOutput
+	UserLibraryOutput,
+	UserStatistics
 } from './user.model'
 import { UserService } from './user.service'
 
@@ -35,6 +36,18 @@ export class UserController {
 	) {
 		await this.usersService.syncHistory(dto, userId)
 		return this.usersService.library(+userId)
+	}
+
+	@Auth()
+	@Post('/statistics')
+	@ApiBody({ type: [ReadingHistory] })
+	@ApiOkResponse({ type: UserStatistics })
+	async statistics(
+		@CurrentUser('id') userId: number,
+		@Body() dto: ReadingHistory[]
+	) {
+		await this.usersService.syncHistory(dto, userId)
+		return this.usersService.userStatistics(userId)
 	}
 
 	@Auth()

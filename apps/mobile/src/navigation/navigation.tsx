@@ -29,6 +29,11 @@ const Navigation: FC = () => {
 	const { user } = useAuth()
 	const { logout } = useAction()
 	const [initialHistory] = useState(useReadingProgressStore.getState().history) // eslint-disable-line
+	const latestHistory = initialHistory
+		.sort(
+			(a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
+		)
+		.find(h => h.startFromReadingScreen)
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)
@@ -66,12 +71,6 @@ const Navigation: FC = () => {
 				ref={navReference}
 				fallback={<Loader />}
 				onReady={() => {
-					const latestHistory = initialHistory
-						.sort(
-							(a, b) =>
-								new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
-						)
-						.find(h => h.startFromReadingScreen)
 					if (user && latestHistory)
 						navReference.navigate('Reader', {
 							slug: latestHistory.bookSlug,

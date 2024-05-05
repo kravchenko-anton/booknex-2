@@ -32,7 +32,7 @@ export const useReadingProgress = ({
 	const newProgress = useReadingProgressStore(state => state.newProgress)
 
 	const [scrollPosition, setScrollPosition] = useState(
-		initialScrollPosition || 1
+		initialScrollPosition || 0
 	)
 	const [readingProgress, setReadingProgress] = useState<ReadingProgressType>({
 		progress: 0,
@@ -41,11 +41,18 @@ export const useReadingProgress = ({
 			progress: 0
 		}
 	})
+	console.log(
+		'readingProgress',
+		readingProgress,
+		'scrollPosition',
+		scrollPosition,
+		'initialScrollPosition',
+		initialScrollPosition
+	)
 	useEffect(() => {
 		if (readerLoading) return
-
 		return addListener('beforeRemove', () => {
-			console.log('beforeRemove', readingSessionKey, readingProgress.progress)
+			console.log('beforeRemove')
 			updateStartFromReadingScreen({
 				id: readingSessionKey,
 				startFromReadingScreen: false
@@ -53,11 +60,9 @@ export const useReadingProgress = ({
 		})
 	}, [
 		addListener,
-		readingSessionKey,
 		readerLoading,
-		updateStartFromReadingScreen,
-		startReadingDate,
-		slug
+		readingSessionKey,
+		updateStartFromReadingScreen
 	])
 
 	const clearProgress = () => {

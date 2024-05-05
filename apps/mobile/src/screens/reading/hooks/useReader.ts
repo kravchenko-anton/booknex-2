@@ -1,4 +1,5 @@
 import api from '@/api'
+
 import { useFinishBook } from '@/screens/reading/hooks/useFinishBook'
 import { useModalReference } from '@/screens/reading/hooks/useModalReference'
 import { useReaderLoading } from '@/screens/reading/hooks/useReaderLoading'
@@ -19,9 +20,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data,
-		enabled: !!slug,
-		cacheTime: 0,
-		staleTime: 0
+		enabled: !!slug
 	})
 
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(

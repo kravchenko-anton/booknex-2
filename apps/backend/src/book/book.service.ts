@@ -111,6 +111,18 @@ export class BookService {
 						savedBy: true
 					}
 				},
+				readingHistory: {
+						where: {
+							bookSlug: slug
+						},
+						select: {
+							endDate: true,
+							progress: true,
+							 readingTimeMs: true,
+							scrollPosition: true,
+							startDate: true,
+						}
+				},
 				activities: {
 					select: {
 						type: true,
@@ -130,6 +142,7 @@ export class BookService {
 		console.log('rest', rest)
 		return {
 			...rest,
+			readingStats: transformActivity(activities),
 			activities: transformActivity(activities)
 		}
 	}

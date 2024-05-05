@@ -101,6 +101,12 @@ export class ParserService {
 					title: true
 				}
 			})
+
+			const booksExists = await this.prisma.book.findMany({
+				select: {
+					title: true
+				}
+			})
 			const { browser, page } = await useParser()
 
 			const books = await parseBookTable(page, dto.url, dto.page)
@@ -108,7 +114,11 @@ export class ParserService {
 				try {
 					const { title, author, description, picture, genres, rating } =
 						await parseCurrentBook(page, book.link)
-					if (bookTemplate.some(b => b.title === title.trim())) continue
+					if (
+						bookTemplate.some(b => b.title === title.trim()) ||
+						booksExists.some(b => b.title === title.trim())
+					)
+						continue
 					if (rating < 2) continue
 					const goodGenres = await this.prisma.genre.findMany({
 						where: {

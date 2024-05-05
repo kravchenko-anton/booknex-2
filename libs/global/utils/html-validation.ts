@@ -37,7 +37,10 @@ export const checkHtmlValid = async (html: string) => {
 			throw new Error('Html validation error')
 		})
 
-	const skippedErrors = ['Element “dl” is missing a required child element']
+	const skippedErrors = [
+		'Element “dl” is missing a required child element',
+		'Section lacks heading'
+	]
 	const messages = request.data.messages
 		.filter(
 			(message: HtmlValidationMessageType) =>

@@ -15,37 +15,31 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserLibraryOutputFinishedBooksInner } from './user-library-output-finished-books-inner';
+import { UserStatisticsProgressByLastWeekInner } from './user-statistics-progress-by-last-week-inner';
 
 /**
  * 
  * @export
- * @interface FindOneGenreOutput
+ * @interface UserStatistics
  */
-export interface FindOneGenreOutput {
+export interface UserStatistics {
     /**
      * 
-     * @type {Array<UserLibraryOutputFinishedBooksInner>}
-     * @memberof FindOneGenreOutput
+     * @type {Array<UserStatisticsProgressByLastWeekInner>}
+     * @memberof UserStatistics
      */
-    'books': Array<UserLibraryOutputFinishedBooksInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof FindOneGenreOutput
-     */
-    'slug': string;
+    'progressByLastWeek': Array<UserStatisticsProgressByLastWeekInner>;
     /**
      * 
      * @type {string}
-     * @memberof FindOneGenreOutput
+     * @memberof UserStatistics
      */
-    'name': string;
+    'pepTalk': string;
     /**
      * 
-     * @type {string}
-     * @memberof FindOneGenreOutput
+     * @type {number}
+     * @memberof UserStatistics
      */
-    'icon': string;
+    'userSteak': number;
 }
 

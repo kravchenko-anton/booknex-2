@@ -1,12 +1,11 @@
 import api from '@/api'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
-import { errorToast } from '@/utils/toast'
 import { useIsFocused } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useShallow } from 'zustand/react/shallow'
 
-export const useLibraryWithSync = () => {
+export const useStatisticsWithSync = () => {
 	const isFocus = useIsFocused()
 	const { history, clearHistory } = useReadingProgressStore(
 		useShallow(state => ({
@@ -14,12 +13,10 @@ export const useLibraryWithSync = () => {
 			clearHistory: state.clearHistory
 		}))
 	)
-	console.log('actual history in library', history)
-	const { data: library, isLoading } = useQuery({
-		queryKey: QueryKeys.library,
-		enabled: isFocus,
+	const { data: statistics, isLoading } = useQuery({
+		queryKey: QueryKeys.userStatistics,
 		queryFn: () =>
-			api.user.library(
+			api.user.statistics(
 				history.map(b => ({
 					...b,
 					startDate: b.startDate as unknown as string,
@@ -27,17 +24,17 @@ export const useLibraryWithSync = () => {
 				}))
 			),
 		select: data => data.data,
-		staleTime: 0,
 		refetchOnWindowFocus: true,
-		refetchOnMount: true,
-		retryOnMount: history.length > 0,
-		retry: history.length > 0,
-		onError: () => errorToast('Failed to sync library'),
+		staleTime: 0,
+		retry: true,
+		retryOnMount: true,
+		enabled: isFocus,
 		onSuccess: () => {
 			console.log('sync success, clear history', history)
 			clearHistory()
-		}
+		},
+		onError: () => console.log('Failed to sync statistics')
 	})
 
-	return { library, isLoading, history }
+	return { isLoading, statistics }
 }

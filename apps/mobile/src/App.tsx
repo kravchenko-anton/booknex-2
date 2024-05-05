@@ -2,11 +2,13 @@ import Navigation from '@/navigation/navigation'
 import { persistor, store } from '@/redux/store'
 import Loader from '@/ui/loader/loader'
 import Toast from '@/ui/toast'
+import { MMKV_STORAGE_KEY, SENTRY_DNC } from '@/utils/config'
 import { reduxStorage } from '@/utils/mmkv-wrapper'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import NetInfo from '@react-native-community/netinfo'
 import * as Sentry from '@sentry/react-native'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
-import { QueryClient } from '@tanstack/react-query'
+import { QueryClient, onlineManager } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { Color } from 'global/colors'
 import { StatusBar, View } from 'react-native'
@@ -22,22 +24,24 @@ const queryClient = new QueryClient({
 		queries: {
 			networkMode: 'offlineFirst',
 			refetchOnWindowFocus: false,
-			cacheTime: 1000 * 60 * 60,
 			staleTime: 1000 * 60 * 60
 		}
 	}
 })
 
+onlineManager.setEventListener(setOnline =>
+	NetInfo.addEventListener(state => {
+		setOnline(!!state.isConnected)
+	})
+)
+
 export const storage = new MMKV({
-	id: 'app'
+	id: 'app',
+	encryptionKey: MMKV_STORAGE_KEY
 })
 
 Sentry.init({
-	dsn: 'https://5b4c8cc2dc0a1223669dbfe7284599f1@o4506886163267584.ingest.us.sentry.io/4506886443630592',
-
-	// Set tracesSampleRate to 1.0 to capture 100%
-	// of transactions for performance monitoring.
-	// We recommend adjusting this value in production
+	dsn: SENTRY_DNC,
 	tracesSampleRate: 1
 })
 

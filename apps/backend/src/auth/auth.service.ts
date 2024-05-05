@@ -48,6 +48,7 @@ export class AuthService {
 			data: {
 				email: dto.email,
 				password: await hash(dto.password),
+				goalMinutes: 10,
 				selectedGenres: {
 					connect: popularGenres.map(genre => ({
 						slug: genre.slug
@@ -113,6 +114,7 @@ export class AuthService {
 			data: {
 				email: data.email,
 				socialId: data.sub,
+				goalMinutes: 10,
 				selectedGenres: {
 					connect: popularGenres.map(genre => ({
 						slug: genre.slug

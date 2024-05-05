@@ -34,8 +34,7 @@ export const onTextSelection = async (event: any, removeAllSelection: void) => {
 		if (!textSelectionValidation(event.nativeEvent.selectedText)) return
 		await Linking.openURL(
 			//popup open with translation
-			`https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${event.nativeEvent.selectedText}?utm_source=reader&utm_medium=share&utm_campaign=translate
-			`
+			`https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${event.nativeEvent.selectedText}`
 		)
 	}
 	return removeAllSelection

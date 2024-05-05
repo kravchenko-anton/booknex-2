@@ -51,6 +51,9 @@ const ReaderViewer = forwardRef(
 						javaScriptEnabled
 						startInLoadingState
 						ref={reference}
+						// prevent fast scroll in webview
+						androidLayerType='hardware'
+						decelerationRate={0.8}
 						originWhitelist={['*']}
 						showsVerticalScrollIndicator={false}
 						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
@@ -63,6 +66,8 @@ const ReaderViewer = forwardRef(
 								}}
 							/>
 						)}
+						// prevent fast scroll in webview
+
 						source={{
 							baseUrl: '',
 							html: composeReaderViewHtml({

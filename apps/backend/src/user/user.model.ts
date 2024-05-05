@@ -55,8 +55,19 @@ export const HistorySchema = z.object({
 	bookSlug: z.string()
 })
 
+export const UserStatisticsSchema = z.object({
+	progressByLastWeek: z.array(
+		z.object({
+			day: z.string(),
+			isReadMoreThatGoal: z.boolean(),
+			readingTimeMs: z.number()
+		})
+	),
+	pepTalk: z.string(),
+	userSteak: z.number()
+})
 export class ReadingHistory extends createZodDto(HistorySchema) {}
-
+export class UserStatistics extends createZodDto(UserStatisticsSchema) {}
 export class UserCatalogOutput extends createZodDto(UserCatalogOutputSchema) {}
 
 export class UserLibraryOutput extends createZodDto(UserLibraryOutputSchema) {}

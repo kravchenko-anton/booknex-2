@@ -8,7 +8,7 @@ extendZodWithOpenApi(z)
 
 export const FindOneGenreOutputSchema = z
 	.object({
-		mainBooks: z.array(ShortBookSchema)
+		books: z.array(ShortBookSchema)
 	})
 	.merge(shortGenreSchema)
 

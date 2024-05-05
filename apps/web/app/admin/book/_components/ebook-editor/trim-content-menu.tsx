@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/popover'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Scissors } from 'icons'
-import { FC } from 'react'
+import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 

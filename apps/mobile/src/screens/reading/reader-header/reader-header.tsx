@@ -25,7 +25,7 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 	readingProgress,
 	onSelectThemeIconPress
 }) => {
-	const { goBack } = useTypedNavigation()
+	const { navigate } = useTypedNavigation()
 	const { top } = useSafeAreaInsets()
 	const fadeAnimation = useAnimatedStyle(() => ({
 		opacity: withTiming(Boolean(visible) ? 1 : 0, { duration: 200 })
@@ -48,7 +48,7 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 							width={28}
 							height={28}
 							color={colorScheme.colorPalette.text}
-							onPress={() => goBack()}
+							onPress={() => navigate('Library')}
 						/>
 						<View className='ml-auto w-1/2'>
 							<ProgressBar

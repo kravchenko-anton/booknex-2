@@ -5,6 +5,7 @@ import { AuthUserSchema } from './dto/auth.dto'
 
 extendZodWithOpenApi(z)
 
+
 export const AuthOutputSchema = z.object({
 	accessToken: z.string(),
 	refreshToken: z.string(),

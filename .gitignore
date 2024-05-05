@@ -10,10 +10,15 @@ apps/web/.env
 apps/web/.env.production
 apps/web/.env.development
 apps/web/.next
+apps/web/sentry.client.config.ts
+apps/web/sentry.edge.config.ts
+apps/web/sentry.server.config.ts
 apps/web/.env.test
 apps/web/.env.staging
 apps/application/package-lock.json
 apps/mobile/.env
+apps/mobile/.env.production
+apps/mobile/src/utils/config.ts
 # dependencies
 node_modules
 

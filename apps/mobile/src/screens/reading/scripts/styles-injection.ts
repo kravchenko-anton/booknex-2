@@ -36,8 +36,12 @@ export const getStyleTag = ({
 		line-height: ${lineHeight};
 		word-wrap: break-word !important;
 		max-width: 100% !important;
-		
+		height: 100% !important;
 		padding: ${padding}px;
+		behave: smooth !important;
+		overflow-x: hidden !important;
+		  overscroll-behavior: none !important;
+
 		color: ${colorPalette.text};
 	}
 
@@ -104,8 +108,8 @@ export const getStyleTag = ({
 		color: ${colorPalette.text} !important;
 	}
 	i {
-		font-style: italic !important;
-		color: ${colorPalette.primary} !important;
+		font-style: normal !important;
+		color: ${colorPalette.text} !important;
 	}
 	
 	.finish-book-button {
