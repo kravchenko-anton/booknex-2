@@ -4,6 +4,7 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
 import { transformActivity } from 'global/utils/activity-transformer'
+import { getTimeDate } from 'global/utils/getTimeDate'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { slugSelect } from '../utils/common/return.default.object'
@@ -11,6 +12,16 @@ import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import { returnUserObject } from './return.user.object'
 
+function isThisWeek(date: Date) {
+	const today = new Date()
+	const firstDayOfWeek = new Date(
+		today.setDate(today.getDate() - today.getDay())
+	)
+	const lastDayOfWeek = new Date(
+		today.setDate(today.getDate() - today.getDay() + 6)
+	)
+	return date >= firstDayOfWeek && date <= lastDayOfWeek
+}
 const pepTalks = [
 	{
 		lessThan: 3,
@@ -91,6 +102,17 @@ export class UserService {
 			}))
 		})
 	}
+
+	async adjustGoal(userId: number, goal: number) {
+		if (goal % 10 !== 0 || goal < 10 || goal > 60)
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+		await this.prisma.user.update({
+			where: { id: userId },
+			data: {
+				goalMinutes: goal
+			}
+		})
+	}
 	async userStatistics(userId: number) {
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
@@ -112,6 +134,7 @@ export class UserService {
 				startDate: true
 			}
 		})
+		// TODO: пофиксить не валидная запись даты
 		const WeekDays = [
 			'Sunday',
 			'Monday',
@@ -121,49 +144,48 @@ export class UserService {
 			'Friday',
 			'Saturday'
 		]
-		// array where be object of weekDays like [
-		// 	{
-		// 		day: 'Monday',
-		// isReadMoreThatGoal: boolean,
-		// readingTimeMs: number
-		// 	}
-		// ]
-		const progressByLastWeek = WeekDays.map(day => {
-			const dayHistory = userHistory.filter(
-				history => new Date(history.endDate).getDay() === WeekDays.indexOf(day)
-			)
-			const readingTimeMs = dayHistory.reduce(
-				(accumulator, history) => accumulator + history.readingTimeMs,
+		//TODO: проверить на работоспособность
+		const currentDate = getTimeDate()
+
+		const currentWeekHistory = userHistory.filter(history => {
+			const historyDate = getTimeDate(history.endDate)
+			return isThisWeek(historyDate)
+		})
+
+		const currentWeekSteakProgress = WeekDays.map(day => {
+			const dayHistory = currentWeekHistory.filter(history => {
+				const historyDate = getTimeDate(history.endDate)
+				return historyDate.getDay() === WeekDays.indexOf(day)
+			})
+			const dayProgress = dayHistory.reduce(
+				(accumulator, history) =>
+					accumulator + history.readingTimeMs / 60_000 / user.goalMinutes,
 				0
 			)
 			return {
 				day,
-				isReadMoreThatGoal: readingTimeMs / 60_000 > user.goalMinutes,
-				readingTimeMs
+				isReadMoreThatGoal: dayProgress >= user.goalMinutes,
+				readingTimeMs: dayProgress
 			}
 		})
-		let userSteak = 0
-		const currentDate = new Date()
 
-		for (let index = userHistory.length - 1; index >= 0; index--) {
-			// @ts-ignore
-			const historyDate = new Date(userHistory[index].endDate)
-			if (
-				historyDate.getDate() === currentDate.getDate() &&
+		const userSteak = userHistory.reduce((streak, history, index) => {
+			const historyDate = getTimeDate(history.endDate)
+			return historyDate.getDate() === currentDate.getDate() - index &&
 				historyDate.getMonth() === currentDate.getMonth() &&
 				historyDate.getFullYear() === currentDate.getFullYear() &&
-				// @ts-ignore
-				userHistory[index].readingTimeMs / 60_000 >= user.goalMinutes
-			) {
-				userSteak++
-				currentDate.setDate(currentDate.getDate() - 1)
-			} else {
-				break
-			}
-		}
+				history.readingTimeMs / 60_000 >= user.goalMinutes
+				? streak + 1
+				: streak
+		}, 0)
 		return {
-			progressByLastWeek,
+			progressByCurrentWeek: currentWeekSteakProgress,
 			userSteak,
+			isDaySteakComplete: Boolean(
+				currentWeekSteakProgress.find(
+					day => day.day === WeekDays[currentDate.getDay()]
+				)?.isReadMoreThatGoal
+			),
 			pepTalk:
 				pepTalks.find(pepTalk => userSteak < pepTalk.lessThan)?.text ??
 				'Good result, keep it up!'
@@ -220,8 +242,8 @@ export class UserService {
 					if (!a.readingHistory) return 1
 					if (!b.readingHistory) return -1
 					return (
-						new Date(b.readingHistory.endDate).getTime() -
-						new Date(a.readingHistory.endDate).getTime()
+						getTimeDate(b.readingHistory.endDate).getTime() -
+						getTimeDate(a.readingHistory.endDate).getTime()
 					)
 				}),
 			finishedBooks,

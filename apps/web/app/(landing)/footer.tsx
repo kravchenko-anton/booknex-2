@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui'
 import { appName, installAppLink, mailLink } from 'global/utils'
+import { getTimeDate } from 'global/utils/getTimeDate'
 import Link from 'next/link'
 
 export const footerNavigationLinks = [
@@ -15,9 +16,13 @@ export const footerNavigationLinks = [
 	}
 ]
 export const Footer = () => (
-	<footer className='bg-foreground px-2 py-6 h-36 text-white' style={{
-		//
-	}}>
+	<footer
+		className='bg-foreground h-36 px-2 py-6 text-white'
+		style={
+			{
+				//
+			}
+		}>
 		<div className='mx-auto  w-full md:w-1/2 '>
 			<div className={'flex flex-wrap items-center  gap-2'}>
 				{footerNavigationLinks.map(link => (
@@ -35,7 +40,7 @@ export const Footer = () => (
 				</Button>
 			</Link>
 			<p className='mt-4'>
-				© {new Date().getFullYear()}, {appName}
+				© {getTimeDate().getFullYear()}, {appName}
 			</p>
 		</div>
 	</footer>

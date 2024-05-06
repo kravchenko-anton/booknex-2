@@ -1,6 +1,7 @@
 import { useTypedNavigation } from '@/hooks'
 import type { WebviewMessageType } from '@/screens/reading/hooks/useReaderMessage'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
+import { getTimeDate } from 'global/utils/getTimeDate'
 import { useEffect, useState } from 'react'
 
 interface ReadingProgressProperties {
@@ -24,7 +25,7 @@ export const useReadingProgress = ({
 	readingSessionKey,
 	initialScrollPosition
 }: ReadingProgressProperties) => {
-	const [startReadingDate] = useState(new Date()) // eslint-disable-line
+	const [startReadingDate] = useState(getTimeDate()) // eslint-disable-line
 	const { addListener } = useTypedNavigation()
 	const updateStartFromReadingScreen = useReadingProgressStore(
 		state => state.updateStartFromReadingScreen
@@ -41,14 +42,6 @@ export const useReadingProgress = ({
 			progress: 0
 		}
 	})
-	console.log(
-		'readingProgress',
-		readingProgress,
-		'scrollPosition',
-		scrollPosition,
-		'initialScrollPosition',
-		initialScrollPosition
-	)
 	useEffect(() => {
 		if (readerLoading) return
 		return addListener('beforeRemove', () => {
@@ -85,15 +78,16 @@ export const useReadingProgress = ({
 			}
 		})
 		setScrollPosition(payload.scrollTop)
+		console.log((getTimeDate().getTime() - startReadingDate.getTime()) / 1000)
 		newProgress({
 			startFromReadingScreen: true,
 			id: readingSessionKey,
 			bookSlug: slug,
 			progress: readingProgress.progress,
 			scrollPosition: scrollPosition,
-			endDate: new Date(),
+			endDate: getTimeDate(),
 			startDate: startReadingDate,
-			readingTimeMs: new Date().getTime() - startReadingDate.getTime()
+			readingTimeMs: getTimeDate().getTime() - startReadingDate.getTime()
 		})
 	}
 

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserStatisticsProgressByLastWeekInner } from './user-statistics-progress-by-last-week-inner';
+import { UserStatisticsProgressByCurrentWeekInner } from './user-statistics-progress-by-current-week-inner';
 
 /**
  * 
@@ -25,10 +25,10 @@ import { UserStatisticsProgressByLastWeekInner } from './user-statistics-progres
 export interface UserStatistics {
     /**
      * 
-     * @type {Array<UserStatisticsProgressByLastWeekInner>}
+     * @type {Array<UserStatisticsProgressByCurrentWeekInner>}
      * @memberof UserStatistics
      */
-    'progressByLastWeek': Array<UserStatisticsProgressByLastWeekInner>;
+    'progressByCurrentWeek': Array<UserStatisticsProgressByCurrentWeekInner>;
     /**
      * 
      * @type {string}
@@ -41,5 +41,11 @@ export interface UserStatistics {
      * @memberof UserStatistics
      */
     'userSteak': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserStatistics
+     */
+    'isDaySteakComplete': boolean;
 }
 

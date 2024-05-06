@@ -12,6 +12,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 import type { UserCatalogOutputDataInner } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { timeAgo } from 'global/helpers/time-format'
+import { getTimeDate } from 'global/utils/getTimeDate'
 import { MoreHorizontal } from 'icons'
 
 export const columns = ({
@@ -50,7 +51,7 @@ export const columns = ({
 				<h2 className='text-lg'>{row.original.fullName}</h2>
 				<p className='text-xm'>{row.original.email}</p>
 				<p className='text-xm'> {row.original.socialId}</p>
-				<p>joined: {timeAgo(new Date(row.original.createdAt))}</p>
+				<p>joined: {timeAgo(getTimeDate(row.original.createdAt))}</p>
 				<p>
 					location: <b className='font-bold'> {row.original.location}</b>
 				</p>

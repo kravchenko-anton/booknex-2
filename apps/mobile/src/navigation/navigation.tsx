@@ -13,6 +13,7 @@ import {
 } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Color } from 'global/colors'
+import { getTimeDate } from 'global/utils/getTimeDate'
 import { useEffect, useState, type FC } from 'react'
 import BootSplash from 'react-native-bootsplash'
 import {
@@ -31,7 +32,8 @@ const Navigation: FC = () => {
 	const [initialHistory] = useState(useReadingProgressStore.getState().history) // eslint-disable-line
 	const latestHistory = initialHistory
 		.sort(
-			(a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
+			(a, b) =>
+				getTimeDate(b.endDate).getTime() - getTimeDate(a.endDate).getTime()
 		)
 		.find(h => h.startFromReadingScreen)
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(

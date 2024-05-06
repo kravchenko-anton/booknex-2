@@ -12,32 +12,36 @@ import {
 } from 'global/api-client'
 import { instance } from './interceptors'
 
-export const webServerURL = process.env['SERVER_URL']
+export const webServerURL = process.env.SERVER_URL
 console.log('webServerURL', webServerURL)
-const baseParams = {
+const baseParameters = {
 	basePath: webServerURL,
 	isJsonMime: () => true
 }
 
-const auth = new AuthApi(baseParams, webServerURL, undefined)
+const auth = new AuthApi(baseParameters, webServerURL, undefined)
 
-const book = new BookApi(baseParams, webServerURL, instance)
+const book = new BookApi(baseParameters, webServerURL, instance)
 
-const catalog = new CatalogApi(baseParams, webServerURL, instance)
+const catalog = new CatalogApi(baseParameters, webServerURL, instance)
 
-const ebook = new EbookApi(baseParams, webServerURL, instance)
+const ebook = new EbookApi(baseParameters, webServerURL, instance)
 
-const genre = new GenreApi(baseParams, webServerURL, instance)
+const genre = new GenreApi(baseParameters, webServerURL, instance)
 
-const parser = new ParserApi(baseParams, webServerURL, instance)
+const parser = new ParserApi(baseParameters, webServerURL, instance)
 
-const recommendation = new RecommendationApi(baseParams, webServerURL, instance)
+const recommendation = new RecommendationApi(
+	baseParameters,
+	webServerURL,
+	instance
+)
 
-const review = new ReviewApi(baseParams, webServerURL, instance)
+const review = new ReviewApi(baseParameters, webServerURL, instance)
 
-const storage = new StorageApi(baseParams, webServerURL, instance)
+const storage = new StorageApi(baseParameters, webServerURL, instance)
 
-const user = new UserApi(baseParams, webServerURL, instance)
+const user = new UserApi(baseParameters, webServerURL, instance)
 
 export default {
 	auth,

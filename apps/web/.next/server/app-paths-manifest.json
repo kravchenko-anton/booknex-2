@@ -1,1 +1,3 @@
-{}
+{
+  "/admin/user/catalog/page": "app/admin/user/catalog/page.js"
+}

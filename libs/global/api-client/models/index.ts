@@ -45,4 +45,4 @@ export * from './user-library-output-finished-books-inner';
 export * from './user-library-output-reading-books-inner';
 export * from './user-library-output-reading-books-inner-reading-history';
 export * from './user-statistics';
-export * from './user-statistics-progress-by-last-week-inner';
+export * from './user-statistics-progress-by-current-week-inner';

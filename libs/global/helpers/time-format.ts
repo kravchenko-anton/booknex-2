@@ -1,4 +1,6 @@
-export function formatYYYYMMDD(date = new Date()) {
+import { getTimeDate } from '../utils/getTimeDate'
+
+export function formatYYYYMMDD(date = getTimeDate()) {
 	const year = date.toLocaleString('default', { year: 'numeric' })
 	const month = date.toLocaleString('default', {
 		month: '2-digit'

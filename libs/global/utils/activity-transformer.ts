@@ -1,4 +1,5 @@
 import { formatYYYYMMDD } from '../helpers/time-format'
+import { getTimeDate } from './getTimeDate'
 
 export interface ActivitiesProperties {
 	importance: number
@@ -30,9 +31,9 @@ type ActivitiesByDate = Record<
 >
 
 const timeFormat = (date: Date) =>
-	('0' + new Date(date).getHours()).slice(-2) +
+	('0' + getTimeDate(date).getHours()).slice(-2) +
 	':' +
-	('0' + new Date(date).getMinutes()).slice(-2)
+	('0' + getTimeDate(date).getMinutes()).slice(-2)
 
 export const transformActivity = (
 	activities: ActivitiesProperties[]

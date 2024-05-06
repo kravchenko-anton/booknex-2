@@ -56,7 +56,7 @@ export const HistorySchema = z.object({
 })
 
 export const UserStatisticsSchema = z.object({
-	progressByLastWeek: z.array(
+	progressByCurrentWeek: z.array(
 		z.object({
 			day: z.string(),
 			isReadMoreThatGoal: z.boolean(),
@@ -64,7 +64,8 @@ export const UserStatisticsSchema = z.object({
 		})
 	),
 	pepTalk: z.string(),
-	userSteak: z.number()
+	userSteak: z.number(),
+	isDaySteakComplete: z.boolean()
 })
 export class ReadingHistory extends createZodDto(HistorySchema) {}
 export class UserStatistics extends createZodDto(UserStatisticsSchema) {}

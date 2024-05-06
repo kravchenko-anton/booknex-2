@@ -2,6 +2,7 @@ import { SheetComponent, SheetHeader } from '@/components/ui/sheet'
 import { cn } from '@/utils'
 import type { ActivitiesOutput } from 'global/utils/activity-transformer'
 
+import { getTimeDate } from 'global/utils/getTimeDate'
 import { useState, type FC } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 
@@ -60,7 +61,7 @@ const ActivityList: FC<ActivityListProperties> = ({
 					<>
 						<SheetHeader className='pb-2'>
 							<h1 className='text-lg font-medium md:text-3xl'>
-								Activities: {new Date(selectActivity.date).toDateString()}
+								Activities: {getTimeDate(selectActivity.date).toDateString()}
 							</h1>
 						</SheetHeader>
 						<div className='no-scrollbar h-[95%] w-full overflow-y-scroll'>

@@ -1,21 +1,23 @@
+import { Fire } from '@/screens/profile/fire'
 import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
 import { ScrollLayout, Title } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
 import { cn } from '@/utils'
 import { Color } from 'global/colors'
+import { getTimeDate } from 'global/utils/getTimeDate'
 import { View } from 'react-native'
 
 const currentDayTitle = () => {
 	const days = [
+		'Sunday',
 		'Monday',
 		'Tuesday',
 		'Wednesday',
 		'Thursday',
 		'Friday',
-		'Saturday',
-		'Sunday'
+		'Saturday'
 	]
-	const today = new Date().getDay()
+	const today = getTimeDate().getDay()
 
 	return days[today]
 }
@@ -32,24 +34,27 @@ const Profile = () => {
 	return (
 		<ScrollLayout className=' px-2'>
 			<View className='bg-foreground border-bordered mt-4 rounded-md border-[1px] p-2'>
-				<Title
-					weight='bold'
-					color='white'
-					size='xxl'
-					className='mx-auto pb-2 pt-2'>
-					{`${statistics.userSteak}-day steak`}
+				<View className='mx-auto mt-4'>
+					<Fire isDaySteakComplete={statistics.isDaySteakComplete} />
+				</View>
+				<Title center weight='bold' color='white' size='xxl' className=' pt-2'>
+					{statistics.userSteak} days in a streak
 				</Title>
+
 				<Title
+					center
 					weight='bold'
 					color={Color.gray}
-					numberOfLines={2}
-					size='sm'
-					className='pb-4 text-center'>
-					{statistics.pepTalk}
+					size='md'
+					className='mb-4  pt-1'>
+					reading daily keeping your progress
 				</Title>
+				<View className='mx-auto ' />
+
 				<View className='flex-row items-center justify-between gap-2'>
-					{statistics.progressByLastWeek.map(item => (
+					{statistics.progressByCurrentWeek.map(item => (
 						<View
+							key={item.day}
 							className={cn(
 								'pb-2',
 								currentDayTitle() === item.day
@@ -57,7 +62,6 @@ const Profile = () => {
 									: ''
 							)}>
 							<View
-								key={item.day}
 								className={cn(
 									' flex h-[30px] w-[30px] items-center justify-center rounded-full',
 									item.isReadMoreThatGoal
@@ -70,6 +74,16 @@ const Profile = () => {
 							</View>
 						</View>
 					))}
+				</View>
+				<View className='mb-4 pt-4'>
+					<Title
+						weight='bold'
+						color={Color.gray}
+						numberOfLines={2}
+						size='sm'
+						className='border-l-bordered border-l-2 pl-2 '>
+						bob: “ {statistics.pepTalk} ”
+					</Title>
 				</View>
 			</View>
 		</ScrollLayout>

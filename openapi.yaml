@@ -46,6 +46,22 @@ paths:
         - 👤 user
       security:
         - bearer: []
+  /user/adjust-goal:
+    patch:
+      operationId: adjustGoal
+      parameters:
+        - name: goal
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
   /user/start-reading/{slug}:
     patch:
       operationId: startReading
@@ -902,7 +918,7 @@ components:
     UserStatistics:
       type: object
       properties:
-        progressByLastWeek:
+        progressByCurrentWeek:
           type: array
           items:
             type: object
@@ -924,10 +940,13 @@ components:
           type: string
         userSteak:
           type: number
+        isDaySteakComplete:
+          type: boolean
       required:
-        - progressByLastWeek
+        - progressByCurrentWeek
         - pepTalk
         - userSteak
+        - isDaySteakComplete
     UserCatalogOutput:
       type: object
       properties:

@@ -1,5 +1,6 @@
-import { FullBookCount } from 'global/api-client'
+import type { FullBookCount } from 'global/api-client'
 import { minutesToTime } from 'global/helpers/time-converter'
+import { getTimeDate } from 'global/utils/getTimeDate'
 import type { FC } from 'react'
 
 interface InfoBlockProperties {
@@ -36,13 +37,13 @@ const BookStatistic: FC<InfoBlockProperties> = ({
 		<p className='text-md mb-1'>
 			create At:
 			<b className='text-white'>
-				{' ' + new Date(createdAt).toLocaleDateString()}
+				{' ' + getTimeDate(createdAt).toLocaleDateString()}
 			</b>
 		</p>
 		<p className='text-md'>
 			update At:
 			<b className='text-white'>
-				{' ' + new Date(updatedAt).toLocaleDateString()}
+				{' ' + getTimeDate(updatedAt).toLocaleDateString()}
 			</b>
 		</p>
 	</div>

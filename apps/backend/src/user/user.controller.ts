@@ -45,9 +45,18 @@ export class UserController {
 	async statistics(
 		@CurrentUser('id') userId: number,
 		@Body() dto: ReadingHistory[]
-	) {
+	): Promise<UserStatistics> {
 		await this.usersService.syncHistory(dto, userId)
 		return this.usersService.userStatistics(userId)
+	}
+
+	@Auth()
+	@Patch('/adjust-goal')
+	async adjustGoal(
+		@CurrentUser('id') userId: number,
+		@Query('goal') goal: number
+	) {
+		return this.usersService.adjustGoal(userId, goal)
 	}
 
 	@Auth()
