@@ -2,7 +2,7 @@ import Navigation from '@/navigation/navigation'
 import { persistor, store } from '@/redux/store'
 import Loader from '@/ui/loader/loader'
 import Toast from '@/ui/toast'
-import { MMKV_STORAGE_KEY, SENTRY_DNC } from '@/utils/config'
+import { SENTRY_DNC } from '@/utils/config'
 import { reduxStorage } from '@/utils/mmkv-wrapper'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import NetInfo from '@react-native-community/netinfo'
@@ -36,8 +36,7 @@ onlineManager.setEventListener(setOnline =>
 )
 
 export const storage = new MMKV({
-	id: 'app',
-	encryptionKey: MMKV_STORAGE_KEY
+	id: 'app'
 })
 
 Sentry.init({
