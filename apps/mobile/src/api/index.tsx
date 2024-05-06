@@ -1,4 +1,3 @@
-import { SERVER_URL } from '@/utils/config'
 import {
 	AuthApi,
 	BookApi,
@@ -11,6 +10,7 @@ import {
 	StorageApi,
 	UserApi
 } from 'global/api-client'
+import { SERVER_URL } from '../utils/config'
 import { instance } from './interceptors'
 
 const baseParameters = {

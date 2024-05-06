@@ -52,7 +52,7 @@ const Profile = () => {
 				<View className='mx-auto ' />
 
 				<View className='flex-row items-center justify-between gap-2'>
-					{statistics.progressByCurrentWeek.map(item => (
+					{statistics.progressByCurrentWeek?.map(item => (
 						<View
 							key={item.day}
 							className={cn(
