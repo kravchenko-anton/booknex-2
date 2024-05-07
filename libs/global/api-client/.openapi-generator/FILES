@@ -54,10 +54,9 @@ models/unfold-output.ts
 models/update-book-dto.ts
 models/update-recommendation-dto.ts
 models/upload-output-dto.ts
-models/user-catalog-output-data-inner-activities-inner-activities-inner.ts
-models/user-catalog-output-data-inner-activities-inner.ts
 models/user-catalog-output-data-inner-count.ts
 models/user-catalog-output-data-inner-selected-genres-inner.ts
+models/user-catalog-output-data-inner-statistics-inner.ts
 models/user-catalog-output-data-inner.ts
 models/user-catalog-output.ts
 models/user-library-output-finished-books-inner.ts

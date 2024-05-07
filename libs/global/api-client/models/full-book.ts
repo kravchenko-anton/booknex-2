@@ -21,10 +21,10 @@ import { FullBookCount } from './full-book-count';
 import { FullBookReviewInner } from './full-book-review-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner';
+import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
+import { UserCatalogOutputDataInnerStatisticsInner } from './user-catalog-output-data-inner-statistics-inner';
 
 /**
  * 
@@ -124,10 +124,10 @@ export interface FullBook {
     '_count': FullBookCount;
     /**
      * 
-     * @type {Array<UserCatalogOutputDataInnerActivitiesInner>}
+     * @type {Array<UserCatalogOutputDataInnerStatisticsInner>}
      * @memberof FullBook
      */
-    'activities': Array<UserCatalogOutputDataInnerActivitiesInner>;
+    'statistics': Array<UserCatalogOutputDataInnerStatisticsInner>;
     /**
      * 
      * @type {Array<FullBookReviewInner>}

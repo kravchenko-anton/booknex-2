@@ -31,10 +31,22 @@ export interface UserStatistics {
     'progressByCurrentWeek': Array<UserStatisticsProgressByCurrentWeekInner>;
     /**
      * 
+     * @type {number}
+     * @memberof UserStatistics
+     */
+    'daySteakProgressPercentage': number;
+    /**
+     * 
      * @type {string}
      * @memberof UserStatistics
      */
     'pepTalk': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserStatistics
+     */
+    'goalMinutes': number;
     /**
      * 
      * @type {number}

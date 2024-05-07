@@ -1,4 +1,3 @@
-import { ActivitySchema } from '@/src/activity/activity.model'
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { z } from 'zod'
@@ -14,7 +13,13 @@ export const CatalogUserOutputSchema = z
 		id: z.number(),
 		email: z.string(),
 		selectedGenres: z.array(shortGenreSchema),
-		activities: z.array(ActivitySchema),
+		statistics: z.array(
+			z.object({
+				endDate: z.date(),
+				progress: z.number(),
+				readingTimeMs: z.number()
+			})
+		),
 		_count: z
 			.object({
 				savedBooks: z.number(),
@@ -63,7 +68,9 @@ export const UserStatisticsSchema = z.object({
 			readingTimeMs: z.number()
 		})
 	),
+	daySteakProgressPercentage: z.number(),
 	pepTalk: z.string(),
+	goalMinutes: z.number(),
 	userSteak: z.number(),
 	isDaySteakComplete: z.boolean()
 })

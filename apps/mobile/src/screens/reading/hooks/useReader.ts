@@ -14,8 +14,6 @@ import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
 export const useReader = (slug: string, initialScrollPosition: number) => {
-	const [readingSessionKey] = useState(slug + Math.random() * 1000)
-
 	const { data: ebook } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
@@ -40,8 +38,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	} = useReadingProgress({
 		slug,
 		readerLoading,
-		initialScrollPosition: initialScrollPosition,
-		readingSessionKey
+		initialScrollPosition: initialScrollPosition
 	})
 
 	const { finishReadingLoading, onFinish } = useFinishBook({

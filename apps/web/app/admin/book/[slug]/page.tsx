@@ -3,7 +3,6 @@ import BookStatistic from '@/app/admin/book/_components/book-statistic'
 import BookOverview from '@/app/admin/book/_components/ebook-tabs'
 import { RemoveButton } from '@/app/admin/book/_components/remove-button'
 import ReviewTable from '@/app/admin/book/_components/review/review-table'
-import ActivityList from '@/components/activity-list'
 import { Button } from '@/components/ui'
 import GenreElement from '@/components/ui/genre-element'
 import Loader from '@/components/ui/loader/loader'
@@ -13,9 +12,19 @@ import { secureRoutes } from '@/utils/route'
 import { validateStringParameter } from '@/utils/validate-parameter'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
+import { Color } from 'global/colors'
 import { QueryKeys } from 'global/utils/query-keys'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
+import {
+	Legend,
+	Line,
+	LineChart,
+	ResponsiveContainer,
+	Tooltip,
+	XAxis,
+	YAxis
+} from 'recharts'
 
 const Page = () => {
 	const router = useRouter()
@@ -36,6 +45,7 @@ const Page = () => {
 	}
 
 	if (!book) return <Loader />
+	console.log('book', book.statistics)
 
 	return (
 		<div>
@@ -80,12 +90,52 @@ const Page = () => {
 					<h4 className='mb-2 mt-4 text-lg font-bold'>Genres</h4>
 					<div className='text-gray mb-8 flex items-center gap-2 overflow-auto'>
 						{book.genres.map(genre => (
-							<GenreElement title={genre.name} svgUri={genre.icon} />
+							<GenreElement
+								title={genre.name}
+								key={genre.slug}
+								svgUri={genre.icon}
+							/>
 						))}
 					</div>
 					<p className='mb-2 text-lg'>{book.description}</p>
+					<ResponsiveContainer width='100%' height={300}>
+						<LineChart
+							className='mt-4'
+							height={300}
+							width={800}
+							data={book?.statistics.map(history => ({
+								...history,
+								readingTimeMin: Math.round(history.readingTimeMs / 60_000) || 0,
+								name: new Date(history.endDate).toLocaleDateString()
+							}))}
+							margin={{
+								top: 5,
+								right: 30,
+								left: 20,
+								bottom: 5
+							}}>
+							<XAxis dataKey='name' />
+							<YAxis />
+							<Tooltip
+								contentStyle={{ backgroundColor: Color.bordered }}
+								itemStyle={{ color: Color.white }}
+							/>
+							<Legend />
+							<Line
+								dot={false}
+								type='monotone'
+								dataKey='readingTimeMin'
+								stroke='#8884d8'
+							/>
 
-					<ActivityList data={book.activities} />
+							<Line
+								dot={false}
+								type='monotone'
+								dataKey='progress'
+								stroke='#82ca9d'
+							/>
+						</LineChart>
+					</ResponsiveContainer>
 
 					<BookOverview bookSlug={book.slug} />
 					<ReviewTable review={book.review} />

@@ -23,7 +23,6 @@ export function timeAgo(date: Date) {
 	}
 	const secondsElapsed = (date.getTime() - Date.now()) / 1000
 	for (const key in ranges) {
-		//@ts-ignore
 		const rangeKey = ranges[key]
 		if (!rangeKey) continue
 		if (!(rangeKey < Math.abs(secondsElapsed))) continue

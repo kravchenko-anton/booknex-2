@@ -3,7 +3,6 @@ import type { ReadingHistory } from '@/src/user/user.model'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
-import { transformActivity } from 'global/utils/activity-transformer'
 import { getTimeDate } from 'global/utils/getTimeDate'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
@@ -186,6 +185,12 @@ export class UserService {
 					day => day.day === WeekDays[currentDate.getDay()]
 				)?.isReadMoreThatGoal
 			),
+			goalMinutes: user.goalMinutes,
+			daySteakProgressPercentage:
+				userHistory?.find(
+					history =>
+						getTimeDate(history.endDate).getDate() === currentDate.getDate()
+				)?.readingTimeMs || 0 / 60_000 / user.goalMinutes,
 			pepTalk:
 				pepTalks.find(pepTalk => userSteak < pepTalk.lessThan)?.text ??
 				'Good result, keep it up!'
@@ -266,15 +271,13 @@ export class UserService {
 				selectedGenres: {
 					select: ReturnGenreObject
 				},
-				activity: {
+				readingHistory: {
 					select: {
-						type: true,
-						id: true,
-						importance: true,
-						createdAt: true,
-						userId: true,
-						bookId: true,
-						genreId: true
+						endDate: true,
+						progress: true,
+						readingTimeMs: true,
+						scrollPosition: true,
+						startDate: true
 					}
 				},
 				_count: {
@@ -303,10 +306,29 @@ export class UserService {
 				})
 			})
 		})
+
 		return {
-			data: data.map(({ activity, ...user }) => ({
+			data: data.map(({ readingHistory, ...user }) => ({
 				...user,
-				activities: transformActivity(activity)
+				statistics: readingHistory.reduce<
+					{
+						startDate: Date
+						endDate: Date
+						readingTimeMs: number
+						progress: number
+					}[]
+				>((accumulator, current) => {
+					const exist = accumulator.find(
+						({ startDate }) => startDate === current.startDate
+					)
+					if (exist) {
+						exist.readingTimeMs += current.readingTimeMs
+						exist.progress = Math.max(exist.progress, current.progress)
+					} else {
+						accumulator.push(current)
+					}
+					return accumulator
+				}, [])
 			})),
 			canLoadMore:
 				page < Math.floor((await this.prisma.user.count()) / perPage),

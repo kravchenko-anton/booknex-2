@@ -1,13 +1,11 @@
 import api from '@/api'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
-import { useIsFocused } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useShallow } from 'zustand/react/shallow'
 
 export const useStatisticsWithSync = () => {
-	const isFocus = useIsFocused()
-	const { history, clearHistory } = useReadingProgressStore(
+	const { history = [], clearHistory } = useReadingProgressStore(
 		useShallow(state => ({
 			history: state.history,
 			clearHistory: state.clearHistory
@@ -24,11 +22,11 @@ export const useStatisticsWithSync = () => {
 				}))
 			),
 		select: data => data.data,
-		refetchOnWindowFocus: true,
 		staleTime: 0,
-		retry: true,
-		retryOnMount: true,
-		enabled: isFocus,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true,
+		retryOnMount: history.length > 0,
+		retry: history.length > 0,
 		onSuccess: () => {
 			console.log('sync success, clear history', history)
 			clearHistory()

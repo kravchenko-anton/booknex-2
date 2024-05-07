@@ -1,4 +1,3 @@
-import ActivityList from '@/components/activity-list'
 import { Button } from '@/components/ui'
 import {
 	DropdownMenu,
@@ -11,9 +10,19 @@ import { acceptToast, infoToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { UserCatalogOutputDataInner } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
+import { Color } from 'global/colors'
 import { timeAgo } from 'global/helpers/time-format'
 import { getTimeDate } from 'global/utils/getTimeDate'
 import { MoreHorizontal } from 'icons'
+import {
+	Legend,
+	Line,
+	LineChart,
+	ResponsiveContainer,
+	Tooltip,
+	XAxis,
+	YAxis
+} from 'recharts'
 
 export const columns = ({
 	remove,
@@ -63,7 +72,46 @@ export const columns = ({
 		id: 'Activities',
 		enableHiding: false,
 		header: () => <p className='text-center text-lg'>Activities</p>,
-		cell: ({ row }) => <ActivityList onlyGraph data={row.original.activities} />
+		cell: ({ row }) => (
+			<ResponsiveContainer width='100%' height={150}>
+				<LineChart
+					className='mt-4'
+					height={300}
+					width={800}
+					data={row?.original.statistics.map(history => ({
+						...history,
+						readingTimeMin: Math.round(history.readingTimeMs / 60_000) || 0,
+						name: new Date(history.endDate).toLocaleDateString()
+					}))}
+					margin={{
+						top: 5,
+						right: 30,
+						left: 20,
+						bottom: 5
+					}}>
+					<XAxis dataKey='name' />
+					<YAxis />
+					<Tooltip
+						contentStyle={{ backgroundColor: Color.bordered }}
+						itemStyle={{ color: Color.white }}
+					/>
+					<Legend />
+					<Line
+						dot={false}
+						type='monotone'
+						dataKey='readingTimeMin'
+						stroke='#8884d8'
+					/>
+
+					<Line
+						dot={false}
+						type='monotone'
+						dataKey='progress'
+						stroke='#82ca9d'
+					/>
+				</LineChart>
+			</ResponsiveContainer>
+		)
 	},
 
 	{

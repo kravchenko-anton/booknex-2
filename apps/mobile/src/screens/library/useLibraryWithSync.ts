@@ -17,7 +17,6 @@ export const useLibraryWithSync = () => {
 	console.log('actual history in library', history)
 	const { data: library, isLoading } = useQuery({
 		queryKey: QueryKeys.library,
-		enabled: isFocus,
 		queryFn: () =>
 			api.user.library(
 				history.map(b => ({
@@ -32,7 +31,7 @@ export const useLibraryWithSync = () => {
 		refetchOnMount: true,
 		retryOnMount: history.length > 0,
 		retry: history.length > 0,
-		onError: () => errorToast('Failed to sync library'),
+		onError: () => isFocus && errorToast('Failed to sync library'),
 		onSuccess: () => {
 			console.log('sync success, clear history', history)
 			clearHistory()

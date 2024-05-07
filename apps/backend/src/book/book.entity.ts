@@ -1,4 +1,3 @@
-import { ActivitySchema } from '@/src/activity/activity.model'
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendZodWithOpenApi } from '@anatine/zod-openapi'
 import { z } from 'zod'
@@ -38,7 +37,13 @@ export const FullBookSchema = BookSchema.merge(
 					savedBy: z.number()
 				})
 				.strict(),
-			activities: z.array(ActivitySchema),
+			statistics: z.array(
+				z.object({
+					endDate: z.date(),
+					progress: z.number(),
+					readingTimeMs: z.number()
+				})
+			),
 			review: z.array(ReviewSchema)
 		})
 		.strict()

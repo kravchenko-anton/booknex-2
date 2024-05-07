@@ -3,7 +3,6 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { adminErrors, globalErrors } from 'global/errors'
 import { slugify } from 'global/helpers/slugify'
-import { transformActivity } from 'global/utils/activity-transformer'
 import { checkHtmlValid } from 'global/utils/html-validation'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
@@ -111,39 +110,47 @@ export class BookService {
 						savedBy: true
 					}
 				},
+
 				readingHistory: {
-						where: {
-							bookSlug: slug
-						},
-						select: {
-							endDate: true,
-							progress: true,
-							 readingTimeMs: true,
-							scrollPosition: true,
-							startDate: true,
-						}
-				},
-				activities: {
+					where: {
+						bookSlug: slug
+					},
 					select: {
-						type: true,
-						id: true,
-						importance: true,
-						createdAt: true,
-						genreId: true,
-						bookId: true,
-						userId: true
+						endDate: true,
+						progress: true,
+						readingTimeMs: true,
+						scrollPosition: true,
+						startDate: true
 					}
 				}
 			}
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		const { activities, ...rest } = book
-		console.log('rest', rest)
+		const { readingHistory = [], ...rest } = book
+		console.log('activities', readingHistory)
+
 		return {
 			...rest,
-			readingStats: transformActivity(activities),
-			activities: transformActivity(activities)
+			statistics: readingHistory.reduce<
+				{
+					startDate: Date
+					endDate: Date
+					readingTimeMs: number
+					progress: number
+				}[]
+			>((accumulator, current) => {
+				const exist = accumulator.find(
+					({ startDate }) => startDate === current.startDate
+				)
+				if (exist) {
+					exist.readingTimeMs += current.readingTimeMs
+					exist.progress = Math.max(exist.progress, current.progress)
+				} else {
+					accumulator.push(current)
+				}
+				return accumulator
+			}, [])
 		}
 	}
 

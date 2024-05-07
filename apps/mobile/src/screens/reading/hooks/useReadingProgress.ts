@@ -3,12 +3,12 @@ import type { WebviewMessageType } from '@/screens/reading/hooks/useReaderMessag
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { getTimeDate } from 'global/utils/getTimeDate'
 import { useEffect, useState } from 'react'
+import { AppState } from 'react-native'
 
 interface ReadingProgressProperties {
 	slug: string
 	readerLoading: boolean
 	initialScrollPosition: number
-	readingSessionKey: string
 }
 
 export interface ReadingProgressType {
@@ -22,10 +22,13 @@ export interface ReadingProgressType {
 export const useReadingProgress = ({
 	readerLoading,
 	slug,
-	readingSessionKey,
 	initialScrollPosition
 }: ReadingProgressProperties) => {
-	const [startReadingDate] = useState(getTimeDate()) // eslint-disable-line
+	const [readingSessionKey, setReadingSessionKey] = useState(
+		slug + Math.random() * 1000
+	)
+	const [startReadingDate, setStartReadingDate] = useState(getTimeDate()) // eslint-disable-line
+	console.log('startReadingDate', startReadingDate)
 	const { addListener } = useTypedNavigation()
 	const updateStartFromReadingScreen = useReadingProgressStore(
 		state => state.updateStartFromReadingScreen
@@ -44,13 +47,29 @@ export const useReadingProgress = ({
 	})
 	useEffect(() => {
 		if (readerLoading) return
-		return addListener('beforeRemove', () => {
+
+		const listener = AppState.addEventListener(
+			'change',
+			(nextAppState: string) => {
+				if (nextAppState === 'active') {
+					setStartReadingDate(getTimeDate())
+					setReadingSessionKey(slug + Math.random() * 1000)
+				}
+			}
+		)
+
+		const beforeLeave = addListener('beforeRemove', () => {
 			console.log('beforeRemove')
 			updateStartFromReadingScreen({
 				id: readingSessionKey,
 				startFromReadingScreen: false
 			})
 		})
+
+		return () => {
+			beforeLeave()
+			listener.remove()
+		}
 	}, [
 		addListener,
 		readerLoading,

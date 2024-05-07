@@ -936,15 +936,21 @@ components:
               - day
               - isReadMoreThatGoal
               - readingTimeMs
+        daySteakProgressPercentage:
+          type: number
         pepTalk:
           type: string
+        goalMinutes:
+          type: number
         userSteak:
           type: number
         isDaySteakComplete:
           type: boolean
       required:
         - progressByCurrentWeek
+        - daySteakProgressPercentage
         - pepTalk
+        - goalMinutes
         - userSteak
         - isDaySteakComplete
     UserCatalogOutput:
@@ -981,49 +987,25 @@ components:
                     - name
                     - icon
                 required: true
-              activities:
+              statistics:
                 type: array
                 items:
                   type: object
                   properties:
-                    date:
+                    endDate:
                       type: string
+                      format: date-time
                       required: true
-                    count:
+                    progress:
                       type: number
-                      minimum: 1
                       required: true
-                    level:
+                    readingTimeMs:
                       type: number
-                      minimum: 1
-                      maximum: 10
-                      required: true
-                    activities:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          message:
-                            type: string
-                            required: true
-                          time:
-                            type: string
-                            required: true
-                          importance:
-                            type: number
-                            minimum: 1
-                            maximum: 10
-                            required: true
-                        required:
-                          - message
-                          - time
-                          - importance
                       required: true
                   required:
-                    - date
-                    - count
-                    - level
-                    - activities
+                    - endDate
+                    - progress
+                    - readingTimeMs
                 required: true
               _count:
                 type: object
@@ -1060,7 +1042,7 @@ components:
               - id
               - email
               - selectedGenres
-              - activities
+              - statistics
               - _count
               - createdAt
               - picture
@@ -1391,49 +1373,25 @@ components:
               type: number
               required: true
           additionalProperties: false
-        activities:
+        statistics:
           type: array
           items:
             type: object
             properties:
-              date:
+              endDate:
                 type: string
+                format: date-time
                 required: true
-              count:
+              progress:
                 type: number
-                minimum: 1
                 required: true
-              level:
+              readingTimeMs:
                 type: number
-                minimum: 1
-                maximum: 10
-                required: true
-              activities:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      required: true
-                    time:
-                      type: string
-                      required: true
-                    importance:
-                      type: number
-                      minimum: 1
-                      maximum: 10
-                      required: true
-                  required:
-                    - message
-                    - time
-                    - importance
                 required: true
             required:
-              - date
-              - count
-              - level
-              - activities
+              - endDate
+              - progress
+              - readingTimeMs
         review:
           type: array
           items:
@@ -1484,7 +1442,7 @@ components:
         - recommendable
         - ebook
         - _count
-        - activities
+        - statistics
         - review
     CatalogOutput:
       type: object

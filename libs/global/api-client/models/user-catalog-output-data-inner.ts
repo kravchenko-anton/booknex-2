@@ -15,13 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { UserCatalogOutputDataInnerActivitiesInner } from './user-catalog-output-data-inner-activities-inner';
-// May contain unused imports in some cases
-// @ts-ignore
 import { UserCatalogOutputDataInnerCount } from './user-catalog-output-data-inner-count';
 // May contain unused imports in some cases
 // @ts-ignore
 import { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
+// May contain unused imports in some cases
+// @ts-ignore
+import { UserCatalogOutputDataInnerStatisticsInner } from './user-catalog-output-data-inner-statistics-inner';
 
 /**
  * 
@@ -49,10 +49,10 @@ export interface UserCatalogOutputDataInner {
     'selectedGenres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
     /**
      * 
-     * @type {Array<UserCatalogOutputDataInnerActivitiesInner>}
+     * @type {Array<UserCatalogOutputDataInnerStatisticsInner>}
      * @memberof UserCatalogOutputDataInner
      */
-    'activities': Array<UserCatalogOutputDataInnerActivitiesInner>;
+    'statistics': Array<UserCatalogOutputDataInnerStatisticsInner>;
     /**
      * 
      * @type {UserCatalogOutputDataInnerCount}
