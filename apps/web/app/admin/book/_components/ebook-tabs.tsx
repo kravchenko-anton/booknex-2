@@ -33,13 +33,13 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookSlug }) => {
 						__html:
 							ebook?.map(({ chapters, title }) =>
 								chapters
-									.map(({ text, name, romanNumber, readingTime }) =>
+									.map(({ text, name, romanNumber, id, readingTime }) =>
 										getServerBookHtml({
 											name,
 											romanNumber,
 											readingTime,
 											text,
-											title
+											sectionId: `${name + ' ' + title}_${id} `
 										})
 									)
 									.join(' ')
