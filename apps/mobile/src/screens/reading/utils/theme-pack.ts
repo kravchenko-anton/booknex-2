@@ -31,9 +31,9 @@ export const themePack: ThemePackType[] = [
 			primary: '#4d92d3',
 			secondary: '#cf8e6d',
 			background: {
-				normal: '#202020',
-				lighter: '#2b2b2b',
-				darker: '#1a1a1a'
+				normal: '#121212',
+				lighter: '#1a1a1a',
+				darker: '#0c0c0c'
 			},
 			textSelection: '#285943',
 			text: '#fff'
@@ -105,6 +105,22 @@ export const themePack: ThemePackType[] = [
 		}
 	},
 	{
+		title: 'Cobalt 2',
+		slug: 'cobalt-2',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#e1efff',
+			secondary: '#f07178',
+			background: {
+				normal: '#193549',
+				lighter: '#1d3e5e',
+				darker: '#142b40'
+			},
+			textSelection: '#3d4d5f',
+			text: '#b9c0cb'
+		}
+	},
+	{
 		title: 'Solarized',
 		slug: 'solarized',
 		statusBar: statusBar.light,
@@ -120,22 +136,7 @@ export const themePack: ThemePackType[] = [
 			text: '#a8b4b5'
 		}
 	},
-	{
-		title: 'Blue night',
-		slug: 'blue-night',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#24b5a8',
-			secondary: '#3398d3',
-			background: {
-				normal: '#121726',
-				lighter: '#1a2533',
-				darker: '#0c111a'
-			},
-			textSelection: '#3d4d5f',
-			text: '#c2c8db'
-		}
-	},
+
 	{
 		title: 'Kanagawa',
 		slug: 'kanagawa',
@@ -202,6 +203,22 @@ export const themePack: ThemePackType[] = [
 	},
 
 	{
+		title: 'Nord Frost',
+		slug: 'nord-frost',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#81a1c1',
+			secondary: '#bf616a',
+			background: {
+				normal: '#eceff4',
+				lighter: '#f7fafc',
+				darker: '#d8dee9'
+			},
+			textSelection: '#4f3f6f',
+			text: '#2e3440'
+		}
+	},
+	{
 		title: 'Gruvbox',
 		slug: 'gruvbox',
 		statusBar: statusBar.light,
@@ -246,7 +263,139 @@ export const themePack: ThemePackType[] = [
 				darker: '#121110'
 			},
 			textSelection: '#214283',
-			text: '#e6e1cf'
+			text: '#e6e5e9'
+		}
+	},
+	{
+		title: "Dracula's Castle",
+		slug: 'draculas-castle',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#ff79c6',
+			secondary: '#bd93f9',
+			background: {
+				normal: '#282a36',
+				lighter: '#373844',
+				darker: '#1e2029'
+			},
+			textSelection: '#44475a',
+			text: '#f8f8f2'
+		}
+	},
+
+	{
+		title: "80's Neon",
+		slug: '80s-neon',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#ffcc66',
+			secondary: '#ff6b72',
+			background: {
+				normal: '#101010',
+				lighter: '#121212',
+				darker: '#0e0e0e'
+			},
+			textSelection: '#44475a',
+			text: '#f8f8f2'
+		}
+	},
+	{
+		title: 'Dark Knight',
+		slug: 'dark-knight',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#ff79c6',
+			secondary: '#8be9fd',
+			background: {
+				normal: '#1a1a1a',
+				lighter: '#1c1c1c',
+				darker: '#181818'
+			},
+			textSelection: '#44475a',
+			text: '#f8f8f2'
+		}
+	},
+
+	{
+		title: 'Cyberpunk',
+		slug: 'cyberpunk',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#f7768e',
+			secondary: '#bd93f9',
+			background: {
+				normal: '#1b1b2f',
+				lighter: '#1f1f38',
+				darker: '#161625'
+			},
+			textSelection: '#3d4d5f',
+			text: '#f8f8f2'
+		}
+	},
+	{
+		title: "Hacker's Delight",
+		slug: 'hackers-delight',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#50fa7b',
+			secondary: '#ff79c6',
+
+			// dark background
+			background: {
+				normal: '#141414',
+				lighter: '#202020',
+				darker: '#111111'
+			},
+			textSelection: '#44475a',
+			text: '#f8f8f2'
+		}
+	},
+	{
+		title: 'Ayu',
+		slug: 'ayu',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#ffd163',
+			secondary: '#ffa965',
+			background: {
+				normal: '#0b0e14',
+				lighter: '#0e1116',
+				darker: '#080a0f'
+			},
+			textSelection: '#3d4d5f',
+			text: '#f8f8f2'
+		}
+	},
+	{
+		title: 'Bearded Bear',
+		slug: 'bearded-bear',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#87dc76',
+			secondary: '#78e8bb',
+			background: {
+				normal: '#141414',
+				lighter: '#202020',
+				darker: '#0e0e0e'
+			},
+			textSelection: '#44475a',
+			text: '#f8f8f2'
+		}
+	},
+	{
+		title: 'Rainglow',
+		slug: 'rainglow',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#167b96',
+			secondary: '#89dbbc',
+			background: {
+				normal: '#0e1114',
+				lighter: '#12161a',
+				darker: '#060708'
+			},
+			textSelection: '#3d4d5f',
+			text: '#e6eaef'
 		}
 	}
 ]

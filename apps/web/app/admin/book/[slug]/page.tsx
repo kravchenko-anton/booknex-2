@@ -131,7 +131,7 @@ const Page = () => {
 							<Line
 								dot={false}
 								type='monotone'
-								dataKey='progress'
+								dataKey='progressDelta'
 								stroke='#82ca9d'
 							/>
 						</LineChart>

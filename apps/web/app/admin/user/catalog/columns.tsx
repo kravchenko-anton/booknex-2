@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui'
+import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -14,6 +15,7 @@ import { Color } from 'global/colors'
 import { timeAgo } from 'global/helpers/time-format'
 import { getTimeDate } from 'global/utils/getTimeDate'
 import { MoreHorizontal } from 'icons'
+import { NothingFound } from 'illustrations'
 import {
 	Legend,
 	Line,
@@ -60,10 +62,19 @@ export const columns = ({
 				<h2 className='text-lg'>{row.original.fullName}</h2>
 				<p className='text-xm'>{row.original.email}</p>
 				<p className='text-xm'> {row.original.socialId}</p>
-				<p>joined: {timeAgo(getTimeDate(row.original.createdAt))}</p>
 				<p>
 					location: <b className='font-bold'> {row.original.location}</b>
 				</p>
+			</div>
+		)
+	},
+	{
+		id: 'Joined at',
+		enableHiding: false,
+		header: () => <p className='text-center text-lg'>Joined at</p>,
+		cell: ({ row }) => (
+			<div className='text-center'>
+				<p>{timeAgo(getTimeDate(row.original.createdAt))}</p>
 			</div>
 		)
 	},
@@ -73,44 +84,75 @@ export const columns = ({
 		enableHiding: false,
 		header: () => <p className='text-center text-lg'>Activities</p>,
 		cell: ({ row }) => (
-			<ResponsiveContainer width='100%' height={150}>
-				<LineChart
-					className='mt-4'
-					height={300}
-					width={800}
-					data={row?.original.statistics.map(history => ({
-						...history,
-						readingTimeMin: Math.round(history.readingTimeMs / 60_000) || 0,
-						name: new Date(history.endDate).toLocaleDateString()
-					}))}
-					margin={{
-						top: 5,
-						right: 30,
-						left: 20,
-						bottom: 5
-					}}>
-					<XAxis dataKey='name' />
-					<YAxis />
-					<Tooltip
-						contentStyle={{ backgroundColor: Color.bordered }}
-						itemStyle={{ color: Color.white }}
-					/>
-					<Legend />
-					<Line
-						dot={false}
-						type='monotone'
-						dataKey='readingTimeMin'
-						stroke='#8884d8'
-					/>
+			<div className='flex items-center justify-center'>
+				<Drawer>
+					<DrawerTrigger>
+						<Button
+							size={'md'}
+							className='mx-auto'
+							variant={
+								row.original.statistics.length > 0 ? 'primary' : 'muted'
+							}>
+							{` ${row.original.statistics.length} Activities `}
+						</Button>
+					</DrawerTrigger>
+					<DrawerContent>
+						{row.original.statistics.length > 0 ? (
+							<div className='mb-8'>
+								<ResponsiveContainer width='100%' height={150}>
+									<LineChart
+										height={150}
+										width={800}
+										data={row?.original.statistics.map(history => ({
+											...history,
+											readingTimeMin:
+												Math.round(history.readingTimeMs / 60_000) || 0,
+											name: timeAgo(getTimeDate(history.endDate))
+										}))}
+										margin={{
+											top: 5,
+											right: 30,
+											left: 20,
+											bottom: 5
+										}}>
+										<XAxis dataKey='name' />
+										<YAxis />
+										<Tooltip
+											contentStyle={{ backgroundColor: Color.bordered }}
+											itemStyle={{ color: Color.white }}
+										/>
+										<Legend />
+										<Line
+											dot={false}
+											type='monotone'
+											dataKey='readingTimeMin'
+											stroke='#8884d8'
+										/>
 
-					<Line
-						dot={false}
-						type='monotone'
-						dataKey='progress'
-						stroke='#82ca9d'
-					/>
-				</LineChart>
-			</ResponsiveContainer>
+										<Line
+											dot={false}
+											type='monotone'
+											dataKey='progressDelta'
+											stroke='#82ca9d'
+										/>
+									</LineChart>
+								</ResponsiveContainer>
+							</div>
+						) : (
+							<div className='mx-auto mb-8 mt-4'>
+								<NothingFound
+									className='mx-auto mb-2'
+									width={200}
+									height={180}
+								/>
+								<h1 color={Color.gray}>
+									Nothing found, try looking for something else
+								</h1>
+							</div>
+						)}
+					</DrawerContent>
+				</Drawer>
+			</div>
 		)
 	},
 

@@ -115,9 +115,12 @@ export class BookService {
 					where: {
 						bookSlug: slug
 					},
+					orderBy: {
+						endDate: 'asc'
+					},
 					select: {
 						endDate: true,
-						progress: true,
+						progressDelta: true,
 						readingTimeMs: true,
 						scrollPosition: true,
 						startDate: true
@@ -137,7 +140,7 @@ export class BookService {
 					startDate: Date
 					endDate: Date
 					readingTimeMs: number
-					progress: number
+					progressDelta: number
 				}[]
 			>((accumulator, current) => {
 				const exist = accumulator.find(
@@ -145,7 +148,10 @@ export class BookService {
 				)
 				if (exist) {
 					exist.readingTimeMs += current.readingTimeMs
-					exist.progress = Math.max(exist.progress, current.progress)
+					exist.progressDelta = Math.max(
+						exist.progressDelta,
+						current.progressDelta
+					)
 				} else {
 					accumulator.push(current)
 				}

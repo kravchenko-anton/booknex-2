@@ -16,7 +16,7 @@ export const CatalogUserOutputSchema = z
 		statistics: z.array(
 			z.object({
 				endDate: z.date(),
-				progress: z.number(),
+				progressDelta: z.number(),
 				readingTimeMs: z.number()
 			})
 		),
@@ -40,10 +40,12 @@ export const UserLibraryOutputSchema = z.object({
 	readingBooks: z.array(
 		ShortBookSchema.merge(
 			z.object({
-				readingHistory: z.object({
-					progress: z.number(),
-					scrollPosition: z.number()
-				})
+				readingHistory: z
+					.object({
+						progress: z.number(),
+						scrollPosition: z.number()
+					})
+					.nullable()
 			})
 		)
 	),
@@ -54,7 +56,10 @@ export const UserLibraryOutputSchema = z.object({
 export const HistorySchema = z.object({
 	startDate: z.date(),
 	endDate: z.date(),
-	progress: z.number(),
+	startProgress: z.number(),
+
+	endProgress: z.number(),
+	progressDelta: z.number(),
 	readingTimeMs: z.number(),
 	scrollPosition: z.number(),
 	bookSlug: z.string()

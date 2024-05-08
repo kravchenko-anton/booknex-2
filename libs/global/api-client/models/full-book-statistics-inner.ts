@@ -31,7 +31,7 @@ export interface FullBookStatisticsInner {
      * @type {number}
      * @memberof FullBookStatisticsInner
      */
-    'progress': number;
+    'progressDelta': number;
     /**
      * 
      * @type {number}

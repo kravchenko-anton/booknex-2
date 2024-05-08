@@ -29,11 +29,10 @@ export const useLibraryWithSync = () => {
 		staleTime: 0,
 		refetchOnWindowFocus: true,
 		refetchOnMount: true,
-		retryOnMount: history.length > 0,
-		retry: history.length > 0,
+		refetchOnReconnect: true,
 		onError: () => isFocus && errorToast('Failed to sync library'),
 		onSuccess: () => {
-			console.log('sync success, clear history', history)
+			console.log('sync profile success, clear history', history)
 			clearHistory()
 		}
 	})

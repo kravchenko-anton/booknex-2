@@ -24,9 +24,8 @@ export const useStatisticsWithSync = () => {
 		select: data => data.data,
 		staleTime: 0,
 		refetchOnWindowFocus: true,
+		refetchOnReconnect: true,
 		refetchOnMount: true,
-		retryOnMount: history.length > 0,
-		retry: history.length > 0,
 		onSuccess: () => {
 			console.log('sync success, clear history', history)
 			clearHistory()

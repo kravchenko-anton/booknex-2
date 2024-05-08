@@ -127,7 +127,9 @@ model ReadingHistory {
   endDate        DateTime
   readingTimeMs  Int
   scrollPosition Int
-  progress       Float
+  startProgress  Float
+  endProgress    Float
+  progressDelta  Float
   book           Book     @relation(fields: [bookSlug], references: [slug])
   user           User     @relation(fields: [userId], references: [id])
   bookSlug       String

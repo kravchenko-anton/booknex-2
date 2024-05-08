@@ -1,10 +1,8 @@
 import { Fire } from '@/screens/profile/fire'
 import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
 import { Loader, ScrollLayout, Title } from '@/ui'
-import NetworkError from '@/ui/no-network-connection'
 import NothingFount from '@/ui/nothing-fount'
 import { cn } from '@/utils'
-import { useNetInfo } from '@react-native-community/netinfo'
 import { Color } from 'global/colors'
 import { getTimeDate } from 'global/utils/getTimeDate'
 import { View } from 'react-native'
@@ -24,7 +22,6 @@ const currentDayTitle = () => {
 	return days[today]
 }
 const Profile = () => {
-	const { isConnected } = useNetInfo()
 	const { isLoading, statistics } = useStatisticsWithSync()
 	if (isLoading) return <Loader />
 	if (!statistics)
@@ -33,11 +30,14 @@ const Profile = () => {
 				text={"There will be your story here, but it's not definite"}
 			/>
 		)
-	if (!isConnected) return <NetworkError />
+	console.log(
+		statistics.daySteakProgressPercentage || 0,
+		'daySteakProgressPercentage'
+	)
 	return (
 		<ScrollLayout className=' px-2'>
 			{/*<GoalSelectModal sheetRef={adjustGoalref} />*/}
-			<View className='bg-foreground border-bordered mt-4 rounded-md border-[1px] p-2'>
+			<View className='bg-foreground border-bordered mt-4 rounded-lg border-[1px] p-2'>
 				<View className='mx-auto mt-4'>
 					<Fire progress={statistics.daySteakProgressPercentage || 0} />
 				</View>
@@ -72,7 +72,7 @@ const Profile = () => {
 										? 'bg-primary'
 										: 'border-bordered border-[2px] bg-transparent'
 								)}>
-								<Title weight='bold' color='white' size='md'>
+								<Title className='mb-0.5' weight='bold' color='white' size='md'>
 									{item.day.slice(0, 1)}
 								</Title>
 							</View>

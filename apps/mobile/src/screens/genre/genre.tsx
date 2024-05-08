@@ -30,7 +30,7 @@ const Genre = () => {
 		<ScrollLayout>
 			<CatalogList
 				disabledScroll
-				data={genre.mainBooks}
+				data={genre.books}
 				onElementPress={slug => navigate('Book', { slug })}
 			/>
 		</ScrollLayout>

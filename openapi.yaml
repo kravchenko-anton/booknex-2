@@ -816,7 +816,11 @@ components:
         endDate:
           type: string
           format: date-time
-        progress:
+        startProgress:
+          type: number
+        endProgress:
+          type: number
+        progressDelta:
           type: number
         readingTimeMs:
           type: number
@@ -827,7 +831,9 @@ components:
       required:
         - startDate
         - endDate
-        - progress
+        - startProgress
+        - endProgress
+        - progressDelta
         - readingTimeMs
         - scrollPosition
         - bookSlug
@@ -861,6 +867,7 @@ components:
                     type: number
                     required: true
                 required: true
+                nullable: true
             required:
               - slug
               - title
@@ -996,7 +1003,7 @@ components:
                       type: string
                       format: date-time
                       required: true
-                    progress:
+                    progressDelta:
                       type: number
                       required: true
                     readingTimeMs:
@@ -1004,7 +1011,7 @@ components:
                       required: true
                   required:
                     - endDate
-                    - progress
+                    - progressDelta
                     - readingTimeMs
                 required: true
               _count:
@@ -1382,7 +1389,7 @@ components:
                 type: string
                 format: date-time
                 required: true
-              progress:
+              progressDelta:
                 type: number
                 required: true
               readingTimeMs:
@@ -1390,7 +1397,7 @@ components:
                 required: true
             required:
               - endDate
-              - progress
+              - progressDelta
               - readingTimeMs
         review:
           type: array

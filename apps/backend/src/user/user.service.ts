@@ -92,8 +92,9 @@ export class UserService {
 			data: dto.map(history => ({
 				readingTimeMs: history.readingTimeMs,
 				endDate: history.endDate,
-				progress: history.progress,
-
+				progressDelta: history.progressDelta,
+				startProgress: history.startProgress,
+				endProgress: history.endProgress,
 				scrollPosition: history.scrollPosition,
 				startDate: history.startDate,
 				userId: userId,
@@ -127,7 +128,7 @@ export class UserService {
 			},
 			select: {
 				endDate: true,
-				progress: true,
+				progressDelta: true,
 				readingTimeMs: true,
 				bookSlug: true,
 				startDate: true
@@ -143,7 +144,6 @@ export class UserService {
 			'Friday',
 			'Saturday'
 		]
-		//TODO: проверить на работоспособность
 		const currentDate = getTimeDate()
 
 		const currentWeekHistory = userHistory.filter(history => {
@@ -177,6 +177,16 @@ export class UserService {
 				? streak + 1
 				: streak
 		}, 0)
+
+		console.log(
+			userHistory.reduce(
+				(accumulator, history) => accumulator + history.readingTimeMs,
+				0
+			) /
+				60_000 /
+				user.goalMinutes,
+			'daySteakProgressPercentage'
+		)
 		return {
 			progressByCurrentWeek: currentWeekSteakProgress,
 			userSteak,
@@ -187,10 +197,12 @@ export class UserService {
 			),
 			goalMinutes: user.goalMinutes,
 			daySteakProgressPercentage:
-				userHistory?.find(
-					history =>
-						getTimeDate(history.endDate).getDate() === currentDate.getDate()
-				)?.readingTimeMs || 0 / 60_000 / user.goalMinutes,
+				userHistory.reduce(
+					(accumulator, history) => accumulator + history.readingTimeMs,
+					0
+				) /
+				60_000 /
+				user.goalMinutes,
 			pepTalk:
 				pepTalks.find(pepTalk => userSteak < pepTalk.lessThan)?.text ??
 				'Good result, keep it up!'
@@ -205,7 +217,7 @@ export class UserService {
 						...returnBookObject,
 						readingHistory: {
 							select: {
-								progress: true,
+								progressDelta: true,
 								scrollPosition: true,
 								endDate: true
 							},
@@ -241,7 +253,12 @@ export class UserService {
 			readingBooks: readingBooks
 				.map(book => ({
 					...book,
-					readingHistory: book.readingHistory[0]
+					readingHistory:
+						{
+							scrollPosition: book.readingHistory[0]?.scrollPosition ?? 0,
+							endDate: book.readingHistory[0]?.endDate,
+							progress: book.readingHistory[0]?.progressDelta ?? 0
+						} ?? null
 				}))
 				.sort((a, b) => {
 					if (!a.readingHistory) return 1
@@ -272,9 +289,12 @@ export class UserService {
 					select: ReturnGenreObject
 				},
 				readingHistory: {
+					orderBy: {
+						endDate: 'asc'
+					},
 					select: {
 						endDate: true,
-						progress: true,
+						progressDelta: true,
 						readingTimeMs: true,
 						scrollPosition: true,
 						startDate: true
@@ -306,7 +326,7 @@ export class UserService {
 				})
 			})
 		})
-
+		const userCount = await this.prisma.user.count()
 		return {
 			data: data.map(({ readingHistory, ...user }) => ({
 				...user,
@@ -315,24 +335,26 @@ export class UserService {
 						startDate: Date
 						endDate: Date
 						readingTimeMs: number
-						progress: number
+						progressDelta: number
 					}[]
 				>((accumulator, current) => {
 					const exist = accumulator.find(
-						({ startDate }) => startDate === current.startDate
+						({ endDate }) => endDate === current.endDate
 					)
 					if (exist) {
 						exist.readingTimeMs += current.readingTimeMs
-						exist.progress = Math.max(exist.progress, current.progress)
+						exist.progressDelta = Math.max(
+							exist.progressDelta,
+							current.progressDelta
+						)
 					} else {
 						accumulator.push(current)
 					}
 					return accumulator
 				}, [])
 			})),
-			canLoadMore:
-				page < Math.floor((await this.prisma.user.count()) / perPage),
-			totalPages: Math.floor((await this.prisma.user.count()) / perPage)
+			canLoadMore: page < Math.floor(userCount / perPage),
+			totalPages: Math.floor(userCount / perPage)
 		}
 	}
 

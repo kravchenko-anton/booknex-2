@@ -33,7 +33,7 @@ export class UserController {
 		@CurrentUser('id') userId: number,
 
 		@Body() dto: ReadingHistory[]
-	) {
+	): Promise<UserLibraryOutput> {
 		await this.usersService.syncHistory(dto, userId)
 		return this.usersService.library(+userId)
 	}

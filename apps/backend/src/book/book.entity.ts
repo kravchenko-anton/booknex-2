@@ -40,7 +40,7 @@ export const FullBookSchema = BookSchema.merge(
 			statistics: z.array(
 				z.object({
 					endDate: z.date(),
-					progress: z.number(),
+					progressDelta: z.number(),
 					readingTimeMs: z.number()
 				})
 			),

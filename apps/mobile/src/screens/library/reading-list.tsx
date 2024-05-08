@@ -54,8 +54,9 @@ export const ReadingList: FC<ReadingListProperties> = ({
 									history.some(h => h.bookSlug === b.slug)
 								) {
 									return (
-										(history.find(h => h.bookSlug === a.slug)?.progress || 0) -
-										(history.find(h => h.bookSlug === b.slug)?.progress || 0)
+										(history.find(h => h.bookSlug === a.slug)?.endProgress ||
+											0) -
+										(history.find(h => h.bookSlug === b.slug)?.endProgress || 0)
 									)
 								}
 								if (history.some(h => h.bookSlug === a.slug)) return -1
@@ -73,12 +74,12 @@ export const ReadingList: FC<ReadingListProperties> = ({
 					item: UserLibraryOutputReadingBooksInner
 				}) => {
 					const progress = history.some(b => b.bookSlug === book.slug)
-						? (history.find(b => b.bookSlug === book.slug)?.progress || 0) / 100
+						? (history.find(b => b.bookSlug === book.slug)?.endProgress || 0) /
+							100
 						: (book.readingHistory?.progress || 0) / 100
 					const scrollPosition = history.some(b => b.bookSlug === book.slug)
 						? history.find(b => b.bookSlug === book.slug)?.scrollPosition || 0
 						: book.readingHistory?.scrollPosition
-					console.log(`progress from ${book.title} |`, progress, scrollPosition)
 					return (
 						<Animated.View
 							style={{

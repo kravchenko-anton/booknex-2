@@ -31,7 +31,7 @@ export interface UserCatalogOutputDataInnerStatisticsInner {
      * @type {number}
      * @memberof UserCatalogOutputDataInnerStatisticsInner
      */
-    'progress': number;
+    'progressDelta': number;
     /**
      * 
      * @type {number}

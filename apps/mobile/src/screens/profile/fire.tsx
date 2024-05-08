@@ -5,8 +5,8 @@ function mapToRange(value: number) {
 	return +(100 - value)
 }
 export const Fire = ({ progress = 0 }: { progress?: number }) => {
-	console.log(progress)
-	const adaptivePercentage = -3.4 + mapToRange(progress) * 0.07
+	console.log(progress, 'progress')
+	const adaptivePercentage = -3.4 + mapToRange(progress) * 0.0709
 	console.log(adaptivePercentage, 'adaptivePercentage')
 	const cy = 77 + (87 - 77) * adaptivePercentage
 	const d = `M33.2712 ${66.7727 + (76.7727 - 66.7727) * adaptivePercentage}C33.2712 ${84.8475 + (94.8475 - 84.8475) * adaptivePercentage} 18.8836 99.5 1.13559 ${99.5 + (109.5 - 99.5) * adaptivePercentage}C-16.6124 ${99.5 + (109.5 - 99.5) * adaptivePercentage} -31 ${84.8475 + (94.8475 - 84.8475) * adaptivePercentage} -31 ${66.7727 + (76.7727 - 66.7727) * adaptivePercentage}C-31 ${48.698 + (58.698 - 48.698) * adaptivePercentage} -16.6124 ${34.0455 + (44.0455 - 34.0455) * adaptivePercentage} 1.13559 ${34.0455 + (44.0455 - 34.0455) * adaptivePercentage}C18.8836 ${34.0455 + (44.0455 - 34.0455) * adaptivePercentage} 33.2712 ${48.698 + (58.698 - 48.698) * adaptivePercentage} 33.2712 ${66.7727 + (76.7727 - 66.7727) * adaptivePercentage}Z`

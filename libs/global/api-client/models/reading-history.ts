@@ -37,7 +37,19 @@ export interface ReadingHistory {
      * @type {number}
      * @memberof ReadingHistory
      */
-    'progress': number;
+    'startProgress': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReadingHistory
+     */
+    'endProgress': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReadingHistory
+     */
+    'progressDelta': number;
     /**
      * 
      * @type {number}

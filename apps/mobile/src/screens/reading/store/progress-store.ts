@@ -5,7 +5,9 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 export interface ReadingHistoryType {
 	id: string
 	bookSlug: string
-	progress: number
+	startProgress: number
+	endProgress: number
+	progressDelta: number
 	scrollPosition: number
 	startDate: Date
 	endDate: Date
@@ -41,7 +43,7 @@ export const useReadingProgressStore = create<
 						console.log(
 							'update info in old history',
 							newHistory.id,
-							newHistory.progress
+							newHistory.endProgress
 						)
 						return {
 							...state,
@@ -50,7 +52,7 @@ export const useReadingProgressStore = create<
 							)
 						}
 					}
-					console.log('add new history', newHistory.id, newHistory.progress)
+					console.log('add new history', newHistory.id, newHistory.endProgress)
 					return { ...state, history: [...state.history, newHistory] }
 				})
 			},

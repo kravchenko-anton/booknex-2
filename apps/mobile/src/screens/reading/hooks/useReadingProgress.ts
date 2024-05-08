@@ -28,6 +28,7 @@ export const useReadingProgress = ({
 		slug + Math.random() * 1000
 	)
 	const [startReadingDate, setStartReadingDate] = useState(getTimeDate()) // eslint-disable-line
+	const [startReadingProgress, setStartReadingProgress] = useState(0)
 	console.log('startReadingDate', startReadingDate)
 	const { addListener } = useTypedNavigation()
 	const updateStartFromReadingScreen = useReadingProgressStore(
@@ -45,6 +46,7 @@ export const useReadingProgress = ({
 			progress: 0
 		}
 	})
+
 	useEffect(() => {
 		if (readerLoading) return
 
@@ -89,6 +91,9 @@ export const useReadingProgress = ({
 	}
 
 	const updateReadingProgress = (payload: WebviewMessageType['payload']) => {
+		if (!startReadingProgress) {
+			setStartReadingProgress(payload.progress)
+		}
 		setReadingProgress({
 			progress: payload.progress,
 			chapter: {
@@ -102,7 +107,9 @@ export const useReadingProgress = ({
 			startFromReadingScreen: true,
 			id: readingSessionKey,
 			bookSlug: slug,
-			progress: readingProgress.progress,
+			startProgress: startReadingProgress,
+			endProgress: payload.progress,
+			progressDelta: payload.progress - startReadingProgress,
 			scrollPosition: scrollPosition,
 			endDate: getTimeDate(),
 			startDate: startReadingDate,

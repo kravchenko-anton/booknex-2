@@ -52,6 +52,6 @@ export interface UserLibraryOutputReadingBooksInner {
      * @type {UserLibraryOutputReadingBooksInnerReadingHistory}
      * @memberof UserLibraryOutputReadingBooksInner
      */
-    'readingHistory': UserLibraryOutputReadingBooksInnerReadingHistory;
+    'readingHistory': UserLibraryOutputReadingBooksInnerReadingHistory | null;
 }
 
