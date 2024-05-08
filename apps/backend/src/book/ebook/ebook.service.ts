@@ -10,12 +10,11 @@ import { serverError } from '../../utils/helpers/server-error'
 import { PrismaService } from '../../utils/services/prisma.service'
 import { StoredEBookSchema, type StoredEBook } from './ebook.model'
 
-
 @Injectable()
 export class EbookService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService,
+		private readonly activityService: ActivityService
 	) {}
 	async storedEbook(slug: string) {
 		const book = await this.prisma.book.findUnique({
@@ -69,10 +68,10 @@ export class EbookService {
 			...book,
 			file: ebook.map(({ chapters, title }) =>
 				chapters
-					.map(({ text, name, romanNumber, readingTime }) =>
+					.map(({ text, name, romanNumber, readingTime, id }) =>
 						getServerBookHtml({
 							name,
-							title,
+							sectionId: `${slugify(name + ' ' + title)}_${id}`,
 							text,
 							readingTime,
 							romanNumber
@@ -82,9 +81,9 @@ export class EbookService {
 			),
 			chapters: ebook.map(({ title, chapters }) => ({
 				title,
-				children: chapters.map(({ name }) => ({
+				children: chapters.map(({ name, id }) => ({
 					name,
-					link: `${slugify(name + ' ' + title)}`
+					link: `${slugify(name + ' ' + title)}_${id}`
 				}))
 			}))
 		}

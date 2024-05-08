@@ -83,7 +83,6 @@ const Navigation: FC = () => {
 				<Stack.Navigator
 					initialRouteName={user ? 'Featured' : 'Welcome'}
 					screenOptions={{
-						presentation: 'containedTransparentModal',
 						animation: 'fade',
 						headerShown: false,
 						statusBarColor: Color.background,
@@ -117,8 +116,15 @@ const Navigation: FC = () => {
 									{...route}
 								/>
 							))}
-					{modalRoutes.map(({ ...route }) => (
-						<Stack.Screen key={route.name} {...route} />
+					{modalRoutes.map(({ options, ...route }) => (
+						<Stack.Screen
+							key={route.name}
+							options={{
+								presentation: 'containedTransparentModal',
+								...options
+							}}
+							{...route}
+						/>
 					))}
 				</Stack.Navigator>
 			</NavigationContainer>

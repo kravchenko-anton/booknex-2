@@ -8,7 +8,6 @@ import NothingFount from '@/ui/nothing-fount'
 const Library = () => {
 	const { isLoading, library, history } = useLibraryWithSync()
 	console.log('isLoading', isLoading, 'library')
-
 	const { navigate } = useTypedNavigation()
 	if (!library) return <Loader />
 	if (

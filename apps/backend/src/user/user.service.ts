@@ -124,7 +124,7 @@ export class UserService {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		const userHistory = await this.prisma.readingHistory.findMany({
 			where: {
-				id: userId
+				userId
 			},
 			select: {
 				endDate: true,
@@ -197,12 +197,11 @@ export class UserService {
 			),
 			goalMinutes: user.goalMinutes,
 			daySteakProgressPercentage:
-				userHistory.reduce(
-					(accumulator, history) => accumulator + history.readingTimeMs,
-					0
-				) /
-				60_000 /
-				user.goalMinutes,
+				((currentWeekSteakProgress.find(
+					day => day.day === WeekDays[currentDate.getDay()]
+				)?.readingTimeMs ?? 0 / 60_000) /
+					user.goalMinutes) *
+				100,
 			pepTalk:
 				pepTalks.find(pepTalk => userSteak < pepTalk.lessThan)?.text ??
 				'Good result, keep it up!'
@@ -217,8 +216,8 @@ export class UserService {
 						...returnBookObject,
 						readingHistory: {
 							select: {
-								progressDelta: true,
 								scrollPosition: true,
+								endProgress: true,
 								endDate: true
 							},
 							orderBy: {
@@ -257,15 +256,15 @@ export class UserService {
 						{
 							scrollPosition: book.readingHistory[0]?.scrollPosition ?? 0,
 							endDate: book.readingHistory[0]?.endDate,
-							progress: book.readingHistory[0]?.progressDelta ?? 0
+							progress: book.readingHistory[0]?.endProgress ?? 0
 						} ?? null
 				}))
 				.sort((a, b) => {
 					if (!a.readingHistory) return 1
 					if (!b.readingHistory) return -1
 					return (
-						getTimeDate(b.readingHistory.endDate).getTime() -
-						getTimeDate(a.readingHistory.endDate).getTime()
+						getTimeDate(a.readingHistory.endDate).getTime() -
+						getTimeDate(b.readingHistory.endDate).getTime()
 					)
 				}),
 			finishedBooks,

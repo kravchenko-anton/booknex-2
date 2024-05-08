@@ -1,21 +1,17 @@
-import { slugify } from './slugify'
+import { ChapterType } from '../../../apps/backend/src/book/ebook/ebook.model'
 import { minutesToTime } from './time-converter'
 
-interface BookHtmlType {
-	name: string
-	title: string
-	text: string
-	readingTime: number
-	romanNumber: string
+export interface getServerBookHtmlType
+	extends Pick<ChapterType, 'romanNumber' | 'readingTime' | 'name' | 'text'> {
+	sectionId: string
 }
-
 export const getServerBookHtml = ({
 	name,
-	title,
 	text,
+	sectionId,
 	readingTime,
 	romanNumber
-}: BookHtmlType) => `<section id="${slugify(name + ' ' + title)}">
+}: getServerBookHtmlType) => `<section id="${sectionId}">
 
 	<h4 style="margin: 0; padding: 0; font-size: 18px; margin-bottom:4px">${name}</h4>
 	<div style=" gap: 10px; display: flex; align-items: center;">

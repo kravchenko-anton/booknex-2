@@ -37,6 +37,7 @@ export const EbookOutputSchema = z
 	})
 	.merge(ShortBookSchema.pick({ title: true, picture: true }))
 
+export class ChapterType extends createZodDto(ChapterSchema) {}
 export class StoredEBook extends createZodDto(StoredEBookSchema) {}
 export class BaseChapter extends createZodDto(ChapterPayloadSchema) {}
 export class EbookOutput extends createZodDto(EbookOutputSchema) {}
