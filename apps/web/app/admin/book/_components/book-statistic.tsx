@@ -1,6 +1,6 @@
 import type { FullBookCount } from 'global/api-client'
 import { minutesToTime } from 'global/helpers/time-converter'
-import { getTimeDate } from 'global/utils/getTimeDate'
+import { getTimeDate } from 'global/utils'
 import type { FC } from 'react'
 
 interface InfoBlockProperties {

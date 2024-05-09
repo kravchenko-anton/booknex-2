@@ -939,10 +939,14 @@ components:
               readingTimeMs:
                 type: number
                 required: true
+              dayProgress:
+                type: number
+                required: true
             required:
               - day
               - isReadMoreThatGoal
               - readingTimeMs
+              - dayProgress
         daySteakProgressPercentage:
           type: number
         pepTalk:

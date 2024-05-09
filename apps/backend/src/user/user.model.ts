@@ -70,7 +70,8 @@ export const UserStatisticsSchema = z.object({
 		z.object({
 			day: z.string(),
 			isReadMoreThatGoal: z.boolean(),
-			readingTimeMs: z.number()
+			readingTimeMs: z.number(),
+			dayProgress: z.number()
 		})
 	),
 	daySteakProgressPercentage: z.number(),

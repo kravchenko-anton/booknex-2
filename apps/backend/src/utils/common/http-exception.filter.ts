@@ -5,7 +5,7 @@ import {
 	type ExceptionFilter
 } from '@nestjs/common'
 import type { Request, Response } from 'express'
-import { getTimeDate } from 'global/utils/getTimeDate'
+import { getTimeDate } from 'global/utils'
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {

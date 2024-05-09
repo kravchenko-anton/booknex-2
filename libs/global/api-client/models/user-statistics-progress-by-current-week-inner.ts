@@ -38,5 +38,11 @@ export interface UserStatisticsProgressByCurrentWeekInner {
      * @memberof UserStatisticsProgressByCurrentWeekInner
      */
     'readingTimeMs': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserStatisticsProgressByCurrentWeekInner
+     */
+    'dayProgress': number;
 }
 

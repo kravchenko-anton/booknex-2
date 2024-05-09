@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui'
-import { appName, installAppLink, mailLink } from 'global/utils'
-import { getTimeDate } from 'global/utils/getTimeDate'
+import { appName, getTimeDate, installAppLink, mailLink } from 'global/utils'
 import Link from 'next/link'
 
 export const footerNavigationLinks = [

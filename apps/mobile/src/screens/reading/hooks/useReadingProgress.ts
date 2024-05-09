@@ -1,7 +1,7 @@
 import { useTypedNavigation } from '@/hooks'
 import type { WebviewMessageType } from '@/screens/reading/hooks/useReaderMessage'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
-import { getTimeDate } from 'global/utils/getTimeDate'
+import { getTimeDate } from 'global/utils'
 import { useEffect, useState } from 'react'
 import { AppState } from 'react-native'
 

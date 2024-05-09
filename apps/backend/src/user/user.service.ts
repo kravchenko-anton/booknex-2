@@ -3,14 +3,14 @@ import type { ReadingHistory } from '@/src/user/user.model'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
-import { getTimeDate } from 'global/utils/getTimeDate'
+import { timeAgo } from 'global/helpers/time-format'
+import { getTimeDate } from 'global/utils'
 import { returnBookObject } from '../book/return.book.object'
 import { ReturnGenreObject } from '../genre/return.genre.object'
 import { slugSelect } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import { returnUserObject } from './return.user.object'
-
 function isThisWeek(date: Date) {
 	const today = new Date()
 	const firstDayOfWeek = new Date(
@@ -157,13 +157,13 @@ export class UserService {
 				return historyDate.getDay() === WeekDays.indexOf(day)
 			})
 			const dayProgress = dayHistory.reduce(
-				(accumulator, history) =>
-					accumulator + history.readingTimeMs / 60_000 / user.goalMinutes,
+				(accumulator, history) => accumulator + history.readingTimeMs / 60_000,
 				0
 			)
 			return {
 				day,
 				isReadMoreThatGoal: dayProgress >= user.goalMinutes,
+				dayProgress,
 				readingTimeMs: dayProgress
 			}
 		})
@@ -178,15 +178,6 @@ export class UserService {
 				: streak
 		}, 0)
 
-		console.log(
-			userHistory.reduce(
-				(accumulator, history) => accumulator + history.readingTimeMs,
-				0
-			) /
-				60_000 /
-				user.goalMinutes,
-			'daySteakProgressPercentage'
-		)
 		return {
 			progressByCurrentWeek: currentWeekSteakProgress,
 			userSteak,
@@ -216,6 +207,7 @@ export class UserService {
 						...returnBookObject,
 						readingHistory: {
 							select: {
+								id: true,
 								scrollPosition: true,
 								endProgress: true,
 								endDate: true
@@ -247,18 +239,25 @@ export class UserService {
 		if (!library)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		const { readingBooks, finishedBooks, savedBooks } = library
-
 		return {
 			readingBooks: readingBooks
-				.map(book => ({
-					...book,
-					readingHistory:
-						{
-							scrollPosition: book.readingHistory[0]?.scrollPosition ?? 0,
-							endDate: book.readingHistory[0]?.endDate,
-							progress: book.readingHistory[0]?.endProgress ?? 0
-						} ?? null
-				}))
+				.map(book => {
+					console.log(
+						book.readingHistory,
+						'book.readingHistory',
+						book.slug,
+						timeAgo(getTimeDate(book.readingHistory[0]?.endDate))
+					)
+					return {
+						...book,
+						readingHistory:
+							{
+								scrollPosition: book.readingHistory[0]?.scrollPosition ?? 0,
+								endDate: book.readingHistory[0]?.endDate,
+								progress: book.readingHistory[0]?.endProgress ?? 0
+							} ?? null
+					}
+				})
 				.sort((a, b) => {
 					if (!a.readingHistory) return 1
 					if (!b.readingHistory) return -1

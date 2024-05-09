@@ -13,7 +13,7 @@ import type { UserCatalogOutputDataInner } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { Color } from 'global/colors'
 import { timeAgo } from 'global/helpers/time-format'
-import { getTimeDate } from 'global/utils/getTimeDate'
+import { getTimeDate } from 'global/utils'
 import { MoreHorizontal } from 'icons'
 import { NothingFound } from 'illustrations'
 import {

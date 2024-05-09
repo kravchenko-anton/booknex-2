@@ -13,7 +13,7 @@ import {
 } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Color } from 'global/colors'
-import { getTimeDate } from 'global/utils/getTimeDate'
+import { getTimeDate } from 'global/utils'
 import { useEffect, useState, type FC } from 'react'
 import BootSplash from 'react-native-bootsplash'
 import {

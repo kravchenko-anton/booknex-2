@@ -11,18 +11,12 @@
 				"../../libs/global/illustrations/react-native/index.ts"
 			],
 			"global/*": ["../../libs/global/*"]
-			//			"backend/*": [
-			//				"../backend/*"
-			//			]
 		}
 	},
 	"include": ["../../libs/**/*"],
 	"references": [
 		{
 			"path": "./tsconfig.app.json"
-		},
-		{
-			"path": "./tsconfig.spec.json"
 		}
 	]
 }

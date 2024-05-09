@@ -43,7 +43,7 @@ const Profile = () => {
 
 	return (
 		<>
-			<GoalSelectModal sheetRef={bottomSheetRef} />
+			<GoalSelectModal />
 			<ScrollLayout className=' px-2'>
 				<View className='bg-foreground border-bordered mt-4 rounded-lg border-[1px] p-2'>
 					<View className='mx-auto mt-4'>

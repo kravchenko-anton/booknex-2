@@ -47,7 +47,7 @@
 				"{projectRoot}/android/app/build/outputs/bundle",
 				"{projectRoot}/android/app/build/outputs/apk"
 			],
-			"dependsOn": ["ensure-symlink"],
+			"dependsOn": ["ensure-symlink"]
 		},
 		"build-ios": {
 			"executor": "@nx/react-native:build-ios",

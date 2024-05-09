@@ -1,4 +1,4 @@
-import { getTimeDate } from '../utils/getTimeDate'
+import { getTimeDate } from '../utils'
 
 export function formatYYYYMMDD(date = getTimeDate()) {
 	const year = date.toLocaleString('default', { year: 'numeric' })
