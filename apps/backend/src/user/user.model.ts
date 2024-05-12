@@ -70,6 +70,7 @@ export const UserStatisticsSchema = z.object({
 		z.object({
 			day: z.string(),
 			isReadMoreThatGoal: z.boolean(),
+			isCurrentDay: z.boolean(),
 			readingTimeMs: z.number(),
 			dayProgress: z.number()
 		})
@@ -77,8 +78,7 @@ export const UserStatisticsSchema = z.object({
 	daySteakProgressPercentage: z.number(),
 	pepTalk: z.string(),
 	goalMinutes: z.number(),
-	userSteak: z.number(),
-	isDaySteakComplete: z.boolean()
+	userSteak: z.number()
 })
 export class ReadingHistory extends createZodDto(HistorySchema) {}
 export class UserStatistics extends createZodDto(UserStatisticsSchema) {}

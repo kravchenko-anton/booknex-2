@@ -2,6 +2,7 @@ import type { ReadingHistoryType } from '@/screens/reading/store/progress-store'
 import { Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
+import { historyByLatestSorting } from '@/utils'
 import { useNetInfo } from '@react-native-community/netinfo'
 import type { UserLibraryOutputReadingBooksInner } from 'global/api-client'
 import { Color } from 'global/colors'
@@ -73,12 +74,16 @@ export const ReadingList: FC<ReadingListProperties> = ({
 				}: {
 					item: UserLibraryOutputReadingBooksInner
 				}) => {
-					const progress = history.some(b => b.bookSlug === book.slug)
-						? (history.find(b => b.bookSlug === book.slug)?.endProgress || 0) /
-							100
+					const latestHistory = historyByLatestSorting(history)
+					const progress = latestHistory.some(b => b.bookSlug === book.slug)
+						? (latestHistory.find(b => b.bookSlug === book.slug)?.endProgress ||
+								0) / 100
 						: (book.readingHistory?.progress || 0) / 100
-					const scrollPosition = history.some(b => b.bookSlug === book.slug)
-						? history.find(b => b.bookSlug === book.slug)?.scrollPosition || 0
+					const scrollPosition = latestHistory.some(
+						b => b.bookSlug === book.slug
+					)
+						? latestHistory.find(b => b.bookSlug === book.slug)
+								?.scrollPosition || 0
 						: book.readingHistory?.scrollPosition
 					return (
 						<Animated.View
@@ -98,6 +103,7 @@ export const ReadingList: FC<ReadingListProperties> = ({
 								className='mb-2'
 							/>
 							<ProgressBar progress={progress} />
+
 							<Title
 								numberOfLines={2}
 								size='md'

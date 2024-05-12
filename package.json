@@ -3,9 +3,6 @@
 	"version": "0.0.5",
 	"license": "MIT",
 	"scripts": {
-		"start:web": "nx serve web",
-		"start:backend": "nx serve backend",
-		"start:mobile": "nx run-android mobile",
 		"build:web": "nx build web",
 		"build:backend": "nx build backend",
 		"build:mobile": "nx build mobile",
@@ -78,7 +75,7 @@
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-hook-form": "^7.46.1",
-		"react-native": "0.73.6",
+		"react-native": "0.72.6",
 		"react-native-bootsplash": "^5.4.1",
 		"react-native-code-push": "^8.2.1",
 		"react-native-device-info": "^10.13.2",

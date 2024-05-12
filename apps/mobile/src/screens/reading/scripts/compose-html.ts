@@ -26,7 +26,7 @@ export const composeReaderViewHtml = ({
 			</head>
 		
 			<style>${defaultProperties.theme}</style>
-			<div>
+			<div style="margin-bottom: 40px;">
 				<img style='width:100%; height: 300px; object-fit: contain; object-position: center; padding-top: 40px'
 					 src="${getFileUrl(picture)}" alt="${title}"
 					    						onerror="this.style.display='none';"

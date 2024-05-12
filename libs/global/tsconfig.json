@@ -5,5 +5,10 @@
 		"esModuleInterop": true
 	},
 	"files": [],
+	"references": [
+		{
+			"path": "./tsconfig.lib.json"
+		},
+	],
 	"include": ["./*"]
 }

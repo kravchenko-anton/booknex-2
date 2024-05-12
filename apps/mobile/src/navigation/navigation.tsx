@@ -7,13 +7,13 @@ import { routes } from '@/navigation/user-routes'
 import { getRefreshToken } from '@/redux/auth/auth-helper'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { Loader } from '@/ui'
+import { historyByLatestSorting } from '@/utils'
 import {
 	NavigationContainer,
 	useNavigationContainerRef
 } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Color } from 'global/colors'
-import { getTimeDate } from 'global/utils'
 import { useEffect, useState, type FC } from 'react'
 import BootSplash from 'react-native-bootsplash'
 import {
@@ -30,12 +30,9 @@ const Navigation: FC = () => {
 	const { user } = useAuth()
 	const { logout } = useAction()
 	const [initialHistory] = useState(useReadingProgressStore.getState().history) // eslint-disable-line
-	const latestHistory = initialHistory
-		.sort(
-			(a, b) =>
-				getTimeDate(b.endDate).getTime() - getTimeDate(a.endDate).getTime()
-		)
-		.find(h => h.startFromReadingScreen)
+	const latestHistory = historyByLatestSorting(initialHistory).find(
+		h => h.startFromReadingScreen
+	)
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)

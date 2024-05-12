@@ -56,7 +56,8 @@ export const useReadingProgressStore = create<
 					return { ...state, history: [...state.history, newHistory] }
 				})
 			},
-			clearHistory: () => set(state => ({ ...state, history: [] })),
+			clearHistory: () =>
+				set(({ history, ...state }) => ({ ...state, history: [] })),
 			updateStartFromReadingScreen: (
 				data: Pick<ReadingHistoryType, 'id' | 'startFromReadingScreen'>
 			) =>

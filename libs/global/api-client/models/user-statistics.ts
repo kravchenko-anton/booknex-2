@@ -53,11 +53,5 @@ export interface UserStatistics {
      * @memberof UserStatistics
      */
     'userSteak': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserStatistics
-     */
-    'isDaySteakComplete': boolean;
 }
 

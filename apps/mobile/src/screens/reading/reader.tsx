@@ -7,7 +7,7 @@ import ReaderViewer from '@/screens/reading/reader-viewer/reader-viewer'
 import { Loader } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import { screenHeight } from '@/utils/dimensions'
-//TODO: сделать нормальную историю чтения
+
 const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()
 	const {

@@ -1,5 +1,4 @@
 import type { FC } from 'react'
-import React from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
 import Svg, { G, Path } from 'react-native-svg'
 

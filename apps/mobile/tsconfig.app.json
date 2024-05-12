@@ -2,12 +2,11 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"moduleResolution": "node",
-		"outDir": "dist",
 		"jsx": "react-native",
 		"lib": ["dom", "esnext"],
 		"types": ["node"],
+		"outDir": "dist",
 		"noEmit": false,
-		"composite": true,
 		"allowJs": true,
 		"incremental": true,
 		"resolveJsonModule": true,

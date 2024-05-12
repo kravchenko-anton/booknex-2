@@ -1,0 +1,1 @@
+export declare const selectTextLimitScript = "\ndocument.addEventListener('selectionchange', function() {\n\tconst selectedText = window.getSelection().toString()\n\tif (selectedText.length > 1200) {\n\t\twindow.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selection-limit-fail'}))\n\t\twindow.getSelection().removeAllRanges()\n\t}\n});\n";

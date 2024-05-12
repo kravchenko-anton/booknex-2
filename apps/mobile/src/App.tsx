@@ -79,4 +79,4 @@ const App = () => (
 	</Provider>
 )
 
-export default Sentry.wrap(codePush(App))
+export default codePush(Sentry.wrap(App))

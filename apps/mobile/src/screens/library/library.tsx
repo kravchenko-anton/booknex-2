@@ -1,7 +1,7 @@
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
 import { useLibraryWithSync } from '@/screens/library/useLibraryWithSync'
-import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
+import { BookCard, Flatlist, Loader, ScrollLayout, Title } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
 
 //TODO: сделать сихнронную историю
@@ -58,6 +58,10 @@ const Library = () => {
 					/>
 				)}
 			/>
+
+			<Title numberOfLines={10_000_000} className='mx-4'>
+				{JSON.stringify(history)}
+			</Title>
 		</ScrollLayout>
 	)
 }
