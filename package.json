@@ -48,7 +48,7 @@
 		"@sentry/tracing": "^7.106.0",
 		"@tanstack/query-async-storage-persister": "^4.35.0",
 		"@tanstack/query-sync-storage-persister": "^5.36.0",
-		"@tanstack/react-query": "^4.35.0",
+		"@tanstack/react-query": "^5.36.0",
 		"@tanstack/react-query-persist-client": "^5.36.0",
 		"@tanstack/react-table": "^8.11.6",
 		"appcenter": "5.0.1",

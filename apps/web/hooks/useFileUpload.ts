@@ -10,7 +10,7 @@ interface UploadFileProperties {
 }
 
 export const useUploadFile = () => {
-	const { mutateAsync: upload, isLoading: uploadLoading } = useMutation({
+	const { mutateAsync: upload, isPending: uploadLoading } = useMutation({
 		mutationKey: MutationKeys.storage.uploadFile,
 		mutationFn: ({ folder, file }: UploadFileProperties) =>
 			api.storage.upload(folder, file),

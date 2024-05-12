@@ -2,6 +2,7 @@ import api from '@/api'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
+import { useEffect } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 
 export const useStatisticsWithSync = () => {
@@ -11,7 +12,11 @@ export const useStatisticsWithSync = () => {
 			clearHistory: state.clearHistory
 		}))
 	)
-	const { data: statistics, isLoading } = useQuery({
+	const {
+		data: statistics,
+		isLoading,
+		isSuccess
+	} = useQuery({
 		queryKey: QueryKeys.userStatistics,
 		queryFn: () =>
 			api.user.statistics(
@@ -25,13 +30,15 @@ export const useStatisticsWithSync = () => {
 		staleTime: 0,
 		refetchOnWindowFocus: true,
 		refetchOnReconnect: true,
-		refetchOnMount: true,
-		onSuccess: () => {
+		refetchOnMount: true
+	})
+
+	useEffect(() => {
+		if (isSuccess) {
 			console.log('sync success, clear history', history)
 			clearHistory()
-		},
-		onError: () => console.log('Failed to sync statistics')
-	})
+		}
+	}, [isSuccess])
 
 	return { isLoading, statistics }
 }

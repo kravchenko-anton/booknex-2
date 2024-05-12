@@ -15,7 +15,7 @@ interface BookVisibleButtonProperties {
 }
 export const RemoveButton: FC<BookVisibleButtonProperties> = properties => {
 	const router = useRouter()
-	const { mutateAsync: remove, isLoading: removeLoading } = useMutation({
+	const { mutateAsync: remove, isPending: removeLoading } = useMutation({
 		mutationKey: MutationKeys.book.removeBook,
 		mutationFn: (slug: string) => api.book.remove(slug),
 		onSuccess: () => {

@@ -34,7 +34,7 @@ export const _useCreateForm = () => {
 
 	const { deleteTemplate } = _useTemplate({ templateSlug, reset })
 
-	const { mutateAsync: create, isLoading: createLoading } = useMutation({
+	const { mutateAsync: create, isPending: createLoading } = useMutation({
 		mutationKey: MutationKeys.book.createBook,
 		mutationFn: (payload: CreateBookDto) => api.book.create(payload),
 		onSuccess: async data => {

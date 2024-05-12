@@ -17,7 +17,7 @@ interface ParseButtonProperties extends DialogProperties {
 const ParseButton: FC<ParseButtonProperties> = properties => {
 	const queryClient = useQueryClient()
 
-	const { mutateAsync: parse, isLoading: parseLoading } = useMutation({
+	const { mutateAsync: parse, isPending: parseLoading } = useMutation({
 		mutationKey: MutationKeys.bookTemplate.parse,
 		mutationFn: (dto: ParserDto) => api.parser.parse(dto),
 		onSuccess: async () => {

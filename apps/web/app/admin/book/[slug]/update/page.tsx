@@ -47,7 +47,7 @@ const Page: FC = () => {
 		select: data => data.data
 	})
 
-	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
+	const { mutateAsync: update, isPending: updateLoading } = useMutation({
 		mutationKey: MutationKeys.book.update,
 		mutationFn: (payload: UpdateBookSchemaType) =>
 			api.book.update(bookSlug, payload),

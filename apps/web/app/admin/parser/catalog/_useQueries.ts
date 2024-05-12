@@ -11,7 +11,7 @@ export const _useQueries = ({ searchTerm = '', page = 0 }) => {
 		select: data => data.data
 	})
 
-	const { mutateAsync: deleteTemplate, isLoading: deleteTemplateLoading } =
+	const { mutateAsync: deleteTemplate, isPending: deleteTemplateLoading } =
 		useMutation({
 			mutationKey: MutationKeys.bookTemplate.deleteTemplate,
 			mutationFn: (slug: string) => api.parser.remove(slug),

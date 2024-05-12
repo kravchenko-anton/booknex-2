@@ -12,7 +12,7 @@ export const useBookCompose = ({
 	ebooks: EBookPayloadType[] | undefined
 	setEBooks: (books: EBookPayloadType[]) => void
 }) => {
-	const { mutateAsync: unfold, isLoading: unfoldLoading } = useMutation({
+	const { mutateAsync: unfold, isPending: unfoldLoading } = useMutation({
 		mutationKey: MutationKeys.bookTemplate.unfold,
 		mutationFn: (file: File) => api.parser.unfold(file),
 		onSuccess: () => successToast('File uploaded'),
