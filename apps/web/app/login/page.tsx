@@ -1,7 +1,7 @@
 'use client'
 import { Button, Field } from '@/components/ui'
-import { useAction } from '@/hooks'
 import { loginRoute } from '@/providers/secure-route'
+import { useAuthStore } from '@/services/store/auth-store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
 import { AuthSchema, type AuthDtoType } from 'global/validation/auth/auth.dto'
@@ -9,7 +9,10 @@ import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
 
 const Page = () => {
-	const { mailLogin, googleLogin } = useAction()
+	const { mailLogin, googleLogin } = useAuthStore(state => ({
+		mailLogin: state.mailLogin,
+		googleLogin: state.googleLogin
+	}))
 	const { handleSubmit, control } = useForm<AuthDtoType>({
 		mode: 'onSubmit',
 		resolver: zodResolver(AuthSchema)

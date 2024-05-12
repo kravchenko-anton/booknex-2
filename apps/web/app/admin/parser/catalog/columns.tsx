@@ -9,7 +9,7 @@ import {
 import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { AxiosResponse } from 'axios'
-import { BookTemplate } from 'global/api-client'
+import type { BookTemplate } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 import { MoreHorizontal } from 'icons'
 

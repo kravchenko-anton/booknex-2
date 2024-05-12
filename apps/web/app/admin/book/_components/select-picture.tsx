@@ -1,6 +1,6 @@
 import { useUploadFile } from '@/hooks/useFileUpload'
 import { getFileUrl } from 'global/api-config'
-import { BaseFieldProperties } from 'global/types'
+import type { BaseFieldProperties } from 'global/types'
 import { Controller } from 'react-hook-form'
 
 export const SelectPicture = <T extends Record<string, any>>({

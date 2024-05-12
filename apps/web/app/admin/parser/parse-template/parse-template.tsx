@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { parseValidation, parseValidationType } from './parse-template.dto'
+import { parseValidation, type parseValidationType } from './parse-template.dto'
 
 interface NewParserPopupProperties extends DialogProperties {
 	onSubmit: (data: { url: string; page: number }) => void

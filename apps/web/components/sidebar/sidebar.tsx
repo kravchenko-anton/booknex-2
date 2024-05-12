@@ -5,7 +5,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { useAction } from '@/hooks'
+import { useAuthStore } from '@/services/store/auth-store'
 import { cn } from '@/utils'
 import { secureRoutes } from '@/utils/route'
 import { Color } from 'global/colors'
@@ -24,7 +24,9 @@ export const iconsList = [
 ]
 
 export const Sidebar: FC = () => {
-	const { logout } = useAction()
+	const { logout } = useAuthStore(state => ({
+		logout: state.logout
+	}))
 	const activePath = usePathname()
 	const router = useRouter()
 	return (

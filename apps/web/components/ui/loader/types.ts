@@ -1,7 +1,7 @@
 import type { LineColorType } from 'global/colors'
-import { SVGProps } from 'react'
+import type { SVGProps } from 'react'
 
-export interface LoaderProperties extends SVGProps<SVGSVGElement>{
+export interface LoaderProperties extends SVGProps<SVGSVGElement> {
 	color?: LineColorType
 	width?: number
 	height?: number

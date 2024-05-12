@@ -3,6 +3,7 @@ import { Header } from '@/app/(landing)/header'
 import { Button } from '@/components/ui'
 import GenreElement from '@/components/ui/genre-element'
 import Loader from '@/components/ui/loader/loader'
+import api from '@/services/api'
 import { successToast } from '@/utils/toast'
 import { useQuery } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
@@ -11,7 +12,6 @@ import { QueryKeys } from 'global/utils/query-keys'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound, useParams } from 'next/navigation'
-import api from '../../../../mobile/src/api'
 
 const Page = () => {
 	const parameters = useParams()

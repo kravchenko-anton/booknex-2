@@ -1,4 +1,4 @@
-import { chapterNames } from '@/app/admin/book/_components/ebook-editor/chapterNames'
+import { chapterNames } from '@/app/admin/book/_components/ebook-editor/chapter-names'
 import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'

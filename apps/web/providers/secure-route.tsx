@@ -1,14 +1,17 @@
 'use client'
 
-import { useAction, useAuth } from '@/hooks'
-import { getRefreshToken } from '@/redux/auth/auth-helper'
+import { getRefreshToken } from '@/services/store/auth-helper'
+import { useAuthStore } from '@/services/store/auth-store'
 import { publicRoutes, secureRoutes } from '@/utils/route'
 import { redirect } from 'next/navigation'
 import { useLayoutEffect, type FC } from 'react'
 
 export const loginRoute = (Component: FC) =>
 	function (properties: NonNullable<unknown>) {
-		const { user, isLoading } = useAuth()
+		const { user, isLoading } = useAuthStore(state => ({
+			user: state.user,
+			isLoading: state.isLoading
+		}))
 
 		useLayoutEffect(() => {
 			if (user) redirect(secureRoutes.dashboard)
@@ -19,8 +22,11 @@ export const loginRoute = (Component: FC) =>
 
 export const adminRoute = (Component: FC) =>
 	function (properties: NonNullable<unknown>) {
-		const { user, isLoading } = useAuth()
-		const { logout } = useAction()
+		const { user, isLoading, logout } = useAuthStore(state => ({
+			user: state.user,
+			isLoading: state.isLoading,
+			logout: state.logout
+		}))
 		useLayoutEffect(() => {
 			const checkRefreshToken = async () => {
 				const refreshToken = getRefreshToken()

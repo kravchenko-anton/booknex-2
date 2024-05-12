@@ -2,7 +2,7 @@ import {
 	deleteTokensStorage,
 	getAccessToken,
 	getNewTokens
-} from '@/redux/auth/auth-helper'
+} from '@/services/store/auth-helper'
 import { errorToast } from '@/utils/toast'
 import axios, { type InternalAxiosRequestConfig } from 'axios'
 import { errorCatch } from 'global/helpers/catch-error'

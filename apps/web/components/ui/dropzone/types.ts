@@ -1,5 +1,5 @@
 import type { ClampPaletteType } from 'global/colors'
-import { BaseFieldProperties, SizeProperties } from 'global/types'
+import type { BaseFieldProperties, SizeProperties } from 'global/types'
 import type { FieldValues } from 'react-hook-form'
 import type { DefaultInputProperties } from '../base-components-types'
 
