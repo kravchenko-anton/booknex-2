@@ -4,8 +4,9 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"CodePush:android": "appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-production -d Production",
-		"CodePush:deployementList": "appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex -k",
+		"start:android": "SET ENVFILE=.env && react-native run-android -- --reset-cache",
+		"CodePush:android": "SET ENVFILE=.env.production && appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-production -d Production",
+		"CodePush:deployementList": "SET ENVFILE=.env.production && appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex -k",
 		"boothSplash:android": "yarn react-native generate-bootsplash assets/logo.png  \\\n  --background-color=111113 \\\n  --logo-width=100 \\\n  --assets-path=assets \\\n"
 	},
 	"dependencies": {
@@ -13,6 +14,7 @@
 		"react-native-device-info": "*",
 		"@hookform/resolvers": "*",
 		"@react-native-community/netinfo": "*",
+		"react-native-config": "*",
 		"@react-native-clipboard/clipboard": "*",
 		"react-native-mmkv": "*",
 		"@react-native-google-signin/google-signin": "*",

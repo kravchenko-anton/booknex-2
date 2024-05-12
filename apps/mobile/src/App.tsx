@@ -2,7 +2,6 @@ import Navigation from '@/navigation/navigation'
 import { persistor, store } from '@/redux/store'
 import Loader from '@/ui/loader/loader'
 import Toast from '@/ui/toast'
-import { SENTRY_DNC } from '@/utils/config'
 import { reduxStorage } from '@/utils/mmkv-wrapper'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import NetInfo from '@react-native-community/netinfo'
@@ -13,11 +12,13 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { Color } from 'global/colors'
 import { StatusBar, View } from 'react-native'
 import codePush from 'react-native-code-push'
+import Config from 'react-native-config'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { MMKV } from 'react-native-mmkv'
 import 'react-native-url-polyfill/auto'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import '../env-config'
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -40,7 +41,7 @@ export const storage = new MMKV({
 })
 
 Sentry.init({
-	dsn: SENTRY_DNC,
+	dsn: Config.SENTRY_DNC,
 	tracesSampleRate: 1
 })
 

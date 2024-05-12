@@ -10,36 +10,37 @@ import {
 	StorageApi,
 	UserApi
 } from 'global/api-client'
-import { SERVER_URL } from '../utils/config'
+import Config from 'react-native-config'
 import { instance } from './interceptors'
 
+const serverUrl = Config.SERVER_URL
 const baseParameters = {
-	basePath: SERVER_URL,
+	basePath: serverUrl,
 	isJsonMime: () => true
 }
-const auth = new AuthApi(baseParameters, SERVER_URL, undefined)
+const auth = new AuthApi(baseParameters, serverUrl, undefined)
 
-const book = new BookApi(baseParameters, SERVER_URL, instance)
+const book = new BookApi(baseParameters, serverUrl, instance)
 
-const catalog = new CatalogApi(baseParameters, SERVER_URL, instance)
+const catalog = new CatalogApi(baseParameters, serverUrl, instance)
 
-const ebook = new EbookApi(baseParameters, SERVER_URL, instance)
+const ebook = new EbookApi(baseParameters, serverUrl, instance)
 
-const genre = new GenreApi(baseParameters, SERVER_URL, instance)
+const genre = new GenreApi(baseParameters, serverUrl, instance)
 
-const parser = new ParserApi(baseParameters, SERVER_URL, instance)
+const parser = new ParserApi(baseParameters, serverUrl, instance)
 
 const recommendation = new RecommendationApi(
 	baseParameters,
-	SERVER_URL,
+	serverUrl,
 	instance
 )
 
-const review = new ReviewApi(baseParameters, SERVER_URL, instance)
+const review = new ReviewApi(baseParameters, serverUrl, instance)
 
-const storage = new StorageApi(baseParameters, SERVER_URL, instance)
+const storage = new StorageApi(baseParameters, serverUrl, instance)
 
-const user = new UserApi(baseParameters, SERVER_URL, instance)
+const user = new UserApi(baseParameters, serverUrl, instance)
 
 export default {
 	auth,

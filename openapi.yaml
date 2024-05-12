@@ -936,9 +936,6 @@ components:
               isReadMoreThatGoal:
                 type: boolean
                 required: true
-              isCurrentDay:
-                type: boolean
-                required: true
               readingTimeMs:
                 type: number
                 required: true
@@ -948,7 +945,6 @@ components:
             required:
               - day
               - isReadMoreThatGoal
-              - isCurrentDay
               - readingTimeMs
               - dayProgress
         daySteakProgressPercentage:

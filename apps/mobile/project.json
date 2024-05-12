@@ -4,43 +4,6 @@
 	"sourceRoot": "apps/mobile/src",
 	"projectType": "application",
 	"targets": {
-		"start": {
-			"executor": "@nx/react-native:start",
-			"dependsOn": ["ensure-symlink", "pod-install"],
-			"options": {
-				"port": 8082,
-				"resetCache": true
-			}
-		},
-		"serve": {
-			"executor": "nx:run-commands",
-			"options": {
-				"command": "nx start mobile"
-			}
-		},
-		"run-ios": {
-			"executor": "@nx/react-native:run-ios",
-			"dependsOn": ["ensure-symlink", "pod-install"],
-			"options": {}
-		},
-		"bundle-ios": {
-			"executor": "@nx/react-native:bundle",
-			"dependsOn": ["ensure-symlink"],
-			"outputs": ["{options.bundleOutput}"],
-			"options": {
-				"entryFile": "src/main.tsx",
-				"platform": "ios",
-				"bundleOutput": "dist/apps/mobile/ios/main.jsbundle"
-			}
-		},
-		"run-android": {
-			"executor": "@nx/react-native:run-android",
-			"dependsOn": ["ensure-symlink"],
-			"options": {
-				"resetCache": true,
-				"port": 8081
-			}
-		},
 		"build-android": {
 			"executor": "@nx/react-native:build-android",
 			"outputs": [

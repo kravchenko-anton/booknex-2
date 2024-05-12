@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    res="com.reactnative.booknex"
+    res="com.reactnative.booknex" 
 >
 
     <uses-permission android:name="android.permission.INTERNET"/>
