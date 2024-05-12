@@ -1,21 +1,28 @@
-import { useAction } from '@/hooks'
+import { useAuthStore } from '@/screens/auth/store/auth-store'
 import { useAuthorize } from '@/screens/auth/useAuthorize'
-import { Button, Icon, Layout, Title } from '@/ui'
+import { Button, ScrollLayout, Title } from '@/ui'
 import { errorToast } from '@/utils/toast'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { Color } from 'global/colors'
-import { Google, Mail } from 'icons'
-import { Welcome as WelcomeIllustration } from 'illustrations'
-import { type FC, useLayoutEffect } from 'react'
-import { View } from 'react-native'
+import { Book, Google, Mail } from 'icons'
+import { Login as LoginIllustration } from 'illustrations'
+import { useLayoutEffect, type FC } from 'react'
+import { Linking, View } from 'react-native'
 
 const Welcome: FC = () => {
-	const { googleLogin } = useAction()
-	const { isLoading: authLoading, onMainButtonPress } = useAuthorize()
+	const { googleLogin } = useAuthStore(state => ({
+		googleLogin: state.googleLogin
+	}))
+	const {
+		isLoading: authLoading,
+		onCreateAccount,
+		onContinueWithMail
+	} = useAuthorize()
 
 	useLayoutEffect(() => {
 		GoogleSignin.configure({
 			webClientId:
+				//TODO: обернуть в env
 				'390949311214-hqfqvic7p47pt3elpne00es58k99nonh.apps.googleusercontent.com'
 		})
 	}, [])
@@ -23,8 +30,8 @@ const Welcome: FC = () => {
 	const signIn = async () => {
 		try {
 			await GoogleSignin.hasPlayServices()
-			const userInfo = await GoogleSignin.signIn().catch(
-				(e) => console.log(e)
+			const userInfo = await GoogleSignin.signIn().catch(error =>
+				console.log(error)
 			)
 			if (!userInfo.idToken) return errorToast('Something went wrong')
 			googleLogin({
@@ -36,53 +43,74 @@ const Welcome: FC = () => {
 	}
 
 	return (
-		<Layout className='justify-end'>
-			<View className='h-4/5 justify-between'>
-				<View>
-					<WelcomeIllustration
-						width={230}
-						height={230}
-						className='ml-auto w-full p-0'
-					/>
+		<ScrollLayout>
+			<View className='mb-4 mt-[20%]'>
+				<LoginIllustration
+					width={200}
+					height={200}
+					className='mx-auto w-full p-0'
+				/>
+			</View>
+			<View className='mx-4'>
+				<Title center size='xxl' weight='bold' className='mb-6'>
+					Login to continue
+				</Title>
+				<Button
+					size='md'
+					isLoading={authLoading === 'google'}
+					className='mb-3 py-2'
+					icon={Google}
+					variant='muted'
+					onPress={signIn}>
+					Continue with Google
+				</Button>
+				<Button
+					size='md'
+					variant='muted'
+					isLoading={authLoading === 'mail-login'}
+					className='mb-2 py-2'
+					icon={Mail}
+					onPress={onContinueWithMail}>
+					Continue with Email
+				</Button>
+				<View className='border-bordered flex-row items-center justify-center border-b-2 border-b-2'>
 					<Title
 						center
-						numberOfLines={2}
-						weight={'bold'}
-						size={'xxl'}
-						className='text-left'>
-						Dive into the world of unique{' '}
-						<Title weight={'bold'} size='xxl' color={Color.primary}>
-							stories
-						</Title>
-					</Title>
-					<Title
-						center
-						size={'md'}
-						weight='light'
-						className='text-left'
-						color={Color.gray}>
-						Enter your credentials to continue
+						size='sm'
+						className='bg-background overflow-50 -mb-[9px] mt-2 w-[50px]'>
+						Or
 					</Title>
 				</View>
-
-				<View className='mb-2 w-full flex-row items-center justify-between'>
+				<View className='mt-4'>
 					<Button
 						size='md'
-						isLoading={authLoading}
-						className='mr-2 h-full flex-1'
-						icon={Google}
-						onPress={signIn}>
-						Sign in with Google
-					</Button>
-					<Icon
-						size='md'
+						className='mb-2 py-2'
 						variant='foreground'
-						icon={Mail}
-						onPress={onMainButtonPress}
-					/>
+						icon={Book}
+						onPress={() => onCreateAccount()}>
+						Create account
+					</Button>
 				</View>
+				<Title className='mt-2' color={Color.gray} numberOfLines={4}>
+					By continuing, you agree to our{' '}
+					<Title
+						weight='bold'
+						onPress={() =>
+							Linking.openURL('https://booknex.up.railway.app/terms-of-service')
+						}>
+						Terms of Service
+					</Title>{' '}
+					and{' '}
+					<Title
+						weight='bold'
+						onPress={() =>
+							Linking.openURL('https://booknex.up.railway.app/privacy-policy')
+						}>
+						Privacy Policy
+					</Title>
+				</Title>
 			</View>
-		</Layout>
+		</ScrollLayout>
 	)
 }
 

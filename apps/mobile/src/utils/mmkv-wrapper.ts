@@ -1,27 +1,24 @@
 import { storage } from '@/App'
-import type { Storage } from 'redux-persist'
-import type { StateStorage } from 'zustand/middleware'
+import type { StateStorage } from 'zustand/middleware/persist'
 
 export const zustandStorage: StateStorage = {
 	setItem: (name, value) => storage.set(name, value),
 	getItem: name => {
 		const value = storage.getString(name)
-		return value ?? null
+		return value ? JSON.parse(value) : null
 	},
 	removeItem: name => storage.delete(name)
 }
 
-export const reduxStorage: Storage = {
-	setItem: (key, value) => {
+export const clientStorage = {
+	setItem: (key: string, value: string) => {
 		storage.set(key, value)
-		return Promise.resolve(true)
 	},
-	getItem: key => {
+	getItem: (key: string) => {
 		const value = storage.getString(key)
-		return Promise.resolve(value)
+		return value === undefined ? null : value
 	},
-	removeItem: key => {
+	removeItem: (key: string) => {
 		storage.delete(key)
-		return Promise.resolve()
 	}
 }

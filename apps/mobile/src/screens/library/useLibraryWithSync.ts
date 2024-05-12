@@ -27,9 +27,8 @@ export const useLibraryWithSync = () => {
 			),
 		select: data => data.data,
 		staleTime: 0,
-		refetchOnWindowFocus: true,
-		refetchOnMount: true,
-		refetchOnReconnect: true,
+		refetchOnMount: history.length > 0,
+		refetchOnWindowFocus: history.length > 0,
 		onError: () => isFocus && errorToast('Failed to sync library'),
 		onSuccess: () => {
 			console.log('sync profile success, clear history', history)

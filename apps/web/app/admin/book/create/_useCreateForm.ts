@@ -1,4 +1,4 @@
-import { useTemplate } from '@/app/admin/book/create/useTemplate'
+import { _useTemplate } from '@/app/admin/book/create/_useTemplate'
 import api from '@/services/api'
 import { secureRoutes } from '@/utils/route'
 import { successToast } from '@/utils/toast'
@@ -15,7 +15,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 //TODO: пофиксить полностью создание книги чтобы работало без багов
-export const useCreateForm = () => {
+export const _useCreateForm = () => {
 	const parameters = useSearchParams()
 	const templateSlug = validateStringParameter(parameters.get('template'))
 	const router = useRouter()
@@ -32,7 +32,7 @@ export const useCreateForm = () => {
 		mode: 'onBlur'
 	})
 
-	const { deleteTemplate } = useTemplate({ templateSlug, reset })
+	const { deleteTemplate } = _useTemplate({ templateSlug, reset })
 
 	const { mutateAsync: create, isLoading: createLoading } = useMutation({
 		mutationKey: MutationKeys.book.createBook,

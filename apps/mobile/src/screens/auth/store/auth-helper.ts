@@ -1,5 +1,5 @@
-import api from '@/api'
 import { errorCatch } from 'global/helpers/catch-error'
+import api from '../../../api'
 
 import EncryptedStorage from 'react-native-encrypted-storage'
 

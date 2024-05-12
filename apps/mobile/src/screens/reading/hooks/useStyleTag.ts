@@ -16,6 +16,7 @@ export const useStyleTag = (
 		padding
 	})
 
+	// eslint-disable-next-line
 	const [defaultProperties] = useState({
 		scrollPosition,
 		theme: styleTag

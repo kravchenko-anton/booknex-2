@@ -1,3 +1,4 @@
+/* eslint-disable */
 declare module 'react-native-config' {
 	export interface NativeConfig {
 		SENTRY_DNC: string

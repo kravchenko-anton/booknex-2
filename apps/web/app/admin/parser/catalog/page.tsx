@@ -1,7 +1,7 @@
 'use client'
 
-import { columns } from '@/app/admin/parser/catalog/columns'
-import { useQueries } from '@/app/admin/parser/catalog/useQueries'
+import { _columns } from '@/app/admin/parser/catalog/_columns'
+import { _useQueries } from '@/app/admin/parser/catalog/_useQueries'
 import ParseButton from '@/app/admin/parser/parse-template/parse-button'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'
@@ -16,14 +16,14 @@ import type { FC } from 'react'
 const Parser: FC = () => {
 	const { page, searchTerm, dialog } = useTableParameters()
 	const router = useRouter()
-	const { books, deleteTemplate, deleteTemplateLoading } = useQueries({
+	const { books, deleteTemplate, deleteTemplateLoading } = _useQueries({
 		page,
 		searchTerm
 	})
 
 	const table = useReactTable({
 		data: books?.data ?? [],
-		columns: columns({
+		columns: _columns({
 			remove: (slug: string) => deleteTemplate(slug),
 			removeLoading: deleteTemplateLoading,
 			useAsTemplate: slug =>

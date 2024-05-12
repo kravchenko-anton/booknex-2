@@ -1,11 +1,11 @@
+import { errorToast } from '@/utils/toast'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
+import { errorCatch } from 'global/helpers/catch-error'
 import {
 	deleteTokensStorage,
 	getAccessToken,
 	getNewTokens
-} from '@/redux/auth/auth-helper'
-import { errorToast } from '@/utils/toast'
-import axios, { InternalAxiosRequestConfig } from 'axios'
-import { errorCatch } from 'global/helpers/catch-error'
+} from '../screens/auth/store/auth-helper'
 
 export const instance = axios.create({
 	headers: {
@@ -59,7 +59,7 @@ export const axiosResponseInstance = async (error: any) => {
 	}
 
 	errorToast(error)
-	return Promise.reject(error)
+	throw error
 }
 
 instance.interceptors.request.use(axiosRequestInstance)

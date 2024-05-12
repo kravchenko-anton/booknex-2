@@ -1,7 +1,7 @@
 'use client'
 
-import { columns } from '@/app/admin/user/catalog/columns'
-import { useQueries } from '@/app/admin/user/catalog/useQueries'
+import { _columns } from '@/app/admin/user/catalog/_columns'
+import { _useQueries } from '@/app/admin/user/catalog/_useQueries'
 import DataTable from '@/components/catalog/data-table'
 import DataTableHeader from '@/components/catalog/table-search'
 import { useTableParameters } from '@/hooks/useTableParameters'
@@ -14,14 +14,14 @@ import type { FC } from 'react'
 const Page: FC = () => {
 	const router = useRouter()
 	const { page, searchTerm } = useTableParameters()
-	const { users, deleteUser, deleteUserLoading } = useQueries({
+	const { users, deleteUser, deleteUserLoading } = _useQueries({
 		page,
 		searchTerm
 	})
 
 	const table = useReactTable({
 		data: users?.data ?? [],
-		columns: columns({
+		columns: _columns({
 			remove: deleteUser,
 			removeLoading: deleteUserLoading
 		}),

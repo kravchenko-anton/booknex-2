@@ -1,5 +1,5 @@
 import type { ClampPaletteType } from 'global/colors'
-import { BaseFieldProperties } from 'global/types'
+import type { BaseFieldProperties } from 'global/types'
 import type { FC } from 'react'
 import type { FieldValues } from 'react-hook-form'
 import type { KeyboardTypeOptions, TextInputProps } from 'react-native'

@@ -1,10 +1,10 @@
-import { useAction, useAuth } from '@/hooks'
 import { authRoutes } from '@/navigation/auth-routes'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
 import { modalRoutes } from '@/navigation/modal-routes'
 import type { TypeRootStackParameterListType } from '@/navigation/navigation-types'
 import { routes } from '@/navigation/user-routes'
-import { getRefreshToken } from '@/redux/auth/auth-helper'
+import { getRefreshToken } from '@/screens/auth/store/auth-helper'
+import { useAuthStore } from '@/screens/auth/store/auth-store'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { Loader } from '@/ui'
 import { historyByLatestSorting } from '@/utils'
@@ -27,8 +27,10 @@ const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
 const noBottomMenuRoutes = new Set(['Reader', 'BookReview', 'Search'])
 
 const Navigation: FC = () => {
-	const { user } = useAuth()
-	const { logout } = useAction()
+	const { user, logout } = useAuthStore(state => ({
+		user: state.user,
+		logout: state.logout
+	}))
 	const [initialHistory] = useState(useReadingProgressStore.getState().history) // eslint-disable-line
 	const latestHistory = historyByLatestSorting(initialHistory).find(
 		h => h.startFromReadingScreen

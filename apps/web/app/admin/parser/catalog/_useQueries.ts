@@ -3,7 +3,7 @@ import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 
-export const useQueries = ({ searchTerm = '', page = 0 }) => {
+export const _useQueries = ({ searchTerm = '', page = 0 }) => {
 	const queryClient = useQueryClient()
 	const { data: books } = useQuery({
 		queryKey: QueryKeys.bookTemplate.catalog.action(searchTerm, page),

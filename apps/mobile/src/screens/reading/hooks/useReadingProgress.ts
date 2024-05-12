@@ -27,7 +27,7 @@ export const useReadingProgress = ({
 	const [readingSessionKey, setReadingSessionKey] = useState(
 		slug + Math.random() * 1000
 	)
-	const [startReadingDate, setStartReadingDate] = useState(getTimeDate()) // eslint-disable-line
+	const [startReadingDate, setStartReadingDate] = useState(getTimeDate())
 	const [startReadingProgress, setStartReadingProgress] = useState(0)
 	console.log('startReadingDate', startReadingDate)
 	const { addListener } = useTypedNavigation()

@@ -2,7 +2,7 @@
     <string name="app_name">Booknex</string>
     <string name="server_client_id">390949311214-e6ao91fp1c9dot6lgns4qbupn6euh5ef.apps.googleusercontent.com</string>
     <string moduleConfig="true" name="CodePushDeploymentKey">lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG</string>
-    <string name="build_config_package">com.reactnative.booknex</string>
+    <string name="build_config_package">com.mobile</string>
 </resources>
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Config from 'react-native-config'
 import zod from 'zod'
 

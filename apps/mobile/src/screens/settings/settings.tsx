@@ -1,4 +1,5 @@
-import { useAuth, useTypedNavigation } from '@/hooks'
+import { useTypedNavigation } from '@/hooks'
+import { useAuthStore } from '@/screens/auth/store/auth-store'
 import { useOTAVersion } from '@/screens/settings/getAppVersion'
 import { Title } from '@/ui'
 import { mailLink } from 'global/utils'
@@ -7,7 +8,7 @@ import * as List from './settings-list'
 
 const Settings = () => {
 	const { navigate } = useTypedNavigation()
-	const { user } = useAuth()
+	const user = useAuthStore(state => state.user)
 	const { appVersion } = useOTAVersion()
 	return (
 		<View className='h-full'>

@@ -92,12 +92,12 @@ export class UserService {
 			skipDuplicates: true,
 			data: dto.map(history => ({
 				readingTimeMs: history.readingTimeMs,
-				endDate: history.endDate,
+				endDate: new Date(history.endDate),
 				progressDelta: history.progressDelta,
 				startProgress: history.startProgress,
 				endProgress: history.endProgress,
 				scrollPosition: history.scrollPosition,
-				startDate: history.startDate,
+				startDate: new Date(history.startDate),
 				userId: userId,
 				bookSlug: history.bookSlug
 			}))

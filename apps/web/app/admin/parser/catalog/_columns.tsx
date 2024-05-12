@@ -15,7 +15,7 @@ import { MoreHorizontal } from 'icons'
 
 type ColumnType = ColumnDef<BookTemplate>[]
 
-export const columns = ({
+export const _columns = ({
 	remove,
 	useAsTemplate,
 	removeLoading

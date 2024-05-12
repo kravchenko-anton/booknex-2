@@ -52,7 +52,7 @@ export class StorageController {
 			new ParseFilePipe({
 				validators: [
 					new MaxFileSizeValidator({
-						maxSize: Number(process.env['MAX_UPLOAD_SIZE'])
+						maxSize: Number(process.env.MAX_UPLOAD_SIZE)
 					})
 				]
 			})

@@ -1,4 +1,4 @@
-import { useAction } from '@/hooks'
+import { useAuthStore } from '@/screens/auth/store/auth-store'
 import { useAuthorize } from '@/screens/auth/useAuthorize'
 import { Button, Field, ScrollLayout } from '@/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,7 +8,7 @@ import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 
 const Login = () => {
-	const { mailLogin } = useAction()
+	const mailLogin = useAuthStore(state => state.mailLogin)
 	const { isLoading: authLoading } = useAuthorize()
 	const { control, handleSubmit } = useForm<AuthDtoType>({
 		mode: 'onSubmit',
@@ -36,7 +36,7 @@ const Login = () => {
 			/>
 			<Button
 				size='lg'
-				isLoading={authLoading}
+				isLoading={authLoading === 'mail-login'}
 				variant='primary'
 				className='mb-4 mt-2'
 				onPress={handleSubmit(onSubmit)}>

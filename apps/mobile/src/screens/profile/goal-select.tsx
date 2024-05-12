@@ -1,13 +1,9 @@
 import { Button } from '@/ui'
-import { windowWidth } from '@/utils/dimensions'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import { Color } from 'global/colors'
 import type { FC, RefObject } from 'react'
-//TODO: доделать adjust goals и сделать нормально
-const ITEM_SIZE = windowWidth * 0.38
-const ITEM_SPACING = (windowWidth - ITEM_SIZE) / 2
 
-const goals = [10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+//TODO: доделать adjust goals и сделать нормально
 interface GoalSelectModalProperties {
 	sheetRef: RefObject<BottomSheetModal>
 }
