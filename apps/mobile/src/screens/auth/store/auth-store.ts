@@ -128,7 +128,7 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 			}
 		}),
 		{
-			name: 'auth-store',
+			name: 'auth-storage',
 			storage: createJSONStorage(() => zustandStorage)
 		}
 	)

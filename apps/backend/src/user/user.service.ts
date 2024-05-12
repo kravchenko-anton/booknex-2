@@ -184,6 +184,11 @@ export class UserService {
 				dayProgress: isCurrentWeek ? dayProgress : 0
 			}
 		})
+			// sorting like monday, tuesday, wednesday, thursday, friday, saturday, sunday
+			.sort((a, b) => {
+				const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+				return days.indexOf(a.day) - days.indexOf(b.day)
+			})
 		return {
 			userSteak,
 			progressByCurrentWeek,
