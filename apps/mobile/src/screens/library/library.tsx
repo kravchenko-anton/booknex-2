@@ -1,14 +1,16 @@
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
-import { useLibraryWithSync } from '@/screens/library/useLibraryWithSync'
-import { BookCard, Flatlist, Loader, ScrollLayout, Title } from '@/ui'
+import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
+import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
 
 //TODO: сделать сихнронную историю
 const Library = () => {
-	const { isLoading, library, history } = useLibraryWithSync()
-	console.log('isLoading', isLoading, 'library')
-	const { navigate } = useTypedNavigation()
+	const { navigate, isFocused } = useTypedNavigation()
+	const library = useReadingProgressStore(
+		state => state.getLibrary(),
+		isFocused
+	)
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&
@@ -25,11 +27,7 @@ const Library = () => {
 		)
 	return (
 		<ScrollLayout>
-			<ReadingList
-				data={library.readingBooks}
-				history={history}
-				navigate={navigate}
-			/>
+			<ReadingList data={library.readingBooks} navigate={navigate} />
 			<Flatlist
 				horizontal
 				title='Saved to read'
@@ -58,10 +56,6 @@ const Library = () => {
 					/>
 				)}
 			/>
-
-			<Title numberOfLines={10_000_000} className='mx-4'>
-				{JSON.stringify(history)}
-			</Title>
 		</ScrollLayout>
 	)
 }

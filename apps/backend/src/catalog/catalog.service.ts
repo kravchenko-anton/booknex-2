@@ -91,9 +91,6 @@ export class CatalogService {
 				slug: {
 					notIn: skippedBookSlugs
 				}
-			},
-			orderBy: {
-				rating: 'desc'
 			}
 		})
 		const timeToSave = 60 * 60 * 24 * 7 // 1 week

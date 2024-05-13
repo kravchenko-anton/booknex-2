@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { BookSchema, ShortBookSchema } from './book.entity'
 
 extendZodWithOpenApi(z)
+
 export const CatalogOutputSchema = z
 	.object({
 		data: z.array(BookSchema)

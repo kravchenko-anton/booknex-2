@@ -18,7 +18,9 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data,
-		enabled: !!slug
+		enabled: !!slug,
+		networkMode: 'offlineFirst',
+		gcTime: Number.POSITIVE_INFINITY
 	})
 
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(

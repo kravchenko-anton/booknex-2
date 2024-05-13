@@ -69,7 +69,6 @@ export const UserStatisticsSchema = z.object({
 	progressByCurrentWeek: z.array(
 		z.object({
 			day: z.string(),
-			isReadMoreThatGoal: z.boolean(),
 			isCurrentDay: z.boolean(),
 			readingTimeMs: z.number(),
 			dayProgress: z.number()

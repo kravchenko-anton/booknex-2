@@ -5,7 +5,7 @@
 		"jsx": "react-native",
 		"lib": ["dom", "esnext"],
 		"types": ["node"],
-		"outDir": "dist",
+		"outDir": "./dist",
 		"noEmit": false,
 		"allowJs": true,
 		"incremental": true,
@@ -31,7 +31,8 @@
 		"src/**/*.spec.ts",
 		"src/**/*.spec.tsx",
 		"test-setup.ts",
-		"../web/**/*"
+		"../web/**/*",
+		"./dist/**/*",
 	],
 	"include": [
 		"**/*.ts",

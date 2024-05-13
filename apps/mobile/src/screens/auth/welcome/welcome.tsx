@@ -4,6 +4,7 @@ import { Button, ScrollLayout, Title } from '@/ui'
 import { errorToast } from '@/utils/toast'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { Color } from 'global/colors'
+import { appName } from 'global/utils'
 import { Book, Google, Mail } from 'icons'
 import { Login as LoginIllustration } from 'illustrations'
 import { useLayoutEffect, type FC } from 'react'
@@ -52,8 +53,22 @@ const Welcome: FC = () => {
 				/>
 			</View>
 			<View className='mx-4'>
-				<Title center size='xxl' weight='bold' className='mb-6'>
-					Login to continue
+				<Title
+					center
+					numberOfLines={2}
+					size='xxl'
+					color={Color.white}
+					weight='medium'
+					className='mb-6'>
+					Welcome to
+					<Title
+						numberOfLines={2}
+						size='xxl'
+						color={Color.primary}
+						weight='bold'>
+						{` ${appName}`}
+					</Title>
+					,{'\n'}the best place to read books
 				</Title>
 				<Button
 					size='md'
@@ -76,8 +91,9 @@ const Welcome: FC = () => {
 				<View className='border-bordered flex-row items-center justify-center border-b-2 border-b-2'>
 					<Title
 						center
-						size='sm'
-						className='bg-background overflow-50 -mb-[9px] mt-2 w-[50px]'>
+						weight='bold'
+						size='md'
+						className='bg-background overflow-50 -mb-[11px] mt-2 w-[50px]'>
 						Or
 					</Title>
 				</View>

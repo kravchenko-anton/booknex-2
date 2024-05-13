@@ -1,7 +1,15 @@
+import api from '@/api'
+import {
+	compareReadingBooks,
+	type CompareReadingBooksType
+} from '@/screens/reading/store/progress-helper'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
+import { errorToast } from '@/utils/toast'
+import type { UserLibraryOutput, UserStatistics } from 'global/api-client'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
+//TODO: добавить состояние загрузки, ошибкок и так далее. Пофиксить перерендер
 export interface ReadingHistoryType {
 	id: string
 	bookSlug: string
@@ -9,17 +17,25 @@ export interface ReadingHistoryType {
 	endProgress: number
 	progressDelta: number
 	scrollPosition: number
-	startDate: Date
-	endDate: Date
+	startDate: string
+	endDate: string
 	readingTimeMs: number
 	startFromReadingScreen: boolean
 }
 interface ReadingProgressStoreType {
 	history: ReadingHistoryType[]
+	statistics: UserStatistics | null
+	library:
+		| (Omit<UserLibraryOutput, 'readingBooks'> & {
+				readingBooks: CompareReadingBooksType[]
+		  })
+		| null
 }
 
-const initialState = {
-	history: [] as ReadingHistoryType[]
+const initialState: ReadingProgressStoreType = {
+	history: [],
+	statistics: null,
+	library: null
 }
 
 interface ReadingProgressStoreActionsType {
@@ -28,18 +44,79 @@ interface ReadingProgressStoreActionsType {
 	updateStartFromReadingScreen: (
 		data: Pick<ReadingHistoryType, 'id'> & { startFromReadingScreen: boolean }
 	) => void
+	getLibrary: () =>
+		| (Omit<UserLibraryOutput, 'readingBooks'> & {
+				readingBooks: CompareReadingBooksType[]
+		  })
+		| null
+
+	getStatistics: () => UserStatistics | null
 }
 export const useReadingProgressStore = create<
 	ReadingProgressStoreType & ReadingProgressStoreActionsType
 >()(
 	persist(
-		set => ({
+		(set, getState) => ({
 			...initialState,
-			// addNewProgress if history with this id exists, update info
+			getLibrary: () => {
+				const library = getState().library
+				const history = getState().history
+				if (history.length === 0 && library) {
+					console.log('return library from store, no history and library exist')
+					return library
+				}
+				api.user
+					.library(history)
+					.then(({ data: response }) => {
+						if (!response) return
+						console.log('return library from api, no history and library exist')
+						set({
+							library: {
+								...response,
+								readingBooks: compareReadingBooks(
+									response.readingBooks,
+									history
+								)
+							},
+							history: []
+						})
+						return {
+							...response,
+							readingBooks: compareReadingBooks(response.readingBooks, history)
+						}
+					})
+					.catch(error => {
+						console.log(error, 'error in library sync')
+						errorToast('Failed to sync library')
+					})
+				return library
+			},
+			getStatistics: () => {
+				const { history, statistics } = getState()
+				if (history.length === 0 && statistics) {
+					console.log(
+						'return statistics from store, no history and statistics exist'
+					)
+					return statistics
+				}
+				api.user
+					.statistics(history)
+					.then(({ data: response }) => {
+						console.log(
+							'return statistics from api, no history and statistics exist'
+						)
+						set({ statistics: response, history: [] })
+						return response
+					})
+					.catch(error => {
+						console.log(error, 'error in statistics sync')
+						errorToast('Failed to sync statistics')
+					})
+				return statistics
+			},
 			newProgress: newHistory => {
 				set(state => {
 					if (state.history.some(h => h.id === newHistory.id)) {
-						// update info in old history
 						console.log(
 							'update info in old history',
 							newHistory.id,
@@ -71,7 +148,7 @@ export const useReadingProgressStore = create<
 				}))
 		}),
 		{
-			name: 'progress-store',
+			name: 'reading-progress-storage',
 			storage: createJSONStorage(() => zustandStorage)
 		}
 	)

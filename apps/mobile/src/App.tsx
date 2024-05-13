@@ -1,12 +1,12 @@
 import Navigation from '@/navigation/navigation'
 import Toast from '@/ui/toast'
+import { clientStorage } from '@/utils/mmkv-wrapper'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import NetInfo from '@react-native-community/netinfo'
 import * as Sentry from '@sentry/react-native'
-import {
-	createSyncStoragePersister,
-} from '@tanstack/query-sync-storage-persister'
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import { onlineManager, QueryClient } from '@tanstack/react-query'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { Color } from 'global/colors'
 import { StatusBar } from 'react-native'
 import codePush from 'react-native-code-push'
@@ -15,15 +15,14 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { MMKV } from 'react-native-mmkv'
 import 'react-native-url-polyfill/auto'
 import '../env-config'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { clientStorage } from '@/utils/mmkv-wrapper'
 
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			networkMode: 'offlineFirst',
 			refetchOnWindowFocus: false,
-			staleTime: 1000 * 60 * 60
+			staleTime: 1000 * 60 * 60, // 1 hour
+			gcTime: 1000 * 60 * 60 * 24 // 24 hours
 		}
 	}
 })
@@ -43,8 +42,9 @@ Sentry.init({
 	tracesSampleRate: 1
 })
 
-
-export const clientPersister: any = createSyncStoragePersister({ storage: clientStorage });
+export const clientPersister: any = createSyncStoragePersister({
+	storage: clientStorage
+})
 
 codePush.sync({
 	deploymentKey: 'lpmdi40ol2sLqecTc1ZWfy5k716Lp3Z2NK9yG',

@@ -2,7 +2,7 @@ import {
 	calculateProgress,
 	scrollCalculateProgress
 } from '@/screens/reading/scripts/calculate-progress'
-import { selectTextLimitScript } from '@/screens/reading/scripts/text-selection-limit'
+import { selectTextLimitScript } from '@/screens/reading/scripts/text-select/text-selection-limit'
 
 export const injectStartScripts = (startPosition: number) => `
 <script>

@@ -136,6 +136,8 @@ export class UserService {
 			}
 		})
 		const currentDate = new Date()
+		const isCurrentWeek = isThisWeek(currentDate)
+
 		const userSteak = userHistory.reduce((streak, history, index) => {
 			const historyDate = getTimeDate(history.endDate)
 			return historyDate.getDate() === currentDate.getDate() - index &&
@@ -160,35 +162,33 @@ export class UserService {
 			60_000
 
 		const progressByCurrentWeek = Array.from({ length: 7 }, (_, index) => {
+			// using isCurrentWeek to check if the day is in the current week
 			const day = new Date(currentDate)
-			day.setDate(day.getDate() - index)
-			const isCurrentWeek = isThisWeek(day)
-			const dayHistory = userHistory.filter(history => {
-				const historyDate = getTimeDate(history.endDate)
-				return (
-					historyDate.getDate() === day.getDate() &&
-					historyDate.getMonth() === day.getMonth() &&
-					historyDate.getFullYear() === day.getFullYear()
-				)
-			})
-			const dayReadingTime = dayHistory.reduce(
-				(progress, history) => progress + history.readingTimeMs,
-				0
-			)
-			const dayProgress = (dayReadingTime / (user.goalMinutes * 60_000)) * 100
+			day.setDate(currentDate.getDate() - index)
+
+			const dayProgress =
+				userHistory
+					.filter(history => {
+						const historyDate = getTimeDate(history.endDate)
+						return (
+							historyDate.getDate() === day.getDate() &&
+							historyDate.getMonth() === day.getMonth() &&
+							historyDate.getFullYear() === day.getFullYear()
+						)
+					})
+					.reduce((progress, history) => progress + history.readingTimeMs, 0) /
+				60_000
+
 			return {
-				isCurrentDay: getTimeDate(day).getDate() === currentDate.getDate(),
-				day: day.toLocaleString('en-US', { weekday: 'short' }),
-				isReadMoreThatGoal: dayReadingTime >= user.goalMinutes * 60_000,
-				readingTimeMs: dayReadingTime,
-				dayProgress: isCurrentWeek ? dayProgress : 0
+				readingTimeMs: userHistory.reduce(
+					(progress, history) => progress + history.readingTimeMs,
+					0
+				),
+				day: day.toLocaleDateString('en-US', { weekday: 'long' }),
+				dayProgress,
+				isCurrentDay: isCurrentWeek && index === 0
 			}
-		})
-			// sorting like monday, tuesday, wednesday, thursday, friday, saturday, sunday
-			.sort((a, b) => {
-				const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-				return days.indexOf(a.day) - days.indexOf(b.day)
-			})
+		}).reverse()
 		return {
 			userSteak,
 			progressByCurrentWeek,
@@ -259,14 +259,12 @@ export class UserService {
 							} ?? null
 					}
 				})
-				.sort((a, b) => {
-					if (!a.readingHistory) return 1
-					if (!b.readingHistory) return -1
-					return (
-						getTimeDate(a.readingHistory.endDate).getTime() -
-						getTimeDate(b.readingHistory.endDate).getTime()
-					)
-				}),
+
+				.sort(
+					(a, b) =>
+						(b.readingHistory?.endDate?.getTime() ?? 0) -
+						(a.readingHistory?.endDate?.getTime() ?? 0)
+				),
 			finishedBooks,
 			savedBooks
 		}

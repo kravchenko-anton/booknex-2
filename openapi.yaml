@@ -933,9 +933,6 @@ components:
               day:
                 type: string
                 required: true
-              isReadMoreThatGoal:
-                type: boolean
-                required: true
               isCurrentDay:
                 type: boolean
                 required: true
@@ -947,7 +944,6 @@ components:
                 required: true
             required:
               - day
-              - isReadMoreThatGoal
               - isCurrentDay
               - readingTimeMs
               - dayProgress

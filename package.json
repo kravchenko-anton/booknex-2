@@ -52,8 +52,6 @@
 		"@tanstack/react-query-persist-client": "^5.36.0",
 		"@tanstack/react-table": "^8.11.6",
 		"appcenter": "5.0.1",
-		"appcenter-analytics": "5.0.1",
-		"appcenter-crashes": "5.0.1",
 		"argon2": "^0.30.3",
 		"axios": "1.6.2",
 		"cache-manager": "^5.2.3",
@@ -104,9 +102,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.0",
-		"@babel/plugin-proposal-decorators": "^7.24.0",
 		"@babel/runtime": "^7.24.4",
-		"@commitlint/cli": "^19.2.1",
 		"@eslint/eslintrc": "^2.1.1",
 		"@nestjs/cli": "^10.0.0",
 		"@nestjs/schematics": "^10.0.1",

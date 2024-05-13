@@ -1,4 +1,4 @@
-import { textSElectionLimit } from '@/screens/reading/functions/on-text-selection'
+import { textSElectionLimit } from '@/screens/reading/scripts/text-select/on-text-selection'
 
 export const selectTextLimitScript = `
 document.addEventListener('selectionchange', function() {

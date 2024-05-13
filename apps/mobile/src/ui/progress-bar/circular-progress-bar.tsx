@@ -79,7 +79,7 @@ export const CircularProgressBar: FC<CircularProgressProperties> = ({
 	style,
 	tintTransparency,
 	width,
-	fill,
+	fill = 0,
 	padding = 0,
 	size
 }) => {

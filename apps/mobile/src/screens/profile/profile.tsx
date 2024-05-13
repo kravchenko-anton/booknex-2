@@ -1,24 +1,19 @@
-import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
+import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { Loader, ScrollLayout, Title } from '@/ui'
-import NothingFount from '@/ui/nothing-fount'
 import { CircularProgressBar } from '@/ui/progress-bar/circular-progress-bar'
 import { cn } from '@/utils'
+import { useIsFocused } from '@react-navigation/native'
 import { Color } from 'global/colors'
 import { View } from 'react-native'
 
 const Profile = () => {
-	const { isLoading, statistics } = useStatisticsWithSync()
-	if (isLoading) return <Loader />
-	if (!statistics)
-		return (
-			<NothingFount
-				text={"There will be your story here, but it's not definite"}
-			/>
-		)
-	console.log(
-		statistics.daySteakProgressPercentage || 0,
-		'daySteakProgressPercentage'
+	const isFocused = useIsFocused()
+	const statistics = useReadingProgressStore(
+		state => state.getStatistics(),
+		() => isFocused
 	)
+	if (!statistics) return <Loader />
+	console.log(statistics, 'daySteakProgressPercentage')
 
 	return (
 		<ScrollLayout className='px-2'>
@@ -42,7 +37,7 @@ const Profile = () => {
 						size={200}
 						width={7}
 						backgroundWidth={7}
-						fill={54}
+						fill={(statistics.daySteakProgressPercentage || 0) / 100 || 0}
 						tintColor={Color.success}
 						fillLineCap='round'
 						lineCap='round'
@@ -94,14 +89,16 @@ const Profile = () => {
 								<CircularProgressBar
 									size={32}
 									style={item.dayProgress === 0 ? { opacity: 0.5 } : {}}
-									fill={item.dayProgress / 100 || 0}
-									backgroundColor={Color.gray}
+									fill={item.dayProgress}
 									width={2}
 									fillLineCap='round'
 									backgroundWidth={2}
 									lineCap='round'
 									rotation={-90}
-									tintColor={item.isCurrentDay ? Color.primary : Color.white}>
+									tintColor={item.isCurrentDay ? Color.primary : Color.white}
+									backgroundColor={
+										item.isCurrentDay ? Color.gray : Color.bordered
+									}>
 									{() => (
 										<Title
 											weight='bold'
@@ -128,6 +125,9 @@ const Profile = () => {
 					</Title>
 				</View>
 			</View>
+			<Title numberOfLines={10_000_000} className='mx-4'>
+				{JSON.stringify(statistics)}
+			</Title>
 		</ScrollLayout>
 	)
 }

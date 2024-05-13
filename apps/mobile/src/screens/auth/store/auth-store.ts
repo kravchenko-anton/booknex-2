@@ -51,7 +51,6 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 					})
 					.catch(error => {
 						console.log(JSON.stringify(error))
-
 						errorToast(globalErrors.somethingWrong)
 						set({
 							isLoading: false,

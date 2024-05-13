@@ -31,12 +31,6 @@ export interface UserStatisticsProgressByCurrentWeekInner {
      * @type {boolean}
      * @memberof UserStatisticsProgressByCurrentWeekInner
      */
-    'isReadMoreThatGoal': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserStatisticsProgressByCurrentWeekInner
-     */
     'isCurrentDay': boolean;
     /**
      * 
