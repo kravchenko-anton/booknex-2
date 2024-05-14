@@ -1,17 +1,21 @@
+import { GoalSelectModal } from '@/screens/profile/goal-select'
 import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
 import { Loader, ScrollLayout, Title } from '@/ui'
 import { CircularProgressBar } from '@/ui/progress-bar/circular-progress-bar'
 import { cn } from '@/utils'
+import type { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { Color } from 'global/colors'
+import { useRef } from 'react'
 import { View } from 'react-native'
 
 const Profile = () => {
 	const { statistics } = useStatisticsWithSync()
 	if (!statistics) return <Loader />
 	console.log(statistics, 'daySteakProgressPercentage')
-
+	const sheetReference = useRef<BottomSheetModal>(null)
 	return (
 		<ScrollLayout className='px-2'>
+			<GoalSelectModal sheetRef={sheetReference} />
 			<View className='bg-foreground border-bordered mt-4 rounded-lg border-[1px] p-2'>
 				<View className='mx-2 mb-6'>
 					<Title center weight='bold' color={Color.white} size='xxl'>
@@ -117,6 +121,16 @@ const Profile = () => {
 						size='sm'
 						className='border-l-bordered border-l-2 pl-2 '>
 						bob: “ {statistics.pepTalk} ”
+					</Title>
+				</View>
+
+				<View className='flex-row justify-center'>
+					<Title
+						weight='bold'
+						color={Color.white}
+						size='sm'
+						className='border-bordered rounded-lg border-[1px] px-4 py-2'>
+						Change goal
 					</Title>
 				</View>
 			</View>

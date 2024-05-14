@@ -11,7 +11,8 @@ import { secureRoutes } from '@/utils/route'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 
-import type { FC } from 'react'
+import Loader from '@/components/ui/loader/loader'
+import { Suspense, type FC } from 'react'
 
 const Parser: FC = () => {
 	const { page, searchTerm, dialog } = useTableParameters()
@@ -34,36 +35,38 @@ const Parser: FC = () => {
 	})
 
 	return (
-		<div className='w-full'>
-			<DataTableHeader
-				title='Parser'
-				defaultTerm={searchTerm}
-				onSearchSubmit={term => {
-					router.replace(
-						generateParameters(secureRoutes.parserCatalogRoute, {
-							searchTerm: term.searchTerm
-						})
-					)
-				}}>
-				<ParseButton
-					isOpen={dialog === 'parse'}
-					openParserDialog={() =>
+		<Suspense fallback={<Loader />}>
+			<div className='w-full'>
+				<DataTableHeader
+					title='Parser'
+					defaultTerm={searchTerm}
+					onSearchSubmit={term => {
 						router.replace(
 							generateParameters(secureRoutes.parserCatalogRoute, {
-								dialog: 'parse'
+								searchTerm: term.searchTerm
 							})
 						)
-					}
-					onClose={() => router.replace(secureRoutes.parserCatalogRoute)}
+					}}>
+					<ParseButton
+						isOpen={dialog === 'parse'}
+						openParserDialog={() =>
+							router.replace(
+								generateParameters(secureRoutes.parserCatalogRoute, {
+									dialog: 'parse'
+								})
+							)
+						}
+						onClose={() => router.replace(secureRoutes.parserCatalogRoute)}
+					/>
+				</DataTableHeader>
+				<DataTable
+					table={table}
+					totalPages={books?.totalPages ?? 0}
+					currentPage={page}
+					canLoadMore={!!books?.canLoadMore}
 				/>
-			</DataTableHeader>
-			<DataTable
-				table={table}
-				totalPages={books?.totalPages ?? 0}
-				currentPage={page}
-				canLoadMore={!!books?.canLoadMore}
-			/>
-		</div>
+			</div>
+		</Suspense>
 	)
 }
 
