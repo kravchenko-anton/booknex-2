@@ -6,7 +6,7 @@ import type { CreateBookSchemaType } from 'global/validation/book/create.book.sc
 import { useLayoutEffect } from 'react'
 import type { UseFormReset } from 'react-hook-form'
 
-export const _useTemplate = ({
+export const useTemplate = ({
 	templateSlug,
 	reset
 }: {

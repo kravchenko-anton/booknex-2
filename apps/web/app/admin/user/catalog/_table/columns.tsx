@@ -26,7 +26,7 @@ import {
 	YAxis
 } from 'recharts'
 
-export const _columns = ({
+export const columns = ({
 	remove,
 	removeLoading
 }: {
