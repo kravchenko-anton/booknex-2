@@ -45,7 +45,7 @@ models/info-by-slug.ts
 models/parser-dto.ts
 models/reading-history.ts
 models/refresh-dto.ts
-models/review-book-dto.ts
+models/review-dto.ts
 models/short-book.ts
 models/short-genre.ts
 models/stored-ebook-chapters-inner.ts

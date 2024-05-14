@@ -1,5 +1,5 @@
 import { ActivityService } from '@/src/activity/activity.service'
-import type { ReadingHistory } from '@/src/user/user.model'
+import type { ReadingHistory } from '@/src/user/user.dto'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'

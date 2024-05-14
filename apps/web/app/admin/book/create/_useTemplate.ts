@@ -2,7 +2,7 @@ import api from '@/services/api'
 import { errorToast } from '@/utils/toast'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
-import type { CreateBookSchemaType } from 'global/validation/book/create.book.dto'
+import type { CreateBookSchemaType } from 'global/validation/book/create.book.schema'
 import { useLayoutEffect } from 'react'
 import type { UseFormReset } from 'react-hook-form'
 

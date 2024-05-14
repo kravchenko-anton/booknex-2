@@ -4,7 +4,10 @@ import { loginRoute } from '@/providers/secure-route'
 import { useAuthStore } from '@/services/store/auth-store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google'
-import { AuthSchema, type AuthDtoType } from 'global/validation/auth/auth.dto'
+import {
+	AuthSchema,
+	type AuthDtoType
+} from 'global/validation/auth/auth.schema'
 import { Mail, Password } from 'icons'
 import { useForm } from 'react-hook-form'
 

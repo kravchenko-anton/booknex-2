@@ -1,6 +1,6 @@
-import type { EBookPayloadType } from 'global/validation/book/ebook.payload.dto'
+import type { EBookPayloadType } from 'global/validation/ebook/ebook.schema'
 import { convertToRoman } from '../../utils/helpers/romanize-number'
-import type { StoredEBook } from '../ebook/ebook.model'
+import type { StoredEBook } from '../ebook/ebook.dto'
 
 const calculateReadingTime = (text: string) => {
 	const wordsPerMinute = 200

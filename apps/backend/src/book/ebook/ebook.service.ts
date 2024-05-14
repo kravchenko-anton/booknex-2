@@ -5,10 +5,11 @@ import { getFileUrl } from 'global/api-config'
 import { globalErrors } from 'global/errors'
 import { getServerBookHtml } from 'global/helpers/getBookHtml'
 import { slugify } from 'global/helpers/slugify'
+import { StoredEBookSchema } from 'global/validation/ebook/ebook.schema'
 import { z } from 'zod'
 import { serverError } from '../../utils/helpers/server-error'
 import { PrismaService } from '../../utils/services/prisma.service'
-import { StoredEBookSchema, type StoredEBook } from './ebook.model'
+import type { StoredEBook } from './ebook.dto'
 
 @Injectable()
 export class EbookService {

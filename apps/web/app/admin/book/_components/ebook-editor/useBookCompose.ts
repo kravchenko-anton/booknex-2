@@ -3,7 +3,7 @@ import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import { MutationKeys } from 'global/utils/query-keys'
-import type { EBookPayloadType } from 'global/validation/book/ebook.payload.dto'
+import type { EBookPayloadType } from 'global/validation/ebook/ebook.schema'
 
 export const useBookCompose = ({
 	ebooks: ebooks,

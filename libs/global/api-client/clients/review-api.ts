@@ -22,7 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import { ReviewBookDto } from '../models';
+import { ReviewDto } from '../models';
 /**
  * ReviewApi - axios parameter creator
  * @export
@@ -32,15 +32,15 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @param {string} slug 
-         * @param {ReviewBookDto} reviewBookDto Review book
+         * @param {ReviewDto} reviewDto Review book
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        review: async (slug: string, reviewBookDto: ReviewBookDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        review: async (slug: string, reviewDto: ReviewDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('review', 'slug', slug)
-            // verify required parameter 'reviewBookDto' is not null or undefined
-            assertParamExists('review', 'reviewBookDto', reviewBookDto)
+            // verify required parameter 'reviewDto' is not null or undefined
+            assertParamExists('review', 'reviewDto', reviewDto)
             const localVarPath = `/review/review/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -65,7 +65,7 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(reviewBookDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(reviewDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -85,12 +85,12 @@ export const ReviewApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} slug 
-         * @param {ReviewBookDto} reviewBookDto Review book
+         * @param {ReviewDto} reviewDto Review book
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async review(slug: string, reviewBookDto: ReviewBookDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.review(slug, reviewBookDto, options);
+        async review(slug: string, reviewDto: ReviewDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.review(slug, reviewDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReviewApi.review']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -108,12 +108,12 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @param {string} slug 
-         * @param {ReviewBookDto} reviewBookDto Review book
+         * @param {ReviewDto} reviewDto Review book
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        review(slug: string, reviewBookDto: ReviewBookDto, options?: any): AxiosPromise<void> {
-            return localVarFp.review(slug, reviewBookDto, options).then((request) => request(axios, basePath));
+        review(slug: string, reviewDto: ReviewDto, options?: any): AxiosPromise<void> {
+            return localVarFp.review(slug, reviewDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -128,13 +128,13 @@ export class ReviewApi extends BaseAPI {
     /**
      * 
      * @param {string} slug 
-     * @param {ReviewBookDto} reviewBookDto Review book
+     * @param {ReviewDto} reviewDto Review book
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReviewApi
      */
-    public review(slug: string, reviewBookDto: ReviewBookDto, options?: RawAxiosRequestConfig) {
-        return ReviewApiFp(this.configuration).review(slug, reviewBookDto, options).then((request) => request(this.axios, this.basePath));
+    public review(slug: string, reviewDto: ReviewDto, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).review(slug, reviewDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

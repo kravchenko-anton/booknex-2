@@ -4,7 +4,7 @@ import { Activities } from '@prisma/client'
 import { adminErrors, globalErrors } from 'global/errors'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
-import type { ReviewBookDto } from './dto/review.book.dto'
+import type { ReviewDto } from './review.dto'
 
 @Injectable()
 export class ReviewService {
@@ -13,7 +13,7 @@ export class ReviewService {
 		private readonly activityService: ActivityService
 	) {}
 
-	async review(userId: number, bookSlug: string, dto: ReviewBookDto) {
+	async review(userId: number, bookSlug: string, dto: ReviewDto) {
 		await this.checkBookExist(bookSlug)
 
 		await this.checkUserExist(userId)

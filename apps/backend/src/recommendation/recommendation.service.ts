@@ -4,7 +4,7 @@ import { Activities } from '@prisma/client'
 import { adminErrors } from 'global/errors'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
-import type { UpdateRecommendationDto } from './dto/update-recommendation.dto'
+import type { UpdateRecommendationDto } from './recommendation.dto'
 
 @Injectable()
 export class RecommendationService {

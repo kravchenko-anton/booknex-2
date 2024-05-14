@@ -4,9 +4,15 @@ import type { DialogProperties } from '@/components/ui/base-components-types'
 import { SheetComponent, SheetHeader } from '@/components/ui/sheet'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import type { ParserDto } from 'global/api-client'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { parseValidation, type parseValidationType } from './parse-template.dto'
+import { z } from 'zod'
+
+export const parseValidation: z.ZodType<ParserDto> = z.object({
+	url: z.string(),
+	page: z.number().int()
+})
 
 interface NewParserPopupProperties extends DialogProperties {
 	onSubmit: (data: { url: string; page: number }) => void
@@ -14,7 +20,7 @@ interface NewParserPopupProperties extends DialogProperties {
 }
 
 const CallParserDialog: FC<NewParserPopupProperties> = properties => {
-	const { control, handleSubmit, setValue } = useForm<parseValidationType>({
+	const { control, handleSubmit, setValue } = useForm<ParserDto>({
 		resolver: zodResolver(parseValidation)
 	})
 	return (

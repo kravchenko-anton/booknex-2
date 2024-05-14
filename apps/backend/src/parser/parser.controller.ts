@@ -1,7 +1,7 @@
 import {
 	BookTemplateCatalogOutput,
 	UnfoldOutput
-} from '@/src/parser/parser.model'
+} from '@/src/parser/parser.dto'
 import {
 	Body,
 	Controller,
@@ -26,8 +26,7 @@ import {
 } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 
-import { ParserDto } from './dto/parser.dto'
-import { BookTemplate } from './parser.entity'
+import { BookTemplate, ParserDto } from './parser.dto'
 import { ParserService } from './parser.service'
 
 @Auth('admin')

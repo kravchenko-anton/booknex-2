@@ -8,11 +8,8 @@ import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
-import type { Book } from './book.entity'
+import type { Book, CreateBookDto, UpdateBookDto } from './book.dto'
 import type { UpdateBookDtoExtended } from './book.types'
-import type { CreateBookDto } from './dto/create.book.dto'
-
-import type { UpdateBookDto } from './dto/update.book.dto'
 
 import { returnBookObject } from '@/src/book/return.book.object'
 import { useEbookCalculation } from './helpers/get-ebook'

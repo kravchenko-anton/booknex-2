@@ -3,7 +3,10 @@ import { useAuthorize } from '@/screens/auth/useAuthorize'
 import { useAuthStore } from '@/screens/auth/store/auth-store'
 import { Button, Field, ScrollLayout } from '@/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AuthSchema, type AuthDtoType } from 'global/validation/auth/auth.dto'
+import {
+	AuthSchema,
+	type AuthDtoType
+} from 'global/validation/auth/auth.schema'
 import { Mail, Password } from 'icons'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 

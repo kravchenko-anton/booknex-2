@@ -1,4 +1,4 @@
-import type { ChapterType } from '../../../apps/backend/src/book/ebook/ebook.model'
+import type { ChapterType } from '../validation/ebook/chapter.schema'
 import { minutesToTime } from './time-converter'
 
 export interface GetServerBookHtmlType

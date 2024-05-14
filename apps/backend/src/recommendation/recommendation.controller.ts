@@ -2,8 +2,8 @@ import { Body, Controller, Get, Post } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { ShortGenre } from '../genre/genre.entity'
-import { UpdateRecommendationDto } from './dto/update-recommendation.dto'
+import { ShortGenre } from '../genre/genre.dto'
+import { UpdateRecommendationDto } from './recommendation.dto'
 import { RecommendationService } from './recommendation.service'
 
 @Controller('recommendation')

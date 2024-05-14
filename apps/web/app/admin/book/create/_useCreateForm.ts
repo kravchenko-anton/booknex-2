@@ -10,7 +10,7 @@ import { MutationKeys } from 'global/utils/query-keys'
 import {
 	CreateBookSchema,
 	type CreateBookSchemaType
-} from 'global/validation/book/create.book.dto'
+} from 'global/validation/book/create.book.schema'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'

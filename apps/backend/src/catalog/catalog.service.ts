@@ -1,5 +1,5 @@
 import { ActivityService } from '@/src/activity/activity.service'
-import type { ShortBook } from '@/src/book/book.entity'
+import type { ShortBook } from '@/src/book/book.dto'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'

@@ -7,8 +7,8 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 export const fontSizeSettings = {
-	min: 18,
-	max: 26
+	min: 10,
+	max: 30
 }
 export const ReaderFont = [
 	{

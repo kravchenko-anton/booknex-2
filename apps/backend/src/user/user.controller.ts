@@ -16,7 +16,7 @@ import {
 	UserCatalogOutput,
 	UserLibraryOutput,
 	UserStatistics
-} from './user.model'
+} from './user.dto'
 import { UserService } from './user.service'
 
 @ApiBearerAuth()

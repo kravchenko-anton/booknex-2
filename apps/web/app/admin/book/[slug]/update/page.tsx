@@ -15,7 +15,7 @@ import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import {
 	UpdateBookSchema,
 	type UpdateBookSchemaType
-} from 'global/validation/book/update.book.dto'
+} from 'global/validation/book/update.book.schema'
 import { PenNib, Star } from 'icons'
 import { useParams } from 'next/navigation'
 import { useEffect, type FC } from 'react'

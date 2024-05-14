@@ -1,6 +1,6 @@
+import type { CreateActivityDto } from '@/src/activity/activity.dto'
 import { PrismaService } from '@/src/utils/services/prisma.service'
 import { Injectable } from '@nestjs/common'
-import type { CreateActivityDto } from './dto/create-activity.dto'
 
 @Injectable()
 export class ActivityService {

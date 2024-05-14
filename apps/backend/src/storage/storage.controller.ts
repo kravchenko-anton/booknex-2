@@ -18,7 +18,7 @@ import {
 } from '@nestjs/swagger'
 import * as storageTypes from 'global/helpers/storage-types'
 import { Auth } from '../auth/decorators/auth.decorator'
-import { UploadOutputDto } from './dto/upload.dto'
+import { UploadOutputDto } from './storage.dto'
 import { StorageService } from './storage.service'
 
 @ApiTags('storage')

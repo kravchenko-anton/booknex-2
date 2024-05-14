@@ -25,7 +25,7 @@ export * from './info-by-slug';
 export * from './parser-dto';
 export * from './reading-history';
 export * from './refresh-dto';
-export * from './review-book-dto';
+export * from './review-dto';
 export * from './short-book';
 export * from './short-genre';
 export * from './stored-ebook';

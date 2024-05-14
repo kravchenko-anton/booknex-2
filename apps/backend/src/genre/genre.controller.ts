@@ -2,8 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
-import { ShortGenre } from './genre.entity'
-import { FindOneGenreOutput } from './genre.model'
+import { FindOneGenreOutput, ShortGenre } from './genre.dto'
 
 import { GenreService } from './genre.service'
 

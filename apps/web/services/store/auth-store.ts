@@ -3,7 +3,7 @@ import { saveTokensStorage } from '@/services/store/auth-helper'
 import { errorToast } from '@/utils/toast'
 import type { AuthOutput } from 'global/api-client'
 import { globalErrors } from 'global/errors'
-import type { AuthDtoType } from 'global/validation/auth/auth.dto'
+import type { AuthDtoType } from 'global/validation/auth/auth.schema'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 

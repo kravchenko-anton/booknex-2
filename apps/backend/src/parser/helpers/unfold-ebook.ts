@@ -1,4 +1,4 @@
-import type { BaseChapter } from '@/src/book/ebook/ebook.model'
+import type { BaseChapter } from '@/src/book/ebook/ebook.dto'
 import prettify from '@liquify/prettify'
 import { HttpStatus } from '@nestjs/common'
 import EPub from 'epub2'

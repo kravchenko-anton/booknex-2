@@ -13,7 +13,6 @@ import type { FC } from 'react'
 interface ParseButtonProperties extends DialogProperties {
 	openParserDialog?: FunctionType
 }
-
 const ParseButton: FC<ParseButtonProperties> = properties => {
 	const queryClient = useQueryClient()
 

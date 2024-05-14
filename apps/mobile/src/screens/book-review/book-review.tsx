@@ -13,7 +13,7 @@ import { MutationKeys } from 'global/utils/query-keys'
 import {
 	ReviewBookDtoSchema,
 	type ReviewBookDtoType
-} from 'global/validation/review/review.book.dto'
+} from 'global/validation/review/review.book.schema'
 import { Close } from 'icons'
 import { FinishBook } from 'illustrations'
 import type { FC } from 'react'
