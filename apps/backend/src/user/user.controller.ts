@@ -56,7 +56,7 @@ export class UserController {
 		@CurrentUser('id') userId: number,
 		@Query('goal') goal: number
 	) {
-		return this.usersService.adjustGoal(userId, goal)
+		return this.usersService.adjustGoal(userId, Number(goal) || 0)
 	}
 
 	@Auth()

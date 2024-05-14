@@ -114,7 +114,7 @@ export class UserService {
 	}
 
 	async adjustGoal(userId: number, goal: number) {
-		if (goal % 10 !== 0 || goal < 10 || goal > 60)
+		if (goal % 10 !== 0 || goal < 10 || goal > 180)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		await this.prisma.user.update({
 			where: { id: userId },

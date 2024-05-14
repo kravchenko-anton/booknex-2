@@ -17,7 +17,8 @@ export const useStatisticsWithSync = () => {
 		data: statistics,
 		isLoading,
 		isSuccess,
-		isError
+		isError,
+		refetch
 	} = useQuery({
 		queryKey: QueryKeys.userStatistics,
 		queryFn: () => api.user.statistics(history),
@@ -39,5 +40,5 @@ export const useStatisticsWithSync = () => {
 		}
 	}, [isSuccess, clearHistory])
 
-	return { isLoading, statistics }
+	return { isLoading, statistics, refetch }
 }

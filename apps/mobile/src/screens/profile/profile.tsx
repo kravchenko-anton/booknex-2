@@ -1,6 +1,6 @@
 import { GoalSelectModal } from '@/screens/profile/goal-select'
 import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
-import { Loader, ScrollLayout, Title } from '@/ui'
+import { Button, Loader, ScrollLayout, Title } from '@/ui'
 import { CircularProgressBar } from '@/ui/progress-bar/circular-progress-bar'
 import { cn } from '@/utils'
 import type { BottomSheetModal } from '@gorhom/bottom-sheet'
@@ -9,13 +9,17 @@ import { useRef } from 'react'
 import { View } from 'react-native'
 
 const Profile = () => {
-	const { statistics } = useStatisticsWithSync()
+	const { statistics, refetch } = useStatisticsWithSync()
 	if (!statistics) return <Loader />
 	console.log(statistics, 'daySteakProgressPercentage')
 	const sheetReference = useRef<BottomSheetModal>(null)
 	return (
 		<ScrollLayout className='px-2'>
-			<GoalSelectModal sheetRef={sheetReference} />
+			<GoalSelectModal
+				sheetRef={sheetReference}
+				refetch={refetch}
+				currentGoal={statistics.goalMinutes || 10}
+			/>
 			<View className='bg-foreground border-bordered mt-4 rounded-lg border-[1px] p-2'>
 				<View className='mx-2 mb-6'>
 					<Title center weight='bold' color={Color.white} size='xxl'>
@@ -125,13 +129,13 @@ const Profile = () => {
 				</View>
 
 				<View className='flex-row justify-center'>
-					<Title
-						weight='bold'
-						color={Color.white}
-						size='sm'
-						className='border-bordered rounded-lg border-[1px] px-4 py-2'>
+					<Button
+						variant='foreground'
+						className='mb-2'
+						size={'sm'}
+						onPress={() => sheetReference.current?.present()}>
 						Change goal
-					</Title>
+					</Button>
 				</View>
 			</View>
 		</ScrollLayout>
