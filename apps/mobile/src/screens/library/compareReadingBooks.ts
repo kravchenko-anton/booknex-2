@@ -12,7 +12,6 @@ export type CompareReadingBooksType = Omit<
 	progress: number
 	scrollPosition: number | undefined
 }
-
 export const compareReadingBooks = (
 	readingList: UserLibraryOutput['readingBooks'],
 	history: ReadingHistoryType[]

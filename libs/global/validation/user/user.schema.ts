@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ShortBookSchema } from '../book/book.schema'
-import { shortGenreSchema } from '../genre/short-genre.schema'
-import { baseCatalogSchema } from '../index'
+import { ShortGenreSchema } from '../genre/short-genre.schema'
+import { BaseCatalogSchema } from '../index'
 
 export const UserSchema = z.object({
 	id: z.number(),
@@ -16,7 +16,7 @@ export const CatalogUserOutputSchema = z
 	.object({
 		id: z.number(),
 		email: z.string(),
-		selectedGenres: z.array(shortGenreSchema),
+		selectedGenres: z.array(ShortGenreSchema),
 		statistics: z.array(
 			z.object({
 				endDate: z.date(),
@@ -38,7 +38,7 @@ export const UserCatalogOutputSchema = z
 	.object({
 		data: z.array(CatalogUserOutputSchema)
 	})
-	.merge(baseCatalogSchema)
+	.merge(BaseCatalogSchema)
 
 export const UserLibraryOutputSchema = z.object({
 	readingBooks: z.array(

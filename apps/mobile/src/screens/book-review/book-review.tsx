@@ -11,8 +11,8 @@ import type { ReviewBookDto } from 'global/api-client'
 import { Color } from 'global/colors'
 import { MutationKeys } from 'global/utils/query-keys'
 import {
-	ReviewBookDtoSchema,
-	type ReviewBookDtoType
+	ReviewBookSchema,
+	type ReviewBookType
 } from 'global/validation/review/review.book.schema'
 import { Close } from 'icons'
 import { FinishBook } from 'illustrations'
@@ -29,9 +29,9 @@ const BookReview: FC = () => {
 		handleSubmit,
 		watch,
 		formState: { errors }
-	} = useForm<ReviewBookDtoType>({
+	} = useForm<ReviewBookType>({
 		mode: 'onSubmit',
-		resolver: zodResolver(ReviewBookDtoSchema)
+		resolver: zodResolver(ReviewBookSchema)
 	})
 	const rating = watch('rating')
 	console.log(errors)

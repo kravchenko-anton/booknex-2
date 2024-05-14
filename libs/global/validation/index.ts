@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const baseCatalogSchema = z.object({
+export const BaseCatalogSchema = z.object({
 	canLoadMore: z.boolean(),
 	totalPages: z.number()
 })

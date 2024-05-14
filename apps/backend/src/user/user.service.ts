@@ -12,15 +12,24 @@ import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import { returnUserObject } from './return.user.object'
 
-function isThisWeek(date: Date) {
+const days = [
+	'Monday',
+	'Tuesday',
+	'Wednesday',
+	'Thursday',
+	'Friday',
+	'Saturday',
+	'Sunday'
+]
+
+const isThisWeek = (date: Date) => {
 	const today = new Date()
-	const firstDayOfWeek = new Date(
-		today.setDate(today.getDate() - today.getDay())
-	)
-	const lastDayOfWeek = new Date(
-		today.setDate(today.getDate() - today.getDay() + 6)
-	)
-	return date >= firstDayOfWeek && date <= lastDayOfWeek
+	const first =
+		today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1) // Adjust so Monday is the first day
+	const last = first + 6
+	const firstDay = new Date(today.setDate(first)).setHours(0, 0, 0, 0)
+	const lastDay = new Date(today.setDate(last)).setHours(23, 59, 59, 999)
+	return date.getTime() >= firstDay && date.getTime() <= lastDay
 }
 const pepTalks = [
 	{
@@ -135,8 +144,8 @@ export class UserService {
 				startDate: true
 			}
 		})
+		//TODO: оптимизировать код
 		const currentDate = new Date()
-		const isCurrentWeek = isThisWeek(currentDate)
 
 		const userSteak = userHistory.reduce((streak, history, index) => {
 			const historyDate = getTimeDate(history.endDate)
@@ -161,13 +170,13 @@ export class UserService {
 				.reduce((progress, history) => progress + history.readingTimeMs, 0) /
 			60_000
 
-		const progressByCurrentWeek = Array.from({ length: 7 }, (_, index) => {
-			// using isCurrentWeek to check if the day is in the current week
-			const day = new Date(currentDate)
-			day.setDate(currentDate.getDate() - index)
+		const progressByCurrentWeek = Array.from({ length: 7 }, (_, index) => index)
+			.map((_, index) => {
+				const day = new Date()
+				day.setDate(day.getDate() - ((day.getDay() + 7 - index) % 7))
 
-			const dayProgress =
-				userHistory
+				const dayHistory = userHistory
+					.filter(history => isThisWeek(getTimeDate(history.endDate)))
 					.filter(history => {
 						const historyDate = getTimeDate(history.endDate)
 						return (
@@ -176,19 +185,27 @@ export class UserService {
 							historyDate.getFullYear() === day.getFullYear()
 						)
 					})
-					.reduce((progress, history) => progress + history.readingTimeMs, 0) /
-				60_000
 
-			return {
-				readingTimeMs: userHistory.reduce(
+				const dayReadingTime = dayHistory.reduce(
 					(progress, history) => progress + history.readingTimeMs,
 					0
-				),
-				day: day.toLocaleDateString('en-US', { weekday: 'long' }),
-				dayProgress,
-				isCurrentDay: isCurrentWeek && index === 0
-			}
-		}).reverse()
+				)
+				const dayProgress = dayReadingTime / (user.goalMinutes * 60_000)
+				return {
+					// return from day current day like first array return monday, second tuesday etc
+					day: day.toLocaleDateString('en-US', {
+						weekday: 'long'
+					}),
+					isCurrentDay: getTimeDate(day).getDate() === currentDate.getDate(),
+					isReadMoreThatGoal: dayReadingTime >= user.goalMinutes * 60_000,
+					readingTimeMs: dayReadingTime,
+					dayProgress: dayProgress
+				}
+			})
+			//sort like from monday to sunday
+
+			.sort((a, b) => days.indexOf(a.day) - days.indexOf(b.day))
+
 		return {
 			userSteak,
 			progressByCurrentWeek,

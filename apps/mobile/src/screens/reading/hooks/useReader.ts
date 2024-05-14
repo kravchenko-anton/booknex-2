@@ -20,7 +20,9 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		select: data => data.data,
 		enabled: !!slug,
 		networkMode: 'offlineFirst',
-		gcTime: Number.POSITIVE_INFINITY
+		gcTime: Number.POSITIVE_INFINITY,
+		staleTime: 1000 * 60 * 60 * 24 // 24 hours
+		// do store it data like every time
 	})
 
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(

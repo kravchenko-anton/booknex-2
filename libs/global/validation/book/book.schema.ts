@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { shortGenreSchema } from '../genre/short-genre.schema'
-import { baseCatalogSchema } from '../index'
+import { ShortGenreSchema } from '../genre/short-genre.schema'
+import { BaseCatalogSchema } from '../index'
 import { ReviewSchema } from '../review/review.schema'
 
 export const ShortBookSchema = z.object({
@@ -16,7 +16,7 @@ export const BookSchema = z
 		chapters: z.number(),
 		rating: z.number(),
 		isPublic: z.boolean(),
-		genres: z.array(shortGenreSchema)
+		genres: z.array(ShortGenreSchema)
 	})
 	.merge(ShortBookSchema)
 
@@ -50,7 +50,7 @@ export const CatalogOutputSchema = z
 	.object({
 		data: z.array(BookSchema)
 	})
-	.merge(baseCatalogSchema)
+	.merge(BaseCatalogSchema)
 
 export const infoBySlugSchema = BookSchema.merge(
 	z.object({

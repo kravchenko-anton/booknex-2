@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { EbookSchema } from '../ebook/ebook.schema'
-import { shortGenreSchema } from '../genre/short-genre.schema'
+import { ShortGenreSchema } from '../genre/short-genre.schema'
 
 export const UpdateBookSchema = z.object({
 	title: z.string().optional(),
@@ -11,7 +11,7 @@ export const UpdateBookSchema = z.object({
 	recommendable: z.boolean().optional(),
 	rating: z.number().min(1).positive().optional(),
 	picture: z.string().optional(),
-	genres: z.array(shortGenreSchema).min(1).optional()
+	genres: z.array(ShortGenreSchema).min(1).optional()
 })
 
 export type UpdateBookSchemaType = z.infer<typeof UpdateBookSchema>

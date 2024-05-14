@@ -1,16 +1,13 @@
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
-import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
+import { useLibraryWithSync } from '@/screens/library/useLibraryWithSync'
 import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
 
 //TODO: сделать сихнронную историю
 const Library = () => {
-	const { navigate, isFocused } = useTypedNavigation()
-	const library = useReadingProgressStore(
-		state => state.getLibrary(),
-		isFocused
-	)
+	const { navigate } = useTypedNavigation()
+	const { library } = useLibraryWithSync()
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&

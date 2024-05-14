@@ -1,4 +1,4 @@
-import type { CompareReadingBooksType } from '@/screens/reading/store/progress-helper'
+import type { CompareReadingBooksType } from '@/screens/library/compareReadingBooks'
 import { Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'

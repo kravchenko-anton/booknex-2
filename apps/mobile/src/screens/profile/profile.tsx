@@ -1,17 +1,12 @@
-import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
+import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
 import { Loader, ScrollLayout, Title } from '@/ui'
 import { CircularProgressBar } from '@/ui/progress-bar/circular-progress-bar'
 import { cn } from '@/utils'
-import { useIsFocused } from '@react-navigation/native'
 import { Color } from 'global/colors'
 import { View } from 'react-native'
 
 const Profile = () => {
-	const isFocused = useIsFocused()
-	const statistics = useReadingProgressStore(
-		state => state.getStatistics(),
-		() => isFocused
-	)
+	const { statistics } = useStatisticsWithSync()
 	if (!statistics) return <Loader />
 	console.log(statistics, 'daySteakProgressPercentage')
 
@@ -73,16 +68,16 @@ const Profile = () => {
 							key={item.day}
 							className={cn(
 								'pb-2',
-								item.isCurrentDay ? 'border-b-primary  border-b-[2px]' : ''
+								item.isCurrentDay ? 'border-b-[2px]  border-b-white' : ''
 							)}>
 							{item.dayProgress === 100 ? (
-								<View className='bg-primary h-[32px] w-[32px]'>
+								<View className='bg-bordered h-[32px] w-[32px] flex-row items-center  justify-center rounded-full'>
 									<Title
+										className='mb-0.5'
 										weight='bold'
 										color={Color.white}
-										size='sm'
-										className='text-center'>
-										{item.day}
+										size='sm'>
+										{item.day.slice(0, 1)}
 									</Title>
 								</View>
 							) : (
@@ -95,9 +90,9 @@ const Profile = () => {
 									backgroundWidth={2}
 									lineCap='round'
 									rotation={-90}
-									tintColor={item.isCurrentDay ? Color.primary : Color.white}
+									tintColor={item.isCurrentDay ? Color.white : Color.gray}
 									backgroundColor={
-										item.isCurrentDay ? Color.gray : Color.bordered
+										item.isCurrentDay ? Color.bordered : Color.muted
 									}>
 									{() => (
 										<Title
@@ -125,9 +120,6 @@ const Profile = () => {
 					</Title>
 				</View>
 			</View>
-			<Title numberOfLines={10_000_000} className='mx-4'>
-				{JSON.stringify(statistics)}
-			</Title>
 		</ScrollLayout>
 	)
 }
