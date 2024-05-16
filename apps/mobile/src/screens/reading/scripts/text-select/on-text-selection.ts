@@ -1,6 +1,5 @@
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
-import Clipboard from '@react-native-clipboard/clipboard'
 import { Linking, NativeModules, Platform } from 'react-native'
 
 const deviceLanguage =
@@ -18,19 +17,12 @@ const textSelectionValidation = (selectedText: string) => {
 }
 
 export const onTextSelection = async (event: any, removeAllSelection: void) => {
-	if (event.nativeEvent.key === 'copy') {
-		if (!event.nativeEvent.selectedText) return
-		if (!textSelectionValidation(event.nativeEvent.selectedText)) return
-		console.log('Copy', event.nativeEvent.selectedText)
-		Clipboard.setString(event.nativeEvent.selectedText)
-	}
-
 	if (event.nativeEvent.key === 'share') {
 		if (!textSelectionValidation(event.nativeEvent.selectedText)) return
 		await share(event.nativeEvent.selectedText)
 	}
 
-	if (event.nativeEvent.key === 'Translate') {
+	if (event.nativeEvent.key === 'translate') {
 		if (!textSelectionValidation(event.nativeEvent.selectedText)) return
 		const link = `
 		"https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${event.nativeEvent.selectedText}"

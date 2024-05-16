@@ -1,1 +1,0 @@
-{"version":3,"file":"text-select-menu.js","sourceRoot":"","sources":["../../../../../../../src/screens/reading/utils/text-select-menu.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,cAAc,GAAG;IAC7B,EAAE,KAAK,EAAE,MAAM,EAAE,GAAG,EAAE,MAAM,EAAE;IAC9B;QACC,KAAK,EAAE,OAAO;QACd,GAAG,EAAE,OAAO;KACZ;IACD,EAAE,KAAK,EAAE,WAAW,EAAE,GAAG,EAAE,WAAW,EAAE;CACxC,CAAA"}

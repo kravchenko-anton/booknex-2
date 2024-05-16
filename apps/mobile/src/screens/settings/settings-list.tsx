@@ -35,7 +35,7 @@ export const Item = ({
 					{title}
 				</Title>
 				{description ? (
-					<Title size='sm' weight='light' color={Color.gray}>
+					<Title size='sm' numberOfLines={2} weight='light' color={Color.gray}>
 						{description}
 					</Title>
 				) : null}

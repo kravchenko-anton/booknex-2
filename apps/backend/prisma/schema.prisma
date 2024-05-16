@@ -105,6 +105,7 @@ model User {
   goalMinutes    Int              @default(10)
   socialId       String?          @unique
   password       String?
+  authType       AuthType         @default(email)
   selectedGenres Genre[]
   picture        String           @default("fallback.png")
   fullName       String           @default("unknown")
@@ -146,6 +147,11 @@ enum StorageFolderEnum {
   booksCovers
 }
 
+
+enum AuthType {
+  email
+  google
+}
 enum Activities {
   startedReading
   finishedReading

@@ -12,7 +12,7 @@ interface SaveButtonProperties {
 const SaveButton: FC<SaveButtonProperties> = ({ slug }) => {
 	const queryClient = useQueryClient()
 
-	const { mutateAsync: toggleSave, isLoading: toggleSaveLoading } = useMutation(
+	const { mutateAsync: toggleSave, isPending: toggleSaveLoading } = useMutation(
 		{
 			mutationKey: MutationKeys.book.toggleSaveBySlug(slug),
 			mutationFn: (slug: string) => api.user.toggleSave(slug),

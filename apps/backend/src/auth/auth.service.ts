@@ -41,12 +41,12 @@ export class AuthService {
 	}
 
 	async register(dto: AuthDto) {
-		await this.checkUserExistBeforeCreate(dto.email)
-
+		await this.checkEmailExist(dto.email)
 		const popularGenres = await this.getPopular()
 		const user = await this.prisma.user.create({
 			data: {
 				email: dto.email,
+				authType: 'email',
 				password: await hash(dto.password),
 				goalMinutes: 10,
 				selectedGenres: {
@@ -108,7 +108,7 @@ export class AuthService {
 
 		if (!data?.email)
 			throw serverError(HttpStatus.BAD_REQUEST, authErrors.invalidGoogleToken)
-		await this.checkUserExistBeforeCreate(data.email)
+		await this.checkEmailExist(data.email)
 		const popularGenres = await this.getPopular()
 		const newUser = await this.prisma.user.create({
 			data: {
@@ -162,16 +162,8 @@ export class AuthService {
 			...tokens
 		}
 	}
-	private async checkUserExistBeforeCreate(email: string) {
-		const user = await this.prisma.user.findUnique({
-			where: {
-				email
-			}
-		})
-		if (user) throw serverError(HttpStatus.BAD_REQUEST, authErrors.userExist)
-	}
 
-	private issueToken(userId: number) {
+	issueToken(userId: number) {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {
@@ -183,12 +175,19 @@ export class AuthService {
 			})
 		}
 	}
-	private async validateUser(dto: AuthDto) {
+	async validateUser(dto: AuthDto) {
 		const user = await this.prisma.user.findUnique({
 			where: {
 				email: dto.email
+			},
+			select: {
+				password: true,
+				id: true,
+				role: true,
+				email: true
 			}
 		})
+		console.log(user)
 		if (!user?.password)
 			throw serverError(
 				HttpStatus.BAD_REQUEST,
@@ -215,8 +214,16 @@ export class AuthService {
 			}
 		})
 	}
+	async checkEmailExist(email: string) {
+		const user = await this.prisma.user.findUnique({
+			where: {
+				email
+			}
+		})
+		if (user) throw serverError(HttpStatus.BAD_REQUEST, authErrors.userExist)
+	}
 
-	private userFields(user: User) {
+	userFields(user: Pick<User, 'id' | 'email' | 'role'>) {
 		return {
 			id: user.id,
 			email: user.email,

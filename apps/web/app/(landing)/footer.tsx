@@ -15,13 +15,7 @@ export const footerNavigationLinks = [
 	}
 ]
 export const Footer = () => (
-	<footer
-		className='bg-foreground h-36 px-2 py-6 text-white'
-		style={
-			{
-				//
-			}
-		}>
+	<footer className='bg-foreground px-2 py-6 text-white xl:h-36'>
 		<div className='mx-auto  w-full md:w-1/2 '>
 			<div className={'flex flex-wrap items-center  gap-2'}>
 				{footerNavigationLinks.map(link => (

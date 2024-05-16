@@ -9,10 +9,10 @@ import { useRef } from 'react'
 import { View } from 'react-native'
 
 const Profile = () => {
+	const sheetReference = useRef<BottomSheetModal>(null)
 	const { statistics, refetch } = useStatisticsWithSync()
 	if (!statistics) return <Loader />
 	console.log(statistics, 'daySteakProgressPercentage')
-	const sheetReference = useRef<BottomSheetModal>(null)
 	return (
 		<ScrollLayout className='px-2'>
 			<GoalSelectModal
@@ -134,7 +134,7 @@ const Profile = () => {
 						className='mb-2'
 						size={'sm'}
 						onPress={() => sheetReference.current?.present()}>
-						Change goal
+						Adjust goal
 					</Button>
 				</View>
 			</View>

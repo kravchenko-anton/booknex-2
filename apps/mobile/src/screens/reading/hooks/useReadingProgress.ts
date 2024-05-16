@@ -111,8 +111,8 @@ export const useReadingProgress = ({
 			endProgress: payload.progress,
 			progressDelta: payload.progress - startReadingProgress,
 			scrollPosition: scrollPosition,
-			endDate: getTimeDate(),
-			startDate: startReadingDate,
+			endDate: getTimeDate() as unknown as string,
+			startDate: startReadingDate as unknown as string,
 			readingTimeMs: getTimeDate().getTime() - startReadingDate.getTime()
 		})
 	}

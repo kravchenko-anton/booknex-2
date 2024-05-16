@@ -29,12 +29,19 @@ const Settings = () => {
 						Linking.openURL('https://booknex.up.railway.app/terms-of-service')
 					}
 				/>
+
 				<List.Item
-					bordered
 					title='Community chat'
 					onPress={() => Linking.openURL('https://t.me/boknex')}
 				/>
-
+				<List.Item
+					bordered
+					title={`Donate`}
+					description={`Support the development of the app`}
+					onPress={() =>
+						Linking.openURL('https://boosty.to/booknex-app/donate')
+					}
+				/>
 				<List.Item
 					description={user?.email}
 					title={`Sign out`}

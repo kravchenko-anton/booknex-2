@@ -4,5 +4,5 @@ export const selectTextMenu = [
 		label: 'Share',
 		key: 'share'
 	},
-	{ label: 'Translate', key: 'Translate' }
+	{ label: 'Translate', key: 'translate' }
 ]

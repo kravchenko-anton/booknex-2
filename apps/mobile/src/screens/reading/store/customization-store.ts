@@ -57,7 +57,7 @@ export const initialState: CustomizationStoreType = {
 		title: ReaderFont[0]?.title as string,
 		fontFamily: ReaderFont[0]?.fontFamily as string
 	},
-	fontSize: fontSizeSettings.min,
+	fontSize: fontSizeSettings.min * 2,
 	lineHeight: 1.3,
 	padding: 14
 }

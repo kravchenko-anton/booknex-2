@@ -54,7 +54,10 @@ export class BookService {
 			fromSameAuthor: await this.prisma.book.findMany({
 				where: {
 					isPublic: true,
-					author: book.author
+					author: book.author,
+					slug: {
+						not: book.slug
+					}
 				},
 				select: returnBookObject
 			})

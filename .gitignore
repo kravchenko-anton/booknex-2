@@ -2,6 +2,7 @@
 apps/web/.sentryclirc
 # compiled output
 tmp
+yarn.lock
 /out-tsc
 apps/backend/.env
 apps/backend/.env.production

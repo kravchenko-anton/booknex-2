@@ -62,7 +62,7 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  /user/start-reading/{slug}:
+  "/user/start-reading/{slug}":
     patch:
       operationId: startReading
       parameters:
@@ -78,7 +78,7 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  /user/finish-reading/{slug}:
+  "/user/finish-reading/{slug}":
     patch:
       operationId: finishReading
       parameters:
@@ -94,7 +94,7 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  /user/toggle-save/{slug}:
+  "/user/toggle-save/{slug}":
     patch:
       operationId: toggleSave
       parameters:
@@ -114,7 +114,7 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  /user/is-saved/{slug}:
+  "/user/is-saved/{slug}":
     get:
       operationId: isSaved
       parameters:
@@ -159,7 +159,7 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  /user/admin/remove/{id}:
+  "/user/admin/remove/{id}":
     delete:
       operationId: remove
       parameters:
@@ -175,7 +175,7 @@ paths:
         - 👤 user
       security:
         - bearer: []
-  /catalog/search/{query}:
+  "/catalog/search/{query}":
     get:
       operationId: search
       parameters:
@@ -246,7 +246,7 @@ paths:
         - 🔖 genre
       security:
         - bearer: []
-  /genre/by-slug/{slug}:
+  "/genre/by-slug/{slug}":
     get:
       operationId: bySlug
       parameters:
@@ -266,7 +266,7 @@ paths:
         - 🔖 genre
       security:
         - bearer: []
-  /book/info/by-slug/{slug}:
+  "/book/info/by-slug/{slug}":
     get:
       operationId: infoBySlug
       parameters:
@@ -286,7 +286,7 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  /book/admin-info/by-slug/{slug}:
+  "/book/admin-info/by-slug/{slug}":
     get:
       operationId: adminInfoBySlug
       parameters:
@@ -349,7 +349,7 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  /book/admin/update/{slug}:
+  "/book/admin/update/{slug}":
     put:
       operationId: update
       parameters:
@@ -371,7 +371,7 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  /book/admin/remove/{slug}:
+  "/book/admin/remove/{slug}":
     delete:
       operationId: remove
       parameters:
@@ -467,7 +467,7 @@ paths:
                 $ref: "#/components/schemas/AuthOutput"
       tags:
         - 🔐 auth
-  /storage/{folder}:
+  "/storage/{folder}":
     post:
       operationId: upload
       parameters:
@@ -527,7 +527,7 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  /parser/admin/by-slug/{slug}:
+  "/parser/admin/by-slug/{slug}":
     get:
       operationId: bySlug
       parameters:
@@ -591,7 +591,7 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  /parser/admin/remove/{slug}:
+  "/parser/admin/remove/{slug}":
     delete:
       operationId: remove
       parameters:
@@ -607,7 +607,7 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  /review/review/{slug}:
+  "/review/review/{slug}":
     post:
       operationId: review
       parameters:
@@ -732,7 +732,7 @@ paths:
                       additionalProperties: true
       tags:
         - ❤️ health
-  /ebook/ebook/by-slug/{slug}:
+  "/ebook/ebook/by-slug/{slug}":
     get:
       operationId: ebookBySlug
       parameters:
@@ -750,7 +750,7 @@ paths:
                 $ref: "#/components/schemas/EbookOutput"
       tags:
         - 📙 ebook
-  /ebook/admin/stored-ebook/{slug}:
+  "/ebook/admin/stored-ebook/{slug}":
     get:
       operationId: storedEbookBySlug
       parameters:
