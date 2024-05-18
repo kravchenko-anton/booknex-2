@@ -1,9 +1,14 @@
 import { useTypedNavigation } from '@/hooks'
 import type { BottomSheetModal } from '@gorhom/bottom-sheet'
-import { useRef } from 'react'
+import type { FunctionType } from 'global/types'
+import { useRef, type Dispatch, type SetStateAction } from 'react'
 
+interface UseModalReferenceProperties {
+	onOpenModal: FunctionType
+}
 export const useModalReference = (
-	setReaderUiVisible: React.Dispatch<React.SetStateAction<boolean>>
+	setReaderUiVisible: Dispatch<SetStateAction<boolean>>,
+	{ onOpenModal }: UseModalReferenceProperties
 ) => {
 	const { addListener } = useTypedNavigation()
 
@@ -19,7 +24,19 @@ export const useModalReference = (
 	})
 
 	return {
-		chaptersListModalReference,
-		readingSettingsModalReference
+		modalRefs: {
+			chaptersListModalReference,
+			readingSettingsModalReference
+		},
+		openModal: {
+			chaptersList: () => {
+				chaptersListModalReference.current?.present()
+				onOpenModal()
+			},
+			readingSettings: () => {
+				readingSettingsModalReference.current?.present()
+				onOpenModal()
+			}
+		}
 	}
 }

@@ -26,7 +26,7 @@ export const composeReaderViewHtml = ({
 			</head>
 		
 			<style>${defaultProperties.theme}</style>
-			<div style="margin-bottom: 40px;">
+			<div style="margin-bottom: 40px; user-select: none;">
 				<img style='width:100%; height: 300px; object-fit: contain; object-position: center; padding-top: 40px'
 					 src="${getFileUrl(picture)}" alt="${title}"
 					    						onerror="this.style.display='none';"
@@ -38,5 +38,13 @@ export const composeReaderViewHtml = ({
 			</div>
 
 			${finishBookButton}
+			  <p id="text-selection-menu" class="text-selection-menu" 
+        >
+          <button 
+          >
+            <span id="share" >Share</span>
+            <Twitter className="w-5 h-5" />
+          </button>
+        </p>
 			${injectStartScripts(defaultProperties.scrollPosition)}
 	`

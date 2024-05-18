@@ -1,6 +1,6 @@
 import { useTypedNavigation } from '@/hooks'
 import type { ReadingProgressType } from '@/screens/reading/hooks/useReadingProgress'
-import type { ThemePackType } from '@/screens/reading/utils/theme-pack'
+import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import { AnimatedView } from '@/ui/animated-components'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
 import type { FunctionType } from 'global/types'

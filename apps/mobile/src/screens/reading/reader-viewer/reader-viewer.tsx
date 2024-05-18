@@ -1,8 +1,7 @@
+import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import { composeReaderViewHtml } from '@/screens/reading/scripts/compose-html'
 import { injectStyle } from '@/screens/reading/scripts/styles-injection'
 import { onTextSelection } from '@/screens/reading/scripts/text-select/on-text-selection'
-import { selectTextMenu } from '@/screens/reading/scripts/text-select/text-select-menu'
-import type { ThemePackType } from '@/screens/reading/utils/theme-pack'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
 import type { FunctionType } from 'global/types'
@@ -20,6 +19,7 @@ export interface ReaderViewerProperties {
 		scrollPosition: number
 		theme: string
 	}
+	fullTextSelectionMenu: boolean
 	styleTag: string
 	colorScheme: ThemePackType
 	onMessage: (event: WebViewMessageEvent) => Promise<void>
@@ -34,6 +34,7 @@ const ReaderViewer = forwardRef(
 			colorScheme,
 			title,
 			onMessage,
+			fullTextSelectionMenu,
 			picture,
 			file
 		} = properties
@@ -41,7 +42,7 @@ const ReaderViewer = forwardRef(
 		useEffect(() => {
 			reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 		}, [styleTag])
-
+		console.log(fullTextSelectionMenu, 'fullTextSelectionMenu')
 		if (!defaultProperties) return <View className='flex-1' />
 		return (
 			<View className='m-0 h-screen w-screen flex-1 items-center justify-center p-0'>
@@ -49,15 +50,13 @@ const ReaderViewer = forwardRef(
 					<WebView
 						scrollEnabled
 						javaScriptEnabled
-						startInLoadingState
 						ref={reference}
-						// prevent fast scroll in webview
 						androidLayerType='hardware'
 						decelerationRate={0.8}
 						originWhitelist={['*']}
 						showsVerticalScrollIndicator={false}
 						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
-						menuItems={selectTextMenu}
+						menuItems={[]}
 						renderLoading={() => (
 							<View
 								className='h-screen w-screen'
@@ -83,8 +82,10 @@ const ReaderViewer = forwardRef(
 						}}
 						onMessage={onMessage}
 						onCustomMenuSelection={async (event: any) => {
+							// get selected text with html tags
 							await onTextSelection(
 								event,
+								reference,
 								reference?.current?.injectJavaScript(`
 							document.getSelection().removeAllRanges()
 						`)

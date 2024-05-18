@@ -1,8 +1,7 @@
-export const selectTextMenu = [
-	{ label: 'Copy', key: 'copy' },
-	{
-		label: 'Share',
-		key: 'share'
-	},
-	{ label: 'Translate', key: 'translate' }
-]
+export const selectionKeys = {
+	note: 'note',
+	highlight: 'highlight',
+	share: 'share',
+	translate: 'translate'
+}
+export const selectTextMenu = () => []

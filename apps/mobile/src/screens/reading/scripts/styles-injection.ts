@@ -1,4 +1,4 @@
-import type { ThemePackType } from '@/screens/reading/utils/theme-pack'
+import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 
 export const injectStyle = (style: string) => `
 	var style = document.createElement('style');
@@ -37,10 +37,11 @@ export const getStyleTag = ({
 		word-wrap: break-word !important;
 		max-width: 100% !important;
 		height: 100% !important;
+		user-select: element !important;
 		padding: ${padding}px;
 		behave: smooth !important;
 		overflow-x: hidden !important;
-		  overscroll-behavior: none !important;
+		overscroll-behavior: none !important;
 
 		color: ${colorPalette.text};
 	}
@@ -115,6 +116,9 @@ export const getStyleTag = ({
 	.finish-book-button {
 		background: ${colorPalette.background.lighter} !important;
 		color: ${colorPalette.text} !important;
+				user-select: none !important;
+				-webkit-user-select: none !important;
+				-moz-user-select: none !important;
 	}
 	.finish-book-text {
 		color: ${colorPalette.text} !important;
@@ -127,4 +131,14 @@ export const getStyleTag = ({
 	.finish-book-button-container {
 		background: ${colorPalette.background.darker} !important;
 	}
+	
+.text-selection-menu {
+  position: absolute;
+  top: -2rem;
+  padding: 0.5rem;
+  width: 150px;
+  height: 25px;
+  border-radius: 5px;
+  background-color: ${colorPalette.background.darker} !important;
+}
 	`

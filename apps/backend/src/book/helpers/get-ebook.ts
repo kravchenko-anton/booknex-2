@@ -2,8 +2,9 @@ import type { EBookPayloadType } from 'global/validation/ebook/ebook.schema'
 import { convertToRoman } from '../../utils/helpers/romanize-number'
 import type { StoredEBook } from '../ebook/ebook.dto'
 
+export const wordsPerMinute = 200
+export const charactersPerPage = 2000
 const calculateReadingTime = (text: string) => {
-	const wordsPerMinute = 200
 	const words = text.split(' ').length
 	const minutes = words / wordsPerMinute
 	return Math.ceil(minutes)
@@ -14,6 +15,7 @@ export const useEbookCalculation = (
 ): {
 	readingTime: number
 	uploadedEbook: StoredEBook[]
+	pagesCount: number
 	chaptersCount: number
 } => {
 	const readingTime = calculateReadingTime(
@@ -21,6 +23,16 @@ export const useEbookCalculation = (
 			.map(ebook => ebook.chapters.map(chapter => chapter.text).join(' '))
 			.join(' ')
 	)
+	const pagesCount = Math.ceil(
+		ebooks
+			.map(ebook =>
+				ebook.chapters
+					.map(chapter => chapter.text.length)
+					.reduce((a, b) => a + b, 0)
+			)
+			.reduce((a, b) => a + b, 0) / charactersPerPage
+	)
+
 	const uploadedEbook = ebooks.map((ebook, ebookIndex) => ({
 		id: ebookIndex + 1,
 		title: ebook.title,
@@ -40,6 +52,7 @@ export const useEbookCalculation = (
 	return {
 		uploadedEbook,
 		readingTime,
+		pagesCount,
 		chaptersCount
 	}
 }

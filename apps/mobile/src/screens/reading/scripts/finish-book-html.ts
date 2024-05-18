@@ -12,6 +12,8 @@ export const finishBookButton = `
 				right: 0;
 				height: 70px;
 				font-weight: bold;
+				margin-top: 40px;
+		
 				">
 				<div
 					class="finish-book-text">Read it till the end?<div

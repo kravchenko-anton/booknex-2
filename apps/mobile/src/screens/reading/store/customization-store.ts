@@ -1,7 +1,7 @@
 import {
 	themePack,
 	type ThemePackType
-} from '@/screens/reading/utils/theme-pack'
+} from '@/screens/reading/reader-customization/theme-pack'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'

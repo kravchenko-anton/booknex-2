@@ -1,9 +1,9 @@
-import type { ThemePackType } from '@/screens/reading/utils/theme-pack'
 import { Title } from '@/ui'
 import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 
+import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import { fontSizeSettings } from '@/screens/reading/store/customization-store'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 

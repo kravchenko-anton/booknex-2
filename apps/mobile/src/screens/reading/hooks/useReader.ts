@@ -14,25 +14,26 @@ import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
 export const useReader = (slug: string, initialScrollPosition: number) => {
-	const { data: ebook } = useQuery({
+	const { data: ebook, isLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data,
 		enabled: !!slug,
 		networkMode: 'offlineFirst',
 		gcTime: Number.POSITIVE_INFINITY,
-		staleTime: 1000 * 60 * 60 * 24 // 24 hours
-		// do store it data like every time
+		staleTime: 1000 * 60 * 60 * 24
 	})
-
+	const {
+		loaderAnimation,
+		setReaderLoading,
+		readerLoading = isLoading
+	} = useReaderLoading()
+	const [fullTextSelectionMenu, setFullTextSelectionMenu] = useState(true)
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(
 		state => state
 	)
 	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
 	const viewerReference = useRef<WebView>(null)
-
-	const { loaderAnimation, setReaderLoading, readerLoading } =
-		useReaderLoading()
 
 	const {
 		readingProgress,
@@ -50,15 +51,20 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		onFinishComplete: clearProgress
 	})
 
-	const { chaptersListModalReference, readingSettingsModalReference } =
-		useModalReference(setReaderHeaderVisible)
+	const { openModal, modalRefs } = useModalReference(setReaderHeaderVisible, {
+		onOpenModal: () =>
+			viewerReference.current?.injectJavaScript(
+				`window.getSelection().removeAllRanges();`
+			)
+	})
 
 	useStatusBarStyle({ colorScheme, readerUiVisible: readerHeaderVisible })
 	const { onMessage } = useReaderMessage({
 		finishReadingLoading,
 		onFinishBookPress: onFinish,
 		onContentLoadEnd: () => setReaderLoading(false),
-		onScroll: updateReadingProgress
+		onScroll: updateReadingProgress,
+		setFullTextSelectionMenu
 	})
 
 	const { defaultProperties, styleTag } = useStyleTag(
@@ -74,9 +80,10 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		colorScheme,
 		viewerReference,
 		setReaderHeaderVisible,
+		modalRefs,
 		readingProgress,
-		chaptersListModalReference,
-		readingSettingsModalReference,
+		openModal,
+		fullTextSelectionMenu,
 		onMessage,
 		defaultProperties,
 		styleTag

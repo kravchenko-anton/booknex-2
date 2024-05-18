@@ -4,13 +4,18 @@ import { Activities, type Prisma } from '@prisma/client'
 import { adminErrors, globalErrors } from 'global/errors'
 import { slugify } from 'global/helpers/slugify'
 import { checkHtmlValid } from 'global/utils/html-validation'
-import { ReturnGenreObject } from '../genre/return.genre.object'
 import { StorageService } from '../storage/storage.service'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import type { Book, CreateBookDto, UpdateBookDto } from './book.dto'
 import type { UpdateBookDtoExtended } from './book.types'
 
+import {
+	bookCatalogFields,
+	bookCreateFields,
+	infoBySlug,
+	infoBySlugAdminFields
+} from '@/src/book/book.fields'
 import { returnBookObject } from '@/src/book/return.book.object'
 import { useEbookCalculation } from './helpers/get-ebook'
 
@@ -25,19 +30,7 @@ export class BookService {
 	async infoBySlug(slug: string, userId: number) {
 		const book = await this.prisma.book.findUnique({
 			where: { slug, isPublic: true },
-			select: {
-				title: true,
-				isPublic: true,
-				slug: true,
-				chapters: true,
-				picture: true,
-				author: true,
-				description: true,
-				mainGenre: false,
-				readingTime: true,
-				rating: true,
-				genres: { select: ReturnGenreObject }
-			}
+			select: infoBySlug
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
@@ -67,66 +60,7 @@ export class BookService {
 	async infoBySlugAdmin(slug: string) {
 		const book = await this.prisma.book.findUnique({
 			where: { slug },
-			select: {
-				id: true,
-				chapters: true,
-				title: true,
-				picture: true,
-				recommendable: true,
-				author: true,
-				slug: true,
-				createdAt: true,
-				updatedAt: true,
-				rating: true,
-				readingTime: true,
-				genres: {
-					select: {
-						name: true,
-						slug: true,
-						icon: true
-					}
-				},
-				ebook: true,
-				description: true,
-				isPublic: true,
-				review: {
-					select: {
-						tags: true,
-						text: true,
-						rating: true,
-						user: {
-							select: {
-								id: true,
-								email: true,
-								picture: true
-							}
-						}
-					}
-				},
-				_count: {
-					select: {
-						finishedBy: true,
-						readingBy: true,
-						savedBy: true
-					}
-				},
-
-				readingHistory: {
-					where: {
-						bookSlug: slug
-					},
-					orderBy: {
-						endDate: 'asc'
-					},
-					select: {
-						endDate: true,
-						progressDelta: true,
-						readingTimeMs: true,
-						scrollPosition: true,
-						startDate: true
-					}
-				}
-			}
+			select: infoBySlugAdminFields(slug)
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
@@ -164,42 +98,9 @@ export class BookService {
 		const perPage = 20
 		const count = await this.prisma.book.count()
 		return {
-			data: await this.prisma.book.findMany({
-				take: perPage,
-				select: {
-					author: true,
-					chapters: true,
-					title: true,
-					picture: true,
-					slug: true,
-					genres: { select: ReturnGenreObject },
-					readingTime: true,
-					rating: true,
-					isPublic: true,
-					description: true,
-					mainGenre: {
-						select: ReturnGenreObject
-					}
-				},
-				orderBy: {
-					isPublic: 'asc' as const
-				},
-				...(page && {
-					skip: page * perPage
-				}),
-				...(searchTerm && {
-					where: {
-						title: {
-							contains: searchTerm
-						}
-					},
-					...(!Number.isNaN(+searchTerm) && {
-						where: {
-							id: +searchTerm
-						}
-					})
-				})
-			}),
+			data: await this.prisma.book.findMany(
+				bookCatalogFields({ page, perPage, searchTerm })
+			),
 			canLoadMore: page < Math.floor(count / perPage),
 			totalPages: Math.floor(count / perPage)
 		}
@@ -207,9 +108,8 @@ export class BookService {
 
 	async create(dto: CreateBookDto) {
 		const { genreIds, mainGenreSlug } = await this.getGenres(dto.genres)
-		const { readingTime, uploadedEbook, chaptersCount } = useEbookCalculation(
-			dto.ebook
-		)
+		const { readingTime, uploadedEbook, pagesCount, chaptersCount } =
+			useEbookCalculation(dto.ebook)
 
 		const { isValid, messages } = await checkHtmlValid(
 			uploadedEbook
@@ -238,31 +138,15 @@ export class BookService {
 		if (checkExist)
 			throw serverError(HttpStatus.BAD_REQUEST, adminErrors.bookAlreadyExist)
 		await this.prisma.book.create({
-			data: {
-				slug: slugify(dto.title),
-				activities: {
-					create: {
-						type: Activities.createBook,
-						importance: 9
-					}
-				},
-				chapters: chaptersCount,
-				title: dto.title,
-				picture: dto.picture,
-				rating: dto.rating,
-				readingTime: readingTime,
-				description: dto.description,
-				ebook: ebookName,
-				author: dto.author,
-				genres: {
-					connect: genreIds
-				},
-				mainGenre: {
-					connect: {
-						slug: mainGenreSlug
-					}
-				}
-			}
+			data: bookCreateFields({
+				dto,
+				genreIds,
+				mainGenreSlug,
+				ebookName,
+				readingTime,
+				chaptersCount,
+				pagesCount
+			})
 		})
 	}
 
@@ -297,7 +181,7 @@ export class BookService {
 		let updateData: UpdateBookDtoExtended = { ...rest }
 
 		if (ebook) {
-			const { uploadedEbook, readingTime, chaptersCount } =
+			const { uploadedEbook, readingTime, pagesCount, chaptersCount } =
 				useEbookCalculation(ebook)
 			const { isValid, messages } = await checkHtmlValid(
 				uploadedEbook
@@ -318,6 +202,7 @@ export class BookService {
 				...updateData,
 				ebook: ebookName,
 				readingTime,
+				pagesCount,
 				chapters: chaptersCount
 			}
 		}

@@ -72,6 +72,38 @@ export const themePack: ThemePackType[] = [
 		}
 	},
 	{
+		title: 'One Dark',
+		slug: 'one-dark',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#61afef',
+			secondary: '#e06c75',
+			background: {
+				normal: '#282c34',
+				lighter: '#2c313a',
+				darker: '#1e222a'
+			},
+			textSelection: '#3e4451',
+			text: '#abb2bf'
+		}
+	},
+	{
+		title: 'Gerry Dark',
+		slug: 'gerry-dark',
+		statusBar: statusBar.light,
+		colorPalette: {
+			primary: '#ff6c6b',
+			secondary: '#f9c859',
+			background: {
+				normal: '#1f1f1f',
+				lighter: '#2b2b2b',
+				darker: '#131313'
+			},
+			textSelection: '#4f3f6f',
+			text: '#F4F3F2'
+		}
+	},
+	{
 		title: 'Dark purple',
 		slug: 'dark-purple',
 		statusBar: statusBar.light,
@@ -153,38 +185,7 @@ export const themePack: ThemePackType[] = [
 			text: '#dcd7ba'
 		}
 	},
-	{
-		title: 'Pink owl',
-		slug: 'pink-owl',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#ff699a',
-			secondary: '#e7de79',
-			background: {
-				normal: '#13111b',
-				lighter: '#1b1825',
-				darker: '#0c0a12'
-			},
-			textSelection: '#3d4d5f',
-			text: '#c2c8db'
-		}
-	},
-	{
-		title: 'Kanagawa Black',
-		slug: 'kanagawa-black',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#957fb8',
-			secondary: '#ff4848',
-			background: {
-				normal: '#000000',
-				lighter: '#121212',
-				darker: '#000000'
-			},
-			textSelection: '#223249',
-			text: '#dcd7ba'
-		}
-	},
+
 	{
 		title: 'Nord',
 		slug: 'nord',
@@ -199,23 +200,6 @@ export const themePack: ThemePackType[] = [
 			},
 			textSelection: '#4f3f6f',
 			text: '#d8dee9'
-		}
-	},
-
-	{
-		title: 'Nord Frost',
-		slug: 'nord-frost',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#81a1c1',
-			secondary: '#bf616a',
-			background: {
-				normal: '#eceff4',
-				lighter: '#f7fafc',
-				darker: '#d8dee9'
-			},
-			textSelection: '#4f3f6f',
-			text: '#2e3440'
 		}
 	},
 	{
@@ -284,22 +268,6 @@ export const themePack: ThemePackType[] = [
 	},
 
 	{
-		title: "80's Neon",
-		slug: '80s-neon',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#ffcc66',
-			secondary: '#ff6b72',
-			background: {
-				normal: '#101010',
-				lighter: '#121212',
-				darker: '#0e0e0e'
-			},
-			textSelection: '#44475a',
-			text: '#f8f8f2'
-		}
-	},
-	{
 		title: 'Dark Knight',
 		slug: 'dark-knight',
 		statusBar: statusBar.light,
@@ -313,89 +281,6 @@ export const themePack: ThemePackType[] = [
 			},
 			textSelection: '#44475a',
 			text: '#f8f8f2'
-		}
-	},
-
-	{
-		title: 'Cyberpunk',
-		slug: 'cyberpunk',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#f7768e',
-			secondary: '#bd93f9',
-			background: {
-				normal: '#1b1b2f',
-				lighter: '#1f1f38',
-				darker: '#161625'
-			},
-			textSelection: '#3d4d5f',
-			text: '#f8f8f2'
-		}
-	},
-	{
-		title: "Hacker's Delight",
-		slug: 'hackers-delight',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#50fa7b',
-			secondary: '#ff79c6',
-
-			// dark background
-			background: {
-				normal: '#141414',
-				lighter: '#202020',
-				darker: '#111111'
-			},
-			textSelection: '#44475a',
-			text: '#f8f8f2'
-		}
-	},
-	{
-		title: 'Ayu',
-		slug: 'ayu',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#ffd163',
-			secondary: '#ffa965',
-			background: {
-				normal: '#0b0e14',
-				lighter: '#0e1116',
-				darker: '#080a0f'
-			},
-			textSelection: '#3d4d5f',
-			text: '#f8f8f2'
-		}
-	},
-	{
-		title: 'Bearded Bear',
-		slug: 'bearded-bear',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#87dc76',
-			secondary: '#78e8bb',
-			background: {
-				normal: '#141414',
-				lighter: '#202020',
-				darker: '#0e0e0e'
-			},
-			textSelection: '#44475a',
-			text: '#f8f8f2'
-		}
-	},
-	{
-		title: 'Rainglow',
-		slug: 'rainglow',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#167b96',
-			secondary: '#89dbbc',
-			background: {
-				normal: '#0e1114',
-				lighter: '#12161a',
-				darker: '#060708'
-			},
-			textSelection: '#3d4d5f',
-			text: '#e6eaef'
 		}
 	}
 ]

@@ -5,7 +5,8 @@ export enum ReaderMessageType {
 	Scroll = 'scroll',
 	SelectionLimitFail = 'selection-limit-fail',
 	FinishLoading = 'finish-loading',
-	FinishBook = 'finishBook'
+	FinishBook = 'finishBook',
+	SelectionWithExistingNote = 'selection-with-existing-note'
 }
 export interface WebviewMessageType {
 	type: ReaderMessageType
@@ -24,11 +25,13 @@ export interface ReaderMessageProperties {
 	finishReadingLoading: boolean
 	onFinishBookPress: () => void
 	onContentLoadEnd: () => void
+	setFullTextSelectionMenu: (value: boolean) => void
 }
 
 export const useReaderMessage = ({
 	onFinishBookPress,
 	onContentLoadEnd,
+	setFullTextSelectionMenu,
 	onScroll,
 	finishReadingLoading
 }: ReaderMessageProperties) => {
@@ -55,6 +58,8 @@ export const useReaderMessage = ({
 			if (finishReadingLoading) return
 			onFinishBookPress()
 		}
+		if (type === ReaderMessageType.SelectionWithExistingNote)
+			setFullTextSelectionMenu(false)
 	}
 
 	return {

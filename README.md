@@ -10,6 +10,7 @@
 ## Features 
 - `shadecn` ui library for build dashboard
 -  app updating with  `(react-native-code-push)`
+-  file storaging with `aws s3 (blackblaze)`
 -  debug problems with `sentry` 🐞
 -  global validation and dto with `zod`
 -   swagger generate types for backend with `openapi` 

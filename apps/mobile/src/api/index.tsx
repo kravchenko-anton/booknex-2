@@ -13,6 +13,7 @@ import {
 import Config from 'react-native-config'
 import { instance } from './interceptors'
 
+const mobileInstance: any = instance
 const serverUrl = Config.SERVER_URL
 const baseParameters = {
 	basePath: serverUrl,
@@ -20,27 +21,27 @@ const baseParameters = {
 }
 const auth = new AuthApi(baseParameters, serverUrl, undefined)
 
-const book = new BookApi(baseParameters, serverUrl, instance)
+const book = new BookApi(baseParameters, serverUrl, mobileInstance)
 
-const catalog = new CatalogApi(baseParameters, serverUrl, instance)
+const catalog = new CatalogApi(baseParameters, serverUrl, mobileInstance)
 
-const ebook = new EbookApi(baseParameters, serverUrl, instance)
+const ebook = new EbookApi(baseParameters, serverUrl, mobileInstance)
 
-const genre = new GenreApi(baseParameters, serverUrl, instance)
+const genre = new GenreApi(baseParameters, serverUrl, mobileInstance)
 
-const parser = new ParserApi(baseParameters, serverUrl, instance)
+const parser = new ParserApi(baseParameters, serverUrl, mobileInstance)
 
 const recommendation = new RecommendationApi(
 	baseParameters,
 	serverUrl,
-	instance
+	mobileInstance
 )
 
-const review = new ReviewApi(baseParameters, serverUrl, instance)
+const review = new ReviewApi(baseParameters, serverUrl, mobileInstance)
 
-const storage = new StorageApi(baseParameters, serverUrl, instance)
+const storage = new StorageApi(baseParameters, serverUrl, mobileInstance)
 
-const user = new UserApi(baseParameters, serverUrl, instance)
+const user = new UserApi(baseParameters, serverUrl, mobileInstance)
 
 export default {
 	auth,

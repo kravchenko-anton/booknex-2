@@ -1,3 +1,7 @@
+import {
+	bookTemplateByIdFields,
+	parserCatalogFields
+} from '@/src/parser/parser.fields'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { adminErrors } from 'global/errors'
 import { slugify } from 'global/helpers/slugify'
@@ -18,44 +22,13 @@ export class ParserService {
 	async catalog(searchTerm: string, page: number) {
 		const perPage = 20
 		return {
-			data: await this.prisma.bookTemplate.findMany({
-				take: perPage,
-				select: {
-					title: true,
-					slug: true,
-					rating: true,
-					description: true,
-					author: true,
-					genres: true,
-					picture: true
-				},
-				...(page && {
-					skip: page * perPage
-				}),
-				...(searchTerm && {
-					where: {
-						OR: [
-							{
-								author: {
-									contains: searchTerm,
-									mode: 'insensitive'
-								}
-							},
-							{
-								title: {
-									contains: searchTerm,
-									mode: 'insensitive'
-								}
-							}
-						]
-					},
-					...(!Number.isNaN(+searchTerm) && {
-						where: {
-							id: +searchTerm
-						}
-					})
+			data: await this.prisma.bookTemplate.findMany(
+				parserCatalogFields({
+					page,
+					perPage,
+					searchTerm
 				})
-			}),
+			),
 			canLoadMore:
 				page < Math.floor((await this.prisma.bookTemplate.count()) / perPage),
 			totalPages: Math.floor((await this.prisma.bookTemplate.count()) / perPage)
@@ -76,20 +49,9 @@ export class ParserService {
 		return getEbook(file.buffer)
 	}
 	async bySlug(slug: string) {
-		const book = await this.prisma.bookTemplate.findUnique({
-			where: {
-				slug
-			},
-			select: {
-				title: true,
-				slug: true,
-				rating: true,
-				description: true,
-				author: true,
-				picture: true,
-				genres: true
-			}
-		})
+		const book = await this.prisma.bookTemplate.findUnique(
+			bookTemplateByIdFields(slug)
+		)
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, adminErrors.bookNotFound)
 		return book

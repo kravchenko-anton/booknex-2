@@ -13,14 +13,15 @@ const Reader = () => {
 	const {
 		colorScheme,
 		setReaderHeaderVisible,
-		chaptersListModalReference,
 		defaultProperties,
 		ebook,
 		loaderAnimation,
 		onMessage,
 		readerHeaderVisible,
 		readingProgress,
-		readingSettingsModalReference,
+		fullTextSelectionMenu,
+		modalRefs,
+		openModal,
 		styleTag,
 		viewerReference
 	} = useReader(params.slug, params.initialScrollPosition)
@@ -42,6 +43,7 @@ const Reader = () => {
 				<Loader background={colorScheme.colorPalette.background.normal} />
 			</AnimatedView>
 			<ReaderViewer
+				fullTextSelectionMenu={fullTextSelectionMenu}
 				colorScheme={colorScheme}
 				styleTag={styleTag}
 				defaultProperties={defaultProperties}
@@ -57,17 +59,15 @@ const Reader = () => {
 				colorScheme={colorScheme}
 				readingProgress={readingProgress}
 				visible={readerHeaderVisible}
-				onChapterIconPress={() => chaptersListModalReference.current?.present()}
-				onSelectThemeIconPress={() =>
-					readingSettingsModalReference.current?.present()
-				}
+				onChapterIconPress={() => openModal.chaptersList()}
+				onSelectThemeIconPress={() => openModal.readingSettings()}
 			/>
 
 			<ReaderChapters
 				activeChapter={readingProgress.chapter}
 				colorScheme={colorScheme}
 				chapters={ebook.chapters}
-				sheetRef={chaptersListModalReference}
+				sheetRef={modalRefs.chaptersListModalReference}
 				changeChapter={link => {
 					console.log('link', link)
 					viewerReference.current?.injectJavaScript(
@@ -77,7 +77,7 @@ const Reader = () => {
 				}}
 			/>
 
-			<ReaderCustomization sheetRef={readingSettingsModalReference} />
+			<ReaderCustomization sheetRef={modalRefs.readingSettingsModalReference} />
 		</>
 	)
 }
