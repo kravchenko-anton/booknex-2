@@ -2,6 +2,7 @@ import type { ThemePackType } from '@/screens/reading/reader-customization/theme
 import { composeReaderViewHtml } from '@/screens/reading/scripts/compose-html'
 import { injectStyle } from '@/screens/reading/scripts/styles-injection'
 import { onTextSelection } from '@/screens/reading/scripts/text-select/on-text-selection'
+import { selectTextMenu } from '@/screens/reading/scripts/text-select/text-select-menu'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
 import type { FunctionType } from 'global/types'
@@ -50,13 +51,12 @@ const ReaderViewer = forwardRef(
 					<WebView
 						scrollEnabled
 						javaScriptEnabled
+						mixedContentMode='compatibility'
 						ref={reference}
-						androidLayerType='hardware'
-						decelerationRate={0.8}
 						originWhitelist={['*']}
 						showsVerticalScrollIndicator={false}
 						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
-						menuItems={[]}
+						menuItems={selectTextMenu}
 						renderLoading={() => (
 							<View
 								className='h-screen w-screen'

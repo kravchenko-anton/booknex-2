@@ -20,6 +20,7 @@ export * from './full-book';
 export * from './full-book-count';
 export * from './full-book-review-inner';
 export * from './full-book-review-inner-user';
+export * from './full-book-statistics-inner';
 export * from './google-auth-dto';
 export * from './info-by-slug';
 export * from './parser-dto';

@@ -38,6 +38,7 @@ export const FullBookSchema = BookSchema.merge(
 				z.object({
 					endDate: z.date(),
 					progressDelta: z.number(),
+					pagesRead: z.number(),
 					readingTimeMs: z.number()
 				})
 			),

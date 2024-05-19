@@ -127,12 +127,17 @@ const Page = () => {
 								dataKey='readingTimeMin'
 								stroke='#8884d8'
 							/>
-
+							<Line
+								dot={false}
+								type='monotone'
+								dataKey='pagesRead'
+								stroke='#82ca9d'
+							/>
 							<Line
 								dot={false}
 								type='monotone'
 								dataKey='progressDelta'
-								stroke='#82ca9d'
+								stroke='#ff7300'
 							/>
 						</LineChart>
 					</ResponsiveContainer>

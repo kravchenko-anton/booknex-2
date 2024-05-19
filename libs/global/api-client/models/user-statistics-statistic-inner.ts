@@ -17,32 +17,32 @@
 /**
  * 
  * @export
- * @interface FullBookStatisticsInner
+ * @interface UserStatisticsStatisticInner
  */
-export interface FullBookStatisticsInner {
+export interface UserStatisticsStatisticInner {
     /**
      * 
      * @type {string}
-     * @memberof FullBookStatisticsInner
+     * @memberof UserStatisticsStatisticInner
      */
-    'endDate': string;
+    'date': string;
     /**
      * 
      * @type {number}
-     * @memberof FullBookStatisticsInner
+     * @memberof UserStatisticsStatisticInner
      */
     'progressDelta': number;
     /**
      * 
      * @type {number}
-     * @memberof FullBookStatisticsInner
+     * @memberof UserStatisticsStatisticInner
      */
-    'pagesRead': number;
+    'readingTimeMs': number;
     /**
      * 
      * @type {number}
-     * @memberof FullBookStatisticsInner
+     * @memberof UserStatisticsStatisticInner
      */
-    'readingTimeMs': number;
+    'pageRead': number;
 }
 

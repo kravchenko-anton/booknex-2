@@ -78,7 +78,6 @@ export const UserStatisticsSchema = z.object({
 			dayProgress: z.number()
 		})
 	),
-	daySteakProgressPercentage: z.number(),
 	pepTalk: z.string(),
 	goalMinutes: z.number(),
 	userSteak: z.number()

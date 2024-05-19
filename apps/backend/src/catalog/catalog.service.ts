@@ -1,5 +1,6 @@
 import { ActivityService } from '@/src/activity/activity.service'
 import type { ShortBook } from '@/src/book/book.dto'
+import { catalogSearchFields } from '@/src/catalog/catalog.fields'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
@@ -18,23 +19,7 @@ export class CatalogService {
 
 	search(query: string) {
 		return this.prisma.book.findMany({
-			where: {
-				isPublic: true,
-				OR: [
-					{
-						title: {
-							mode: 'insensitive',
-							contains: query
-						}
-					},
-					{
-						author: {
-							contains: query,
-							mode: 'insensitive'
-						}
-					}
-				]
-			}
+			where: catalogSearchFields(query)
 		})
 	}
 

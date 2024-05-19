@@ -947,8 +947,6 @@ components:
               - isCurrentDay
               - readingTimeMs
               - dayProgress
-        daySteakProgressPercentage:
-          type: number
         pepTalk:
           type: string
         goalMinutes:
@@ -957,7 +955,6 @@ components:
           type: number
       required:
         - progressByCurrentWeek
-        - daySteakProgressPercentage
         - pepTalk
         - goalMinutes
         - userSteak
@@ -1393,12 +1390,16 @@ components:
               progressDelta:
                 type: number
                 required: true
+              pagesRead:
+                type: number
+                required: true
               readingTimeMs:
                 type: number
                 required: true
             required:
               - endDate
               - progressDelta
+              - pagesRead
               - readingTimeMs
         review:
           type: array

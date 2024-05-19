@@ -1,18 +1,23 @@
 import { ActivityService } from '@/src/activity/activity.service'
 import type { ReadingHistory } from '@/src/user/user.dto'
-import { isThisWeek, pepTalks } from '@/src/user/user.utils'
+import {
+	userCatalogFields,
+	userFinishReadingBookFields,
+	userLibraryFields,
+	userStartReadingBookFields,
+	userToggleSaveFields
+} from '@/src/user/user.fields'
+import { days, isThisWeek, pepTalks } from '@/src/user/user.utils'
+import { statisticReduce } from '@/src/utils/services/statisticReduce.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
-import { timeAgo } from 'global/helpers/time-format'
 import { getTimeDate } from 'global/utils'
-import { returnBookObject } from '../book/return.book.object'
-import { ReturnGenreObject } from '../genre/return.genre.object'
+import { fromMinutesToMs, fromMsToMinutes } from 'global/utils/numberConvertor'
 import { slugSelect } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import { returnUserObject } from './return.user.object'
-import { days } from './user.utils'
 
 @Injectable()
 export class UserService {
@@ -84,7 +89,6 @@ export class UserService {
 				startDate: true
 			}
 		})
-		//TODO: оптимизировать код
 		const currentDate = new Date()
 
 		const userSteak = userHistory.reduce((streak, history, index) => {
@@ -92,23 +96,10 @@ export class UserService {
 			return historyDate.getDate() === currentDate.getDate() - index &&
 				historyDate.getMonth() === currentDate.getMonth() &&
 				historyDate.getFullYear() === currentDate.getFullYear() &&
-				history.readingTimeMs / 60_000 >= user.goalMinutes
+				fromMsToMinutes(history.readingTimeMs) >= user.goalMinutes
 				? streak + 1
 				: streak
 		}, 0)
-
-		const daySteakProgressPercentage =
-			userHistory
-				.filter(history => {
-					const historyDate = getTimeDate(history.endDate)
-					return (
-						historyDate.getDate() === currentDate.getDate() &&
-						historyDate.getMonth() === currentDate.getMonth() &&
-						historyDate.getFullYear() === currentDate.getFullYear()
-					)
-				})
-				.reduce((progress, history) => progress + history.readingTimeMs, 0) /
-			60_000
 
 		const progressByCurrentWeek = Array.from({ length: 7 }, (_, index) => index)
 			.map((_, index) => {
@@ -130,93 +121,49 @@ export class UserService {
 					(progress, history) => progress + history.readingTimeMs,
 					0
 				)
-				const dayProgress = dayReadingTime / (user.goalMinutes * 60_000)
+				const dayProgress =
+					(dayReadingTime / fromMinutesToMs(user.goalMinutes)) * 100
 				return {
-					// return from day current day like first array return monday, second tuesday etc
 					day: day.toLocaleDateString('en-US', {
 						weekday: 'long'
 					}),
 					isCurrentDay: getTimeDate(day).getDate() === currentDate.getDate(),
-					isReadMoreThatGoal: dayReadingTime >= user.goalMinutes * 60_000,
+					isReadMoreThatGoal:
+						dayReadingTime >= fromMinutesToMs(user.goalMinutes),
 					readingTimeMs: dayReadingTime,
-					dayProgress: dayProgress
+					dayProgress: Math.min(dayProgress, 100)
 				}
 			})
-			//sort like from monday to sunday
-
 			.sort((a, b) => days.indexOf(a.day) - days.indexOf(b.day))
 
 		return {
 			userSteak,
 			progressByCurrentWeek,
-			daySteakProgressPercentage,
 			goalMinutes: user.goalMinutes,
 			pepTalk:
 				pepTalks.find(pepTalk => userSteak < pepTalk.lessThan)?.text ??
 				'Good result, keep it up!'
 		}
 	}
+
 	async library(userId: number) {
-		const library = await this.prisma.user.findUnique({
-			where: { id: userId },
-			select: {
-				readingBooks: {
-					select: {
-						...returnBookObject,
-						readingHistory: {
-							select: {
-								id: true,
-								scrollPosition: true,
-								endProgress: true,
-								endDate: true
-							},
-							orderBy: {
-								endDate: 'desc'
-							},
-							take: 1
-						}
-					},
-					where: {
-						isPublic: true
-					}
-				},
-				finishedBooks: {
-					select: returnBookObject,
-					where: {
-						isPublic: true
-					}
-				},
-				savedBooks: {
-					select: returnBookObject,
-					where: {
-						isPublic: true
-					}
-				}
-			}
-		})
+		const library = await this.prisma.user.findUnique(userLibraryFields(userId))
 		if (!library)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		const { readingBooks, finishedBooks, savedBooks } = library
 		return {
 			readingBooks: readingBooks
 				.map(book => {
-					console.log(
-						book.readingHistory,
-						'book.readingHistory',
-						book.slug,
-						timeAgo(getTimeDate(book.readingHistory[0]?.endDate))
-					)
+					const latestHistory = book.readingHistory[0] ?? null
 					return {
 						...book,
-						readingHistory:
-							{
-								scrollPosition: book.readingHistory[0]?.scrollPosition ?? 0,
-								endDate: book.readingHistory[0]?.endDate,
-								progress: book.readingHistory[0]?.endProgress ?? 0
-							} ?? null
+						readingHistory: {
+							scrollPosition: latestHistory?.scrollPosition ?? 0,
+							endDate: latestHistory?.endDate,
+							progress: latestHistory?.endProgress ?? 0
+						}
 					}
 				})
-
 				.sort(
 					(a, b) =>
 						(b.readingHistory?.endDate?.getTime() ?? 0) -
@@ -229,83 +176,20 @@ export class UserService {
 
 	async catalog(searchTerm: string, page: number) {
 		const perPage = 20
-		const data = await this.prisma.user.findMany({
-			take: perPage,
-			select: {
-				...returnUserObject,
-				picture: true,
-				socialId: true,
-				role: true,
-				createdAt: true,
-				fullName: true,
-				location: true,
-				selectedGenres: {
-					select: ReturnGenreObject
-				},
-				readingHistory: {
-					orderBy: {
-						endDate: 'asc'
-					},
-					select: {
-						endDate: true,
-						progressDelta: true,
-						readingTimeMs: true,
-						scrollPosition: true,
-						startDate: true
-					}
-				},
-				_count: {
-					select: {
-						savedBooks: true,
-						review: true,
-						finishedBooks: true,
-						readingBooks: true
-					}
-				}
-			},
-
-			...(page && {
-				skip: page * perPage
-			}),
-			...(searchTerm && {
-				where: {
-					fullName: {
-						contains: searchTerm
-					}
-				},
-				...(!Number.isNaN(+searchTerm) && {
-					where: {
-						id: +searchTerm
-					}
-				})
-			})
-		})
+		const data = await this.prisma.user.findMany(
+			userCatalogFields({ page, perPage, searchTerm })
+		)
 		const userCount = await this.prisma.user.count()
 		return {
 			data: data.map(({ readingHistory, ...user }) => ({
 				...user,
-				statistics: readingHistory.reduce<
-					{
-						startDate: Date
-						endDate: Date
-						readingTimeMs: number
-						progressDelta: number
-					}[]
-				>((accumulator, current) => {
-					const exist = accumulator.find(
-						({ endDate }) => endDate === current.endDate
-					)
-					if (exist) {
-						exist.readingTimeMs += current.readingTimeMs
-						exist.progressDelta = Math.max(
-							exist.progressDelta,
-							current.progressDelta
-						)
-					} else {
-						accumulator.push(current)
-					}
-					return accumulator
-				}, [])
+				statistics: statisticReduce({
+					statistics: readingHistory.map(({ book, ...history }) => ({
+						...history,
+						pagesCount: book.pagesCount
+					})),
+					initialDate: user.createdAt
+				})
 			})),
 			canLoadMore: page < Math.floor(userCount / perPage),
 			totalPages: Math.floor(userCount / perPage)
@@ -337,23 +221,7 @@ export class UserService {
 		})
 		await this.prisma.user.update({
 			where: { id: user.id },
-			data: {
-				readingBooks: {
-					connect: {
-						slug
-					}
-				},
-				savedBooks: {
-					disconnect: {
-						slug
-					}
-				},
-				finishedBooks: {
-					disconnect: {
-						slug
-					}
-				}
-			}
+			data: userStartReadingBookFields(slug)
 		})
 	}
 
@@ -374,38 +242,8 @@ export class UserService {
 
 		await this.prisma.user.update({
 			where: { id: user.id },
-			data: {
-				readingBooks: {
-					disconnect: {
-						slug
-					}
-				},
-				savedBooks: {
-					disconnect: {
-						slug
-					}
-				},
-				finishedBooks: {
-					connect: {
-						slug
-					}
-				}
-			}
+			data: userFinishReadingBookFields(slug)
 		})
-	}
-
-	async isSaved(userId: number, slug: string) {
-		await this.checkBookExist(slug)
-		const user = await this.prisma.user.findUnique({
-			where: { id: userId },
-			select: {
-				id: true,
-				savedBooks: slugSelect
-			}
-		})
-		if (!user)
-			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		return user.savedBooks.some(book => book.slug === slug)
 	}
 
 	async toggleSave(userId: number, slug: string) {
@@ -429,25 +267,10 @@ export class UserService {
 		})
 		await this.prisma.user.update({
 			where: { id: user.id },
-			data: {
-				savedBooks: {
-					[isSavedExist ? 'disconnect' : 'connect']: {
-						slug
-					}
-				},
-				...(!isSavedExist && {
-					readingBooks: {
-						disconnect: {
-							slug
-						}
-					},
-					finishedBooks: {
-						disconnect: {
-							slug
-						}
-					}
-				})
-			}
+			data: userToggleSaveFields({
+				slug,
+				isSavedExist
+			})
 		})
 
 		return !isSavedExist
@@ -464,5 +287,19 @@ export class UserService {
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		return !!book
+	}
+
+	public async isSaved(userId: number, slug: string) {
+		await this.checkBookExist(slug)
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: {
+				id: true,
+				savedBooks: slugSelect
+			}
+		})
+		if (!user)
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+		return user.savedBooks.some(book => book.slug === slug)
 	}
 }

@@ -27,6 +27,7 @@ export const infoBySlugAdminFields = (slug: string) =>
 		createdAt: true,
 		updatedAt: true,
 		rating: true,
+		pagesCount: true,
 		readingTime: true,
 		genres: {
 			select: {

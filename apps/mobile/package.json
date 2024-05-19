@@ -12,9 +12,9 @@
 	},
 	"dependencies": {
 		"@gorhom/bottom-sheet": "*",
+		"react-native-gifted-charts": "*",
 		"@hookform/resolvers": "*",
 		"@react-native-community/cli": "*",
-		"@react-native-community/cli-platform-android": "^13.6.6",
 		"@react-native-community/netinfo": "*",
 		"@react-native-google-signin/google-signin": "*",
 		"@react-navigation/native": "*",
@@ -43,8 +43,6 @@
 		"react-native-svg": "*",
 		"react-native-toast-message": "*",
 		"react-native-webview": "*",
-		"react-redux": "*",
-		"redux-persist": "*",
 		"tailwind-merge": "*",
 		"zod": "*"
 	},

@@ -17,6 +17,7 @@ import {
 	infoBySlugAdminFields
 } from '@/src/book/book.fields'
 import { returnBookObject } from '@/src/book/return.book.object'
+import { statisticReduce } from '@/src/utils/services/statisticReduce.service'
 import { useEbookCalculation } from './helpers/get-ebook'
 
 @Injectable()
@@ -69,28 +70,14 @@ export class BookService {
 
 		return {
 			...rest,
-			statistics: readingHistory.reduce<
-				{
-					startDate: Date
-					endDate: Date
-					readingTimeMs: number
-					progressDelta: number
-				}[]
-			>((accumulator, current) => {
-				const exist = accumulator.find(
-					({ startDate }) => startDate === current.startDate
-				)
-				if (exist) {
-					exist.readingTimeMs += current.readingTimeMs
-					exist.progressDelta = Math.max(
-						exist.progressDelta,
-						current.progressDelta
-					)
-				} else {
-					accumulator.push(current)
-				}
-				return accumulator
-			}, [])
+			statistics: statisticReduce({
+				statistics: readingHistory.map(statistics => ({
+					...statistics,
+					pagesCount: book.pagesCount
+				})),
+				initialDate: book.createdAt,
+				nowDate: true
+			})
 		}
 	}
 
