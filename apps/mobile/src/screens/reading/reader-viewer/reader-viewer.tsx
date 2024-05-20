@@ -20,7 +20,6 @@ export interface ReaderViewerProperties {
 		scrollPosition: number
 		theme: string
 	}
-	fullTextSelectionMenu: boolean
 	styleTag: string
 	colorScheme: ThemePackType
 	onMessage: (event: WebViewMessageEvent) => Promise<void>
@@ -35,7 +34,6 @@ const ReaderViewer = forwardRef(
 			colorScheme,
 			title,
 			onMessage,
-			fullTextSelectionMenu,
 			picture,
 			file
 		} = properties
@@ -43,7 +41,6 @@ const ReaderViewer = forwardRef(
 		useEffect(() => {
 			reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 		}, [styleTag])
-		console.log(fullTextSelectionMenu, 'fullTextSelectionMenu')
 		if (!defaultProperties) return <View className='flex-1' />
 		return (
 			<View className='m-0 h-screen w-screen flex-1 items-center justify-center p-0'>
@@ -82,7 +79,6 @@ const ReaderViewer = forwardRef(
 						}}
 						onMessage={onMessage}
 						onCustomMenuSelection={async (event: any) => {
-							// get selected text with html tags
 							await onTextSelection(
 								event,
 								reference,

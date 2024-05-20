@@ -26,7 +26,6 @@ import { BookService } from './book.service'
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
 
-	@Auth()
 	@Get('/info/by-slug/:slug')
 	@ApiOkResponse({ type: InfoBySlug })
 	async infoBySlug(

@@ -38,13 +38,6 @@ export const composeReaderViewHtml = ({
 			</div>
 
 			${finishBookButton}
-			  <p id="text-selection-menu" class="text-selection-menu" 
-        >
-          <button 
-          >
-            <span id="share" >Share</span>
-            <Twitter className="w-5 h-5" />
-          </button>
-        </p>
+		
 			${injectStartScripts(defaultProperties.scrollPosition)}
 	`

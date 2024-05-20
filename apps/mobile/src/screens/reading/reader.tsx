@@ -17,15 +17,15 @@ const Reader = () => {
 		ebook,
 		loaderAnimation,
 		onMessage,
+		ebookRequestLoading,
 		readerHeaderVisible,
 		readingProgress,
-		fullTextSelectionMenu,
 		modalRefs,
 		openModal,
 		styleTag,
 		viewerReference
 	} = useReader(params.slug, params.initialScrollPosition)
-	if (!ebook)
+	if (!ebook || ebookRequestLoading)
 		return <Loader background={colorScheme.colorPalette.background.normal} />
 	console.log('ebook')
 	return (
@@ -43,7 +43,6 @@ const Reader = () => {
 				<Loader background={colorScheme.colorPalette.background.normal} />
 			</AnimatedView>
 			<ReaderViewer
-				fullTextSelectionMenu={fullTextSelectionMenu}
 				colorScheme={colorScheme}
 				styleTag={styleTag}
 				defaultProperties={defaultProperties}

@@ -1,20 +1,32 @@
 import { GoalSelectModal } from '@/screens/profile/goal-select'
-import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
+import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { Button, Loader, ScrollLayout, Title } from '@/ui'
 import { CircularProgressBar } from '@/ui/progress-bar/circular-progress-bar'
 import { cn } from '@/utils'
 import type { BottomSheetModal } from '@gorhom/bottom-sheet'
+import type { UserStatistics } from 'global/api-client'
 import { Color } from 'global/colors'
 import { fromMsToMinutes } from 'global/utils/numberConvertor'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { View } from 'react-native'
 
 const Profile = () => {
 	const sheetReference = useRef<BottomSheetModal>(null)
-	const { statistics, refetch } = useStatisticsWithSync()
-	if (!statistics) return <Loader />
+	const [statistic, setStatistic] = useState<UserStatistics | null>(null)
+	const { getStatistic, history, refetchStatistic } = useReadingProgressStore(
+		state => ({
+			getStatistic: state.getStatistic,
+			history: state.history,
+			refetchStatistic: state.refetchStatistic
+		})
+	)
+	useEffect(() => {
+		const parsingStatistic = getStatistic()
+		if (parsingStatistic) setStatistic(parsingStatistic)
+	}, [getStatistic, statistic, setStatistic])
+	if (!statistic) return <Loader />
 	console.log(
-		statistics.progressByCurrentWeek?.find(item => item.isCurrentDay)
+		statistic.progressByCurrentWeek?.find(item => item.isCurrentDay)
 			?.dayProgress || 0,
 		'daySteakProgressPercentage'
 	)
@@ -22,8 +34,8 @@ const Profile = () => {
 		<ScrollLayout className='px-2'>
 			<GoalSelectModal
 				sheetRef={sheetReference}
-				refetch={refetch}
-				currentGoal={statistics.goalMinutes || 10}
+				currentGoal={statistic.goalMinutes || 10}
+				refetch={refetchStatistic}
 			/>
 			<View className='bg-foreground border-bordered mt-4 rounded-lg border-[1px] p-2'>
 				<View className='mx-2 mb-6'>
@@ -36,7 +48,7 @@ const Profile = () => {
 						weight='bold'
 						color={Color.gray}
 						size='sm'>
-						Read at least {statistics.goalMinutes || 10} minutes a day to keep
+						Read at least {statistic.goalMinutes || 10} minutes a day to keep
 						your progress
 					</Title>
 				</View>
@@ -52,7 +64,7 @@ const Profile = () => {
 						arcSweepAngle={240}
 						rotation={240}
 						fill={
-							statistics.progressByCurrentWeek?.find(item => item.isCurrentDay)
+							statistic.progressByCurrentWeek?.find(item => item.isCurrentDay)
 								?.dayProgress || 0
 						}>
 						{() => (
@@ -64,13 +76,13 @@ const Profile = () => {
 									size='xxxl'
 									className='mb-0.5'>
 									{fromMsToMinutes(
-										statistics.progressByCurrentWeek?.find(
+										statistic.progressByCurrentWeek?.find(
 											item => item.isCurrentDay
 										)?.readingTimeMs || 0
 									).toFixed(2)}
 								</Title>
 								<Title center weight='bold' color={Color.gray} size='sm'>
-									of {statistics.goalMinutes || 10} minutes goal
+									of {statistic.goalMinutes || 10} minutes goal
 								</Title>
 							</View>
 						)}
@@ -78,48 +90,69 @@ const Profile = () => {
 				</View>
 
 				<View className='flex-row items-center justify-between gap-2'>
-					{statistics.progressByCurrentWeek?.map(item => (
-						<View key={item.day}>
-							{item.isCurrentDay ? (
-								<CircularProgressBar
-									size={32}
-									fill={item.dayProgress}
-									width={2}
-									fillLineCap='round'
-									backgroundWidth={2}
-									lineCap='round'
-									rotation={-90}
-									tintColor={item.isCurrentDay ? Color.white : Color.gray}
-									backgroundColor={Color.bordered}>
-									{() => (
+					{statistic.progressByCurrentWeek?.map(item => {
+						const isDayCompleted = item.dayProgress === 100
+						return (
+							<View key={item.day}>
+								{item.isCurrentDay ? (
+									<View className='border-b-2 border-white pb-2 pt-2'>
+										<CircularProgressBar
+											size={32}
+											fill={item.dayProgress}
+											width={2}
+											fillLineCap='round'
+											backgroundWidth={2}
+											lineCap='round'
+											rotation={-90}
+											tintColor={isDayCompleted ? Color.success : Color.white}
+											backgroundColor={
+												isDayCompleted ? Color.transparent : Color.bordered
+											}
+											style={{
+												borderRadius: 1000,
+												backgroundColor: isDayCompleted
+													? Color.success
+													: Color.transparent
+											}}>
+											{() => (
+												<Title
+													weight='bold'
+													color='white'
+													size='sm'
+													className='mb-0.5'>
+													{item.day.slice(0, 1)}
+												</Title>
+											)}
+										</CircularProgressBar>
+									</View>
+								) : (
+									<View
+										className={cn(
+											` h-[32px] w-[32px] flex-row items-center  justify-center rounded-full`,
+											isDayCompleted ? 'bg-success' : 'bg-bordered'
+										)}>
 										<Title
+											className='mb-0.5'
 											weight='bold'
-											color='white'
-											size='sm'
-											className='mb-0.5'>
+											color={Color.white}
+											size='sm'>
 											{item.day.slice(0, 1)}
 										</Title>
-									)}
-								</CircularProgressBar>
-							) : (
-								<View
-									className={cn(
-										` h-[32px] w-[32px] flex-row items-center  justify-center rounded-full`,
-										item.dayProgress === 100 ? 'bg-success' : 'bg-bordered'
-									)}>
-									<Title
-										className='mb-0.5'
-										weight='bold'
-										color={Color.white}
-										size='sm'>
-										{item.day.slice(0, 1)}
-									</Title>
-								</View>
-							)}
-						</View>
-					))}
+									</View>
+								)}
+							</View>
+						)
+					})}
 				</View>
 
+				<Title
+					weight='bold'
+					color={Color.gray}
+					numberOfLines={2}
+					size='sm'
+					className='mx-auto mt-2'>
+					your steak: {statistic.userSteak} days
+				</Title>
 				<View className='mb-4 pt-4'>
 					<Title
 						weight='bold'
@@ -127,7 +160,7 @@ const Profile = () => {
 						numberOfLines={2}
 						size='sm'
 						className='border-l-bordered border-l-2 pl-2 '>
-						bob: “ {statistics.pepTalk} ”
+						bob: “ {statistic.pepTalk} ”
 					</Title>
 				</View>
 
@@ -141,6 +174,9 @@ const Profile = () => {
 					</Button>
 				</View>
 			</View>
+			<Title numberOfLines={100_000} className='mb-4'>
+				{JSON.stringify(history)}
+			</Title>
 		</ScrollLayout>
 	)
 }

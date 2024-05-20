@@ -13,7 +13,7 @@ export const injectStartScripts = (startPosition: number) => `
 						${calculateProgress}
 						${onSelectTextScript}
 						${scrollCalculateProgress}
-						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading'}))
+						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading' }))
 }
 </script>
 					`

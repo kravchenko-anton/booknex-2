@@ -1,13 +1,28 @@
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
-import { useLibraryWithSync } from '@/screens/library/useLibraryWithSync'
-import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
+import {
+	useReadingProgressStore,
+	type libraryType
+} from '@/screens/reading/store/progress-store'
+import { BookCard, Flatlist, Loader, ScrollLayout, Title } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
+import { useEffect, useState } from 'react'
 
-//TODO: сделать сихнронную историю
 const Library = () => {
 	const { navigate } = useTypedNavigation()
-	const { library } = useLibraryWithSync()
+	const [library, setLibrary] = useState<libraryType>(null)
+	const { getLibrary, library: storeLibrary } = useReadingProgressStore(
+		state => ({
+			getLibrary: state.getLibrary,
+			library: state.library
+		})
+	)
+
+	useEffect(() => {
+		const parsingLibrary = getLibrary()
+		if (parsingLibrary) setLibrary(parsingLibrary)
+	}, [library, getLibrary, storeLibrary, setLibrary])
+
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&
@@ -53,6 +68,9 @@ const Library = () => {
 					/>
 				)}
 			/>
+			<Title numberOfLines={100_000} className='mb-4'>
+				{JSON.stringify(library.readingBooks)}
+			</Title>
 		</ScrollLayout>
 	)
 }

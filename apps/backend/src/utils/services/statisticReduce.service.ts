@@ -33,11 +33,7 @@ export const statisticReduce = ({
 		...(nowDate ? [emptyStatistic()] : [])
 	].reduce<StatisticReduceOutputType>((accumulator, current) => {
 		const exist = accumulator.find(
-			exist =>
-				Math.abs(
-					new Date(exist.startDate).getDay() -
-						new Date(current.startDate).getDay()
-				) < 7
+			({ startDate }) => startDate === current.startDate
 		)
 		if (exist) {
 			exist.readingTimeMs += current.readingTimeMs

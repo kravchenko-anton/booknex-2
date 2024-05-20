@@ -12,7 +12,6 @@
 	},
 	"dependencies": {
 		"@gorhom/bottom-sheet": "*",
-		"react-native-gifted-charts": "*",
 		"@hookform/resolvers": "*",
 		"@react-native-community/cli": "*",
 		"@react-native-community/netinfo": "*",

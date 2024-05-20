@@ -131,14 +131,4 @@ export const getStyleTag = ({
 	.finish-book-button-container {
 		background: ${colorPalette.background.darker} !important;
 	}
-	
-.text-selection-menu {
-  position: absolute;
-  top: -2rem;
-  padding: 0.5rem;
-  width: 150px;
-  height: 25px;
-  border-radius: 5px;
-  background-color: ${colorPalette.background.darker} !important;
-}
 	`

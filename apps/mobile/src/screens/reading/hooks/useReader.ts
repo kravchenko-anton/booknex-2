@@ -14,21 +14,17 @@ import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
 export const useReader = (slug: string, initialScrollPosition: number) => {
-	const { data: ebook, isLoading } = useQuery({
+	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data,
 		enabled: !!slug,
 		networkMode: 'offlineFirst',
-		gcTime: Number.POSITIVE_INFINITY,
-		staleTime: 1000 * 60 * 60 * 24
+		gcTime: 1000 * 60 * 60 * 24 * 365,
+		staleTime: 1000 * 60 * 60 * 24 * 365
 	})
-	const {
-		loaderAnimation,
-		setReaderLoading,
-		readerLoading = isLoading
-	} = useReaderLoading()
-	const [fullTextSelectionMenu, setFullTextSelectionMenu] = useState(true)
+	const { loaderAnimation, setReaderLoading, readerLoading } =
+		useReaderLoading()
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(
 		state => state
 	)
@@ -63,8 +59,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		finishReadingLoading,
 		onFinishBookPress: onFinish,
 		onContentLoadEnd: () => setReaderLoading(false),
-		onScroll: updateReadingProgress,
-		setFullTextSelectionMenu
+		onScroll: updateReadingProgress
 	})
 
 	const { defaultProperties, styleTag } = useStyleTag(
@@ -81,9 +76,9 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		viewerReference,
 		setReaderHeaderVisible,
 		modalRefs,
+		ebookRequestLoading,
 		readingProgress,
 		openModal,
-		fullTextSelectionMenu,
 		onMessage,
 		defaultProperties,
 		styleTag

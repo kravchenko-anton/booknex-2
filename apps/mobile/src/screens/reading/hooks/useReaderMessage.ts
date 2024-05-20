@@ -25,13 +25,11 @@ export interface ReaderMessageProperties {
 	finishReadingLoading: boolean
 	onFinishBookPress: () => void
 	onContentLoadEnd: () => void
-	setFullTextSelectionMenu: (value: boolean) => void
 }
 
 export const useReaderMessage = ({
 	onFinishBookPress,
 	onContentLoadEnd,
-	setFullTextSelectionMenu,
 	onScroll,
 	finishReadingLoading
 }: ReaderMessageProperties) => {
@@ -58,8 +56,6 @@ export const useReaderMessage = ({
 			if (finishReadingLoading) return
 			onFinishBookPress()
 		}
-		if (type === ReaderMessageType.SelectionWithExistingNote)
-			setFullTextSelectionMenu(false)
 	}
 
 	return {
