@@ -13,6 +13,24 @@ import { QueryKeys } from 'global/utils/query-keys'
 import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
+export type QuoteAndNoteType = {
+	type: 'quote' | 'note'
+	text: string
+	range: {
+		startOffset: number
+		endOffset: number
+	}
+}
+
+export type SelectionType = {
+	text: string
+	range: {
+		startOffset: number
+		endOffset: number
+	}
+	isOverlappingMark: boolean
+}
+
 export const useReader = (slug: string, initialScrollPosition: number) => {
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
@@ -23,6 +41,20 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		gcTime: 1000 * 60 * 60 * 24 * 365,
 		staleTime: 1000 * 60 * 60 * 24 * 365
 	})
+
+	const [ebookQuotesAndNotes, setEbookQuotesAndNotes] = useState<
+		QuoteAndNoteType[]
+	>([])
+
+	const [activeSelectedContent, setActiveSelectedContent] =
+		useState<SelectionType>({
+			text: '',
+			range: {
+				startOffset: 0,
+				endOffset: 0
+			},
+			isOverlappingMark: false
+		})
 	const { loaderAnimation, setReaderLoading, readerLoading } =
 		useReaderLoading()
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(
@@ -59,16 +91,19 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		finishReadingLoading,
 		onFinishBookPress: onFinish,
 		onContentLoadEnd: () => setReaderLoading(false),
-		onScroll: updateReadingProgress
+		onScroll: updateReadingProgress,
+		setActiveSelectedContent
 	})
 
 	const { defaultProperties, styleTag } = useStyleTag(
 		{ colorScheme, ...restUiProperties },
-		scrollPosition
+		scrollPosition,
+		ebookQuotesAndNotes
 	)
 
 	return {
 		ebook,
+		activeSelectedContent,
 		readerLoading,
 		loaderAnimation,
 		readerHeaderVisible,
@@ -78,6 +113,8 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		modalRefs,
 		ebookRequestLoading,
 		readingProgress,
+		ebookQuotesAndNotes,
+		setEbookQuotesAndNotes,
 		openModal,
 		onMessage,
 		defaultProperties,

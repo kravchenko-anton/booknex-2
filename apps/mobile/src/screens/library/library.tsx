@@ -21,7 +21,7 @@ const Library = () => {
 	useEffect(() => {
 		const parsingLibrary = getLibrary()
 		if (parsingLibrary) setLibrary(parsingLibrary)
-	}, [library, getLibrary, storeLibrary, setLibrary])
+	}, [getLibrary, storeLibrary, setLibrary])
 
 	if (!library) return <Loader />
 	if (

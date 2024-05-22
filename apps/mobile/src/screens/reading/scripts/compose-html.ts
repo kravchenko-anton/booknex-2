@@ -1,3 +1,4 @@
+import type { QuoteAndNoteType } from '@/screens/reading/hooks/useReader'
 import { finishBookButton } from '@/screens/reading/scripts/finish-book-html'
 import { injectFont } from '@/screens/reading/scripts/font-injection'
 import { injectStartScripts } from '@/screens/reading/scripts/injectStartScripts'
@@ -10,6 +11,7 @@ interface ComposeReaderViewHtmlProperties {
 	defaultProperties: {
 		scrollPosition: number
 		theme: string
+		ebookQuotesAndNotes: QuoteAndNoteType[]
 	}
 }
 export const composeReaderViewHtml = ({
@@ -39,5 +41,5 @@ export const composeReaderViewHtml = ({
 
 			${finishBookButton}
 		
-			${injectStartScripts(defaultProperties.scrollPosition)}
+			${injectStartScripts(defaultProperties.scrollPosition, defaultProperties.ebookQuotesAndNotes)}
 	`

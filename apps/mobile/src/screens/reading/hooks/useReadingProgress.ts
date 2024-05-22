@@ -90,7 +90,12 @@ export const useReadingProgress = ({
 		})
 	}
 
-	const updateReadingProgress = (payload: WebviewMessageType['payload']) => {
+	const updateReadingProgress = (
+		payload: Omit<
+			WebviewMessageType['payload'],
+			'text' | 'isOverlappingMark' | 'range'
+		>
+	) => {
 		if (!startReadingProgress) {
 			setStartReadingProgress(payload.progress)
 		}

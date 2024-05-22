@@ -18,7 +18,7 @@ export const compareReadingBooks = (
 ) => {
 	{
 		const latestHistory = historyByLatestSorting(history)
-
+		console.log(latestHistory)
 		return readingList
 			.sort((a, b) => {
 				if (

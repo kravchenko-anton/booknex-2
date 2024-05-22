@@ -1,3 +1,4 @@
+import type { SelectionType } from '@/screens/reading/hooks/useReader'
 import { errorToast } from '@/utils/toast'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
@@ -6,11 +7,11 @@ export enum ReaderMessageType {
 	SelectionLimitFail = 'selection-limit-fail',
 	FinishLoading = 'finish-loading',
 	FinishBook = 'finishBook',
-	SelectionWithExistingNote = 'selection-with-existing-note'
+	selectText = 'selectText'
 }
 export interface WebviewMessageType {
 	type: ReaderMessageType
-	payload: {
+	payload: SelectionType & {
 		scrollTop: number
 		progress: number
 		chapter: {
@@ -21,15 +22,22 @@ export interface WebviewMessageType {
 }
 
 export interface ReaderMessageProperties {
-	onScroll: (payload: WebviewMessageType['payload']) => void
+	onScroll: (
+		payload: Omit<
+			WebviewMessageType['payload'],
+			'text' | 'isOverlappingMark' | 'range'
+		>
+	) => void
 	finishReadingLoading: boolean
 	onFinishBookPress: () => void
 	onContentLoadEnd: () => void
+	setActiveSelectedContent: (content: SelectionType) => void
 }
 
 export const useReaderMessage = ({
 	onFinishBookPress,
 	onContentLoadEnd,
+	setActiveSelectedContent,
 	onScroll,
 	finishReadingLoading
 }: ReaderMessageProperties) => {
@@ -55,6 +63,13 @@ export const useReaderMessage = ({
 		if (type === ReaderMessageType.FinishBook) {
 			if (finishReadingLoading) return
 			onFinishBookPress()
+		}
+		if (type === ReaderMessageType.selectText) {
+			setActiveSelectedContent({
+				range: payload.range,
+				text: payload.text,
+				isOverlappingMark: payload.isOverlappingMark
+			})
 		}
 	}
 

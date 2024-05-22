@@ -1,7 +1,7 @@
 import { storage } from '@/App'
 import { getFileUrl } from 'global/api-config'
 import { useLayoutEffect, useState } from 'react'
-
+//TODO: интигрировать emoji
 export const useGenreSvgContent = (svgUri: string) => {
 	const [svgContent, setSvgContent] = useState<string | null>(null)
 	useLayoutEffect(() => {

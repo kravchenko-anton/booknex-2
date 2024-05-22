@@ -13,6 +13,16 @@ export interface ThemePackType {
 			lighter: string
 			darker: string
 		}
+		mark: {
+			quote: {
+				background: string
+				text: string
+			}
+			note: {
+				background: string
+				text: string
+			}
+		}
 		text: string
 	}
 }
@@ -28,6 +38,16 @@ export const themePack: ThemePackType[] = [
 		slug: 'dark',
 		statusBar: statusBar.light,
 		colorPalette: {
+			mark: {
+				note: {
+					background: '#22333B',
+					text: '#fff'
+				},
+				quote: {
+					background: '#3A3A3A',
+					text: '#fff'
+				}
+			},
 			primary: '#4d92d3',
 			secondary: '#cf8e6d',
 			background: {
@@ -51,6 +71,16 @@ export const themePack: ThemePackType[] = [
 				lighter: '#f9f9f9',
 				darker: '#f2f2f2'
 			},
+			mark: {
+				note: {
+					background: '#7D387D',
+					text: '#FFF'
+				},
+				quote: {
+					background: '#177E89',
+					text: '#FFF'
+				}
+			},
 			textSelection: '#317259',
 			text: Color.black
 		}
@@ -66,6 +96,16 @@ export const themePack: ThemePackType[] = [
 				normal: '#f0e9d7',
 				lighter: '#f7f1e3',
 				darker: '#eae3cf'
+			},
+			mark: {
+				note: {
+					background: '#b5a08f',
+					text: '#fff'
+				},
+				quote: {
+					background: '#BEB7A4',
+					text: '#fff'
+				}
 			},
 			textSelection: '#7a5a3f',
 			text: '#5f4b32'
@@ -83,6 +123,16 @@ export const themePack: ThemePackType[] = [
 				lighter: '#2c313a',
 				darker: '#1e222a'
 			},
+			mark: {
+				note: {
+					background: '#4A6D7C',
+					text: '#fff'
+				},
+				quote: {
+					background: '#475657',
+					text: '#fff'
+				}
+			},
 			textSelection: '#3e4451',
 			text: '#abb2bf'
 		}
@@ -98,6 +148,16 @@ export const themePack: ThemePackType[] = [
 				normal: '#1f1f1f',
 				lighter: '#2b2b2b',
 				darker: '#131313'
+			},
+			mark: {
+				note: {
+					background: '#6A2E35',
+					text: '#fff'
+				},
+				quote: {
+					background: '#3E6990',
+					text: '#fff'
+				}
 			},
 			textSelection: '#4f3f6f',
 			text: '#F4F3F2'
@@ -115,6 +175,18 @@ export const themePack: ThemePackType[] = [
 				lighter: '#272433',
 				darker: '#1a1928'
 			},
+			// get random mark color based on the theme
+			mark: {
+				note: {
+					background: '#55286F',
+					text: '#fff'
+				},
+				quote: {
+					background: '#210B2C',
+					text: '#fff'
+				}
+			},
+
 			textSelection: '#4f3f6f',
 			text: '#d3cedc'
 		}
@@ -132,6 +204,16 @@ export const themePack: ThemePackType[] = [
 				lighter: '#222332',
 				darker: '#13131c'
 			},
+			mark: {
+				note: {
+					background: '#3E6990',
+					text: '#fff'
+				},
+				quote: {
+					background: '#475657',
+					text: '#fff'
+				}
+			},
 			textSelection: '#3d4d5f',
 			text: '#b7bcd9'
 		}
@@ -148,6 +230,16 @@ export const themePack: ThemePackType[] = [
 				lighter: '#1d3e5e',
 				darker: '#142b40'
 			},
+			mark: {
+				note: {
+					background: '#2C4251',
+					text: '#fff'
+				},
+				quote: {
+					background: '#028090',
+					text: '#fff'
+				}
+			},
 			textSelection: '#3d4d5f',
 			text: '#b9c0cb'
 		}
@@ -163,6 +255,16 @@ export const themePack: ThemePackType[] = [
 				normal: '#002b36',
 				lighter: '#003847',
 				darker: '#001f26'
+			},
+			mark: {
+				note: {
+					background: '#042029',
+					text: '#fff'
+				},
+				quote: {
+					background: '#073642',
+					text: '#fff'
+				}
 			},
 			textSelection: '#586e75',
 			text: '#a8b4b5'
@@ -181,6 +283,16 @@ export const themePack: ThemePackType[] = [
 				lighter: '#272732',
 				darker: '#1a1a22'
 			},
+			mark: {
+				note: {
+					background: '#63557A',
+					text: '#fff'
+				},
+				quote: {
+					background: '#292235',
+					text: '#fff'
+				}
+			},
 			textSelection: '#4f3f6f',
 			text: '#dcd7ba'
 		}
@@ -198,6 +310,16 @@ export const themePack: ThemePackType[] = [
 				lighter: '#3b4252',
 				darker: '#242831'
 			},
+			mark: {
+				note: {
+					background: '#323C50',
+					text: '#fff'
+				},
+				quote: {
+					background: '#4F5D7A',
+					text: '#fff'
+				}
+			},
 			textSelection: '#4f3f6f',
 			text: '#d8dee9'
 		}
@@ -213,6 +335,16 @@ export const themePack: ThemePackType[] = [
 				normal: '#282828',
 				lighter: '#3c3836',
 				darker: '#1d2021'
+			},
+			mark: {
+				note: {
+					background: '#504945',
+					text: '#fff'
+				},
+				quote: {
+					background: '#665c54',
+					text: '#fff'
+				}
 			},
 			textSelection: '#458588',
 			text: '#ebdbb2'
@@ -230,23 +362,17 @@ export const themePack: ThemePackType[] = [
 				lighter: '#181817',
 				darker: '#141416'
 			},
-			textSelection: '#333333',
-			text: '#e6e5e9'
-		}
-	},
-	{
-		title: 'Hiberbee',
-		slug: 'hiberbee',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#e7bf57',
-			secondary: '#ee7762',
-			background: {
-				normal: '#171615',
-				lighter: '#373635',
-				darker: '#121110'
+			mark: {
+				note: {
+					background: '#333344',
+					text: '#fff'
+				},
+				quote: {
+					background: '#393947',
+					text: '#fff'
+				}
 			},
-			textSelection: '#214283',
+			textSelection: '#333333',
 			text: '#e6e5e9'
 		}
 	},
@@ -262,22 +388,15 @@ export const themePack: ThemePackType[] = [
 				lighter: '#373844',
 				darker: '#1e2029'
 			},
-			textSelection: '#44475a',
-			text: '#f8f8f2'
-		}
-	},
-
-	{
-		title: 'Dark Knight',
-		slug: 'dark-knight',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#ff79c6',
-			secondary: '#8be9fd',
-			background: {
-				normal: '#1a1a1a',
-				lighter: '#1c1c1c',
-				darker: '#181818'
+			mark: {
+				note: {
+					background: '#4F3A65',
+					text: '#fff'
+				},
+				quote: {
+					background: '#5B4E77',
+					text: '#fff'
+				}
 			},
 			textSelection: '#44475a',
 			text: '#f8f8f2'

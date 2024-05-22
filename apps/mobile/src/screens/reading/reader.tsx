@@ -18,6 +18,9 @@ const Reader = () => {
 		loaderAnimation,
 		onMessage,
 		ebookRequestLoading,
+		activeSelectedContent,
+		setEbookQuotesAndNotes,
+		ebookQuotesAndNotes,
 		readerHeaderVisible,
 		readingProgress,
 		modalRefs,
@@ -43,6 +46,9 @@ const Reader = () => {
 				<Loader background={colorScheme.colorPalette.background.normal} />
 			</AnimatedView>
 			<ReaderViewer
+				setEbookQuotesAndNotes={setEbookQuotesAndNotes}
+				ebookQuotesAndNotes={ebookQuotesAndNotes}
+				activeSelectedContent={activeSelectedContent}
 				colorScheme={colorScheme}
 				styleTag={styleTag}
 				defaultProperties={defaultProperties}

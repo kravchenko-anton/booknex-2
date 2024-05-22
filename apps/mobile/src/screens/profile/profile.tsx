@@ -23,7 +23,7 @@ const Profile = () => {
 	useEffect(() => {
 		const parsingStatistic = getStatistic()
 		if (parsingStatistic) setStatistic(parsingStatistic)
-	}, [getStatistic, statistic, setStatistic])
+	}, [getStatistic, setStatistic])
 	if (!statistic) return <Loader />
 	console.log(
 		statistic.progressByCurrentWeek?.find(item => item.isCurrentDay)

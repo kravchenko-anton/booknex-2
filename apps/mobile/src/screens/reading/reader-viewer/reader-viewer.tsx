@@ -1,3 +1,7 @@
+import type {
+	QuoteAndNoteType,
+	SelectionType
+} from '@/screens/reading/hooks/useReader'
 import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import { composeReaderViewHtml } from '@/screens/reading/scripts/compose-html'
 import { injectStyle } from '@/screens/reading/scripts/styles-injection'
@@ -6,7 +10,12 @@ import { selectTextMenu } from '@/screens/reading/scripts/text-select/text-selec
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
 import type { FunctionType } from 'global/types'
-import { forwardRef, useEffect } from 'react'
+import {
+	forwardRef,
+	useEffect,
+	type Dispatch,
+	type SetStateAction
+} from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import WebView, { type WebViewMessageEvent } from 'react-native-webview'
 
@@ -19,9 +28,13 @@ export interface ReaderViewerProperties {
 	defaultProperties: {
 		scrollPosition: number
 		theme: string
+		ebookQuotesAndNotes: QuoteAndNoteType[]
 	}
+	setEbookQuotesAndNotes: Dispatch<SetStateAction<QuoteAndNoteType[]>>
+	ebookQuotesAndNotes: QuoteAndNoteType[]
 	styleTag: string
 	colorScheme: ThemePackType
+	activeSelectedContent: SelectionType
 	onMessage: (event: WebViewMessageEvent) => Promise<void>
 }
 
@@ -30,13 +43,23 @@ const ReaderViewer = forwardRef(
 		const {
 			defaultProperties,
 			styleTag,
+			activeSelectedContent,
 			handleDoublePress,
 			colorScheme,
+			ebookQuotesAndNotes,
+			setEbookQuotesAndNotes,
 			title,
 			onMessage,
 			picture,
 			file
 		} = properties
+
+		useEffect(() => {
+			console.log('ebookQuotesAndNotes changed')
+			reference.current?.injectJavaScript(`
+    	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)})
+    `)
+		}, [ebookQuotesAndNotes])
 
 		useEffect(() => {
 			reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
@@ -53,7 +76,7 @@ const ReaderViewer = forwardRef(
 						originWhitelist={['*']}
 						showsVerticalScrollIndicator={false}
 						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
-						menuItems={selectTextMenu}
+						decelerationRate='normal'
 						renderLoading={() => (
 							<View
 								className='h-screen w-screen'
@@ -63,7 +86,7 @@ const ReaderViewer = forwardRef(
 							/>
 						)}
 						// prevent fast scroll in webview
-
+						menuItems={selectTextMenu(!activeSelectedContent.isOverlappingMark)}
 						source={{
 							baseUrl: '',
 							html: composeReaderViewHtml({
@@ -78,14 +101,21 @@ const ReaderViewer = forwardRef(
 							backgroundColor: colorScheme.colorPalette.background.normal
 						}}
 						onMessage={onMessage}
-						onCustomMenuSelection={async (event: any) => {
-							await onTextSelection(
-								event,
-								reference,
-								reference?.current?.injectJavaScript(`
+						onCustomMenuSelection={async event => {
+							// check if activeSelectedContent is not null and equal to the selected text from event
+							if (
+								activeSelectedContent.text !== '' &&
+								activeSelectedContent.text === event.nativeEvent.selectedText
+							) {
+								await onTextSelection({
+									activeSelectedContent,
+									setEbookQuotesAndNotes,
+									removeAllSelection: reference?.current?.injectJavaScript(`
 							document.getSelection().removeAllRanges()
-						`)
-							)
+						`),
+									key: event.nativeEvent.key
+								})
+							}
 						}}
 					/>
 				</TouchableWithoutFeedback>
