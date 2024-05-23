@@ -50,6 +50,7 @@ interface ReadingProgressStoreActionsType {
 	getLibrary: () => libraryType
 	refetchStatistic: () => void
 	getStatistic: () => UserStatistics | null
+	refreshLibrary: () => void
 }
 export const useReadingProgressStore = create<
 	ReadingProgressStoreType & ReadingProgressStoreActionsType
@@ -128,6 +129,29 @@ export const useReadingProgressStore = create<
 					.catch(error => {
 						console.log(error, 'error in statistics sync')
 						errorToast('Failed to sync statistics')
+					})
+			},
+			refreshLibrary: () => {
+				const { history } = getState()
+				api.user
+					.library(history)
+					.then(({ data: response }) => {
+						if (!response) return
+						console.log('return library from api,  history and library exist')
+						set({
+							library: {
+								...response,
+								readingBooks: compareReadingBooks(
+									response.readingBooks,
+									history
+								)
+							},
+							history: []
+						})
+					})
+					.catch(error => {
+						console.log(error, 'error in library sync')
+						errorToast('Failed to sync library')
 					})
 			},
 			newProgress: newHistory => {

@@ -55,7 +55,7 @@ const ReaderViewer = forwardRef(
 		} = properties
 
 		useEffect(() => {
-			console.log('ebookQuotesAndNotes changed')
+			console.log('ebookQuotesAndNotes changed', ebookQuotesAndNotes)
 			reference.current?.injectJavaScript(`
     	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)})
     `)

@@ -131,9 +131,13 @@ export const getStyleTag = ({
 	.finish-book-button-container {
 		background: ${colorPalette.background.darker} !important;
 	}
-	mark {
-		background: ${colorPalette.textSelection} !important;
-		color: ${colorPalette.text} !important;
-		
+
+	mark .quote {
+		background: ${colorPalette.mark?.quote?.background} !important;
+		color: ${colorPalette.mark?.quote?.text} !important;
+	}
+	mark .note {
+		background: ${colorPalette.mark?.note?.background} !important;
+		color: ${colorPalette.mark?.note?.text} !important;
 	}
 	`

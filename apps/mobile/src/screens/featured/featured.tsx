@@ -5,10 +5,12 @@ import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
 import { GenreElement } from '@/ui/genre-element/genre-element'
 import { useQuery } from '@tanstack/react-query'
+import { Color } from 'global/colors'
 import { QueryKeys } from 'global/utils/query-keys'
+import { RefreshControl } from 'react-native'
 
 const Featured = () => {
-	const { data: featured } = useQuery({
+	const { data: featured, refetch } = useQuery({
 		queryKey: QueryKeys.featured,
 		queryFn: () => api.catalog.featured(),
 		select: data => data.data
@@ -16,7 +18,15 @@ const Featured = () => {
 	const { navigate } = useTypedNavigation()
 	if (!featured) return <Loader />
 	return (
-		<ScrollLayout>
+		<ScrollLayout
+			refreshControl={
+				<RefreshControl
+					refreshing={false}
+					colors={[Color.white]}
+					progressBackgroundColor={Color.transparent}
+					onRefresh={refetch}
+				/>
+			}>
 			<BannerList
 				title='Picks of the week'
 				data={featured.picksOfWeek}

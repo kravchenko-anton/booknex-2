@@ -1,4 +1,5 @@
 import { ActivityService } from '@/src/activity/activity.service'
+import { calculateUserStatistics } from '@/src/user/helpers/calculate-user-statistics'
 import type { ReadingHistory } from '@/src/user/user.dto'
 import {
 	userCatalogFields,
@@ -7,13 +8,10 @@ import {
 	userStartReadingBookFields,
 	userToggleSaveFields
 } from '@/src/user/user.fields'
-import { days, isThisWeek, pepTalks } from '@/src/user/user.utils'
 import { statisticReduce } from '@/src/utils/services/statisticReduce.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities, type Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
-import { getTimeDate } from 'global/utils'
-import { fromMinutesToMs, fromMsToMinutes } from 'global/utils/numberConvertor'
 import { slugSelect } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -78,9 +76,7 @@ export class UserService {
 		if (!user)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		const userHistory = await this.prisma.readingHistory.findMany({
-			where: {
-				userId
-			},
+			where: { userId },
 			select: {
 				endDate: true,
 				progressDelta: true,
@@ -89,60 +85,14 @@ export class UserService {
 				startDate: true
 			}
 		})
-		const currentDate = new Date()
-
-		const userSteak = userHistory.reduce((streak, history, index) => {
-			const historyDate = getTimeDate(history.endDate)
-			return historyDate.getDate() === currentDate.getDate() - index &&
-				historyDate.getMonth() === currentDate.getMonth() &&
-				historyDate.getFullYear() === currentDate.getFullYear() &&
-				fromMsToMinutes(history.readingTimeMs) >= user.goalMinutes
-				? streak + 1
-				: streak
-		}, 0)
-
-		const progressByCurrentWeek = Array.from({ length: 7 }, (_, index) => index)
-			.map((_, index) => {
-				const day = new Date()
-				day.setDate(day.getDate() - ((day.getDay() + 7 - index) % 7))
-
-				const dayHistory = userHistory
-					.filter(history => isThisWeek(getTimeDate(history.endDate)))
-					.filter(history => {
-						const historyDate = getTimeDate(history.endDate)
-						return (
-							historyDate.getDate() === day.getDate() &&
-							historyDate.getMonth() === day.getMonth() &&
-							historyDate.getFullYear() === day.getFullYear()
-						)
-					})
-
-				const dayReadingTime = dayHistory.reduce(
-					(progress, history) => progress + history.readingTimeMs,
-					0
-				)
-				const dayProgress =
-					(dayReadingTime / fromMinutesToMs(user.goalMinutes)) * 100
-				return {
-					day: day.toLocaleDateString('en-US', {
-						weekday: 'long'
-					}),
-					isCurrentDay: getTimeDate(day).getDate() === currentDate.getDate(),
-					isReadMoreThatGoal:
-						dayReadingTime >= fromMinutesToMs(user.goalMinutes),
-					readingTimeMs: dayReadingTime,
-					dayProgress: Math.min(dayProgress, 100)
-				}
-			})
-			.sort((a, b) => days.indexOf(a.day) - days.indexOf(b.day))
+		const { userSteak, progressByCurrentWeek, pepTalk } =
+			calculateUserStatistics({ userHistory, goalMinutes: user.goalMinutes })
 
 		return {
 			userSteak,
+			pepTalk,
 			progressByCurrentWeek,
-			goalMinutes: user.goalMinutes,
-			pepTalk:
-				pepTalks.find(pepTalk => userSteak < pepTalk.lessThan)?.text ??
-				'Good result, keep it up!'
+			goalMinutes: user.goalMinutes
 		}
 	}
 

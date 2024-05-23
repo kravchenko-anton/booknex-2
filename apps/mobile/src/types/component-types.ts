@@ -80,7 +80,7 @@ export type ImageDefaultProperties = Pick<
 export type ScrollViewDefaultProperties = Pick<
 	ScrollViewProps,
 	| 'scrollEnabled'
-	// onScroll end
+	| 'refreshControl'
 	| 'onResponderEnd'
 	| 'onTouchEnd'
 	| 'style'

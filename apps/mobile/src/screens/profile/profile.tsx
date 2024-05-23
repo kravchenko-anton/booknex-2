@@ -8,10 +8,12 @@ import type { UserStatistics } from 'global/api-client'
 import { Color } from 'global/colors'
 import { fromMsToMinutes } from 'global/utils/numberConvertor'
 import { useEffect, useRef, useState } from 'react'
-import { View } from 'react-native'
+import { RefreshControl, View } from 'react-native'
 
 const Profile = () => {
 	const sheetReference = useRef<BottomSheetModal>(null)
+
+	//TODO: переделать статистику чтобы сразу был рефеч
 	const [statistic, setStatistic] = useState<UserStatistics | null>(null)
 	const { getStatistic, history, refetchStatistic } = useReadingProgressStore(
 		state => ({
@@ -31,7 +33,16 @@ const Profile = () => {
 		'daySteakProgressPercentage'
 	)
 	return (
-		<ScrollLayout className='px-2'>
+		<ScrollLayout
+			className='px-2'
+			refreshControl={
+				<RefreshControl
+					refreshing={false}
+					colors={[Color.white]}
+					progressBackgroundColor={Color.transparent}
+					onRefresh={refetchStatistic}
+				/>
+			}>
 			<GoalSelectModal
 				sheetRef={sheetReference}
 				currentGoal={statistic.goalMinutes || 10}

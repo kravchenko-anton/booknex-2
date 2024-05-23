@@ -6,17 +6,22 @@ import {
 } from '@/screens/reading/store/progress-store'
 import { BookCard, Flatlist, Loader, ScrollLayout, Title } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
+import { Color } from 'global/colors'
 import { useEffect, useState } from 'react'
+import { RefreshControl } from 'react-native'
 
 const Library = () => {
 	const { navigate } = useTypedNavigation()
 	const [library, setLibrary] = useState<libraryType>(null)
-	const { getLibrary, library: storeLibrary } = useReadingProgressStore(
-		state => ({
-			getLibrary: state.getLibrary,
-			library: state.library
-		})
-	)
+	const {
+		getLibrary,
+		library: storeLibrary,
+		refreshLibrary
+	} = useReadingProgressStore(state => ({
+		getLibrary: state.getLibrary,
+		library: state.library,
+		refreshLibrary: state.refreshLibrary
+	}))
 
 	useEffect(() => {
 		const parsingLibrary = getLibrary()
@@ -38,7 +43,15 @@ const Library = () => {
 			/>
 		)
 	return (
-		<ScrollLayout>
+		<ScrollLayout
+			refreshControl={
+				<RefreshControl
+					refreshing={false}
+					colors={[Color.white]}
+					progressBackgroundColor={Color.transparent}
+					onRefresh={refreshLibrary}
+				/>
+			}>
 			<ReadingList data={library.readingBooks} navigate={navigate} />
 			<Flatlist
 				horizontal

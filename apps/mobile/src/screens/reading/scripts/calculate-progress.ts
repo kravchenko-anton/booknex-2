@@ -5,12 +5,11 @@ export const calculateProgress = `
 			 let currentChapterProgress = 0;
 			 let currentChapter = 0;
 			  let currentChapterLink = '';
-			  
 			  chapters.forEach((chapter, index) => {
          const chapterStart = chapter.offsetTop - 1;
          const chapterEnd = chapterStart + chapter.clientHeight;
          const chapterProgress = (currentScrollPosition - chapterStart) / (chapterEnd - chapterStart) * 100;
-         
+          
          if (chapterProgress >= 0 && chapterProgress <= 100) {
           currentChapterProgress = chapterProgress;
           currentChapter = index;
