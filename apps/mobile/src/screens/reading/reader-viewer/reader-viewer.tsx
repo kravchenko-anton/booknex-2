@@ -53,17 +53,17 @@ const ReaderViewer = forwardRef(
 			picture,
 			file
 		} = properties
+		useEffect(() => {
+			reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
+		}, [styleTag])
 
 		useEffect(() => {
 			console.log('ebookQuotesAndNotes changed', ebookQuotesAndNotes)
 			reference.current?.injectJavaScript(`
-    	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)})
+    	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)});
     `)
 		}, [ebookQuotesAndNotes])
 
-		useEffect(() => {
-			reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
-		}, [styleTag])
 		if (!defaultProperties) return <View className='flex-1' />
 		return (
 			<View className='m-0 h-screen w-screen flex-1 items-center justify-center p-0'>

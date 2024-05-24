@@ -61,6 +61,7 @@ export const useReadingProgressStore = create<
 			getLibrary: () => {
 				const library = getState().library
 				const history = getState().history
+				console.log('history in getLibrary', history)
 				if (history.length === 0 && library) {
 					console.log('return library from store, no history and library exist')
 					return library
@@ -155,6 +156,7 @@ export const useReadingProgressStore = create<
 					})
 			},
 			newProgress: newHistory => {
+				console.log('new progress', newHistory)
 				set(state => {
 					if (state.history.some(h => h.id === newHistory.id)) {
 						console.log(
@@ -170,6 +172,16 @@ export const useReadingProgressStore = create<
 						}
 					}
 					console.log('add new history', newHistory.id, newHistory.endProgress)
+					if (
+						state.history.some(
+							h =>
+								h.bookSlug === newHistory.bookSlug &&
+								h.scrollPosition === newHistory.scrollPosition
+						)
+					) {
+						console.log('history with this scrollPosition already exist')
+						return { ...state }
+					}
 					return { ...state, history: [...state.history, newHistory] }
 				})
 			},

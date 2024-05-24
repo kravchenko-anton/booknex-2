@@ -86,7 +86,10 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 			)
 	})
 
-	useStatusBarStyle({ colorScheme, readerUiVisible: readerHeaderVisible })
+	useStatusBarStyle({
+		colorScheme,
+		isVisible: readerHeaderVisible && !readerLoading
+	})
 	const { onMessage } = useReaderMessage({
 		finishReadingLoading,
 		onFinishBookPress: onFinish,

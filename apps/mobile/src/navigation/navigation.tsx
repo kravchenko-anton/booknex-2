@@ -31,7 +31,6 @@ const Navigation: FC = () => {
 		user: state.user,
 		logout: state.logout
 	}))
-	console.log('user', user)
 	const [initialHistory] = useState(useReadingProgressStore.getState().history) // eslint-disable-line
 	const latestHistory = historyByLatestSorting(initialHistory).find(
 		h => h.startFromReadingScreen

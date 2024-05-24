@@ -132,12 +132,9 @@ export const getStyleTag = ({
 		background: ${colorPalette.background.darker} !important;
 	}
 
-	mark .quote {
-		background: ${colorPalette.mark?.quote?.background} !important;
-		color: ${colorPalette.mark?.quote?.text} !important;
-	}
-	mark .note {
-		background: ${colorPalette.mark?.note?.background} !important;
-		color: ${colorPalette.mark?.note?.text} !important;
+	mark {
+		background: ${colorPalette.mark.background} !important;
+		color: ${colorPalette.mark.text} !important;
+		border-radius: 4px !important;
 	}
 	`

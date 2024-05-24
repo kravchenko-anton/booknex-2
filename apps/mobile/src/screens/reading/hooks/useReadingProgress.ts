@@ -29,11 +29,11 @@ export const useReadingProgress = ({
 	)
 	const [startReadingDate, setStartReadingDate] = useState(getTimeDate())
 	const [startReadingProgress, setStartReadingProgress] = useState(0)
-	console.log('startReadingDate', startReadingDate)
 	const { addListener } = useTypedNavigation()
-	const updateStartFromReadingScreen = useReadingProgressStore(
-		state => state.updateStartFromReadingScreen
-	)
+	const { updateStartFromReadingScreen } = useReadingProgressStore(state => ({
+		updateStartFromReadingScreen: state.updateStartFromReadingScreen,
+		history: state.history
+	}))
 	const newProgress = useReadingProgressStore(state => state.newProgress)
 
 	const [scrollPosition, setScrollPosition] = useState(
@@ -107,7 +107,7 @@ export const useReadingProgress = ({
 			}
 		})
 		setScrollPosition(payload.scrollTop)
-		console.log((getTimeDate().getTime() - startReadingDate.getTime()) / 1000)
+		// check if history with this scrollPosition already exist,return
 		newProgress({
 			startFromReadingScreen: true,
 			id: readingSessionKey,
@@ -121,7 +121,6 @@ export const useReadingProgress = ({
 			readingTimeMs: getTimeDate().getTime() - startReadingDate.getTime()
 		})
 	}
-
 	return {
 		scrollPosition,
 		readingProgress,

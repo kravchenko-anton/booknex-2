@@ -42,8 +42,8 @@ export const extendedTextSelectionScript = `
     const isOverlappingMark = !!(selection.anchorNode.parentElement.closest('mark') || selection.focusNode.parentElement.closest('mark'))
     const startOffset = range.startOffset;
     const endOffset = range.endOffset;
-    const rect = range.getBoundingClientRect();
-
+   	const xpath = findElementByXpath(range.startContainer.parentElement);
+		if (selectionText.length === 0) return;
 					window.ReactNativeWebView.postMessage(
 					JSON.stringify({
 						type: 'selectText',
@@ -51,7 +51,8 @@ export const extendedTextSelectionScript = `
 							text: selectionText,
 						  range: {
                     startOffset,
-                    endOffset
+                    endOffset,
+                    xpath
                 },
 						isOverlappingMark
 						}

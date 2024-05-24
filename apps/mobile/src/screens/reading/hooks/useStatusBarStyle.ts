@@ -4,21 +4,21 @@ import { useEffect } from 'react'
 
 interface StatusBarStyleProperties {
 	colorScheme: ThemePackType
-	readerUiVisible: boolean
+	isVisible: boolean
 }
 export const useStatusBarStyle = ({
 	colorScheme,
-	readerUiVisible
+	isVisible
 }: StatusBarStyleProperties) => {
 	const { setOptions } = useTypedNavigation()
 	useEffect(() => {
 		setOptions({
 			statusBarStyle: colorScheme.statusBar,
 			navigationBarColor: colorScheme.colorPalette.background.darker,
-			navigationBarHidden: true,
+			navigationBarHidden: !isVisible,
 			statusBarTranslucent: true,
-			statusBarHidden: !readerUiVisible,
+			statusBarHidden: !isVisible,
 			statusBarColor: colorScheme.colorPalette.background.darker
 		})
-	}, [colorScheme, setOptions, readerUiVisible])
+	}, [colorScheme, setOptions, isVisible])
 }

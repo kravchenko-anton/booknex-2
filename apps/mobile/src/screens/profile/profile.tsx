@@ -86,11 +86,15 @@ const Profile = () => {
 									color={Color.white}
 									size='xxxl'
 									className='mb-0.5'>
-									{fromMsToMinutes(
-										statistic.progressByCurrentWeek?.find(
-											item => item.isCurrentDay
-										)?.readingTimeMs || 0
-									).toFixed(2)}
+									{
+										// to clock format
+
+										fromMsToMinutes(
+											statistic.progressByCurrentWeek?.find(
+												item => item.isCurrentDay
+											)?.readingTimeMs || 0
+										).toFixed(2)
+									}
 								</Title>
 								<Title center weight='bold' color={Color.gray} size='sm'>
 									of {statistic.goalMinutes || 10} minutes goal

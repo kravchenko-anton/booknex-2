@@ -7,9 +7,7 @@ export const socialLinks = {
 	github: 'https://github.com/kravchenko-anton'
 }
 export const getTimeDate = (initialDate?: Date | string) => {
-	if (initialDate) {
-		return new Date(initialDate)
-	}
+	if (initialDate) return new Date(initialDate)
 	return new Date()
 }
 

@@ -15,14 +15,18 @@ const Library = () => {
 	const [library, setLibrary] = useState<libraryType>(null)
 	const {
 		getLibrary,
+		clearHistory,
+		history,
 		library: storeLibrary,
 		refreshLibrary
 	} = useReadingProgressStore(state => ({
 		getLibrary: state.getLibrary,
 		library: state.library,
+		history: state.history,
+		clearHistory: state.clearHistory,
 		refreshLibrary: state.refreshLibrary
 	}))
-
+	console.log('history', history)
 	useEffect(() => {
 		const parsingLibrary = getLibrary()
 		if (parsingLibrary) setLibrary(parsingLibrary)

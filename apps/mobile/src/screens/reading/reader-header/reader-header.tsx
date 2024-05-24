@@ -3,10 +3,12 @@ import type { ReadingProgressType } from '@/screens/reading/hooks/useReadingProg
 import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import { AnimatedView } from '@/ui/animated-components'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
+import { screenHeight, windowHeight } from '@/utils/dimensions'
+import Slider from '@react-native-community/slider'
 import type { FunctionType } from 'global/types'
 import { ArrowLeft, CaseSensitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
-import { View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -18,6 +20,8 @@ interface ReaderMenuProperties {
 	readingProgress: ReadingProgressType
 }
 
+const navbarHeight =
+	screenHeight - windowHeight + (StatusBar.currentHeight || 24)
 const ReaderHeader: FC<ReaderMenuProperties> = ({
 	visible = false,
 	onChapterIconPress,
@@ -30,6 +34,7 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 	const fadeAnimation = useAnimatedStyle(() => ({
 		opacity: withTiming(Boolean(visible) ? 1 : 0, { duration: 200 })
 	}))
+	console.log(StatusBar.currentHeight)
 	return (
 		<View className='absolute h-screen w-full'>
 			<AnimatedView
@@ -79,6 +84,26 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 						/>
 					</View>
 				</View>
+			</AnimatedView>
+
+			<AnimatedView
+				className='absolute z-50 mb-0 mt-0 w-full flex-1 justify-center border-t-2'
+				style={[
+					fadeAnimation,
+					{
+						bottom: 0,
+						backgroundColor: colorScheme.colorPalette.background.darker,
+						borderTopColor: colorScheme.colorPalette.background.lighter
+					}
+				]}>
+				<Slider
+					style={{ width: 200, height: 40 }}
+					minimumValue={0}
+					value={10}
+					maximumValue={1}
+					minimumTrackTintColor='#FFFFFF'
+					maximumTrackTintColor='#000000'
+				/>
 			</AnimatedView>
 		</View>
 	)

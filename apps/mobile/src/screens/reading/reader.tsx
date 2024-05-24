@@ -10,26 +10,12 @@ import { screenHeight } from '@/utils/dimensions'
 
 const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()
-	const {
-		colorScheme,
-		setReaderHeaderVisible,
-		defaultProperties,
-		ebook,
-		loaderAnimation,
-		onMessage,
-		ebookRequestLoading,
-		activeSelectedContent,
-		setEbookQuotesAndNotes,
-		ebookQuotesAndNotes,
-		readerHeaderVisible,
-		readingProgress,
-		modalRefs,
-		openModal,
-		styleTag,
-		viewerReference
-	} = useReader(params.slug, params.initialScrollPosition)
-	if (!ebook || ebookRequestLoading)
-		return <Loader background={colorScheme.colorPalette.background.normal} />
+	const reader = useReader(params.slug, params.initialScrollPosition)
+	if (!reader.ebook || reader.ebookRequestLoading)
+		return (
+			<Loader background={reader.colorScheme.colorPalette.background.normal} />
+		)
+
 	console.log('ebook')
 	return (
 		<>
@@ -37,52 +23,62 @@ const Reader = () => {
 				pointerEvents='none'
 				className='absolute z-50 h-full w-full'
 				style={[
-					loaderAnimation,
+					reader.loaderAnimation,
 					{
-						backgroundColor: colorScheme.colorPalette.background.normal,
+						backgroundColor: reader.colorScheme.colorPalette.background.normal,
 						height: screenHeight
 					}
 				]}>
-				<Loader background={colorScheme.colorPalette.background.normal} />
+				<Loader
+					background={reader.colorScheme.colorPalette.background.normal}
+				/>
 			</AnimatedView>
 			<ReaderViewer
-				setEbookQuotesAndNotes={setEbookQuotesAndNotes}
-				ebookQuotesAndNotes={ebookQuotesAndNotes}
-				activeSelectedContent={activeSelectedContent}
-				colorScheme={colorScheme}
-				styleTag={styleTag}
-				defaultProperties={defaultProperties}
-				title={ebook.title}
-				picture={ebook.picture}
-				file={ebook.file}
-				ref={viewerReference}
-				readerUiVisible={readerHeaderVisible}
-				handleDoublePress={() => setReaderHeaderVisible(!readerHeaderVisible)}
-				onMessage={onMessage}
+				setEbookQuotesAndNotes={reader.setEbookQuotesAndNotes}
+				ebookQuotesAndNotes={reader.ebookQuotesAndNotes}
+				activeSelectedContent={reader.activeSelectedContent}
+				colorScheme={reader.colorScheme}
+				styleTag={reader.styleTag}
+				defaultProperties={reader.defaultProperties}
+				title={reader.ebook.title}
+				picture={reader.ebook.picture}
+				file={reader.ebook.file}
+				ref={reader.viewerReference}
+				readerUiVisible={reader.readerHeaderVisible}
+				handleDoublePress={() =>
+					reader.setReaderHeaderVisible(!reader.readerHeaderVisible)
+				}
+				onMessage={reader.onMessage}
 			/>
 			<ReaderHeader
-				colorScheme={colorScheme}
-				readingProgress={readingProgress}
-				visible={readerHeaderVisible}
-				onChapterIconPress={() => openModal.chaptersList()}
-				onSelectThemeIconPress={() => openModal.readingSettings()}
+				colorScheme={reader.colorScheme}
+				readingProgress={reader.readingProgress}
+				visible={
+					reader.readerHeaderVisible && !reader.readerLoading
+						? !reader.ebookRequestLoading
+						: false
+				}
+				onChapterIconPress={() => reader.openModal.chaptersList()}
+				onSelectThemeIconPress={() => reader.openModal.readingSettings()}
 			/>
 
 			<ReaderChapters
-				activeChapter={readingProgress.chapter}
-				colorScheme={colorScheme}
-				chapters={ebook.chapters}
-				sheetRef={modalRefs.chaptersListModalReference}
+				activeChapter={reader.readingProgress.chapter}
+				colorScheme={reader.colorScheme}
+				chapters={reader.ebook.chapters}
+				sheetRef={reader.modalRefs.chaptersListModalReference}
 				changeChapter={link => {
 					console.log('link', link)
-					viewerReference.current?.injectJavaScript(
+					reader.viewerReference.current?.injectJavaScript(
 						`
 						document.getElementById('${link}')?.scrollIntoView({ behavior: 'smooth' })`
 					)
 				}}
 			/>
 
-			<ReaderCustomization sheetRef={modalRefs.readingSettingsModalReference} />
+			<ReaderCustomization
+				sheetRef={reader.modalRefs.readingSettingsModalReference}
+			/>
 		</>
 	)
 }
