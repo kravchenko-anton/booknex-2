@@ -1,21 +1,13 @@
-import type {
-	QuoteAndNoteType,
-	SelectionType
-} from '@/screens/reading/hooks/useReader'
+import type { SelectionType } from '@/screens/reading/hooks/useReader'
 import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import { composeReaderViewHtml } from '@/screens/reading/scripts/compose-html'
 import { injectStyle } from '@/screens/reading/scripts/styles-injection'
 import { onTextSelection } from '@/screens/reading/scripts/text-select/on-text-selection'
-import { selectTextMenu } from '@/screens/reading/scripts/text-select/text-select-menu'
+import type { QuoteAndNoteType } from '@/screens/reading/store/notes-store'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
 import type { FunctionType } from 'global/types'
-import {
-	forwardRef,
-	useEffect,
-	type Dispatch,
-	type SetStateAction
-} from 'react'
+import { forwardRef, useEffect } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
 import WebView, { type WebViewMessageEvent } from 'react-native-webview'
 
@@ -24,14 +16,15 @@ export interface ReaderViewerProperties {
 	handleDoublePress: FunctionType
 	file: string[]
 	picture: string
+	bookSlug: string
 	title: string
 	defaultProperties: {
 		scrollPosition: number
 		theme: string
 		ebookQuotesAndNotes: QuoteAndNoteType[]
 	}
-	setEbookQuotesAndNotes: Dispatch<SetStateAction<QuoteAndNoteType[]>>
 	ebookQuotesAndNotes: QuoteAndNoteType[]
+	setEbookQuotesAndNotes: (note: QuoteAndNoteType) => void
 	styleTag: string
 	colorScheme: ThemePackType
 	activeSelectedContent: SelectionType
@@ -43,12 +36,13 @@ const ReaderViewer = forwardRef(
 		const {
 			defaultProperties,
 			styleTag,
+			bookSlug,
 			activeSelectedContent,
 			handleDoublePress,
 			colorScheme,
-			ebookQuotesAndNotes,
 			setEbookQuotesAndNotes,
 			title,
+			ebookQuotesAndNotes,
 			onMessage,
 			picture,
 			file
@@ -56,14 +50,12 @@ const ReaderViewer = forwardRef(
 		useEffect(() => {
 			reference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 		}, [styleTag])
-
 		useEffect(() => {
 			console.log('ebookQuotesAndNotes changed', ebookQuotesAndNotes)
 			reference.current?.injectJavaScript(`
     	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)});
     `)
-		}, [ebookQuotesAndNotes])
-
+		}, [ebookQuotesAndNotes, setEbookQuotesAndNotes])
 		if (!defaultProperties) return <View className='flex-1' />
 		return (
 			<View className='m-0 h-screen w-screen flex-1 items-center justify-center p-0'>
@@ -86,7 +78,7 @@ const ReaderViewer = forwardRef(
 							/>
 						)}
 						// prevent fast scroll in webview
-						menuItems={selectTextMenu(!activeSelectedContent.isOverlappingMark)}
+						menuItems={[]}
 						source={{
 							baseUrl: '',
 							html: composeReaderViewHtml({
@@ -102,7 +94,6 @@ const ReaderViewer = forwardRef(
 						}}
 						onMessage={onMessage}
 						onCustomMenuSelection={async event => {
-							// check if activeSelectedContent is not null and equal to the selected text from event
 							if (
 								activeSelectedContent.text !== '' &&
 								activeSelectedContent.text === event.nativeEvent.selectedText
@@ -113,7 +104,8 @@ const ReaderViewer = forwardRef(
 									removeAllSelection: reference?.current?.injectJavaScript(`
 							document.getSelection().removeAllRanges()
 						`),
-									key: event.nativeEvent.key
+									key: event.nativeEvent.key,
+									bookSlug
 								})
 							}
 						}}

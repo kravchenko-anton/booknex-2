@@ -1,6 +1,6 @@
-import type { QuoteAndNoteType } from '@/screens/reading/hooks/useReader'
 import { getStyleTag } from '@/screens/reading/scripts/styles-injection'
 import type { CustomizationStoreType } from '@/screens/reading/store/customization-store'
+import type { QuoteAndNoteType } from '@/screens/reading/store/notes-store'
 import { useState } from 'react'
 
 export const useStyleTag = (

@@ -14,7 +14,7 @@ export const useFinishBook = ({
 }: FinishBookProperties) => {
 	const { navigate } = useTypedNavigation()
 	const queryClient = useQueryClient()
-	const { mutateAsync: finishReading, isLoading: finishReadingLoading } =
+	const { mutateAsync: finishReading, isPending: finishReadingLoading } =
 		useMutation({
 			mutationKey: MutationKeys.book.finishReadingBySlug(slug),
 			mutationFn: (slug: string) => api.user.finishReading(slug)

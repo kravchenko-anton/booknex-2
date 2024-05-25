@@ -17,14 +17,12 @@ const Library = () => {
 		getLibrary,
 		clearHistory,
 		history,
-		library: storeLibrary,
-		refreshLibrary
+		library: storeLibrary
 	} = useReadingProgressStore(state => ({
 		getLibrary: state.getLibrary,
 		library: state.library,
 		history: state.history,
-		clearHistory: state.clearHistory,
-		refreshLibrary: state.refreshLibrary
+		clearHistory: state.clearHistory
 	}))
 	console.log('history', history)
 	useEffect(() => {
@@ -53,7 +51,6 @@ const Library = () => {
 					refreshing={false}
 					colors={[Color.white]}
 					progressBackgroundColor={Color.transparent}
-					onRefresh={refreshLibrary}
 				/>
 			}>
 			<ReadingList data={library.readingBooks} navigate={navigate} />

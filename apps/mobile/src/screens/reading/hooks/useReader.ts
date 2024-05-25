@@ -13,48 +13,30 @@ import { QueryKeys } from 'global/utils/query-keys'
 import { useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
-export type QuoteAndNoteType = {
-	type: 'quote' | 'note'
-	text: string
-	range: {
-		startOffset: number
-		endOffset: number
-	}
-}
-
 export type SelectionType = {
 	text: string
 	range: {
 		startOffset: number
 		endOffset: number
+		xpath: string
 	}
 	isOverlappingMark: boolean
 }
-
+//TODO: переписать на mobx
 export const useReader = (slug: string, initialScrollPosition: number) => {
+	const { setEbookQuotesAndNotes, ebookQuotesAndNotes } = {
+		ebookQuotesAndNotes: [],
+		setEbookQuotesAndNotes: () => null
+	}
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data,
 		enabled: !!slug,
 		networkMode: 'offlineFirst',
-		gcTime: 1000 * 60 * 60 * 24 * 365,
-		staleTime: 1000 * 60 * 60 * 24 * 365
+		gcTime: 1000 * 60 * 60 * 24 * 365
 	})
 
-	const [ebookQuotesAndNotes, setEbookQuotesAndNotes] = useState<
-		QuoteAndNoteType[]
-	>([])
-
-	const [activeSelectedContent, setActiveSelectedContent] =
-		useState<SelectionType>({
-			text: '',
-			range: {
-				startOffset: 0,
-				endOffset: 0
-			},
-			isOverlappingMark: false
-		})
 	const { loaderAnimation, setReaderLoading, readerLoading } =
 		useReaderLoading()
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(
@@ -63,6 +45,16 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
 	const viewerReference = useRef<WebView>(null)
 
+	const [activeSelectedContent, setActiveSelectedContent] =
+		useState<SelectionType>({
+			text: '',
+			range: {
+				startOffset: 0,
+				endOffset: 0,
+				xpath: ''
+			},
+			isOverlappingMark: false
+		})
 	const {
 		readingProgress,
 		scrollPosition,
@@ -78,6 +70,13 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		slug,
 		onFinishComplete: clearProgress
 	})
+	const { onMessage } = useReaderMessage({
+		finishReadingLoading,
+		onFinishBookPress: onFinish,
+		onContentLoadEnd: () => setReaderLoading(false),
+		onScroll: updateReadingProgress,
+		setActiveSelectedContent
+	})
 
 	const { openModal, modalRefs } = useModalReference(setReaderHeaderVisible, {
 		onOpenModal: () =>
@@ -89,13 +88,6 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	useStatusBarStyle({
 		colorScheme,
 		isVisible: readerHeaderVisible && !readerLoading
-	})
-	const { onMessage } = useReaderMessage({
-		finishReadingLoading,
-		onFinishBookPress: onFinish,
-		onContentLoadEnd: () => setReaderLoading(false),
-		onScroll: updateReadingProgress,
-		setActiveSelectedContent
 	})
 
 	const { defaultProperties, styleTag } = useStyleTag(

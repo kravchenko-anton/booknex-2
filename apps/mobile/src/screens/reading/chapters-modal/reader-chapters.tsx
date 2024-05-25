@@ -8,11 +8,11 @@ import {
 	type BottomSheetSectionListMethods
 } from '@gorhom/bottom-sheet'
 import type { EbookOutputChaptersInner } from 'global/api-client'
-import { useMemo, useRef, type FC } from 'react'
+import { useMemo, useRef, type FC, type RefObject } from 'react'
 import { Pressable } from 'react-native'
 
 export interface ReaderChaptersProperties {
-	sheetRef: React.RefObject<BottomSheetModal>
+	sheetRef: RefObject<BottomSheetModal>
 	chapters: EbookOutputChaptersInner[]
 	changeChapter: (link: string) => void
 	colorScheme: ThemePackType

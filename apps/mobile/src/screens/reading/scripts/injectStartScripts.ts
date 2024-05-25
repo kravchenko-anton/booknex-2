@@ -1,22 +1,29 @@
-import type { QuoteAndNoteType } from '@/screens/reading/hooks/useReader'
 import {
 	calculateProgress,
 	scrollCalculateProgress
 } from '@/screens/reading/scripts/calculate-progress'
 import {
 	extendedTextSelectionScript,
-	onSelectTextScript
+	onSelectTextScript,
+	textSelectMenu
 } from '@/screens/reading/scripts/text-select/text-selection-scripts'
-//TODO: пофиксить тут селект текста и его обработку
+import type { QuoteAndNoteType } from '@/screens/reading/store/notes-store'
+
 export const injectStartScripts = (
 	startPosition: number,
 	noteAndQuotes: QuoteAndNoteType[]
 ) => `
 <script>
+	function scrollToProgress(progress) {
+		const scrollHeight = document.documentElement.scrollHeight;
+		const scrollTop = scrollHeight * progress;
+		window.scrollTo({
+			top: scrollTop
+		})
+		${calculateProgress}
+	}
 	
 function findElementByXpath(element) {
-
-	
 	if (!element) return null;
 	if (element.id !== '') return 'id("' + element.id + '")';
 	if (element === document.body) return element.tagName;
@@ -30,38 +37,24 @@ function findElementByXpath(element) {
 	}
 }
 
-function getElementFromXpath(xpath) {
-		return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
-
-
+	//TODO: добавить доп проверку по тексту чтобы если нету нужного контента то просто не селектилась
  function wrapTextWithBoldTag(noteAndQuotes) {
-try {
 		noteAndQuotes.forEach(({ range }) => {
 		const { startOffset, endOffset, xpath } = range;
-		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'info', payload: range }));
-		const element = getElementFromXpath(xpath);
+		const element =  document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 		if (!element) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: 'Element not found' }));
 		const text = element.textContent;
 		const regex = new RegExp(text.substring(startOffset, endOffset), 'g');
-		element.innerHTML = text.replace(regex, '<mark>' + text.substring(startOffset, endOffset) + '</b>');
+		element.innerHTML = text.replace(regex, '<mark>' + text.substring(startOffset, endOffset) + '</mark>');
 	});
 }
 
-catch (error) {
-	window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: error.message }))
-}
-	
- 
- }
-
 
 						window.onload = function() {
-						window.scrollTo({
-							top: ${startPosition}
-						})
+						window.scrollTo({	top: ${startPosition} })
 						${calculateProgress}
 						${onSelectTextScript}
+						${textSelectMenu}
 						${scrollCalculateProgress}
 						${extendedTextSelectionScript}
 						wrapTextWithBoldTag(${JSON.stringify(noteAndQuotes)})

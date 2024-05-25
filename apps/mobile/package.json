@@ -11,6 +11,7 @@
 		"boothSplash:android": "yarn react-native generate-bootsplash assets/logo.png  \\\n  --background-color=111113 \\\n  --logo-width=100 \\\n  --assets-path=assets \\\n"
 	},
 	"dependencies": {
+		"react-native-awesome-slider": "*",
 		"@gorhom/bottom-sheet": "*",
 		"@hookform/resolvers": "*",
 		"react-native-picker-select": "*",

@@ -15,6 +15,7 @@ export interface ReadingProgressType {
 	progress: number
 	chapter: {
 		link: string
+		id: number
 		progress: number
 	}
 }
@@ -42,6 +43,7 @@ export const useReadingProgress = ({
 	const [readingProgress, setReadingProgress] = useState<ReadingProgressType>({
 		progress: 0,
 		chapter: {
+			id: 0,
 			link: '',
 			progress: 0
 		}
@@ -84,6 +86,7 @@ export const useReadingProgress = ({
 		setReadingProgress({
 			progress: 0,
 			chapter: {
+				id: 0,
 				link: '',
 				progress: 0
 			}
@@ -102,6 +105,7 @@ export const useReadingProgress = ({
 		setReadingProgress({
 			progress: payload.progress,
 			chapter: {
+				id: payload.chapter.chapterId,
 				link: payload.chapter.chapterLink,
 				progress: payload.chapter.chapterProgress
 			}

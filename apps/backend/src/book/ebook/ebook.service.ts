@@ -72,6 +72,7 @@ export class EbookService {
 					.map(({ text, name, romanNumber, readingTime, id }) =>
 						getServerBookHtml({
 							name,
+							id,
 							sectionId: `${slugify(name + ' ' + title)}_${id}`,
 							text,
 							readingTime,

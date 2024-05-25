@@ -15,6 +15,7 @@ export interface WebviewMessageType {
 		scrollTop: number
 		progress: number
 		chapter: {
+			chapterId: number
 			chapterLink: string
 			chapterProgress: number
 		}
@@ -56,6 +57,7 @@ export const useReaderMessage = ({
 				scrollTop: payload.scrollTop,
 				progress: payload.progress,
 				chapter: {
+					chapterId: payload.chapter.chapterId,
 					chapterLink: payload.chapter.chapterLink,
 					chapterProgress: payload.chapter.chapterProgress
 				}

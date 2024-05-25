@@ -2,13 +2,11 @@ import { useTypedNavigation } from '@/hooks'
 import type { ReadingProgressType } from '@/screens/reading/hooks/useReadingProgress'
 import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import { AnimatedView } from '@/ui/animated-components'
-import ProgressBar from '@/ui/progress-bar/progress-bar'
-import { screenHeight, windowHeight } from '@/utils/dimensions'
 import Slider from '@react-native-community/slider'
 import type { FunctionType } from 'global/types'
-import { ArrowLeft, CaseSensitive, ListOrdered } from 'icons'
+import { ArrowLeft, CaseSensitive, ListOrdered, NotePen } from 'icons'
 import type { FC } from 'react'
-import { StatusBar, View } from 'react-native'
+import { View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -18,15 +16,15 @@ interface ReaderMenuProperties {
 	onSelectThemeIconPress: FunctionType
 	colorScheme: ThemePackType
 	readingProgress: ReadingProgressType
+	onProgressChange: (value: number) => void
 }
-
-const navbarHeight =
-	screenHeight - windowHeight + (StatusBar.currentHeight || 24)
-const ReaderHeader: FC<ReaderMenuProperties> = ({
+// Переиминовать на readerMenu
+const ReaderMenu: FC<ReaderMenuProperties> = ({
 	visible = false,
 	onChapterIconPress,
 	colorScheme,
 	readingProgress,
+	onProgressChange,
 	onSelectThemeIconPress
 }) => {
 	const { navigate } = useTypedNavigation()
@@ -34,7 +32,8 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 	const fadeAnimation = useAnimatedStyle(() => ({
 		opacity: withTiming(Boolean(visible) ? 1 : 0, { duration: 200 })
 	}))
-	console.log(StatusBar.currentHeight)
+
+	console.log(readingProgress.progress, 'readingProgress.progress / 100')
 	return (
 		<View className='absolute h-screen w-full'>
 			<AnimatedView
@@ -55,21 +54,14 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 							color={colorScheme.colorPalette.text}
 							onPress={() => navigate('Library')}
 						/>
-						<View className='ml-auto w-1/2'>
-							<ProgressBar
-								className='mb-1.5'
-								tintColor={colorScheme.colorPalette.secondary}
-								trackTintColor={colorScheme.colorPalette.background.lighter}
-								progress={(readingProgress.chapter.progress || 0) / 100}
-							/>
-							<ProgressBar
-								tintColor={colorScheme.colorPalette.primary}
-								trackTintColor={colorScheme.colorPalette.background.lighter}
-								progress={readingProgress.progress / 100}
-							/>
-						</View>
 					</View>
 					<View className='flex-row items-center gap-6'>
+						<NotePen
+							width={24}
+							height={24}
+							color={colorScheme.colorPalette.text}
+							onPress={onChapterIconPress}
+						/>
 						<ListOrdered
 							width={28}
 							height={28}
@@ -87,7 +79,7 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 			</AnimatedView>
 
 			<AnimatedView
-				className='absolute z-50 mb-0 mt-0 w-full flex-1 justify-center border-t-2'
+				className='absolute z-50 w-full flex-1 justify-center border-t-2 pb-2 pt-2'
 				style={[
 					fadeAnimation,
 					{
@@ -96,17 +88,22 @@ const ReaderHeader: FC<ReaderMenuProperties> = ({
 						borderTopColor: colorScheme.colorPalette.background.lighter
 					}
 				]}>
+				{/*TODO: сделать при переходах запись в стор и возможность вернутся позже к конкретному месту*/}
+				{/*TODO: мигрировать на  https://www.npmjs.com/package/react-native-awesome-slider и добавить шаги и метки мжду глававми*/}
 				<Slider
-					style={{ width: 200, height: 40 }}
-					minimumValue={0}
-					value={10}
+					minimumValue={0.1}
 					maximumValue={1}
-					minimumTrackTintColor='#FFFFFF'
-					maximumTrackTintColor='#000000'
+					step={0.001}
+					minimumTrackTintColor={colorScheme.colorPalette.primary}
+					thumbTintColor={colorScheme.colorPalette.primary}
+					maximumTrackTintColor={colorScheme.colorPalette.background.lighter}
+					value={readingProgress.progress / 100}
+					onSlidingComplete={onProgressChange}
 				/>
+				{/*TODO: Сделать текст нормально  с отображением прогресса и сколько осталось чтобы дочитать */}
 			</AnimatedView>
 		</View>
 	)
 }
 
-export default ReaderHeader
+export default ReaderMenu

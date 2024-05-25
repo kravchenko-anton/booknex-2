@@ -24,7 +24,8 @@ export const calculateProgress = `
        progress: (currentScrollPosition / (document.body.scrollHeight - document.body.clientHeight) * 100),
        chapter: {
         chapterLink: chapters[currentChapter].id,
-        chapterProgress: currentChapterProgress
+        chapterProgress: currentChapterProgress,
+        chapterId: chapters[currentChapter].getAttribute('data-id')
        }
      }
    }));

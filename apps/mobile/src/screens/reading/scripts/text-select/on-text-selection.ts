@@ -1,11 +1,8 @@
-import type {
-	QuoteAndNoteType,
-	SelectionType
-} from '@/screens/reading/hooks/useReader'
+import type { SelectionType } from '@/screens/reading/hooks/useReader'
 import { selectionKeys } from '@/screens/reading/scripts/text-select/text-select-menu'
+import type { QuoteAndNoteType } from '@/screens/reading/store/notes-store'
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
-import type { Dispatch, SetStateAction } from 'react'
 import { Linking, NativeModules, Platform } from 'react-native'
 
 const deviceLanguage =
@@ -25,13 +22,14 @@ const textSelectionValidation = (selectedText: string) => {
 export interface OnTextSelectionType {
 	key: string
 	activeSelectedContent: SelectionType
-	setEbookQuotesAndNotes: Dispatch<SetStateAction<QuoteAndNoteType[]>>
+	setEbookQuotesAndNotes: (value: QuoteAndNoteType) => void
 	removeAllSelection: () => void
+	bookSlug: string
 }
 
-//TODO: добавить типизации
 export const onTextSelection = async ({
 	activeSelectedContent,
+	bookSlug,
 	setEbookQuotesAndNotes,
 	key,
 	removeAllSelection
@@ -39,27 +37,24 @@ export const onTextSelection = async ({
 	if (key === selectionKeys.note) {
 		if (!textSelectionValidation(activeSelectedContent.text)) return
 		console.log(activeSelectedContent, 'create note')
-		setEbookQuotesAndNotes(previous => [
-			...previous,
-			{
-				type: 'note',
-				text: activeSelectedContent.text,
-				range: activeSelectedContent.range
-			}
-		])
+
+		setEbookQuotesAndNotes({
+			type: 'note',
+			text: activeSelectedContent.text,
+			range: activeSelectedContent.range,
+			bookSlug
+		})
 	}
 
 	if (key === selectionKeys.quote) {
 		if (!textSelectionValidation(activeSelectedContent.text)) return
 		console.log(activeSelectedContent, 'create quote')
-		setEbookQuotesAndNotes(previous => [
-			...previous,
-			{
-				type: 'quote',
-				text: activeSelectedContent.text,
-				range: activeSelectedContent.range
-			}
-		])
+		setEbookQuotesAndNotes({
+			type: 'quote',
+			text: activeSelectedContent.text,
+			range: activeSelectedContent.range,
+			bookSlug
+		})
 	}
 
 	if (key === selectionKeys.share) {

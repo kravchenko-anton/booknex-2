@@ -2,20 +2,26 @@ import { useTypedRoute } from '@/hooks'
 import ReaderChapters from '@/screens/reading/chapters-modal/reader-chapters'
 import { useReader } from '@/screens/reading/hooks/useReader'
 import ReaderCustomization from '@/screens/reading/reader-customization/reader-customization'
-import ReaderHeader from '@/screens/reading/reader-header/reader-header'
+import ReaderMenu from '@/screens/reading/reader-menu/reader-menu'
 import ReaderViewer from '@/screens/reading/reader-viewer/reader-viewer'
 import { Loader } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import { screenHeight } from '@/utils/dimensions'
+import { useEffect } from 'react'
 
 const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()
 	const reader = useReader(params.slug, params.initialScrollPosition)
+	useEffect(() => {
+		console.log('ebookQuotesAndNotes changed', reader.ebookQuotesAndNotes)
+		reader.viewerReference.current?.injectJavaScript(`
+    	wrapTextWithBoldTag(${JSON.stringify(reader.ebookQuotesAndNotes)});
+    `)
+	}, [reader.ebookQuotesAndNotes])
 	if (!reader.ebook || reader.ebookRequestLoading)
 		return (
 			<Loader background={reader.colorScheme.colorPalette.background.normal} />
 		)
-
 	console.log('ebook')
 	return (
 		<>
@@ -34,8 +40,9 @@ const Reader = () => {
 				/>
 			</AnimatedView>
 			<ReaderViewer
-				setEbookQuotesAndNotes={reader.setEbookQuotesAndNotes}
 				ebookQuotesAndNotes={reader.ebookQuotesAndNotes}
+				bookSlug={params.slug}
+				setEbookQuotesAndNotes={reader.setEbookQuotesAndNotes}
 				activeSelectedContent={reader.activeSelectedContent}
 				colorScheme={reader.colorScheme}
 				styleTag={reader.styleTag}
@@ -50,7 +57,7 @@ const Reader = () => {
 				}
 				onMessage={reader.onMessage}
 			/>
-			<ReaderHeader
+			<ReaderMenu
 				colorScheme={reader.colorScheme}
 				readingProgress={reader.readingProgress}
 				visible={
@@ -60,6 +67,11 @@ const Reader = () => {
 				}
 				onChapterIconPress={() => reader.openModal.chaptersList()}
 				onSelectThemeIconPress={() => reader.openModal.readingSettings()}
+				onProgressChange={value =>
+					reader.viewerReference.current?.injectJavaScript(`
+					 scrollToProgress("${value}")
+				`)
+				}
 			/>
 
 			<ReaderChapters

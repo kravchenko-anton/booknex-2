@@ -1,7 +1,8 @@
-import type { QuoteAndNoteType } from '@/screens/reading/hooks/useReader'
 import { finishBookButton } from '@/screens/reading/scripts/finish-book-html'
 import { injectFont } from '@/screens/reading/scripts/font-injection'
 import { injectStartScripts } from '@/screens/reading/scripts/injectStartScripts'
+import { selectMenuHtml } from '@/screens/reading/scripts/text-select/text-selection-scripts'
+import type { QuoteAndNoteType } from '@/screens/reading/store/notes-store'
 import { getFileUrl } from 'global/api-config'
 
 interface ComposeReaderViewHtmlProperties {
@@ -24,14 +25,14 @@ export const composeReaderViewHtml = ({
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 				<title>${title}</title>
 				<style>${injectFont()}</style>
-	
 			</head>
-		
 			<style>${defaultProperties.theme}</style>
+		${selectMenuHtml}
+			
 			<div style="margin-bottom: 40px; user-select: none;">
 				<img style='width:100%; height: 300px; object-fit: contain; object-position: center; padding-top: 40px'
 					 src="${getFileUrl(picture)}" alt="${title}"
-					    						onerror="this.style.display='none';"
+					onerror="this.style.display='none';"
 					  />
 				<h1>${title}</h1>
 			</div>
@@ -40,6 +41,5 @@ export const composeReaderViewHtml = ({
 			</div>
 
 			${finishBookButton}
-		
-			${injectStartScripts(defaultProperties.scrollPosition, defaultProperties.ebookQuotesAndNotes)}
+			${injectStartScripts(defaultProperties.scrollPosition, [])}
 	`
