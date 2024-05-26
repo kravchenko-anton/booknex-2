@@ -13,7 +13,7 @@ export const getServerBookHtml = ({
 	id,
 	readingTime,
 	romanNumber
-}: GetServerBookHtmlType) => `<section id="${sectionId}" data-id="${id}">
+}: GetServerBookHtmlType) => `<section id="${sectionId}" data-title="${name}">
 <div style="width: 100%; user-select: none !important; margin-bottom: 30px; margin-top: 30px;">
 	<h4 style="padding: 0; font-size: 18px; margin: 0 0 4px;">${name}</h4>
 	<div style=" gap: 10px; display: flex; align-items: center;">

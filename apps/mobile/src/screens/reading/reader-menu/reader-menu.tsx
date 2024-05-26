@@ -47,7 +47,7 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 					}
 				]}>
 				<View className='mt-0 w-full flex-row items-center justify-between px-4 pb-2.5 pt-2.5'>
-					<View className='w-2/3 flex-row items-center'>
+					<View className=' flex-row items-center'>
 						<ArrowLeft
 							width={28}
 							height={28}
@@ -79,7 +79,7 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 			</AnimatedView>
 
 			<AnimatedView
-				className='absolute z-50 w-full flex-1 justify-center border-t-2 pb-2 pt-2'
+				className='absolute z-50 w-full flex-1 justify-center border-t-2 pb-1 pt-2'
 				style={[
 					fadeAnimation,
 					{
@@ -89,21 +89,25 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 					}
 				]}>
 				{/*TODO: сделать при переходах запись в стор и возможность вернутся позже к конкретному месту*/}
-				<View>
-					<Title className='text-center text-white'>
-						{Math.round(readingProgress.progress)}%
-					</Title>
-					<Slider
-						minimumValue={0}
-						maximumValue={1}
-						step={0.001}
-						minimumTrackTintColor={colorScheme.colorPalette.primary}
-						thumbTintColor={colorScheme.colorPalette.primary}
-						maximumTrackTintColor={colorScheme.colorPalette.primary}
-						value={readingProgress.progress / 100}
-						onSlidingComplete={onProgressChange}
-					/>
+				<View className='mb-1'>
+					<View className='flex-row items-center justify-between px-4 '>
+						<Title>{readingProgress.chapter.title}</Title>
+						<Title>
+							{(100 - readingProgress.chapter.progress).toFixed(2)}% left
+						</Title>
+					</View>
 				</View>
+				<Slider
+					minimumValue={0}
+					maximumValue={1}
+					step={0.001}
+					minimumTrackTintColor={colorScheme.colorPalette.primary}
+					thumbTintColor={colorScheme.colorPalette.primary}
+					maximumTrackTintColor={colorScheme.colorPalette.primary}
+					value={readingProgress.progress / 100}
+					onSlidingComplete={onProgressChange}
+				/>
+
 				{/*TODO: Сделать текст нормально  с отображением прогресса и сколько осталось чтобы дочитать */}
 			</AnimatedView>
 		</View>

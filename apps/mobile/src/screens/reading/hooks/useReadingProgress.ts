@@ -15,7 +15,7 @@ export interface ReadingProgressType {
 	progress: number
 	chapter: {
 		link: string
-		id: number
+		title: string
 		progress: number
 	}
 }
@@ -31,10 +31,9 @@ export const useReadingProgress = ({
 	const [startReadingDate, setStartReadingDate] = useState(getTimeDate())
 	const [startReadingProgress, setStartReadingProgress] = useState(0)
 	const { addListener } = useTypedNavigation()
-	const { updateStartFromReadingScreen } = useReadingProgressStore(state => ({
-		updateStartFromReadingScreen: state.updateStartFromReadingScreen,
-		history: state.history
-	}))
+	const updateStartFromReadingScreen = useReadingProgressStore(
+		state => state.updateStartFromReadingScreen
+	)
 	const newProgress = useReadingProgressStore(state => state.newProgress)
 
 	const [scrollPosition, setScrollPosition] = useState(
@@ -43,7 +42,7 @@ export const useReadingProgress = ({
 	const [readingProgress, setReadingProgress] = useState<ReadingProgressType>({
 		progress: 0,
 		chapter: {
-			id: 0,
+			title: '',
 			link: '',
 			progress: 0
 		}
@@ -86,7 +85,7 @@ export const useReadingProgress = ({
 		setReadingProgress({
 			progress: 0,
 			chapter: {
-				id: 0,
+				title: '',
 				link: '',
 				progress: 0
 			}
@@ -105,7 +104,7 @@ export const useReadingProgress = ({
 		setReadingProgress({
 			progress: payload.progress,
 			chapter: {
-				id: payload.chapter.chapterId,
+				title: payload.chapter.chapterTitle,
 				link: payload.chapter.chapterLink,
 				progress: payload.chapter.chapterProgress
 			}

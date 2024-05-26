@@ -1,33 +1,28 @@
 import api from '@/api'
 
+import { useTypedNavigation } from '@/hooks'
 import { useFinishBook } from '@/screens/reading/hooks/useFinishBook'
 import { useModalReference } from '@/screens/reading/hooks/useModalReference'
 import { useReaderLoading } from '@/screens/reading/hooks/useReaderLoading'
 import { useReaderMessage } from '@/screens/reading/hooks/useReaderMessage'
 import { useReadingProgress } from '@/screens/reading/hooks/useReadingProgress'
-import { useStatusBarStyle } from '@/screens/reading/hooks/useStatusBarStyle'
-import { useStyleTag } from '@/screens/reading/hooks/useStyleTag'
+import {
+	getStyleTag,
+	injectStyle
+} from '@/screens/reading/scripts/styles-injection'
 import { useCustomizationStore } from '@/screens/reading/store/customization-store'
-import { useNotesStore } from '@/screens/reading/store/notes-store'
+import { useNotesStore } from '@/screens/reading/store/reader-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
-export type SelectionType = {
-	text: string
-	range: {
-		startOffset: number
-		endOffset: number
-		xpath: string
-	}
-	isOverlappingMark: boolean
-}
 //TODO: переписать на mobx
 export const useReader = (slug: string, initialScrollPosition: number) => {
+	const { setOptions } = useTypedNavigation()
 	const { setEbookQuotesAndNotes, ebookQuotesAndNotes } = useNotesStore(
 		state => ({
-			ebookQuotesAndNotes: state.notesAndQuotes,
+			ebookQuotesAndNotes: [],
 			setEbookQuotesAndNotes: state.newNoteOrQuote
 		})
 	)
@@ -47,17 +42,6 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	)
 	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
 	const viewerReference = useRef<WebView>(null)
-
-	const [activeSelectedContent, setActiveSelectedContent] =
-		useState<SelectionType>({
-			text: '',
-			range: {
-				startOffset: 0,
-				endOffset: 0,
-				xpath: ''
-			},
-			isOverlappingMark: false
-		})
 	const {
 		readingProgress,
 		scrollPosition,
@@ -77,8 +61,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		finishReadingLoading,
 		onFinishBookPress: onFinish,
 		onContentLoadEnd: () => setReaderLoading(false),
-		onScroll: updateReadingProgress,
-		setActiveSelectedContent
+		onScroll: updateReadingProgress
 	})
 
 	const { openModal, modalRefs } = useModalReference(setReaderHeaderVisible, {
@@ -88,20 +71,50 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 			)
 	})
 
-	useStatusBarStyle({
-		colorScheme,
-		isVisible: readerHeaderVisible && !readerLoading
+	const styleTag = getStyleTag({
+		colorPalette: colorScheme.colorPalette,
+		fontFamily: restUiProperties.font.fontFamily,
+		fontSize: restUiProperties.fontSize,
+		lineHeight: restUiProperties.lineHeight,
+		padding: restUiProperties.padding
 	})
 
-	const { defaultProperties, styleTag } = useStyleTag(
-		{ colorScheme, ...restUiProperties },
+	// eslint-disable-next-line
+	const [defaultProperties] = useState({
 		scrollPosition,
+		theme: styleTag,
 		ebookQuotesAndNotes
-	)
+	})
+	useEffect(() => {
+		setOptions({
+			statusBarStyle: colorScheme.statusBar,
+			navigationBarColor: colorScheme.colorPalette.background.darker,
+			navigationBarHidden: !readerHeaderVisible,
+			statusBarTranslucent: true,
+			statusBarHidden: !readerHeaderVisible,
+			statusBarColor: colorScheme.colorPalette.background.darker
+		})
+	}, [colorScheme, setOptions, readerHeaderVisible])
+
+	useEffect(() => {
+		console.log('ebookQuotesAndNotes changed', ebookQuotesAndNotes)
+		viewerReference.current?.injectJavaScript(`
+    	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)});
+    `)
+	}, [ebookQuotesAndNotes])
+
+	useEffect(() => {
+		viewerReference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
+	}, [styleTag])
+	useEffect(() => {
+		console.log('ebookQuotesAndNotes changed', ebookQuotesAndNotes)
+		viewerReference.current?.injectJavaScript(`
+    	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)});
+    `)
+	}, [ebookQuotesAndNotes, setEbookQuotesAndNotes])
 
 	return {
 		ebook,
-		activeSelectedContent,
 		readerLoading,
 		loaderAnimation,
 		readerHeaderVisible,

@@ -14,12 +14,10 @@ export const useModalReference = (
 
 	const chaptersListModalReference = useRef<BottomSheetModal>(null)
 	const readingSettingsModalReference = useRef<BottomSheetModal>(null)
-	// closing all modals when leaving the screen
 	const unsubscribe = addListener('beforeRemove', () => {
 		setReaderUiVisible(false)
 		readingSettingsModalReference.current?.close()
 		chaptersListModalReference.current?.close()
-
 		return () => unsubscribe()
 	})
 

@@ -1,5 +1,4 @@
-import { textSElectionLimit } from '@/screens/reading/scripts/text-select/on-text-selection'
-
+export const textSElectionLimit = 1200
 export const onSelectTextScript = `
 let position = { x: 0, y: 0 };
 let timeoutId = null;
@@ -43,28 +42,28 @@ export const selectMenuHtml = `
 <img class="select-menu-reaction-item"  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/People/Writing%20Hand.webp" alt="Writing Hand" width="30" height="30" />
 </div>
 <div class="select-default-menu">
-<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
-<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+<svg id="text-menu-translate" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+<svg id="text-menu-share" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
 </div>
 </div>
 `
 export const selectMenuActions = `
-	const noteButton = document.getElementById('note');
-`
-
-export const logAllEvents = `
-	const events = [
-    'click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave',
-    'contextmenu', 'wheel', 'select', 'input', 'keydown', 'keyup', 'keypress', 'touchstart', 'touchend', 'touchmove',
-    'resize', 'scroll', 'zoom', 'focus', 'blur', 'select', 'change', 'submit', 'reset', 'play', 'pause', 'loadedmetadata',
-    'loadstart', 'progress', 'error', 'abort', 'load', 'beforeunload', 'unload', 'offline', 'online', 'toggle'
-];
-
-events.forEach(eventType => {
-    document.addEventListener(eventType, (event) => {
-    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selectionEnd', payload: { eventType } }));
-    });
-});
+	// if press post message 
+	const translateButton = document.getElementById('text-menu-translate');
+	const shareButton = document.getElementById('text-menu-share');
+	
+	translateButton.addEventListener('click', () => {
+		const activeSelection = document.getSelection().toString();
+		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'translate', payload: {text:activeSelection} }));
+		window.getSelection().removeAllRanges();
+	});
+	
+	shareButton.addEventListener('click', () => {
+		const activeSelection = document.getSelection().toString();
+		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', payload: {text:activeSelection} }));
+		window.getSelection().removeAllRanges();
+	});
+	
 `
 
 export const textSelectMenu = `
@@ -86,6 +85,7 @@ document.addEventListener('contextmenu', (e) => {
     isFirstSelection = true;	
     const activeSelection = document.getSelection();
 		contextMenuTextSelect	= activeSelection.toString();
+		if (contextMenuTextSelect.length === 0) return;
     const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
     selectMenu.style.top =(rect.top + window.scrollY - 60)  + 'px';
     selectMenu.style.display = 'block';

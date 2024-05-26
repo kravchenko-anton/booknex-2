@@ -5,13 +5,15 @@ export const calculateProgress = `
 			 let currentChapterProgress = 0;
 			 let currentChapter = 0;
 			  let currentChapterLink = '';
+			  let currentChapterTitle = '';
 			  chapters.forEach((chapter, index) => {
          const chapterStart = chapter.offsetTop - 1;
          const chapterEnd = chapterStart + chapter.clientHeight;
          const chapterProgress = (currentScrollPosition - chapterStart) / (chapterEnd - chapterStart) * 100;
-          
+         const chapterTitle = chapter.getAttribute('data-title');
          if (chapterProgress >= 0 && chapterProgress <= 100) {
           currentChapterProgress = chapterProgress;
+          currentChapterTitle = chapterTitle;
           currentChapter = index;
           currentChapterLink = chapter.id;
          }
@@ -25,7 +27,7 @@ export const calculateProgress = `
        chapter: {
         chapterLink: chapters[currentChapter].id,
         chapterProgress: currentChapterProgress,
-        chapterId: chapters[currentChapter].getAttribute('data-id')
+        chapterTitle: currentChapterTitle
        }
      }
    }));

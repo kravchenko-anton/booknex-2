@@ -1,21 +1,29 @@
-import type { SelectionType } from '@/screens/reading/hooks/useReader'
+import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
+import { Linking, NativeModules, Platform } from 'react-native'
 import type { WebViewMessageEvent } from 'react-native-webview'
+
+const deviceLanguage =
+	Platform.OS === 'ios'
+		? NativeModules.SettingsManager.settings.AppleLocale // iOS
+		: NativeModules.I18nManager.localeIdentifier // Android
 
 export enum ReaderMessageType {
 	Scroll = 'scroll',
 	SelectionLimitFail = 'selection-limit-fail',
 	FinishLoading = 'finish-loading',
 	FinishBook = 'finishBook',
-	selectText = 'selectText'
+	Share = 'share',
+	Translate = 'translate'
 }
 export interface WebviewMessageType {
 	type: ReaderMessageType
-	payload: SelectionType & {
+	payload: {
+		text: string
 		scrollTop: number
 		progress: number
 		chapter: {
-			chapterId: number
+			chapterTitle: string
 			chapterLink: string
 			chapterProgress: number
 		}
@@ -32,13 +40,11 @@ export interface ReaderMessageProperties {
 	finishReadingLoading: boolean
 	onFinishBookPress: () => void
 	onContentLoadEnd: () => void
-	setActiveSelectedContent: (content: SelectionType) => void
 }
 
 export const useReaderMessage = ({
 	onFinishBookPress,
 	onContentLoadEnd,
-	setActiveSelectedContent,
 	onScroll,
 	finishReadingLoading
 }: ReaderMessageProperties) => {
@@ -50,6 +56,14 @@ export const useReaderMessage = ({
 			console.log('Finish loading')
 			onContentLoadEnd()
 		}
+		if (type === ReaderMessageType.Share) {
+			await share(payload.text)
+		}
+		if (type === ReaderMessageType.Translate) {
+			const link = `https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${payload.text}`
+			console.log(link)
+			await Linking.openURL(link)
+		}
 		if (type === ReaderMessageType.SelectionLimitFail)
 			errorToast('Selected text is too long')
 		if (type === ReaderMessageType.Scroll)
@@ -57,7 +71,7 @@ export const useReaderMessage = ({
 				scrollTop: payload.scrollTop,
 				progress: payload.progress,
 				chapter: {
-					chapterId: payload.chapter.chapterId,
+					chapterTitle: payload.chapter.chapterTitle,
 					chapterLink: payload.chapter.chapterLink,
 					chapterProgress: payload.chapter.chapterProgress
 				}
@@ -65,13 +79,6 @@ export const useReaderMessage = ({
 		if (type === ReaderMessageType.FinishBook) {
 			if (finishReadingLoading) return
 			onFinishBookPress()
-		}
-		if (type === ReaderMessageType.selectText) {
-			setActiveSelectedContent({
-				range: payload.range,
-				text: payload.text,
-				isOverlappingMark: payload.isOverlappingMark
-			})
 		}
 	}
 
