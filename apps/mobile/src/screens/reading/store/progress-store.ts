@@ -16,7 +16,6 @@ export type libraryType =
 	  })
 	| null
 
-//TODO: добавить состояние загрузки, ошибкок и так далее. оптимизировать под оффлайн
 export interface ReadingHistoryType {
 	id: string
 	bookSlug: string
@@ -47,10 +46,8 @@ interface ReadingProgressStoreActionsType {
 	updateStartFromReadingScreen: (
 		data: Pick<ReadingHistoryType, 'id'> & { startFromReadingScreen: boolean }
 	) => void
-	getLibrary: () => libraryType
-	refetchStatistic: () => void
-	getStatistic: () => UserStatistics | null
-	refreshLibrary: () => void
+	fetchLibrary: (isRefetch?: boolean) => void
+	fetchStatistic: (isRefetch?: boolean) => void
 }
 export const useReadingProgressStore = create<
 	ReadingProgressStoreType & ReadingProgressStoreActionsType
@@ -58,48 +55,33 @@ export const useReadingProgressStore = create<
 	persist(
 		(set, getState) => ({
 			...initialState,
-			getLibrary: () => {
-				const library = getState().library
+			fetchLibrary: (isRefetch = false) => {
 				const history = getState().history
 				console.log('history in getLibrary', history)
-				if (history.length === 0 && library) {
-					console.log('return library from store, no history and library exist')
-					return library
-				}
+				if (history.length === 0 && !isRefetch)
+					return console.log('no history to fetch library')
 				api.user
 					.library(history)
-					.then(({ data: response }) => {
-						if (!response) return
-						console.log('return library from api,  history and library exist')
+					.then(({ data: result }) => {
+						if (!result) return
+						console.log('return library from api, no history and library exist')
 						set({
 							library: {
-								...response,
-								readingBooks: compareReadingBooks(
-									response.readingBooks,
-									history
-								)
+								...result,
+								readingBooks: compareReadingBooks(result.readingBooks, history)
 							},
 							history: []
 						})
-						return {
-							...response,
-							readingBooks: compareReadingBooks(response.readingBooks, history)
-						}
 					})
 					.catch(error => {
 						console.log(error, 'error in library sync')
 						errorToast('Failed to sync library')
 					})
-				return library
 			},
-			getStatistic: () => {
-				const { history, statistics } = getState()
-				if (history.length === 0 && statistics) {
-					console.log(
-						'return statistics from store, no history and statistics exist'
-					)
-					return statistics
-				}
+			fetchStatistic: (isRefetch = false) => {
+				const { history } = getState()
+				if (history.length === 0 && !isRefetch)
+					return console.log('no history to fetch statistics')
 				api.user
 					.statistics(history)
 					.then(({ data: response }) => {
@@ -114,76 +96,33 @@ export const useReadingProgressStore = create<
 						console.log(error, 'error in statistics sync')
 						errorToast('Failed to sync statistics')
 					})
-				return statistics
-			},
-			refetchStatistic: () => {
-				const { history } = getState()
-				api.user
-					.statistics(history)
-					.then(({ data: response }) => {
-						console.log(
-							'return statistics from api, no history and statistics exist',
-							response
-						)
-						set({ statistics: response, history: [] })
-					})
-					.catch(error => {
-						console.log(error, 'error in statistics sync')
-						errorToast('Failed to sync statistics')
-					})
-			},
-			refreshLibrary: () => {
-				const { history } = getState()
-				api.user
-					.library(history)
-					.then(({ data: response }) => {
-						if (!response) return
-						console.log('return library from api,  history and library exist')
-						set({
-							library: {
-								...response,
-								readingBooks: compareReadingBooks(
-									response.readingBooks,
-									history
-								)
-							},
-							history: []
-						})
-					})
-					.catch(error => {
-						console.log(error, 'error in library sync')
-						errorToast('Failed to sync library')
-					})
 			},
 			newProgress: newHistory => {
+				const history = getState().history
 				console.log('new progress', newHistory)
-				set(state => {
-					if (state.history.some(h => h.id === newHistory.id)) {
-						console.log(
-							'update info in old history',
-							newHistory.id,
-							newHistory.endProgress
+
+				if (history.some(h => h.id === newHistory.id))
+					set(state => ({
+						...state,
+						history: state.history.map(history =>
+							history.id === newHistory.id ? newHistory : history
 						)
-						return {
-							...state,
-							history: state.history.map(history =>
-								history.id === newHistory.id ? newHistory : history
-							)
-						}
-					}
-					console.log('add new history', newHistory.id, newHistory.endProgress)
-					if (
-						state.history.some(
-							h =>
-								h.bookSlug === newHistory.bookSlug &&
-								h.scrollPosition === newHistory.scrollPosition
-						)
-					) {
-						console.log('history with this scrollPosition already exist')
-						return { ...state }
-					}
-					return { ...state, history: [...state.history, newHistory] }
-				})
+					}))
+
+				if (
+					history.some(
+						h =>
+							h.bookSlug === newHistory.bookSlug &&
+							h.scrollPosition === newHistory.scrollPosition
+					)
+				)
+					return
+
+				set(state => ({
+					...state,
+					needSync: true,
+					history: [...state.history, newHistory]
+				}))
 			},
 			clearHistory: () =>
 				set(({ history, ...state }) => ({ ...state, history: [] })),

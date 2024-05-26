@@ -1,6 +1,7 @@
 import { useTypedNavigation } from '@/hooks'
 import type { ReadingProgressType } from '@/screens/reading/hooks/useReadingProgress'
 import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
+import { Title } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import Slider from '@react-native-community/slider'
 import type { FunctionType } from 'global/types'
@@ -32,7 +33,6 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 	const fadeAnimation = useAnimatedStyle(() => ({
 		opacity: withTiming(Boolean(visible) ? 1 : 0, { duration: 200 })
 	}))
-
 	console.log(readingProgress.progress, 'readingProgress.progress / 100')
 	return (
 		<View className='absolute h-screen w-full'>
@@ -89,17 +89,21 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 					}
 				]}>
 				{/*TODO: сделать при переходах запись в стор и возможность вернутся позже к конкретному месту*/}
-				{/*TODO: мигрировать на  https://www.npmjs.com/package/react-native-awesome-slider и добавить шаги и метки мжду глававми*/}
-				<Slider
-					minimumValue={0.1}
-					maximumValue={1}
-					step={0.001}
-					minimumTrackTintColor={colorScheme.colorPalette.primary}
-					thumbTintColor={colorScheme.colorPalette.primary}
-					maximumTrackTintColor={colorScheme.colorPalette.background.lighter}
-					value={readingProgress.progress / 100}
-					onSlidingComplete={onProgressChange}
-				/>
+				<View>
+					<Title className='text-center text-white'>
+						{Math.round(readingProgress.progress)}%
+					</Title>
+					<Slider
+						minimumValue={0}
+						maximumValue={1}
+						step={0.001}
+						minimumTrackTintColor={colorScheme.colorPalette.primary}
+						thumbTintColor={colorScheme.colorPalette.primary}
+						maximumTrackTintColor={colorScheme.colorPalette.primary}
+						value={readingProgress.progress / 100}
+						onSlidingComplete={onProgressChange}
+					/>
+				</View>
 				{/*TODO: Сделать текст нормально  с отображением прогресса и сколько осталось чтобы дочитать */}
 			</AnimatedView>
 		</View>

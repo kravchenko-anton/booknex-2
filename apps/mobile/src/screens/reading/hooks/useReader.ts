@@ -8,6 +8,7 @@ import { useReadingProgress } from '@/screens/reading/hooks/useReadingProgress'
 import { useStatusBarStyle } from '@/screens/reading/hooks/useStatusBarStyle'
 import { useStyleTag } from '@/screens/reading/hooks/useStyleTag'
 import { useCustomizationStore } from '@/screens/reading/store/customization-store'
+import { useNotesStore } from '@/screens/reading/store/notes-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useRef, useState } from 'react'
@@ -24,10 +25,12 @@ export type SelectionType = {
 }
 //TODO: переписать на mobx
 export const useReader = (slug: string, initialScrollPosition: number) => {
-	const { setEbookQuotesAndNotes, ebookQuotesAndNotes } = {
-		ebookQuotesAndNotes: [],
-		setEbookQuotesAndNotes: () => null
-	}
+	const { setEbookQuotesAndNotes, ebookQuotesAndNotes } = useNotesStore(
+		state => ({
+			ebookQuotesAndNotes: state.notesAndQuotes,
+			setEbookQuotesAndNotes: state.newNoteOrQuote
+		})
+	)
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),

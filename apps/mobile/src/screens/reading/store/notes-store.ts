@@ -26,7 +26,7 @@ interface ReadingProgressStoreActionsType {
 	newNoteOrQuote: (note: QuoteAndNoteType) => void
 }
 
-export const useReadingProgressStore = create<
+export const useNotesStore = create<
 	NoteStoreType & ReadingProgressStoreActionsType
 >()(
 	persist(
@@ -40,7 +40,7 @@ export const useReadingProgressStore = create<
 			}
 		}),
 		{
-			name: 'reading-progress-storage',
+			name: 'reading-notes',
 			storage: createJSONStorage(() => zustandStorage)
 		}
 	)

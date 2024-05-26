@@ -1,34 +1,19 @@
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
-import {
-	useReadingProgressStore,
-	type libraryType
-} from '@/screens/reading/store/progress-store'
+import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { BookCard, Flatlist, Loader, ScrollLayout, Title } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
 import { Color } from 'global/colors'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { RefreshControl } from 'react-native'
 
 const Library = () => {
 	const { navigate } = useTypedNavigation()
-	const [library, setLibrary] = useState<libraryType>(null)
-	const {
-		getLibrary,
-		clearHistory,
-		history,
-		library: storeLibrary
-	} = useReadingProgressStore(state => ({
-		getLibrary: state.getLibrary,
-		library: state.library,
-		history: state.history,
-		clearHistory: state.clearHistory
+	const { fetchLibrary, library } = useReadingProgressStore(state => ({
+		fetchLibrary: state.fetchLibrary,
+		library: state.library
 	}))
-	console.log('history', history)
-	useEffect(() => {
-		const parsingLibrary = getLibrary()
-		if (parsingLibrary) setLibrary(parsingLibrary)
-	}, [getLibrary, storeLibrary, setLibrary])
+	useEffect(fetchLibrary, [fetchLibrary])
 
 	if (!library) return <Loader />
 	if (
@@ -51,6 +36,7 @@ const Library = () => {
 					refreshing={false}
 					colors={[Color.white]}
 					progressBackgroundColor={Color.transparent}
+					onRefresh={() => fetchLibrary(true)}
 				/>
 			}>
 			<ReadingList data={library.readingBooks} navigate={navigate} />

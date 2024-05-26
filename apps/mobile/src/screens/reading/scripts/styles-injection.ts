@@ -1,4 +1,5 @@
 import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
+import { windowWidth } from '@/utils/dimensions'
 
 export const injectStyle = (style: string) => `
 	var style = document.createElement('style');
@@ -137,4 +138,50 @@ export const getStyleTag = ({
 		color: ${colorPalette.mark.text} !important;
 		border-radius: 4px !important;
 	}
+	
+				#select-menu {
+        background: ${colorPalette.background.darker} !important;
+        color: ${colorPalette.text} !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        height: 48px !important;
+        width: ${windowWidth * 0.95}px !important;
+        border-radius: 10px !important;
+    }
+
+
+			.select-menu-reaction {
+				display: flex !important;
+			}
+
+		.select-menu-reaction .select-menu-reaction-item {
+        padding: 8px 8px !important;
+        &:first-child {
+            padding-left: 10px !important;
+        }
+
+        &:last-child {
+            padding-right: 10px !important;
+				}
+    }
+
+    .select-default-menu {
+        border-left: 1px solid ${colorPalette.background.lighter} !important;
+				display: flex !important;
+				width: 100% !important;
+    }
+
+    .select-default-menu svg {
+        stroke: ${colorPalette.text} !important;
+				padding: 10px 10px;
+				&:first-child {
+					padding-left: 10px !important;
+				}
+
+				&:last-child {
+					padding-right: 10px !important;
+				}
+
+    }
 	`

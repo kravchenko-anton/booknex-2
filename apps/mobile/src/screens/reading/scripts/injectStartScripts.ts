@@ -3,7 +3,7 @@ import {
 	scrollCalculateProgress
 } from '@/screens/reading/scripts/calculate-progress'
 import {
-	extendedTextSelectionScript,
+	logAllEvents,
 	onSelectTextScript,
 	textSelectMenu
 } from '@/screens/reading/scripts/text-select/text-selection-scripts'
@@ -56,7 +56,7 @@ function findElementByXpath(element) {
 						${onSelectTextScript}
 						${textSelectMenu}
 						${scrollCalculateProgress}
-						${extendedTextSelectionScript}
+						${logAllEvents}
 						wrapTextWithBoldTag(${JSON.stringify(noteAndQuotes)})
 						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading' }))
 }

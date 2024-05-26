@@ -4,34 +4,23 @@ import { Button, Loader, ScrollLayout, Title } from '@/ui'
 import { CircularProgressBar } from '@/ui/progress-bar/circular-progress-bar'
 import { cn } from '@/utils'
 import type { BottomSheetModal } from '@gorhom/bottom-sheet'
-import type { UserStatistics } from 'global/api-client'
 import { Color } from 'global/colors'
 import { fromMsToMinutes } from 'global/utils/numberConvertor'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { RefreshControl, View } from 'react-native'
 
 const Profile = () => {
 	const sheetReference = useRef<BottomSheetModal>(null)
-
-	//TODO: переделать статистику чтобы сразу был рефеч
-	const [statistic, setStatistic] = useState<UserStatistics | null>(null)
-	const { getStatistic, history, refetchStatistic } = useReadingProgressStore(
+	const { statistic, fetchStatistic, history } = useReadingProgressStore(
 		state => ({
-			getStatistic: state.getStatistic,
-			history: state.history,
-			refetchStatistic: state.refetchStatistic
+			fetchStatistic: state.fetchStatistic,
+			statistic: state.statistics,
+			history: state.history
 		})
 	)
-	useEffect(() => {
-		const parsingStatistic = getStatistic()
-		if (parsingStatistic) setStatistic(parsingStatistic)
-	}, [getStatistic, setStatistic])
+	useEffect(fetchStatistic, [fetchStatistic])
+
 	if (!statistic) return <Loader />
-	console.log(
-		statistic.progressByCurrentWeek?.find(item => item.isCurrentDay)
-			?.dayProgress || 0,
-		'daySteakProgressPercentage'
-	)
 	return (
 		<ScrollLayout
 			className='px-2'
@@ -40,13 +29,13 @@ const Profile = () => {
 					refreshing={false}
 					colors={[Color.white]}
 					progressBackgroundColor={Color.transparent}
-					onRefresh={refetchStatistic}
+					onRefresh={() => fetchStatistic(true)}
 				/>
 			}>
 			<GoalSelectModal
 				sheetRef={sheetReference}
 				currentGoal={statistic.goalMinutes || 10}
-				refetch={refetchStatistic}
+				refetch={() => fetchStatistic(true)}
 			/>
 			<View className='bg-foreground border-bordered mt-4 rounded-lg border-[1px] p-2'>
 				<View className='mx-2 mb-6'>
