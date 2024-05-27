@@ -1,6 +1,6 @@
 import { authRoutes } from '@/navigation/auth-routes'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
-import { modalRoutes } from '@/navigation/modal-routes'
+import { fullScreenModalRoutes, modalRoutes } from '@/navigation/modal-routes'
 import type { TypeRootStackParameterListType } from '@/navigation/navigation-types'
 import { routes } from '@/navigation/user-routes'
 import { getRefreshToken } from '@/screens/auth/store/auth-helper'
@@ -24,7 +24,13 @@ import {
 const authRequiredRoutes = new Set(routes.map(route => route.name))
 const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
 
-const noBottomMenuRoutes = new Set(['Reader', 'BookReview', 'Search'])
+const noBottomMenuRoutes = new Set([
+	'Reader',
+	'BookReview',
+	'Search',
+	'CreateNote',
+	'Note'
+])
 
 const Navigation: FC = () => {
 	const { user, logout } = useAuthStore(state => ({
@@ -120,6 +126,19 @@ const Navigation: FC = () => {
 							key={route.name}
 							options={{
 								presentation: 'containedTransparentModal',
+								...options
+							}}
+							{...route}
+						/>
+					))}
+					{fullScreenModalRoutes.map(({ options, ...route }) => (
+						<Stack.Screen
+							key={route.name}
+							options={{
+								presentation: 'fullScreenModal',
+								contentStyle: {
+									backgroundColor: Color.background
+								},
 								...options
 							}}
 							{...route}

@@ -38,5 +38,11 @@ export interface ShortGenre {
      * @memberof ShortGenre
      */
     'icon': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShortGenre
+     */
+    'emoji': string;
 }
 

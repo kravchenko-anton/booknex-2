@@ -1,9 +1,9 @@
+import type { reactionsTitles } from '@/screens/reading/reactions'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-export type QuoteAndNoteType = {
-	type: 'quote' | 'note'
+export type ReactionType = {
 	text: string
 	bookSlug: string
 	range: {
@@ -11,34 +11,29 @@ export type QuoteAndNoteType = {
 		endOffset: number
 		xpath: string
 	}
+	reaction: reactionsTitles
 }
 export type ReaderStoreType = {
-	books: {
-		bookSlug: string
-		isLoading: boolean
-
-		notesAndQuotes: QuoteAndNoteType[]
-	}[]
+	reactions: ReactionType[]
 }
 
 const initialState: ReaderStoreType = {
-	books: []
+	reactions: []
 }
 
 interface ReadingProgressStoreActionsType {
-	newNoteOrQuote: (note: QuoteAndNoteType) => void
+	newReaction: (note: ReactionType) => void
 }
 
-export const useNotesStore = create<
+export const useReactionsStore = create<
 	ReaderStoreType & ReadingProgressStoreActionsType
 >()(
 	persist(
 		set => ({
 			...initialState,
-			newNoteOrQuote: note => {
+			newReaction: reaction => {
 				set(state => ({
-					...state
-					// notesAndQuotes: [...state.notesAndQuotes, note]
+					reactions: [...state.reactions, reaction]
 				}))
 			}
 		}),

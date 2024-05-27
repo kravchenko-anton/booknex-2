@@ -2,7 +2,7 @@ import { finishBookButton } from '@/screens/reading/scripts/finish-book-html'
 import { injectFont } from '@/screens/reading/scripts/font-injection'
 import { injectStartScripts } from '@/screens/reading/scripts/injectStartScripts'
 import { selectMenuHtml } from '@/screens/reading/scripts/text-selection-scripts'
-import type { QuoteAndNoteType } from '@/screens/reading/store/reader-store'
+import type { ReactionType } from '@/screens/reading/store/reader-store'
 import { getFileUrl } from 'global/api-config'
 
 interface ComposeReaderViewHtmlProperties {
@@ -12,7 +12,7 @@ interface ComposeReaderViewHtmlProperties {
 	defaultProperties: {
 		scrollPosition: number
 		theme: string
-		ebookQuotesAndNotes: QuoteAndNoteType[]
+		reactions: ReactionType[]
 	}
 }
 export const composeReaderViewHtml = ({
@@ -40,5 +40,5 @@ export const composeReaderViewHtml = ({
 			</div>
 			${selectMenuHtml}
 			${finishBookButton}
-			${injectStartScripts(defaultProperties.scrollPosition, [])}
+			${injectStartScripts(defaultProperties.scrollPosition, defaultProperties.reactions)}
 	`

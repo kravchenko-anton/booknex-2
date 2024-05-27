@@ -47,5 +47,11 @@ export interface FindOneGenreOutput {
      * @memberof FindOneGenreOutput
      */
     'icon': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FindOneGenreOutput
+     */
+    'emoji': string;
 }
 

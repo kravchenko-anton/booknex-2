@@ -13,6 +13,7 @@ const Field = <T extends Record<string, any>>({
 	icon: Icon,
 	className = '',
 	style = {},
+	placeholderTextColor = Color.gray,
 	isArea = false,
 	...properties
 }: FieldProperties<T>): JSX.Element | null => (
@@ -35,7 +36,7 @@ const Field = <T extends Record<string, any>>({
 						renderToHardwareTextureAndroid
 						className='text-lg'
 						autoCapitalize='none'
-						placeholderTextColor={Color.gray}
+						placeholderTextColor={placeholderTextColor}
 						defaultValue={properties.defaultValue}
 						value={value}
 						keyboardAppearance='dark'

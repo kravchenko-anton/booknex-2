@@ -38,5 +38,11 @@ export interface UserCatalogOutputDataInnerSelectedGenresInner {
      * @memberof UserCatalogOutputDataInnerSelectedGenresInner
      */
     'icon': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCatalogOutputDataInnerSelectedGenresInner
+     */
+    'emoji': string;
 }
 

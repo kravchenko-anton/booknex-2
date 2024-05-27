@@ -1,4 +1,5 @@
 import { ActivityService } from '@/src/activity/activity.service'
+import { ReturnGenreObject } from '@/src/genre/return.genre.object'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { Activities } from '@prisma/client'
 import { adminErrors } from 'global/errors'
@@ -20,11 +21,7 @@ export class RecommendationService {
 			},
 			select: {
 				selectedGenres: {
-					select: {
-						slug: true,
-						name: true,
-						icon: true
-					}
+					select: ReturnGenreObject
 				}
 			}
 		})

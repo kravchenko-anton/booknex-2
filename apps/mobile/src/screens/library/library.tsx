@@ -13,7 +13,7 @@ const Library = () => {
 		fetchLibrary: state.fetchLibrary,
 		library: state.library
 	}))
-	useEffect(fetchLibrary, [fetchLibrary])
+	useEffect(fetchLibrary, [fetchLibrary, library])
 
 	if (!library) return <Loader />
 	if (

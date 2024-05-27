@@ -6,7 +6,7 @@ import { successToast } from '@/utils/toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { UpdateRecommendationDto } from 'global/api-client'
 
-import { GenreElement } from '@/ui/genre-element/genre-element'
+import { SvgButton } from '@/ui/svg-button/svg-button'
 import { Color } from 'global/colors'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Close } from 'icons'
@@ -22,7 +22,7 @@ const UpdateRecommendation = () => {
 		select: data => data.data
 	})
 
-	const { mutateAsync: update, isLoading: updateLoading } = useMutation({
+	const { mutateAsync: update, isPending: updateLoading } = useMutation({
 		mutationKey: MutationKeys.recommendation.update,
 		mutationFn: (dto: UpdateRecommendationDto) =>
 			api.recommendation.updateRecommendation(dto),
@@ -60,7 +60,8 @@ const UpdateRecommendation = () => {
 				</View>
 				<View className='flex w-full flex-row flex-wrap justify-around'>
 					{genres.map(genre => (
-						<GenreElement
+						<SvgButton
+							altEmoji={genre.emoji}
 							title={genre.name}
 							svgUri={genre.icon}
 							key={genre.slug}

@@ -3,7 +3,7 @@ import { useTypedNavigation } from '@/hooks'
 import ManageRecommendationMenu from '@/screens/update-recommendation/manage-recommendation-menu'
 import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
-import { GenreElement } from '@/ui/genre-element/genre-element'
+import { SvgButton } from '@/ui/svg-button/svg-button'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { QueryKeys } from 'global/utils/query-keys'
@@ -45,8 +45,9 @@ const Featured = () => {
 				horizontal
 				data={featured.genres}
 				renderItem={({ item: genre }) => (
-					<GenreElement
+					<SvgButton
 						size='md'
+						altEmoji={genre.emoji}
 						svgUri={genre.icon}
 						title={genre.name}
 						onPress={() =>

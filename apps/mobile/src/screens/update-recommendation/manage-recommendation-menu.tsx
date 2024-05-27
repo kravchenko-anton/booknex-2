@@ -1,6 +1,6 @@
 import api from '@/api'
 import { Button, Title } from '@/ui'
-import { GenreElement } from '@/ui/genre-element/genre-element'
+import { SvgButton } from '@/ui/svg-button/svg-button'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import type { FunctionType } from 'global/types'
@@ -31,8 +31,9 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
 			</Title>
 			<View className='mb-4 flex flex-row flex-wrap'>
 				{selectedGenres.map(genre => (
-					<GenreElement
+					<SvgButton
 						size='sm'
+						altEmoji={genre.emoji}
 						className='mr-2'
 						key={genre.slug}
 						svgUri={genre.icon}

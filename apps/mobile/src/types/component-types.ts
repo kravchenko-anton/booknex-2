@@ -15,6 +15,7 @@ export type ViewDefaultProperties = Pick<
 export type FlatListDefaultProperties<T> = Pick<
 	FlatListProps<T>,
 	| 'horizontal'
+	| 'onScrollToIndexFailed'
 	| 'onScroll'
 	| 'onLayout'
 	| 'columnWrapperStyle'

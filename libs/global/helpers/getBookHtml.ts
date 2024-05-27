@@ -10,7 +10,6 @@ export const getServerBookHtml = ({
 	name,
 	text,
 	sectionId,
-	id,
 	readingTime,
 	romanNumber
 }: GetServerBookHtmlType) => `<section id="${sectionId}" data-title="${name}">

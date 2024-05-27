@@ -1,6 +1,6 @@
 import type { ThemePackType } from '@/screens/reading/reader-customization/theme-pack'
 import { composeReaderViewHtml } from '@/screens/reading/scripts/compose-html'
-import type { QuoteAndNoteType } from '@/screens/reading/store/reader-store'
+import type { ReactionType } from '@/screens/reading/store/reader-store'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
 import type { FunctionType } from 'global/types'
@@ -17,7 +17,7 @@ export interface ReaderViewerProperties {
 	defaultProperties: {
 		scrollPosition: number
 		theme: string
-		ebookQuotesAndNotes: QuoteAndNoteType[]
+		reactions: ReactionType[]
 	}
 	colorScheme: ThemePackType
 	onMessage: (event: WebViewMessageEvent) => Promise<void>

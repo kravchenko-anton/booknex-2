@@ -11,13 +11,12 @@
 		"boothSplash:android": "yarn react-native generate-bootsplash assets/logo.png  \\\n  --background-color=111113 \\\n  --logo-width=100 \\\n  --assets-path=assets \\\n"
 	},
 	"dependencies": {
-		"react-native-awesome-slider": "*",
 		"@gorhom/bottom-sheet": "*",
 		"@hookform/resolvers": "*",
-		"react-native-picker-select": "*",
-		"@react-native-community/slider": "*",
 		"@react-native-community/cli": "*",
+		"@react-native-community/cli-platform-android": "*",
 		"@react-native-community/netinfo": "*",
+		"@react-native-community/slider": "*",
 		"@react-native-google-signin/google-signin": "*",
 		"@react-navigation/native": "*",
 		"@react-navigation/native-stack": "*",
@@ -39,6 +38,7 @@
 		"react-native-gesture-handler": "*",
 		"react-native-linear-gradient": "*",
 		"react-native-mmkv": "*",
+		"react-native-picker-select": "*",
 		"react-native-reanimated": "*",
 		"react-native-safe-area-context": "*",
 		"react-native-screens": "*",

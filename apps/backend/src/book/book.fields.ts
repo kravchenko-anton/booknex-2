@@ -30,11 +30,7 @@ export const infoBySlugAdminFields = (slug: string) =>
 		pagesCount: true,
 		readingTime: true,
 		genres: {
-			select: {
-				name: true,
-				slug: true,
-				icon: true
-			}
+			select: ReturnGenreObject
 		},
 		ebook: true,
 		description: true,

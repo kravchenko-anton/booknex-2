@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 interface ReaderMenuProperties {
 	visible: boolean
+	bookTitle: string
 	onChapterIconPress: FunctionType
 	onSelectThemeIconPress: FunctionType
 	colorScheme: ThemePackType
@@ -23,6 +24,7 @@ interface ReaderMenuProperties {
 const ReaderMenu: FC<ReaderMenuProperties> = ({
 	visible = false,
 	onChapterIconPress,
+	bookTitle,
 	colorScheme,
 	readingProgress,
 	onProgressChange,
@@ -60,7 +62,7 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 							width={24}
 							height={24}
 							color={colorScheme.colorPalette.text}
-							onPress={onChapterIconPress}
+							onPress={() => navigate('Note')}
 						/>
 						<ListOrdered
 							width={28}
@@ -91,8 +93,10 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 				{/*TODO: сделать при переходах запись в стор и возможность вернутся позже к конкретному месту*/}
 				<View className='mb-1'>
 					<View className='flex-row items-center justify-between px-4 '>
-						<Title>{readingProgress.chapter.title}</Title>
-						<Title>
+						<Title size={'sm'} color={colorScheme.colorPalette.text}>
+							{readingProgress.chapter.title || bookTitle}
+						</Title>
+						<Title size={'sm'} color={colorScheme.colorPalette.text}>
 							{(100 - readingProgress.chapter.progress).toFixed(2)}% left
 						</Title>
 					</View>
@@ -107,8 +111,6 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 					value={readingProgress.progress / 100}
 					onSlidingComplete={onProgressChange}
 				/>
-
-				{/*TODO: Сделать текст нормально  с отображением прогресса и сколько осталось чтобы дочитать */}
 			</AnimatedView>
 		</View>
 	)

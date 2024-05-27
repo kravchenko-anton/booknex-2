@@ -1,3 +1,5 @@
+import { useTypedNavigation } from '@/hooks'
+import type { reactionsTitles } from '@/screens/reading/reactions'
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
 import { Linking, NativeModules, Platform } from 'react-native'
@@ -14,12 +16,19 @@ export enum ReaderMessageType {
 	FinishLoading = 'finish-loading',
 	FinishBook = 'finishBook',
 	Share = 'share',
-	Translate = 'translate'
+	Translate = 'translate',
+	Reaction = 'reaction'
 }
 export interface WebviewMessageType {
 	type: ReaderMessageType
 	payload: {
 		text: string
+		range: {
+			start: number
+			end: number
+			xpath: string
+		}
+		reaction: reactionsTitles
 		scrollTop: number
 		progress: number
 		chapter: {
@@ -34,10 +43,11 @@ export interface ReaderMessageProperties {
 	onScroll: (
 		payload: Omit<
 			WebviewMessageType['payload'],
-			'text' | 'isOverlappingMark' | 'range'
+			'text' | 'isOverlappingMark' | 'range' | 'reaction'
 		>
 	) => void
 	finishReadingLoading: boolean
+	slug: string
 	onFinishBookPress: () => void
 	onContentLoadEnd: () => void
 }
@@ -45,9 +55,11 @@ export interface ReaderMessageProperties {
 export const useReaderMessage = ({
 	onFinishBookPress,
 	onContentLoadEnd,
+	slug,
 	onScroll,
 	finishReadingLoading
 }: ReaderMessageProperties) => {
+	const { navigate } = useTypedNavigation()
 	const onMessage = async (event: WebViewMessageEvent) => {
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessageType
 		const { type, payload } = parsedEvent
@@ -63,6 +75,18 @@ export const useReaderMessage = ({
 			const link = `https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${payload.text}`
 			console.log(link)
 			await Linking.openURL(link)
+		}
+		if (type === ReaderMessageType.Reaction) {
+			navigate('CreateNote', {
+				slug,
+				text: payload.text,
+				range: {
+					start: payload.range.start,
+					end: payload.range.end,
+					xpath: payload.range.xpath
+				},
+				reaction: payload.reaction
+			})
 		}
 		if (type === ReaderMessageType.SelectionLimitFail)
 			errorToast('Selected text is too long')

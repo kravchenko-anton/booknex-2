@@ -987,10 +987,14 @@ components:
                     icon:
                       type: string
                       required: true
+                    emoji:
+                      type: string
+                      required: true
                   required:
                     - slug
                     - name
                     - icon
+                    - emoji
                 required: true
               statistics:
                 type: array
@@ -1116,10 +1120,14 @@ components:
               icon:
                 type: string
                 required: true
+              emoji:
+                type: string
+                required: true
             required:
               - slug
               - name
               - icon
+              - emoji
         bestSellingBooks:
           type: array
           items:
@@ -1203,10 +1211,13 @@ components:
           type: string
         icon:
           type: string
+        emoji:
+          type: string
       required:
         - slug
         - name
         - icon
+        - emoji
     FindOneGenreOutput:
       type: object
       properties:
@@ -1238,11 +1249,14 @@ components:
           type: string
         icon:
           type: string
+        emoji:
+          type: string
       required:
         - books
         - slug
         - name
         - icon
+        - emoji
     InfoBySlug:
       type: object
       properties:
@@ -1270,10 +1284,14 @@ components:
               icon:
                 type: string
                 required: true
+              emoji:
+                type: string
+                required: true
             required:
               - slug
               - name
               - icon
+              - emoji
         slug:
           type: string
         title:
@@ -1343,10 +1361,14 @@ components:
               icon:
                 type: string
                 required: true
+              emoji:
+                type: string
+                required: true
             required:
               - slug
               - name
               - icon
+              - emoji
         slug:
           type: string
         title:
@@ -1490,10 +1512,14 @@ components:
                     icon:
                       type: string
                       required: true
+                    emoji:
+                      type: string
+                      required: true
                   required:
                     - slug
                     - name
                     - icon
+                    - emoji
                 required: true
               slug:
                 type: string
@@ -1597,10 +1623,14 @@ components:
               icon:
                 type: string
                 required: true
+              emoji:
+                type: string
+                required: true
             required:
               - slug
               - name
               - icon
+              - emoji
           minItems: 1
       required:
         - title
@@ -1685,10 +1715,14 @@ components:
               icon:
                 type: string
                 required: true
+              emoji:
+                type: string
+                required: true
             required:
               - slug
               - name
               - icon
+              - emoji
           minItems: 1
     GoogleAuthDto:
       type: object
@@ -1791,10 +1825,14 @@ components:
                     icon:
                       type: string
                       required: true
+                    emoji:
+                      type: string
+                      required: true
                   required:
                     - slug
                     - name
                     - icon
+                    - emoji
                 required: true
             required:
               - slug
@@ -1843,10 +1881,14 @@ components:
               icon:
                 type: string
                 required: true
+              emoji:
+                type: string
+                required: true
             required:
               - slug
               - name
               - icon
+              - emoji
       required:
         - slug
         - title

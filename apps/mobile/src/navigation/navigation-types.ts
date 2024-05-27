@@ -1,3 +1,4 @@
+import type { reactionsTitles } from '@/screens/reading/reactions'
 import type { ParamListBase } from '@react-navigation/native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { ComponentType } from 'react'
@@ -11,6 +12,17 @@ export type TypeRootStackParameterListType = {
 	Login: undefined
 	Register: undefined
 	Profile: undefined
+	Note: undefined
+	CreateNote: {
+		slug: string
+		range: {
+			start: number
+			end: number
+			xpath: string
+		}
+		reaction: reactionsTitles
+		text: string
+	}
 	Welcome: undefined
 	Reader: { slug: string; initialScrollPosition: number }
 	UpdateRecommendation: undefined

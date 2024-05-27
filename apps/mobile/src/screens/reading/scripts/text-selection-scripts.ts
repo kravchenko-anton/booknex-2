@@ -1,3 +1,5 @@
+import { reactions } from '@/screens/reading/reactions'
+
 export const textSElectionLimit = 1200
 export const onSelectTextScript = `
 let position = { x: 0, y: 0 };
@@ -31,15 +33,26 @@ document.addEventListener('selectionchange', () => {
 	}
 });
 `
+
+export const logAllEvents = `
+	const events = [
+    'click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave',
+    'contextmenu', 'wheel', 'select', 'input', 'keydown', 'keyup', 'keypress', 'touchstart', 'touchend', 'touchmove',
+    'resize', 'scroll', 'zoom', 'focus', 'blur', 'select', 'change', 'submit', 'reset', 'play', 'pause', 'loadedmetadata',
+    'loadstart', 'progress', 'error', 'abort', 'load', 'beforeunload', 'unload', 'offline', 'online', 'toggle'
+];
+
+events.forEach(eventType => {
+    document.addEventListener(eventType, (event) => {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selectionEnd', payload: { eventType } }));
+    });
+});
+`
+
 export const selectMenuHtml = `
 <div id="select-menu" style="display: none; opacity: 0; position: absolute; left: 10px; top: 10px; z-index: 1000;  user-select: none; transition: opacity 0.5s ease-in-out;">
-<div class="select-menu-reaction">
-<img class="select-menu-reaction-item"  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Face%20With%20Symbols%20On%20Mouth.webp" alt="Face With Symbols On Mouth" width="30" height="30" />
-<img class="select-menu-reaction-item" src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Grinning%20Face%20With%20Smiling%20Eyes.webp" alt="Grinning Face With Smiling Eyes" width="30" height="30" />
-<img class="select-menu-reaction-item" src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Loudly%20Crying%20Face.webp" alt="Loudly Crying Face" width="30" height="30" />
-<img class="select-menu-reaction-item"  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Smiling%20Face%20With%20Hearts.webp" alt="Smiling Face With Hearts" width="30" height="30" />
-<img class="select-menu-reaction-item" src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Smileys/Anxious%20Face%20With%20Sweat.webp" alt="Anxious Face With Sweat" width="30" height="30" />
-<img class="select-menu-reaction-item"  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/People/Writing%20Hand.webp" alt="Writing Hand" width="30" height="30" />
+<div class="select-menu-reaction" id="select-menu-reaction">
+	${reactions.map(reaction => `<img src="${reaction.gif}" alt="${reaction.alt}" title="${reaction.title}" width="30" height="30" class="select-menu-reaction-item">`).join('')}
 </div>
 <div class="select-default-menu">
 <svg id="text-menu-translate" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
@@ -48,10 +61,9 @@ export const selectMenuHtml = `
 </div>
 `
 export const selectMenuActions = `
-	// if press post message 
 	const translateButton = document.getElementById('text-menu-translate');
 	const shareButton = document.getElementById('text-menu-share');
-	
+	const emojiButtons = document.querySelectorAll('.select-menu-reaction-item');
 	translateButton.addEventListener('click', () => {
 		const activeSelection = document.getSelection().toString();
 		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'translate', payload: {text:activeSelection} }));
@@ -64,18 +76,34 @@ export const selectMenuActions = `
 		window.getSelection().removeAllRanges();
 	});
 	
+	emojiButtons.forEach((button) => {
+		button.addEventListener('click', () => {
+		const activeSelection = document.getSelection().toString();
+		const range = document.getSelection().getRangeAt(0);
+    const startOffset = range.startOffset;
+    const endOffset = range.endOffset;
+		const xpath = findElementByXpath(range.startContainer.parentElement);
+			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'reaction', payload: {
+			text:activeSelection,
+			reaction: button.title,
+			range: {start: startOffset, end: endOffset, xpath: xpath},
+			 }}));
+			window.getSelection().removeAllRanges();
+		});
+	});	
+	
 `
-
+// TODO: сделать полное пропадание и isOverlappingMark
 export const textSelectMenu = `
 const selectMenu = document.getElementById('select-menu');
-selectMenu.style.opacity = '0';
 let contextMenuTextSelect = "";
+selectMenu.style.opacity = '0';
 selectMenu.style.display = 'none';
 selectMenu.style.pointerEvents = 'none';
 let isFirstSelection = true;
 	
 	document.addEventListener('click', (e) => {
-	isFirstSelection = true;
+		isFirstSelection = false;
    setTimeout(() => selectMenu.style.opacity = '0', 50);
    selectMenu.style.display = 'none';
 	 selectMenu.style.pointerEvents = 'none';
@@ -85,7 +113,22 @@ document.addEventListener('contextmenu', (e) => {
     isFirstSelection = true;	
     const activeSelection = document.getSelection();
 		contextMenuTextSelect	= activeSelection.toString();
-		if (contextMenuTextSelect.length === 0) return;
+		if (contextMenuTextSelect.length < 2) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'not-select-much-text', payload: {text:contextMenuTextSelect} }));
+		const reactionItems = document.querySelectorAll('.select-menu-reaction-item');
+		const isOverlappingMark = activeSelection.toString().includes('<mark>');
+	if (isOverlappingMark) {
+			reactionItems.forEach((item) => {
+				item.style.opacity = '0.5';
+				item.style.pointerEvents = 'none';
+			});
+		}
+		else {
+			reactionItems.forEach((item) => {
+				item.style.opacity = '1';
+				item.style.pointerEvents = 'auto';
+			});
+		}
+		
     const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
     selectMenu.style.top =(rect.top + window.scrollY - 60)  + 'px';
     selectMenu.style.display = 'block';
@@ -103,30 +146,3 @@ document.addEventListener('selectionchange', () => {
 `
 
 //TODO: доделать полностью функционал селекта текста чтобы при выборе и вдруг изменении epub, ничего не ломалось
-
-// export const extendedTextSelectionScript = `
-// 	document.addEventListener('displaySelectMenu', function(e) {
-//    	const selection = window.getSelection();
-//     const range = selection.getRangeAt(0);
-//     const selectionText = selection.toString();
-//     const isOverlappingMark = !!(selection.anchorNode.parentElement.closest('mark') || selection.focusNode.parentElement.closest('mark'))
-//     const startOffset = range.startOffset;
-//     const endOffset = range.endOffset;
-//    	const xpath = findElementByXpath(range.startContainer.parentElement);
-// 		if (selectionText.length === 0) return;
-// 					window.ReactNativeWebView.postMessage(
-// 					JSON.stringify({
-// 						type: 'selectText',
-// 						payload: {
-// 							text: selectionText,
-// 						  range: {
-//                     startOffset,
-//                     endOffset,
-//                     xpath
-//                 },
-// 						isOverlappingMark
-// 						}
-// 					})
-// 				)
-// 	});
-// `

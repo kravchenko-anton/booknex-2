@@ -48,6 +48,7 @@ const Reader = () => {
 			<ReaderMenu
 				colorScheme={reader.colorScheme}
 				readingProgress={reader.readingProgress}
+				bookTitle={reader.ebook.title}
 				visible={
 					reader.readerHeaderVisible && !reader.readerLoading
 						? !reader.ebookRequestLoading

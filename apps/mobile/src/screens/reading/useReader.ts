@@ -11,7 +11,7 @@ import {
 	injectStyle
 } from '@/screens/reading/scripts/styles-injection'
 import { useCustomizationStore } from '@/screens/reading/store/customization-store'
-import { useNotesStore } from '@/screens/reading/store/reader-store'
+import { useReactionsStore } from '@/screens/reading/store/reader-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useEffect, useRef, useState } from 'react'
@@ -20,12 +20,10 @@ import type WebView from 'react-native-webview'
 //TODO: переписать на mobx
 export const useReader = (slug: string, initialScrollPosition: number) => {
 	const { setOptions } = useTypedNavigation()
-	const { setEbookQuotesAndNotes, ebookQuotesAndNotes } = useNotesStore(
-		state => ({
-			ebookQuotesAndNotes: [],
-			setEbookQuotesAndNotes: state.newNoteOrQuote
-		})
-	)
+	const { newReaction, reactions } = useReactionsStore(state => ({
+		reactions: state.reactions,
+		newReaction: state.newReaction
+	}))
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
@@ -58,6 +56,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		onFinishComplete: clearProgress
 	})
 	const { onMessage } = useReaderMessage({
+		slug,
 		finishReadingLoading,
 		onFinishBookPress: onFinish,
 		onContentLoadEnd: () => setReaderLoading(false),
@@ -83,7 +82,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	const [defaultProperties] = useState({
 		scrollPosition,
 		theme: styleTag,
-		ebookQuotesAndNotes
+		reactions: reactions
 	})
 	useEffect(() => {
 		setOptions({
@@ -97,21 +96,21 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	}, [colorScheme, setOptions, readerHeaderVisible])
 
 	useEffect(() => {
-		console.log('ebookQuotesAndNotes changed', ebookQuotesAndNotes)
+		console.log('ebookQuotesAndNotes changed', reactions)
 		viewerReference.current?.injectJavaScript(`
-    	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)});
+    	wrapTextWithBoldTag(${JSON.stringify(reactions)});
     `)
-	}, [ebookQuotesAndNotes])
+	}, [reactions])
 
 	useEffect(() => {
 		viewerReference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 	}, [styleTag])
 	useEffect(() => {
-		console.log('ebookQuotesAndNotes changed', ebookQuotesAndNotes)
+		console.log('ebookQuotesAndNotes changed', reactions)
 		viewerReference.current?.injectJavaScript(`
-    	wrapTextWithBoldTag(${JSON.stringify(ebookQuotesAndNotes)});
+    	wrapTextWithBoldTag(${JSON.stringify(reactions)});
     `)
-	}, [ebookQuotesAndNotes, setEbookQuotesAndNotes])
+	}, [reactions, newReaction])
 
 	return {
 		ebook,
@@ -124,8 +123,8 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		modalRefs,
 		ebookRequestLoading,
 		readingProgress,
-		ebookQuotesAndNotes,
-		setEbookQuotesAndNotes,
+		reactions,
+		newReaction,
 		openModal,
 		onMessage,
 		defaultProperties,

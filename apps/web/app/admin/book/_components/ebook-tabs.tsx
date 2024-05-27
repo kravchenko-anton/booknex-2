@@ -35,6 +35,7 @@ const BookOverview: FC<EbookInfoProperties> = ({ bookSlug }) => {
 								chapters
 									.map(({ text, name, romanNumber, id, readingTime }) =>
 										getServerBookHtml({
+											id,
 											name,
 											romanNumber,
 											readingTime,

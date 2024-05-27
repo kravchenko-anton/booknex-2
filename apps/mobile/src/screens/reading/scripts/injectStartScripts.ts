@@ -4,15 +4,16 @@ import {
 } from '@/screens/reading/scripts/calculate-progress'
 
 import {
+	logAllEvents,
 	onSelectTextScript,
 	selectMenuActions,
 	textSelectMenu
 } from '@/screens/reading/scripts/text-selection-scripts'
-import type { QuoteAndNoteType } from '@/screens/reading/store/reader-store'
+import type { ReactionType } from '@/screens/reading/store/reader-store'
 
 export const injectStartScripts = (
 	startPosition: number,
-	noteAndQuotes: QuoteAndNoteType[]
+	noteAndQuotes: ReactionType[]
 ) => `
 <script>
 	function scrollToProgress(progress) {
@@ -58,6 +59,7 @@ function findElementByXpath(element) {
 						${textSelectMenu}
 						${selectMenuActions}
 						${scrollCalculateProgress}
+						${logAllEvents}
 						wrapTextWithBoldTag(${JSON.stringify(noteAndQuotes)})
 						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading' }))
 }
