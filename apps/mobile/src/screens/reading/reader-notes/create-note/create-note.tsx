@@ -5,6 +5,7 @@ import { useReactionsStore } from '@/screens/reading/store/reader-store'
 import { Field, Flatlist, Title } from '@/ui'
 import { SvgButton } from '@/ui/svg-button/svg-button'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Color } from 'global/colors'
 import { ArrowLeft, Check } from 'icons'
 import React, { useEffect, useRef } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -17,7 +18,8 @@ export interface CreateNoteFormType {
 	range: {
 		start: number
 		end: number
-		xpath: string
+		endXPath: string
+		startXPath: string
 	}
 	reaction: reactionsTitles
 	selectedText?: string
@@ -29,7 +31,8 @@ export const validation = z.object({
 	range: z.object({
 		start: z.number(),
 		end: z.number(),
-		xpath: z.string()
+		endXPath: z.string(),
+		startXPath: z.string()
 	}),
 	reaction: z.string(),
 	selectedText: z.string().optional(),
@@ -40,10 +43,11 @@ const CreateNote = () => {
 	const { params } = useTypedRoute<'CreateNote'>()
 	const { goBack } = useTypedNavigation()
 	const { colorPalette } = useCustomizationStore(state => state.colorScheme)
+	const newReaction = useReactionsStore(state => state.newReaction)
+	console.log(params.range, 'params')
 	const { control, reset, handleSubmit } = useForm<CreateNoteFormType>({
 		resolver: zodResolver(validation)
 	})
-	const newReaction = useReactionsStore(state => state.newReaction)
 	useEffect(() => {
 		reset({
 			slug: params.slug,
@@ -56,10 +60,14 @@ const CreateNote = () => {
 	const onSubmit = handleSubmit(data => {
 		console.log(data, 'данные с формы')
 		newReaction({
+			//TODO: переделать и сделать нормальный id
+			id: Math.random().toString() + Date.now().toString(),
+			createAt: new Date(),
 			bookSlug: data.slug,
 			reaction: data.reaction,
 			range: {
-				xpath: data.range.xpath,
+				startXPath: data.range.startXPath,
+				endXPath: data.range.endXPath,
 				endOffset: data.range.end,
 				startOffset: data.range.start
 			},
@@ -109,7 +117,7 @@ const CreateNote = () => {
 						borderLeftColor: colorPalette.primary,
 						borderLeftWidth: 2
 					}}>
-					{params.text.replaceAll('\n', '\n').trim()}
+					{params.text}
 				</Title>
 				<Field
 					multiline
@@ -120,7 +128,7 @@ const CreateNote = () => {
 					className=' mt-2 h-40'
 					placeholder='Write something about your feelings...'
 					numberOfLines={10_000}
-					placeholderTextColor={colorPalette.text}
+					placeholderTextColor={Color.gray}
 					textAlignVertical='top'
 				/>
 			</View>

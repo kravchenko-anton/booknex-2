@@ -18,7 +18,8 @@ export type TypeRootStackParameterListType = {
 		range: {
 			start: number
 			end: number
-			xpath: string
+			endXPath: string
+			startXPath: string
 		}
 		reaction: reactionsTitles
 		text: string

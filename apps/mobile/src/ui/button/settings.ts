@@ -23,7 +23,7 @@ export const settings: {
 			'bg-warning text-white border-[1px] border-transparent hover:bg-warning'
 	},
 	iconSize: {
-		sm: 14,
+		sm: 18,
 		md: 22,
 		lg: 26
 	},

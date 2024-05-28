@@ -24,6 +24,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		reactions: state.reactions,
 		newReaction: state.newReaction
 	}))
+	console.log(reactions, 'reactions')
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),

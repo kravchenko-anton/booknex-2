@@ -66,7 +66,6 @@ const Navigation: FC = () => {
 
 		return () => navReference.removeListener('state', listener)
 	}, [])
-	console.log('initialHistory', initialHistory)
 
 	return (
 		<SafeAreaProvider

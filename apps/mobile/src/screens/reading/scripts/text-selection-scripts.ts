@@ -50,7 +50,7 @@ events.forEach(eventType => {
 `
 
 export const selectMenuHtml = `
-<div id="select-menu" style="display: none; opacity: 0; position: absolute; left: 10px; top: 10px; z-index: 1000;  user-select: none; transition: opacity 0.5s ease-in-out;">
+<div id="select-menu" style="display: none; opacity: 0; position: absolute; left: 10px; top: 10px; z-index: 1000;  user-select: none; transition: all 0.3s ease-in-out;">
 <div class="select-menu-reaction" id="select-menu-reaction">
 	${reactions.map(reaction => `<img src="${reaction.gif}" alt="${reaction.alt}" title="${reaction.title}" width="30" height="30" class="select-menu-reaction-item">`).join('')}
 </div>
@@ -82,67 +82,74 @@ export const selectMenuActions = `
 		const range = document.getSelection().getRangeAt(0);
     const startOffset = range.startOffset;
     const endOffset = range.endOffset;
-		const xpath = findElementByXpath(range.startContainer.parentElement);
+		const { startXPath, endXPath } = findElementByXpath(range.startContainer.parentElement, range.endContainer.parentElement);
 			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'reaction', payload: {
 			text:activeSelection,
 			reaction: button.title,
-			range: {start: startOffset, end: endOffset, xpath: xpath},
+			range: {start: startOffset, end: endOffset, 	endXPath, startXPath },
 			 }}));
 			window.getSelection().removeAllRanges();
 		});
 	});	
 	
 `
-// TODO: сделать полное пропадание и isOverlappingMark
 export const textSelectMenu = `
 const selectMenu = document.getElementById('select-menu');
 let contextMenuTextSelect = "";
 selectMenu.style.opacity = '0';
 selectMenu.style.display = 'none';
+selectMenu.style.visibility = 'hidden';
 selectMenu.style.pointerEvents = 'none';
 let isFirstSelection = true;
 	
-	document.addEventListener('click', (e) => {
-		isFirstSelection = false;
-   setTimeout(() => selectMenu.style.opacity = '0', 50);
-   selectMenu.style.display = 'none';
-	 selectMenu.style.pointerEvents = 'none';
+document.addEventListener('click', (e) => {
+	isFirstSelection = false;
+	setTimeout(() => {
+		selectMenu.style.opacity = '0';
+		selectMenu.style.display = 'none';
+		selectMenu.style.pointerEvents = 'none';
+selectMenu.style.visibility = 'hidden';
+			
+	}, 50);
+});
+document.addEventListener('contextmenu', (e) => {
+	isFirstSelection = true;	
+	const activeSelection = document.getSelection();
+	contextMenuTextSelect	= activeSelection.toString();
+	if (contextMenuTextSelect.length < 2) return;
+		const reactionItems = document.querySelectorAll('.select-menu-reaction-item');
+	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
+	if (isOverlappingMark) {
+		reactionItems.forEach((item) => {
+			item.style.opacity = '0.5';
+			item.style.pointerEvents = 'none';
+		});
+	}
+	else {
+		reactionItems.forEach((item) => {
+			item.style.opacity = '1';
+			item.style.pointerEvents = 'auto';
+		});
+	}
+	const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
+	selectMenu.style.top =(rect.top + window.scrollY - 60)  + 'px';
+	setTimeout(() => selectMenu.style.opacity = '1', 50); 
+	selectMenu.style.display = 'block';
+	selectMenu.style.pointerEvents = 'auto';
+	selectMenu.style.visibility = 'visible';
 });
 
-document.addEventListener('contextmenu', (e) => {
-    isFirstSelection = true;	
-    const activeSelection = document.getSelection();
-		contextMenuTextSelect	= activeSelection.toString();
-		if (contextMenuTextSelect.length < 2) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'not-select-much-text', payload: {text:contextMenuTextSelect} }));
-		const reactionItems = document.querySelectorAll('.select-menu-reaction-item');
-		const isOverlappingMark = activeSelection.toString().includes('<mark>');
-	if (isOverlappingMark) {
-			reactionItems.forEach((item) => {
-				item.style.opacity = '0.5';
-				item.style.pointerEvents = 'none';
-			});
-		}
-		else {
-			reactionItems.forEach((item) => {
-				item.style.opacity = '1';
-				item.style.pointerEvents = 'auto';
-			});
-		}
-		
-    const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
-    selectMenu.style.top =(rect.top + window.scrollY - 60)  + 'px';
-    selectMenu.style.display = 'block';
-    selectMenu.style.pointerEvents = 'auto';
-    setTimeout(() => selectMenu.style.opacity = '1', 50); 
-});
 document.addEventListener('selectionchange', () => {
-	 if (!isFirstSelection) {
-        setTimeout(() => selectMenu.style.opacity = '0', 50);
-        selectMenu.style.display = 'none';
-        selectMenu.style.pointerEvents = 'none';
-    }
-    isFirstSelection = false;
+	if (!isFirstSelection) {
+		setTimeout(() => {
+			selectMenu.style.opacity = '0';
+			selectMenu.style.display = 'none';
+			selectMenu.style.pointerEvents = 'none';
+			selectMenu.style.visibility = 'hidden';
+
+		}, 50);
+	}
+	isFirstSelection = false;
 });
 `
-
 //TODO: доделать полностью функционал селекта текста чтобы при выборе и вдруг изменении epub, ничего не ломалось

@@ -2,6 +2,8 @@ import { storage } from '@/App'
 import { getFileUrl } from 'global/api-config'
 import { useLayoutEffect, useState } from 'react'
 
+export const storedSvgPath = 'svg-icon'
+
 export const useSvgIcon = (svgUri: string, emoji: string) => {
 	const [svgContent, setSvgContent] = useState<{
 		type: 'emoji' | 'svg'
@@ -9,7 +11,7 @@ export const useSvgIcon = (svgUri: string, emoji: string) => {
 	} | null>(null)
 	useLayoutEffect(() => {
 		const getSvgFromStorage = async () => {
-			const svg = storage.getString('svg-button' + svgUri)
+			const svg = storage.getString(storedSvgPath + svgUri)
 			if (svg) {
 				setSvgContent({
 					type: 'svg',
@@ -18,7 +20,10 @@ export const useSvgIcon = (svgUri: string, emoji: string) => {
 			}
 			if (!svg) {
 				const fetchedSvg = await fetch(getFileUrl(svgUri))
-					.then(response => response.text())
+					.then(response => {
+						if (response.status === 200) return response.text()
+						throw new Error('Failed to fetch svg')
+					})
 					.catch(() =>
 						setSvgContent({
 							type: 'emoji',
@@ -26,7 +31,7 @@ export const useSvgIcon = (svgUri: string, emoji: string) => {
 						})
 					)
 				if (!fetchedSvg) return
-				storage.set('svg-button' + svgUri, fetchedSvg)
+				storage.set(storedSvgPath + svgUri, fetchedSvg)
 				setSvgContent({
 					type: 'svg',
 					content: fetchedSvg

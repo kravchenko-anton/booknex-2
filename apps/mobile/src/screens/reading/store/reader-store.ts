@@ -4,12 +4,15 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 export type ReactionType = {
+	id: string
 	text: string
 	bookSlug: string
+	createAt: Date
 	range: {
 		startOffset: number
 		endOffset: number
-		xpath: string
+		startXPath: string
+		endXPath: string
 	}
 	reaction: reactionsTitles
 }
@@ -35,10 +38,15 @@ export const useReactionsStore = create<
 				set(state => ({
 					reactions: [...state.reactions, reaction]
 				}))
+			},
+			removeReaction: (id: string) => {
+				set(state => ({
+					reactions: state.reactions.filter(item => item.id !== id)
+				}))
 			}
 		}),
 		{
-			name: 'reading-notes',
+			name: 'reading-note',
 			storage: createJSONStorage(() => zustandStorage)
 		}
 	)

@@ -1,10 +1,13 @@
+import { storage } from '@/App'
 import { AnimatedPress } from '@/ui'
 import { settings } from '@/ui/button/settings'
 import type { ButtonProperties } from '@/ui/button/types'
-import { useSvgIcon } from '@/ui/svg-button/useSvgIcon'
+import { storedSvgPath, useSvgIcon } from '@/ui/svg-button/useSvgIcon'
 import Title from '@/ui/title/title'
 import { cn } from '@/utils'
 import { InnerColor } from 'global/colors'
+import { Text } from 'react-native'
+import { SvgXml } from 'react-native-svg'
 
 interface SvgButtonProperties extends Omit<ButtonProperties, 'isLoading'> {
 	svgUri: string
@@ -20,7 +23,6 @@ export const SvgButton = ({
 	...rest
 }: SvgButtonProperties) => {
 	const svgContent = useSvgIcon(svgUri, altEmoji)
-	console.log('svgContent', svgContent)
 	return (
 		<AnimatedPress
 			className={cn(
@@ -35,24 +37,24 @@ export const SvgButton = ({
 				size={settings.titleSize[size]}>
 				{title}
 			</Title>
-			{/*{svgContent?.type === 'svg' ? (*/}
-			{/*	<SvgXml*/}
-			{/*		xml={svgContent.content}*/}
-			{/*		className='ml-2 mt-0.5'*/}
-			{/*		width={settings.iconSize[size]}*/}
-			{/*		height={settings.iconSize[size]}*/}
-			{/*		onError={() => storage.delete('svgGenre' + svgUri)}*/}
-			{/*	/>*/}
-			{/*) : (*/}
-			{/*	<Text*/}
-			{/*		className='ml-2 mt-0.5'*/}
-			{/*		style={{*/}
-			{/*			fontSize: settings.iconSize[size],*/}
-			{/*			color: InnerColor[variant]*/}
-			{/*		}}>*/}
-			{/*		{altEmoji}*/}
-			{/*	</Text>*/}
-			{/*)}*/}
+			{svgContent?.type === 'svg' ? (
+				<SvgXml
+					xml={svgContent.content.toString()}
+					className='ml-2 mt-0.5'
+					width={settings.iconSize[size]}
+					height={settings.iconSize[size]}
+					onError={() => storage.delete(storedSvgPath + svgUri)}
+				/>
+			) : (
+				<Text
+					className='ml-2 mt-0.5'
+					style={{
+						fontSize: settings.iconSize[size],
+						color: InnerColor[variant]
+					}}>
+					{altEmoji}
+				</Text>
+			)}
 		</AnimatedPress>
 	)
 }
