@@ -11,10 +11,11 @@
 		"boothSplash:android": "yarn react-native generate-bootsplash assets/logo.png  \\\n  --background-color=111113 \\\n  --logo-width=100 \\\n  --assets-path=assets \\\n"
 	},
 	"dependencies": {
-		"@gorhom/bottom-sheet": "*",
+		"@gorhom/bottom-sheet": "4.6.3",
 		"@hookform/resolvers": "*",
+		"zustand": "4.5.2",
 		"@react-native-community/cli": "*",
-		"@react-native-community/cli-platform-android": "*",
+		"@react-native-community/cli-platform-android": "^13.6.6",
 		"@react-native-community/netinfo": "*",
 		"@react-native-community/slider": "*",
 		"@react-native-google-signin/google-signin": "*",
@@ -27,7 +28,7 @@
 		"axios": "*",
 		"clsx": "*",
 		"nativewind": "*",
-		"react": "*",
+		"react": "18.3.1",
 		"react-hook-form": "*",
 		"react-native": "0.72.6",
 		"react-native-bootsplash": "*",
@@ -45,6 +46,7 @@
 		"react-native-svg": "*",
 		"react-native-toast-message": "*",
 		"react-native-webview": "*",
+		"sharp": "^0.33.4",
 		"tailwind-merge": "*",
 		"zod": "*"
 	},
@@ -55,5 +57,8 @@
 		"metro-react-native-babel-preset": "*",
 		"react-native-svg-transformer": "*",
 		"tailwindcss": "3.3.2"
+	},
+	"resolutions": {
+		"react": "18.3.1"
 	}
 }

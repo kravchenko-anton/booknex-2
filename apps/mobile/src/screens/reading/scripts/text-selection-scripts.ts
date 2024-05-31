@@ -52,7 +52,7 @@ events.forEach(eventType => {
 export const selectMenuHtml = `
 <div id="select-menu" style="display: none; opacity: 0; position: absolute; left: 10px; top: 10px; z-index: 1000;  user-select: none; transition: all 0.3s ease-in-out;">
 <div class="select-menu-reaction" id="select-menu-reaction">
-	${reactions.map(reaction => `<img src="${reaction.gif}" alt="${reaction.alt}" title="${reaction.title}" width="30" height="30" class="select-menu-reaction-item">`).join('')}
+	${reactions.map(reaction => `<img src="${reaction.gif}" alt="${reaction.alt}" title="${reaction.title}" width="28" height="28" class="select-menu-reaction-item">`).join('')}
 </div>
 <div class="select-default-menu">
 <svg id="text-menu-translate" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
@@ -103,11 +103,11 @@ selectMenu.style.pointerEvents = 'none';
 let isFirstSelection = true;
 	
 document.addEventListener('click', (e) => {
+		selectMenu.style.pointerEvents = 'none';
 	isFirstSelection = false;
 	setTimeout(() => {
 		selectMenu.style.opacity = '0';
 		selectMenu.style.display = 'none';
-		selectMenu.style.pointerEvents = 'none';
 selectMenu.style.visibility = 'hidden';
 			
 	}, 50);
@@ -141,12 +141,11 @@ document.addEventListener('contextmenu', (e) => {
 
 document.addEventListener('selectionchange', () => {
 	if (!isFirstSelection) {
+		selectMenu.style.pointerEvents = 'none';
 		setTimeout(() => {
 			selectMenu.style.opacity = '0';
 			selectMenu.style.display = 'none';
-			selectMenu.style.pointerEvents = 'none';
 			selectMenu.style.visibility = 'hidden';
-
 		}, 50);
 	}
 	isFirstSelection = false;

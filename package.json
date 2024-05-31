@@ -16,7 +16,7 @@
 		"@anatine/zod-nestjs": "^2.0.8",
 		"@anatine/zod-openapi": "^2.2.5",
 		"@aws-sdk/client-s3": "^3.405.0",
-		"@gorhom/bottom-sheet": "^4.6.0",
+		"@gorhom/bottom-sheet": "^4.6.3",
 		"@hookform/resolvers": "^3.3.2",
 		"@liquify/prettify": "^0.5.5-beta.1",
 		"@nestjs/axios": "^3.0.2",
@@ -70,7 +70,7 @@
 		"passport-jwt": "^4.0.1",
 		"prisma": "^5.13.0",
 		"puppeteer": "^21.6.0",
-		"react": "18.2.0",
+		"react": "18.3.1",
 		"react-dom": "18.2.0",
 		"react-hook-form": "^7.46.1",
 		"react-native": "0.72.6",
@@ -192,5 +192,8 @@
 		"typescript": "~5.3.2",
 		"url-loader": "^4.1.1",
 		"webpack": "^5.82.0"
+	},
+	"resolutions": {
+		"react": "18.3.1"
 	}
 }

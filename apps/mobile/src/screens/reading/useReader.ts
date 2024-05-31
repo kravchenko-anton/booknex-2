@@ -89,7 +89,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		setOptions({
 			statusBarStyle: colorScheme.statusBar,
 			navigationBarColor: colorScheme.colorPalette.background.darker,
-			navigationBarHidden: !readerHeaderVisible,
+			navigationBarHidden: true,
 			statusBarTranslucent: true,
 			statusBarHidden: !readerHeaderVisible,
 			statusBarColor: colorScheme.colorPalette.background.darker
@@ -97,19 +97,13 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	}, [colorScheme, setOptions, readerHeaderVisible])
 
 	useEffect(() => {
-		console.log('ebookQuotesAndNotes changed', reactions)
-		viewerReference.current?.injectJavaScript(`
-    	wrapTextWithBoldTag(${JSON.stringify(reactions)});
-    `)
-	}, [reactions])
-
-	useEffect(() => {
 		viewerReference.current?.injectJavaScript(`${injectStyle(styleTag)}`)
 	}, [styleTag])
+
 	useEffect(() => {
 		console.log('ebookQuotesAndNotes changed', reactions)
 		viewerReference.current?.injectJavaScript(`
-    	wrapTextWithBoldTag(${JSON.stringify(reactions)});
+    	wrapQuotesInMarkTag(${JSON.stringify(reactions)});
     `)
 	}, [reactions, newReaction])
 

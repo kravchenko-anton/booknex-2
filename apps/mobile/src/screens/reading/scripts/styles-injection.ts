@@ -145,6 +145,7 @@ export const getStyleTag = ({
         padding: 0 !important;
         display: flex !important;
         align-items: center !important;
+        justify-content: space-between !important;
         height: 48px !important;
         width: ${windowWidth * 0.95}px !important;
         border-radius: 10px !important;
@@ -153,12 +154,15 @@ export const getStyleTag = ({
 
 			.select-menu-reaction {
 				display: flex !important;
+				justify-content: space-between !important;
+				align-items: center !important;
+				width: 100% !important;
 			}
 
 		.select-menu-reaction .select-menu-reaction-item {
-        padding: 8px 8px !important;
+        padding: 7.5px 7.5px !important;
         &:first-child {
-            padding-left: 10px !important;
+            padding-left: 15px !important;
         }
 
         &:last-child {
@@ -169,18 +173,20 @@ export const getStyleTag = ({
     .select-default-menu {
         border-left: 1px solid ${colorPalette.background.lighter} !important;
 				display: flex !important;
-				width: 100% !important;
-    }
+				width: 160px !important;
+				align-items: center !important;
+				justify-content: flex-end !important;
+	    }
 
     .select-default-menu svg {
         stroke: ${colorPalette.text} !important;
 				padding: 10px 10px;
-				&:first-child {
-					padding-left: 10px !important;
-				}
+				 &:first-child {
+            padding-left: 0px !important;
+        }
 
 				&:last-child {
-					padding-right: 10px !important;
+					padding-right: 15px !important;
 				}
 
     }

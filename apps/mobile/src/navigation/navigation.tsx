@@ -33,17 +33,21 @@ const noBottomMenuRoutes = new Set([
 ])
 
 const Navigation: FC = () => {
-	const { user, logout } = useAuthStore(state => ({
-		user: state.user,
-		logout: state.logout
-	}))
 	const [initialHistory] = useState(useReadingProgressStore.getState().history) // eslint-disable-line
 	const latestHistory = historyByLatestSorting(initialHistory).find(
 		h => h.startFromReadingScreen
 	)
+	const { user, logout } = useAuthStore(state => ({
+		user: state.user,
+		logout: state.logout
+	}))
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)
+
+	const navReference =
+		useNavigationContainerRef<TypeRootStackParameterListType>()
+
 	const checkRefreshToken = async (
 		route: keyof TypeRootStackParameterListType
 	) => {
@@ -51,9 +55,6 @@ const Navigation: FC = () => {
 		const refreshToken = await getRefreshToken()
 		if (!refreshToken && user) logout()
 	}
-
-	const navReference =
-		useNavigationContainerRef<TypeRootStackParameterListType>()
 
 	useEffect(() => {
 		const listener = navReference.addListener('state', () => {
@@ -135,6 +136,8 @@ const Navigation: FC = () => {
 							key={route.name}
 							options={{
 								presentation: 'fullScreenModal',
+								animation: 'slide_from_right',
+								navigationBarColor: Color.background,
 								contentStyle: {
 									backgroundColor: Color.background
 								},

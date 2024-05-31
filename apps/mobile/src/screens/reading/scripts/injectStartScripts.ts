@@ -45,28 +45,16 @@ function findElementByXpath(startElement, endElement) {
 
     return { startXPath, endXPath };
 }
-	//TODO: добавить доп проверку по тексту чтобы если нету нужного контента то просто не селектилась
- function wrapTextWithBoldTag(noteAndQuotes) {
-		noteAndQuotes.forEach(({ range }) => {
-		const { startOffset, endOffset, startXPath, endXPath } = range;
-		const startElement = document.evaluate(startXPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-		const endElement = document.evaluate(endXPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+function wrapQuotesInMarkTag(noteAndQuotes) {
+	    noteAndQuotes.forEach(({ startOffset, text, endOffset, startXPath, endXPath }) => {
 		
-		
-		
-		const textStart = startElement.textContent;
-		const textEnd = endElement.textContent;
-		const text = textStart + textEnd;
-		const before = text.slice(0, startOffset);
-		const selected = text.slice(startOffset, endOffset);
-		const after = text.slice(endOffset);
-		const newElement = document.createElement('mark');
-		newElement.innerHTML = selected;
-		element.innerHTML = before + newElement.outerHTML + after;
-	});
-}
+				})
+		}
 
-
+   window.onerror = function(message, sourcefile, lineno, colno, error) {
+      alert("Message: " + message + " - Source: " + sourcefile + " Line: " + lineno + ":" + colno);
+      return true;
+    };
 						window.onload = function() {
 						window.scrollTo({	top: ${startPosition} })
 						${calculateProgress}
@@ -75,7 +63,7 @@ function findElementByXpath(startElement, endElement) {
 						${selectMenuActions}
 						${scrollCalculateProgress}
 						${logAllEvents}
-						wrapTextWithBoldTag(${JSON.stringify(noteAndQuotes)})
+						wrapQuotesInMarkTag(${JSON.stringify(noteAndQuotes)})
 						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading' }))
 }
 </script>

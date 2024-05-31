@@ -79,22 +79,25 @@ export const useReadingProgressStore = create<
 					})
 			},
 			fetchStatistic: (isRefetch = false) => {
-				const { history } = getState()
+				const history = getState().history
+				console.log('history in getStatistic', history)
 				if (history.length === 0 && !isRefetch)
-					return console.log('no history to fetch statistics')
+					return console.log('no history to fetch statistic')
 				api.user
 					.statistics(history)
-					.then(({ data: response }) => {
+					.then(({ data: result }) => {
+						if (!result) return
 						console.log(
-							'return statistics from api, no history and statistics exist',
-							response
+							'return library from api, no history and statistic exist'
 						)
-						set({ statistics: response, history: [] })
-						return response
+						set({
+							statistics: result,
+							history: []
+						})
 					})
 					.catch(error => {
-						console.log(error, 'error in statistics sync')
-						errorToast('Failed to sync statistics')
+						console.log(error, 'error in statistic sync')
+						errorToast('Failed to sync statistic')
 					})
 			},
 			newProgress: newHistory => {

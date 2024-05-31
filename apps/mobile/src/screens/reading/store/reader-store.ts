@@ -26,6 +26,7 @@ const initialState: ReaderStoreType = {
 
 interface ReadingProgressStoreActionsType {
 	newReaction: (note: ReactionType) => void
+	removeReaction: (id: string) => void
 }
 
 export const useReactionsStore = create<

@@ -81,11 +81,10 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 			</AnimatedView>
 
 			<AnimatedView
-				className='absolute z-50 w-full flex-1 justify-center border-t-2 pb-1 pt-2'
+				className='absolute bottom-0 z-50 w-full flex-1 justify-center border-t-2 pb-1 pt-2'
 				style={[
 					fadeAnimation,
 					{
-						bottom: 0,
 						backgroundColor: colorScheme.colorPalette.background.darker,
 						borderTopColor: colorScheme.colorPalette.background.lighter
 					}

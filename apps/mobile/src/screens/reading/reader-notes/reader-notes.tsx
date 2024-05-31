@@ -15,7 +15,10 @@ import { Controller, useForm } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
 //TODO: сделать edit, добавление и синхронизацию
 const ReaderNotes = () => {
-	const userReactions = useReactionsStore(state => state.reactions)
+	const { removeReaction, userReactions } = useReactionsStore(state => ({
+		userReactions: state.reactions,
+		removeReaction: state.removeReaction
+	}))
 	const [filterSettings, setFilterSettings] = React.useState({
 		search: '',
 		reaction: ''
@@ -165,7 +168,12 @@ const ReaderNotes = () => {
 									}}>
 									Share
 								</Button>
-								<Button size={'sm'} variant='foreground'>
+								<Button
+									size={'sm'}
+									variant='foreground'
+									onPress={() => {
+										removeReaction(item.id)
+									}}>
 									Delete
 								</Button>
 							</View>
