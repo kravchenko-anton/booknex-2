@@ -1,4 +1,5 @@
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
+import type { WebviewMessageType } from '@/screens/reading/hooks/useReaderMessage'
 import { reactions, type reactionsTitles } from '@/screens/reading/reactions'
 import { useCustomizationStore } from '@/screens/reading/store/customization-store'
 import { useReactionsStore } from '@/screens/reading/store/reader-store'
@@ -15,24 +16,22 @@ import { z } from 'zod'
 
 export interface CreateNoteFormType {
 	slug: string
-	range: {
-		start: number
-		end: number
-		endXPath: string
-		startXPath: string
-	}
+	range: WebviewMessageType['payload']['range']
 	reaction: reactionsTitles
 	selectedText?: string
 	userFeelings?: string
 }
 
-export const validation = z.object({
+export const validation: z.ZodType<
+	Omit<CreateNoteFormType, 'reaction'> & {
+		reaction: string
+	}
+> = z.object({
 	slug: z.string(),
 	range: z.object({
-		start: z.number(),
-		end: z.number(),
-		endXPath: z.string(),
-		startXPath: z.string()
+		startOffset: z.number(),
+		endOffset: z.number(),
+		xpath: z.string()
 	}),
 	reaction: z.string(),
 	selectedText: z.string().optional(),
@@ -66,10 +65,9 @@ const CreateNote = () => {
 			bookSlug: data.slug,
 			reaction: data.reaction,
 			range: {
-				startXPath: data.range.startXPath,
-				endXPath: data.range.endXPath,
-				endOffset: data.range.end,
-				startOffset: data.range.start
+				xpath: data.range.xpath,
+				startOffset: data.range.startOffset,
+				endOffset: data.range.endOffset
 			},
 			text: data.selectedText || ''
 		})
@@ -125,7 +123,7 @@ const CreateNote = () => {
 					control={control}
 					name='userFeelings'
 					variant='background'
-					className=' mt-2 h-40'
+					className=' mt-2 h-40 border-none'
 					placeholder='Write something about your feelings...'
 					numberOfLines={10_000}
 					placeholderTextColor={Color.gray}

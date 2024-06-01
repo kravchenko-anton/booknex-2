@@ -1,3 +1,4 @@
+import type { WebviewMessageType } from '@/screens/reading/hooks/useReaderMessage'
 import type { reactionsTitles } from '@/screens/reading/reactions'
 import type { ParamListBase } from '@react-navigation/native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
@@ -15,12 +16,7 @@ export type TypeRootStackParameterListType = {
 	Note: undefined
 	CreateNote: {
 		slug: string
-		range: {
-			start: number
-			end: number
-			endXPath: string
-			startXPath: string
-		}
+		range: WebviewMessageType['payload']['range']
 		reaction: reactionsTitles
 		text: string
 	}

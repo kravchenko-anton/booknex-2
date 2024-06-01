@@ -43,19 +43,17 @@ export class UserService {
 
 		await this.prisma.readingHistory.createMany({
 			skipDuplicates: true,
-			data: dto
-				//TODO: проверить не ломается ли при таком filter
-				.map(history => ({
-					readingTimeMs: history.readingTimeMs,
-					endDate: new Date(history.endDate),
-					progressDelta: history.progressDelta,
-					startProgress: history.startProgress,
-					endProgress: history.endProgress,
-					scrollPosition: history.scrollPosition,
-					startDate: new Date(history.startDate),
-					userId: userId,
-					bookSlug: history.bookSlug
-				}))
+			data: dto.map(history => ({
+				readingTimeMs: history.readingTimeMs,
+				endDate: new Date(history.endDate),
+				progressDelta: history.progressDelta,
+				startProgress: history.startProgress,
+				endProgress: history.endProgress,
+				scrollPosition: history.scrollPosition,
+				startDate: new Date(history.startDate),
+				userId: userId,
+				bookSlug: history.bookSlug
+			}))
 		})
 	}
 

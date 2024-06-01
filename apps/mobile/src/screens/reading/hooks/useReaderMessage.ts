@@ -24,10 +24,9 @@ export interface WebviewMessageType {
 	payload: {
 		text: string
 		range: {
-			start: number
-			end: number
-			endXPath: string
-			startXPath: string
+			startOffset: number
+			endOffset: number
+			xpath: string
 		}
 		reaction: reactionsTitles
 		scrollTop: number
@@ -82,10 +81,9 @@ export const useReaderMessage = ({
 				slug,
 				text: payload.text,
 				range: {
-					start: payload.range.start,
-					end: payload.range.end,
-					startXPath: payload.range.startXPath,
-					endXPath: payload.range.endXPath
+					startOffset: payload.range.startOffset,
+					endOffset: payload.range.endOffset,
+					xpath: payload.range.xpath
 				},
 				reaction: payload.reaction
 			})

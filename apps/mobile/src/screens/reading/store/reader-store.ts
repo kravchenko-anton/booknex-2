@@ -1,3 +1,4 @@
+import type { WebviewMessageType } from '@/screens/reading/hooks/useReaderMessage'
 import type { reactionsTitles } from '@/screens/reading/reactions'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
 import { create } from 'zustand'
@@ -8,12 +9,7 @@ export type ReactionType = {
 	text: string
 	bookSlug: string
 	createAt: Date
-	range: {
-		startOffset: number
-		endOffset: number
-		startXPath: string
-		endXPath: string
-	}
+	range: WebviewMessageType['payload']['range']
 	reaction: reactionsTitles
 }
 export type ReaderStoreType = {

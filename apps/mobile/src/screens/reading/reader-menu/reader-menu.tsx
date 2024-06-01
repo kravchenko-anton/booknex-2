@@ -5,6 +5,7 @@ import { Title } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import Slider from '@react-native-community/slider'
 import type { FunctionType } from 'global/types'
+import { hexToRgbA } from 'global/utils'
 import { ArrowLeft, CaseSensitive, ListOrdered, NotePen } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
@@ -33,11 +34,12 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 	const { navigate } = useTypedNavigation()
 	const { top } = useSafeAreaInsets()
 	const fadeAnimation = useAnimatedStyle(() => ({
-		opacity: withTiming(Boolean(visible) ? 1 : 0, { duration: 200 })
+		opacity: withTiming(Boolean(visible) ? 1 : 0, { duration: 200 }),
+		pointerEvents: Boolean(visible) ? 'auto' : 'none'
 	}))
 	console.log(readingProgress.progress, 'readingProgress.progress / 100')
 	return (
-		<View className='absolute h-screen w-full'>
+		<View className='absolute h-full  w-full'>
 			<AnimatedView
 				className=' absolute z-50 mb-0 mt-0 w-full flex-1 justify-center border-b-2'
 				style={[
@@ -81,10 +83,11 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 			</AnimatedView>
 
 			<AnimatedView
-				className='absolute bottom-0 z-50 w-full flex-1 justify-center border-t-2 pb-1 pt-2'
+				className='absolute z-50 w-full flex-1 justify-center border-t-2 pb-6 pt-2'
 				style={[
 					fadeAnimation,
 					{
+						bottom: 0,
 						backgroundColor: colorScheme.colorPalette.background.darker,
 						borderTopColor: colorScheme.colorPalette.background.lighter
 					}
@@ -111,6 +114,24 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 					onSlidingComplete={onProgressChange}
 				/>
 			</AnimatedView>
+
+			<View
+				style={{
+					backgroundColor: hexToRgbA(
+						colorScheme.colorPalette.background.darker,
+						0.6
+					),
+					position: 'absolute',
+					bottom: 0,
+					width: '100%',
+					alignItems: 'center',
+					justifyContent: 'center',
+					display: 'flex'
+				}}>
+				<Title size='sm' color={colorScheme.colorPalette.text}>
+					{readingProgress.progress.toFixed(2)}%
+				</Title>
+			</View>
 		</View>
 	)
 }

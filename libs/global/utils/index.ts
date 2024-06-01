@@ -40,3 +40,17 @@ export function timeAgo(date: Date) {
 	}
 	return Math.floor(seconds) + ' seconds'
 }
+
+export const hexToRgbA = (hex: string, opacity: number) => {
+	let c
+	if (/^#([\dA-Fa-f]{3}){1,2}$/.test(hex)) {
+		c = hex.slice(1).split('')
+		if (c.length === 3) {
+			c = [c[0], c[0], c[1], c[1], c[2], c[2]]
+		}
+		c = `0x${c.join('')}`
+		// @ts-ignore
+		return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},${opacity})`
+	}
+	throw new Error('Bad Hex')
+}

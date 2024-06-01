@@ -171,9 +171,7 @@ export const getStyleTag = ({
     }
 
     .select-default-menu {
-        border-left: 1px solid ${colorPalette.background.lighter} !important;
 				display: flex !important;
-				width: 160px !important;
 				align-items: center !important;
 				justify-content: flex-end !important;
 	    }
@@ -182,7 +180,7 @@ export const getStyleTag = ({
         stroke: ${colorPalette.text} !important;
 				padding: 10px 10px;
 				 &:first-child {
-            padding-left: 0px !important;
+            padding-left: 10px !important;
         }
 
 				&:last-child {

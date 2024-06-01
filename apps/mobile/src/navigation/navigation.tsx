@@ -136,7 +136,7 @@ const Navigation: FC = () => {
 							key={route.name}
 							options={{
 								presentation: 'fullScreenModal',
-								animation: 'slide_from_right',
+								animation: 'flip',
 								navigationBarColor: Color.background,
 								contentStyle: {
 									backgroundColor: Color.background

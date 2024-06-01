@@ -52,7 +52,7 @@ events.forEach(eventType => {
 export const selectMenuHtml = `
 <div id="select-menu" style="display: none; opacity: 0; position: absolute; left: 10px; top: 10px; z-index: 1000;  user-select: none; transition: all 0.3s ease-in-out;">
 <div class="select-menu-reaction" id="select-menu-reaction">
-	${reactions.map(reaction => `<img src="${reaction.gif}" alt="${reaction.alt}" title="${reaction.title}" width="28" height="28" class="select-menu-reaction-item">`).join('')}
+	${reactions.map(reaction => `<img src="${reaction.gif}" alt="${reaction.alt}" title="${reaction.title}" width="27" height="27" class="select-menu-reaction-item">`).join('')}
 </div>
 <div class="select-default-menu">
 <svg id="text-menu-translate" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
@@ -82,11 +82,13 @@ export const selectMenuActions = `
 		const range = document.getSelection().getRangeAt(0);
     const startOffset = range.startOffset;
     const endOffset = range.endOffset;
-		const { startXPath, endXPath } = findElementByXpath(range.startContainer.parentElement, range.endContainer.parentElement);
-			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'reaction', payload: {
+			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'reaction', 
+			payload: {
 			text:activeSelection,
 			reaction: button.title,
-			range: {start: startOffset, end: endOffset, 	endXPath, startXPath },
+			range: { startOffset, endOffset,	
+			xpath: getXPath(range.commonAncestorContainer.parentNode)
+			},
 			 }}));
 			window.getSelection().removeAllRanges();
 		});
@@ -103,23 +105,25 @@ selectMenu.style.pointerEvents = 'none';
 let isFirstSelection = true;
 	
 document.addEventListener('click', (e) => {
+		isFirstSelection = false;
+		setTimeout(() => selectMenu.style.opacity = '0', 50);
 		selectMenu.style.pointerEvents = 'none';
-	isFirstSelection = false;
-	setTimeout(() => {
-		selectMenu.style.opacity = '0';
 		selectMenu.style.display = 'none';
-selectMenu.style.visibility = 'hidden';
-			
-	}, 50);
+		selectMenu.style.visibility = 'hidden';
+		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'click with poiner event none', payload: { eventType: 'click' } }));
 });
+
+
 document.addEventListener('contextmenu', (e) => {
 	isFirstSelection = true;	
 	const activeSelection = document.getSelection();
 	contextMenuTextSelect	= activeSelection.toString();
 	if (contextMenuTextSelect.length < 2) return;
+	const startXpath = getXPath(activeSelection.getRangeAt(0).startContainer.parentNode);
+	const endXpath = getXPath(activeSelection.getRangeAt(0).endContainer.parentNode);
 		const reactionItems = document.querySelectorAll('.select-menu-reaction-item');
 	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
-	if (isOverlappingMark) {
+	if (isOverlappingMark || startXpath !== endXpath) { 
 		reactionItems.forEach((item) => {
 			item.style.opacity = '0.5';
 			item.style.pointerEvents = 'none';
@@ -140,13 +144,12 @@ document.addEventListener('contextmenu', (e) => {
 });
 
 document.addEventListener('selectionchange', () => {
-	if (!isFirstSelection) {
+	if (!isFirstSelection) { 
+		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selectionchange with pointer event', payload: { eventType: 'click' } }));
+		setTimeout(() => selectMenu.style.opacity = '0', 50);
 		selectMenu.style.pointerEvents = 'none';
-		setTimeout(() => {
-			selectMenu.style.opacity = '0';
-			selectMenu.style.display = 'none';
-			selectMenu.style.visibility = 'hidden';
-		}, 50);
+		selectMenu.style.display = 'none';
+		selectMenu.style.visibility = 'hidden';
 	}
 	isFirstSelection = false;
 });
