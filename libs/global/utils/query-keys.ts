@@ -87,7 +87,8 @@ export const MutationKeys = {
 	},
 	user: {
 		remove: ['remove-user'],
-		adjustGoal: ['adjust-goal']
+		adjustGoal: ['adjust-goal'],
+		syncHistory: ['sync-history']
 	},
 	storage: {
 		uploadFile: ['upload-file']

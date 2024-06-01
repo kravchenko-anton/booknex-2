@@ -39,6 +39,16 @@ export class UserController {
 	}
 
 	@Auth()
+	@Post('/sync-history')
+	@ApiBody({ type: [ReadingHistory] })
+	async syncHistory(
+		@CurrentUser('id') userId: number,
+		@Body() dto: ReadingHistory[]
+	) {
+		await this.usersService.syncHistory(dto, userId)
+	}
+
+	@Auth()
 	@Post('/statistics')
 	@ApiBody({ type: [ReadingHistory] })
 	@ApiOkResponse({ type: UserStatistics })

@@ -33,7 +33,10 @@ const noBottomMenuRoutes = new Set([
 ])
 
 const Navigation: FC = () => {
-	const [initialHistory] = useState(useReadingProgressStore.getState().history) // eslint-disable-line
+	const syncHistory = useReadingProgressStore(state => state.syncHistory)
+	const [initialHistory, setInitialHistory] = useState(
+		useReadingProgressStore.getState().history
+	) // eslint-disable-line
 	const latestHistory = historyByLatestSorting(initialHistory).find(
 		h => h.startFromReadingScreen
 	)
@@ -83,6 +86,10 @@ const Navigation: FC = () => {
 							slug: latestHistory.bookSlug,
 							initialScrollPosition: latestHistory.scrollPosition
 						})
+					if (user && initialHistory.length > 0) {
+						syncHistory(initialHistory)
+						setInitialHistory([])
+					}
 					BootSplash.hide({ fade: true })
 				}}>
 				<Stack.Navigator

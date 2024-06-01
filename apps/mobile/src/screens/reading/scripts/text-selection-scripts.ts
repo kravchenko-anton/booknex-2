@@ -50,7 +50,7 @@ events.forEach(eventType => {
 `
 
 export const selectMenuHtml = `
-<div id="select-menu" style="display: none; opacity: 0; position: absolute; left: 10px; top: 10px; z-index: 1000;  user-select: none; transition: all 0.3s ease-in-out;">
+<div id="select-menu" style="display: none; pointer-events: none; visibility: hidden; opacity: 0; position: absolute; left: 10px; top: 10px;  transition: all 0.3s ease-in-out;">
 <div class="select-menu-reaction" id="select-menu-reaction">
 	${reactions.map(reaction => `<img src="${reaction.gif}" alt="${reaction.alt}" title="${reaction.title}" width="27" height="27" class="select-menu-reaction-item">`).join('')}
 </div>
@@ -95,30 +95,40 @@ export const selectMenuActions = `
 	});	
 	
 `
+
 export const textSelectMenu = `
 const selectMenu = document.getElementById('select-menu');
-let contextMenuTextSelect = "";
 selectMenu.style.opacity = '0';
 selectMenu.style.display = 'none';
-selectMenu.style.visibility = 'hidden';
 selectMenu.style.pointerEvents = 'none';
+selectMenu.style.visibility = 'hidden';
 let isFirstSelection = true;
-	
+
 document.addEventListener('click', (e) => {
-		isFirstSelection = false;
-		setTimeout(() => selectMenu.style.opacity = '0', 50);
-		selectMenu.style.pointerEvents = 'none';
+		isFirstSelection = true;
+	setTimeout(() => {
+		selectMenu.style.opacity = '0';
+	}, 50);
 		selectMenu.style.display = 'none';
+		selectMenu.style.pointerEvents = 'none';
 		selectMenu.style.visibility = 'hidden';
-		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'click with poiner event none', payload: { eventType: 'click' } }));
 });
 
 
 document.addEventListener('contextmenu', (e) => {
 	isFirstSelection = true;	
 	const activeSelection = document.getSelection();
-	contextMenuTextSelect	= activeSelection.toString();
-	if (contextMenuTextSelect.length < 2) return;
+	if (activeSelection.toString().length < 2) return;
+
+	const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
+	selectMenu.style.top = (rect.top + window.scrollY - 60)  + 'px';
+	setTimeout(() => {
+		selectMenu.style.opacity = '1';
+	}, 50);
+	selectMenu.style.pointerEvents = 'auto';
+	selectMenu.style.display = 'flex';
+	selectMenu.style.visibility = 'visible';
+	
 	const startXpath = getXPath(activeSelection.getRangeAt(0).startContainer.parentNode);
 	const endXpath = getXPath(activeSelection.getRangeAt(0).endContainer.parentNode);
 		const reactionItems = document.querySelectorAll('.select-menu-reaction-item');
@@ -135,18 +145,13 @@ document.addEventListener('contextmenu', (e) => {
 			item.style.pointerEvents = 'auto';
 		});
 	}
-	const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
-	selectMenu.style.top =(rect.top + window.scrollY - 60)  + 'px';
-	setTimeout(() => selectMenu.style.opacity = '1', 50); 
-	selectMenu.style.display = 'block';
-	selectMenu.style.pointerEvents = 'auto';
-	selectMenu.style.visibility = 'visible';
 });
 
 document.addEventListener('selectionchange', () => {
 	if (!isFirstSelection) { 
-		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selectionchange with pointer event', payload: { eventType: 'click' } }));
-		setTimeout(() => selectMenu.style.opacity = '0', 50);
+	setTimeout(() => {
+		selectMenu.style.opacity = '0';
+	}, 50);
 		selectMenu.style.pointerEvents = 'none';
 		selectMenu.style.display = 'none';
 		selectMenu.style.visibility = 'hidden';

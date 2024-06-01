@@ -143,7 +143,6 @@ export const getStyleTag = ({
         background: ${colorPalette.background.darker} !important;
         color: ${colorPalette.text} !important;
         padding: 0 !important;
-        display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
         height: 48px !important;
@@ -153,27 +152,27 @@ export const getStyleTag = ({
 
 
 			.select-menu-reaction {
-				display: flex !important;
-				justify-content: space-between !important;
-				align-items: center !important;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 				width: 100% !important;
 			}
 
 		.select-menu-reaction .select-menu-reaction-item {
-        padding: 7.5px 7.5px !important;
+        padding: 7.5px 7.5px;
         &:first-child {
-            padding-left: 15px !important;
+            padding-left: 15px;
         }
 
         &:last-child {
-            padding-right: 10px !important;
+            padding-right: 10px;
 				}
     }
 
     .select-default-menu {
-				display: flex !important;
-				align-items: center !important;
-				justify-content: flex-end !important;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
 	    }
 
     .select-default-menu svg {

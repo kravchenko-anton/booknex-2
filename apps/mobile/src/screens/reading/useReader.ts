@@ -21,7 +21,7 @@ import type WebView from 'react-native-webview'
 export const useReader = (slug: string, initialScrollPosition: number) => {
 	const { setOptions } = useTypedNavigation()
 	const { newReaction, reactions } = useReactionsStore(state => ({
-		reactions: state.reactions,
+		reactions: state.reactions.filter(reaction => reaction.bookSlug === slug),
 		newReaction: state.newReaction
 	}))
 	console.log(reactions, 'reactions')

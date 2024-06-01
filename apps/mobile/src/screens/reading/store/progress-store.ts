@@ -48,6 +48,7 @@ interface ReadingProgressStoreActionsType {
 	) => void
 	fetchLibrary: (isRefetch?: boolean) => void
 	fetchStatistic: (isRefetch?: boolean) => void
+	syncHistory: (history: ReadingHistoryType[]) => void
 }
 export const useReadingProgressStore = create<
 	ReadingProgressStoreType & ReadingProgressStoreActionsType
@@ -76,6 +77,17 @@ export const useReadingProgressStore = create<
 					.catch(error => {
 						console.log(error, 'error in library sync')
 						errorToast('Failed to sync library')
+					})
+			},
+			syncHistory: (history: ReadingHistoryType[]) => {
+				api.user
+					.syncHistory(history)
+					.catch(error => {
+						console.log(error, 'error in history sync')
+						errorToast('Failed to sync history')
+					})
+					.then(() => {
+						set(({ history, ...state }) => ({ ...state, history: [] }))
 					})
 			},
 			fetchStatistic: (isRefetch = false) => {

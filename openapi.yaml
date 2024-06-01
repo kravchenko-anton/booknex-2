@@ -23,6 +23,25 @@ paths:
         - 👤 user
       security:
         - bearer: []
+  /user/sync-history:
+    post:
+      operationId: syncHistory
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/ReadingHistory"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
   /user/statistics:
     post:
       operationId: statistics

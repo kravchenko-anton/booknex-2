@@ -123,7 +123,7 @@ const CreateNote = () => {
 					control={control}
 					name='userFeelings'
 					variant='background'
-					className=' mt-2 h-40 border-none'
+					className='border-background mt-2 h-40 border-0'
 					placeholder='Write something about your feelings...'
 					numberOfLines={10_000}
 					placeholderTextColor={Color.gray}

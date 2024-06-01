@@ -119,14 +119,15 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 				style={{
 					backgroundColor: hexToRgbA(
 						colorScheme.colorPalette.background.darker,
-						0.6
+						0.7
 					),
 					position: 'absolute',
 					bottom: 0,
 					width: '100%',
 					alignItems: 'center',
 					justifyContent: 'center',
-					display: 'flex'
+					display: 'flex',
+					paddingVertical: 1.5
 				}}>
 				<Title size='sm' color={colorScheme.colorPalette.text}>
 					{readingProgress.progress.toFixed(2)}%
