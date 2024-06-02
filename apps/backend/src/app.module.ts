@@ -19,6 +19,7 @@ import { ReviewModule } from './review/review.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
 import { AppLoggerMiddleware } from './utils/logger/logger'
+import { ReactionModule } from './reaction/reaction.module';
 
 @Module({
 	imports: [
@@ -49,7 +50,8 @@ import { AppLoggerMiddleware } from './utils/logger/logger'
 		ReviewModule,
 		RecommendationModule,
 		HealthModule,
-		EbookModule
+		EbookModule,
+		ReactionModule
 	],
 	controllers: [AppController],
 	providers: [AppService]

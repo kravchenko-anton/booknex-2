@@ -37,7 +37,6 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 		opacity: withTiming(Boolean(visible) ? 1 : 0, { duration: 200 }),
 		pointerEvents: Boolean(visible) ? 'auto' : 'none'
 	}))
-	console.log(readingProgress.progress, 'readingProgress.progress / 100')
 	return (
 		<View className='absolute h-full  w-full'>
 			<AnimatedView

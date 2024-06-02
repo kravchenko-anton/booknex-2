@@ -79,9 +79,21 @@ model Book {
   readingBy      User[]           @relation("ReadingBooks")
   activities     Activity[]
   readingHistory ReadingHistory[]
-
+  reactions      Reaction[]
   similarBooks Book[] @relation("SimilarBooks")
   similarBy    Book[] @relation("SimilarBooks")
+}
+
+
+model Reaction {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  type      String
+  user      User     @relation(fields: [userId], references: [id])
+  book      Book     @relation(fields: [bookId], references: [id])
+  userId    Int
+  bookId    Int
 }
 
 model BookTemplate {
@@ -108,6 +120,7 @@ model User {
   password       String?
   authType       AuthType         @default(email)
   selectedGenres Genre[]
+  reactions      Reaction[]
   picture        String           @default("fallback.png")
   fullName       String           @default("unknown")
   location       String           @default("unknown")

@@ -143,10 +143,11 @@ const CreateNote = () => {
 								horizontal
 								mt={0}
 								data={reactions}
+								Ref={reference}
 								renderItem={({ item }) => (
 									<SvgButton
 										altEmoji={item.altEmoji}
-										title={item.title}
+										title={item.description}
 										svgUri={item.svg}
 										size='md'
 										variant={value === item.title ? 'primary' : 'muted'}

@@ -35,18 +35,18 @@ document.addEventListener('selectionchange', () => {
 `
 
 export const logAllEvents = `
-	const events = [
-    'click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave',
-    'contextmenu', 'wheel', 'select', 'input', 'keydown', 'keyup', 'keypress', 'touchstart', 'touchend', 'touchmove',
-    'resize', 'scroll', 'zoom', 'focus', 'blur', 'select', 'change', 'submit', 'reset', 'play', 'pause', 'loadedmetadata',
-    'loadstart', 'progress', 'error', 'abort', 'load', 'beforeunload', 'unload', 'offline', 'online', 'toggle'
-];
-
-events.forEach(eventType => {
-    document.addEventListener(eventType, (event) => {
-    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selectionEnd', payload: { eventType } }));
-    });
-});
+// 	const events = [
+//     'click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave',
+//     'contextmenu', 'wheel', 'select', 'input', 'keydown', 'keyup', 'keypress', 'touchstart', 'touchend', 'touchmove',
+//     'resize', 'scroll', 'zoom', 'focus', 'blur', 'select', 'change', 'submit', 'reset', 'play', 'pause', 'loadedmetadata',
+//     'loadstart', 'progress', 'error', 'abort', 'load', 'beforeunload', 'unload', 'offline', 'online', 'toggle'
+// ];
+//
+// events.forEach(eventType => {
+//     document.addEventListener(eventType, (event) => {
+//     window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selectionEnd', payload: { eventType } }));
+//     });
+// });
 `
 
 export const selectMenuHtml = `
@@ -55,8 +55,16 @@ export const selectMenuHtml = `
 	${reactions.map(reaction => `<img src="${reaction.gif}" alt="${reaction.alt}" title="${reaction.title}" width="27" height="27" class="select-menu-reaction-item">`).join('')}
 </div>
 <div class="select-default-menu">
-<svg id="text-menu-translate" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
-<svg id="text-menu-share" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+<img
+	id="text-menu-translate"
+ 	width="26" height="26"
+ 	alt="translate"
+ 	src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1sYW5ndWFnZXMiPjxwYXRoIGQ9Im01IDggNiA2Ii8+PHBhdGggZD0ibTQgMTQgNi02IDItMyIvPjxwYXRoIGQ9Ik0yIDVoMTIiLz48cGF0aCBkPSJNNyAyaDEiLz48cGF0aCBkPSJtMjIgMjItNS0xMC01IDEwIi8+PHBhdGggZD0iTTE0IDE4aDYiLz48L3N2Zz4="/>
+<img
+	id="text-menu-share"
+ 	width="26" height="26"
+ 	alt="translate"
+ 	src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1zaGFyZSI+PHBhdGggZD0iTTQgMTJ2OGEyIDIgMCAwIDAgMiAyaDEyYTIgMiAwIDAgMCAyLTJ2LTgiLz48cG9seWxpbmUgcG9pbnRzPSIxNiA2IDEyIDIgOCA2Ii8+PGxpbmUgeDE9IjEyIiB4Mj0iMTIiIHkxPSIyIiB5Mj0iMTUiLz48L3N2Zz4="/>
 </div>
 </div>
 `
@@ -64,17 +72,6 @@ export const selectMenuActions = `
 	const translateButton = document.getElementById('text-menu-translate');
 	const shareButton = document.getElementById('text-menu-share');
 	const emojiButtons = document.querySelectorAll('.select-menu-reaction-item');
-	translateButton.addEventListener('click', () => {
-		const activeSelection = document.getSelection().toString();
-		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'translate', payload: {text:activeSelection} }));
-		window.getSelection().removeAllRanges();
-	});
-	
-	shareButton.addEventListener('click', () => {
-		const activeSelection = document.getSelection().toString();
-		window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', payload: {text:activeSelection} }));
-		window.getSelection().removeAllRanges();
-	});
 	
 	emojiButtons.forEach((button) => {
 		button.addEventListener('click', () => {
@@ -94,6 +91,21 @@ export const selectMenuActions = `
 		});
 	});	
 	
+		translateButton.addEventListener('click', (e) => {
+	const activeSelection = document.getSelection().toString();
+	window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'translate', payload: {
+	text: activeSelection
+	} }));
+		window.getSelection().removeAllRanges();
+	});
+	
+	shareButton.addEventListener('click', () => {
+			const activeSelection = document.getSelection().toString();
+			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', payload: {
+			text: activeSelection
+			} }));
+		window.getSelection().removeAllRanges();
+	});
 `
 
 export const textSelectMenu = `

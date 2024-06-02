@@ -24,7 +24,6 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		reactions: state.reactions.filter(reaction => reaction.bookSlug === slug),
 		newReaction: state.newReaction
 	}))
-	console.log(reactions, 'reactions')
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
@@ -101,7 +100,6 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	}, [styleTag])
 
 	useEffect(() => {
-		console.log('ebookQuotesAndNotes changed', reactions)
 		viewerReference.current?.injectJavaScript(`
     	wrapQuotesInMarkTag(${JSON.stringify(reactions)});
     `)

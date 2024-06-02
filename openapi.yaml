@@ -789,6 +789,53 @@ paths:
                   $ref: "#/components/schemas/StoredEBook"
       tags:
         - 📙 ebook
+  /reaction:
+    post:
+      operationId: create
+      parameters: []
+      responses:
+        "201":
+          description: ""
+    get:
+      operationId: findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+  "/reaction/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
 info:
   title: Booknex
   description: ""

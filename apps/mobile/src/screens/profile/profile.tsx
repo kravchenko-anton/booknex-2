@@ -18,7 +18,7 @@ const Profile = () => {
 			history: state.history
 		})
 	)
-	useEffect(fetchStatistic, [fetchStatistic, statistic])
+	useEffect(fetchStatistic, [])
 
 	if (!statistic) return <Loader />
 	return (

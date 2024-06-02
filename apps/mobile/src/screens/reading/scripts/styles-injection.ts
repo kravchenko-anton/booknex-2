@@ -137,6 +137,8 @@ export const getStyleTag = ({
 		background: ${colorPalette.mark.background} !important;
 		color: ${colorPalette.mark.text} !important;
 		border-radius: 4px !important;
+		padding-left: 4px !important;
+		padding-right: 4px !important;
 	}
 	
 				#select-menu {
@@ -175,7 +177,7 @@ export const getStyleTag = ({
 				justify-content: flex-end;
 	    }
 
-    .select-default-menu svg {
+    .select-default-menu img {
         stroke: ${colorPalette.text} !important;
 				padding: 10px 10px;
 				 &:first-child {

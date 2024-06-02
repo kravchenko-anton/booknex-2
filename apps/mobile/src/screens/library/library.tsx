@@ -3,17 +3,23 @@ import { ReadingList } from '@/screens/library/reading-list'
 import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
 import { BookCard, Flatlist, Loader, ScrollLayout, Title } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
+import { historyByLatestSorting } from '@/utils'
 import { Color } from 'global/colors'
 import { useEffect } from 'react'
 import { RefreshControl } from 'react-native'
 
 const Library = () => {
 	const { navigate } = useTypedNavigation()
-	const { fetchLibrary, library } = useReadingProgressStore(state => ({
+	const {
+		fetchLibrary,
+		library,
+		history = []
+	} = useReadingProgressStore(state => ({
 		fetchLibrary: state.fetchLibrary,
-		library: state.library
+		library: state.library,
+		history: state.history
 	}))
-	useEffect(fetchLibrary, [fetchLibrary, library])
+	useEffect(fetchLibrary, [])
 
 	if (!library) return <Loader />
 	if (
@@ -39,7 +45,11 @@ const Library = () => {
 					onRefresh={() => fetchLibrary(true)}
 				/>
 			}>
-			<ReadingList data={library.readingBooks} navigate={navigate} />
+			<ReadingList
+				data={library.readingBooks}
+				sortedHistory={historyByLatestSorting(history) || []}
+				navigate={navigate}
+			/>
 			<Flatlist
 				horizontal
 				title='Saved to read'

@@ -61,6 +61,8 @@ export const useReadingProgressStore = create<
 				console.log('history in getLibrary', history)
 				if (history.length === 0 && !isRefetch)
 					return console.log('no history to fetch library')
+
+				console.log('🔵 history be sync in library', history)
 				api.user
 					.library(history)
 					.then(({ data: result }) => {
@@ -114,25 +116,19 @@ export const useReadingProgressStore = create<
 			},
 			newProgress: newHistory => {
 				const history = getState().history
-				console.log('new progress', newHistory)
 
-				if (history.some(h => h.id === newHistory.id))
-					set(state => ({
+				if (history.some(h => h.id === newHistory.id)) {
+					console.log('⚠️ update progress', newHistory)
+					return set(state => ({
 						...state,
-						history: state.history.map(history =>
-							history.id === newHistory.id ? newHistory : history
+						// find and replace old history with this id to new
+						history: state.history.map(({ ...h }) =>
+							h.id === newHistory.id ? newHistory : h
 						)
 					}))
+				}
 
-				if (
-					history.some(
-						h =>
-							h.bookSlug === newHistory.bookSlug &&
-							h.scrollPosition === newHistory.scrollPosition
-					)
-				)
-					return
-
+				console.log('⚠️ new progress', newHistory)
 				set(state => ({
 					...state,
 					needSync: true,

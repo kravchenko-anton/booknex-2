@@ -5,6 +5,7 @@ export const ReturnGenreObject: Pick<
 	'name' | 'slug' | 'icon' | 'emoji'
 > = {
 	name: true,
+	icon: true,
 	slug: true,
 	emoji: true
 }
