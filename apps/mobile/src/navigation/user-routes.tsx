@@ -1,10 +1,10 @@
-import BookReview from '@/screens/book-review/book-review'
+import BookImpression from '@/screens/book-impression/book-impression'
 import Book from '@/screens/book/book'
 import Featured from '@/screens/featured/featured'
 import Genre from '@/screens/genre/genre'
 import Library from '@/screens/library/library'
 import Profile from '@/screens/profile/profile'
-import Reader from '@/screens/reading/reader'
+import Reader from '@/screens/reader/reader'
 import SearchCatalog from '@/screens/search/search'
 import Settings from '@/screens/settings/settings'
 import UpdateRecommendation from '@/screens/update-recommendation/update-recommendation'
@@ -32,7 +32,7 @@ export const routes: IRouteType[] = [
 	},
 	{
 		name: 'BookReview',
-		component: BookReview,
+		component: BookImpression,
 		options: {
 			headerShown: false
 		}

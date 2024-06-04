@@ -9,9 +9,9 @@ clients/default-api.ts
 clients/ebook-api.ts
 clients/genre-api.ts
 clients/health-api.ts
+clients/impression-api.ts
 clients/parser-api.ts
 clients/recommendation-api.ts
-clients/review-api.ts
 clients/storage-api.ts
 clients/user-api.ts
 common.ts
@@ -42,12 +42,12 @@ models/full-book-review-inner.ts
 models/full-book-statistics-inner.ts
 models/full-book.ts
 models/google-auth-dto.ts
+models/impression-dto.ts
 models/index.ts
 models/info-by-slug.ts
 models/parser-dto.ts
 models/reading-history.ts
 models/refresh-dto.ts
-models/review-dto.ts
 models/short-book.ts
 models/short-genre.ts
 models/stored-ebook-chapters-inner.ts

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ShortGenreSchema } from '../genre/short-genre.schema'
+import { ImpressionSchema } from '../impression/impression.schema'
 import { BaseCatalogSchema } from '../index'
-import { ReviewSchema } from '../review/review.schema'
 
 export const ShortBookSchema = z.object({
 	slug: z.string(),
@@ -42,7 +42,7 @@ export const FullBookSchema = BookSchema.merge(
 					readingTimeMs: z.number()
 				})
 			),
-			review: z.array(ReviewSchema)
+			review: z.array(ImpressionSchema)
 		})
 		.strict()
 )

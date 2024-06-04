@@ -1,5 +1,5 @@
 import type { CompareReadingBooksType } from '@/screens/library/compareReadingBooks'
-import type { ReadingHistoryType } from '@/screens/reading/store/progress-store'
+import type { ReadingHistoryType } from '@/screens/reader/store/progress-store'
 import { Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
@@ -47,17 +47,16 @@ export const ReadingList: FC<ReadingListProperties> = ({
 				paddingBottom: 8
 			}}
 			renderItem={({ item: book }: { item: CompareReadingBooksType }) => {
-				const latestHistory = sortedHistory.find(
+				const latestHistory = sortedHistory?.find(
 					historyItem => historyItem.bookSlug === book.slug
 				)
-				console.log('latestHistory', latestHistory)
+
+				console.log(latestHistory, 'latestHistory of' + book.slug)
 				const progress =
 					(latestHistory?.endProgress || 0) / 100 || book.progress
 
 				const scrollPosition =
 					latestHistory?.scrollPosition || book.scrollPosition
-
-				console.log(progress, 'scrollPosition', scrollPosition, book.slug)
 				return (
 					<Animated.View
 						style={{

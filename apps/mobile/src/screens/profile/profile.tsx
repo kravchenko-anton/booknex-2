@@ -1,5 +1,5 @@
 import { GoalSelectModal } from '@/screens/profile/goal-select'
-import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
+import { useReadingProgressStore } from '@/screens/reader/store/progress-store'
 import { Button, Loader, ScrollLayout, Title } from '@/ui'
 import { CircularProgressBar } from '@/ui/progress-bar/circular-progress-bar'
 import { cn } from '@/utils'

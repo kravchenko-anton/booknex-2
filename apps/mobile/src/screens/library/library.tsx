@@ -1,6 +1,6 @@
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
-import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
+import { useReadingProgressStore } from '@/screens/reader/store/progress-store'
 import { BookCard, Flatlist, Loader, ScrollLayout, Title } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
 import { historyByLatestSorting } from '@/utils'
@@ -79,7 +79,7 @@ const Library = () => {
 				)}
 			/>
 			<Title numberOfLines={100_000} className='mb-4'>
-				{JSON.stringify(library.readingBooks)}
+				{JSON.stringify(historyByLatestSorting(history) || [])}
 			</Title>
 		</ScrollLayout>
 	)

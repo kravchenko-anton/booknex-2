@@ -1,5 +1,5 @@
-import CreateNote from '@/screens/reading/reader-notes/create-note/create-note'
-import ReaderNotes from '@/screens/reading/reader-notes/reader-notes'
+import CreateReaction from '@/screens/reaction/create-reaction/create-reaction'
+import Reaction from '@/screens/reaction/reaction'
 import LogoutAlert from '@/screens/settings/logout-dialog'
 import type { IRouteType } from './navigation-types'
 
@@ -15,15 +15,15 @@ export const modalRoutes: IRouteType[] = [
 
 export const fullScreenModalRoutes: IRouteType[] = [
 	{
-		name: 'CreateNote',
-		component: CreateNote,
+		name: 'CreateReaction',
+		component: CreateReaction,
 		options: {
 			headerShown: false
 		}
 	},
 	{
-		name: 'Note',
-		component: ReaderNotes,
+		name: 'Reactions',
+		component: Reaction,
 		options: {
 			headerShown: false
 		}

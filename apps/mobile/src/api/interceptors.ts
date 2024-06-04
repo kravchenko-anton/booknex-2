@@ -1,11 +1,11 @@
-import { errorToast } from '@/utils/toast'
-import axios, { type InternalAxiosRequestConfig } from 'axios'
-import { errorCatch } from 'global/helpers/catch-error'
 import {
 	deleteTokensStorage,
 	getAccessToken,
 	getNewTokens
-} from '../screens/auth/store/auth-helper'
+} from '@/screens/auth/store/auth-helper'
+import { errorToast } from '@/utils/toast'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
+import { errorCatch } from 'global/helpers/catch-error'
 
 export const instance = axios.create({
 	headers: {

@@ -1,5 +1,6 @@
 import { ActivityModule } from '@/src/activity/activity.module'
 
+import { ImpressionModule } from '@/src/impression/impression.module'
 import { envConfigSchema } from '@/src/utils/config/env-config'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module, type MiddlewareConsumer } from '@nestjs/common'
@@ -14,12 +15,11 @@ import { CatalogModule } from './catalog/catalog.module'
 import { GenreModule } from './genre/genre.module'
 import { HealthModule } from './health/health.module'
 import { ParserModule } from './parser/parser.module'
+import { ReactionModule } from './reaction/reaction.module'
 import { RecommendationModule } from './recommendation/recommendation.module'
-import { ReviewModule } from './review/review.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
 import { AppLoggerMiddleware } from './utils/logger/logger'
-import { ReactionModule } from './reaction/reaction.module';
 
 @Module({
 	imports: [
@@ -47,7 +47,7 @@ import { ReactionModule } from './reaction/reaction.module';
 				limit: 10
 			}
 		]),
-		ReviewModule,
+		ImpressionModule,
 		RecommendationModule,
 		HealthModule,
 		EbookModule,

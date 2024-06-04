@@ -75,7 +75,7 @@ export const MutationKeys = {
 		createBook: ['create-book']
 	},
 	review: {
-		sendReview: ['send-review']
+		sendReview: ['send-impression']
 	},
 	bookTemplate: {
 		unfold: ['unfold'],

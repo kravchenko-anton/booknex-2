@@ -626,9 +626,9 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  "/review/review/{slug}":
+  "/impression/impression/{slug}":
     post:
-      operationId: review
+      operationId: impression
       parameters:
         - name: slug
           required: true
@@ -637,16 +637,16 @@ paths:
             type: string
       requestBody:
         required: true
-        description: Review book
+        description: Impression book
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ReviewDto"
+              $ref: "#/components/schemas/ImpressionDto"
       responses:
         "200":
           description: Review book
       tags:
-        - ⭐ review
+        - ⭐ impression
       security:
         - bearer: []
   /recommendation/update-recommendation:
@@ -859,8 +859,8 @@ tags:
     description: genre service
   - name: 📁 storage
     description: storage service
-  - name: ⭐ review
-    description: review service
+  - name: ⭐ impression
+    description: impression service
   - name: 📨 recommendation
     description: recommendation service
   - name: 📦 parser
@@ -1989,7 +1989,7 @@ components:
         - id
         - name
         - text
-    ReviewDto:
+    ImpressionDto:
       type: object
       properties:
         rating:

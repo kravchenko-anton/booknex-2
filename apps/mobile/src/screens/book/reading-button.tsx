@@ -13,7 +13,7 @@ interface BookReadingButtonProperties {
 const ReadingButton: FC<BookReadingButtonProperties> = ({ slug }) => {
 	const { navigate } = useTypedNavigation()
 	const queryClient = useQueryClient()
-	const { mutateAsync: startReading, isLoading: startReadingLoading } =
+	const { mutateAsync: startReading, isPending: startReadingLoading } =
 		useMutation({
 			mutationKey: MutationKeys.book.startReadingBySlug(slug),
 			mutationFn: (slug: string) => api.user.startReading(slug)

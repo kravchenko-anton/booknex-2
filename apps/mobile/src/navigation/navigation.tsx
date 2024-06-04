@@ -1,3 +1,4 @@
+import api from '@/api'
 import { authRoutes } from '@/navigation/auth-routes'
 import BottomMenu from '@/navigation/bottom-menu/bottom-menu'
 import { fullScreenModalRoutes, modalRoutes } from '@/navigation/modal-routes'
@@ -5,7 +6,7 @@ import type { TypeRootStackParameterListType } from '@/navigation/navigation-typ
 import { routes } from '@/navigation/user-routes'
 import { getRefreshToken } from '@/screens/auth/store/auth-helper'
 import { useAuthStore } from '@/screens/auth/store/auth-store'
-import { useReadingProgressStore } from '@/screens/reading/store/progress-store'
+import { useReadingProgressStore } from '@/screens/reader/store/progress-store'
 import { Loader } from '@/ui'
 import { historyByLatestSorting } from '@/utils'
 import {
@@ -13,7 +14,10 @@ import {
 	useNavigationContainerRef
 } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useMutation } from '@tanstack/react-query'
+import type { ReadingHistory } from 'global/api-client'
 import { Color } from 'global/colors'
+import { MutationKeys } from 'global/utils/query-keys'
 import { useEffect, useState, type FC } from 'react'
 import BootSplash from 'react-native-bootsplash'
 import {
@@ -33,7 +37,6 @@ const noBottomMenuRoutes = new Set([
 ])
 
 const Navigation: FC = () => {
-	const syncHistory = useReadingProgressStore(state => state.syncHistory)
 	const [initialHistory, setInitialHistory] = useState(
 		useReadingProgressStore.getState().history
 	) // eslint-disable-line
@@ -44,6 +47,10 @@ const Navigation: FC = () => {
 		user: state.user,
 		logout: state.logout
 	}))
+	const { mutateAsync: syncHistory } = useMutation({
+		mutationKey: MutationKeys.user.syncHistory,
+		mutationFn: (dto: ReadingHistory[]) => api.user.syncHistory(dto)
+	})
 	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
 		user ? 'Featured' : 'Welcome'
 	)
@@ -86,10 +93,7 @@ const Navigation: FC = () => {
 							slug: latestHistory.bookSlug,
 							initialScrollPosition: latestHistory.scrollPosition
 						})
-					if (user && initialHistory.length > 0) {
-						syncHistory(initialHistory)
-						setInitialHistory([])
-					}
+					if (user && initialHistory.length > 0) syncHistory(initialHistory)
 					BootSplash.hide({ fade: true })
 				}}>
 				<Stack.Navigator

@@ -1,4 +1,4 @@
-import type { ReadingHistoryType } from '@/screens/reading/store/progress-store'
+import type { ReadingHistoryType } from '@/screens/reader/store/progress-store'
 import { historyByLatestSorting } from '@/utils'
 import type {
 	UserLibraryOutput,

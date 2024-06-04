@@ -1,5 +1,4 @@
 import type { RouteProperties } from '@/navigation/navigation-types'
-
 import { useAuthStore } from '@/screens/auth/store/auth-store'
 import Alert from '@/ui/alert/alert'
 import { Logout } from 'icons'

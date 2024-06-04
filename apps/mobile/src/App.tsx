@@ -8,7 +8,6 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import { onlineManager, QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { Color } from 'global/colors'
-import 'react'
 import { StatusBar } from 'react-native'
 import codePush from 'react-native-code-push'
 import Config from 'react-native-config'
@@ -16,7 +15,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { MMKV } from 'react-native-mmkv'
 import 'react-native-svg'
 import 'react-native-url-polyfill/auto'
-import 'zustand'
 import '../env-config'
 
 const queryClient = new QueryClient({
@@ -25,7 +23,7 @@ const queryClient = new QueryClient({
 			networkMode: 'offlineFirst',
 			refetchOnWindowFocus: false,
 			staleTime: 1000 * 60 * 60, // 1 hour
-			gcTime: 1000 * 60 * 60 * 24 // 24 hours
+			gcTime: 1000 * 60 * 60 * 24 * 7 // 1 week
 		}
 	}
 })

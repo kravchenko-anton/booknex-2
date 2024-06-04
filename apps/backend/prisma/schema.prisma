@@ -36,7 +36,7 @@ model Activity {
   userId     Int?
 }
 
-model Review {
+model Impression{
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -73,7 +73,7 @@ model Book {
   mainGenreId    Int
   mainGenre      Genre            @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres         Genre[]          @relation("BookGenre")
-  review         Review[]
+  impressions         Impression[]
   finishedBy     User[]           @relation("FinishedBooks")
   savedBy        User[]           @relation("SavedBooks")
   readingBy      User[]           @relation("ReadingBooks")
@@ -125,7 +125,7 @@ model User {
   fullName       String           @default("unknown")
   location       String           @default("unknown")
   role           Role             @default(user)
-  review         Review[]
+  impressions     Impression[]
   savedBooks     Book[]           @relation("SavedBooks")
   finishedBooks  Book[]           @relation("FinishedBooks")
   readingBooks   Book[]           @relation("ReadingBooks")
