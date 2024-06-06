@@ -1,5 +1,6 @@
 import type { ThemePackType } from '@/screens/reader/reader-customization/theme-pack'
 import { windowWidth } from '@/utils/dimensions'
+import { Color } from 'global/colors'
 
 export const injectStyle = (style: string) => `
 	var style = document.createElement('style');
@@ -142,7 +143,7 @@ export const getStyleTag = ({
 	}
 	
 				#select-menu {
-        background: ${colorPalette.background.darker} !important;
+        background: ${Color.foreground} !important;
         color: ${colorPalette.text} !important;
         padding: 0 !important;
         align-items: center !important;

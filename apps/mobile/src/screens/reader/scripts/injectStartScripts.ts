@@ -45,14 +45,33 @@ export const injectStartScripts = (
 	
 		//TODO: добавить проверку что этот текст действительно существует как и елемент и так далее, чтобы не было виделение в непонятных границах
  function wrapReactionsInMarkTag(reactions) {
-		reactions.forEach(({ range }) => {
-		const { startOffset, endOffset, xpath } = range;
-		const element =  document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-		if (!element) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: 'Element not found' }));
-		const text = element.textContent
-		const regex = new RegExp(text.substring(startOffset, endOffset), 'g');
-		element.innerHTML = text.replace(regex, '<mark>' + text.substring(startOffset, endOffset) + '</mark>');
-	});
+			const slugify = (textContent) => textContent.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+	 
+ 		const marks = document.querySelectorAll('mark');
+		marks.forEach((mark) => {
+			mark.outerHTML = mark.innerHTML;
+		});
+			// find all elements for reactions
+			const elementsForReactions = [];
+			reactions.forEach(({ range, text }) => {
+				const {xpath, startOffset, endOffset} = range;
+				const element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+				if (!element) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: 'Element not found' }));
+				elementsForReactions.push({ element, startOffset, endOffset,text });
+			});
+				
+			// wrap all text in mark tag
+			elementsForReactions.forEach(({ element, text, startOffset, endOffset }) => {
+			if (!element || !text) return;
+			const containerText = slugify(element.textContent.slice(startOffset, endOffset));
+			const textSlug = slugify(text);
+			if (containerText !== textSlug) return;
+			const regex = new RegExp(element.textContent.slice(startOffset, endOffset), 'g');
+			element.innerHTML = element.innerHTML.replace(regex, (match) => {
+				return '<mark>' + match + '</mark>';
+					})
+			});
+
 }
 
 	

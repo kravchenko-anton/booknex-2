@@ -75,7 +75,7 @@ export const themePack: ThemePackType[] = [
 			primary: '#c7a17a',
 			secondary: '#cf8e6d',
 			background: {
-				normal: '#f0e9d7',
+				normal: '#FBF0D9',
 				lighter: '#f7f1e3',
 				darker: '#eae3cf'
 			},
@@ -83,8 +83,8 @@ export const themePack: ThemePackType[] = [
 				background: '#b5a08f',
 				text: '#fff'
 			},
-			textSelection: '#7a5a3f',
-			text: '#5f4b32'
+			textSelection: '#F0E1B9',
+			text: '#5F4B32'
 		}
 	},
 	{
