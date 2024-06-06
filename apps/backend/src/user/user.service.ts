@@ -5,6 +5,7 @@ import {
 	userCatalogFields,
 	userFinishReadingBookFields,
 	userLibraryFields,
+	userRemoveFromLibraryFields,
 	userStartReadingBookFields,
 	userToggleSaveFields
 } from '@/src/user/user.fields'
@@ -173,6 +174,25 @@ export class UserService {
 		await this.prisma.user.update({
 			where: { id: user.id },
 			data: userStartReadingBookFields(slug)
+		})
+	}
+	async removeFromLibrary(userId: number, slug: string) {
+		await this.checkBookExist(slug)
+		const user = await this.getUserById(+userId, {
+			readingBooks: slugSelect,
+			finishedBooks: slugSelect,
+			savedBooks: slugSelect
+		})
+
+		await this.activityService.create({
+			type: Activities.removeFromLibrary,
+			importance: 2,
+			userId,
+			bookSlug: slug
+		})
+		await this.prisma.user.update({
+			where: { id: user.id },
+			data: userRemoveFromLibraryFields(slug)
 		})
 	}
 

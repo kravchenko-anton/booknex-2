@@ -7,7 +7,7 @@ import { useReader } from '@/screens/reader/useReader'
 import { Loader } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import { screenHeight } from '@/utils/dimensions'
-
+//TODO: сделать фунционал реакций полностью
 const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()
 	console.log(params.initialScrollPosition, '🤯 scroll position')

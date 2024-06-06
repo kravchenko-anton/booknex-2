@@ -88,6 +88,15 @@ export class UserController {
 	}
 
 	@Auth()
+	@Patch('/remove-from-library/:slug')
+	async removeFromLibrary(
+		@CurrentUser('id') userId: number,
+		@Param('slug') slug: string
+	) {
+		return this.usersService.removeFromLibrary(userId, slug)
+	}
+
+	@Auth()
 	@Patch('/toggle-save/:slug')
 	@ApiOkResponse({ type: Boolean })
 	async toggleSave(

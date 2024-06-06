@@ -113,6 +113,22 @@ paths:
         - 👤 user
       security:
         - bearer: []
+  "/user/remove-from-library/{slug}":
+    patch:
+      operationId: removeFromLibrary
+      parameters:
+        - name: slug
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - 👤 user
+      security:
+        - bearer: []
   "/user/toggle-save/{slug}":
     patch:
       operationId: toggleSave
@@ -789,24 +805,45 @@ paths:
                   $ref: "#/components/schemas/StoredEBook"
       tags:
         - 📙 ebook
-  /reaction:
+  /reaction/create:
     post:
       operationId: create
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReaction"
       responses:
         "201":
           description: ""
+      tags:
+        - 👍 Reaction
+      security:
+        - bearer: []
+  /reaction/reaction-list:
     get:
-      operationId: findAll
+      operationId: reactionList
       parameters: []
       responses:
         "200":
           description: ""
-  "/reaction/{id}":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReactionListOutput"
+      tags:
+        - 👍 Reaction
+      security:
+        - bearer: []
+  "/reaction/reaction-by-book/{bookSlug}":
     get:
-      operationId: findOne
+      operationId: reactionByBook
       parameters:
-        - name: id
+        - name: bookSlug
           required: true
           in: path
           schema:
@@ -814,17 +851,17 @@ paths:
       responses:
         "200":
           description: ""
-    patch:
-      operationId: update
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        "200":
-          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReactionByBookOutput"
+      tags:
+        - 👍 Reaction
+      security:
+        - bearer: []
+  "/reaction/delete/{id}":
     delete:
       operationId: remove
       parameters:
@@ -836,6 +873,10 @@ paths:
       responses:
         "200":
           description: ""
+      tags:
+        - 👍 Reaction
+      security:
+        - bearer: []
 info:
   title: Booknex
   description: ""
@@ -2098,3 +2139,79 @@ components:
         - chapters
         - id
         - title
+    CreateReaction:
+      type: object
+      properties:
+        bookSlug:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        text:
+          type: string
+        xpath:
+          type: string
+        startOffset:
+          type: number
+        endOffset:
+          type: number
+      required:
+        - bookSlug
+        - type
+        - text
+        - xpath
+        - startOffset
+        - endOffset
+    ReactionListOutput:
+      type: object
+      properties:
+        id:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+        type:
+          type: string
+        text:
+          type: string
+        book:
+          type: object
+          properties:
+            picture:
+              type: string
+              required: true
+            title:
+              type: string
+              required: true
+            slug:
+              type: string
+              required: true
+      required:
+        - id
+        - createdAt
+        - type
+        - text
+        - book
+    ReactionByBookOutput:
+      type: object
+      properties:
+        id:
+          type: number
+        type:
+          type: string
+        text:
+          type: string
+        xpath:
+          type: string
+        startOffset:
+          type: number
+        endOffset:
+          type: number
+      required:
+        - id
+        - type
+        - text
+        - xpath
+        - startOffset
+        - endOffset

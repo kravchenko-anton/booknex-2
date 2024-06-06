@@ -90,10 +90,15 @@ model Reaction {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   type      String
+  description String?
+  text      String
+  xpath     String
+  startOffset Int
+  endOffset Int
   user      User     @relation(fields: [userId], references: [id])
-  book      Book     @relation(fields: [bookId], references: [id])
+  book      Book     @relation(fields: [bookSlug], references: [slug])
   userId    Int
-  bookId    Int
+  bookSlug    String
 }
 
 model BookTemplate {
@@ -170,6 +175,7 @@ enum Activities {
   startedReading
   finishedReading
   savedBook
+  removeFromLibrary
   removeFromSaved
   checkCatalog
   reviewBook

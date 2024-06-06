@@ -13,6 +13,7 @@ export interface CalculateUserStatisticsType {
 	}[]
 	goalMinutes: number
 }
+// TODO: пофиксить тут
 
 export const calculateUserStatistics = ({
 	userHistory,
@@ -48,20 +49,24 @@ export const calculateUserStatistics = ({
 
 	const progressByCurrentWeek = Array.from({ length: 7 }, (_, index) => index)
 		.map((_, index) => {
-			const day = new Date()
-			day.setDate(day.getDate() - ((day.getDay() + 7 - index) % 7))
-			const currentDayHistory = sortedHistory.filter(
-				history => getTimeDate(history.endDate).getDate() === day.getDate()
-			)
-			const dayReadingTimeMs = currentDayHistory.reduce(
-				(accumulator, history) => accumulator + history.readingTimeMs,
-				0
-			)
+			// get day
+			const day = new Date(currentDate)
+			day.setDate(currentDate.getDate() - index)
+			const dayReadingTimeMs = sortedHistory
+				.filter(
+					history => getTimeDate(history.endDate).getDate() === day.getDate()
+				)
+				.reduce(
+					(accumulator, history) => accumulator + history.readingTimeMs,
+					0
+				)
+
 			console.log(
 				// get day reading time to minutes
 				dayReadingTimeMs,
 				'dayReadingTimeMs ' + day.toLocaleDateString('en-US')
 			)
+			console.log(goalMinutes)
 			const dayProgress = dayReadingTimeMs / fromMinutesToMs(goalMinutes)
 			return {
 				day: day.toLocaleDateString('en-US', {
@@ -69,7 +74,7 @@ export const calculateUserStatistics = ({
 				}),
 				isCurrentDay: getTimeDate(day).getDate() === currentDate.getDate(),
 				readingTimeMs: dayReadingTimeMs,
-				dayProgress: Math.min(dayProgress, 100)
+				dayProgress: dayProgress
 			}
 		})
 		.sort((a, b) => days.indexOf(a.day) - days.indexOf(b.day))

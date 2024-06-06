@@ -3,6 +3,7 @@ import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { useFinishBook } from '@/screens/reader/hooks/useFinishBook'
 import { useModalReference } from '@/screens/reader/hooks/useModalReference'
+import { useReactions } from '@/screens/reader/hooks/useReactions'
 import { useReaderLoading } from '@/screens/reader/hooks/useReaderLoading'
 import { useReaderMessage } from '@/screens/reader/hooks/useReaderMessage'
 import { useReadingProgress } from '@/screens/reader/hooks/useReadingProgress'
@@ -11,7 +12,6 @@ import {
 	injectStyle
 } from '@/screens/reader/scripts/styles-injection'
 import { useCustomizationStore } from '@/screens/reader/store/customization-store'
-import { useReactionsStore } from '@/screens/reader/store/reader-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useEffect, useRef, useState } from 'react'
@@ -19,11 +19,7 @@ import type WebView from 'react-native-webview'
 
 //TODO: переписать на mobx
 export const useReader = (slug: string, initialScrollPosition: number) => {
-	const { setOptions } = useTypedNavigation()
-	const { newReaction, reactions } = useReactionsStore(state => ({
-		reactions: state.reactions.filter(reaction => reaction.bookSlug === slug),
-		newReaction: state.newReaction
-	}))
+	const { setOptions, navigate } = useTypedNavigation()
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
@@ -32,6 +28,14 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		networkMode: 'offlineFirst',
 		gcTime: 1000 * 60 * 60 * 24 * 365
 	})
+	const {
+		removeReaction,
+		removeReactionLoading,
+		createReactionLoading,
+		reactionBookListLoading,
+		reactionBookList = [],
+		createReaction
+	} = useReactions(slug)
 
 	const { loaderAnimation, setReaderLoading, readerLoading } =
 		useReaderLoading()
@@ -52,8 +56,12 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	})
 
 	const { finishReadingLoading, onFinish } = useFinishBook({
-		slug,
-		onFinishComplete: clearProgress
+		onFinishComplete: () => {
+			clearProgress()
+			navigate('BookReview', {
+				slug
+			})
+		}
 	})
 	const { onMessage } = useReaderMessage({
 		slug,
@@ -82,7 +90,16 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	const [defaultProperties] = useState({
 		scrollPosition,
 		theme: styleTag,
-		reactions: reactions
+		reactions: reactionBookList?.map(
+			({ endOffset, startOffset, xpath, ...rest }) => ({
+				...rest,
+				range: {
+					startOffset,
+					endOffset,
+					xpath
+				}
+			})
+		)
 	})
 	useEffect(() => {
 		setOptions({
@@ -100,10 +117,20 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	}, [styleTag])
 
 	useEffect(() => {
+		if (reactionBookList.length === 0) return
 		viewerReference.current?.injectJavaScript(`
-    	wrapReactionsInMarkTag(${JSON.stringify(reactions)});
+    	wrapReactionsInMarkTag(${JSON.stringify(
+				reactionBookList?.map(({ endOffset, startOffset, xpath, ...rest }) => ({
+					...rest,
+					range: {
+						startOffset,
+						endOffset,
+						xpath
+					}
+				}))
+			)});
     `)
-	}, [reactions, newReaction])
+	}, [reactionBookList])
 
 	return {
 		ebook,
@@ -116,8 +143,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		modalRefs,
 		ebookRequestLoading,
 		readingProgress,
-		reactions,
-		newReaction,
+
 		openModal,
 		onMessage,
 		defaultProperties,

@@ -4,7 +4,9 @@ export const QueryKeys = {
 	featured: ['featured'],
 	recommendationGenres: ['recommendation-genres'],
 	searchByTerm: (searchTerm: string) => ['search-by-term', searchTerm],
-
+	reaction: {
+		bySlug: (slug: string) => ['reaction-by-slug', slug]
+	},
 	book: {
 		picksOfTheWeek: ['picks-of-the-week'],
 		key: ['book'],
@@ -70,7 +72,8 @@ export const MutationKeys = {
 		update: ['update-book'],
 		startReadingBySlug: (slug: string) => ['start-reading', slug],
 		toggleSaveBySlug: (slug: string) => ['toggle-save', slug],
-		finishReadingBySlug: (slug: string) => ['finish-reading', slug],
+		finishReading: ['finish-reading'],
+		removeFromLibrary: ['remove-from-library'],
 		removeBook: ['remove-book'],
 		createBook: ['create-book']
 	},
@@ -92,5 +95,9 @@ export const MutationKeys = {
 	},
 	storage: {
 		uploadFile: ['upload-file']
+	},
+	reaction: {
+		create: ['create-reaction'],
+		remove: ['remove-reaction']
 	}
 }

@@ -1,25 +1,15 @@
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
-import { useReadingProgressStore } from '@/screens/reader/store/progress-store'
+import { useLibraryWithSync } from '@/screens/library/useLibraryWithSync'
 import { BookCard, Flatlist, Loader, ScrollLayout, Title } from '@/ui'
 import NothingFount from '@/ui/nothing-fount'
 import { historyByLatestSorting } from '@/utils'
 import { Color } from 'global/colors'
-import { useEffect } from 'react'
 import { RefreshControl } from 'react-native'
 
 const Library = () => {
 	const { navigate } = useTypedNavigation()
-	const {
-		fetchLibrary,
-		library,
-		history = []
-	} = useReadingProgressStore(state => ({
-		fetchLibrary: state.fetchLibrary,
-		library: state.library,
-		history: state.history
-	}))
-	useEffect(fetchLibrary, [])
+	const { library, refetch, readingList, history } = useLibraryWithSync()
 
 	if (!library) return <Loader />
 	if (
@@ -42,11 +32,11 @@ const Library = () => {
 					refreshing={false}
 					colors={[Color.white]}
 					progressBackgroundColor={Color.transparent}
-					onRefresh={() => fetchLibrary(true)}
+					onRefresh={() => refetch()}
 				/>
 			}>
 			<ReadingList
-				data={library.readingBooks}
+				data={readingList}
 				sortedHistory={historyByLatestSorting(history) || []}
 				navigate={navigate}
 			/>

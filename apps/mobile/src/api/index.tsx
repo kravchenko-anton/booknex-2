@@ -6,6 +6,7 @@ import {
 	GenreApi,
 	ImpressionApi,
 	ParserApi,
+	ReactionApi,
 	RecommendationApi,
 	StorageApi,
 	UserApi
@@ -42,6 +43,7 @@ const impressions = new ImpressionApi(baseParameters, serverUrl, mobileInstance)
 const storage = new StorageApi(baseParameters, serverUrl, mobileInstance)
 
 const user = new UserApi(baseParameters, serverUrl, mobileInstance)
+const reaction = new ReactionApi(baseParameters, serverUrl, mobileInstance)
 
 export default {
 	auth,
@@ -50,6 +52,7 @@ export default {
 	ebook,
 	genre,
 	parser,
+	reaction,
 	recommendation,
 	impressions,
 	storage,

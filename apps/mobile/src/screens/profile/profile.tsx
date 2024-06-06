@@ -1,25 +1,17 @@
 import { GoalSelectModal } from '@/screens/profile/goal-select'
-import { useReadingProgressStore } from '@/screens/reader/store/progress-store'
+import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
 import { Button, Loader, ScrollLayout, Title } from '@/ui'
 import { CircularProgressBar } from '@/ui/progress-bar/circular-progress-bar'
 import { cn } from '@/utils'
 import type { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { Color } from 'global/colors'
 import { fromMsToMinutes } from 'global/utils/numberConvertor'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { RefreshControl, View } from 'react-native'
 
 const Profile = () => {
 	const sheetReference = useRef<BottomSheetModal>(null)
-	const { statistic, fetchStatistic, history } = useReadingProgressStore(
-		state => ({
-			fetchStatistic: state.fetchStatistic,
-			statistic: state.statistics,
-			history: state.history
-		})
-	)
-	useEffect(fetchStatistic, [])
-
+	const { statistic, refetch, history } = useStatisticsWithSync()
 	if (!statistic) return <Loader />
 	return (
 		<ScrollLayout
@@ -29,13 +21,13 @@ const Profile = () => {
 					refreshing={false}
 					colors={[Color.white]}
 					progressBackgroundColor={Color.transparent}
-					onRefresh={() => fetchStatistic(true)}
+					onRefresh={() => refetch()}
 				/>
 			}>
 			<GoalSelectModal
 				sheetRef={sheetReference}
 				currentGoal={statistic.goalMinutes || 10}
-				refetch={() => fetchStatistic(true)}
+				refetch={() => refetch()}
 			/>
 			<View className='bg-foreground border-bordered mt-4 rounded-lg border-[1px] p-2'>
 				<View className='mx-2 mb-6'>

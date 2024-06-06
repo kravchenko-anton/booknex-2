@@ -5,12 +5,12 @@ base.ts
 clients/auth-api.ts
 clients/book-api.ts
 clients/catalog-api.ts
-clients/default-api.ts
 clients/ebook-api.ts
 clients/genre-api.ts
 clients/health-api.ts
 clients/impression-api.ts
 clients/parser-api.ts
+clients/reaction-api.ts
 clients/recommendation-api.ts
 clients/storage-api.ts
 clients/user-api.ts
@@ -31,6 +31,7 @@ models/check503-response.ts
 models/create-book-dto-ebook-inner-chapters-inner.ts
 models/create-book-dto-ebook-inner.ts
 models/create-book-dto.ts
+models/create-reaction.ts
 models/ebook-output-chapters-inner-children-inner.ts
 models/ebook-output-chapters-inner.ts
 models/ebook-output.ts
@@ -46,6 +47,9 @@ models/impression-dto.ts
 models/index.ts
 models/info-by-slug.ts
 models/parser-dto.ts
+models/reaction-by-book-output.ts
+models/reaction-list-output-book.ts
+models/reaction-list-output.ts
 models/reading-history.ts
 models/refresh-dto.ts
 models/short-book.ts

@@ -126,6 +126,24 @@ export const userFinishReadingBookFields = (slug: string) =>
 		}
 	}) as const
 
+export const userRemoveFromLibraryFields = (slug: string) => ({
+	readingBooks: {
+		disconnect: {
+			slug
+		}
+	},
+	savedBooks: {
+		disconnect: {
+			slug
+		}
+	},
+	finishedBooks: {
+		disconnect: {
+			slug
+		}
+	}
+})
+
 export const userStartReadingBookFields = (slug: string) =>
 	({
 		readingBooks: {
