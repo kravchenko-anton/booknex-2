@@ -1,5 +1,6 @@
 import { useTypedNavigation } from '@/hooks'
 import type { reactionsTitles } from '@/screens/reader/reactions'
+import type { ReactionType } from '@/screens/reader/store/reader-store'
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
 import { Linking, NativeModules, Platform } from 'react-native'
@@ -48,8 +49,9 @@ export interface ReaderMessageProperties {
 	) => void
 	finishReadingLoading: boolean
 	slug: string
-	onFinishBookPress: (slug: string) => Promise<void>
+	onFinishBookPress: () => void
 	onContentLoadEnd: () => void
+	createReaction: (data: ReactionType) => void
 }
 
 export const useReaderMessage = ({
@@ -57,6 +59,7 @@ export const useReaderMessage = ({
 	onContentLoadEnd,
 	slug,
 	onScroll,
+	createReaction,
 	finishReadingLoading
 }: ReaderMessageProperties) => {
 	const { navigate } = useTypedNavigation()
@@ -77,8 +80,22 @@ export const useReaderMessage = ({
 			await Linking.openURL(link)
 		}
 		if (type === ReaderMessageType.Reaction) {
-			navigate('CreateReaction', {
-				slug,
+			console.log('🚂', {
+				bookSlug: slug,
+				id: Math.random().toString(),
+				createAt: new Date(),
+				text: payload.text,
+				range: {
+					startOffset: payload.range.startOffset,
+					endOffset: payload.range.endOffset,
+					xpath: payload.range.xpath
+				},
+				reaction: payload.reaction
+			})
+			createReaction({
+				bookSlug: slug,
+				id: Math.random().toString(),
+				createAt: new Date(),
 				text: payload.text,
 				range: {
 					startOffset: payload.range.startOffset,
@@ -102,7 +119,7 @@ export const useReaderMessage = ({
 			})
 		if (type === ReaderMessageType.FinishBook) {
 			if (finishReadingLoading) return
-			onFinishBookPress(slug)
+			onFinishBookPress()
 		}
 	}
 

@@ -1,9 +1,7 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import type { ShortBook } from '@/src/book/book.dto'
 import { catalogSearchFields } from '@/src/catalog/catalog.fields'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable } from '@nestjs/common'
-import { Activities } from '@prisma/client'
 import * as cacheManagerType from 'cache-manager'
 import { RecommendationService } from '../recommendation/recommendation.service'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -11,7 +9,6 @@ import { PrismaService } from '../utils/services/prisma.service'
 @Injectable()
 export class CatalogService {
 	constructor(
-		private readonly activityService: ActivityService,
 		private readonly prisma: PrismaService,
 		private readonly recommendationService: RecommendationService,
 		@Inject(CACHE_MANAGER) private cacheManager: cacheManagerType.Cache
@@ -24,12 +21,6 @@ export class CatalogService {
 	}
 
 	async featured(userId: number) {
-		await this.activityService.create({
-			type: Activities.checkCatalog,
-			importance: 1,
-			userId: userId
-		})
-
 		const alreadyUsedBookSlugs: string[] = []
 		const pushBooks = (books: ShortBook[]) => {
 			alreadyUsedBookSlugs.push(...books.map(book => book.slug))

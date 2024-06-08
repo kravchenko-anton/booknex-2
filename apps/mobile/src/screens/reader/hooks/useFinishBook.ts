@@ -1,11 +1,18 @@
 import api from '@/api'
+import { useTypedNavigation } from '@/hooks'
+import { successToast } from '@/utils/toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 
 interface FinishBookProperties {
-	onFinishComplete?: () => void
+	slug: string
+	onFinishComplete: () => void
 }
-export const useFinishBook = ({ onFinishComplete }: FinishBookProperties) => {
+export const useFinishBook = ({
+	onFinishComplete,
+	slug
+}: FinishBookProperties) => {
+	const { navigate } = useTypedNavigation()
 	const queryClient = useQueryClient()
 	const { mutateAsync: finishReading, isPending: finishReadingLoading } =
 		useMutation({
@@ -13,11 +20,13 @@ export const useFinishBook = ({ onFinishComplete }: FinishBookProperties) => {
 			mutationFn: (slug: string) => api.user.finishReading(slug)
 		})
 
-	const onFinish = async (slug: string) => {
+	const onFinish = async () => {
 		await finishReading(slug).then(() => {
-			if (onFinishComplete) {
-				onFinishComplete()
-			}
+			onFinishComplete()
+			successToast('Book successfully finished')
+			navigate('BookReview', {
+				slug
+			})
 			queryClient.invalidateQueries({
 				queryKey: QueryKeys.library
 			})

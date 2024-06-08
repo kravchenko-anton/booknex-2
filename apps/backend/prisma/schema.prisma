@@ -19,21 +19,6 @@ model Genre {
   books         Book[]         @relation("BookGenre")
   mainBooks     Book[]         @relation("BookMajorGenre")
   bookTemplates BookTemplate[]
-  activities    Activity[]
-}
-
-model Activity {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  book      Book?    @relation(fields: [bookId], references: [id])
-  genre     Genre?   @relation(fields: [genreId], references: [id])
-  user      User?    @relation(fields: [userId], references: [id])
-
-  type       Activities
-  importance Int
-  genreId    Int?
-  bookId     Int?
-  userId     Int?
 }
 
 model Impression{
@@ -77,7 +62,6 @@ model Book {
   finishedBy     User[]           @relation("FinishedBooks")
   savedBy        User[]           @relation("SavedBooks")
   readingBy      User[]           @relation("ReadingBooks")
-  activities     Activity[]
   readingHistory ReadingHistory[]
   reactions      Reaction[]
   similarBooks Book[] @relation("SimilarBooks")
@@ -134,7 +118,6 @@ model User {
   savedBooks     Book[]           @relation("SavedBooks")
   finishedBooks  Book[]           @relation("FinishedBooks")
   readingBooks   Book[]           @relation("ReadingBooks")
-  activity       Activity[]
   readingHistory ReadingHistory[]
 }
 

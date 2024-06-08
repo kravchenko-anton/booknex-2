@@ -1,4 +1,3 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { Module } from '@nestjs/common'
 import { GenreService } from '../genre/genre.service'
 import { RecommendationService } from '../recommendation/recommendation.service'
@@ -11,7 +10,6 @@ import { CatalogService } from './catalog.service'
 	providers: [
 		CatalogService,
 		PrismaService,
-		ActivityService,
 		GenreService,
 		RecommendationService
 	]

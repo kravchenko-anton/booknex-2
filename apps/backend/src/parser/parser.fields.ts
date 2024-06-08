@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client'
+
 export const parserCatalogFields = ({
 	page,
 	perPage,
@@ -9,7 +11,7 @@ export const parserCatalogFields = ({
 }) =>
 	({
 		take: perPage,
-		select: {
+		select: Prisma.validator<Prisma.BookTemplateSelect>()({
 			title: true,
 			slug: true,
 			rating: true,
@@ -17,7 +19,7 @@ export const parserCatalogFields = ({
 			author: true,
 			genres: true,
 			picture: true
-		},
+		}),
 		...(page && {
 			skip: page * perPage
 		}),
@@ -50,7 +52,7 @@ export const bookTemplateByIdFields = (slug: string) => ({
 	where: {
 		slug
 	},
-	select: {
+	select: Prisma.validator<Prisma.BookTemplateSelect>()({
 		title: true,
 		slug: true,
 		rating: true,
@@ -58,5 +60,5 @@ export const bookTemplateByIdFields = (slug: string) => ({
 		author: true,
 		picture: true,
 		genres: true
-	}
+	})
 })

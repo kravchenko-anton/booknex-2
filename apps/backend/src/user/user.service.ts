@@ -1,4 +1,3 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { calculateUserStatistics } from '@/src/user/helpers/calculate-user-statistics'
 import type { ReadingHistory } from '@/src/user/user.dto'
 import {
@@ -11,7 +10,7 @@ import {
 } from '@/src/user/user.fields'
 import { statisticReduce } from '@/src/utils/services/statisticReduce.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities, type Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { globalErrors } from 'global/errors'
 import { slugSelect } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/server-error'
@@ -20,10 +19,7 @@ import { returnUserObject } from './return.user.object'
 
 @Injectable()
 export class UserService {
-	constructor(
-		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService
-	) {}
+	constructor(private readonly prisma: PrismaService) {}
 
 	async getUserById(id: number, selectObject: Prisma.UserSelect = {}) {
 		const user = await this.prisma.user.findUnique({
@@ -165,12 +161,6 @@ export class UserService {
 		const isReadingExist = user.readingBooks.some(book => book.slug === slug)
 		if (isReadingExist) return
 
-		await this.activityService.create({
-			type: Activities.startedReading,
-			importance: 2,
-			userId,
-			bookSlug: slug
-		})
 		await this.prisma.user.update({
 			where: { id: user.id },
 			data: userStartReadingBookFields(slug)
@@ -184,12 +174,6 @@ export class UserService {
 			savedBooks: slugSelect
 		})
 
-		await this.activityService.create({
-			type: Activities.removeFromLibrary,
-			importance: 2,
-			userId,
-			bookSlug: slug
-		})
 		await this.prisma.user.update({
 			where: { id: user.id },
 			data: userRemoveFromLibraryFields(slug)
@@ -203,13 +187,6 @@ export class UserService {
 		})
 		const isReadingExist = user.readingBooks.some(book => book.slug === slug)
 		if (!isReadingExist) return
-
-		await this.activityService.create({
-			type: Activities.finishedReading,
-			importance: 3,
-			userId,
-			bookSlug: slug
-		})
 
 		await this.prisma.user.update({
 			where: { id: user.id },
@@ -230,12 +207,6 @@ export class UserService {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		const isSavedExist = user.savedBooks.some(book => book.slug === slug)
 
-		await this.activityService.create({
-			type: isSavedExist ? Activities.removeFromSaved : Activities.savedBook,
-			importance: 1,
-			userId,
-			bookSlug: slug
-		})
 		await this.prisma.user.update({
 			where: { id: user.id },
 			data: userToggleSaveFields({

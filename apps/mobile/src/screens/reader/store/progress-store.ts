@@ -1,7 +1,11 @@
 import api from '@/api'
 
-import type { CompareReadingBooksType } from '@/screens/library/compareReadingBooks'
+import {
+	compareReadingBooks,
+	type CompareReadingBooksType
+} from '@/screens/library/compareReadingBooks'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
+import { errorToast } from '@/utils/toast'
 import type { UserLibraryOutput, UserStatistics } from 'global/api-client'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
@@ -42,6 +46,8 @@ interface ReadingProgressStoreActionsType {
 	updateStartFromReadingScreen: (
 		data: Pick<ReadingHistoryType, 'id'> & { startFromReadingScreen: boolean }
 	) => void
+	fetchLibrary: (isRefetch?: boolean) => void
+	fetchStatistic: (isRefetch?: boolean) => void
 	syncHistory: (history: ReadingHistoryType[]) => void
 }
 export const useReadingProgressStore = create<
@@ -50,6 +56,30 @@ export const useReadingProgressStore = create<
 	persist(
 		(set, getState) => ({
 			...initialState,
+			fetchLibrary: (isRefetch = false) => {
+				const history = getState().history
+				console.log('history in getLibrary', history)
+				if (history.length === 0 && !isRefetch)
+					return console.log('no history to fetch library')
+
+				console.log('🔵 history be sync in library', history)
+				api.user
+					.library(history)
+					.then(({ data: result }) => {
+						if (!result) return
+						console.log('return library from api, no history and library exist')
+						set({
+							library: {
+								...result,
+								readingBooks: compareReadingBooks(result.readingBooks, history)
+							},
+							history: []
+						})
+					})
+					.catch(error => {
+						console.log(error, 'error in library sync')
+					})
+			},
 			syncHistory: (history: ReadingHistoryType[]) => {
 				api.user
 					.syncHistory(history)
@@ -58,6 +88,28 @@ export const useReadingProgressStore = create<
 					})
 					.then(() => {
 						set(({ history, ...state }) => ({ ...state, history: [] }))
+					})
+			},
+			fetchStatistic: (isRefetch = false) => {
+				const history = getState().history
+				console.log('history in getStatistic', history)
+				if (history.length === 0 && !isRefetch)
+					return console.log('no history to fetch statistic')
+				api.user
+					.statistics(history)
+					.then(({ data: result }) => {
+						if (!result) return
+						console.log(
+							'return library from api, no history and statistic exist'
+						)
+						set({
+							statistics: result,
+							history: []
+						})
+					})
+					.catch(error => {
+						console.log(error, 'error in statistic sync')
+						errorToast('Failed to sync statistic')
 					})
 			},
 			newProgress: newHistory => {

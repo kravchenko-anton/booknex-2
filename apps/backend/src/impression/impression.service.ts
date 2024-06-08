@@ -1,6 +1,4 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities } from '@prisma/client'
 import { adminErrors, globalErrors } from 'global/errors'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -8,21 +6,12 @@ import type { ImpressionDto } from './impression.dto'
 
 @Injectable()
 export class ImpressionService {
-	constructor(
-		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService
-	) {}
+	constructor(private readonly prisma: PrismaService) {}
 
 	async impression(userId: number, bookSlug: string, dto: ImpressionDto) {
 		await this.checkBookExist(bookSlug)
 
 		await this.checkUserExist(userId)
-		await this.activityService.create({
-			type: Activities.reviewBook,
-			importance: 4,
-			userId,
-			bookSlug
-		})
 		await this.prisma.impression.create({
 			data: {
 				rating: dto.rating,

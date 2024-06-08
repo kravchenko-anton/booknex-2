@@ -1,6 +1,4 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities } from '@prisma/client'
 import { getFileUrl } from 'global/api-config'
 import { globalErrors } from 'global/errors'
 import { getServerBookHtml } from 'global/helpers/getBookHtml'
@@ -13,10 +11,7 @@ import type { StoredEBook } from './ebook.dto'
 
 @Injectable()
 export class EbookService {
-	constructor(
-		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService
-	) {}
+	constructor(private readonly prisma: PrismaService) {}
 	async storedEbook(slug: string) {
 		const book = await this.prisma.book.findUnique({
 			where: { slug },
@@ -58,12 +53,6 @@ export class EbookService {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.unknownError)
 		}
 		const ebook = await this.storedEbook(slug)
-		await this.activityService.create({
-			type: Activities.getEbook,
-			importance: 2,
-			userId,
-			bookSlug: slug
-		})
 
 		return {
 			...book,

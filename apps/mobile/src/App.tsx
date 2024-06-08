@@ -8,6 +8,7 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import { onlineManager, QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { Color } from 'global/colors'
+import { useEffect } from 'react'
 import { StatusBar } from 'react-native'
 import codePush from 'react-native-code-push'
 import Config from 'react-native-config'
@@ -52,21 +53,36 @@ codePush.sync({
 	installMode: codePush.InstallMode.IMMEDIATE,
 	mandatoryInstallMode: codePush.InstallMode.IMMEDIATE
 })
-const App = () => (
-	<PersistQueryClientProvider
-		client={queryClient}
-		persistOptions={{ persister: clientPersister }}>
-		<GestureHandlerRootView
-			style={{
-				flex: 1
-			}}>
-			<BottomSheetModalProvider>
-				<Navigation />
-			</BottomSheetModalProvider>
-		</GestureHandlerRootView>
-		<Toast />
-		<StatusBar backgroundColor={Color.background} />
-	</PersistQueryClientProvider>
-)
+const App = () => {
+	useEffect(
+		() =>
+			NetInfo.addEventListener(state => {
+				const status = !!state.isConnected
+				onlineManager.setOnline(status)
+			}),
+		[]
+	)
+	return (
+		<PersistQueryClientProvider
+			client={queryClient}
+			persistOptions={{ persister: clientPersister }}
+			onSuccess={() =>
+				queryClient
+					.resumePausedMutations()
+					.then(() => queryClient.invalidateQueries())
+			}>
+			<GestureHandlerRootView
+				style={{
+					flex: 1
+				}}>
+				<BottomSheetModalProvider>
+					<Navigation />
+				</BottomSheetModalProvider>
+			</GestureHandlerRootView>
+			<Toast />
+			<StatusBar backgroundColor={Color.background} />
+		</PersistQueryClientProvider>
+	)
+}
 
 export default Sentry.wrap(codePush(App))

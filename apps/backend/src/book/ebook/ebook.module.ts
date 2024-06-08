@@ -1,4 +1,3 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { StorageService } from '@/src/storage/storage.service'
 import { Module } from '@nestjs/common'
 import { PrismaService } from '../../utils/services/prisma.service'
@@ -7,6 +6,6 @@ import { EbookService } from './ebook.service'
 
 @Module({
 	controllers: [EbookController],
-	providers: [EbookService, PrismaService, ActivityService, StorageService]
+	providers: [EbookService, PrismaService, StorageService]
 })
 export class EbookModule {}

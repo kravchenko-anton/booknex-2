@@ -1,5 +1,3 @@
-import { ActivityModule } from '@/src/activity/activity.module'
-
 import { ImpressionModule } from '@/src/impression/impression.module'
 import { envConfigSchema } from '@/src/utils/config/env-config'
 import { CacheModule } from '@nestjs/cache-manager'
@@ -35,7 +33,6 @@ import { AppLoggerMiddleware } from './utils/logger/logger'
 		AuthModule,
 		StorageModule,
 		ParserModule,
-		ActivityModule,
 		CacheModule.register({
 			isGlobal: true,
 			max: 1000,

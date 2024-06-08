@@ -1,7 +1,7 @@
 import { Button, Title } from '@/ui'
 import { Color } from 'global/colors'
 import type { BaseFieldProperties } from 'global/types'
-import { reviewTags } from 'global/utils/review-tags'
+import { impressionsTags } from 'global/utils/impressions-tags'
 import { Controller, type FieldValues } from 'react-hook-form'
 import { View } from 'react-native'
 
@@ -51,7 +51,9 @@ export const TagsSelect = <T extends Record<string, any>>({
 			<>
 				<View className='mb-2 w-full flex-row flex-wrap items-center justify-center gap-2 pt-4'>
 					{mappedTags(
-						currentRating > 3 ? reviewTags.positive : reviewTags.negative,
+						currentRating > 3
+							? impressionsTags.positive
+							: impressionsTags.negative,
 						value,
 						setTags
 					)}

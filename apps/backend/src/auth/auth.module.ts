@@ -1,4 +1,3 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
@@ -16,8 +15,7 @@ import { JwtStrategy } from './strategy/jwt.stategy'
 		PrismaService,
 		JwtStrategy,
 		UserService,
-		ConfigService,
-		ActivityService
+		ConfigService
 	],
 	imports: [
 		ConfigModule,

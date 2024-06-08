@@ -1,7 +1,5 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { ReturnGenreObject } from '@/src/genre/return.genre.object'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities } from '@prisma/client'
 import { adminErrors } from 'global/errors'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
@@ -9,10 +7,7 @@ import type { UpdateRecommendationDto } from './recommendation.dto'
 
 @Injectable()
 export class RecommendationService {
-	constructor(
-		private prisma: PrismaService,
-		private activityService: ActivityService
-	) {}
+	constructor(private prisma: PrismaService) {}
 
 	async userSelectedGenresById(userId: number) {
 		const userSelectedGenres = await this.prisma.user.findUnique({
@@ -39,12 +34,6 @@ export class RecommendationService {
 			select: {
 				id: true
 			}
-		})
-
-		await this.activityService.create({
-			type: Activities.updateRecommendations,
-			importance: 5,
-			userId: id
 		})
 
 		await this.prisma.user.update({

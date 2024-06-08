@@ -1,9 +1,8 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import type { EnvConfig } from '@/src/utils/config/env-config'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { Activities, Role, type User } from '@prisma/client'
+import { Role, type User } from '@prisma/client'
 import { hash, verify } from 'argon2'
 import { authErrors, globalErrors } from 'global/errors'
 import { OAuth2Client } from 'google-auth-library'
@@ -21,8 +20,7 @@ export class AuthService {
 		private readonly prisma: PrismaService,
 		private readonly jwt: JwtService,
 		private readonly usersService: UserService,
-		private readonly configService: ConfigService<EnvConfig>,
-		private readonly activityService: ActivityService
+		private readonly configService: ConfigService<EnvConfig>
 	) {
 		this.google = new OAuth2Client(
 			configService.get('GOOGLE_CLIENT_ID'),
@@ -57,12 +55,6 @@ export class AuthService {
 			}
 		})
 
-		await this.activityService.create({
-			type: Activities.registerNewUser,
-			importance: 1,
-			userId: user.id
-		})
-
 		const tokens = this.issueToken(user.id)
 		return {
 			user: this.userFields(user),
@@ -92,12 +84,6 @@ export class AuthService {
 		if (user) {
 			console.log('User exist and i just logged in')
 			const tokens = this.issueToken(user.id)
-
-			await this.activityService.create({
-				type: Activities.loginUser,
-				importance: 1,
-				userId: user.id
-			})
 
 			return {
 				type: 'login',
@@ -131,11 +117,6 @@ export class AuthService {
 		})
 
 		const newTokens = this.issueToken(newUser.id)
-		await this.activityService.create({
-			type: Activities.registerNewUser,
-			importance: 1,
-			userId: newUser.id
-		})
 		return {
 			type: 'register',
 			user: this.userFields(newUser),

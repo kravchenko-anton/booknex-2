@@ -1,5 +1,3 @@
-import type { WebviewMessageType } from '@/screens/reader/hooks/useReaderMessage'
-import type { reactionsTitles } from '@/screens/reader/reactions'
 import type { ParamListBase } from '@react-navigation/native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { ComponentType } from 'react'
@@ -14,12 +12,6 @@ export type TypeRootStackParameterListType = {
 	Register: undefined
 	Profile: undefined
 	Reactions: { slug: string; reactionId?: string }
-	CreateReaction: {
-		slug: string
-		range: WebviewMessageType['payload']['range']
-		reaction: reactionsTitles
-		text: string
-	}
 	Welcome: undefined
 	Reader: { slug: string; initialScrollPosition: number }
 	UpdateRecommendation: undefined

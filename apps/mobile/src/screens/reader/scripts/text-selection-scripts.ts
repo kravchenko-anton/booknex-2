@@ -144,6 +144,9 @@ document.addEventListener('contextmenu', (e) => {
 	const startXpath = getXPath(activeSelection.getRangeAt(0).startContainer.parentNode);
 	const endXpath = getXPath(activeSelection.getRangeAt(0).endContainer.parentNode);
 		const reactionItems = document.querySelectorAll('.select-menu-reaction-item');
+		
+
+		
 	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
 	if (isOverlappingMark || startXpath !== endXpath) { 
 		reactionItems.forEach((item) => {
@@ -157,6 +160,12 @@ document.addEventListener('contextmenu', (e) => {
 			item.style.pointerEvents = 'auto';
 		});
 	}
+				
+				//TODO: убрать когда сделаю синхронизацию и всю экосистему	
+			reactionItems.forEach((item) => {
+			item.style.opacity = '0.5';
+			item.style.pointerEvents = 'none';
+		});
 });
 
 document.addEventListener('selectionchange', () => {

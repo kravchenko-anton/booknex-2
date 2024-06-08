@@ -1,4 +1,3 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { Module } from '@nestjs/common'
 import { PrismaService } from '../utils/services/prisma.service'
 
@@ -7,7 +6,7 @@ import { GenreService } from './genre.service'
 
 @Module({
 	controllers: [GenreController],
-	providers: [GenreService, PrismaService, ActivityService],
+	providers: [GenreService, PrismaService],
 	exports: [GenreService]
 })
 export class GenreModule {}

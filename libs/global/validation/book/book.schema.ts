@@ -42,7 +42,7 @@ export const FullBookSchema = BookSchema.merge(
 					readingTimeMs: z.number()
 				})
 			),
-			review: z.array(ImpressionSchema)
+			impressions: z.array(ImpressionSchema)
 		})
 		.strict()
 )

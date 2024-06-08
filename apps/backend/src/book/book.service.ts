@@ -1,6 +1,5 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities, type Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { adminErrors, globalErrors } from 'global/errors'
 import { slugify } from 'global/helpers/slugify'
 import { checkHtmlValid } from 'global/utils/html-validation'
@@ -24,7 +23,6 @@ import { useEbookCalculation } from './helpers/get-ebook'
 export class BookService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService,
 		private storageService: StorageService
 	) {}
 
@@ -35,13 +33,6 @@ export class BookService {
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-
-		await this.activityService.create({
-			type: Activities.visitBook,
-			importance: 1,
-			userId,
-			bookSlug: slug
-		})
 
 		return {
 			...book,
@@ -218,12 +209,6 @@ export class BookService {
 		await this.prisma.book.update({
 			where: { id: book.id },
 			data: updateData
-		})
-
-		await this.activityService.create({
-			type: Activities.updateBook,
-			importance: 7,
-			bookSlug: slug
 		})
 	}
 

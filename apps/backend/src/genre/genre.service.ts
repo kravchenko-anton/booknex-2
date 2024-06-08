@@ -1,6 +1,4 @@
-import { ActivityService } from '@/src/activity/activity.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { Activities } from '@prisma/client'
 import { globalErrors } from 'global/errors'
 import { returnBookObject } from '../book/return.book.object'
 import { serverError } from '../utils/helpers/server-error'
@@ -9,10 +7,7 @@ import { ReturnGenreObject } from './return.genre.object'
 
 @Injectable()
 export class GenreService {
-	constructor(
-		private readonly prisma: PrismaService,
-		private readonly activityService: ActivityService
-	) {}
+	constructor(private readonly prisma: PrismaService) {}
 
 	catalog() {
 		return this.prisma.genre.findMany({
@@ -21,12 +16,6 @@ export class GenreService {
 	}
 
 	async bySlug(slug: string, userId: number) {
-		await this.activityService.create({
-			type: Activities.visitGenre,
-			importance: 1,
-			userId
-		})
-
 		const genre = await this.prisma.genre.findUnique({
 			where: {
 				slug

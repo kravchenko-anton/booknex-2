@@ -11,17 +11,13 @@ interface SaveButtonProperties {
 
 const SaveButton: FC<SaveButtonProperties> = ({ slug }) => {
 	const queryClient = useQueryClient()
-
 	const { mutateAsync: toggleSave, isPending: toggleSaveLoading } = useMutation(
 		{
 			mutationKey: MutationKeys.book.toggleSaveBySlug(slug),
 			mutationFn: (slug: string) => api.user.toggleSave(slug),
-			onSuccess: async () => {
-				await queryClient.invalidateQueries({
+			onSuccess: () => {
+				queryClient.invalidateQueries({
 					queryKey: QueryKeys.book.isSaved(slug)
-				})
-				await queryClient.invalidateQueries({
-					queryKey: QueryKeys.library
 				})
 			}
 		}
@@ -38,9 +34,9 @@ const SaveButton: FC<SaveButtonProperties> = ({ slug }) => {
 			variant='muted'
 			icon={Bookmarked}
 			fatness={2}
-			disabled={toggleSaveLoading}
 			size='md'
 			className='ml-3'
+			disabled={toggleSaveLoading}
 			fill={!!isSaved}
 			onPress={() => toggleSave(slug)}
 		/>

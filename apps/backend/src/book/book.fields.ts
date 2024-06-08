@@ -1,5 +1,5 @@
 import { ReturnGenreObject } from '@/src/genre/return.genre.object'
-import { Activities } from '@prisma/client'
+import { Activities, Prisma } from '@prisma/client'
 import { slugify } from 'global/helpers/slugify'
 
 export const infoBySlug = {
@@ -15,8 +15,10 @@ export const infoBySlug = {
 	rating: true,
 	genres: { select: ReturnGenreObject }
 }
-export const infoBySlugAdminFields = (slug: string) =>
-	({
+export const infoBySlugAdminFields: (slug: string) => Prisma.BookSelect = (
+	slug: string
+) =>
+	Prisma.validator<Prisma.BookSelect>()({
 		id: true,
 		chapters: true,
 		title: true,
@@ -35,7 +37,7 @@ export const infoBySlugAdminFields = (slug: string) =>
 		ebook: true,
 		description: true,
 		isPublic: true,
-		review: {
+		impressions: {
 			select: {
 				tags: true,
 				text: true,
@@ -72,7 +74,7 @@ export const infoBySlugAdminFields = (slug: string) =>
 				startDate: true
 			}
 		}
-	}) as const
+	})
 
 export const bookCatalogFields = ({
 	page,
@@ -85,7 +87,7 @@ export const bookCatalogFields = ({
 }) =>
 	({
 		take: perPage,
-		select: {
+		select: Prisma.validator<Prisma.BookSelect>()({
 			author: true,
 			chapters: true,
 			title: true,
@@ -99,9 +101,9 @@ export const bookCatalogFields = ({
 			mainGenre: {
 				select: ReturnGenreObject
 			}
-		},
+		}),
 		orderBy: {
-			isPublic: 'asc' as const
+			isPublic: 'asc'
 		},
 		...(page && {
 			skip: page * perPage
@@ -143,7 +145,7 @@ export const bookCreateFields = ({
 	chaptersCount: number
 	pagesCount: number
 }) =>
-	({
+	Prisma.validator<Prisma.BookCreateInput>()({
 		pagesCount: pagesCount,
 		slug: slugify(dto.title),
 		activities: {
@@ -168,4 +170,4 @@ export const bookCreateFields = ({
 				slug: mainGenreSlug
 			}
 		}
-	}) as const
+	})
