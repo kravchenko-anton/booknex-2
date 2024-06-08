@@ -13,4 +13,5 @@ export interface IconProperties
 	stroke?: string
 	noPadding?: boolean
 	variant?: ClampPaletteType | 'white-outlined' | 'transparent'
+	onPress?: () => void
 }

@@ -14,6 +14,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 	className = '',
 	fill = false,
 	noPadding = false,
+	onPress,
 	...properties
 }) => (
 	<AnimatedPress

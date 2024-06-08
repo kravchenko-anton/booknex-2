@@ -41,7 +41,9 @@ export const ReadingList: FC<ReadingListProperties> = ({
 	> | null>(null)
 
 	const { onFinish, finishReadingLoading } = useFinishBook({
-		onFinishComplete: () => null
+		onFinishComplete: () => {
+			sheetReference.current?.dismiss()
+		}
 	})
 
 	const onRemoveFromLibrary = async (slug: string) => {
@@ -90,6 +92,11 @@ export const ReadingList: FC<ReadingListProperties> = ({
 
 					const scrollPosition =
 						latestHistory?.scrollPosition || book.scrollPosition
+
+					const isBookDownloaded = queryClient.getQueryData(
+						QueryKeys.ebook.bySlug(book.slug)
+					)
+					console.log(!!isBookDownloaded, 'isBookDownloaded')
 					return (
 						<Animated.View
 							style={{
@@ -114,10 +121,19 @@ export const ReadingList: FC<ReadingListProperties> = ({
 								<View className='absolute bottom-4 w-full flex-row justify-between px-2'>
 									{/*TODO: сделать функционал загрузки книги*/}
 									<AnimatedIcon
-										disabled
-										icon={Download}
 										size={'md'}
 										variant='muted'
+										icon={Download}
+										style={{
+											opacity: isBookDownloaded ? 0 : 1
+										}}
+										onPress={async () => {
+											if (!isBookDownloaded)
+												queryClient.prefetchQuery({
+													queryKey: QueryKeys.ebook.bySlug(book.slug),
+													queryFn: () => api.ebook.ebookBySlug(book.slug)
+												})
+										}}
 									/>
 									<AnimatedIcon
 										icon={MoreHorizontal}

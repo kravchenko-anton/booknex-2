@@ -49,7 +49,7 @@ export interface ReaderMessageProperties {
 	) => void
 	finishReadingLoading: boolean
 	slug: string
-	onFinishBookPress: () => void
+	onFinishBookPress: (slug: string) => void
 	onContentLoadEnd: () => void
 	createReaction: (data: ReactionType) => void
 }
@@ -119,7 +119,7 @@ export const useReaderMessage = ({
 			})
 		if (type === ReaderMessageType.FinishBook) {
 			if (finishReadingLoading) return
-			onFinishBookPress()
+			onFinishBookPress(slug)
 		}
 	}
 

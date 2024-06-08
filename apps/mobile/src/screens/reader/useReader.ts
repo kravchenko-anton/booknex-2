@@ -52,7 +52,6 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	})
 
 	const { finishReadingLoading, onFinish } = useFinishBook({
-		slug,
 		onFinishComplete: clearProgress
 	})
 	const { onMessage } = useReaderMessage({
