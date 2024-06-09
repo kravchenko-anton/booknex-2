@@ -1,4 +1,4 @@
-import { reactions } from '@/screens/reader/reactions'
+import { reactions } from '@/screens/reader/feature/reactions/reactions'
 
 export const textSElectionLimit = 1200
 export const onSelectTextScript = `
@@ -32,21 +32,6 @@ document.addEventListener('selectionchange', () => {
 			}
 	}
 });
-`
-
-export const logAllEvents = `
-// 	const events = [
-//     'click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave',
-//     'contextmenu', 'wheel', 'select', 'input', 'keydown', 'keyup', 'keypress', 'touchstart', 'touchend', 'touchmove',
-//     'resize', 'scroll', 'zoom', 'focus', 'blur', 'select', 'change', 'submit', 'reset', 'play', 'pause', 'loadedmetadata',
-//     'loadstart', 'progress', 'error', 'abort', 'load', 'beforeunload', 'unload', 'offline', 'online', 'toggle'
-// ];
-//
-// events.forEach(eventType => {
-//     document.addEventListener(eventType, (event) => {
-//     window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selectionEnd', payload: { eventType } }));
-//     });
-// });
 `
 
 export const selectMenuHtml = `
@@ -108,14 +93,14 @@ export const selectMenuActions = `
 	});
 `
 
-export const textSelectMenu = `
+export const textSelectMenu = (isOnline: boolean) => `
 const selectMenu = document.getElementById('select-menu');
 selectMenu.style.opacity = '0';
 selectMenu.style.display = 'none';
 selectMenu.style.pointerEvents = 'none';
 selectMenu.style.visibility = 'hidden';
 let isFirstSelection = true;
-
+let isOnline = ${isOnline};
 document.addEventListener('click', (e) => {
 		isFirstSelection = true;
 	setTimeout(() => {
@@ -129,6 +114,7 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('contextmenu', (e) => {
 	isFirstSelection = true;	
+
 	const activeSelection = document.getSelection();
 	if (activeSelection.toString().length < 2) return;
 
@@ -148,7 +134,7 @@ document.addEventListener('contextmenu', (e) => {
 
 		
 	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
-	if (isOverlappingMark || startXpath !== endXpath) { 
+	if (isOverlappingMark || startXpath !== endXpath || !isOnline) { 
 		reactionItems.forEach((item) => {
 			item.style.opacity = '0.5';
 			item.style.pointerEvents = 'none';
@@ -160,12 +146,6 @@ document.addEventListener('contextmenu', (e) => {
 			item.style.pointerEvents = 'auto';
 		});
 	}
-				
-				//TODO: убрать когда сделаю синхронизацию и всю экосистему	
-			reactionItems.forEach((item) => {
-			item.style.opacity = '0.5';
-			item.style.pointerEvents = 'none';
-		});
 });
 
 document.addEventListener('selectionchange', () => {
@@ -180,4 +160,3 @@ document.addEventListener('selectionchange', () => {
 	isFirstSelection = false;
 });
 `
-//TODO: доделать полностью функционал селекта текста чтобы при выборе и вдруг изменении epub, ничего не ломалось

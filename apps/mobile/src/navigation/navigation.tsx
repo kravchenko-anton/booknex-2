@@ -6,7 +6,7 @@ import type { TypeRootStackParameterListType } from '@/navigation/navigation-typ
 import { routes } from '@/navigation/user-routes'
 import { getRefreshToken } from '@/screens/auth/store/auth-helper'
 import { useAuthStore } from '@/screens/auth/store/auth-store'
-import { useReadingProgressStore } from '@/screens/reader/store/progress-store'
+import { useReadingProgressStore } from '@/screens/reader/feature/reading-progress/progress-store'
 import { Loader } from '@/ui'
 import { historyByLatestSorting } from '@/utils'
 import {
@@ -30,16 +30,14 @@ const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
 
 const noBottomMenuRoutes = new Set([
 	'Reader',
-	'BookReview',
+	'BookImpression',
 	'Search',
 	'CreateNote',
 	'Note'
 ])
 
 const Navigation: FC = () => {
-	const [initialHistory, setInitialHistory] = useState(
-		useReadingProgressStore.getState().history
-	) // eslint-disable-line
+	const [initialHistory] = useState(useReadingProgressStore.getState().history) // eslint-disable-line
 	const latestHistory = historyByLatestSorting(initialHistory).find(
 		h => h.startFromReadingScreen
 	)
@@ -51,9 +49,9 @@ const Navigation: FC = () => {
 		mutationKey: MutationKeys.user.syncHistory,
 		mutationFn: (dto: ReadingHistory[]) => api.user.syncHistory(dto)
 	})
-	const [currentRoute, setCurrentRoute] = useState<string | undefined>(
-		user ? 'Featured' : 'Welcome'
-	)
+	const [currentRoute, setCurrentRoute] = useState<
+		keyof TypeRootStackParameterListType | undefined
+	>(user ? 'Featured' : 'Welcome')
 
 	const navReference =
 		useNavigationContainerRef<TypeRootStackParameterListType>()

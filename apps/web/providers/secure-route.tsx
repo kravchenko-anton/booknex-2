@@ -30,7 +30,7 @@ export const adminRoute = (Component: FC) =>
 		useLayoutEffect(() => {
 			const checkRefreshToken = async () => {
 				const refreshToken = getRefreshToken()
-				if (!refreshToken && user) {
+				if (!refreshToken && user && !isLoading) {
 					logout()
 				}
 			}

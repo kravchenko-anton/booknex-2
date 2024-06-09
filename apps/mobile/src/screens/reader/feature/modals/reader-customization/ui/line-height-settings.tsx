@@ -1,6 +1,6 @@
-import type { ThemePackType } from '@/screens/reader/reader-customization/theme-pack'
-import LineHeightIcon from '@/screens/reader/reader-customization/ui/icons/line-height'
-import type { CustomizationStoreActionsType } from '@/screens/reader/store/customization-store'
+import type { CustomizationStoreActionsType } from '@/screens/reader/feature/modals/reader-customization/customization-store'
+import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
+import LineHeightIcon from '@/screens/reader/feature/modals/reader-customization/ui/icons/line-height'
 import type { FC } from 'react'
 import { View } from 'react-native'
 

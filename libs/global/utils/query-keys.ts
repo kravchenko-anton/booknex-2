@@ -5,6 +5,7 @@ export const QueryKeys = {
 	recommendationGenres: ['recommendation-genres'],
 	searchByTerm: (searchTerm: string) => ['search-by-term', searchTerm],
 	reaction: {
+		list: ['reactions'],
 		bySlug: (slug: string) => ['reaction-by-slug', slug]
 	},
 	book: {
@@ -71,7 +72,7 @@ export const MutationKeys = {
 	book: {
 		update: ['update-book'],
 		startReadingBySlug: (slug: string) => ['start-reading', slug],
-		toggleSaveBySlug: (slug: string) => ['toggle-save', slug],
+		toggleSaveBySlug: ['toggle-save'],
 		finishReading: ['finish-reading'],
 		removeFromLibrary: ['remove-from-library'],
 		removeBook: ['remove-book'],
@@ -98,6 +99,7 @@ export const MutationKeys = {
 	},
 	reaction: {
 		create: ['create-reaction'],
+		update: ['update-reaction'],
 		remove: ['remove-reaction']
 	}
 }

@@ -1,8 +1,9 @@
-import type { ThemePackType } from '@/screens/reader/reader-customization/theme-pack'
+import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
 import { composeReaderViewHtml } from '@/screens/reader/scripts/compose-html'
-import type { ReactionType } from '@/screens/reader/store/reader-store'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
+import { useNetInfo } from '@react-native-community/netinfo'
+import type { ReactionByBookOutput } from 'global/api-client'
 import type { FunctionType } from 'global/types'
 import { forwardRef } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
@@ -17,7 +18,7 @@ export interface ReaderViewerProperties {
 	defaultProperties: {
 		scrollPosition: number
 		theme: string
-		reactions: ReactionType[]
+		reactions: ReactionByBookOutput[]
 	}
 	colorScheme: ThemePackType
 	onMessage: (event: WebViewMessageEvent) => Promise<void>
@@ -34,7 +35,7 @@ const ReaderViewer = forwardRef(
 			picture,
 			file
 		} = properties
-
+		const { isConnected } = useNetInfo()
 		if (!defaultProperties) return <View className='flex-1' />
 		return (
 			<View className='m-0 h-screen w-screen flex-1 items-center justify-center p-0'>
@@ -64,7 +65,8 @@ const ReaderViewer = forwardRef(
 								defaultProperties,
 								file,
 								picture,
-								title
+								title,
+								isOnline: !!isConnected
 							})
 						}}
 						style={{

@@ -1,5 +1,5 @@
-import type { ThemePackType } from '@/screens/reader/reader-customization/theme-pack'
-import { ReaderFont } from '@/screens/reader/store/customization-store'
+import { ReaderFont } from '@/screens/reader/feature/modals/reader-customization/customization-store'
+import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
 import { cn } from '@/utils'
 import { Color } from 'global/colors'

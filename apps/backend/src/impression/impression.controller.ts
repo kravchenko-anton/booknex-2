@@ -13,7 +13,7 @@ export class ImpressionController {
 
 	@Post('/impression/:slug')
 	@Auth()
-	@ApiOkResponse({ description: 'Review book' })
+	@ApiOkResponse({ description: 'Impression book' })
 	@ApiBody({
 		type: ImpressionDto,
 		required: true,

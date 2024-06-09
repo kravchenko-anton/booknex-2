@@ -4,17 +4,26 @@ import ManageRecommendationMenu from '@/screens/update-recommendation/manage-rec
 import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
 import { SvgButton } from '@/ui/svg-button/svg-button'
+import * as Sentry from '@sentry/react-native'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { QueryKeys } from 'global/utils/query-keys'
+import { useEffect } from 'react'
 import { RefreshControl } from 'react-native'
 
 const Featured = () => {
-	const { data: featured, refetch } = useQuery({
+	const {
+		data: featured,
+		refetch,
+		isSuccess
+	} = useQuery({
 		queryKey: QueryKeys.featured,
 		queryFn: () => api.catalog.featured(),
 		select: data => data.data
 	})
+	useEffect(() => {
+		Sentry.metrics.increment('get-featured')
+	}, [isSuccess])
 	const { navigate } = useTypedNavigation()
 	if (!featured) return <Loader />
 	return (

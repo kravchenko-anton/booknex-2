@@ -1,6 +1,7 @@
 import api from '@/api'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
 import { errorToast } from '@/utils/toast'
+import * as Sentry from '@sentry/react-native'
 import type { AuthOutput } from 'global/api-client'
 import { globalErrors } from 'global/errors'
 import type { AuthDtoType } from 'global/validation/auth/auth.schema'
@@ -48,6 +49,7 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 							user: loginResponse.user,
 							authType: 'login'
 						})
+						Sentry.metrics.increment('mail-login')
 					})
 					.catch(error => {
 						console.log(JSON.stringify(error))
@@ -77,6 +79,7 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 							user: registerResponse.user,
 							authType: 'register'
 						})
+						Sentry.metrics.increment('mail-register')
 					})
 					.catch(error => {
 						console.error(JSON.stringify(error))
@@ -106,6 +109,7 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 							user: loginResponse.user,
 							authType: loginResponse.type as 'register' | 'login'
 						})
+						Sentry.metrics.increment('google-login')
 					})
 					.catch(error => {
 						console.error(JSON.stringify(error))
@@ -124,6 +128,7 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 					user: null,
 					authType: null
 				})
+				Sentry.metrics.increment('logout')
 			}
 		}),
 		{

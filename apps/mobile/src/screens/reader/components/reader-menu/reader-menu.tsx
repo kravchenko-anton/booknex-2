@@ -1,12 +1,12 @@
 import { useTypedNavigation } from '@/hooks'
-import type { ReadingProgressType } from '@/screens/reader/hooks/useReadingProgress'
-import type { ThemePackType } from '@/screens/reader/reader-customization/theme-pack'
+import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
+import type { ReadingProgressType } from '@/screens/reader/feature/reading-progress/useReadingProgress'
 import { Title } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import Slider from '@react-native-community/slider'
 import type { FunctionType } from 'global/types'
 import { hexToRgbA } from 'global/utils'
-import { ArrowLeft, CaseSensitive, ListOrdered, NotePen } from 'icons'
+import { ArrowLeft, CaseSensitive, ListOrdered } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
@@ -61,16 +61,6 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 						/>
 					</View>
 					<View className='flex-row items-center gap-6'>
-						<NotePen
-							width={24}
-							height={24}
-							color={colorScheme.colorPalette.text}
-							onPress={() =>
-								navigate('Reactions', {
-									slug: bookSlug
-								})
-							}
-						/>
 						<ListOrdered
 							width={28}
 							height={28}

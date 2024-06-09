@@ -1,7 +1,7 @@
 import api from '@/api'
 import type { CompareReadingBooksType } from '@/screens/library/compareReadingBooks'
-import { useFinishBook } from '@/screens/reader/hooks/useFinishBook'
-import type { ReadingHistoryType } from '@/screens/reader/store/progress-store'
+import { useFinishBook } from '@/screens/reader/feature/finish-book/useFinishBook'
+import type { ReadingHistoryType } from '@/screens/reader/feature/reading-progress/progress-store'
 import { AnimatedIcon, Icon, Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
@@ -40,11 +40,9 @@ export const ReadingList: FC<ReadingListProperties> = ({
 		'readingHistory'
 	> | null>(null)
 
-	const { onFinish, finishReadingLoading } = useFinishBook({
-		onFinishComplete: () => {
-			sheetReference.current?.dismiss()
-		}
-	})
+	const { onFinish, finishReadingLoading } = useFinishBook(() =>
+		sheetReference.current?.dismiss()
+	)
 
 	const onRemoveFromLibrary = async (slug: string) => {
 		await removeFromLibrary(slug).then(() => {
@@ -92,10 +90,15 @@ export const ReadingList: FC<ReadingListProperties> = ({
 
 					const scrollPosition =
 						latestHistory?.scrollPosition || book.scrollPosition
-
+					const prefetchBook = () =>
+						queryClient.prefetchQuery({
+							queryKey: QueryKeys.ebook.bySlug(book.slug),
+							queryFn: () => api.ebook.ebookBySlug(book.slug)
+						})
 					const isBookDownloaded = queryClient.getQueryData(
 						QueryKeys.ebook.bySlug(book.slug)
 					)
+
 					console.log(!!isBookDownloaded, 'isBookDownloaded')
 					return (
 						<Animated.View
@@ -119,7 +122,6 @@ export const ReadingList: FC<ReadingListProperties> = ({
 								</View>
 
 								<View className='absolute bottom-4 w-full flex-row justify-between px-2'>
-									{/*TODO: сделать функционал загрузки книги*/}
 									<AnimatedIcon
 										size={'md'}
 										variant='muted'
@@ -128,11 +130,7 @@ export const ReadingList: FC<ReadingListProperties> = ({
 											opacity: isBookDownloaded ? 0 : 1
 										}}
 										onPress={async () => {
-											if (!isBookDownloaded)
-												queryClient.prefetchQuery({
-													queryKey: QueryKeys.ebook.bySlug(book.slug),
-													queryFn: () => api.ebook.ebookBySlug(book.slug)
-												})
+											if (!isBookDownloaded) prefetchBook()
 										}}
 									/>
 									<AnimatedIcon

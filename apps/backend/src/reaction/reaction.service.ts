@@ -1,3 +1,4 @@
+import type { UpdateReaction } from '@/src/reaction/reaction.dto'
 import { serverError } from '@/src/utils/helpers/server-error'
 import { PrismaService } from '@/src/utils/services/prisma.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
@@ -22,6 +23,27 @@ export class ReactionService {
 		})
 	}
 
+	async update(userId: number, updateReactionDto: UpdateReaction) {
+		const reaction = await this.prisma.reaction.findUnique({
+			where: { id: updateReactionDto.id }
+		})
+		if (!reaction) {
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+		}
+		const isUserExist = await this.prisma.user.findUnique({
+			where: { id: userId }
+		})
+		if (!isUserExist) {
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+		}
+		return this.prisma.reaction.update({
+			where: {
+				id: updateReactionDto.id
+			},
+			data: updateReactionDto
+		})
+	}
+
 	async reactionByBook(bookSlug: string, userId: number) {
 		const isUserExist = await this.prisma.user.findUnique({
 			where: { id: userId }
@@ -37,6 +59,7 @@ export class ReactionService {
 			select: {
 				id: true,
 				text: true,
+				createdAt: true,
 				endOffset: true,
 				startOffset: true,
 				xpath: true,
@@ -52,28 +75,51 @@ export class ReactionService {
 		if (!isUserExist) {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		}
-		return this.prisma.reaction.findMany({
+		const reactionsCount = await this.prisma.reaction.groupBy({
+			by: ['bookSlug'],
+			_count: {
+				id: true
+			},
+			orderBy: {
+				_count: {
+					id: 'desc'
+				}
+			},
 			where: {
 				userId
+			}
+		})
+		const bookSlugs = reactionsCount.map(reaction => reaction.bookSlug)
+		const books = await this.prisma.book.findMany({
+			where: {
+				slug: {
+					in: bookSlugs
+				}
 			},
 			select: {
-				id: true,
-				book: {
-					select: {
-						title: true,
-						slug: true,
-						picture: true,
-						author: true
-					}
-				},
-				createdAt: true,
-				text: true,
-				type: true
+				picture: true,
+				title: true,
+				slug: true,
+				author: true
+			}
+		})
+		return reactionsCount.map(reaction => {
+			const book = books.find(book => book.slug === reaction.bookSlug)
+			if (!book) return
+			return {
+				...book,
+				count: reaction._count.id
 			}
 		})
 	}
 
 	async remove(id: number, userId: number) {
+		const reactionById = await this.prisma.reaction.findUnique({
+			where: { id }
+		})
+		if (!reactionById) {
+			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+		}
 		const isUserExist = await this.prisma.user.findUnique({
 			where: { id: userId }
 		})

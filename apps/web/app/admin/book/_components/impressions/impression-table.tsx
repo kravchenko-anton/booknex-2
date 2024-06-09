@@ -1,4 +1,4 @@
-import { reviewColumns } from '@/app/admin/book/_components/review/review-columns'
+import { impressionsColumns } from '@/app/admin/book/_components/impressions/impressions-columns'
 import { columns } from '@/app/admin/book/catalog/columns'
 import {
 	Table,
@@ -17,13 +17,13 @@ import type { FullBook } from 'global/api-client'
 import type { FC } from 'react'
 
 interface ReviewTableProperties {
-	review: FullBook['review']
+	review: FullBook['impressions']
 }
 
-const ReviewTable: FC<ReviewTableProperties> = ({ review }) => {
+const ImpressionTable: FC<ReviewTableProperties> = ({ review }) => {
 	const table = useReactTable({
 		data: review ?? [],
-		columns: reviewColumns(),
+		columns: impressionsColumns(),
 		getCoreRowModel: getCoreRowModel()
 	})
 	return (
@@ -74,4 +74,4 @@ const ReviewTable: FC<ReviewTableProperties> = ({ review }) => {
 	)
 }
 
-export default ReviewTable
+export default ImpressionTable

@@ -1,6 +1,7 @@
 import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { Button } from '@/ui'
+import * as Sentry from '@sentry/react-native'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Book } from 'icons'
@@ -16,7 +17,13 @@ const ReadingButton: FC<BookReadingButtonProperties> = ({ slug }) => {
 	const { mutateAsync: startReading, isPending: startReadingLoading } =
 		useMutation({
 			mutationKey: MutationKeys.book.startReadingBySlug(slug),
-			mutationFn: (slug: string) => api.user.startReading(slug)
+			mutationFn: (slug: string) => api.user.startReading(slug),
+			onSuccess: () => {
+				Sentry.metrics.increment('start-reading')
+				queryClient.invalidateQueries({
+					queryKey: QueryKeys.library
+				})
+			}
 		})
 
 	const startReadingBook = async () => {

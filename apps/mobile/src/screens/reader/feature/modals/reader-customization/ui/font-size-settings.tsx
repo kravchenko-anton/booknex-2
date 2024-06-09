@@ -3,8 +3,8 @@ import { Minus, Plus } from 'icons'
 import type { FC } from 'react'
 import { View } from 'react-native'
 
-import type { ThemePackType } from '@/screens/reader/reader-customization/theme-pack'
-import { fontSizeSettings } from '@/screens/reader/store/customization-store'
+import { fontSizeSettings } from '@/screens/reader/feature/modals/reader-customization/customization-store'
+import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface FontSizeSettingsProperties {

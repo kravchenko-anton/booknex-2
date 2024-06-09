@@ -14,6 +14,7 @@ export const useModalReference = (
 
 	const chaptersListModalReference = useRef<BottomSheetModal>(null)
 	const readingSettingsModalReference = useRef<BottomSheetModal>(null)
+	const reactionModalReference = useRef<BottomSheetModal>(null)
 	const unsubscribe = addListener('beforeRemove', () => {
 		setReaderUiVisible(false)
 		readingSettingsModalReference.current?.close()
@@ -24,7 +25,15 @@ export const useModalReference = (
 	return {
 		modalRefs: {
 			chaptersListModalReference,
-			readingSettingsModalReference
+			readingSettingsModalReference,
+			reactionModalReference
+		},
+		reactionModal: {
+			open: () => {
+				reactionModalReference.current?.present()
+				onOpenModal()
+			},
+			close: () => reactionModalReference.current?.close()
 		},
 		openModal: {
 			chaptersList: () => {

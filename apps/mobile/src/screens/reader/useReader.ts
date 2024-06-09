@@ -1,17 +1,16 @@
 import api from '@/api'
 
 import { useTypedNavigation } from '@/hooks'
-import { useFinishBook } from '@/screens/reader/hooks/useFinishBook'
-import { useModalReference } from '@/screens/reader/hooks/useModalReference'
-import { useReaderLoading } from '@/screens/reader/hooks/useReaderLoading'
+import { useFinishBook } from '@/screens/reader/feature/finish-book/useFinishBook'
+import { useCustomizationStore } from '@/screens/reader/feature/modals/reader-customization/customization-store'
+import { useModalReference } from '@/screens/reader/feature/modals/useModalReference'
+import { useReactions } from '@/screens/reader/feature/reactions/useReactions'
+import { useReadingProgress } from '@/screens/reader/feature/reading-progress/useReadingProgress'
 import { useReaderMessage } from '@/screens/reader/hooks/useReaderMessage'
-import { useReadingProgress } from '@/screens/reader/hooks/useReadingProgress'
 import {
 	getStyleTag,
 	injectStyle
 } from '@/screens/reader/scripts/styles-injection'
-import { useCustomizationStore } from '@/screens/reader/store/customization-store'
-import { useReactionsStore } from '@/screens/reader/store/reader-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useEffect, useRef, useState } from 'react'
@@ -19,10 +18,17 @@ import type WebView from 'react-native-webview'
 
 export const useReader = (slug: string, initialScrollPosition: number) => {
 	const { setOptions } = useTypedNavigation()
-	const { newReaction, reactions } = useReactionsStore(state => ({
-		reactions: state.reactions.filter(reaction => reaction.bookSlug === slug),
-		newReaction: state.newReaction
-	}))
+	const [readerLoading, setReaderLoading] = useState(true)
+	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
+	const viewerReference = useRef<WebView>(null)
+	const [activeReactionPressedId, setActiveReactionPressedId] = useState<
+		number | null
+	>(null)
+	const { colorScheme, ...restUiProperties } = useCustomizationStore(
+		state => state
+	)
+	const { reactionBookList = [], createReaction } = useReactions(slug)
+
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
@@ -33,56 +39,43 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		staleTime: Number.MAX_SAFE_INTEGER
 	})
 
-	const { loaderAnimation, setReaderLoading, readerLoading } =
-		useReaderLoading()
-	const { colorScheme, ...restUiProperties } = useCustomizationStore(
-		state => state
-	)
-	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
-	const viewerReference = useRef<WebView>(null)
 	const {
 		readingProgress,
 		scrollPosition,
 		updateReadingProgress,
 		clearProgress
-	} = useReadingProgress({
-		slug,
-		readerLoading,
-		initialScrollPosition: initialScrollPosition
-	})
+	} = useReadingProgress({ slug, readerLoading, initialScrollPosition })
 
-	const { finishReadingLoading, onFinish } = useFinishBook({
-		onFinishComplete: clearProgress
-	})
+	const { onFinish } = useFinishBook(clearProgress)
+	const { openModal, modalRefs, reactionModal } = useModalReference(
+		setReaderHeaderVisible,
+		{
+			onOpenModal: () =>
+				viewerReference.current?.injectJavaScript(`removeAllTextSelection()`)
+		}
+	)
+
 	const { onMessage } = useReaderMessage({
 		slug,
-		finishReadingLoading,
 		onFinishBookPress: onFinish,
 		onContentLoadEnd: () => setReaderLoading(false),
 		onScroll: updateReadingProgress,
-		createReaction: newReaction
-	})
-
-	const { openModal, modalRefs } = useModalReference(setReaderHeaderVisible, {
-		onOpenModal: () =>
-			viewerReference.current?.injectJavaScript(
-				`window.getSelection().removeAllRanges();`
+		createReaction: createReaction,
+		setActiveReactionPressed: id => {
+			setActiveReactionPressedId(
+				reactionBookList.find(reaction => Number(reaction.id) === Number(id))
+					?.id || null
 			)
+			reactionModal.open()
+		}
 	})
 
-	const styleTag = getStyleTag({
-		colorPalette: colorScheme.colorPalette,
-		fontFamily: restUiProperties.font.fontFamily,
-		fontSize: restUiProperties.fontSize,
-		lineHeight: restUiProperties.lineHeight,
-		padding: restUiProperties.padding
-	})
-
+	const styleTag = getStyleTag({ colorScheme, ...restUiProperties })
 	// eslint-disable-next-line
 	const [defaultProperties] = useState({
 		scrollPosition,
 		theme: styleTag,
-		reactions: reactions
+		reactions: reactionBookList
 	})
 	useEffect(() => {
 		setOptions({
@@ -101,25 +94,24 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 
 	useEffect(() => {
 		viewerReference.current?.injectJavaScript(`
-    	wrapReactionsInMarkTag(${JSON.stringify(reactions)});
+    	wrapReactionsInMarkTag(${JSON.stringify(reactionBookList)});
     `)
-	}, [reactions, newReaction])
+	}, [reactionBookList, createReaction])
 
 	return {
 		ebook,
 		readerLoading,
-		loaderAnimation,
 		readerHeaderVisible,
 		colorScheme,
 		viewerReference,
 		setReaderHeaderVisible,
 		modalRefs,
+		activeReactionPressedId,
 		ebookRequestLoading,
 		readingProgress,
-		reactions,
-		newReaction,
 		openModal,
 		onMessage,
+		reactionBookList,
 		defaultProperties,
 		styleTag
 	}

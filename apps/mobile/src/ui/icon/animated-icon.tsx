@@ -25,6 +25,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 			settings.colors[variant],
 			className
 		)}
+		onPress={onPress}
 		{...properties}>
 		<Icon
 			width={settings.size[size]}

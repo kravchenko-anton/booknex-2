@@ -5,13 +5,13 @@ import type { ComponentType } from 'react'
 export type TypeRootStackParameterListType = {
 	Book: { slug: string }
 	Featured: undefined
-	BookReview: { slug: string }
+	BookImpression: { slug: string }
 	Genre: { slug: string; name: string }
 	Library: undefined
 	Login: undefined
 	Register: undefined
 	Profile: undefined
-	Reactions: { slug: string; reactionId?: string }
+	Reactions: { slug: string }
 	Welcome: undefined
 	Reader: { slug: string; initialScrollPosition: number }
 	UpdateRecommendation: undefined

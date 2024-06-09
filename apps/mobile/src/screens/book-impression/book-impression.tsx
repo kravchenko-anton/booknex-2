@@ -38,7 +38,10 @@ const BookImpression: FC = () => {
 	const { mutateAsync: sendReview, isLoading: reviewLoading } = useMutation({
 		mutationKey: MutationKeys.review.sendReview,
 		mutationFn: ({ slug, dto }: { slug: string; dto: ReviewBookDto }) =>
-			api.review.review(slug, dto)
+			api.impressions.impression(slug, dto),
+		onSuccess: () => {
+			Sentry.metrics.increment('send-impression')
+		}
 	})
 
 	const submitReview = async (data: ReviewBookDto) => {

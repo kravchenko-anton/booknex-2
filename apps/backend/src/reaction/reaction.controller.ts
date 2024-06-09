@@ -3,9 +3,10 @@ import { CurrentUser } from '@/src/auth/decorators/user.decorator'
 import {
 	CreateReaction,
 	ReactionByBookOutput,
-	ReactionListOutput
+	ReactionListOutput,
+	UpdateReaction
 } from '@/src/reaction/reaction.dto'
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { ReactionService } from './reaction.service'
 
@@ -25,9 +26,7 @@ export class ReactionController {
 	@Auth()
 	@Get('/reaction-list')
 	@ApiOkResponse({ type: [ReactionListOutput] })
-	reactionList(
-		@CurrentUser('id') userId: number
-	): Promise<ReactionListOutput[]> {
+	reactionList(@CurrentUser('id') userId: number) {
 		return this.reactionService.reactionList(userId)
 	}
 
@@ -42,8 +41,14 @@ export class ReactionController {
 	}
 
 	@Auth()
-	@Delete('/delete/:id')
-	remove(@Param('id') id: string, @CurrentUser('id') userId: number) {
+	@Post('/update')
+	@ApiBody({ type: UpdateReaction })
+	update(@CurrentUser('id') userId: number, @Body() dto: UpdateReaction) {
+		return this.reactionService.update(userId, dto)
+	}
+	@Auth()
+	@Put('/delete/:id')
+	remove(@Param('id') id: number, @CurrentUser('id') userId: number) {
 		return this.reactionService.remove(+id, userId)
 	}
 }

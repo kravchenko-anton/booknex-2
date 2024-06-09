@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { ReactionListOutputBook } from './reaction-list-output-book';
 
 /**
  * 
@@ -28,30 +25,30 @@ export interface ReactionListOutput {
      * @type {number}
      * @memberof ReactionListOutput
      */
-    'id': number;
+    'count': number;
     /**
      * 
      * @type {string}
      * @memberof ReactionListOutput
      */
-    'createdAt': string;
+    'picture': string;
     /**
      * 
      * @type {string}
      * @memberof ReactionListOutput
      */
-    'type': string;
+    'slug': string;
     /**
      * 
      * @type {string}
      * @memberof ReactionListOutput
      */
-    'text': string;
+    'title': string;
     /**
      * 
-     * @type {ReactionListOutputBook}
+     * @type {string}
      * @memberof ReactionListOutput
      */
-    'book': ReactionListOutputBook;
+    'author': string;
 }
 

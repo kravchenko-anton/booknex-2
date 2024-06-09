@@ -1,8 +1,9 @@
 import {
 	themePack,
 	type ThemePackType
-} from '@/screens/reader/reader-customization/theme-pack'
+} from '@/screens/reader/feature/modals/reader-customization/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
+import * as Sentry from '@sentry/react-native'
 import { Color } from 'global/colors'
 import { useEffect, useRef, type FC } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
@@ -50,7 +51,10 @@ export const ThemeStyleSettings: FC<ThemeStyleSettingsProperties> = ({
 								? colorScheme.colorPalette.primary
 								: Color.transparent
 					}}
-					onPress={() => changeTheme(theme.slug)}>
+					onPress={() => {
+						Sentry.metrics.increment('change-theme')
+						changeTheme(theme.slug)
+					}}>
 					<Title
 						weight='semiBold'
 						size={'lg'}

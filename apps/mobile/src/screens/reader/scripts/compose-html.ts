@@ -1,8 +1,8 @@
-import { finishBookButton } from '@/screens/reader/scripts/finish-book-html'
+import { finishBookButton } from '@/screens/reader/feature/finish-book/finish-book-html'
 import { injectFont } from '@/screens/reader/scripts/font-injection'
 import { injectStartScripts } from '@/screens/reader/scripts/injectStartScripts'
 import { selectMenuHtml } from '@/screens/reader/scripts/text-selection-scripts'
-import type { ReactionType } from '@/screens/reader/store/reader-store'
+import type { ReactionByBookOutput } from 'global/api-client'
 import { getFileUrl } from 'global/api-config'
 
 interface ComposeReaderViewHtmlProperties {
@@ -12,14 +12,16 @@ interface ComposeReaderViewHtmlProperties {
 	defaultProperties: {
 		scrollPosition: number
 		theme: string
-		reactions: ReactionType[]
+		reactions: ReactionByBookOutput[]
 	}
+	isOnline: boolean
 }
 export const composeReaderViewHtml = ({
 	title,
 	picture,
 	file,
-	defaultProperties
+	defaultProperties,
+	isOnline
 }: ComposeReaderViewHtmlProperties) => `
 				<head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -40,5 +42,5 @@ export const composeReaderViewHtml = ({
 			</div>
 			${selectMenuHtml}
 			${finishBookButton}
-			${injectStartScripts(defaultProperties.scrollPosition, defaultProperties.reactions)}
-	`
+			${injectStartScripts(defaultProperties.scrollPosition, defaultProperties.reactions, isOnline)}
+`

@@ -154,25 +154,3 @@ enum AuthType {
   email
   google
 }
-enum Activities {
-  startedReading
-  finishedReading
-  savedBook
-  removeFromLibrary
-  removeFromSaved
-  checkCatalog
-  reviewBook
-  updatePicture
-  visitBook
-  createBook
-
-  updateBook
-  updateEBook
-  updateGenre
-  visitGenre
-  visitCollection
-  getEbook
-  updateRecommendations
-  registerNewUser
-  loginUser
-}

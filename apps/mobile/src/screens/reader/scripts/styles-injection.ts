@@ -1,4 +1,4 @@
-import type { ThemePackType } from '@/screens/reader/reader-customization/theme-pack'
+import type { CustomizationStoreType } from '@/screens/reader/feature/modals/reader-customization/customization-store'
 import { windowWidth } from '@/utils/dimensions'
 import { Color } from 'global/colors'
 
@@ -9,18 +9,12 @@ export const injectStyle = (style: string) => `
  document.head.appendChild(style);
 		`
 export const getStyleTag = ({
-	colorPalette,
-	fontFamily,
 	fontSize,
+	font: { fontFamily },
+	padding,
 	lineHeight,
-	padding
-}: {
-	colorPalette: ThemePackType['colorPalette']
-	fontFamily: string
-	fontSize: number
-	lineHeight: number
-	padding: number
-}) =>
+	colorScheme: { colorPalette }
+}: CustomizationStoreType) =>
 	`
 	span {
 		color: ${colorPalette.text} !important;

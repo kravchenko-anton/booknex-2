@@ -1,5 +1,5 @@
-import type { ReadingProgressType } from '@/screens/reader/hooks/useReadingProgress'
-import type { ThemePackType } from '@/screens/reader/reader-customization/theme-pack'
+import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
+import type { ReadingProgressType } from '@/screens/reader/feature/reading-progress/useReadingProgress'
 import { Title } from '@/ui'
 import {
 	BottomSheetBackdrop,

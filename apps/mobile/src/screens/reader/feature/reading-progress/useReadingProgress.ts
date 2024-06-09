@@ -1,6 +1,6 @@
 import { useTypedNavigation } from '@/hooks'
+import { useReadingProgressStore } from '@/screens/reader/feature/reading-progress/progress-store'
 import type { WebviewMessageType } from '@/screens/reader/hooks/useReaderMessage'
-import { useReadingProgressStore } from '@/screens/reader/store/progress-store'
 import { getTimeDate } from 'global/utils'
 import { useEffect, useState } from 'react'
 import { AppState } from 'react-native'
@@ -93,9 +93,9 @@ export const useReadingProgress = ({
 	}
 
 	const updateReadingProgress = (
-		payload: Omit<
+		payload: Pick<
 			WebviewMessageType['payload'],
-			'text' | 'isOverlappingMark' | 'range' | 'reaction'
+			'chapter' | 'progress' | 'scrollTop'
 		>
 	) => {
 		console.log('🔴 updateReadingProgress', payload)

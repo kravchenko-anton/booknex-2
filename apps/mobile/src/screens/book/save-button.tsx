@@ -1,8 +1,10 @@
 import api from '@/api'
 import { AnimatedIcon } from '@/ui'
+import * as Sentry from '@sentry/react-native'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Bookmarked } from 'icons'
+
 import type { FC } from 'react'
 
 interface SaveButtonProperties {
@@ -14,7 +16,7 @@ const SaveButton: FC<SaveButtonProperties> = ({ slug }) => {
 
 	const { mutateAsync: toggleSave, isPending: toggleSaveLoading } = useMutation(
 		{
-			mutationKey: MutationKeys.book.toggleSaveBySlug(slug),
+			mutationKey: MutationKeys.book.toggleSaveBySlug,
 			mutationFn: (slug: string) => api.user.toggleSave(slug),
 			onSuccess: async () => {
 				await queryClient.invalidateQueries({
@@ -23,6 +25,7 @@ const SaveButton: FC<SaveButtonProperties> = ({ slug }) => {
 				await queryClient.invalidateQueries({
 					queryKey: QueryKeys.library
 				})
+				Sentry.metrics.increment('toggle-save')
 			}
 		}
 	)

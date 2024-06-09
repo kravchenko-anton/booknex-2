@@ -17,50 +17,50 @@
 /**
  * 
  * @export
- * @interface ReactionByBookOutput
+ * @interface UpdateReaction
  */
-export interface ReactionByBookOutput {
+export interface UpdateReaction {
     /**
      * 
      * @type {number}
-     * @memberof ReactionByBookOutput
+     * @memberof UpdateReaction
      */
-    'id': number;
+    'id'?: number;
     /**
      * 
      * @type {string}
-     * @memberof ReactionByBookOutput
+     * @memberof UpdateReaction
      */
-    'type': string;
+    'type'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ReactionByBookOutput
+     * @memberof UpdateReaction
      */
-    'text': string;
+    'description'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ReactionByBookOutput
+     * @memberof UpdateReaction
      */
-    'xpath': string;
+    'text'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ReactionByBookOutput
+     * @memberof UpdateReaction
      */
-    'createdAt': string;
+    'xpath'?: string;
     /**
      * 
      * @type {number}
-     * @memberof ReactionByBookOutput
+     * @memberof UpdateReaction
      */
-    'startOffset': number;
+    'startOffset'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ReactionByBookOutput
+     * @memberof UpdateReaction
      */
-    'endOffset': number;
+    'endOffset'?: number;
 }
 

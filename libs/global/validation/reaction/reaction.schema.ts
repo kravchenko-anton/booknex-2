@@ -3,15 +3,11 @@
 import { z } from 'zod'
 
 export const ReactionListOutputSchema = z.object({
-	id: z.number(),
-	createdAt: z.date(),
-	type: z.string(),
-	text: z.string(),
-	book: z.object({
-		picture: z.string(),
-		title: z.string(),
-		slug: z.string()
-	})
+	count: z.number(),
+	picture: z.string(),
+	slug: z.string(),
+	title: z.string(),
+	author: z.string()
 })
 
 export const ReactionByBookOutputSchema = z.object({
@@ -19,6 +15,7 @@ export const ReactionByBookOutputSchema = z.object({
 	type: z.string(),
 	text: z.string(),
 	xpath: z.string(),
+	createdAt: z.date(),
 	startOffset: z.number(),
 	endOffset: z.number()
 })

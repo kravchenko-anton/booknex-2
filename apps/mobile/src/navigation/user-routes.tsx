@@ -4,6 +4,7 @@ import Featured from '@/screens/featured/featured'
 import Genre from '@/screens/genre/genre'
 import Library from '@/screens/library/library'
 import Profile from '@/screens/profile/profile'
+import Reactions from '@/screens/reaction/reactions'
 import Reader from '@/screens/reader/reader'
 import SearchCatalog from '@/screens/search/search'
 import Settings from '@/screens/settings/settings'
@@ -31,7 +32,7 @@ export const routes: IRouteType[] = [
 		}
 	},
 	{
-		name: 'BookReview',
+		name: 'BookImpression',
 		component: BookImpression,
 		options: {
 			headerShown: false
@@ -108,6 +109,13 @@ export const routes: IRouteType[] = [
 	{
 		name: 'UpdateRecommendation',
 		component: UpdateRecommendation,
+		options: {
+			headerShown: false
+		}
+	},
+	{
+		name: 'Reactions',
+		component: Reactions,
 		options: {
 			headerShown: false
 		}

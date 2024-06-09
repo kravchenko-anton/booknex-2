@@ -47,7 +47,6 @@ models/index.ts
 models/info-by-slug.ts
 models/parser-dto.ts
 models/reaction-by-book-output.ts
-models/reaction-list-output-book.ts
 models/reaction-list-output.ts
 models/reading-history.ts
 models/refresh-dto.ts
@@ -57,6 +56,7 @@ models/stored-ebook-chapters-inner.ts
 models/stored-ebook.ts
 models/unfold-output.ts
 models/update-book-dto.ts
+models/update-reaction.ts
 models/update-recommendation-dto.ts
 models/upload-output-dto.ts
 models/user-catalog-output-data-inner-count.ts

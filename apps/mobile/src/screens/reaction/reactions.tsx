@@ -1,29 +1,39 @@
+import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
-import { reactions } from '@/screens/reader/reactions'
-import { useReactionsStore } from '@/screens/reader/store/reader-store'
+import { reactions } from '@/screens/reader/feature/reactions/reactions'
 import type { SearchFormDataType } from '@/screens/search/useSearchForm'
-import { Button, Flatlist, Title } from '@/ui'
+import { Button, Flatlist, Loader, Title } from '@/ui'
 import { SvgButton } from '@/ui/svg-button/svg-button'
 import { fontSettings } from '@/ui/title/settings'
 import { cn } from '@/utils'
 import { share } from '@/utils/share-function'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { timeAgo } from 'global/utils'
+import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Close } from 'icons'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
-//TODO: сделать edit, добавление и синхронизацию
-const Reaction = () => {
+
+const Reactions = () => {
+	const queryClient = useQueryClient()
+	const { params } = useTypedRoute<'Reactions'>()
+	const { data: userReactions = [], isLoading } = useQuery({
+		queryKey: QueryKeys.reaction.bySlug(params.slug),
+		queryFn: () => api.reaction.reactionByBook(params.slug),
+		select: data => data.data,
+		staleTime: 0,
+		refetchOnMount: true,
+		refetchOnWindowFocus: true
+	})
 	const {
-		params: { slug }
-	} = useTypedRoute<'Reactions'>()
-	const { removeReaction, userReactions } = useReactionsStore(state => ({
-		userReactions: state.reactions.filter(
-			reaction => reaction.bookSlug === slug
-		),
-		removeReaction: state.removeReaction
-	}))
+		mutateAsync: removeReactionMutation,
+		isPending: removeReactionLoading
+	} = useMutation({
+		mutationKey: MutationKeys.reaction.remove,
+		mutationFn: (id: number) => api.reaction.remove(id)
+	})
 	const [filterSettings, setFilterSettings] = React.useState({
 		search: '',
 		reaction: ''
@@ -39,6 +49,7 @@ const Reaction = () => {
 
 	const searchTerm = watch('searchTerm')
 	const { goBack } = useTypedNavigation()
+	if (!userReactions || isLoading) return <Loader />
 	return (
 		<View className='bg-background h-screen w-screen'>
 			<Controller
@@ -150,9 +161,9 @@ const Reaction = () => {
 				)}
 				data={userReactions.filter(
 					reaction =>
-						reaction.text.includes(searchTerm) &&
+						reaction?.text?.includes(searchTerm) &&
 						(filterSettings.reaction === '' ||
-							reaction.reaction === filterSettings.reaction)
+							reaction.type === filterSettings.reaction)
 				)}
 				renderItem={({ item }) => (
 					<View className='border-bordered mx-2 border-b-[1px] py-2'>
@@ -161,7 +172,7 @@ const Reaction = () => {
 						</Title>
 						<View className='flex-row items-center justify-between'>
 							<Title size='sm' numberOfLines={1} color={Color.gray}>
-								{timeAgo(new Date(item.createAt))} ago
+								{timeAgo(new Date(item.createdAt))} ago
 							</Title>
 							<View className='mt-2 flex-row items-center'>
 								<Button
@@ -177,7 +188,12 @@ const Reaction = () => {
 									size={'sm'}
 									variant='foreground'
 									onPress={() => {
-										removeReaction(item.id)
+										if (removeReactionLoading) return
+										removeReactionMutation(item.id).then(() => {
+											queryClient.invalidateQueries({
+												queryKey: QueryKeys.reaction.list
+											})
+										})
 									}}>
 									Delete
 								</Button>
@@ -189,4 +205,4 @@ const Reaction = () => {
 		</View>
 	)
 }
-export default Reaction
+export default Reactions

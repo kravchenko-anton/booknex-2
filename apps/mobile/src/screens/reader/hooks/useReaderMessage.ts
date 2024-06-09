@@ -1,8 +1,7 @@
-import { useTypedNavigation } from '@/hooks'
-import type { reactionsTitles } from '@/screens/reader/reactions'
-import type { ReactionType } from '@/screens/reader/store/reader-store'
+import type { reactionsTitles } from '@/screens/reader/feature/reactions/reactions'
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
+import type { CreateReaction } from 'global/api-client'
 import { Linking, NativeModules, Platform } from 'react-native'
 import type { WebViewMessageEvent } from 'react-native-webview'
 
@@ -16,6 +15,7 @@ export enum ReaderMessageType {
 	SelectionLimitFail = 'selection-limit-fail',
 	FinishLoading = 'finish-loading',
 	FinishBook = 'finishBook',
+	MarkClick = 'mark-click',
 	Share = 'share',
 	Translate = 'translate',
 	Reaction = 'reaction'
@@ -23,6 +23,7 @@ export enum ReaderMessageType {
 export interface WebviewMessageType {
 	type: ReaderMessageType
 	payload: {
+		id: number
 		text: string
 		range: {
 			startOffset: number
@@ -42,16 +43,16 @@ export interface WebviewMessageType {
 
 export interface ReaderMessageProperties {
 	onScroll: (
-		payload: Omit<
+		payload: Pick<
 			WebviewMessageType['payload'],
-			'text' | 'isOverlappingMark' | 'range' | 'reaction'
+			'chapter' | 'progress' | 'scrollTop'
 		>
 	) => void
-	finishReadingLoading: boolean
 	slug: string
 	onFinishBookPress: (slug: string) => void
 	onContentLoadEnd: () => void
-	createReaction: (data: ReactionType) => void
+	createReaction: (data: CreateReaction) => void
+	setActiveReactionPressed: (id: number) => void
 }
 
 export const useReaderMessage = ({
@@ -59,10 +60,9 @@ export const useReaderMessage = ({
 	onContentLoadEnd,
 	slug,
 	onScroll,
-	createReaction,
-	finishReadingLoading
+	setActiveReactionPressed,
+	createReaction
 }: ReaderMessageProperties) => {
-	const { navigate } = useTypedNavigation()
 	const onMessage = async (event: WebViewMessageEvent) => {
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessageType
 		const { type, payload } = parsedEvent
@@ -93,16 +93,12 @@ export const useReaderMessage = ({
 				reaction: payload.reaction
 			})
 			createReaction({
-				bookSlug: slug,
-				id: Math.random().toString(),
-				createAt: new Date(),
+				startOffset: payload.range.startOffset,
+				endOffset: payload.range.endOffset,
+				xpath: payload.range.xpath,
 				text: payload.text,
-				range: {
-					startOffset: payload.range.startOffset,
-					endOffset: payload.range.endOffset,
-					xpath: payload.range.xpath
-				},
-				reaction: payload.reaction
+				type: payload.reaction,
+				bookSlug: slug
 			})
 		}
 		if (type === ReaderMessageType.SelectionLimitFail)
@@ -117,9 +113,9 @@ export const useReaderMessage = ({
 					chapterProgress: payload.chapter.chapterProgress
 				}
 			})
-		if (type === ReaderMessageType.FinishBook) {
-			if (finishReadingLoading) return
-			onFinishBookPress(slug)
+		if (type === ReaderMessageType.FinishBook) onFinishBookPress(slug)
+		if (type === ReaderMessageType.MarkClick) {
+			setActiveReactionPressed(payload.id)
 		}
 	}
 
