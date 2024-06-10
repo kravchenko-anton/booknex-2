@@ -61,12 +61,6 @@ export const calculateUserStatistics = ({
 					0
 				)
 
-			console.log(
-				// get day reading time to minutes
-				dayReadingTimeMs,
-				'dayReadingTimeMs ' + day.toLocaleDateString('en-US')
-			)
-			console.log(goalMinutes)
 			const dayProgress = dayReadingTimeMs / fromMinutesToMs(goalMinutes)
 			return {
 				day: day.toLocaleDateString('en-US', {

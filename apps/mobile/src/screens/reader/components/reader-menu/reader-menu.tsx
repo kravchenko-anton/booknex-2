@@ -29,7 +29,6 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 	bookTitle,
 	colorScheme,
 	readingProgress,
-	bookSlug,
 	onProgressChange,
 	onSelectThemeIconPress
 }) => {
@@ -87,17 +86,14 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 						borderTopColor: colorScheme.colorPalette.background.lighter
 					}
 				]}>
-				{/*TODO: сделать при переходах запись в стор и возможность вернутся позже к конкретному месту*/}
-				<View className='mb-1'>
-					<View className='flex-row items-center justify-between px-4 '>
-						<Title size={'sm'} color={colorScheme.colorPalette.text}>
-							{readingProgress.chapter.title || bookTitle}
-						</Title>
-						<Title size={'sm'} color={colorScheme.colorPalette.text}>
-							{(100 - readingProgress.chapter.progress).toFixed(2)}% left
-						</Title>
-					</View>
-				</View>
+				<Title
+					center
+					className='mb-1'
+					size={'sm'}
+					weight='medium'
+					color={colorScheme.colorPalette.text}>
+					{readingProgress.progress.toFixed(2)}%
+				</Title>
 				<Slider
 					minimumValue={0}
 					maximumValue={1}
@@ -108,6 +104,17 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 					value={readingProgress.progress / 100}
 					onSlidingComplete={onProgressChange}
 				/>
+				{/*TODO: сделать при переходах запись в стор и возможность вернутся позже к конкретному месту*/}
+				<View className='mt-1'>
+					<View className='flex-row items-center justify-between px-4 '>
+						<Title size={'sm'} color={colorScheme.colorPalette.text}>
+							{readingProgress.chapter.title || bookTitle}
+						</Title>
+						<Title size={'sm'} color={colorScheme.colorPalette.text}>
+							{(100 - readingProgress.chapter.progress).toFixed(2)}% left
+						</Title>
+					</View>
+				</View>
 			</AnimatedView>
 
 			<View

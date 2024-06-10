@@ -187,12 +187,7 @@ export class AuthService {
 	async getPopular() {
 		return this.prisma.genre.findMany({
 			take: 3,
-			select: ReturnGenreObject,
-			orderBy: {
-				activities: {
-					_count: 'asc'
-				}
-			}
+			select: ReturnGenreObject
 		})
 	}
 	async checkEmailExist(email: string) {

@@ -7,7 +7,7 @@
 		"start:android": "SET ENVFILE=.env && react-native run-android -- --reset-cache",
 		"assemble:android": "SET ENVFILE=.env.production && cd android && gradlew assembleRelease",
 		"CodePush:android": "SET ENVFILE=.env.production && appcenter codepush release-react -a antonkzavcenco05-gmail.com/booknex-production -d Production",
-		"CodePush:deployementList": "SET ENVFILE=.env.production && appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex -k",
+		"CodePush:deployementList": "SET ENVFILE=.env.production && npx appcenter codepush deployment list -a antonkzavcenco05-gmail.com/booknex -k",
 		"boothSplash:android": "yarn react-native generate-bootsplash assets/logo.png  \\\n  --background-color=111113 \\\n  --logo-width=100 \\\n  --assets-path=assets \\\n"
 	},
 	"dependencies": {

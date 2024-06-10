@@ -57,7 +57,6 @@ export class BookService {
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		const { readingHistory = [], ...rest } = book
-		console.log('activities', readingHistory)
 
 		return {
 			...rest,

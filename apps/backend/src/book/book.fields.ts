@@ -1,5 +1,5 @@
 import { ReturnGenreObject } from '@/src/genre/return.genre.object'
-import { Activities, Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import { slugify } from 'global/helpers/slugify'
 
 export const infoBySlug = {
@@ -148,12 +148,6 @@ export const bookCreateFields = ({
 	Prisma.validator<Prisma.BookCreateInput>()({
 		pagesCount: pagesCount,
 		slug: slugify(dto.title),
-		activities: {
-			create: {
-				type: Activities.createBook,
-				importance: 9
-			}
-		},
 		chapters: chaptersCount,
 		title: dto.title,
 		picture: dto.picture,
