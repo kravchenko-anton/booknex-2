@@ -1,8 +1,8 @@
-import { days, pepTalks } from '@/src/user/user.utils'
+import { isThisWeek, pepTalks } from '@/src/user/user.utils'
 import type { UserStatistics } from 'global/api-client'
-import { getTimeDate } from 'global/utils'
 import { fromMinutesToMs } from 'global/utils/numberConvertor'
 
+const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 export interface CalculateUserStatisticsType {
 	userHistory: {
 		startDate: Date
@@ -13,71 +13,64 @@ export interface CalculateUserStatisticsType {
 	}[]
 	goalMinutes: number
 }
-// TODO: пофиксить тут
 
 export const calculateUserStatistics = ({
 	userHistory,
 	goalMinutes
 }: CalculateUserStatisticsType): Omit<UserStatistics, 'goalMinutes'> => {
-	const currentDate = new Date()
+	const progressByCurrentWeek = daysOfWeek.map(day => {
+		const isCurrentDay = new Date().getDay() === daysOfWeek.indexOf(day) + 1
+		const data = userHistory.reduce(
+			(accumulator, history) =>
+				new Date(history.startDate).getDay() === daysOfWeek.indexOf(day) + 1 &&
+				isThisWeek(history.startDate)
+					? {
+							readingTimeMs: accumulator.readingTimeMs + history.readingTimeMs,
+							dayProgress:
+								((accumulator.readingTimeMs + history.readingTimeMs) /
+									fromMinutesToMs(goalMinutes)) *
+								100
+						}
+					: accumulator,
+			{ readingTimeMs: 0, dayProgress: 0 }
+		)
+		return {
+			day: day,
+			isCurrentDay,
+			readingTimeMs: data.readingTimeMs,
+			dayProgress: data.dayProgress
+		}
+	})
 
-	// calculate how long user reading day by day with no loose
-	const sortedHistory = userHistory.sort(
-		(a, b) => a.endDate.getTime() - b.endDate.getTime()
+	const historyGroupedByDay = userHistory.reduce(
+		(accumulator, history) => {
+			const date = new Date(history.startDate).toDateString()
+			const day = accumulator[date] ?? {
+				readingTimeMs: 0
+			}
+			return {
+				...accumulator,
+				[date]: {
+					readingTimeMs: day.readingTimeMs + history.readingTimeMs
+				}
+			}
+		},
+		{} as Record<string, { readingTimeMs: number }>
 	)
 
-	let streak = 0
-	let maxStreak = 0
-	for (let index = 1; index < sortedHistory.length; index++) {
-		const previousDate = new Date(sortedHistory[index - 1]?.endDate ?? '')
-		const currentDate = new Date(sortedHistory[index]?.endDate ?? '')
-
-		// Check if the current date is the day after the previous date
-		previousDate.setDate(previousDate.getDate() + 1)
-		if (
-			previousDate.getDate() === currentDate.getDate() &&
-			previousDate.getMonth() === currentDate.getMonth() &&
-			previousDate.getFullYear() === currentDate.getFullYear()
-		) {
-			streak++
-		} else {
-			maxStreak = Math.max(maxStreak, streak)
-			streak = 0
-		}
-	}
-	maxStreak = Math.max(maxStreak, streak)
-
-	const progressByCurrentWeek = Array.from({ length: 7 }, (_, index) => index)
-		.map((_, index) => {
-			// get day
-			const day = new Date(currentDate)
-			day.setDate(currentDate.getDate() - index)
-			const dayReadingTimeMs = sortedHistory
-				.filter(
-					history => getTimeDate(history.endDate).getDate() === day.getDate()
-				)
-				.reduce(
-					(accumulator, history) => accumulator + history.readingTimeMs,
-					0
-				)
-
-			const dayProgress = dayReadingTimeMs / fromMinutesToMs(goalMinutes)
-			return {
-				day: day.toLocaleDateString('en-US', {
-					weekday: 'long'
-				}),
-				isCurrentDay: getTimeDate(day).getDate() === currentDate.getDate(),
-				readingTimeMs: dayReadingTimeMs,
-				dayProgress: dayProgress
-			}
-		})
-		.sort((a, b) => days.indexOf(a.day) - days.indexOf(b.day))
-
+	const userSteak = Object.values(historyGroupedByDay).reduce(
+		// reading time more than 10 minutes
+		(accumulator, day) =>
+			day.readingTimeMs > fromMinutesToMs(goalMinutes) ? accumulator + 1 : 0,
+		0
+	)
+	console.log('progressByCurrentWeek', progressByCurrentWeek)
 	return {
-		userSteak: maxStreak,
+		userSteak,
 		pepTalk:
-			pepTalks.find(pepTalk => maxStreak < pepTalk.lessThan)?.text ??
+			pepTalks.find(pepTalk => userSteak < pepTalk.lessThan)?.text ??
 			'Good result, keep it up!',
+
 		progressByCurrentWeek
 	}
 }
