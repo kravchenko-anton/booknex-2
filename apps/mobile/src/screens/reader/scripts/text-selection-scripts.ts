@@ -115,9 +115,12 @@ document.addEventListener('click', (e) => {
 document.addEventListener('contextmenu', (e) => {
 	isFirstSelection = true;	
 
-	const activeSelection = document.getSelection();
+	const activeSelection = window.getSelection();
 	if (activeSelection.toString().length < 2) return;
-
+	const range = activeSelection.getRangeAt(0);
+	window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selection', payload: {  text: activeSelection.toString(), range:
+	{ startOffset: activeSelection.getRangeAt(0).startOffset, endOffset: activeSelection.getRangeAt(0).endOffset, xpath: getXPath(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode)}
+	 } }));
 	const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
 	selectMenu.style.top = (rect.top + window.scrollY - 60)  + 'px';
 	setTimeout(() => {
@@ -134,7 +137,8 @@ document.addEventListener('contextmenu', (e) => {
 
 		
 	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
-	if (isOverlappingMark || startXpath !== endXpath || !isOnline) { 
+	const isInParentHaveOtherMark = Boolean(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode.querySelector('mark'));
+	if (isOverlappingMark || startXpath !== endXpath || !isOnline || isInParentHaveOtherMark) { 
 		reactionItems.forEach((item) => {
 			item.style.opacity = '0.5';
 			item.style.pointerEvents = 'none';

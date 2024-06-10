@@ -12,6 +12,27 @@ import { calculateProgress } from '@/screens/reader/feature/reading-progress/cal
 //     });
 // });
 export const utilsScripts = `
+function getCharactersCountUntilNode(node, parent) {
+  var walker = document.createTreeWalker(
+    parent || document.body,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+  var found = false;
+  var chars = 0;
+  while (walker.nextNode()) {
+    if(walker.currentNode === node) {
+      found = true;
+      break;
+    }
+    chars += walker.currentNode.textContent.length;
+  }
+  if(found) {
+    return chars;
+  }
+  else return -1;
+}
 
 
 		const slugify = (textContent) => textContent.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');

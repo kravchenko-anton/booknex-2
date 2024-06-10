@@ -28,6 +28,9 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		state => state
 	)
 	const { reactionBookList = [], createReaction } = useReactions(slug)
+	console.log(
+		reactionBookList.sort((a, b) => Number(a.endOffset) - Number(b.endOffset))
+	)
 
 	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),

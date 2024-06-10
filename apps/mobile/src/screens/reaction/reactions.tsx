@@ -187,9 +187,9 @@ const Reactions = () => {
 								<Button
 									size={'sm'}
 									variant='foreground'
-									disabled={removeReactionLoading}
+									disabled={removeReactionLoading || isLoading}
 									onPress={() => {
-										if (removeReactionLoading) return
+										if (removeReactionLoading || isLoading) return
 										removeReactionMutation(item.id).then(() => {
 											queryClient.invalidateQueries({
 												queryKey: QueryKeys.reaction.bySlug(params.slug)
