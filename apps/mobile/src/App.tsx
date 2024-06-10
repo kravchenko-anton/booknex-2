@@ -40,7 +40,8 @@ export const storage = new MMKV({
 
 Sentry.init({
 	dsn: Config.SENTRY_DNC,
-	tracesSampleRate: 1
+	tracesSampleRate: 1,
+	integrations: [Sentry.metrics.metricsAggregatorIntegration()]
 })
 
 export const clientPersister: any = createSyncStoragePersister({

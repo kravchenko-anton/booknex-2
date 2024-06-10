@@ -138,7 +138,9 @@ document.addEventListener('contextmenu', (e) => {
 		
 	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
 	const isInParentHaveOtherMark = Boolean(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode.querySelector('mark'));
-	if (isOverlappingMark || startXpath !== endXpath || !isOnline || isInParentHaveOtherMark) { 
+	const isInCurrentTagHaveMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
+	const isParentTagMark = Boolean(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode.tagName === 'MARK');
+	if (isOverlappingMark || startXpath !== endXpath || !isOnline || isInParentHaveOtherMark || isInCurrentTagHaveMark || isParentTagMark)  { 
 		reactionItems.forEach((item) => {
 			item.style.opacity = '0.5';
 			item.style.pointerEvents = 'none';

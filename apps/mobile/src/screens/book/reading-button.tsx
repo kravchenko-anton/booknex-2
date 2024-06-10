@@ -19,7 +19,7 @@ const ReadingButton: FC<BookReadingButtonProperties> = ({ slug }) => {
 			mutationKey: MutationKeys.book.startReadingBySlug(slug),
 			mutationFn: (slug: string) => api.user.startReading(slug),
 			onSuccess: () => {
-				Sentry.metrics.increment('start-reading')
+				Sentry.metrics.increment('start-reading', 1)
 				queryClient.invalidateQueries({
 					queryKey: QueryKeys.library
 				})

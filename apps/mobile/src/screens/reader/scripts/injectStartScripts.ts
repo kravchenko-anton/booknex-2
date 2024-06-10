@@ -22,26 +22,22 @@ export const injectStartScripts = (
 			marks.forEach((mark) => {
 				mark.outerHTML = mark.innerHTML;
 			});
-			const elementsForReactions = [];
-			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'reactions in wrap', payload: reactions }));
 			reactions.forEach(({ xpath, startOffset, id, endOffset, text }) => {
+			
 				const element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 				if (!element) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: 'Element not found' }));
-				elementsForReactions.push({ element, startOffset, id, endOffset, text });
-			});
-			elementsForReactions.forEach(({ element, text, id, startOffset, endOffset }) => {
 			if (!element || !text || !startOffset) return;
 			const containerText = slugify(element.textContent.slice(startOffset, endOffset));
 			const textSlug = slugify(text);
 			if (containerText !== textSlug) return;
-			
-			const regex = new RegExp(element.textContent.slice(startOffset, endOffset), 'g');
-			element.innerHTML = element.innerHTML.replace(regex, (match) => {
-				return match ? \`<mark id="\${id}">\${match}</mark>\` : match;
-				});
-	
-	
-			});
+			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: element.textContent.slice(startOffset, endOffset) }));
+	let startElement = element.innerHTML.slice(0,startOffset)
+	let middleElement = document.createElement('mark')
+	middleElement.setAttribute('id', id)
+	middleElement.textContent = element.innerHTML.slice(startOffset, endOffset)
+	let endElement = element.innerHTML.slice(endOffset)
+	element.innerHTML = startElement + middleElement.outerHTML + endElement
+			})
 			
 }
 						${utilsScripts}

@@ -25,7 +25,9 @@ const SaveButton: FC<SaveButtonProperties> = ({ slug }) => {
 				await queryClient.invalidateQueries({
 					queryKey: QueryKeys.library
 				})
-				Sentry.metrics.increment('toggle-save')
+				Sentry.metrics.increment('toggle-save', 1, {
+					tags: { slug }
+				})
 			}
 		}
 	)
