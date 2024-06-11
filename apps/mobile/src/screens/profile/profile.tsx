@@ -87,7 +87,8 @@ const Profile = () => {
 
 				<View className='flex-row items-center justify-between gap-2'>
 					{statistic.progressByCurrentWeek?.map(item => {
-						const isDayCompleted = item.dayProgress === 100
+						console.log('item', item)
+						const isDayCompleted = item.dayProgress >= 100
 						return (
 							<View key={item.day}>
 								{item.isCurrentDay ? (
@@ -140,15 +141,15 @@ const Profile = () => {
 						)
 					})}
 				</View>
-
-				<Title
-					weight='bold'
-					color={Color.gray}
-					numberOfLines={2}
-					size='sm'
-					className='mx-auto mt-2'>
-					your steak: {statistic.userSteak} days
-				</Title>
+				{/*TODO: добавить позднее*/}
+				{/*<Title*/}
+				{/*	weight='bold'*/}
+				{/*	color={Color.gray}*/}
+				{/*	numberOfLines={2}*/}
+				{/*	size='sm'*/}
+				{/*	className='mx-auto mt-2'>*/}
+				{/*	your steak: {statistic.userSteak} days*/}
+				{/*</Title>*/}
 				<View className='mb-4 pt-4'>
 					<Title
 						weight='bold'

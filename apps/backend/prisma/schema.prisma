@@ -14,7 +14,7 @@ model Genre {
   name          String         @unique
   slug          String         @unique
   icon          String         @default("")
-  emoji      String         @default("")
+  emoji      String            @default("")
   users         User[]
   books         Book[]         @relation("BookGenre")
   mainBooks     Book[]         @relation("BookMajorGenre")

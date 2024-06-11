@@ -5,6 +5,7 @@ import { getTimeDate } from 'global/utils'
 import { useEffect, useState } from 'react'
 import { AppState } from 'react-native'
 
+//TODO: пофиксить трекиенг времени чтобы нельзя было полушить приложение и накапает много времени, нужно если прогресс долго не менятся перейти в спящий режим
 interface ReadingProgressProperties {
 	slug: string
 	readerLoading: boolean

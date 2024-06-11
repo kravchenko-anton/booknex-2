@@ -38,7 +38,7 @@ export const calculateUserStatistics = ({
 			day: day,
 			isCurrentDay,
 			readingTimeMs: data.readingTimeMs,
-			dayProgress: data.dayProgress
+			dayProgress: Math.min(data.dayProgress, 100)
 		}
 	})
 

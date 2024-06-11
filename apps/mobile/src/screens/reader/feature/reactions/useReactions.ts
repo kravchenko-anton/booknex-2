@@ -36,8 +36,7 @@ export const useReactions = (bookSlug: string) => {
 		select: data => data.data,
 		enabled: !!bookSlug,
 		networkMode: 'offlineFirst',
-		gcTime: Number.MAX_SAFE_INTEGER,
-		staleTime: Number.MAX_SAFE_INTEGER
+		gcTime: Number.MAX_SAFE_INTEGER
 	})
 
 	return {
