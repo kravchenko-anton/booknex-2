@@ -19,7 +19,6 @@ export const calculateUserStatistics = ({
 	goalMinutes
 }: CalculateUserStatisticsType): Omit<UserStatistics, 'goalMinutes'> => {
 	const progressByCurrentWeek = daysOfWeek.map(day => {
-		const isCurrentDay = new Date().getDay() === daysOfWeek.indexOf(day) + 1
 		const data = userHistory.reduce(
 			(accumulator, history) =>
 				new Date(history.startDate).getDay() === daysOfWeek.indexOf(day) + 1 &&
@@ -36,7 +35,7 @@ export const calculateUserStatistics = ({
 		)
 		return {
 			day: day,
-			isCurrentDay,
+			isCurrentDay: new Date().getDay() === daysOfWeek.indexOf(day) + 1,
 			readingTimeMs: data.readingTimeMs,
 			dayProgress: Math.min(data.dayProgress, 100)
 		}

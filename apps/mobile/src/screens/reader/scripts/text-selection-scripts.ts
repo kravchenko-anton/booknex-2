@@ -57,13 +57,20 @@ export const selectMenuActions = `
 	const translateButton = document.getElementById('text-menu-translate');
 	const shareButton = document.getElementById('text-menu-share');
 	const emojiButtons = document.querySelectorAll('.select-menu-reaction-item');
-	
+	const getSelectionOffsetRelativeToParent = () => {
+		const selection = window.getSelection();
+		const range = selection.getRangeAt(0);
+		const preSelectionRange = range.cloneRange();
+		preSelectionRange.selectNodeContents(range.commonAncestorContainer);
+		preSelectionRange.setEnd(range.startContainer, range.startOffset);
+		const startOffset = preSelectionRange.toString().length;
+		return { startOffset, endOffset: startOffset + selection.toString().length };
+	}; 
 	emojiButtons.forEach((button) => {
 		button.addEventListener('click', () => {
 		const activeSelection = document.getSelection().toString();
 		const range = document.getSelection().getRangeAt(0);
-    const startOffset = range.startOffset;
-    const endOffset = range.endOffset;
+		const { startOffset, endOffset } = getSelectionOffsetRelativeToParent();
 			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'reaction', 
 			payload: {
 			text:activeSelection,
@@ -118,8 +125,10 @@ document.addEventListener('contextmenu', (e) => {
 	const activeSelection = window.getSelection();
 	if (activeSelection.toString().length < 2) return;
 	const range = activeSelection.getRangeAt(0);
+		const { startOffset, endOffset } = getSelectionOffsetRelativeToParent();
+	
 	window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selection', payload: {  text: activeSelection.toString(), range:
-	{ startOffset: activeSelection.getRangeAt(0).startOffset, endOffset: activeSelection.getRangeAt(0).endOffset, xpath: getXPath(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode)}
+	{ startOffset, endOffset, xpath: getXPath(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode)}
 	 } }));
 	const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
 	selectMenu.style.top = (rect.top + window.scrollY - 60)  + 'px';
@@ -137,10 +146,8 @@ document.addEventListener('contextmenu', (e) => {
 
 		
 	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
-	const isInParentHaveOtherMark = Boolean(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode.querySelector('mark'));
-	const isInCurrentTagHaveMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
 	const isParentTagMark = Boolean(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode.tagName === 'MARK');
-	if (isOverlappingMark || startXpath !== endXpath || !isOnline || isInParentHaveOtherMark || isInCurrentTagHaveMark || isParentTagMark)  { 
+	if (isOverlappingMark || startXpath !== endXpath || !isOnline || isParentTagMark)  { 
 		reactionItems.forEach((item) => {
 			item.style.opacity = '0.5';
 			item.style.pointerEvents = 'none';
