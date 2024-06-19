@@ -94,32 +94,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 
 	useEffect(() => {
 		viewerReference.current?.injectJavaScript(`
-    	wrapReactionsInMarkTag(${JSON.stringify(
-				reactionBookList.reduce<
-					{
-						xpath: string
-						marks: {
-							id: number
-							startOffset: number
-							endOffset: number
-							text: string
-						}[]
-					}[]
-				>((accumulator, { xpath, id, startOffset, endOffset, text }) => {
-					const element = accumulator.find(
-						({ xpath: currentXpath }) => currentXpath === xpath
-					)
-					if (element) {
-						element.marks.push({ id, startOffset, endOffset, text })
-					} else {
-						accumulator.push({
-							xpath,
-							marks: [{ id, startOffset, endOffset, text }]
-						})
-					}
-					return accumulator
-				}, [])
-			)});
+    	wrapReactionsInMarkTag(${JSON.stringify(reactionBookList)});
     `)
 	}, [reactionBookList, createReaction])
 

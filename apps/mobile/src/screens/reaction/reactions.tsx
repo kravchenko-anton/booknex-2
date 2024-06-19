@@ -19,7 +19,11 @@ import { TextInput, View } from 'react-native'
 const Reactions = () => {
 	const queryClient = useQueryClient()
 	const { params } = useTypedRoute<'Reactions'>()
-	const { data: userReactions = [], isLoading } = useQuery({
+	const {
+		data: userReactions = [],
+		isLoading,
+		isRefetching
+	} = useQuery({
 		queryKey: QueryKeys.reaction.bySlug(params.slug),
 		queryFn: () => api.reaction.reactionByBook(params.slug),
 		select: data => data.data,
@@ -187,7 +191,7 @@ const Reactions = () => {
 								<Button
 									size={'sm'}
 									variant='foreground'
-									disabled={removeReactionLoading || isLoading}
+									disabled={removeReactionLoading || isLoading || isRefetching}
 									onPress={() => {
 										if (removeReactionLoading || isLoading) return
 										removeReactionMutation(item.id).then(() => {

@@ -58,14 +58,16 @@ export const selectMenuActions = `
 	const shareButton = document.getElementById('text-menu-share');
 	const emojiButtons = document.querySelectorAll('.select-menu-reaction-item');
 	const getSelectionOffsetRelativeToParent = () => {
-		const selection = window.getSelection();
-		const range = selection.getRangeAt(0);
-		const preSelectionRange = range.cloneRange();
-		preSelectionRange.selectNodeContents(range.commonAncestorContainer);
-		preSelectionRange.setEnd(range.startContainer, range.startOffset);
-		const startOffset = preSelectionRange.toString().length;
-		return { startOffset, endOffset: startOffset + selection.toString().length };
-	}; 
+const selection = window.getSelection();
+const range = selection.getRangeAt(0);
+const clonedSelection = range.cloneContents();
+const clonedSelectionText = clonedSelection.textContent;
+const parent = range.commonAncestorContainer.parentNode;
+const text = parent.textContent;
+const startOffset = text.indexOf(clonedSelectionText);
+const endOffset = startOffset + clonedSelectionText.length;
+return { startOffset, endOffset };
+}
 	emojiButtons.forEach((button) => {
 		button.addEventListener('click', () => {
 		const activeSelection = document.getSelection().toString();

@@ -114,9 +114,12 @@ export const useReaderMessage = ({
 				}
 			})
 		if (type === ReaderMessageType.FinishBook) onFinishBookPress(slug)
-		if (type === ReaderMessageType.MarkClick) {
+		if (
+			type === ReaderMessageType.MarkClick &&
+			payload.id !== null &&
+			payload.id !== undefined
+		)
 			setActiveReactionPressed(payload.id)
-		}
 	}
 
 	return {

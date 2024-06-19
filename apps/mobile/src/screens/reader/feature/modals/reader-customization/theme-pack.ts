@@ -16,6 +16,7 @@ export interface ThemePackType {
 		mark: {
 			background: string
 			text: string
+			hoverBackground: string
 		}
 		text: string
 	}
@@ -34,7 +35,8 @@ export const themePack: ThemePackType[] = [
 		colorPalette: {
 			mark: {
 				background: '#22333B',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#2C4251'
 			},
 			primary: '#4d92d3',
 			secondary: '#cf8e6d',
@@ -61,7 +63,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#7D387D',
-				text: '#FFF'
+				text: '#FFF',
+				hoverBackground: '#8A4B8A'
 			},
 			textSelection: '#317259',
 			text: Color.black
@@ -81,7 +84,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#b5a08f',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#c7b8a5'
 			},
 			textSelection: '#F0E1B9',
 			text: '#5F4B32'
@@ -101,7 +105,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#4A6D7C',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#5B7F8F'
 			},
 			textSelection: '#3e4451',
 			text: '#abb2bf'
@@ -121,7 +126,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#6A2E35',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#7E3A41'
 			},
 			textSelection: '#4f3f6f',
 			text: '#F4F3F2'
@@ -142,7 +148,8 @@ export const themePack: ThemePackType[] = [
 			// get random mark color based on the theme
 			mark: {
 				background: '#55286F',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#6A3A8F'
 			},
 
 			textSelection: '#4f3f6f',
@@ -164,7 +171,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#475657',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#5A6C6D'
 			},
 			textSelection: '#3d4d5f',
 			text: '#b7bcd9'
@@ -184,7 +192,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#2C4251',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#3C5565'
 			},
 			textSelection: '#3d4d5f',
 			text: '#b9c0cb'
@@ -204,7 +213,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#073642',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#0F4A5A'
 			},
 			textSelection: '#586e75',
 			text: '#a8b4b5'
@@ -225,7 +235,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#63557A',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#74668B'
 			},
 			textSelection: '#4f3f6f',
 			text: '#dcd7ba'
@@ -246,7 +257,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#323C50',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#4A5568'
 			},
 			textSelection: '#4f3f6f',
 			text: '#d8dee9'
@@ -266,7 +278,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#504945',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#665C54'
 			},
 			textSelection: '#458588',
 			text: '#ebdbb2'
@@ -286,7 +299,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#333344',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#444455'
 			},
 			textSelection: '#333333',
 			text: '#e6e5e9'
@@ -306,7 +320,8 @@ export const themePack: ThemePackType[] = [
 			},
 			mark: {
 				background: '#4F3A65',
-				text: '#fff'
+				text: '#fff',
+				hoverBackground: '#5F4A75'
 			},
 			textSelection: '#44475a',
 			text: '#f8f8f2'

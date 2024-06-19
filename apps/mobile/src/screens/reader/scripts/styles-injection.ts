@@ -134,7 +134,10 @@ export const getStyleTag = ({
 		border-radius: 4px !important;
 		padding-left: 4px !important;
 		padding-right: 4px !important;
+		&:hover {
+		 background: ${colorPalette.mark.hoverBackground} !important;
 	}
+
 	
 				#select-menu {
         background: ${Color.foreground} !important;
