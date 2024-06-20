@@ -1,15 +1,13 @@
-import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { RatingSelect } from '@/screens/book-impression/rating-select'
 import { TagsSelect } from '@/screens/book-impression/tags-select'
 
+import { useAuthStore } from '@/screens/auth/store/auth-store'
 import { Button, Field, Icon, ScrollView, Title } from '@/ui'
-import { successToast } from '@/utils/toast'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
-import type { ReviewBookDto } from 'global/api-client'
+import type { UserFeedback } from '@sentry/react-native'
+import * as Sentry from '@sentry/react-native'
 import { Color } from 'global/colors'
-import { MutationKeys } from 'global/utils/query-keys'
 import {
 	ImpressionBookSchema,
 	type ReviewBookType
@@ -24,43 +22,29 @@ import { View } from 'react-native'
 const BookImpression: FC = () => {
 	const { params } = useTypedRoute<'BookImpression'>()
 	const { navigate } = useTypedNavigation()
-	const {
-		control,
-		handleSubmit,
-		watch,
-		formState: { errors }
-	} = useForm<ReviewBookType>({
+	const user = useAuthStore(state => state.user)
+
+	const { control, handleSubmit, watch } = useForm<ReviewBookType>({
 		mode: 'onSubmit',
 		resolver: zodResolver(ImpressionBookSchema)
 	})
-	const rating = watch('rating')
-	console.log(errors)
-	const { mutateAsync: sendReview, isLoading: reviewLoading } = useMutation({
-		mutationKey: MutationKeys.review.sendReview,
-		mutationFn: ({ slug, dto }: { slug: string; dto: ReviewBookDto }) =>
-			api.impressions.impression(slug, dto),
-		onSuccess: () => {
-			Sentry.metrics.increment('send-impression')
-		}
-	})
 
-	const submitReview = async (data: ReviewBookDto) => {
-		await sendReview({
-			slug: params.slug,
-			dto: {
-				rating: data.rating,
-				comment: data.comment || 'No comment',
-				tags: data.tags
-			}
-		}).then(() => {
-			successToast('thanks for impression')
-			console.log({
-				rating: data.rating,
-				comment: data.comment || 'No comment',
-				tags: data.tags
-			})
-			navigate('Library')
-		})
+	const rating = watch('rating')
+	const submitReview = async data => {
+		const sentryId = Sentry.captureMessage('feedback' + Math.random())
+		const userFeedback: UserFeedback = {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			event_id: sentryId,
+			email: user?.email,
+			comments: `Tags: ${data.tags.join(', ')}
+Rating: ${data.rating} stars
+Comment: ${data.comment ?? 'No comment'}
+Slug: ${params.slug}`
+		}
+
+		await Sentry.captureUserFeedback(userFeedback)
+		successToast('Thanks for your feedback!')
+		navigate('Library')
 	}
 	return (
 		<ScrollView className='h-full px-2'>
@@ -101,7 +85,6 @@ const BookImpression: FC = () => {
 					/>
 					<Button
 						size='lg'
-						isLoading={reviewLoading}
 						variant='primary'
 						className='mb-4 w-full'
 						onPress={handleSubmit(submitReview)}>

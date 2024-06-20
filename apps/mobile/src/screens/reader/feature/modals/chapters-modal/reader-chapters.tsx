@@ -105,7 +105,8 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 							size={'lg'}
 							weight='semiBold'
 							style={{
-								color: colorScheme.colorPalette.text
+								color: colorScheme.colorPalette.text,
+								width: '80%'
 							}}>
 							{chapter.name}
 						</Title>

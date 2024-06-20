@@ -108,7 +108,8 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
 				<View className='mt-1'>
 					<View className='flex-row items-center justify-between px-4 '>
 						<Title size={'sm'} color={colorScheme.colorPalette.text}>
-							{readingProgress.chapter.title || bookTitle}
+							{(readingProgress.chapter.title || bookTitle).slice(0, 35) +
+								(readingProgress.chapter.title?.length > 35 ? '...' : '')}
 						</Title>
 						<Title size={'sm'} color={colorScheme.colorPalette.text}>
 							{(100 - readingProgress.chapter.progress).toFixed(2)}% left

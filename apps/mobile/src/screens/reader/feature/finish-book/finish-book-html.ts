@@ -13,6 +13,7 @@ export const finishBookButton = `
 				height: 70px;
 				font-weight: bold;
 				margin-top: 40px;
+				padding-bottom: 10px;
 		
 				">
 				<div

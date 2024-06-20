@@ -150,6 +150,9 @@ export const ReactionModal: FC<ReactionModalProperties> = ({
 					<Pressable
 						disabled={removeReactionLoading || !activeReactionPressed}
 						className='flex-row items-center gap-2'
+						style={{
+							opacity: removeReactionLoading || !activeReactionPressed ? 0.5 : 1
+						}}
 						onPress={() => {
 							if (removeReactionLoading || !activeReactionPressed) return
 							removeReaction(activeReactionPressed.id)
