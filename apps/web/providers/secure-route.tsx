@@ -4,7 +4,7 @@ import { getRefreshToken } from '@/services/store/auth-helper'
 import { useAuthStore } from '@/services/store/auth-store'
 import { publicRoutes, secureRoutes } from '@/utils/route'
 import { redirect } from 'next/navigation'
-import { useLayoutEffect, type FC } from 'react'
+import { useEffect, type FC } from 'react'
 
 export const loginRoute = (Component: FC) =>
 	function (properties: NonNullable<unknown>) {
@@ -12,10 +12,10 @@ export const loginRoute = (Component: FC) =>
 			user: state.user,
 			isLoading: state.isLoading
 		}))
-
-		useLayoutEffect(() => {
-			if (user) redirect(secureRoutes.dashboard)
-		}, [user, isLoading])
+		console.log('user', user, isLoading)
+		useEffect(() => {
+			if (user && !isLoading) redirect(secureRoutes.bookCatalogRoute)
+		}, [user])
 
 		return <Component {...properties} />
 	}
@@ -27,17 +27,17 @@ export const adminRoute = (Component: FC) =>
 			isLoading: state.isLoading,
 			logout: state.logout
 		}))
-		useLayoutEffect(() => {
-			const checkRefreshToken = async () => {
+		useEffect(() => {
+			const checkRefreshToken = () => {
 				const refreshToken = getRefreshToken()
 				if (!refreshToken && user && !isLoading) {
 					logout()
+					redirect(publicRoutes.login)
 				}
 			}
 
 			checkRefreshToken()
-			if (!user && !isLoading) redirect(publicRoutes.login)
-		}, [user, isLoading])
+		}, [user])
 
 		return <Component {...properties} />
 	}

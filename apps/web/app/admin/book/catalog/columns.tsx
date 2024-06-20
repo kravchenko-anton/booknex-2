@@ -105,7 +105,11 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 		cell: ({ row }) => (
 			<div className=' max-w-[150px] items-center justify-center gap-1'>
 				{row.original.genres.map(genre => (
-					<GenreElement title={genre.name} svgUri={genre.icon} />
+					<GenreElement
+						key={genre.slug}
+						title={genre.name}
+						svgUri={genre.icon}
+					/>
 				))}
 			</div>
 		)

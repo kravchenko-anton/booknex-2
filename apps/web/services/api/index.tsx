@@ -4,7 +4,6 @@ import {
 	CatalogApi,
 	EbookApi,
 	GenreApi,
-	ImpressionApi,
 	ParserApi,
 	RecommendationApi,
 	StorageApi,
@@ -37,8 +36,6 @@ const recommendation = new RecommendationApi(
 	instance
 )
 
-const impression = new ImpressionApi(baseParameters, webServerURL, instance)
-
 const storage = new StorageApi(baseParameters, webServerURL, instance)
 
 const user = new UserApi(baseParameters, webServerURL, instance)
@@ -51,7 +48,6 @@ export default {
 	genre,
 	parser,
 	recommendation,
-	impression,
 	storage,
 	user
 }

@@ -1,4 +1,3 @@
-import { ImpressionModule } from '@/src/impression/impression.module'
 import { envConfigSchema } from '@/src/utils/config/env-config'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module, type MiddlewareConsumer } from '@nestjs/common'
@@ -44,7 +43,6 @@ import { AppLoggerMiddleware } from './utils/logger/logger'
 				limit: 10
 			}
 		]),
-		ImpressionModule,
 		RecommendationModule,
 		HealthModule,
 		EbookModule,

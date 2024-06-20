@@ -1,7 +1,6 @@
 'use client'
 import BookStatistic from '@/app/admin/book/_components/book-statistic'
 import BookOverview from '@/app/admin/book/_components/ebook-tabs'
-import ImpressionTable from '@/app/admin/book/_components/impressions/impression-table'
 import { RemoveButton } from '@/app/admin/book/_components/remove-button'
 import { Button } from '@/components/ui'
 import GenreElement from '@/components/ui/genre-element'
@@ -143,7 +142,6 @@ const Page = () => {
 					</ResponsiveContainer>
 
 					<BookOverview bookSlug={book.slug} />
-					<ImpressionTable review={book.impressions} />
 				</div>
 			</div>
 		</div>

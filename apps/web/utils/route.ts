@@ -6,8 +6,7 @@ export const secureRoutes = {
 	bookUpdateRoute: (slug: string) => '/admin/book/' + slug + '/update',
 	bookOverviewRoute: (slug: string) => '/admin/book/' + slug,
 	parserCatalogRoute: '/admin/parser' + '/catalog',
-	userCatalogRoute: '/admin/user' + '/catalog',
-	dashboard: '/admin/dashboard'
+	userCatalogRoute: '/admin/user' + '/catalog'
 }
 
 export const publicRoutes = {

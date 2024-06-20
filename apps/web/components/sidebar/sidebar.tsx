@@ -7,16 +7,14 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useAuthStore } from '@/services/store/auth-store'
 import { cn } from '@/utils'
-import { secureRoutes } from '@/utils/route'
 import { Color } from 'global/colors'
 import { appName } from 'global/utils'
-import { Book, Graph, Logout, MoreHorizontal, Settings, User } from 'icons'
+import { Book, Logout, MoreHorizontal, Settings, User } from 'icons'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import type { FC } from 'react'
 
 export const iconsList = [
-	{ icon: Graph, link: '/admin/dashboard', name: 'Dashboard' },
 	{ icon: User, link: '/admin/user/catalog', name: 'Users' },
 	{ icon: Book, link: '/admin/book/catalog', name: 'Books' },
 	{ icon: Settings, link: '/admin/parser/catalog', name: 'Parser' }
@@ -34,8 +32,7 @@ export const Sidebar: FC = () => {
 			<div className='bg-foreground border-bordered flex w-full justify-between border-b-2 p-5 text-sm xl:h-full xl:flex-col xl:border-r-2'>
 				<button
 					className='flex cursor-pointer items-center text-2xl font-bold xl:mb-12'
-					type='button'
-					onClick={() => router.push(secureRoutes.dashboard)}>
+					type='button'>
 					<span className='bg-muted rounded  p-1 px-2 text-[21px] text-white  xl:w-full '>
 						{appName} 🧑‍💻
 					</span>

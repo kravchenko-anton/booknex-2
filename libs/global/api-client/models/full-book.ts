@@ -18,9 +18,6 @@
 import { FullBookCount } from './full-book-count';
 // May contain unused imports in some cases
 // @ts-ignore
-import { FullBookImpressionsInner } from './full-book-impressions-inner';
-// May contain unused imports in some cases
-// @ts-ignore
 import { FullBookStatisticsInner } from './full-book-statistics-inner';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -128,11 +125,5 @@ export interface FullBook {
      * @memberof FullBook
      */
     'statistics': Array<FullBookStatisticsInner>;
-    /**
-     * 
-     * @type {Array<FullBookImpressionsInner>}
-     * @memberof FullBook
-     */
-    'impressions': Array<FullBookImpressionsInner>;
 }
 

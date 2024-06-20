@@ -642,29 +642,6 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  "/impression/impression/{slug}":
-    post:
-      operationId: impression
-      parameters:
-        - name: slug
-          required: true
-          in: path
-          schema:
-            type: string
-      requestBody:
-        required: true
-        description: Impression book
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ImpressionDto"
-      responses:
-        "200":
-          description: Impression book
-      tags:
-        - ⭐ impression
-      security:
-        - bearer: []
   /recommendation/update-recommendation:
     post:
       operationId: updateRecommendation
@@ -1547,26 +1524,6 @@ components:
               - progressDelta
               - pagesRead
               - readingTimeMs
-        impressions:
-          type: array
-          items:
-            type: object
-            properties:
-              tags:
-                type: array
-                items:
-                  type: string
-                required: true
-              text:
-                type: string
-                required: false
-                nullable: true
-              rating:
-                type: number
-                required: true
-            required:
-              - tags
-              - rating
       required:
         - description
         - readingTime
@@ -1584,7 +1541,6 @@ components:
         - ebook
         - _count
         - statistics
-        - impressions
     CatalogOutput:
       type: object
       properties:
@@ -2033,21 +1989,6 @@ components:
         - id
         - name
         - text
-    ImpressionDto:
-      type: object
-      properties:
-        rating:
-          type: integer
-          minimum: 1
-          maximum: 5
-        tags:
-          type: array
-          items:
-            type: string
-        comment:
-          type: string
-      required:
-        - rating
     UpdateRecommendationDto:
       type: object
       properties:
