@@ -56,6 +56,7 @@ export const useReadingProgress = ({
 			'change',
 			(nextAppState: string) => {
 				if (nextAppState === 'active') {
+					console.log('человек вернулся на скрин')
 					setStartReadingDate(getTimeDate())
 					setReadingSessionKey(slug + Math.random() * 1000)
 				}
@@ -63,7 +64,9 @@ export const useReadingProgress = ({
 		)
 
 		const beforeLeave = addListener('beforeRemove', () => {
-			console.log('beforeRemove')
+			console.log('человек покинул скрин')
+			setStartReadingDate(getTimeDate())
+			setReadingSessionKey(slug + Math.random() * 1000)
 			updateStartFromReadingScreen({
 				id: readingSessionKey,
 				startFromReadingScreen: false
@@ -99,9 +102,13 @@ export const useReadingProgress = ({
 			'chapter' | 'progress' | 'scrollTop'
 		>
 	) => {
-		console.log('🔴 updateReadingProgress', payload)
 		if (!startReadingProgress) {
 			setStartReadingProgress(payload.progress)
+		}
+
+		if (getTimeDate().getTime() - startReadingDate.getTime() > 1000 * 60 * 5) {
+			setStartReadingDate(getTimeDate())
+			setReadingSessionKey(slug + Math.random() * 1000)
 		}
 		setReadingProgress({
 			progress: payload.progress,
@@ -111,8 +118,9 @@ export const useReadingProgress = ({
 				progress: payload.chapter.chapterProgress
 			}
 		})
+
 		setScrollPosition(payload.scrollTop)
-		// check if history with this scrollPosition already exist,return
+
 		newProgress({
 			startFromReadingScreen: true,
 			id: readingSessionKey,

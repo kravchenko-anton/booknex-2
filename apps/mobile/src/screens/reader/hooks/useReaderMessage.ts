@@ -66,7 +66,7 @@ export const useReaderMessage = ({
 	const onMessage = async (event: WebViewMessageEvent) => {
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessageType
 		const { type, payload } = parsedEvent
-		console.log('🔴', type, payload)
+		// console.log('🔴', type, payload)
 		if (type === ReaderMessageType.FinishLoading) {
 			console.log('Finish loading')
 			onContentLoadEnd()

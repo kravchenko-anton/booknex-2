@@ -8,10 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import type { UserFeedback } from '@sentry/react-native'
 import * as Sentry from '@sentry/react-native'
 import { Color } from 'global/colors'
-import {
-	ImpressionBookSchema,
-	type ReviewBookType
-} from 'global/validation/impression/impression.book.schema'
+
 import { Close } from 'icons'
 import { FinishBook } from 'illustrations'
 import type { FC } from 'react'

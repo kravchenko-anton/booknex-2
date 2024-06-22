@@ -1,6 +1,6 @@
 import { useTypedNavigation } from '@/hooks'
-import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
 import type { ReadingProgressType } from '@/screens/reader/feature/reading-progress/useReadingProgress'
+import type { ThemePackType } from '@/screens/reader/modals/reader-customization/theme-pack'
 import { Title } from '@/ui'
 import { AnimatedView } from '@/ui/animated-components'
 import Slider from '@react-native-community/slider'

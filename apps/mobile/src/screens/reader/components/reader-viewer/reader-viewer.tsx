@@ -1,5 +1,5 @@
-import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
-import { composeReaderViewHtml } from '@/screens/reader/scripts/compose-html'
+import { composeReaderViewHtml } from '@/screens/reader/injections/compose-html-injection'
+import type { ThemePackType } from '@/screens/reader/modals/reader-customization/theme-pack'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
 import { useNetInfo } from '@react-native-community/netinfo'

@@ -2,15 +2,15 @@ import api from '@/api'
 
 import { useTypedNavigation } from '@/hooks'
 import { useFinishBook } from '@/screens/reader/feature/finish-book/useFinishBook'
-import { useCustomizationStore } from '@/screens/reader/feature/modals/reader-customization/customization-store'
-import { useModalReference } from '@/screens/reader/feature/modals/useModalReference'
 import { useReactions } from '@/screens/reader/feature/reactions/useReactions'
 import { useReadingProgress } from '@/screens/reader/feature/reading-progress/useReadingProgress'
+import { useModalReference } from '@/screens/reader/hooks/useModalReference'
 import { useReaderMessage } from '@/screens/reader/hooks/useReaderMessage'
 import {
 	getStyleTag,
 	injectStyle
-} from '@/screens/reader/scripts/styles-injection'
+} from '@/screens/reader/injections/styles-injection'
+import { useCustomizationStore } from '@/screens/reader/modals/reader-customization/customization-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useEffect, useRef, useState } from 'react'

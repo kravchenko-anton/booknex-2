@@ -84,7 +84,6 @@ export const ReadingList: FC<ReadingListProperties> = ({
 						historyItem => historyItem.bookSlug === book.slug
 					)
 
-					console.log(latestHistory, 'latestHistory of' + book.slug)
 					const progress =
 						(latestHistory?.endProgress || 0) / 100 || book.progress
 
@@ -99,7 +98,6 @@ export const ReadingList: FC<ReadingListProperties> = ({
 						QueryKeys.ebook.bySlug(book.slug)
 					)
 
-					console.log(!!isBookDownloaded, 'isBookDownloaded')
 					return (
 						<Animated.View
 							style={{

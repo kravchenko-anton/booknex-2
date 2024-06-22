@@ -54,6 +54,9 @@ codePush.sync({
 	mandatoryInstallMode: codePush.InstallMode.IMMEDIATE
 })
 const App = () => (
+	// useEffect(() => {
+	// 	adapty.activate('public_live_0pAJgt4m.7LNqw5dmfPigmxdZUuv3')
+	// }, [])
 	<PersistQueryClientProvider
 		client={queryClient}
 		persistOptions={{ persister: clientPersister }}>

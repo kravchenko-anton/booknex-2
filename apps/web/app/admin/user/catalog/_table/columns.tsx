@@ -107,7 +107,7 @@ export const columns = ({
 											...history,
 											readingTimeMin:
 												Math.round(history.readingTimeMs / 60_000) || 0,
-											name: timeAgo(getTimeDate(history.endDate))
+											name: getTimeDate(history.endDate).toLocaleDateString()
 										}))}
 										margin={{
 											top: 5,

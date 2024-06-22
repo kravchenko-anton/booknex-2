@@ -54,7 +54,10 @@ export class ReactionService {
 		return this.prisma.reaction.findMany({
 			where: {
 				bookSlug,
-				userId
+				userId,
+				book: {
+					isPublic: true
+				}
 			},
 			select: {
 				id: true,
@@ -86,7 +89,10 @@ export class ReactionService {
 				}
 			},
 			where: {
-				userId
+				userId,
+				book: {
+					isPublic: true
+				}
 			}
 		})
 		const bookSlugs = reactionsCount.map(reaction => reaction.bookSlug)
@@ -94,7 +100,8 @@ export class ReactionService {
 			where: {
 				slug: {
 					in: bookSlugs
-				}
+				},
+				isPublic: true
 			},
 			select: {
 				picture: true,

@@ -8,35 +8,22 @@ datasource db {
 }
 
 model Genre {
-  id            Int            @id @default(autoincrement())
+  id                String      @id @default(uuid())
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  name          String         @unique
   slug          String         @unique
+  name          String         @unique
   icon          String         @default("")
   emoji      String            @default("")
   users         User[]
   books         Book[]         @relation("BookGenre")
   mainBooks     Book[]         @relation("BookMajorGenre")
   bookTemplates BookTemplate[]
-}
-
-model Impression{
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  rating    Int
-  tags      String[]
-  text      String?
-  book      Book     @relation(fields: [bookId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-  bookId    Int
-
-  userId Int
+  @@index([slug], name: "genre_slug_index")
 }
 
 model Book {
-  id            Int      @id @default(autoincrement())
+  id            String   @id @default(uuid())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   title         String   @unique
@@ -55,10 +42,9 @@ model Book {
   pagesCount  Int @default(0)
   rating         Float            @default(0)
   isPublic       Boolean          @default(false)
-  mainGenreId    Int
+  mainGenreId    String
   mainGenre      Genre            @relation("BookMajorGenre", fields: [mainGenreId], references: [id])
   genres         Genre[]          @relation("BookGenre")
-  impressions         Impression[]
   finishedBy     User[]           @relation("FinishedBooks")
   savedBy        User[]           @relation("SavedBooks")
   readingBy      User[]           @relation("ReadingBooks")
@@ -66,11 +52,12 @@ model Book {
   reactions      Reaction[]
   similarBooks Book[] @relation("SimilarBooks")
   similarBy    Book[] @relation("SimilarBooks")
+  @@index([slug], name: "book_slug_index")
 }
 
 
 model Reaction {
-  id        Int      @id @default(autoincrement())
+  id        String    @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   type      String
@@ -81,13 +68,13 @@ model Reaction {
   endOffset Int
   user      User     @relation(fields: [userId], references: [id])
   book      Book     @relation(fields: [bookSlug], references: [slug])
-  userId    Int
+  userId    String
   bookSlug    String
+  @@index([id], name: "reaction_id_index")
 }
 
 model BookTemplate {
-  id Int @id @default(autoincrement())
-
+  id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   title       String   @unique
@@ -97,10 +84,12 @@ model BookTemplate {
   picture     String
   rating      Float    @default(0)
   genres      Genre[]
+
+  @@index([slug], name: "book_template_slug_index")
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
+  id                String         @id @default(uuid())
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   email          String           @unique
@@ -114,15 +103,16 @@ model User {
   fullName       String           @default("unknown")
   location       String           @default("unknown")
   role           Role             @default(user)
-  impressions     Impression[]
   savedBooks     Book[]           @relation("SavedBooks")
   finishedBooks  Book[]           @relation("FinishedBooks")
   readingBooks   Book[]           @relation("ReadingBooks")
   readingHistory ReadingHistory[]
+
+  @@index([id], name: "user_id_index")
 }
 
 model ReadingHistory {
-  id        Int      @id @default(autoincrement())
+  id          String    @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -136,7 +126,9 @@ model ReadingHistory {
   book           Book     @relation(fields: [bookSlug], references: [slug])
   user           User     @relation(fields: [userId], references: [id])
   bookSlug       String
-  userId         Int
+  userId         String
+
+  @@index([userId], name: "reading_history_user_id_index")
 }
 
 enum Role {

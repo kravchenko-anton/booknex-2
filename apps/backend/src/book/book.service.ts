@@ -132,13 +132,6 @@ export class BookService {
 			adminVisible: true,
 			where: { slug }
 		})
-		await this.prisma.impression.deleteMany({
-			where: {
-				book: {
-					slug
-				}
-			}
-		})
 		await this.prisma.book.delete({ where: { slug } })
 	}
 

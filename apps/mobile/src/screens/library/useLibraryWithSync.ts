@@ -15,7 +15,6 @@ export const useLibraryWithSync = () => {
 			clearHistory: state.clearHistory
 		}))
 	)
-	console.log('actual history in library', history)
 	const {
 		data: library,
 		isLoading,

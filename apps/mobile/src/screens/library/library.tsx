@@ -24,7 +24,6 @@ const Library = () => {
 			refetchOnMount: true,
 			refetchOnWindowFocus: true
 		})
-	console.log(userReactionsList)
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&

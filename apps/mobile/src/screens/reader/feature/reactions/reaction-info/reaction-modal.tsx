@@ -1,6 +1,6 @@
 import api from '@/api'
-import type { ThemePackType } from '@/screens/reader/feature/modals/reader-customization/theme-pack'
 import { reactions } from '@/screens/reader/feature/reactions/reactions'
+import type { ThemePackType } from '@/screens/reader/modals/reader-customization/theme-pack'
 import { Icon, Title } from '@/ui'
 import { SvgButton } from '@/ui/svg-button/svg-button'
 import { share } from '@/utils/share-function'
