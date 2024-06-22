@@ -1,7 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
-import { CurrentUser } from '../auth/decorators/user.decorator'
 import { FindOneGenreOutput, ShortGenre } from './genre.dto'
 
 import { GenreService } from './genre.service'
@@ -21,10 +20,7 @@ export class GenreController {
 	@Auth()
 	@Get('/by-slug/:slug')
 	@ApiOkResponse({ type: FindOneGenreOutput })
-	async bySlug(
-		@Param('slug') genreSlug: string,
-		@CurrentUser('id') userId: number
-	): Promise<FindOneGenreOutput> {
-		return this.genreService.bySlug(genreSlug, +userId)
+	async bySlug(@Param('slug') genreSlug: string): Promise<FindOneGenreOutput> {
+		return this.genreService.bySlug(genreSlug)
 	}
 }

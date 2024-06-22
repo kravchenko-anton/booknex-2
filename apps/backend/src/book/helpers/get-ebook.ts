@@ -34,10 +34,10 @@ export const useEbookCalculation = (
 	)
 
 	const uploadedEbook = ebooks.map((ebook, ebookIndex) => ({
-		id: ebookIndex + 1,
+		id: (ebookIndex + 1).toString(),
 		title: ebook.title,
 		chapters: ebook.chapters.map((chapter, chapterIndex) => ({
-			id: chapterIndex + 1,
+			id: (chapterIndex + 1).toString(),
 			romanNumber: convertToRoman(chapterIndex + 1),
 			readingTime: calculateReadingTime(chapter.text),
 			name: chapter.name,

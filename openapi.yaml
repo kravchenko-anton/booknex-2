@@ -1640,8 +1640,7 @@ components:
                   type: object
                   properties:
                     id:
-                      type: number
-                      minimum: 1
+                      type: string
                       required: true
                     name:
                       type: string
@@ -1656,8 +1655,7 @@ components:
                 minItems: 1
                 required: true
               id:
-                type: number
-                minimum: 1
+                type: string
                 required: true
               title:
                 type: string
@@ -1728,8 +1726,7 @@ components:
                   type: object
                   properties:
                     id:
-                      type: number
-                      minimum: 1
+                      type: string
                       required: true
                     name:
                       type: string
@@ -1744,8 +1741,7 @@ components:
                 minItems: 1
                 required: true
               id:
-                type: number
-                minimum: 1
+                type: string
                 required: true
               title:
                 type: string
@@ -1980,7 +1976,7 @@ components:
       type: object
       properties:
         id:
-          type: number
+          type: string
         name:
           type: string
         text:
@@ -2056,8 +2052,7 @@ components:
                 type: number
                 required: true
               id:
-                type: number
-                minimum: 1
+                type: string
                 required: true
               name:
                 type: string
@@ -2073,8 +2068,7 @@ components:
               - text
           minItems: 1
         id:
-          type: number
-          minimum: 1
+          type: string
         title:
           type: string
           maxLength: 100

@@ -30,7 +30,7 @@ export const columns = ({
 	remove,
 	removeLoading
 }: {
-	remove: (id: number) => void
+	remove: (id: string) => void
 	removeLoading: boolean
 }): ColumnDef<UserCatalogOutputDataInner, unknown>[] => [
 	{

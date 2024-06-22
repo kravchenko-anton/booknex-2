@@ -14,7 +14,7 @@ export const UserSchema = z.object({
 })
 export const CatalogUserOutputSchema = z
 	.object({
-		id: z.number(),
+		id: z.string(),
 		email: z.string(),
 		selectedGenres: z.array(ShortGenreSchema),
 		statistics: z.array(

@@ -15,7 +15,7 @@ export class GenreService {
 		})
 	}
 
-	async bySlug(slug: string, userId: number) {
+	async bySlug(slug: string) {
 		const genre = await this.prisma.genre.findUnique({
 			where: {
 				slug

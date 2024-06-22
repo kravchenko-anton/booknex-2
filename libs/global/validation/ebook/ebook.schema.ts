@@ -7,7 +7,7 @@ import {
 } from './chapter.schema'
 
 export const EBookBaseSchema = z.object({
-	id: z.number().min(1),
+	id: z.string(),
 	title: z
 		.string()
 		.max(100)

@@ -202,7 +202,7 @@ paths:
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -277,6 +277,17 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/ShortGenre"
+      tags:
+        - 🔖 genre
+      security:
+        - bearer: []
+  /genre/setup:
+    get:
+      operationId: setupGenre
+      parameters: []
+      responses:
+        "200":
+          description: ""
       tags:
         - 🔖 genre
       security:
@@ -642,29 +653,6 @@ paths:
         - 📦 parser
       security:
         - bearer: []
-  "/impression/impression/{slug}":
-    post:
-      operationId: impression
-      parameters:
-        - name: slug
-          required: true
-          in: path
-          schema:
-            type: string
-      requestBody:
-        required: true
-        description: Impression book
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ImpressionDto"
-      responses:
-        "200":
-          description: Review book
-      tags:
-        - ⭐ impression
-      security:
-        - bearer: []
   /recommendation/update-recommendation:
     post:
       operationId: updateRecommendation
@@ -861,8 +849,25 @@ paths:
         - 👍 Reaction
       security:
         - bearer: []
+  /reaction/update:
+    post:
+      operationId: update
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateReaction"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - 👍 Reaction
+      security:
+        - bearer: []
   "/reaction/delete/{id}":
-    delete:
+    put:
       operationId: remove
       parameters:
         - name: id
@@ -1074,7 +1079,7 @@ components:
             type: object
             properties:
               id:
-                type: number
+                type: string
                 required: true
               email:
                 type: string
@@ -1530,26 +1535,6 @@ components:
               - progressDelta
               - pagesRead
               - readingTimeMs
-        impressions:
-          type: array
-          items:
-            type: object
-            properties:
-              tags:
-                type: array
-                items:
-                  type: string
-                required: true
-              text:
-                type: string
-                required: false
-                nullable: true
-              rating:
-                type: number
-                required: true
-            required:
-              - tags
-              - rating
       required:
         - description
         - readingTime
@@ -1567,7 +1552,6 @@ components:
         - ebook
         - _count
         - statistics
-        - impressions
     CatalogOutput:
       type: object
       properties:
@@ -1667,8 +1651,7 @@ components:
                   type: object
                   properties:
                     id:
-                      type: number
-                      minimum: 1
+                      type: string
                       required: true
                     name:
                       type: string
@@ -1683,8 +1666,7 @@ components:
                 minItems: 1
                 required: true
               id:
-                type: number
-                minimum: 1
+                type: string
                 required: true
               title:
                 type: string
@@ -1755,8 +1737,7 @@ components:
                   type: object
                   properties:
                     id:
-                      type: number
-                      minimum: 1
+                      type: string
                       required: true
                     name:
                       type: string
@@ -1771,8 +1752,7 @@ components:
                 minItems: 1
                 required: true
               id:
-                type: number
-                minimum: 1
+                type: string
                 required: true
               title:
                 type: string
@@ -2007,7 +1987,7 @@ components:
       type: object
       properties:
         id:
-          type: number
+          type: string
         name:
           type: string
         text:
@@ -2016,21 +1996,6 @@ components:
         - id
         - name
         - text
-    ImpressionDto:
-      type: object
-      properties:
-        rating:
-          type: integer
-          minimum: 1
-          maximum: 5
-        tags:
-          type: array
-          items:
-            type: string
-        comment:
-          type: string
-      required:
-        - rating
     UpdateRecommendationDto:
       type: object
       properties:
@@ -2098,8 +2063,7 @@ components:
                 type: number
                 required: true
               id:
-                type: number
-                minimum: 1
+                type: string
                 required: true
               name:
                 type: string
@@ -2115,8 +2079,7 @@ components:
               - text
           minItems: 1
         id:
-          type: number
-          minimum: 1
+          type: string
         title:
           type: string
           maxLength: 100
@@ -2152,44 +2115,36 @@ components:
     ReactionListOutput:
       type: object
       properties:
-        id:
+        count:
           type: number
-        createdAt:
+        picture:
           type: string
-          format: date-time
-        type:
+        slug:
           type: string
-        text:
+        title:
           type: string
-        book:
-          type: object
-          properties:
-            picture:
-              type: string
-              required: true
-            title:
-              type: string
-              required: true
-            slug:
-              type: string
-              required: true
+        author:
+          type: string
       required:
-        - id
-        - createdAt
-        - type
-        - text
-        - book
+        - count
+        - picture
+        - slug
+        - title
+        - author
     ReactionByBookOutput:
       type: object
       properties:
         id:
-          type: number
+          type: string
         type:
           type: string
         text:
           type: string
         xpath:
           type: string
+        createdAt:
+          type: string
+          format: date-time
         startOffset:
           type: number
         endOffset:
@@ -2199,5 +2154,23 @@ components:
         - type
         - text
         - xpath
+        - createdAt
         - startOffset
         - endOffset
+    UpdateReaction:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        text:
+          type: string
+        xpath:
+          type: string
+        startOffset:
+          type: number
+        endOffset:
+          type: number

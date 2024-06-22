@@ -36,7 +36,7 @@ const Reactions = () => {
 		isPending: removeReactionLoading
 	} = useMutation({
 		mutationKey: MutationKeys.reaction.remove,
-		mutationFn: (id: number) => api.reaction.remove(id)
+		mutationFn: (id: string) => api.reaction.remove(id)
 	})
 	const [filterSettings, setFilterSettings] = React.useState({
 		search: '',

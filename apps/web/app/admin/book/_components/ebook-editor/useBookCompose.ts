@@ -19,7 +19,7 @@ export const useBookCompose = ({
 		onError: () => errorToast('Error while uploading book')
 	})
 
-	const deleteBook = ({ bookId }: { bookId: number }) => {
+	const deleteBook = ({ bookId }: { bookId: string }) => {
 		if (!ebooks) return errorToast('Error deleting book')
 		setEBooks(ebooks?.filter(book => book.id !== bookId))
 		successToast('Book deleted')
@@ -42,7 +42,7 @@ export const useBookCompose = ({
 		startLine,
 		endLine
 	}: {
-		bookId: number
+		bookId: string
 		startLine: number
 		endLine: number
 	}) => {
@@ -70,7 +70,7 @@ export const useBookCompose = ({
 		successToast('Book trimmed')
 	}
 
-	const generateChapterNames = ({ bookId }: { bookId: number }) => {
+	const generateChapterNames = ({ bookId }: { bookId: string }) => {
 		if (!ebooks) return errorToast('Error generating chapter names')
 
 		setEBooks(
@@ -93,8 +93,8 @@ export const useBookCompose = ({
 		bookId,
 		chapterId
 	}: {
-		bookId: number
-		chapterId: number
+		bookId: string
+		chapterId: string
 	}) => {
 		if (!ebooks) return errorToast('Error adding new chapter')
 		setEBooks(
@@ -109,7 +109,7 @@ export const useBookCompose = ({
 						chapters: [
 							...book.chapters.slice(0, index + 1),
 							{
-								id: Math.round(Math.random() * 1_000_000),
+								id: Math.round(Math.random() * 1_000_000).toString(),
 								name: '',
 								text: ''
 							},
@@ -125,8 +125,8 @@ export const useBookCompose = ({
 		bookId,
 		chapterId
 	}: {
-		bookId: number
-		chapterId: number
+		bookId: string
+		chapterId: string
 	}) => {
 		if (!ebooks) return errorToast('Error moving chapters')
 		const book = ebooks.find(book => book.id === bookId)
@@ -138,7 +138,7 @@ export const useBookCompose = ({
 			content => !chapters.some(chapter => chapter.id === content.id)
 		)
 		const newBook = {
-			id: ebooks.length + 1,
+			id: (ebooks.length + 1).toString(),
 			title: `${ebooks.length + 1} book`,
 			chapters
 		}
@@ -155,8 +155,8 @@ export const useBookCompose = ({
 		topChapterId,
 		insertedContent
 	}: {
-		bookId: number
-		topChapterId: number
+		bookId: string
+		topChapterId: string
 		insertedContent: string
 	}) => {
 		if (!ebooks) return errorToast('Error merging content')
@@ -196,7 +196,7 @@ export const useBookCompose = ({
 		bookId
 	}: {
 		value: string
-		bookId: number
+		bookId: string
 	}) => {
 		if (!ebooks) return errorToast('Error updating book title')
 		setEBooks(
@@ -212,7 +212,7 @@ export const useBookCompose = ({
 		)
 	}
 
-	const removeChapter = (bookId: number, removedId: number) => {
+	const removeChapter = (bookId: string, removedId: string) => {
 		if (!ebooks) return errorToast('Error removing chapter')
 		setEBooks(
 			ebooks.map(book => {
@@ -233,8 +233,8 @@ export const useBookCompose = ({
 		bookId,
 		value
 	}: {
-		chapterId: number
-		bookId: number
+		chapterId: string
+		bookId: string
 		value: {
 			name?: string
 			text?: string
@@ -268,7 +268,7 @@ export const useBookCompose = ({
 	}: {
 		title: string
 		chapters: {
-			id: number
+			id: string
 			name: string
 			text: string
 		}[]
@@ -278,7 +278,7 @@ export const useBookCompose = ({
 		setEBooks([
 			...(ebooks || []),
 			{
-				id: elementIndex + 1,
+				id: (elementIndex + 1).toString(),
 				title: title || '',
 				chapters: chapters || []
 			}

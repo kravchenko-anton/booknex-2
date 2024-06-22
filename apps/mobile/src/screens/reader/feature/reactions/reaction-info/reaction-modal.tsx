@@ -34,9 +34,9 @@ export const ReactionModal: FC<ReactionModalProperties> = ({
 		isPending: removeReactionLoading
 	} = useMutation({
 		mutationKey: MutationKeys.reaction.remove,
-		mutationFn: (id: number) => api.reaction.remove(id)
+		mutationFn: (id: string) => api.reaction.remove(id)
 	})
-	const removeReaction = (id: number) => {
+	const removeReaction = (id: string) => {
 		if (removeReactionLoading) return
 		removeReactionMutation(id).then(async () => {
 			await queryClient.invalidateQueries({

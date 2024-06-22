@@ -14,7 +14,7 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const { mutateAsync: deleteUser, isPending: deleteUserLoading } = useMutation(
 		{
 			mutationKey: MutationKeys.user.remove,
-			mutationFn: (id: number) => api.user.remove(id),
+			mutationFn: (id: string) => api.user.remove(id),
 			onError(error: string) {
 				console.log('error', error)
 			},

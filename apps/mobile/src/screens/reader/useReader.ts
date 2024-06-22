@@ -22,7 +22,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	const [readerHeaderVisible, setReaderHeaderVisible] = useState(false)
 	const viewerReference = useRef<WebView>(null)
 	const [activeReactionPressedId, setActiveReactionPressedId] = useState<
-		number | null
+		string | null
 	>(null)
 	const { colorScheme, ...restUiProperties } = useCustomizationStore(
 		state => state
@@ -63,8 +63,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		createReaction: createReaction,
 		setActiveReactionPressed: id => {
 			setActiveReactionPressedId(
-				reactionBookList.find(reaction => Number(reaction.id) === Number(id))
-					?.id || null
+				reactionBookList.find(reaction => reaction.id === id)?.id || null
 			)
 			reactionModal.open()
 		}

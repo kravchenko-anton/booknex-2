@@ -4,7 +4,7 @@ import { minutesToTime } from './time-converter'
 export interface GetServerBookHtmlType
 	extends Pick<ChapterType, 'romanNumber' | 'readingTime' | 'name' | 'text'> {
 	sectionId: string
-	id: number
+	id: string
 }
 export const getServerBookHtml = ({
 	name,

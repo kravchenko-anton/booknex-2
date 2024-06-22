@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const ChapterPayloadSchema = z.object({
-	id: z.number().min(1),
+	id: z.string(),
 	name: z
 		.string()
 		.refine(value => !value.includes('.epub'), {

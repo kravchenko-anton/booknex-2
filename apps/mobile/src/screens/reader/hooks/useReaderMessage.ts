@@ -23,7 +23,7 @@ export enum ReaderMessageType {
 export interface WebviewMessageType {
 	type: ReaderMessageType
 	payload: {
-		id: number
+		id: string
 		text: string
 		range: {
 			startOffset: number
@@ -52,7 +52,7 @@ export interface ReaderMessageProperties {
 	onFinishBookPress: (slug: string) => void
 	onContentLoadEnd: () => void
 	createReaction: (data: CreateReaction) => void
-	setActiveReactionPressed: (id: number) => void
+	setActiveReactionPressed: (id: string) => void
 }
 
 export const useReaderMessage = ({

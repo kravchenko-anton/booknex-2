@@ -81,7 +81,7 @@ export const getEbook = async (buffer: Buffer) =>
 								if (!text) return null
 								const finalContent = await updatedContent(text)
 								resolve({
-									id: index + 1,
+									id: (index + 1).toString(),
 									name: String(chapter.title),
 									text: finalContent
 								})
