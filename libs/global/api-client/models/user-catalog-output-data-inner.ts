@@ -31,10 +31,10 @@ import { UserCatalogOutputDataInnerStatisticsInner } from './user-catalog-output
 export interface UserCatalogOutputDataInner {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof UserCatalogOutputDataInner
      */
-    'id': number;
+    'id': string;
     /**
      * 
      * @type {string}

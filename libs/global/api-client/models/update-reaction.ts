@@ -22,10 +22,10 @@
 export interface UpdateReaction {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof UpdateReaction
      */
-    'id'?: number;
+    'id'?: string;
     /**
      * 
      * @type {string}

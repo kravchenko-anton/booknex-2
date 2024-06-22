@@ -40,9 +40,9 @@ export const parserCatalogFields = ({
 					}
 				]
 			},
-			...(!Number.isNaN(+searchTerm) && {
+			...(searchTerm && {
 				where: {
-					id: +searchTerm
+					id: searchTerm
 				}
 			})
 		})

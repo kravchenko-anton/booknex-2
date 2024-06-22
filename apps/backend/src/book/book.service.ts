@@ -26,7 +26,7 @@ export class BookService {
 		private storageService: StorageService
 	) {}
 
-	async infoBySlug(slug: string, userId: number) {
+	async infoBySlug(slug: string) {
 		const book = await this.prisma.book.findUnique({
 			where: { slug, isPublic: true },
 			select: infoBySlug

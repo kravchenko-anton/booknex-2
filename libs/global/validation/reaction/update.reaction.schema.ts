@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const UpdateReactionSchema = z
 	.object({
-		id: z.number(),
+		id: z.string(),
 		type: z.string().optional(),
 		description: z.string().optional(),
 		text: z.string().optional(),

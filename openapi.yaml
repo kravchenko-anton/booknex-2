@@ -202,7 +202,7 @@ paths:
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -863,7 +863,7 @@ paths:
           required: true
           in: path
           schema:
-            type: number
+            type: string
       responses:
         "200":
           description: ""
@@ -1068,7 +1068,7 @@ components:
             type: object
             properties:
               id:
-                type: number
+                type: string
                 required: true
               email:
                 type: string
@@ -2130,7 +2130,7 @@ components:
       type: object
       properties:
         id:
-          type: number
+          type: string
         type:
           type: string
         text:
@@ -2156,7 +2156,7 @@ components:
       type: object
       properties:
         id:
-          type: number
+          type: string
         type:
           type: string
         description:

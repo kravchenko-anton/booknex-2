@@ -4,7 +4,7 @@ import { ShortGenreSchema } from '../genre/short-genre.schema'
 import { BaseCatalogSchema } from '../index'
 
 export const UserSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 	createdAt: z.date(),
 	email: z.string().email(),
 	socialId: z.string().nullable().optional(),

@@ -30,19 +30,19 @@ export class UserController {
 	@ApiOkResponse({ type: UserLibraryOutput })
 	@ApiBody({ type: [ReadingHistory] })
 	async library(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 
 		@Body() dto: ReadingHistory[]
 	): Promise<UserLibraryOutput> {
 		await this.usersService.syncHistory(dto, userId)
-		return this.usersService.library(+userId)
+		return this.usersService.library(userId)
 	}
 
 	@Auth()
 	@Post('/sync-history')
 	@ApiBody({ type: [ReadingHistory] })
 	async syncHistory(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Body() dto: ReadingHistory[]
 	) {
 		await this.usersService.syncHistory(dto, userId)
@@ -53,7 +53,7 @@ export class UserController {
 	@ApiBody({ type: [ReadingHistory] })
 	@ApiOkResponse({ type: UserStatistics })
 	async statistics(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Body() dto: ReadingHistory[]
 	): Promise<UserStatistics> {
 		await this.usersService.syncHistory(dto, userId)
@@ -63,7 +63,7 @@ export class UserController {
 	@Auth()
 	@Patch('/adjust-goal')
 	async adjustGoal(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Query('goal') goal: number
 	) {
 		return this.usersService.adjustGoal(userId, Number(goal) || 0)
@@ -72,7 +72,7 @@ export class UserController {
 	@Auth()
 	@Patch('/start-reading/:slug')
 	async startReading(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Param('slug') slug: string
 	) {
 		return this.usersService.startReading(userId, slug)
@@ -81,7 +81,7 @@ export class UserController {
 	@Auth()
 	@Patch('/finish-reading/:slug')
 	async finishReading(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Param('slug') slug: string
 	) {
 		return this.usersService.finishReading(userId, slug)
@@ -90,7 +90,7 @@ export class UserController {
 	@Auth()
 	@Patch('/remove-from-library/:slug')
 	async removeFromLibrary(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Param('slug') slug: string
 	) {
 		return this.usersService.removeFromLibrary(userId, slug)
@@ -100,7 +100,7 @@ export class UserController {
 	@Patch('/toggle-save/:slug')
 	@ApiOkResponse({ type: Boolean })
 	async toggleSave(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Param('slug') slug: string
 	) {
 		return this.usersService.toggleSave(userId, slug)
@@ -110,7 +110,7 @@ export class UserController {
 	@Get('/is-saved/:slug')
 	@ApiOkResponse({ type: Boolean })
 	async isSaved(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Param('slug') slug: string
 	) {
 		return this.usersService.isSaved(userId, slug)
@@ -129,7 +129,7 @@ export class UserController {
 
 	@Auth('admin')
 	@Delete('admin/remove/:id')
-	async remove(@Param('id') id: number) {
-		return this.usersService.remove(+id)
+	async remove(@Param('id') id: string) {
+		return this.usersService.remove(id)
 	}
 }

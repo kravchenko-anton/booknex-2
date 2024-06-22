@@ -21,7 +21,7 @@ import { returnUserObject } from './return.user.object'
 export class UserService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async getUserById(id: number, selectObject: Prisma.UserSelect = {}) {
+	async getUserById(id: string, selectObject: Prisma.UserSelect = {}) {
 		const user = await this.prisma.user.findUnique({
 			where: { id },
 			select: {
@@ -35,7 +35,7 @@ export class UserService {
 		return user
 	}
 
-	async syncHistory(dto: ReadingHistory[], userId: number) {
+	async syncHistory(dto: ReadingHistory[], userId: string) {
 		if (dto.length === 0) return
 
 		await this.prisma.readingHistory.createMany({
@@ -54,7 +54,7 @@ export class UserService {
 		})
 	}
 
-	async adjustGoal(userId: number, goal: number) {
+	async adjustGoal(userId: string, goal: number) {
 		if (goal % 10 !== 0 || goal < 10 || goal > 180)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		await this.prisma.user.update({
@@ -64,7 +64,7 @@ export class UserService {
 			}
 		})
 	}
-	async userStatistics(userId: number) {
+	async userStatistics(userId: string) {
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -94,7 +94,7 @@ export class UserService {
 		}
 	}
 
-	async library(userId: number) {
+	async library(userId: string) {
 		const library = await this.prisma.user.findUnique(userLibraryFields(userId))
 		if (!library)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
@@ -144,16 +144,16 @@ export class UserService {
 		}
 	}
 
-	async remove(id: number) {
+	async remove(id: string) {
 		const user = await this.getUserById(id)
 		await this.prisma.user.delete({
 			where: { id: user.id }
 		})
 	}
 
-	async startReading(userId: number, slug: string) {
+	async startReading(userId: string, slug: string) {
 		await this.checkBookExist(slug)
-		const user = await this.getUserById(+userId, {
+		const user = await this.getUserById(userId, {
 			readingBooks: slugSelect,
 			finishedBooks: slugSelect
 		})
@@ -166,9 +166,9 @@ export class UserService {
 			data: userStartReadingBookFields(slug)
 		})
 	}
-	async removeFromLibrary(userId: number, slug: string) {
+	async removeFromLibrary(userId: string, slug: string) {
 		await this.checkBookExist(slug)
-		const user = await this.getUserById(+userId, {
+		const user = await this.getUserById(userId, {
 			readingBooks: slugSelect,
 			finishedBooks: slugSelect,
 			savedBooks: slugSelect
@@ -180,9 +180,9 @@ export class UserService {
 		})
 	}
 
-	async finishReading(userId: number, slug: string) {
+	async finishReading(userId: string, slug: string) {
 		await this.checkBookExist(slug)
-		const user = await this.getUserById(+userId, {
+		const user = await this.getUserById(userId, {
 			readingBooks: slugSelect
 		})
 		const isReadingExist = user.readingBooks.some(book => book.slug === slug)
@@ -194,7 +194,7 @@ export class UserService {
 		})
 	}
 
-	async toggleSave(userId: number, slug: string) {
+	async toggleSave(userId: string, slug: string) {
 		await this.checkBookExist(slug)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },
@@ -231,7 +231,7 @@ export class UserService {
 		return !!book
 	}
 
-	public async isSaved(userId: number, slug: string) {
+	public async isSaved(userId: string, slug: string) {
 		await this.checkBookExist(slug)
 		const user = await this.prisma.user.findUnique({
 			where: { id: userId },

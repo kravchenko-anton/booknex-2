@@ -17,10 +17,10 @@ export class RecommendationController {
 	@ApiOkResponse({ description: 'Recommendation updated' })
 	@ApiBody({ type: UpdateRecommendationDto })
 	async updateRecommendation(
-		@CurrentUser('id') userId: number,
+		@CurrentUser('id') userId: string,
 		@Body() dto: UpdateRecommendationDto
 	) {
-		return this.recommendationService.updateSelectedGenres(+userId, dto)
+		return this.recommendationService.updateSelectedGenres(userId, dto)
 	}
 
 	@Auth()
@@ -29,7 +29,7 @@ export class RecommendationController {
 		type: [ShortGenre],
 		description: 'Recommendation genres'
 	})
-	async currentRecommendation(@CurrentUser('id') userId: number): Promise<
+	async currentRecommendation(@CurrentUser('id') userId: string): Promise<
 		| {
 				slug: string
 				name: string
@@ -37,6 +37,6 @@ export class RecommendationController {
 		  }[]
 		| null
 	> {
-		return this.recommendationService.userSelectedGenresById(+userId)
+		return this.recommendationService.userSelectedGenresById(userId)
 	}
 }

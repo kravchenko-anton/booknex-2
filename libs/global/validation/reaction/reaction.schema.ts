@@ -11,7 +11,7 @@ export const ReactionListOutputSchema = z.object({
 })
 
 export const ReactionByBookOutputSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 	type: z.string(),
 	text: z.string(),
 	xpath: z.string(),

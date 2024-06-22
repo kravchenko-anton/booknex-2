@@ -3,7 +3,7 @@ import { ReturnGenreObject } from '@/src/genre/return.genre.object'
 import { returnUserObject } from '@/src/user/return.user.object'
 import { Prisma } from '@prisma/client'
 
-export const userLibraryFields = (userId: number) =>
+export const userLibraryFields = (userId: string) =>
 	({
 		where: { id: userId },
 		select: Prisma.validator<Prisma.UserSelect>()({
@@ -84,7 +84,6 @@ export const userCatalogFields = ({
 			_count: {
 				select: {
 					savedBooks: true,
-					impressions: true,
 					finishedBooks: true,
 					readingBooks: true
 				}
@@ -100,9 +99,9 @@ export const userCatalogFields = ({
 					contains: searchTerm
 				}
 			},
-			...(!Number.isNaN(+searchTerm) && {
+			...(searchTerm && {
 				where: {
-					id: +searchTerm
+					id: searchTerm
 				}
 			})
 		})

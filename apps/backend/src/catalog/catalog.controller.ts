@@ -21,8 +21,8 @@ export class CatalogController {
 	@Auth()
 	@Get('/featured')
 	@ApiOkResponse({ type: FeaturedOutput })
-	async featured(@CurrentUser('id') userId: number): Promise<FeaturedOutput> {
-		return this.catalogService.featured(+userId)
+	async featured(@CurrentUser('id') userId: string): Promise<FeaturedOutput> {
+		return this.catalogService.featured(userId)
 	}
 
 	@Get('/picks-of-the-week')

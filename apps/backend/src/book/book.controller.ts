@@ -17,7 +17,6 @@ import {
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Auth } from '../auth/decorators/auth.decorator'
-import { CurrentUser } from '../auth/decorators/user.decorator'
 import { BookService } from './book.service'
 
 @ApiTags('📙 book')
@@ -28,11 +27,8 @@ export class BookController {
 
 	@Get('/info/by-slug/:slug')
 	@ApiOkResponse({ type: InfoBySlug })
-	async infoBySlug(
-		@Param('slug') bookSlug: string,
-		@CurrentUser('id') userId: string
-	): Promise<InfoBySlug> {
-		return this.bookService.infoBySlug(bookSlug, +userId)
+	async infoBySlug(@Param('slug') bookSlug: string): Promise<InfoBySlug> {
+		return this.bookService.infoBySlug(bookSlug)
 	}
 
 	@Auth('admin')

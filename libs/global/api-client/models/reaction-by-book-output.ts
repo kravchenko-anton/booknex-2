@@ -22,10 +22,10 @@
 export interface ReactionByBookOutput {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ReactionByBookOutput
      */
-    'id': number;
+    'id': string;
     /**
      * 
      * @type {string}

@@ -125,7 +125,7 @@ export class AuthService {
 	}
 
 	async refresh(refreshToken: string) {
-		const result: { id: number } = await this.jwt
+		const result: { id: string } = await this.jwt
 			.verifyAsync(refreshToken)
 			.catch(error => {
 				throw serverError(HttpStatus.BAD_REQUEST, error.message)
@@ -144,7 +144,7 @@ export class AuthService {
 		}
 	}
 
-	issueToken(userId: number) {
+	issueToken(userId: string) {
 		const data = { id: userId }
 		return {
 			accessToken: this.jwt.sign(data, {

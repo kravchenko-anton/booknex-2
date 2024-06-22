@@ -37,20 +37,6 @@ export const infoBySlugAdminFields: (slug: string) => Prisma.BookSelect = (
 		ebook: true,
 		description: true,
 		isPublic: true,
-		impressions: {
-			select: {
-				tags: true,
-				text: true,
-				rating: true,
-				user: {
-					select: {
-						id: true,
-						email: true,
-						picture: true
-					}
-				}
-			}
-		},
 		_count: {
 			select: {
 				finishedBy: true,
@@ -114,9 +100,9 @@ export const bookCatalogFields = ({
 					contains: searchTerm
 				}
 			},
-			...(!Number.isNaN(+searchTerm) && {
+			...(searchTerm && {
 				where: {
-					id: +searchTerm
+					id: searchTerm
 				}
 			})
 		})

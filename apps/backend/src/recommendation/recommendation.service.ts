@@ -9,7 +9,7 @@ import type { UpdateRecommendationDto } from './recommendation.dto'
 export class RecommendationService {
 	constructor(private prisma: PrismaService) {}
 
-	async userSelectedGenresById(userId: number) {
+	async userSelectedGenresById(userId: string) {
 		const userSelectedGenres = await this.prisma.user.findUnique({
 			where: {
 				id: userId
@@ -23,7 +23,7 @@ export class RecommendationService {
 		return userSelectedGenres?.selectedGenres || []
 	}
 
-	async updateSelectedGenres(id: number, dto: UpdateRecommendationDto) {
+	async updateSelectedGenres(id: string, dto: UpdateRecommendationDto) {
 		await this.checkUserExist(id)
 		const selectedGenres = await this.prisma.genre.findMany({
 			where: {
@@ -46,7 +46,7 @@ export class RecommendationService {
 		})
 	}
 
-	private async checkUserExist(id: number) {
+	private async checkUserExist(id: string) {
 		const userExist = await this.prisma.user.findUnique({
 			where: { id: id },
 			select: {

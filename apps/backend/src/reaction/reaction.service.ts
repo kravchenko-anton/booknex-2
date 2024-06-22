@@ -8,7 +8,7 @@ import { globalErrors } from 'global/errors'
 @Injectable()
 export class ReactionService {
 	constructor(private readonly prisma: PrismaService) {}
-	async create(userId: number, createReactionDto: CreateReaction) {
+	async create(userId: string, createReactionDto: CreateReaction) {
 		const isUserExist = await this.prisma.user.findUnique({
 			where: { id: userId }
 		})
@@ -23,7 +23,7 @@ export class ReactionService {
 		})
 	}
 
-	async update(userId: number, updateReactionDto: UpdateReaction) {
+	async update(userId: string, updateReactionDto: UpdateReaction) {
 		const reaction = await this.prisma.reaction.findUnique({
 			where: { id: updateReactionDto.id }
 		})
@@ -44,7 +44,7 @@ export class ReactionService {
 		})
 	}
 
-	async reactionByBook(bookSlug: string, userId: number) {
+	async reactionByBook(bookSlug: string, userId: string) {
 		const isUserExist = await this.prisma.user.findUnique({
 			where: { id: userId }
 		})
@@ -71,7 +71,7 @@ export class ReactionService {
 		})
 	}
 
-	async reactionList(userId: number) {
+	async reactionList(userId: string) {
 		const isUserExist = await this.prisma.user.findUnique({
 			where: { id: userId }
 		})
@@ -120,7 +120,7 @@ export class ReactionService {
 		})
 	}
 
-	async remove(id: number, userId: number) {
+	async remove(id: string, userId: string) {
 		const reactionById = await this.prisma.reaction.findUnique({
 			where: { id }
 		})

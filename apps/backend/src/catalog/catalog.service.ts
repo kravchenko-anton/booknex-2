@@ -20,7 +20,7 @@ export class CatalogService {
 		})
 	}
 
-	async featured(userId: number) {
+	async featured(userId: string) {
 		const alreadyUsedBookSlugs: string[] = []
 		const pushBooks = (books: ShortBook[]) => {
 			alreadyUsedBookSlugs.push(...books.map(book => book.slug))

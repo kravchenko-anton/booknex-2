@@ -237,11 +237,11 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        remove: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        remove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('remove', 'id', id)
             const localVarPath = `/user/admin/remove/{id}`
@@ -534,11 +534,11 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async remove(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async remove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.remove(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.remove']?.[localVarOperationServerIndex]?.url;
@@ -662,11 +662,11 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @param {number} id 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        remove(id: number, options?: any): AxiosPromise<void> {
+        remove(id: string, options?: any): AxiosPromise<void> {
             return localVarFp.remove(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -782,12 +782,12 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
-     * @param {number} id 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public remove(id: number, options?: RawAxiosRequestConfig) {
+    public remove(id: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).remove(id, options).then((request) => request(this.axios, this.basePath));
     }
 
