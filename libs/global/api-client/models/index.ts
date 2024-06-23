@@ -32,6 +32,7 @@ export * from './short-genre';
 export * from './stored-ebook';
 export * from './stored-ebook-chapters-inner';
 export * from './unfold-output';
+export * from './unfold-output-images-inner';
 export * from './update-book-dto';
 export * from './update-reaction';
 export * from './update-recommendation-dto';

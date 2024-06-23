@@ -62,8 +62,7 @@ export class ParserController {
 	@Post('admin/unfold')
 	@ApiOkResponse({
 		type: UnfoldOutput,
-		description: 'Unfolded book content',
-		isArray: true
+		description: 'Unfolded book content'
 	})
 	@ApiConsumes('multipart/form-data')
 	@ApiBody({
@@ -89,7 +88,7 @@ export class ParserController {
 			})
 		)
 		file: Express.Multer.File
-	): Promise<UnfoldOutput[]> {
+	): Promise<UnfoldOutput> {
 		return this.parserService.unfold(file)
 	}
 

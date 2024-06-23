@@ -37,7 +37,61 @@ export class UserService {
 
 	async syncHistory(dto: ReadingHistory[], userId: string) {
 		if (dto.length === 0) return
-
+		console.log(
+			'syncHistory',
+			dto.map(history => ({
+				readingTimeMs: history.readingTimeMs,
+				endDate: new Date(history.endDate),
+				progressDelta: history.progressDelta,
+				startProgress: history.startProgress,
+				endProgress: history.endProgress,
+				scrollPosition: history.scrollPosition,
+				startDate: new Date(history.startDate),
+				userId: userId,
+				bookSlug: history.bookSlug
+			})),
+			'🔵',
+			dto
+				.map(history => ({
+					readingTimeMs: history.readingTimeMs,
+					endDate: new Date(history.endDate),
+					progressDelta: history.progressDelta,
+					startProgress: history.startProgress,
+					endProgress: history.endProgress,
+					scrollPosition: history.scrollPosition,
+					startDate: new Date(history.startDate),
+					userId: userId,
+					bookSlug: history.bookSlug
+				}))
+				.reduce<
+					{
+						readingTimeMs: number
+						endDate: Date
+						progressDelta: number
+						startProgress: number
+						endProgress: number
+						scrollPosition: number
+						startDate: Date
+						userId: string
+						bookSlug: string
+					}[]
+				>((accumulator, history) => {
+					const lastElement = accumulator.at(-1)
+					if (
+						lastElement &&
+						Math.abs(
+							lastElement.startDate.getTime() - history.startDate.getTime()
+						) <
+							1000 * 60 * 60 * 24
+					) {
+						lastElement.readingTimeMs += history.readingTimeMs
+						lastElement.endProgress = history.endProgress
+						lastElement.progressDelta += history.progressDelta
+						return accumulator
+					}
+					return [...accumulator, history]
+				}, [])
+		)
 		await this.prisma.readingHistory.createMany({
 			skipDuplicates: true,
 			data: dto.map(history => ({

@@ -51,6 +51,7 @@ models/short-book.ts
 models/short-genre.ts
 models/stored-ebook-chapters-inner.ts
 models/stored-ebook.ts
+models/unfold-output-images-inner.ts
 models/unfold-output.ts
 models/update-book-dto.ts
 models/update-reaction.ts

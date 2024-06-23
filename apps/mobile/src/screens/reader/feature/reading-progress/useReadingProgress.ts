@@ -104,11 +104,13 @@ export const useReadingProgress = ({
 	) => {
 		if (!startReadingProgress) {
 			setStartReadingProgress(payload.progress)
+			return
 		}
 
 		if (getTimeDate().getTime() - startReadingDate.getTime() > 1000 * 60 * 5) {
 			setStartReadingDate(getTimeDate())
 			setReadingSessionKey(slug + Math.random() * 1000)
+			return
 		}
 		setReadingProgress({
 			progress: payload.progress,

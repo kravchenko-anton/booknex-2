@@ -2,14 +2,23 @@ import { chapterNames } from '@/app/admin/book/_components/ebook-editor/chapter-
 import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
+import type { UnfoldOutputImagesInner } from 'global/api-client'
+import { getFileUrl } from 'global/api-config'
 import { MutationKeys } from 'global/utils/query-keys'
 import type { EBookPayloadType } from 'global/validation/ebook/ebook.schema'
+import type { Dispatch, SetStateAction } from 'react'
 
 export const useBookCompose = ({
 	ebooks: ebooks,
-	setEBooks: setEBooks
+	setEBooks: setEBooks,
+	setImages,
+	images
 }: {
 	ebooks: EBookPayloadType[] | undefined
+	images: (UnfoldOutputImagesInner & { isUploaded: boolean })[]
+	setImages: Dispatch<
+		SetStateAction<(UnfoldOutputImagesInner & { isUploaded: boolean })[]>
+	>
 	setEBooks: (books: EBookPayloadType[]) => void
 }) => {
 	const { mutateAsync: unfold, isPending: unfoldLoading } = useMutation({
@@ -18,10 +27,51 @@ export const useBookCompose = ({
 		onSuccess: () => successToast('File uploaded'),
 		onError: () => errorToast('Error while uploading book')
 	})
-
+	const removeImageFromContentById = ({
+		imageAlt,
+		imageId
+	}: {
+		imageId: string
+		imageAlt: string
+	}) => {
+		if (!ebooks) return errorToast('Error removing image')
+		setEBooks(
+			ebooks.map(book => ({
+				...book,
+				chapters: book.chapters.map(chapter => {
+					const domHtml = new DOMParser().parseFromString(
+						chapter.text,
+						'text/html'
+					)
+					const images = domHtml.querySelectorAll('img')
+					for (const image of images) {
+						console.log(
+							image.getAttribute('id'),
+							imageId,
+							image.getAttribute('alt'),
+							imageAlt
+						)
+						if (
+							image.getAttribute('id') === imageId &&
+							image.getAttribute('alt') === '/images/' + imageAlt
+						) {
+							image.remove()
+						}
+					}
+					return {
+						...chapter,
+						text: domHtml.body?.innerHTML || chapter.text
+					}
+				})
+			}))
+		)
+		setImages(images.filter(image => image.id !== imageId))
+		successToast('Image removed')
+	}
 	const deleteBook = ({ bookId }: { bookId: string }) => {
 		if (!ebooks) return errorToast('Error deleting book')
 		setEBooks(ebooks?.filter(book => book.id !== bookId))
+		setImages([])
 		successToast('Book deleted')
 	}
 
@@ -288,13 +338,78 @@ export const useBookCompose = ({
 
 	const unfoldWithUpload = (files: File[]) => {
 		for (const file of files) {
-			unfold(new File([file], file.name)).then(({ data: chapters }) => {
-				upload({
-					title: file.name,
-					chapters
-				})
-			})
+			unfold(new File([file], file.name)).then(
+				({ data: { chapters, images } }) => {
+					upload({
+						title: file.name,
+						chapters
+					})
+					setImages(images.map(image => ({ ...image, isUploaded: false })))
+				}
+			)
 		}
+	}
+
+	const uploadImageToServer = async ({
+		imageId,
+		imageAlt
+	}: {
+		imageId: string
+		imageAlt: string
+	}) => {
+		const image = images.find(image => image.id === imageId.toString())
+		if (!image) return errorToast('Error uploading image')
+		const isImageExist = ebooks?.some(book => {
+			const domHtml = new DOMParser().parseFromString(
+				book.chapters.map(chapter => chapter.text).join(''),
+				'text/html'
+			)
+			const images = domHtml.querySelectorAll('img')
+			for (const img of images) {
+				if (
+					img.getAttribute('id') === imageId.toString() &&
+					img.getAttribute('alt') === 'images/' + imageAlt
+				)
+					return true
+			}
+			return false
+		})
+		if (isImageExist) return errorToast('Image not found in content')
+		const { data: path } = await api.storage.upload(
+			'imagesInBook',
+			new File([Buffer.from(image.data, 'base64')], imageAlt)
+		)
+		setImages(
+			images.map(img =>
+				img.id === imageId ? { ...img, isUploaded: true } : img
+			)
+		)
+		setEBooks(
+			(ebooks || []).map(book => ({
+				...book,
+				chapters: book.chapters.map(chapter => {
+					const domHtml = new DOMParser().parseFromString(
+						chapter.text,
+						'text/html'
+					)
+					const images = domHtml.querySelectorAll('img')
+					for (const img of images) {
+						if (
+							img.getAttribute('id') === imageId &&
+							img.getAttribute('alt') === '/images/' + imageAlt
+						) {
+							console.log('path.name set', path.name)
+							img.setAttribute('src', getFileUrl(path.name))
+						}
+					}
+					return {
+						...chapter,
+						text: domHtml.body?.innerHTML || chapter.text
+					}
+				})
+			}))
+		)
+		successToast('Images uploaded')
 	}
 
 	return {
@@ -305,9 +420,11 @@ export const useBookCompose = ({
 			state: ebooks || [],
 			unfoldLoading,
 			trimmingEBookContent,
+			uploadImageToServer,
 			generateChapterNames,
 			addNewCharacterAfterContent,
 			delete: deleteBook,
+			removeImageFromContentById,
 			updateToc: updateChapter,
 			updateBookTitle,
 			mergeContentWithTopCharacter,

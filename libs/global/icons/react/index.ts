@@ -23,5 +23,7 @@ export { ReactComponent as Scissors } from '../scissors.svg'
 export { ReactComponent as Search } from '../search.svg'
 export { ReactComponent as Settings } from '../settings.svg'
 export { ReactComponent as Star } from '../star.svg'
+export { ReactComponent as Trash } from '../trash.svg'
+
 export { ReactComponent as User } from '../user.svg'
 export { ReactComponent as Close } from '../x.svg'

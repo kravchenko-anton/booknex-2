@@ -13,6 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { CreateBookDtoEbookInnerChaptersInner } from './create-book-dto-ebook-inner-chapters-inner';
+// May contain unused imports in some cases
+// @ts-ignore
+import { UnfoldOutputImagesInner } from './unfold-output-images-inner';
 
 /**
  * 
@@ -22,21 +28,15 @@
 export interface UnfoldOutput {
     /**
      * 
-     * @type {string}
+     * @type {Array<CreateBookDtoEbookInnerChaptersInner>}
      * @memberof UnfoldOutput
      */
-    'id': string;
+    'chapters': Array<CreateBookDtoEbookInnerChaptersInner>;
     /**
      * 
-     * @type {string}
+     * @type {Array<UnfoldOutputImagesInner>}
      * @memberof UnfoldOutput
      */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UnfoldOutput
-     */
-    'text': string;
+    'images': Array<UnfoldOutputImagesInner>;
 }
 

@@ -3,10 +3,17 @@ import { useBookCompose } from '@/app/admin/book/_components/ebook-editor/useBoo
 import { DropZone, Input, TextArea } from '@/components/ui'
 import ErrorMessage from '@/components/ui/error-message/error-message'
 import { errorToast } from '@/utils/toast'
-import { Copy, HardDriveDownload, HardDriveUpload } from 'global/icons/react'
+import type { UnfoldOutputImagesInner } from 'global/api-client'
+import {
+	Copy,
+	HardDriveDownload,
+	HardDriveUpload,
+	Trash
+} from 'global/icons/react'
 import type { BaseFieldProperties } from 'global/types'
 import { postProcessingHtml } from 'global/utils/html-validation'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
+import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 
 const EbookComposer = <T extends Record<string, any>>({
@@ -17,9 +24,14 @@ const EbookComposer = <T extends Record<string, any>>({
 		control={control}
 		name={name}
 		render={({ field: { value = [], onChange }, fieldState: { error } }) => {
+			const [images, setImages] = useState<
+				(UnfoldOutputImagesInner & { isUploaded: boolean })[]
+			>([])
 			const { books } = useBookCompose({
 				ebooks: value,
-				setEBooks: onChange
+				setEBooks: onChange,
+				setImages,
+				images
 			})
 			console.log('errors', error)
 			return (
@@ -37,8 +49,9 @@ const EbookComposer = <T extends Record<string, any>>({
 										books.upload(files)
 									}}
 									onFileDelete={(_file, index) => {
+										if (!books.state[index]?.id) return
 										books.delete({
-											bookId: Number(books.state[index]?.id)
+											bookId: books.state[index]?.id || ''
 										})
 									}}
 								/>
@@ -70,9 +83,7 @@ const EbookComposer = <T extends Record<string, any>>({
 										)
 									}}
 								/>
-								<div
-								// after hover add shash title in popover
-								>
+								<div>
 									<HardDriveUpload
 										width={33}
 										height={33}
@@ -83,7 +94,54 @@ const EbookComposer = <T extends Record<string, any>>({
 								</div>
 							</div>
 						</div>
+						<div
+							className='mb-4 w-[80vw] gap-2 overflow-y-scroll'
+							style={{
+								display: images.length > 0 ? 'flex' : 'none'
+							}}>
+							{images.map(value => (
+								<div key={value.id} className='relative h-max min-w-[250px]'>
+									<img
+										alt={value.href}
+										className='border-bordered relative rounded border-[1px] object-contain '
+										width={400}
+										height={400}
+										src={`data:${value.mimeType};base64,${value.data}`}
+									/>
 
+									<div className='bg-muted absolute bottom-0 left-0 right-0 flex w-full  justify-between p-2'>
+										<p className='text-wrap	mb-2	whitespace-normal	 break-all'>
+											{value.id}
+										</p>
+										<div className='flex gap-5'>
+											<HardDriveUpload
+												className='cursor-pointer'
+												disabled={value.isUploaded}
+												style={{
+													opacity: value.isUploaded ? 0.5 : 1
+												}}
+												onClick={async () => {
+													await books.uploadImageToServer({
+														imageId: value.id,
+														imageAlt: value.href
+													})
+												}}
+											/>
+
+											<Trash
+												className='cursor-pointer'
+												onClick={() => {
+													books.removeImageFromContentById({
+														imageId: value.id,
+														imageAlt: value.href
+													})
+												}}
+											/>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
 						<div className='md:flex md:w-fit'>
 							{books.state.map((book, bookIndex) => {
 								// @ts-ignore
@@ -175,9 +233,8 @@ const EbookComposer = <T extends Record<string, any>>({
 																		bookId: book.id,
 																		insertedContent: chapter.text,
 
-																		topChapterId: Number(
-																			book.chapters[chapterIndex - 1]?.id
-																		)
+																		topChapterId:
+																			book.chapters[chapterIndex - 1]?.id || ''
 																	})
 																}}
 															/>
