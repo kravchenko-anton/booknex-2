@@ -3,7 +3,6 @@ import api from '@/services/api'
 import { errorToast, successToast } from '@/utils/toast'
 import { useMutation } from '@tanstack/react-query'
 import type { UnfoldOutputImagesInner } from 'global/api-client'
-import { getFileUrl } from 'global/api-config'
 import { MutationKeys } from 'global/utils/query-keys'
 import type { EBookPayloadType } from 'global/validation/ebook/ebook.schema'
 import type { Dispatch, SetStateAction } from 'react'
@@ -407,7 +406,7 @@ export const useBookCompose = ({
 							img.getAttribute('alt') === '/images/' + imageAlt
 						) {
 							console.log('path.name set', path.name)
-							img.setAttribute('src', getFileUrl(path.name))
+							img.setAttribute('src', path.name)
 						}
 					}
 					return {

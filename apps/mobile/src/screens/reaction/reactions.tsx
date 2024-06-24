@@ -1,6 +1,5 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
-import { reactions } from '@/screens/reader/feature/reactions/reactions'
 import type { SearchFormDataType } from '@/screens/search/useSearchForm'
 import { Button, Flatlist, Loader, Title } from '@/ui'
 import { SvgButton } from '@/ui/svg-button/svg-button'
@@ -15,6 +14,7 @@ import { Close } from 'icons'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
+import { reactions } from '../../../../backend/src/book/ebook/helpers/reactions'
 
 const Reactions = () => {
 	const queryClient = useQueryClient()

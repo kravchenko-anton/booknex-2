@@ -1,6 +1,6 @@
 import api from '@/api'
 import { compareReadingBooks } from '@/screens/library/compareReadingBooks'
-import { useReadingProgressStore } from '@/screens/reader/feature/reading-progress/progress-store'
+import { useReadingProgressStore } from '@/screens/reader/functions/useReadingProgress/progress-store'
 import { useIsFocused } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'

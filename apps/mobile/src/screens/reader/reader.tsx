@@ -1,15 +1,16 @@
 import { useTypedRoute } from '@/hooks'
+import ReaderChapters from '@/screens/reader/components/chapters-modal/reader-chapters'
+import { ReactionInfo } from '@/screens/reader/components/reaction-info/reaction-info'
+import ReaderCustomization from '@/screens/reader/components/reader-customization/reader-customization'
 import { ReaderLoading } from '@/screens/reader/components/reader-loading'
 import ReaderMenu from '@/screens/reader/components/reader-menu/reader-menu'
 import ReaderViewer from '@/screens/reader/components/reader-viewer/reader-viewer'
-import { ReactionModal } from '@/screens/reader/feature/reactions/reaction-info/reaction-modal'
-import ReaderChapters from '@/screens/reader/modals/chapters-modal/reader-chapters'
-import ReaderCustomization from '@/screens/reader/modals/reader-customization/reader-customization'
-import { useReader } from '@/screens/reader/useReader'
+import { useReader } from '@/screens/reader/functions/useReader'
 import { Loader } from '@/ui'
 
 const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()
+
 	const reader = useReader(params.slug, params.initialScrollPosition)
 	if (!reader.ebook || reader.ebookRequestLoading)
 		return (
@@ -67,7 +68,7 @@ const Reader = () => {
 			<ReaderCustomization
 				sheetRef={reader.modalRefs.readingSettingsModalReference}
 			/>
-			<ReactionModal
+			<ReactionInfo
 				slug={params.slug}
 				colorScheme={reader.colorScheme}
 				sheetRef={reader.modalRefs.reactionModalReference}

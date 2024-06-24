@@ -35,7 +35,6 @@ const Settings = () => {
 					onPress={() => Linking.openURL('https://t.me/boknex')}
 				/>
 				<List.Item
-					bordered
 					title={`Donate`}
 					description={`Support the development of the app`}
 					onPress={() =>

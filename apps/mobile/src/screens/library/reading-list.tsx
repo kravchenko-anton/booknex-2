@@ -1,6 +1,6 @@
 import api from '@/api'
 import type { CompareReadingBooksType } from '@/screens/library/compareReadingBooks'
-import { useFinishBook } from '@/screens/reader/feature/finish-book/useFinishBook'
+import { useFinishBook } from '@/screens/reader/functions/useFinishBook'
 import { AnimatedIcon, Icon, Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
@@ -162,15 +162,15 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 					/>
 				)}>
 				<View className='mx-4'>
-					<View className='border-b-bordered w-full flex-row gap-5 pb-4'>
+					<View className='border-b-bordered w-full flex-row gap-5 pb-2'>
 						<Image
 							width={50}
 							height={70}
 							borderRadius={4}
 							url={activeBookModalContent?.picture}
 						/>
-						<View className='max-w-[75%]'>
-							<Title size='xxl' weight='bold'>
+						<View className='max-w-[80%]'>
+							<Title size='xl' weight='bold'>
 								{activeBookModalContent?.title}
 							</Title>
 							<Title size='md' weight='regular' color={Color.gray}>

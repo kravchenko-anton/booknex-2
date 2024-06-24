@@ -6,7 +6,7 @@ import type { TypeRootStackParameterListType } from '@/navigation/navigation-typ
 import { routes } from '@/navigation/user-routes'
 import { getRefreshToken } from '@/screens/auth/store/auth-helper'
 import { useAuthStore } from '@/screens/auth/store/auth-store'
-import { useReadingProgressStore } from '@/screens/reader/feature/reading-progress/progress-store'
+import { useReadingProgressStore } from '@/screens/reader/functions/useReadingProgress/progress-store'
 import { Loader } from '@/ui'
 import { historyByLatestSorting } from '@/utils'
 import {

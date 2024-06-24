@@ -1,5 +1,5 @@
 import api from '@/api'
-import { useReadingProgressStore } from '@/screens/reader/feature/reading-progress/progress-store'
+import { useReadingProgressStore } from '@/screens/reader/functions/useReadingProgress/progress-store'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useEffect } from 'react'

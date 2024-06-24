@@ -2,7 +2,6 @@ import { composeReaderViewHtml } from '@/screens/reader/injections/compose-html-
 import type { ThemePackType } from '@/screens/reader/modals/reader-customization/theme-pack'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
-import { useNetInfo } from '@react-native-community/netinfo'
 import type { ReactionByBookOutput } from 'global/api-client'
 import type { FunctionType } from 'global/types'
 import { forwardRef } from 'react'
@@ -35,7 +34,6 @@ const ReaderViewer = forwardRef(
 			picture,
 			file
 		} = properties
-		const { isConnected } = useNetInfo()
 		if (!defaultProperties) return <View className='flex-1' />
 		return (
 			<View className='m-0 h-screen w-screen flex-1 items-center justify-center p-0'>
@@ -65,8 +63,7 @@ const ReaderViewer = forwardRef(
 								defaultProperties,
 								file,
 								picture,
-								title,
-								isOnline: !!isConnected
+								title
 							})
 						}}
 						style={{

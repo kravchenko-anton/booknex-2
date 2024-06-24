@@ -1,4 +1,4 @@
-import { calculateProgress } from '@/screens/reader/feature/reading-progress/calculate-progress'
+import { calculateProgress } from './calculate-progress'
 // 	const events = [
 //     'click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave',
 //     'contextmenu', 'wheel', 'select', 'input', 'keydown', 'keyup', 'keypress', 'touchstart', 'touchend', 'touchmove',

@@ -1,9 +1,16 @@
-import { finishBookButton } from '@/screens/reader/feature/finish-book/finish-book-html'
 import { injectFont } from '@/screens/reader/injections/font-injection'
-import { startScript } from '@/screens/reader/scripts/start-script'
-import { selectMenuHtml } from '@/screens/reader/scripts/text-selection-scripts'
+import {
+	calculateProgress,
+	scrollCalculateProgress
+} from '@/screens/reader/scripts/calculate-progress'
+import { markSelectScript } from '@/screens/reader/scripts/mark-select'
+import {
+	onSelectTextScript,
+	selectMenuActions,
+	textSelectMenu
+} from '@/screens/reader/scripts/text-selection-scripts'
+import { utilsScripts } from '@/screens/reader/scripts/utils-scripts'
 import type { ReactionByBookOutput } from 'global/api-client'
-import { getFileUrl } from 'global/api-config'
 
 interface ComposeReaderViewHtmlProperties {
 	title: string
@@ -14,14 +21,11 @@ interface ComposeReaderViewHtmlProperties {
 		theme: string
 		reactions: ReactionByBookOutput[]
 	}
-	isOnline: boolean
 }
 export const composeReaderViewHtml = ({
 	title,
-	picture,
 	file,
-	defaultProperties,
-	isOnline
+	defaultProperties
 }: ComposeReaderViewHtmlProperties) => `
 				<head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -30,17 +34,23 @@ export const composeReaderViewHtml = ({
 			</head>
 			<style>${defaultProperties.theme}</style>
 			
-			<div style="margin-bottom: 40px; user-select: none;">
-				<img style='width:100%; height: 300px; object-fit: contain; object-position: center; padding-top: 40px'
-					 src="${getFileUrl(picture)}" alt="${title}"
-					onerror="this.style.display='none';"
-					  />
-				<h1>${title}</h1>
-			</div>
-			<div id="scroll-container">
-				${file}
-			</div>
-			${selectMenuHtml}
-			${finishBookButton}
-			${startScript(defaultProperties.scrollPosition, defaultProperties.reactions, isOnline)}
+			${file}
+			<script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"  type="text/javascript" charset="utf-8" ></script>
+			<script>
+			 				
+ 						${markSelectScript}
+						${utilsScripts}
+						window.onload = function() {
+						wrapReactionsInMarkTag(${JSON.stringify(defaultProperties.reactions)})
+						window.scrollTo({
+							top: ${defaultProperties.scrollPosition}
+						 })
+						${calculateProgress}
+						${onSelectTextScript}
+						${textSelectMenu}
+						${selectMenuActions}
+						${scrollCalculateProgress}
+						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading' }))
+		}
+</script>
 `

@@ -1,4 +1,4 @@
-import type { CustomizationStoreType } from '@/screens/reader/modals/reader-customization/customization-store'
+import type { CustomizationStoreType } from '@/screens/reader/components/reader-customization/customization-store'
 import { windowWidth } from '@/utils/dimensions'
 import { Color } from 'global/colors'
 

@@ -1,4 +1,4 @@
-import type { ReadingHistoryType } from '@/screens/reader/feature/reading-progress/progress-store'
+import type { ReadingHistoryType } from '@/screens/reader/functions/useReadingProgress/progress-store'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 

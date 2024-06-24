@@ -1,4 +1,4 @@
-import { ReaderFont } from '@/screens/reader/modals/reader-customization/customization-store'
+import { ReaderFont } from '@/screens/reader/components/reader-customization/customization-store'
 import { Platform } from 'react-native'
 
 export const injectFont = () => {
