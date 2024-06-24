@@ -12,7 +12,7 @@ import WebView, { type WebViewMessageEvent } from 'react-native-webview'
 export interface ReaderViewerProperties {
 	readerUiVisible: boolean
 	handleDoublePress: FunctionType
-	file: string[]
+	file: string
 	picture: string
 	title: string
 	defaultProperties: {

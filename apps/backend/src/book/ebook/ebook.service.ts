@@ -56,20 +56,22 @@ export class EbookService {
 
 		return {
 			...book,
-			file: ebook.map(({ chapters, title }) =>
-				chapters
-					.map(({ text, name, romanNumber, readingTime, id }) =>
-						getServerBookHtml({
-							name,
-							id,
-							sectionId: `${slugify(name + ' ' + title)}_${id}`,
-							text,
-							readingTime,
-							romanNumber
-						})
-					)
-					.join(' ')
-			),
+			file: ebook
+				.map(({ chapters, title }) =>
+					chapters
+						.map(({ text, name, romanNumber, readingTime, id }) =>
+							getServerBookHtml({
+								name,
+								id,
+								sectionId: `${slugify(name + ' ' + title)}_${id}`,
+								text,
+								readingTime,
+								romanNumber
+							})
+						)
+						.join(' ')
+				)
+				.join(' '),
 			chapters: ebook.map(({ title, chapters }) => ({
 				title,
 				children: chapters.map(({ name, id }) => ({

@@ -22,8 +22,8 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
 	})
 	if (!selectedGenres) return null
 	return (
-		<View className='bg-foreground border-bordered m-3 rounded border-[1px] p-3.5'>
-			<Title size={'xxl'} color={Color.white} weight='bold'>
+		<View className='bg-foreground border-bordered m-3 rounded-lg border-[1px] p-3.5'>
+			<Title size={'xl'} color={Color.white} weight='bold'>
 				Manage Recommendation
 			</Title>
 			<Title weight='light' className='mb-4' numberOfLines={2} size={'md'}>

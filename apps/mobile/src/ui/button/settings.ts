@@ -35,7 +35,7 @@ export const settings: {
 	},
 	padding: {
 		sm: 'py-1 px-2',
-		md: 'py-1 px-4',
+		md: 'py-1.5 px-4',
 		lg: 'py-1.5 px-4'
 	}
 }

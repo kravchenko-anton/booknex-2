@@ -5,6 +5,7 @@ import { ShortGenreSchema } from '../genre/short-genre.schema'
 export const CreateBookSchema = z.object({
 	title: z.string(),
 	author: z.string(),
+	slug: z.string(),
 	description: z.string().max(1000).min(10),
 	ebook: z.array(EbookSchema).min(1),
 	rating: z.number().min(1).positive(),

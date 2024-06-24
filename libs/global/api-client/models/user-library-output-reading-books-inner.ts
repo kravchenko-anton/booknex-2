@@ -49,6 +49,12 @@ export interface UserLibraryOutputReadingBooksInner {
     'author': string;
     /**
      * 
+     * @type {number}
+     * @memberof UserLibraryOutputReadingBooksInner
+     */
+    'rating': number;
+    /**
+     * 
      * @type {UserLibraryOutputReadingBooksInnerReadingHistory}
      * @memberof UserLibraryOutputReadingBooksInner
      */

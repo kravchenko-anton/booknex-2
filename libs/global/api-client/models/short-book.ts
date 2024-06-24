@@ -44,5 +44,11 @@ export interface ShortBook {
      * @memberof ShortBook
      */
     'author': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShortBook
+     */
+    'rating': number;
 }
 

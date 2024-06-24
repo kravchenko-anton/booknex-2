@@ -1,8 +1,8 @@
 'use client'
+import { publicRoutes } from '@/utils/route'
 import { getFileUrl } from 'global/api-config'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { publicRoutes } from '@/utils/route'
 
 // String url need pass to this function
 
@@ -25,7 +25,7 @@ export const ShowcaseSection = (properties: PicksOfWeekListProperties) => {
 						<Image
 							src={getFileUrl(book.picture)}
 							alt={'book'}
-							className='bg-foreground border-2 border-bordered cursor-pointer rounded-md h-full w-full'
+							className='bg-foreground border-bordered h-full cursor-pointer rounded-md border-2'
 							width={150}
 							height={150}
 							onClick={() => router.push(publicRoutes.bookBySlug(book.slug))}

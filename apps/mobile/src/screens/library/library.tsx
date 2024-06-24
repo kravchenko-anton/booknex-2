@@ -5,7 +5,6 @@ import { useLibraryWithSync } from '@/screens/library/useLibraryWithSync'
 import { BookCard, Flatlist, Image, Loader, ScrollLayout, Title } from '@/ui'
 import { AnimatedPressable } from '@/ui/animated-components'
 import NothingFount from '@/ui/nothing-fount'
-import { historyByLatestSorting } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { QueryKeys } from 'global/utils/query-keys'
@@ -14,7 +13,8 @@ import { FadeIn } from 'react-native-reanimated'
 
 const Library = () => {
 	const { navigate } = useTypedNavigation()
-	const { library, refetch, readingList, history } = useLibraryWithSync()
+	const { library, refetch, readingList } = useLibraryWithSync()
+
 	const { data: userReactionsList = [], refetch: userReactionsListRefetch } =
 		useQuery({
 			queryKey: QueryKeys.reaction.list,
@@ -51,11 +51,7 @@ const Library = () => {
 					}}
 				/>
 			}>
-			<ReadingList
-				data={readingList}
-				sortedHistory={historyByLatestSorting(history) || []}
-				navigate={navigate}
-			/>
+			<ReadingList data={readingList} navigate={navigate} />
 			<Flatlist
 				horizontal
 				title='Saved to read'
@@ -132,9 +128,6 @@ const Library = () => {
 					)}
 				/>
 			</View>
-			<Title numberOfLines={100_000} className='mb-4'>
-				{JSON.stringify(historyByLatestSorting(history) || [])}
-			</Title>
 		</ScrollLayout>
 	)
 }

@@ -11,7 +11,7 @@ import { RefreshControl, View } from 'react-native'
 
 const Profile = () => {
 	const sheetReference = useRef<BottomSheetModal>(null)
-	const { statistic, refetch, history } = useStatisticsWithSync()
+	const { statistic, refetch } = useStatisticsWithSync()
 	if (!statistic) return <Loader />
 	return (
 		<ScrollLayout
@@ -171,9 +171,6 @@ const Profile = () => {
 					</Button>
 				</View>
 			</View>
-			<Title numberOfLines={100_000} className='mb-4'>
-				{JSON.stringify(history)}
-			</Title>
 		</ScrollLayout>
 	)
 }

@@ -94,26 +94,38 @@ const EbookComposer = <T extends Record<string, any>>({
 								</div>
 							</div>
 						</div>
+
 						<div
-							className='mb-4 w-[80vw] gap-2 overflow-y-scroll'
+							className='mb-4 gap-2'
 							style={{
 								display: images.length > 0 ? 'flex' : 'none'
 							}}>
 							{images.map(value => (
-								<div key={value.id} className='relative h-max min-w-[250px]'>
+								<div
+									key={value.id}
+									className='border-bordered relative h-max min-w-[250px] rounded border-[1px]'>
 									<img
 										alt={value.href}
-										className='border-bordered relative rounded border-[1px] object-contain '
+										className=' relative h-[300px]    object-contain transition-transform duration-200 ease-linear'
 										width={400}
 										height={400}
 										src={`data:${value.mimeType};base64,${value.data}`}
 									/>
+									<Close
+										color='red'
+										className='bg-muted absolute right-4 top-4 h-[40px] w-[40px] cursor-pointer rounded p-2'
+										style={{
+											opacity: books.isImageComponentExist(value.id, value.href)
+												? 0
+												: 1
+										}}
+									/>
 
-									<div className='bg-muted absolute bottom-0 left-0 right-0 flex w-full  justify-between p-2'>
+									<div className=' flex w-full  justify-between p-2'>
 										<p className='text-wrap	mb-2	whitespace-normal	 break-all'>
 											{value.id}
 										</p>
-										<div className='flex gap-5'>
+										<div className='flex items-center gap-5'>
 											<HardDriveUpload
 												className='cursor-pointer'
 												disabled={value.isUploaded}
@@ -142,6 +154,7 @@ const EbookComposer = <T extends Record<string, any>>({
 								</div>
 							))}
 						</div>
+
 						<div className='md:flex md:w-fit'>
 							{books.state.map((book, bookIndex) => {
 								// @ts-ignore

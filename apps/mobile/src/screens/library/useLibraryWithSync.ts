@@ -35,7 +35,6 @@ export const useLibraryWithSync = () => {
 	return {
 		library,
 		isLoading,
-		history,
 		refetch,
 		readingList: compareReadingBooks(library?.readingBooks || [], history)
 	}

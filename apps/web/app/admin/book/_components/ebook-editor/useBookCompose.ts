@@ -349,6 +349,27 @@ export const useBookCompose = ({
 			)
 		}
 	}
+	const isImageComponentExist = (imageId: string, imageAlt: string) => {
+		if (!ebooks) return false
+		return ebooks.some(book =>
+			book.chapters.some(chapter => {
+				const domHtml = new DOMParser().parseFromString(
+					chapter.text,
+					'text/html'
+				)
+				const images = domHtml.querySelectorAll('img')
+				for (const img of images) {
+					if (
+						img.getAttribute('id') === imageId &&
+						img.getAttribute('alt') === '/images/' + imageAlt
+					) {
+						return true
+					}
+				}
+				return false
+			})
+		)
+	}
 
 	const uploadImageToServer = async ({
 		imageId,
@@ -359,22 +380,9 @@ export const useBookCompose = ({
 	}) => {
 		const image = images.find(image => image.id === imageId.toString())
 		if (!image) return errorToast('Error uploading image')
-		const isImageExist = ebooks?.some(book => {
-			const domHtml = new DOMParser().parseFromString(
-				book.chapters.map(chapter => chapter.text).join(''),
-				'text/html'
-			)
-			const images = domHtml.querySelectorAll('img')
-			for (const img of images) {
-				if (
-					img.getAttribute('id') === imageId.toString() &&
-					img.getAttribute('alt') === 'images/' + imageAlt
-				)
-					return true
-			}
-			return false
-		})
-		if (isImageExist) return errorToast('Image not found in content')
+		if (!isImageComponentExist(imageId, imageAlt)) {
+			return errorToast('Image not found in content')
+		}
 		const { data: path } = await api.storage.upload(
 			'imagesInBook',
 			new File([Buffer.from(image.data, 'base64')], imageAlt)
@@ -421,6 +429,7 @@ export const useBookCompose = ({
 			unfoldLoading,
 			trimmingEBookContent,
 			uploadImageToServer,
+			isImageComponentExist,
 			generateChapterNames,
 			addNewCharacterAfterContent,
 			delete: deleteBook,

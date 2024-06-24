@@ -21,7 +21,7 @@ export const EBookBaseSchema = z.object({
 })
 export const EbookOutputSchema = z
 	.object({
-		file: z.array(z.string()),
+		file: z.string(),
 		chapters: z.array(OutputChapterSchema)
 	})
 	.merge(ShortBookSchema.pick({ title: true, picture: true }))

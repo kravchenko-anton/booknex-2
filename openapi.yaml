@@ -957,6 +957,9 @@ components:
               author:
                 type: string
                 required: true
+              rating:
+                type: number
+                required: true
               readingHistory:
                 type: object
                 properties:
@@ -973,6 +976,7 @@ components:
               - title
               - picture
               - author
+              - rating
               - readingHistory
         finishedBooks:
           type: array
@@ -991,11 +995,15 @@ components:
               author:
                 type: string
                 required: true
+              rating:
+                type: number
+                required: true
             required:
               - slug
               - title
               - picture
               - author
+              - rating
         savedBooks:
           type: array
           items:
@@ -1013,11 +1021,15 @@ components:
               author:
                 type: string
                 required: true
+              rating:
+                type: number
+                required: true
             required:
               - slug
               - title
               - picture
               - author
+              - rating
       required:
         - readingBooks
         - finishedBooks
@@ -1176,11 +1188,14 @@ components:
           type: string
         author:
           type: string
+        rating:
+          type: number
       required:
         - slug
         - title
         - picture
         - author
+        - rating
     FeaturedOutput:
       type: object
       properties:
@@ -1201,11 +1216,15 @@ components:
               author:
                 type: string
                 required: true
+              rating:
+                type: number
+                required: true
             required:
               - slug
               - title
               - picture
               - author
+              - rating
         genres:
           type: array
           items:
@@ -1245,11 +1264,15 @@ components:
               author:
                 type: string
                 required: true
+              rating:
+                type: number
+                required: true
             required:
               - slug
               - title
               - picture
               - author
+              - rating
         newReleases:
           type: array
           items:
@@ -1267,11 +1290,15 @@ components:
               author:
                 type: string
                 required: true
+              rating:
+                type: number
+                required: true
             required:
               - slug
               - title
               - picture
               - author
+              - rating
         booksBySelectedGenres:
           type: array
           items:
@@ -1291,11 +1318,15 @@ components:
                 author:
                   type: string
                   required: true
+                rating:
+                  type: number
+                  required: true
               required:
                 - slug
                 - title
                 - picture
                 - author
+                - rating
       required:
         - picksOfWeek
         - genres
@@ -1338,11 +1369,15 @@ components:
               author:
                 type: string
                 required: true
+              rating:
+                type: number
+                required: true
             required:
               - slug
               - title
               - picture
               - author
+              - rating
         slug:
           type: string
         name:
@@ -1417,11 +1452,15 @@ components:
               author:
                 type: string
                 required: true
+              rating:
+                type: number
+                required: true
             required:
               - slug
               - title
               - picture
               - author
+              - rating
       required:
         - description
         - readingTime
@@ -1624,6 +1663,8 @@ components:
           type: string
         author:
           type: string
+        slug:
+          type: string
         description:
           type: string
           maxLength: 1000
@@ -1698,6 +1739,7 @@ components:
       required:
         - title
         - author
+        - slug
         - description
         - ebook
         - rating
@@ -2031,9 +2073,7 @@ components:
       type: object
       properties:
         file:
-          type: array
-          items:
-            type: string
+          type: string
         chapters:
           type: array
           items:

@@ -281,17 +281,6 @@ paths:
         - 🔖 genre
       security:
         - bearer: []
-  /genre/setup:
-    get:
-      operationId: setupGenre
-      parameters: []
-      responses:
-        "200":
-          description: ""
-      tags:
-        - 🔖 genre
-      security:
-        - bearer: []
   "/genre/by-slug/{slug}":
     get:
       operationId: bySlug
@@ -524,6 +513,7 @@ paths:
             enum:
               - ebooks
               - booksCovers
+              - imagesInBook
             type: string
       requestBody:
         required: true
@@ -630,9 +620,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/UnfoldOutput"
+                $ref: "#/components/schemas/UnfoldOutput"
       tags:
         - 📦 parser
       security:
@@ -1986,16 +1974,49 @@ components:
     UnfoldOutput:
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        text:
-          type: string
+        chapters:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                required: true
+              name:
+                type: string
+                required: true
+              text:
+                type: string
+                required: true
+            required:
+              - id
+              - name
+              - text
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                required: true
+              href:
+                type: string
+                required: true
+              mimeType:
+                type: string
+                required: true
+              data:
+                type: string
+                required: true
+            required:
+              - id
+              - href
+              - mimeType
+              - data
       required:
-        - id
-        - name
-        - text
+        - chapters
+        - images
     UpdateRecommendationDto:
       type: object
       properties:

@@ -41,5 +41,5 @@ export const useStatisticsWithSync = () => {
 		}
 	}, [isSuccess])
 
-	return { isLoading, statistic: statistics, refetch, history }
+	return { isLoading, statistic: statistics, refetch }
 }

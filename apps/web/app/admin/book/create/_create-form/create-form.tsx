@@ -58,6 +58,13 @@ export const CreateBookForm: FC = () => {
 							/>
 						</div>
 					</div>
+					<h1 className='mb-2 mt-4'>Slug</h1>
+					<Field
+						type='string'
+						control={control}
+						name='slug'
+						placeholder='Slug'
+					/>
 					<h1 className='mb-2 mt-4'>Description</h1>
 					<FormTextArea
 						control={control}

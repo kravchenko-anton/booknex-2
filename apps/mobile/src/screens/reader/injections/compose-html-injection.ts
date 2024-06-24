@@ -8,7 +8,7 @@ import { getFileUrl } from 'global/api-config'
 interface ComposeReaderViewHtmlProperties {
 	title: string
 	picture: string
-	file: string[]
+	file: string
 	defaultProperties: {
 		scrollPosition: number
 		theme: string

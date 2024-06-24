@@ -1,4 +1,5 @@
 import type { ShortBook } from '@/src/book/book.dto'
+import { returnBookObject } from '@/src/book/return.book.object'
 import { catalogSearchFields } from '@/src/catalog/catalog.fields'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable } from '@nestjs/common'
@@ -16,7 +17,8 @@ export class CatalogService {
 
 	search(query: string) {
 		return this.prisma.book.findMany({
-			where: catalogSearchFields(query)
+			where: catalogSearchFields(query),
+			select: returnBookObject
 		})
 	}
 

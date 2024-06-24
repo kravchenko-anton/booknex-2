@@ -43,6 +43,8 @@ const Featured = () => {
 				renderItem={({ item: book }) => (
 					<BookCard
 						size='md'
+						title={book.title}
+						author={book.author}
 						image={{
 							uri: book.picture
 						}}

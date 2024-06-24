@@ -37,7 +37,7 @@ export class StorageService {
 			throw serverError(HttpStatus.BAD_REQUEST, adminErrors.invalidFolder)
 		}
 		const optimizedFile =
-			folder === storageFolder.ebooks
+			folder === storageFolder.ebooks || folder === storageFolder.imagesInBook
 				? file
 				: await sharp(file)
 						.resize({

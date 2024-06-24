@@ -7,6 +7,7 @@ export const fontSettings = {
 }
 
 export const fontSizes = {
+	ssm: 12,
 	sm: 14,
 	md: 16.5,
 	lg: 17,

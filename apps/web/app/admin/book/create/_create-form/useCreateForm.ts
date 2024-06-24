@@ -12,7 +12,9 @@ import {
 } from 'global/validation/book/create.book.schema'
 
 import { useTemplate } from '@/app/admin/book/create/_create-form/useTemplate'
+import { slugify } from 'global/helpers/slugify'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 //TODO: пофиксить полностью создание книги чтобы работало без багов
 export const useCreateForm = () => {
@@ -31,6 +33,10 @@ export const useCreateForm = () => {
 		resolver: zodResolver(CreateBookSchema),
 		mode: 'onBlur'
 	})
+
+	useEffect(() => {
+		setValue('slug', slugify(watch('title')))
+	}, [watch('title')])
 
 	const { deleteTemplate } = useTemplate({ templateSlug, reset })
 

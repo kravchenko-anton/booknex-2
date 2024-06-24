@@ -6,12 +6,12 @@ export const settings: {
 } = {
 	width: {
 		sm: 120,
-		md: 160,
+		md: 120,
 		lg: 190
 	},
 	height: {
 		sm: 180,
-		md: 240,
+		md: 175,
 		lg: 260
 	}
 }

@@ -122,6 +122,7 @@ export const bookCreateFields = ({
 		picture: string
 		rating: number
 		description: string
+		slug: string
 		author: string
 	}
 	genreIds: { slug: string }[]
@@ -133,7 +134,7 @@ export const bookCreateFields = ({
 }) =>
 	Prisma.validator<Prisma.BookCreateInput>()({
 		pagesCount: pagesCount,
-		slug: slugify(dto.title),
+		slug: dto.slug || slugify(dto.title),
 		chapters: chaptersCount,
 		title: dto.title,
 		picture: dto.picture,

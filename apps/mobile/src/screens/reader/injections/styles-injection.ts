@@ -188,4 +188,15 @@ export const getStyleTag = ({
 				}
 
     }
+    
+    img {
+    max-width: 80% !important;
+    max-height: 100% !important;
+		object-fit: contain !important;
+    display: flex !important;
+		margin-top: 20px !important;
+    margin-bottom: 20px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+    }
 	`

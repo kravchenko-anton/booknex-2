@@ -36,7 +36,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		enabled: !!slug,
 		networkMode: 'offlineFirst',
 		gcTime: Number.MAX_SAFE_INTEGER,
-		staleTime: Number.MAX_SAFE_INTEGER
+		staleTime: 0
 	})
 
 	const {

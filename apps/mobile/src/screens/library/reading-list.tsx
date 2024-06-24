@@ -1,7 +1,6 @@
 import api from '@/api'
 import type { CompareReadingBooksType } from '@/screens/library/compareReadingBooks'
 import { useFinishBook } from '@/screens/reader/feature/finish-book/useFinishBook'
-import type { ReadingHistoryType } from '@/screens/reader/feature/reading-progress/progress-store'
 import { AnimatedIcon, Icon, Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
@@ -20,14 +19,9 @@ import Animated, { JumpingTransition } from 'react-native-reanimated'
 interface ReadingListProperties {
 	data: CompareReadingBooksType[]
 	navigate: any
-	sortedHistory: ReadingHistoryType[]
 }
 
-export const ReadingList: FC<ReadingListProperties> = ({
-	sortedHistory,
-	data,
-	navigate
-}) => {
+export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 	const queryClient = useQueryClient()
 	const sheetReference = useRef<BottomSheetModal>(null)
 	const { mutateAsync: removeFromLibrary } = useMutation({
@@ -52,7 +46,7 @@ export const ReadingList: FC<ReadingListProperties> = ({
 		})
 	}
 	return (
-		<View className='bg-foreground border-bordered mb-0 ml-2 mt-4 rounded-md rounded-r-none border-[1px] border-r-0  p-3 px-0'>
+		<View className='bg-foreground border-bordered mb-0 ml-2 mt-4 rounded-[14px] rounded-r-none border-[1px] border-r-0  p-3 px-0'>
 			<View className='pl-4'>
 				<Title
 					weight='bold'
@@ -73,22 +67,12 @@ export const ReadingList: FC<ReadingListProperties> = ({
 				bounces={false}
 				alwaysBounceHorizontal={false}
 				ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
-				//TODO: сделать тут сортировку если нету интернета исходя из истории
 				data={data}
 				contentContainerStyle={{
 					paddingHorizontal: 12,
 					paddingBottom: 8
 				}}
 				renderItem={({ item: book }: { item: CompareReadingBooksType }) => {
-					const latestHistory = sortedHistory?.find(
-						historyItem => historyItem.bookSlug === book.slug
-					)
-
-					const progress =
-						(latestHistory?.endProgress || 0) / 100 || book.progress
-
-					const scrollPosition =
-						latestHistory?.scrollPosition || book.scrollPosition
 					const prefetchBook = () =>
 						queryClient.prefetchQuery({
 							queryKey: QueryKeys.ebook.bySlug(book.slug),
@@ -108,7 +92,7 @@ export const ReadingList: FC<ReadingListProperties> = ({
 									onTouchEnd={() => {
 										navigate('Reader', {
 											slug: book.slug,
-											initialScrollPosition: scrollPosition
+											initialScrollPosition: book.scrollPosition
 										})
 									}}>
 									<Image
@@ -119,9 +103,9 @@ export const ReadingList: FC<ReadingListProperties> = ({
 									/>
 								</View>
 
-								<View className='absolute bottom-4 w-full flex-row justify-between px-2'>
+								<View className='absolute bottom-4  w-full flex-row justify-between px-2'>
 									<AnimatedIcon
-										size={'md'}
+										size={'sm'}
 										variant='muted'
 										icon={Download}
 										style={{
@@ -133,7 +117,7 @@ export const ReadingList: FC<ReadingListProperties> = ({
 									/>
 									<AnimatedIcon
 										icon={MoreHorizontal}
-										size={'md'}
+										size={'sm'}
 										variant='muted'
 										onPress={() => {
 											const { scrollPosition, progress, ...rest } = book
@@ -143,11 +127,11 @@ export const ReadingList: FC<ReadingListProperties> = ({
 									/>
 								</View>
 							</View>
-							<ProgressBar progress={progress} />
+							<ProgressBar progress={book.progress} />
 
 							<Title
 								numberOfLines={2}
-								size='md'
+								size='sm'
 								weight='medium'
 								className='mt-1'>
 								{book.title}

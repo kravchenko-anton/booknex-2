@@ -25,10 +25,10 @@ import { EbookOutputChaptersInner } from './ebook-output-chapters-inner';
 export interface EbookOutput {
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof EbookOutput
      */
-    'file': Array<string>;
+    'file': string;
     /**
      * 
      * @type {Array<EbookOutputChaptersInner>}

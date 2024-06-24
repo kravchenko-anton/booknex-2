@@ -56,9 +56,9 @@ const Book: FC = () => {
 				</View>
 				<Image
 					url={book.picture}
-					height={270}
+					height={220}
 					className='mx-auto -mt-5'
-					width={180}
+					width={150}
 					style={{
 						borderRadius: 8,
 						borderWidth: 1,
@@ -69,18 +69,18 @@ const Book: FC = () => {
 
 			<View className='px-2 pt-2'>
 				<View className='flex-grow flex-row items-center justify-between gap-2'>
-					<Title size={'sm'} color={Color.gray} weight='regular'>
+					<Title size={'sm'} color={Color.gray} weight='semiBold'>
 						{book.rating} Rating • {minutesToTime(book.readingTime)} read time
 					</Title>
 				</View>
-				<Title numberOfLines={2} weight='semiBold' size={'xxl'}>
+				<Title numberOfLines={2} weight='semiBold' size={'xl'}>
 					{book.title}
 				</Title>
 				<Title
 					numberOfLines={1}
 					color={Color.gray}
-					weight='semiBold'
-					size={'md'}>
+					weight='regular'
+					size={'sm'}>
 					{book.author}
 				</Title>
 			</View>
@@ -89,15 +89,17 @@ const Book: FC = () => {
 				<ReadingButton slug={book.slug} />
 				<SaveButton slug={book.slug} />
 			</View>
-
+			<Title size='xl' weight='bold' className='mt-4 px-2'>
+				What is it about?
+			</Title>
 			<Flatlist
 				horizontal
-				title='Explore categories'
+				mt={10}
 				data={book.genres}
 				renderItem={({ item: genre }) => (
 					<SvgButton
 						altEmoji={genre.emoji}
-						size='md'
+						size='sm'
 						svgUri={genre.icon}
 						title={genre.name}
 						onPress={() =>
@@ -106,10 +108,8 @@ const Book: FC = () => {
 					/>
 				)}
 			/>
-			<Title size='xl' weight='bold' className='mt-4 px-2'>
-				What is it about?
-			</Title>
-			<Description size={18} className='mt-2 px-2 pb-8' weight='light'>
+
+			<Description size={16} className='mt-1 px-2 pb-8' weight='light'>
 				{book.description}
 			</Description>
 

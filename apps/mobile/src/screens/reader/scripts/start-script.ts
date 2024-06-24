@@ -15,9 +15,9 @@ export const startScript = (
 	reactions: ReactionByBookOutput[],
 	isOnline: boolean
 ) => `
+
 <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"  type="text/javascript" charset="utf-8" ></script>
 <script>
-		
  function wrapReactionsInMarkTag(reactions) {
 		const instance = new Mark(document.querySelector('body'));
 		instance.unmark();
@@ -60,7 +60,6 @@ export const startScript = (
 						${textSelectMenu(isOnline)}
 						${selectMenuActions}
 						${scrollCalculateProgress}
-		
 						wrapReactionsInMarkTag(${JSON.stringify(reactions)})
 						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading' }))
 }

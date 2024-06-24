@@ -44,5 +44,11 @@ export interface UserLibraryOutputFinishedBooksInner {
      * @memberof UserLibraryOutputFinishedBooksInner
      */
     'author': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserLibraryOutputFinishedBooksInner
+     */
+    'rating': number;
 }
 

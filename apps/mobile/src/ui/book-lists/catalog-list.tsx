@@ -1,6 +1,7 @@
 import { AnimatedPress, Flatlist, Image, Title } from '@/ui'
 import { Color } from 'global/colors'
-import { Dimensions } from 'react-native'
+import { Star } from 'icons'
+import { View } from 'react-native'
 
 const CatalogList = ({
 	data,
@@ -11,57 +12,58 @@ const CatalogList = ({
 	data: {
 		slug: string
 		title: string
+		author: string
+		rating: number
 		picture: string
 	}[]
 	onElementPress?: (slug: string) => void
-}) => {
-	const isBigScreen = Dimensions.get('window').width > 500
-	return (
-		<Flatlist
-			scrollEnabled={!disabledScroll}
-			mt={10}
-			className='w-full px-4'
-			data={data}
-			numColumns={isBigScreen ? 3 : 2}
-			ListEmptyComponent={() => (
-				<Title
-					className='mx-auto'
-					size={'md'}
-					color={Color.gray}
-					weight='medium'>
-					It's quiet, too quiet
-				</Title>
-			)}
-			columnWrapperStyle={{
-				justifyContent: 'space-between'
-			}}
-			renderItem={({ item: book }) => (
-				<AnimatedPress
-					className='mb-4'
-					style={{
-						width: isBigScreen ? '30%' : '48%'
-					}}
-					onPress={() => onElementPress(book.slug)}>
-					<Image
-						className='mb-1 w-full'
-						url={book.picture}
-						height={
-							isBigScreen
-								? Dimensions.get('window').width / 2.3
-								: Dimensions.get('window').width / 1.5
-						}
-					/>
+}) => (
+	<Flatlist
+		scrollEnabled={!disabledScroll}
+		mt={10}
+		className='w-full px-2'
+		data={data}
+		ListEmptyComponent={() => (
+			<Title className='mx-auto' size={'md'} color={Color.gray} weight='medium'>
+				It's quiet, too quiet
+			</Title>
+		)}
+		renderItem={({ item: book }) => (
+			<AnimatedPress
+				className='mb-4 w-full flex-row justify-between'
+				onPress={() => onElementPress(book.slug)}>
+				<Image className='mb-1 mr-2' height={150} url={book.picture} />
+				<View className='w-[70%]'>
 					<Title
-						color={Color.gray}
-						size={'md'}
+						color={Color.white}
+						size={'xl'}
 						numberOfLines={2}
 						weight='semiBold'>
 						{book.title}
 					</Title>
-				</AnimatedPress>
-			)}
-		/>
-	)
-}
+					<Title
+						color={Color.gray}
+						size={'md'}
+						numberOfLines={2}
+						className='mb-2 mt-1'
+						weight='regular'>
+						{book.author}
+					</Title>
+					<View className=' flex-row items-center gap-2'>
+						{Array.from({ length: 5 }).map((_, index) => (
+							<Star
+								key={index}
+								fill={book.rating > index ? Color.warning : Color.gray}
+								width={18}
+								height={18}
+								color={book.rating > index ? Color.warning : Color.gray}
+							/>
+						))}
+					</View>
+				</View>
+			</AnimatedPress>
+		)}
+	/>
+)
 
 export default CatalogList

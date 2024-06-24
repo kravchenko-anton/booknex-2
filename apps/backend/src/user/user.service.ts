@@ -17,6 +17,17 @@ import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import { returnUserObject } from './return.user.object'
 
+export interface SyncHistoryType {
+	readingTimeMs: number
+	endDate: Date
+	progressDelta: number
+	startProgress: number
+	endProgress: number
+	scrollPosition: number
+	startDate: Date
+	userId: string
+	bookSlug: string
+}
 @Injectable()
 export class UserService {
 	constructor(private readonly prisma: PrismaService) {}
@@ -63,19 +74,7 @@ export class UserService {
 					userId: userId,
 					bookSlug: history.bookSlug
 				}))
-				.reduce<
-					{
-						readingTimeMs: number
-						endDate: Date
-						progressDelta: number
-						startProgress: number
-						endProgress: number
-						scrollPosition: number
-						startDate: Date
-						userId: string
-						bookSlug: string
-					}[]
-				>((accumulator, history) => {
+				.reduce<SyncHistoryType[]>((accumulator, history) => {
 					const lastElement = accumulator.at(-1)
 					if (
 						lastElement &&
@@ -94,17 +93,35 @@ export class UserService {
 		)
 		await this.prisma.readingHistory.createMany({
 			skipDuplicates: true,
-			data: dto.map(history => ({
-				readingTimeMs: history.readingTimeMs,
-				endDate: new Date(history.endDate),
-				progressDelta: history.progressDelta,
-				startProgress: history.startProgress,
-				endProgress: history.endProgress,
-				scrollPosition: history.scrollPosition,
-				startDate: new Date(history.startDate),
-				userId: userId,
-				bookSlug: history.bookSlug
-			}))
+			data: dto
+				.map(history => ({
+					readingTimeMs: history.readingTimeMs,
+					endDate: new Date(history.endDate),
+					progressDelta: history.progressDelta,
+					startProgress: history.startProgress,
+					endProgress: history.endProgress,
+					scrollPosition: history.scrollPosition,
+					startDate: new Date(history.startDate),
+					userId: userId,
+					bookSlug: history.bookSlug
+				}))
+				//TODO: мейби поправить, может не так работать
+				.reduce<SyncHistoryType[]>((accumulator, history) => {
+					const lastElement = accumulator.at(-1)
+					if (
+						lastElement &&
+						Math.abs(
+							lastElement.startDate.getTime() - history.startDate.getTime()
+						) <
+							1000 * 60 * 60 * 24
+					) {
+						lastElement.readingTimeMs += history.readingTimeMs
+						lastElement.endProgress = history.endProgress
+						lastElement.progressDelta += history.progressDelta
+						return accumulator
+					}
+					return [...accumulator, history]
+				}, [])
 		})
 	}
 

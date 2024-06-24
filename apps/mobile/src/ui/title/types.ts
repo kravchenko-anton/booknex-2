@@ -4,7 +4,7 @@ import type { SizeType } from 'global/types'
 import type { ReactNode } from 'react'
 import type { fontSettings } from './settings'
 
-export type TitleSizeType = SizeType | ('xl' | 'xxl' | 'xxxl')
+export type TitleSizeType = SizeType | ('xl' | 'xxl' | 'xxxl' | 'ssm')
 export type TitleProperties = TextDefaultProperties &
 	ColorProperties & {
 		center?: boolean
