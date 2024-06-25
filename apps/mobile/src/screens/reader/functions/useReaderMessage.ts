@@ -1,6 +1,5 @@
 import { share } from '@/utils/share-function'
 import { errorToast } from '@/utils/toast'
-import { useNetInfo } from '@react-native-community/netinfo'
 import type { CreateReaction } from 'global/api-client'
 import { Linking, NativeModules, Platform } from 'react-native'
 import type { WebViewMessageEvent } from 'react-native-webview'
@@ -64,8 +63,6 @@ export const useReaderMessage = ({
 	setActiveReactionPressed,
 	createReaction
 }: ReaderMessageProperties) => {
-	const { isConnected } = useNetInfo()
-
 	const onMessage = async (event: WebViewMessageEvent) => {
 		const parsedEvent = JSON.parse(event.nativeEvent.data) as WebviewMessageType
 		const { type, payload } = parsedEvent
@@ -82,7 +79,6 @@ export const useReaderMessage = ({
 			await Linking.openURL(link)
 		}
 		if (type === ReaderMessageType.Reaction) {
-			if (!isConnected) return errorToast('No internet connection')
 			console.log('🚂', {
 				bookSlug: slug,
 				id: Math.random().toString(),
@@ -121,8 +117,10 @@ export const useReaderMessage = ({
 			type === ReaderMessageType.MarkClick &&
 			payload.id !== null &&
 			payload.id !== undefined
-		)
+		) {
+			console.log('Mark click', payload.id)
 			setActiveReactionPressed(payload.id)
+		}
 	}
 
 	return {

@@ -24,6 +24,7 @@ import {
 	SafeAreaProvider,
 	initialWindowMetrics
 } from 'react-native-safe-area-context'
+import { GestureDetectorProvider } from 'react-native-screens/gesture-handler'
 
 const authRequiredRoutes = new Set(routes.map(route => route.name))
 const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
@@ -82,84 +83,89 @@ const Navigation: FC = () => {
 			style={{
 				backgroundColor: Color.background
 			}}>
-			<NavigationContainer
-				ref={navReference}
-				fallback={<Loader />}
-				onReady={() => {
-					if (user && latestHistory)
-						navReference.navigate('Reader', {
-							slug: latestHistory.bookSlug,
-							initialScrollPosition: latestHistory.scrollPosition
-						})
-					if (user && initialHistory.length > 0) syncHistory(initialHistory)
-					BootSplash.hide({ fade: true })
-				}}>
-				<Stack.Navigator
-					initialRouteName={user ? 'Featured' : 'Welcome'}
-					screenOptions={{
-						animation: 'fade',
-						headerShown: false,
-						statusBarColor: Color.background,
-						statusBarTranslucent: false,
-						statusBarAnimation: 'fade'
+			<GestureDetectorProvider>
+				<NavigationContainer
+					ref={navReference}
+					fallback={<Loader />}
+					onReady={() => {
+						if (user && latestHistory)
+							navReference.navigate('Reader', {
+								slug: latestHistory.bookSlug,
+								initialScrollPosition: latestHistory.scrollPosition
+							})
+						if (user && initialHistory.length > 0) syncHistory(initialHistory)
+						BootSplash.hide({ fade: true })
 					}}>
-					{user
-						? routes.map(({ options, ...route }) => (
-								<Stack.Screen
-									key={route.name}
-									options={{
-										contentStyle: {
-											backgroundColor: Color.background
-										},
-										...options,
-										navigationBarColor: Color.background
-									}}
-									{...route}
-								/>
-							))
-						: authRoutes.map(({ options, ...route }) => (
-								<Stack.Screen
-									key={route.name}
-									options={{
-										contentStyle: {
-											backgroundColor: Color.background
-										},
-										...options,
-										navigationBarColor: Color.background
-									}}
-									{...route}
-								/>
-							))}
-					{modalRoutes.map(({ options, ...route }) => (
-						<Stack.Screen
-							key={route.name}
-							options={{
-								presentation: 'containedTransparentModal',
-								...options
-							}}
-							{...route}
-						/>
-					))}
-					{fullScreenModalRoutes.map(({ options, ...route }) => (
-						<Stack.Screen
-							key={route.name}
-							options={{
-								presentation: 'fullScreenModal',
-								animation: 'flip',
-								navigationBarColor: Color.background,
-								contentStyle: {
-									backgroundColor: Color.background
-								},
-								...options
-							}}
-							{...route}
-						/>
-					))}
-				</Stack.Navigator>
-			</NavigationContainer>
-			{user && currentRoute && !noBottomMenuRoutes.has(currentRoute) ? (
-				<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
-			) : null}
+					<Stack.Navigator
+						initialRouteName={user ? 'Featured' : 'Welcome'}
+						screenOptions={{
+							animation: 'fade',
+							headerShown: false,
+							statusBarColor: Color.background,
+							statusBarTranslucent: false,
+							statusBarAnimation: 'fade',
+							statusBarHidden: false,
+							statusBarStyle: 'light',
+							customAnimationOnGesture: true
+						}}>
+						{user
+							? routes.map(({ options, ...route }) => (
+									<Stack.Screen
+										key={route.name}
+										options={{
+											contentStyle: {
+												backgroundColor: Color.background
+											},
+											...options,
+											navigationBarColor: Color.background
+										}}
+										{...route}
+									/>
+								))
+							: authRoutes.map(({ options, ...route }) => (
+									<Stack.Screen
+										key={route.name}
+										options={{
+											contentStyle: {
+												backgroundColor: Color.background
+											},
+											...options,
+											navigationBarColor: Color.background
+										}}
+										{...route}
+									/>
+								))}
+						{modalRoutes.map(({ options, ...route }) => (
+							<Stack.Screen
+								key={route.name}
+								options={{
+									presentation: 'containedTransparentModal',
+									...options
+								}}
+								{...route}
+							/>
+						))}
+						{fullScreenModalRoutes.map(({ options, ...route }) => (
+							<Stack.Screen
+								key={route.name}
+								options={{
+									presentation: 'fullScreenModal',
+									animation: 'flip',
+									navigationBarColor: Color.background,
+									contentStyle: {
+										backgroundColor: Color.background
+									},
+									...options
+								}}
+								{...route}
+							/>
+						))}
+					</Stack.Navigator>
+				</NavigationContainer>
+				{user && currentRoute && !noBottomMenuRoutes.has(currentRoute) ? (
+					<BottomMenu nav={navReference.navigate} currentRoute={currentRoute} />
+				) : null}
+			</GestureDetectorProvider>
 		</SafeAreaProvider>
 	)
 }

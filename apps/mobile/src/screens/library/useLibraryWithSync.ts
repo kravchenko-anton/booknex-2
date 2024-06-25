@@ -32,6 +32,7 @@ export const useLibraryWithSync = () => {
 	useEffect(() => {
 		isFocus && clearHistory()
 	}, [isSuccess])
+	console.log(history, 'history')
 	return {
 		library,
 		isLoading,

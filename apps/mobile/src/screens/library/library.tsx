@@ -14,7 +14,6 @@ import { FadeIn } from 'react-native-reanimated'
 const Library = () => {
 	const { navigate } = useTypedNavigation()
 	const { library, refetch, readingList } = useLibraryWithSync()
-
 	const { data: userReactionsList = [], refetch: userReactionsListRefetch } =
 		useQuery({
 			queryKey: QueryKeys.reaction.list,
@@ -24,6 +23,7 @@ const Library = () => {
 			refetchOnMount: true,
 			refetchOnWindowFocus: true
 		})
+	console.log(userReactionsList)
 	if (!library) return <Loader />
 	if (
 		library.readingBooks.length === 0 &&

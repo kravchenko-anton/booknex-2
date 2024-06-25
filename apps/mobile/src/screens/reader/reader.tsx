@@ -16,7 +16,6 @@ const Reader = () => {
 		return (
 			<Loader background={reader.colorScheme.colorPalette.background.normal} />
 		)
-	console.log(reader.readerLoading)
 	return (
 		<>
 			<ReaderLoading
@@ -74,8 +73,7 @@ const Reader = () => {
 				sheetRef={reader.modalRefs.reactionModalReference}
 				activeReactionPressed={
 					reader.reactionBookList.find(
-						reaction =>
-							Number(reaction.id) === Number(reader.activeReactionPressedId)
+						reaction => reaction.id === reader.activeReactionPressedId
 					) || null
 				}
 			/>

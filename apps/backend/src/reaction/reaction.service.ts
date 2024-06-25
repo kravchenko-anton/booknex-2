@@ -48,9 +48,12 @@ export class ReactionService {
 		const isUserExist = await this.prisma.user.findUnique({
 			where: { id: userId }
 		})
+
 		if (!isUserExist) {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		}
+		// do checking exist in ebook
+
 		return this.prisma.reaction.findMany({
 			where: {
 				bookSlug,

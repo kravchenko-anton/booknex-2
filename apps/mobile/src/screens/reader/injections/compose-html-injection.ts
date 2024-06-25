@@ -21,9 +21,11 @@ interface ComposeReaderViewHtmlProperties {
 		theme: string
 		reactions: ReactionByBookOutput[]
 	}
+	isOnline: boolean
 }
 export const composeReaderViewHtml = ({
 	title,
+	isOnline,
 	file,
 	defaultProperties
 }: ComposeReaderViewHtmlProperties) => `
@@ -47,7 +49,7 @@ export const composeReaderViewHtml = ({
 						 })
 						${calculateProgress}
 						${onSelectTextScript}
-						${textSelectMenu}
+						${textSelectMenu(isOnline)}
 						${selectMenuActions}
 						${scrollCalculateProgress}
 						window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading' }))

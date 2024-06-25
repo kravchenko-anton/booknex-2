@@ -174,6 +174,7 @@ export const getStyleTag = ({
 				display: flex;
 				align-items: center;
 				justify-content: flex-end;
+				padding-left:20px;
 	    }
 
     .select-default-menu img {
@@ -195,6 +196,7 @@ export const getStyleTag = ({
 		object-fit: contain !important;
     display: flex !important;
 		margin-top: 20px !important;
+		user-select: none !important;
     margin-bottom: 20px !important;
 		margin-left: auto !important;
 		margin-right: auto !important;

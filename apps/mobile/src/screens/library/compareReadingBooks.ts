@@ -7,7 +7,7 @@ import type {
 
 export type CompareReadingBooksType = Omit<
 	UserLibraryOutputReadingBooksInner,
-	'readingHistory'
+	'readingHistory' | 'rating'
 > & {
 	progress: number
 	scrollPosition: number | undefined
@@ -35,15 +35,20 @@ export const compareReadingBooks = (
 				return 0
 			})
 			.map(book => {
-				const progress = latestHistory.some(b => b.bookSlug === book.slug)
-					? (latestHistory.find(b => b.bookSlug === book.slug)?.endProgress ||
-							0) / 100
-					: (book.readingHistory?.progress || 0) / 100
-				const scrollPosition = latestHistory.some(b => b.bookSlug === book.slug)
-					? latestHistory.find(b => b.bookSlug === book.slug)?.scrollPosition ||
-						0
-					: book.readingHistory?.scrollPosition
+				const currentLatestHistory = latestHistory?.find(
+					historyItem => historyItem.bookSlug === book.slug
+				)
+				const progress =
+					(currentLatestHistory?.endProgress || 0) / 100 ||
+					(book.readingHistory?.progress || 0) / 100
 
+				const scrollPosition =
+					currentLatestHistory?.scrollPosition ||
+					book.readingHistory?.scrollPosition
+				console.log(
+					(currentLatestHistory?.endProgress || 0) / 100,
+					(book.readingHistory?.progress || 0) / 100
+				)
 				return {
 					slug: book.slug,
 					title: book.title,

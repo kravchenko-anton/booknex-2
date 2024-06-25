@@ -31,7 +31,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 
 	const [activeBookModalContent, setActiveBookModalContent] = useState<Omit<
 		UserLibraryOutputReadingBooksInner,
-		'readingHistory'
+		'readingHistory' | 'rating'
 	> | null>(null)
 
 	const { onFinish, finishReadingLoading } = useFinishBook(() =>
