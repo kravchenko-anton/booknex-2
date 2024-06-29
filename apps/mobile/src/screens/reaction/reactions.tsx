@@ -169,46 +169,73 @@ const Reactions = () => {
 						(filterSettings.reaction === '' ||
 							reaction.type === filterSettings.reaction)
 				)}
-				renderItem={({ item }) => (
-					<View className='border-bordered mx-2 border-b-[1px] py-2'>
-						<Title numberOfLines={100} className=''>
-							{item.text}
-						</Title>
-						<View className='flex-row items-center justify-between'>
-							<Title size='sm' numberOfLines={1} color={Color.gray}>
-								{timeAgo(new Date(item.createdAt))} ago
+				renderItem={({ item }) => {
+					const emoji = reactions.find(reaction => reaction.title === item.type)
+
+					return (
+						<View className='bg-muted border-bordered mx-2 rounded-lg border-[1px] p-2 py-2'>
+							<Title
+								size='md'
+								className='mb-2'
+								numberOfLines={2}
+								color={Color.white}>
+								{item.text}
 							</Title>
-							<View className='mt-2 flex-row items-center'>
-								<Button
-									size={'sm'}
-									variant='foreground'
-									className='mr-2'
-									onPress={() => {
-										share(item.text)
-									}}>
-									Share
-								</Button>
-								<Button
-									size={'sm'}
-									variant='foreground'
-									disabled={removeReactionLoading || isLoading || isRefetching}
-									onPress={() => {
-										if (removeReactionLoading || isLoading) return
-										removeReactionMutation(item.id).then(() => {
-											queryClient.invalidateQueries({
-												queryKey: QueryKeys.reaction.bySlug(params.slug)
+							<View className='flex-row items-center justify-between'>
+								<View className='flex-row items-center gap-2'>
+									{emoji ? (
+										<SvgButton
+											size='sm'
+											title={item.type}
+											altEmoji={emoji?.altEmoji}
+											svgUri={emoji?.svg}
+											variant={'foreground'}
+											onPress={() => {
+												setFilterSettings({
+													...filterSettings,
+													reaction: item.type
+												})
+											}}
+										/>
+									) : null}
+									<Title size='sm' numberOfLines={1} color={Color.gray}>
+										{timeAgo(new Date(item.createdAt))} ago
+									</Title>
+								</View>
+								<View className='mt-2 flex-row items-center'>
+									<Button
+										size={'sm'}
+										variant='foreground'
+										className='mr-2'
+										onPress={() => {
+											share(item.text)
+										}}>
+										Share
+									</Button>
+									<Button
+										size={'sm'}
+										variant='foreground'
+										disabled={
+											removeReactionLoading || isLoading || isRefetching
+										}
+										onPress={() => {
+											if (removeReactionLoading || isLoading) return
+											removeReactionMutation(item.id).then(() => {
+												queryClient.invalidateQueries({
+													queryKey: QueryKeys.reaction.bySlug(params.slug)
+												})
+												queryClient.invalidateQueries({
+													queryKey: QueryKeys.reaction.list
+												})
 											})
-											queryClient.invalidateQueries({
-												queryKey: QueryKeys.reaction.list
-											})
-										})
-									}}>
-									Delete
-								</Button>
+										}}>
+										Delete
+									</Button>
+								</View>
 							</View>
 						</View>
-					</View>
-				)}
+					)
+				}}
 			/>
 		</View>
 	)

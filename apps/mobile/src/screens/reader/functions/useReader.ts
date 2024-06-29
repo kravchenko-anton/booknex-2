@@ -29,7 +29,11 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 	)
 	const { reactionBookList = [], createReaction } = useReactions(slug)
 
-	const { data: ebook, isLoading: ebookRequestLoading } = useQuery({
+	const {
+		data: ebook,
+		isLoading: ebookRequestLoading,
+		isRefetching: ebookRequestRefetching
+	} = useQuery({
 		queryKey: QueryKeys.ebook.bySlug(slug),
 		queryFn: () => api.ebook.ebookBySlug(slug),
 		select: data => data.data,
@@ -108,6 +112,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		activeReactionPressedId,
 		ebookRequestLoading,
 		readingProgress,
+		ebookRequestRefetching,
 		openModal,
 		onMessage,
 		reactionBookList,

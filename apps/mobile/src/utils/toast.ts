@@ -5,8 +5,8 @@ export const errorToast = (error: unknown) => {
 	Toast.show({
 		type: 'error',
 		text1: errorCatch(error),
-		position: 'top',
-		topOffset: 40,
+		position: 'bottom',
+		bottomOffset: 70,
 		swipeable: true
 	})
 }
@@ -15,8 +15,8 @@ export const successToast = (message: string) => {
 	Toast.show({
 		type: 'success',
 		text1: message,
-		position: 'top',
-		topOffset: 40,
+		position: 'bottom',
+		bottomOffset: 70,
 		swipeable: true
 	})
 }

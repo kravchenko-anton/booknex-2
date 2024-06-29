@@ -1,6 +1,7 @@
 import type { ParamListBase } from '@react-navigation/native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { ComponentType } from 'react'
+import type { GoBackGesture } from 'react-native-reanimated'
 
 export type TypeRootStackParameterListType = {
 	Book: { slug: string }
@@ -33,7 +34,7 @@ export interface IRouteType {
 		}: {
 			navigation: NativeStackNavigationProp<ParamListBase>
 		}) => JSX.Element
-		headerShown?: boolean
+		goBackGesture?: GoBackGesture | undefined
 		statusBarHidden?: boolean
 	}
 }

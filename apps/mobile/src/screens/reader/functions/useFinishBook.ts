@@ -18,7 +18,7 @@ export const useFinishBook = (onFinishComplete: () => void) => {
 		if (finishReadingLoading) return
 		await finishReading(slug).then(() => {
 			onFinishComplete()
-			successToast('Book successfully finished')
+			successToast('Successfully finished')
 			navigate('BookImpression', {
 				slug
 			})

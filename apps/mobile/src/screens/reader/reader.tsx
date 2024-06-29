@@ -12,7 +12,11 @@ const Reader = () => {
 	const { params } = useTypedRoute<'Reader'>()
 
 	const reader = useReader(params.slug, params.initialScrollPosition)
-	if (!reader.ebook || reader.ebookRequestLoading)
+	if (
+		!reader.ebook ||
+		reader.ebookRequestLoading ||
+		reader.ebookRequestRefetching
+	)
 		return (
 			<Loader background={reader.colorScheme.colorPalette.background.normal} />
 		)

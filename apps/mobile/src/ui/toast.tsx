@@ -6,11 +6,12 @@ import RnToast, { BaseToast } from 'react-native-toast-message'
 
 const options = () => ({
 	style: {
-		backgroundColor: Color.foreground,
+		backgroundColor: Color.muted,
 		alignItems: 'center' as const,
-		borderRadius: 12,
-		height: 50,
-		borderColor: Color.muted,
+		borderRadius: 10,
+		height: 35,
+		width: 260,
+		borderColor: Color.bordered,
 
 		borderWidth: 1.5,
 		borderLeftWidth: 1.5,
@@ -18,9 +19,10 @@ const options = () => ({
 	},
 	text1Style: {
 		color: Color.white,
-		fontSize: 17,
-		marginLeft: -18,
-		fontFamily: fontSettings.light
+		marginLeft: -25,
+		width: 210,
+		fontSize: 14,
+		fontFamily: fontSettings.regular
 	}
 })
 
@@ -29,9 +31,9 @@ const Toast: FC = () => (
 		config={{
 			success: properties => (
 				<BaseToast
-					text1NumberOfLines={2}
+					text1NumberOfLines={1}
 					renderLeadingIcon={() => (
-						<OkHandEmoji className='ml-2 mr-2' width={25} height={25} />
+						<OkHandEmoji className='ml-2 mr-2' width={20} height={20} />
 					)}
 					{...properties}
 					{...options()}
@@ -39,9 +41,9 @@ const Toast: FC = () => (
 			),
 			error: properties => (
 				<BaseToast
-					text1NumberOfLines={2}
+					text1NumberOfLines={1}
 					renderLeadingIcon={() => (
-						<ThumbDownEmoji className='ml-2 mr-2' width={25} height={25} />
+						<ThumbDownEmoji className='ml-2' width={20} height={20} />
 					)}
 					{...properties}
 					{...options()}

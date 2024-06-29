@@ -5,7 +5,6 @@ import CatalogList from '@/ui/book-lists/catalog-list'
 import Header from '@/ui/header/header'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
-import { useLayoutEffect } from 'react'
 
 const Genre = () => {
 	const { params } = useTypedRoute<'Genre'>()
@@ -14,26 +13,25 @@ const Genre = () => {
 		queryFn: () => api.genre.bySlug(params.slug),
 		select: data => data.data
 	})
-	const { setOptions, navigate } = useTypedNavigation()
-	useLayoutEffect(() => {
-		setOptions({
-			header: () => (
-				<Header.Head>
-					<Header.BackWithTitle title={params.name} />
-				</Header.Head>
-			),
-			headerShown: true
-		})
-	}, [params.name, setOptions])
-	if (!genre) return <Loader />
+	const { navigate } = useTypedNavigation()
 	return (
-		<ScrollLayout>
-			<CatalogList
-				disabledScroll
-				data={genre.books}
-				onElementPress={slug => navigate('Book', { slug })}
-			/>
-		</ScrollLayout>
+		<>
+			<Header.Head>
+				<Header.BackWithTitle title={params.name} />
+			</Header.Head>
+
+			{genre ? (
+				<ScrollLayout>
+					<CatalogList
+						disabledScroll
+						data={genre.books}
+						onElementPress={slug => navigate('Book', { slug })}
+					/>
+				</ScrollLayout>
+			) : (
+				<Loader />
+			)}
+		</>
 	)
 }
 

@@ -13,7 +13,6 @@ import {
 	NavigationContainer,
 	useNavigationContainerRef
 } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useMutation } from '@tanstack/react-query'
 import type { ReadingHistory } from 'global/api-client'
 import { Color } from 'global/colors'
@@ -25,6 +24,7 @@ import {
 	initialWindowMetrics
 } from 'react-native-safe-area-context'
 import { GestureDetectorProvider } from 'react-native-screens/gesture-handler'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 
 const authRequiredRoutes = new Set(routes.map(route => route.name))
 const Stack = createNativeStackNavigator<TypeRootStackParameterListType>()
@@ -99,14 +99,13 @@ const Navigation: FC = () => {
 					<Stack.Navigator
 						initialRouteName={user ? 'Featured' : 'Welcome'}
 						screenOptions={{
-							animation: 'fade',
+							stackAnimation: 'fade',
 							headerShown: false,
 							statusBarColor: Color.background,
 							statusBarTranslucent: false,
 							statusBarAnimation: 'fade',
 							statusBarHidden: false,
-							statusBarStyle: 'light',
-							customAnimationOnGesture: true
+							statusBarStyle: 'light'
 						}}>
 						{user
 							? routes.map(({ options, ...route }) => (
@@ -139,7 +138,7 @@ const Navigation: FC = () => {
 							<Stack.Screen
 								key={route.name}
 								options={{
-									presentation: 'containedTransparentModal',
+									stackPresentation: 'containedTransparentModal',
 									...options
 								}}
 								{...route}
@@ -149,8 +148,8 @@ const Navigation: FC = () => {
 							<Stack.Screen
 								key={route.name}
 								options={{
-									presentation: 'fullScreenModal',
-									animation: 'flip',
+									stackPresentation: 'fullScreenModal',
+									stackAnimation: 'flip',
 									navigationBarColor: Color.background,
 									contentStyle: {
 										backgroundColor: Color.background
