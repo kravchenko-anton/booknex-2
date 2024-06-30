@@ -44,7 +44,7 @@ export class EbookService {
 	async ebookBySlug(slug: string) {
 		//TODO: сделать получение твоих цытат и сразу проверку на существование + gold цытаты
 		const book = await this.prisma.book.findUnique({
-			where: { slug, isPublic: true },
+			where: { slug },
 			select: {
 				id: true,
 				title: true,

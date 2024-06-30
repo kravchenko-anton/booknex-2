@@ -45,6 +45,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 			})
 		})
 	}
+	if (data.length === 0) return null
 	return (
 		<View className='bg-foreground border-bordered mb-0 ml-2 mt-4 rounded-[14px] rounded-r-none border-[1px] border-r-0  p-3 px-0'>
 			<View className='pl-4'>

@@ -16,7 +16,7 @@ export const selectMenuHtml = `
 <img
 	id="text-menu-share"
  	width="26" height="26"
- 	alt="translate"
+ 	alt="share"
  	src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1zaGFyZSI+PHBhdGggZD0iTTQgMTJ2OGEyIDIgMCAwIDAgMiAyaDEyYTIgMiAwIDAgMCAyLTJ2LTgiLz48cG9seWxpbmUgcG9pbnRzPSIxNiA2IDEyIDIgOCA2Ii8+PGxpbmUgeDE9IjEyIiB4Mj0iMTIiIHkxPSIyIiB5Mj0iMTUiLz48L3N2Zz4="/>
 </div>
 </div>
@@ -67,7 +67,6 @@ export const wrapEbookInLogic = (
 					 src="${getFileUrl(picture)}" alt="${title}"
 					onerror="this.style.display='none';"
 					  />
-				<h1>${title}</h1>
 			</div>
 			<div id="scroll-container">
 				${file}

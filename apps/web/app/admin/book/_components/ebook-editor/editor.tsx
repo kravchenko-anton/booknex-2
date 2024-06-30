@@ -4,6 +4,7 @@ import { DropZone, Input, TextArea } from '@/components/ui'
 import ErrorMessage from '@/components/ui/error-message/error-message'
 import { errorToast } from '@/utils/toast'
 import type { UnfoldOutputImagesInner } from 'global/api-client'
+import { Color } from 'global/colors'
 import {
 	Copy,
 	HardDriveDownload,
@@ -15,6 +16,7 @@ import { postProcessingHtml } from 'global/utils/html-validation'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
+import { Pie, PieChart, Tooltip } from 'recharts'
 
 const EbookComposer = <T extends Record<string, any>>({
 	control,
@@ -36,63 +38,108 @@ const EbookComposer = <T extends Record<string, any>>({
 			console.log('errors', error)
 			return (
 				<div className='md:w-max md:overflow-y-scroll '>
-					<div>
-						<div className='mb-4'>
+					<div className='mb-4'>
+						<div>
 							<h1 className='mt-2  text-xl'>Book file</h1>
-							<div className='flex items-end gap-2'>
-								<DropZone
-									multiple
-									size='sm'
-									accept='.epub'
-									disabled={books.unfoldLoading}
-									onDropFile={files => {
-										books.upload(files)
-									}}
-									onFileDelete={(_file, index) => {
-										if (!books.state[index]?.id) return
-										books.delete({
-											bookId: books.state[index]?.id || ''
-										})
-									}}
-								/>
-								<HardDriveDownload
-									width={33}
-									height={33}
-									title='unStash eBook (download from storage latest stashed book)'
-									className='bg-foreground border-bordered cursor-pointer rounded border-[1px] p-1.5'
-									onClick={books.unStashEBook}
-								/>
-								<Copy
-									width={33}
-									height={33}
-									title='download ebook (for validation)'
-									className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
-									onClick={() => {
-										navigator.clipboard.writeText(
-											JSON.stringify(
-												postProcessingHtml(
+							<div className='flex items-center justify-between'>
+								<div className='flex items-end gap-2'>
+									<DropZone
+										multiple
+										size='sm'
+										accept='.epub'
+										disabled={books.unfoldLoading}
+										onDropFile={files => {
+											books.upload(files)
+										}}
+										onFileDelete={(_file, index) => {
+											if (!books.state[index]?.id) return
+											books.delete({
+												bookId: books.state[index]?.id || ''
+											})
+										}}
+									/>
+									<HardDriveDownload
+										width={33}
+										height={33}
+										title='unStash eBook (download from storage latest stashed book)'
+										className='bg-foreground border-bordered cursor-pointer rounded border-[1px] p-1.5'
+										onClick={books.unStashEBook}
+									/>
+									<Copy
+										width={33}
+										height={33}
+										title='download ebook (for validation)'
+										className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
+										onClick={() => {
+											navigator.clipboard.writeText(
+												JSON.stringify(
+													postProcessingHtml(
+														books.state
+															.map(book =>
+																book.chapters
+																	.map(chapter => `${chapter.text}`.trim())
+																	.join('')
+															)
+															.join('')
+													)
+												)
+											)
+										}}
+									/>
+									<div>
+										<HardDriveUpload
+											width={33}
+											height={33}
+											title='Stash eBook (save current book state to storage)'
+											className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
+											onClick={books.stashEBook}
+										/>
+									</div>
+								</div>
+							</div>
+							<PieChart width={730} height={250}>
+								<Pie
+									label
+									dataKey='value'
+									nameKey='name'
+									cx='50%'
+									cy='50%'
+									innerRadius={60}
+									outerRadius={80}
+									fill={Color.primary}
+									color={Color.white}
+									data={Object.entries(
+										[
+											...new DOMParser()
+												.parseFromString(
 													books.state
 														.map(book =>
 															book.chapters
 																.map(chapter => `${chapter.text}`.trim())
 																.join('')
 														)
-														.join('')
+														.join(''),
+													'text/html'
 												)
-											)
-										)
-									}}
+												.querySelectorAll('*')
+										]
+											.map(tag => tag.nodeName)
+											.reduce((accumulator, tag) => {
+												if (tag === 'P') return accumulator
+												if (tag === 'BODY') return accumulator
+												if (tag === 'HTML') return accumulator
+												if (tag === 'HEAD') return accumulator
+												// @ts-ignore
+												accumulator[tag] = accumulator[tag]
+													? // @ts-ignore
+														accumulator[tag] + 1
+													: 1
+												return accumulator
+											}, {})
+									).map(([name, value]) => ({ name, value }))}
 								/>
-								<div>
-									<HardDriveUpload
-										width={33}
-										height={33}
-										title='Stash eBook (save current book state to storage)'
-										className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
-										onClick={books.stashEBook}
-									/>
-								</div>
-							</div>
+								<Tooltip />
+							</PieChart>
 						</div>
 
 						<div

@@ -8,6 +8,7 @@ import { JSDOM } from 'jsdom'
 import { serverError } from '../../utils/helpers/server-error'
 
 export const clearHtmlElement = (element: Element): Element => {
+	console.log(element.tagName, 'element.tagName')
 	const attributes = element.getAttributeNames()
 	for (const attribute of attributes) {
 		if (attribute === 'src') continue
