@@ -4,6 +4,7 @@ import { InnerColor } from 'global/colors'
 import type { FC } from 'react'
 import { settings } from './settings'
 
+import { ActivityIndicator } from 'react-native'
 import type { IconProperties } from './types'
 
 const AnimatedIcon: FC<IconProperties> = ({
@@ -13,6 +14,7 @@ const AnimatedIcon: FC<IconProperties> = ({
 	fatness = 2,
 	className = '',
 	fill = false,
+	isLoading = false,
 	noPadding = false,
 	onPress,
 	...properties
@@ -27,14 +29,20 @@ const AnimatedIcon: FC<IconProperties> = ({
 		)}
 		onPress={onPress}
 		{...properties}>
-		<Icon
-			width={settings.size[size]}
-			height={settings.size[size]}
-			strokeWidth={fatness}
-			fill={fill ? InnerColor[variant] : 'none'}
-			stroke={InnerColor[variant]}
-		/>
+		{isLoading ? (
+			<ActivityIndicator
+				color={InnerColor[variant]}
+				size={settings.size[size]}
+			/>
+		) : (
+			<Icon
+				width={settings.size[size]}
+				height={settings.size[size]}
+				strokeWidth={fatness}
+				fill={fill ? InnerColor[variant] : 'none'}
+				stroke={InnerColor[variant]}
+			/>
+		)}
 	</AnimatedPress>
 )
-
 export default AnimatedIcon

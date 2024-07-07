@@ -7,6 +7,8 @@ import { adminErrors, globalErrors } from 'global/errors'
 import { JSDOM } from 'jsdom'
 import { serverError } from '../../utils/helpers/server-error'
 
+const textTags = new Set(['A', 'H2', 'H1', 'H3', 'H4', 'H5', 'H6', 'P'])
+
 export const clearHtmlElement = (element: Element): Element => {
 	console.log(element.tagName, 'element.tagName')
 	const attributes = element.getAttributeNames()
@@ -15,6 +17,8 @@ export const clearHtmlElement = (element: Element): Element => {
 		element.removeAttribute(attribute)
 	}
 
+	if (textTags.has(element.tagName) && element.textContent === '')
+		element.remove()
 	if (element.tagName === 'svg') element.remove()
 	if (element.tagName === 'iframe') element.remove()
 	if (element.tagName === 'script') element.remove()
@@ -55,7 +59,9 @@ export const updatedContent = async (text: string) => {
 			indentSize: 2,
 			endNewline: true
 		})
-		.then((formatted: string) => formatted)
+		.then((formatted: string) =>
+			formatted.replaceAll('<div>', '').replaceAll('</div>', '')
+		)
 }
 
 const insertIdToImages = (

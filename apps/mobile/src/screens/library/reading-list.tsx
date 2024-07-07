@@ -5,7 +5,9 @@ import { AnimatedIcon, Icon, Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
 import { share } from '@/utils/share-function'
+import { successToast } from '@/utils/toast'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
+import { useNetInfo } from '@react-native-community/netinfo'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { UserLibraryOutputReadingBooksInner } from 'global/api-client'
 import { Color } from 'global/colors'
@@ -23,12 +25,12 @@ interface ReadingListProperties {
 
 export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 	const queryClient = useQueryClient()
+	const { isConnected } = useNetInfo()
 	const sheetReference = useRef<BottomSheetModal>(null)
 	const { mutateAsync: removeFromLibrary } = useMutation({
 		mutationKey: MutationKeys.book.removeFromLibrary,
 		mutationFn: (slug: string) => api.user.removeFromLibrary(slug)
 	})
-
 	const [activeBookModalContent, setActiveBookModalContent] = useState<Omit<
 		UserLibraryOutputReadingBooksInner,
 		'readingHistory' | 'rating'
@@ -45,6 +47,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 			})
 		})
 	}
+
 	if (data.length === 0) return null
 	return (
 		<View className='bg-foreground border-bordered mb-0 ml-2 mt-4 rounded-[14px] rounded-r-none border-[1px] border-r-0  p-3 px-0'>
@@ -73,73 +76,48 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 					paddingHorizontal: 12,
 					paddingBottom: 8
 				}}
-				renderItem={({ item: book }: { item: CompareReadingBooksType }) => {
-					const prefetchBook = () =>
-						queryClient.prefetchQuery({
-							queryKey: QueryKeys.ebook.bySlug(book.slug),
-							queryFn: () => api.ebook.ebookBySlug(book.slug)
-						})
-					const isBookDownloaded = queryClient.getQueryData(
-						QueryKeys.ebook.bySlug(book.slug)
-					)
-
-					return (
-						<Animated.View
-							style={{
-								width: settings.width.md
-							}}>
-							<View className='relative'>
-								<View
-									onTouchEnd={() => {
-										navigate('Reader', {
-											slug: book.slug,
-											initialScrollPosition: book.scrollPosition
-										})
-									}}>
-									<Image
-										width={settings.width.md}
-										height={settings.height.md}
-										url={book.picture}
-										className='mb-2'
-									/>
-								</View>
-
-								<View className='absolute bottom-4  w-full flex-row justify-between px-2'>
-									<AnimatedIcon
-										size={'sm'}
-										variant='muted'
-										icon={Download}
-										style={{
-											opacity: isBookDownloaded ? 0 : 1
-										}}
-										onPress={async () => {
-											if (!isBookDownloaded) prefetchBook()
-										}}
-									/>
-									<AnimatedIcon
-										icon={MoreHorizontal}
-										size={'sm'}
-										variant='muted'
-										onPress={() => {
-											const { scrollPosition, progress, ...rest } = book
-											setActiveBookModalContent(rest)
-											sheetReference.current?.present()
-										}}
-									/>
-								</View>
+				renderItem={({ item: book }: { item: CompareReadingBooksType }) => (
+					<Animated.View
+						style={{
+							width: settings.width.md
+						}}>
+						<View className='relative'>
+							<View
+								onTouchEnd={() => {
+									navigate('Reader', {
+										slug: book.slug,
+										initialScrollPosition: book.scrollPosition
+									})
+								}}>
+								<Image
+									width={settings.width.md}
+									height={settings.height.md}
+									url={book.picture}
+									className='mb-2'
+								/>
 							</View>
-							<ProgressBar progress={book.progress} />
 
-							<Title
-								numberOfLines={2}
-								size='sm'
-								weight='medium'
-								className='mt-1'>
-								{book.title}
-							</Title>
-						</Animated.View>
-					)
-				}}
+							<View className='absolute bottom-4  w-full flex-row justify-between px-2'>
+								<View />
+								<AnimatedIcon
+									icon={MoreHorizontal}
+									size={'sm'}
+									variant='muted'
+									onPress={() => {
+										const { scrollPosition, progress, ...rest } = book
+										setActiveBookModalContent(rest)
+										sheetReference.current?.present()
+									}}
+								/>
+							</View>
+						</View>
+						<ProgressBar progress={book.progress} />
+
+						<Title numberOfLines={2} size='sm' weight='medium' className='mt-1'>
+							{book.title}
+						</Title>
+					</Animated.View>
+				)}
 			/>
 
 			<BottomSheetModal
@@ -149,7 +127,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 				enableOverDrag
 				index={0}
 				ref={sheetReference}
-				snapPoints={[240]}
+				snapPoints={[300]}
 				handleIndicatorStyle={{ backgroundColor: Color.gray }}
 				backgroundStyle={{
 					backgroundColor: Color.foreground
@@ -182,11 +160,12 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 					<View className='border-bordered border-t-2' />
 					<View className='mt-2'>
 						<Pressable
-							className='flex-row items-center gap-2'
+							className='mb-2 flex-row items-center gap-2'
 							onPress={() => {
 								share(
 									`hey, check out this book ${activeBookModalContent?.title} by ${activeBookModalContent?.author} on ${appName}`
 								)
+								sheetReference.current?.dismiss()
 							}}>
 							<Icon
 								icon={Share}
@@ -198,12 +177,46 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 								Share
 							</Title>
 						</Pressable>
+						{queryClient.getQueryData(
+							QueryKeys.ebook.bySlug(activeBookModalContent?.slug as string)
+						) === undefined && isConnected ? (
+							<Pressable
+								className='mb-2 mt-2 flex-row items-center gap-2'
+								onPress={() => {
+									queryClient
+										.prefetchQuery({
+											queryKey: QueryKeys.ebook.bySlug(
+												activeBookModalContent?.slug as string
+											),
+											queryFn: () =>
+												api.ebook.ebookBySlug(
+													activeBookModalContent?.slug as string
+												)
+										})
+										.then(async () => {
+											successToast('Book downloaded successfully')
+										})
 
+									sheetReference.current?.dismiss()
+								}}>
+								<Icon
+									icon={Download}
+									size={'sm'}
+									stroke={Color.gray}
+									variant='transparent'
+								/>
+								<Title size='md' weight='medium' color={Color.white}>
+									Download book to read offline
+								</Title>
+							</Pressable>
+						) : null}
 						<Pressable
-							className='flex-row items-center gap-2'
+							className='mb-2 mt-2 flex-row items-center gap-2'
 							onPress={() => {
 								if (activeBookModalContent?.slug && !finishReadingLoading) {
-									onFinish(activeBookModalContent?.slug)
+									onFinish(activeBookModalContent?.slug).then(() => {
+										successToast('Book marked as read')
+									})
 									sheetReference.current?.dismiss()
 								}
 							}}>
@@ -219,7 +232,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 						</Pressable>
 
 						<Pressable
-							className='flex-row items-center gap-2'
+							className='mt-2 flex-row items-center gap-2'
 							onPress={() => {
 								if (activeBookModalContent?.slug) {
 									onRemoveFromLibrary(activeBookModalContent?.slug)

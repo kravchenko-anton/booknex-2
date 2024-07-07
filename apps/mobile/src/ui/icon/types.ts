@@ -11,6 +11,7 @@ export interface IconProperties
 	fatness?: number
 	fill?: boolean
 	stroke?: string
+	isLoading?: boolean
 	noPadding?: boolean
 	variant?: ClampPaletteType | 'white-outlined' | 'transparent'
 	onPress?: () => void
