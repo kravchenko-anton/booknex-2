@@ -1,5 +1,6 @@
 'use client'
 import BookStatistic from '@/app/admin/book/_components/book-statistic'
+import { ActivityChart } from '@/app/admin/book/_components/charts/activity-chart'
 import BookOverview from '@/app/admin/book/_components/ebook-tabs'
 import { RemoveButton } from '@/app/admin/book/_components/remove-button'
 import { Button } from '@/components/ui'
@@ -11,19 +12,9 @@ import { secureRoutes } from '@/utils/route'
 import { validateStringParameter } from '@/utils/validate-parameter'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getFileUrl } from 'global/api-config'
-import { Color } from 'global/colors'
 import { QueryKeys } from 'global/utils/query-keys'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
-import {
-	Legend,
-	Line,
-	LineChart,
-	ResponsiveContainer,
-	Tooltip,
-	XAxis,
-	YAxis
-} from 'recharts'
 
 const Page = () => {
 	const router = useRouter()
@@ -44,11 +35,9 @@ const Page = () => {
 	}
 
 	if (!book) return <Loader />
-	console.log('book', book.statistics)
 
 	return (
 		<div>
-			<h1 className='text-3xl'>Book overview</h1>
 			<div className='mt-4 gap-5 px-2 md:flex'>
 				<div>
 					<div className='mt-4 px-0.5'>
@@ -86,8 +75,7 @@ const Page = () => {
 							<p className='text-warning  text-lg'>★ {book.rating}</p>
 						</div>
 					</div>
-					<h4 className='mb-2 mt-4 text-lg font-bold'>Genres</h4>
-					<div className='text-gray mb-8 flex items-center gap-2 overflow-auto'>
+					<div className='text-gray mb-2 mt-4 flex items-center gap-2 overflow-auto'>
 						{book.genres.map(genre => (
 							<GenreElement
 								title={genre.name}
@@ -97,53 +85,17 @@ const Page = () => {
 						))}
 					</div>
 					<p className='mb-2 text-lg'>{book.description}</p>
-					<ResponsiveContainer width='100%' height={300}>
-						<LineChart
-							className='mt-4'
-							height={300}
-							width={800}
-							data={book?.statistics.map(history => ({
-								...history,
-								readingTimeMin: Math.round(history.readingTimeMs / 60_000) || 0,
-								name: new Date(history.endDate).toLocaleDateString()
-							}))}
-							margin={{
-								top: 5,
-								right: 30,
-								left: 20,
-								bottom: 5
-							}}>
-							<XAxis dataKey='name' />
-							<YAxis />
-							<Tooltip
-								contentStyle={{ backgroundColor: Color.bordered }}
-								itemStyle={{ color: Color.white }}
-							/>
-							<Legend />
-							<Line
-								dot={false}
-								type='monotone'
-								dataKey='readingTimeMin'
-								stroke='#8884d8'
-							/>
-							<Line
-								dot={false}
-								type='monotone'
-								dataKey='pagesRead'
-								stroke='#82ca9d'
-							/>
-							<Line
-								dot={false}
-								type='monotone'
-								dataKey='progressDelta'
-								stroke='#ff7300'
-							/>
-						</LineChart>
-					</ResponsiveContainer>
-
-					<BookOverview bookSlug={book.slug} />
+					<ActivityChart
+						chartData={book.statistics?.map(history => ({
+							...history,
+							readingTimeMin: Math.round(history.readingTimeMs / 60_000) || 0,
+							name: new Date(history.endDate).toLocaleDateString(),
+							date: new Date(history.endDate).toLocaleDateString()
+						}))}
+					/>
 				</div>
 			</div>
+			<BookOverview bookSlug={book.slug} />
 		</div>
 	)
 }

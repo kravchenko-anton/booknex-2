@@ -2,13 +2,12 @@ import api from '@/api'
 import type { ThemePackType } from '@/screens/reader/components/reader-customization/theme-pack'
 import { Icon, Title } from '@/ui'
 import { SvgButton } from '@/ui/svg-button/svg-button'
-import { share } from '@/utils/share-function'
+import { shareReaction } from '@/utils/share-text'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import * as Sentry from '@sentry/react-native'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ReactionByBookOutput, UpdateReaction } from 'global/api-client'
 import { Color } from 'global/colors'
-import { appName } from 'global/utils'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Share, Trash } from 'icons'
 import React, { type FC, type RefObject } from 'react'
@@ -133,9 +132,7 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
 					<Pressable
 						className='flex-row items-center gap-2'
 						onPress={() => {
-							share(
-								`hey, check out this reaction ${activeReactionPressed?.text} on ${appName}`
-							)
+							shareReaction(String(activeReactionPressed?.text))
 						}}>
 						<Icon
 							icon={Share}

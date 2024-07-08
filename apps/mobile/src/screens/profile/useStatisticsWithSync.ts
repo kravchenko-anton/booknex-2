@@ -1,11 +1,15 @@
 import api from '@/api'
 import { useReadingProgressStore } from '@/screens/reader/functions/useReadingProgress/progress-store'
+import { useNetInfo } from '@react-native-community/netinfo'
+import { useIsFocused } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { QueryKeys } from 'global/utils/query-keys'
 import { useEffect } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 
 export const useStatisticsWithSync = () => {
+	const isFocus = useIsFocused()
+	const { isConnected } = useNetInfo()
 	const { history = [], clearHistory } = useReadingProgressStore(
 		useShallow(state => ({
 			history: state.history,
@@ -40,6 +44,9 @@ export const useStatisticsWithSync = () => {
 			clearHistory()
 		}
 	}, [isSuccess])
+	useEffect(() => {
+		if (isConnected && history.length > 0 && isFocus) refetch()
+	}, [])
 
 	return { isLoading, statistic: statistics, refetch }
 }

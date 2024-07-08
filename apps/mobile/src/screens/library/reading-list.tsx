@@ -4,14 +4,13 @@ import { useFinishBook } from '@/screens/reader/functions/useFinishBook'
 import { AnimatedIcon, Icon, Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
-import { share } from '@/utils/share-function'
+import { shareBookWithAuthor } from '@/utils/share-text'
 import { successToast } from '@/utils/toast'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { UserLibraryOutputReadingBooksInner } from 'global/api-client'
 import { Color } from 'global/colors'
-import { appName } from 'global/utils'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Check, Download, MoreHorizontal, Share, Trash } from 'icons'
 import { useRef, useState, type FC } from 'react'
@@ -162,8 +161,9 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 						<Pressable
 							className='mb-2 flex-row items-center gap-2'
 							onPress={() => {
-								share(
-									`hey, check out this book ${activeBookModalContent?.title} by ${activeBookModalContent?.author} on ${appName}`
+								shareBookWithAuthor(
+									String(activeBookModalContent?.title),
+									String(activeBookModalContent?.author)
 								)
 								sheetReference.current?.dismiss()
 							}}>

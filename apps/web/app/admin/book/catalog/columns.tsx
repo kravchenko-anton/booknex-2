@@ -18,7 +18,7 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 			<Link href={secureRoutes.bookOverviewRoute(row.original.slug)}>
 				<Image
 					alt={row.original.title}
-					className=' mx-auto w-[60px] cursor-pointer rounded'
+					className=' mx-auto w-[400px] cursor-pointer rounded'
 					src={getFileUrl(row.original.picture)}
 					width={200}
 					height={250}
@@ -75,7 +75,7 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	{
 		id: 'rating',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Rating</p>,
+		header: () => <p className='w-[200px] text-center text-lg'>Rating</p>,
 		cell: ({ row }) => (
 			<p className=' text-center text-xl font-light'>
 				<b className='text-warning font-bold'>{row.original.rating}</b>
@@ -85,9 +85,9 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	{
 		id: 'reading time',
 		enableHiding: false,
-		header: () => <p className='w-[120px] text-center text-lg'>Reading time</p>,
+		header: () => <p className='w-[200px] text-center text-lg'>Reading time</p>,
 		cell: ({ row }) => (
-			<p className='text-center text-xl font-light'>
+			<p className='w-[100px] text-center text-xl font-light'>
 				<b
 					className={cn(
 						'font-bold',

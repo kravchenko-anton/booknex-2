@@ -14,11 +14,10 @@ import {
 } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
 import { SvgButton } from '@/ui/svg-button/svg-button'
-import { share } from '@/utils/share-function'
+import { shareBook } from '@/utils/share-text'
 import { useQuery } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { minutesToTime } from 'global/helpers/time-converter'
-import { appName } from 'global/utils'
 import { QueryKeys } from 'global/utils/query-keys'
 import { ArrowLeft, Share } from 'icons'
 import type { FC } from 'react'
@@ -49,9 +48,7 @@ const Book: FC = () => {
 						variant='foreground'
 						icon={Share}
 						size='sm'
-						onPress={() =>
-							share(`${book.title} is a great book! Check it on ${appName}!`)
-						}
+						onPress={() => shareBook(book.title)}
 					/>
 				</View>
 				<Image

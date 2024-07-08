@@ -1,9 +1,9 @@
 // @ts-nocheck
 export { ReactComponent as Book } from '../book-open-text.svg'
 export { ReactComponent as CaseSensitive } from '../case-sensitive.svg'
-
 export { ReactComponent as Check } from '../check.svg'
 export { ReactComponent as ChevronDown } from '../chevron-down.svg'
+export { ReactComponent as ChevronLeft } from '../chevron-left.svg'
 export { ReactComponent as ChevronRight } from '../chevron-right.svg'
 export { ReactComponent as ChevronUp } from '../chevron-up.svg'
 export { ReactComponent as Combine } from '../combine.svg'
@@ -24,6 +24,8 @@ export { ReactComponent as Search } from '../search.svg'
 export { ReactComponent as Settings } from '../settings.svg'
 export { ReactComponent as Star } from '../star.svg'
 export { ReactComponent as Trash } from '../trash.svg'
+export { ReactComponent as TrendingDown } from '../trending-down.svg'
+export { ReactComponent as TrendingUp } from '../trending-up.svg'
 
 export { ReactComponent as User } from '../user.svg'
 export { ReactComponent as Close } from '../x.svg'

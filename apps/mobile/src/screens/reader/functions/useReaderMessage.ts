@@ -1,4 +1,4 @@
-import { share } from '@/utils/share-function'
+import { shareText } from '@/utils/share-text'
 import { errorToast } from '@/utils/toast'
 import type { CreateReaction } from 'global/api-client'
 import { Linking, NativeModules, Platform } from 'react-native'
@@ -71,7 +71,7 @@ export const useReaderMessage = ({
 			onContentLoadEnd()
 		}
 		if (type === ReaderMessageType.Share) {
-			await share(payload.text)
+			await shareText(payload.text)
 		}
 		if (type === ReaderMessageType.Translate) {
 			const link = `https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${payload.text}`

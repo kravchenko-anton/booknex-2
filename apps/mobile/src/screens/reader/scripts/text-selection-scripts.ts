@@ -81,13 +81,12 @@ return { startOffset, endOffset };
 	});
 `
 
-export const textSelectMenu = (isOnline: boolean) => `
+export const textSelectMenu = `
 const selectMenu = document.getElementById('select-menu');
 selectMenu.style.opacity = '0';
 selectMenu.style.display = 'none';
 selectMenu.style.pointerEvents = 'none';
 selectMenu.style.visibility = 'hidden';
-const isOnline = ${isOnline};
 let isFirstSelection = true;
 document.addEventListener('click', (e) => {
 		isFirstSelection = true;
@@ -128,7 +127,7 @@ document.addEventListener('contextmenu', (e) => {
 		
 	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
 	const isParentTagMark = Boolean(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode.tagName === 'MARK');
-	if (isOverlappingMark || startXpath !== endXpath || isParentTagMark || !isOnline) { 
+	if (isOverlappingMark || startXpath !== endXpath || isParentTagMark ) { 
 		reactionItems.forEach((item) => {
 			item.style.opacity = '0.5';
 			item.style.pointerEvents = 'none';

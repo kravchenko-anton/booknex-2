@@ -2,7 +2,6 @@ import type { ThemePackType } from '@/screens/reader/components/reader-customiza
 import { composeReaderViewHtml } from '@/screens/reader/injections/compose-html-injection'
 import { windowWidth } from '@/utils/dimensions'
 import { doublePress } from '@/utils/handleDoublePress'
-import { useNetInfo } from '@react-native-community/netinfo'
 import type { ReactionByBookOutput } from 'global/api-client'
 import type { FunctionType } from 'global/types'
 import { forwardRef } from 'react'
@@ -35,7 +34,6 @@ const ReaderViewer = forwardRef(
 			picture,
 			file
 		} = properties
-		const { isConnected } = useNetInfo()
 
 		if (!defaultProperties) return <View className='flex-1' />
 		return (
@@ -51,7 +49,7 @@ const ReaderViewer = forwardRef(
 						className='bottom-0 left-0 right-0 top-0 z-10 m-0 p-0'
 						menuItems={[]}
 						decelerationRate='normal'
-						// prevent fast scroll in webview
+						//TODO: prevent fast scroll in webview
 						renderLoading={() => (
 							<View
 								className='h-screen w-screen'
@@ -66,8 +64,7 @@ const ReaderViewer = forwardRef(
 								defaultProperties,
 								file,
 								picture,
-								title,
-								isOnline: !!isConnected
+								title
 							})
 						}}
 						style={{

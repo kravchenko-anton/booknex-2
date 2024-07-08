@@ -5,7 +5,7 @@ import { Button, Flatlist, Loader, Title } from '@/ui'
 import { SvgButton } from '@/ui/svg-button/svg-button'
 import { fontSettings } from '@/ui/title/settings'
 import { cn } from '@/utils'
-import { share } from '@/utils/share-function'
+import { shareReaction } from '@/utils/share-text'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Color } from 'global/colors'
 import { timeAgo } from 'global/utils'
@@ -208,7 +208,7 @@ const Reactions = () => {
 										variant='foreground'
 										className='mr-2'
 										onPress={() => {
-											share(item.text)
+											shareReaction(item.text)
 										}}>
 										Share
 									</Button>

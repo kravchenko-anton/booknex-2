@@ -59,9 +59,7 @@ export const updatedContent = async (text: string) => {
 			indentSize: 2,
 			endNewline: true
 		})
-		.then((formatted: string) =>
-			formatted.replaceAll('<div>', '').replaceAll('</div>', '')
-		)
+		.then((formatted: string) => formatted)
 }
 
 const insertIdToImages = (
