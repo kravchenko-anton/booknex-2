@@ -1,12 +1,10 @@
 'use client'
 
-import * as React from 'react'
-import { Pie, PieChart } from 'recharts'
-
 import {
 	Card,
 	CardContent,
 	CardDescription,
+	CardFooter,
 	CardHeader,
 	CardTitle
 } from '@/components/ui/card'
@@ -15,6 +13,8 @@ import {
 	ChartTooltip,
 	ChartTooltipContent
 } from '@/components/ui/chart'
+import * as React from 'react'
+import { Pie, PieChart } from 'recharts'
 
 export const HtmlInfoChart = ({
 	data
@@ -52,5 +52,19 @@ export const HtmlInfoChart = ({
 				</PieChart>
 			</ChartContainer>
 		</CardContent>
+		<CardFooter className='flex-col gap-2 text-sm'>
+			<div className='flex items-center font-medium leading-none'>
+				All HTML elements used is{' '}
+				{data.reduce(
+					(accumulator, { value }) => accumulator + Number(value),
+					0
+				)}
+			</div>
+			<div className='text-gray flex items-center justify-center gap-2 text-center leading-none'>
+				<p className='text-gray font-mono'>
+					{data.map(({ name }) => name).join(', ')}
+				</p>
+			</div>
+		</CardFooter>
 	</Card>
 )

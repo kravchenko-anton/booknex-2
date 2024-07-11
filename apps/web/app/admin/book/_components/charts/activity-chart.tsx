@@ -72,7 +72,7 @@ export const ActivityChart = ({
 				<div className='grid flex-1 gap-1 text-center sm:text-left'>
 					<CardTitle>Area Chart - Interactive</CardTitle>
 					<CardDescription>
-						Showing total visitors for the last 3 months
+						Showing total reading time, pages read and progress delta
 					</CardDescription>
 				</div>
 				<Select value={timeRange} onValueChange={setTimeRange}>

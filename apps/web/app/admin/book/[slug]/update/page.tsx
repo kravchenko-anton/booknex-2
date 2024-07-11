@@ -88,9 +88,6 @@ const Page: FC = () => {
 	if (!book || !ebook) return <Loader />
 	return (
 		<div>
-			<h1 className='mb-4 text-center text-3xl font-medium'>
-				Update <b>{book.title}</b> book
-			</h1>
 			<div className='mb-4 justify-between gap-5  md:flex'>
 				<div>
 					<div>

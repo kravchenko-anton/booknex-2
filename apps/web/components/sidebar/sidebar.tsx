@@ -7,6 +7,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useAuthStore } from '@/services/store/auth-store'
 import { cn } from '@/utils'
+import { tapAnimation } from '@/utils/framer-animation'
+import { motion } from 'framer-motion'
 import { Color } from 'global/colors'
 import { Book, Logout, MoreHorizontal, Settings, User } from 'icons'
 import Link from 'next/link'
@@ -32,28 +34,23 @@ export const Sidebar: FC = () => {
 				<button
 					className='flex cursor-pointer items-center text-2xl font-bold xl:mb-5'
 					type='button'>
-					<div className=' rounded-full bg-white p-2'>
+					<motion.div className='rounded-full bg-white p-2' {...tapAnimation}>
 						<Book className='text-black' height={20} width={20} />
-					</div>
+					</motion.div>
 				</button>
 				<ul className='hidden xl:block'>
 					{iconsList.map(icon => (
-						<li className='w-full' key={icon.link}>
+						<motion.div className='w-full' key={icon.link} {...tapAnimation}>
 							<Link
 								href={icon.link}
 								className={cn(
-									'my-8 flex items-center duration-100  ease-linear xl:gap-5'
+									'mb-4 flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:text-white md:h-8 md:w-8',
+									activePath === icon.link && 'bg-bordered text-white'
 								)}>
-								<icon.icon
-									width={30}
-									height={30}
-									className='hidden xl:block'
-									style={{
-										color: activePath === icon.link ? '#fff' : '#9ca3af'
-									}}
-								/>
+								<icon.icon width={22} height={22} />
+								<span className='sr-only'>{icon.name}</span>
 							</Link>
-						</li>
+						</motion.div>
 					))}
 				</ul>
 				<div

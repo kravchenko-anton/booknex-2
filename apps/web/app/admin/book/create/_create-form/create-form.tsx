@@ -10,7 +10,6 @@ export const CreateBookForm: FC = () => {
 	const { control, ...form } = useCreateForm()
 	return (
 		<div>
-			<h1 className='mb-4 text-center text-3xl font-medium'>Create book</h1>
 			<div className='mb-4 justify-between gap-5  md:flex'>
 				<div>
 					<div>

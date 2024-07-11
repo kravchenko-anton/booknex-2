@@ -1,5 +1,12 @@
 import { Button } from '@/components/ui'
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow
+} from '@/components/ui/table'
 import type { useReactTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
 import Link from 'next/link'
@@ -19,6 +26,22 @@ const DataTable: FC<DataTableProperties> = ({
 }) => (
 	<>
 		<Table>
+			<TableHeader>
+				{table.getHeaderGroups().map(headerGroup => (
+					<TableRow key={headerGroup.id}>
+						{headerGroup.headers.map(header => (
+							<TableHead key={header.id}>
+								{header.isPlaceholder
+									? null
+									: flexRender(
+											header.column.columnDef.header,
+											header.getContext()
+										)}
+							</TableHead>
+						))}
+					</TableRow>
+				))}
+			</TableHeader>
 			{table.getRowModel().rows?.length ? (
 				<TableBody>
 					{table.getRowModel().rows.map(row => (

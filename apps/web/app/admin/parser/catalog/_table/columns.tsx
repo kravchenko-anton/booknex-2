@@ -6,6 +6,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { TapComponent } from '@/utils/framer-animation'
 import { acceptToast } from '@/utils/toast'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { AxiosResponse } from 'axios'
@@ -27,21 +28,23 @@ export const columns = ({
 	{
 		id: 'picture',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Picture</p>,
+		header: () => <p className='text-md text-center'>Picture</p>,
 		cell: ({ row }) => (
-			<img
-				alt={row.original.title}
-				className='mx-auto w-[60px] cursor-pointer rounded'
-				src={getFileUrl(row.original.picture)}
+			<TapComponent
 				onClick={() => {
 					useAsTemplate(row.original.slug)
-				}}
-			/>
+				}}>
+				<img
+					alt={row.original.title}
+					className='mx-auto w-[60px] cursor-pointer rounded'
+					src={getFileUrl(row.original.picture)}
+				/>
+			</TapComponent>
 		)
 	},
 	{
 		id: 'Information',
-		header: () => <p className='text-center text-lg'>Information</p>,
+		header: () => <p className='text-md text-center'>Information</p>,
 		cell: ({ row }) => (
 			<div>
 				<h3 className='text-xl'>{row.original.title}</h3>
@@ -52,7 +55,7 @@ export const columns = ({
 	{
 		//rating
 		id: 'rating',
-		header: () => <p className='text-center text-lg'>Rating</p>,
+		header: () => <p className='text-md text-center'>Rating</p>,
 		cell: ({ row }) => (
 			<h1 className='text-warning flex items-center justify-center text-lg '>
 				{row.original.rating}
@@ -61,7 +64,7 @@ export const columns = ({
 	},
 	{
 		id: 'description',
-		header: () => <p className='text-center text-lg'>Description</p>,
+		header: () => <p className='text-md text-center'>Description</p>,
 		cell: ({ row }) => (
 			<Drawer>
 				<DrawerTrigger asChild>
@@ -81,11 +84,13 @@ export const columns = ({
 		cell: ({ row }) => (
 			<DropdownMenu>
 				<DropdownMenuTrigger className='focus-visible:outline-0'>
-					<MoreHorizontal
-						height={40}
-						width={40}
-						className='bg-muted border-bordered rounded border-[1px] p-2'
-					/>
+					<TapComponent>
+						<MoreHorizontal
+							height={40}
+							width={40}
+							className='bg-muted border-bordered rounded border-[1px] p-2'
+						/>
+					</TapComponent>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align='end'>
 					<DropdownMenuItem

@@ -1,4 +1,11 @@
 import { Button } from '@/components/ui'
+import {
+	ChartContainer,
+	ChartLegend,
+	ChartLegendContent,
+	ChartTooltip,
+	ChartTooltipContent
+} from '@/components/ui/chart'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import {
 	DropdownMenu,
@@ -16,15 +23,8 @@ import { timeAgo } from 'global/helpers/time-format'
 import { getTimeDate } from 'global/utils'
 import { MoreHorizontal } from 'icons'
 import { NothingFound } from 'illustrations'
-import {
-	Legend,
-	Line,
-	LineChart,
-	ResponsiveContainer,
-	Tooltip,
-	XAxis,
-	YAxis
-} from 'recharts'
+import * as React from 'react'
+import { Area, AreaChart, XAxis } from 'recharts'
 
 export const columns = ({
 	remove,
@@ -36,27 +36,41 @@ export const columns = ({
 	{
 		id: 'id',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>id</p>,
-		cell: ({ row }) => <p className='text-center text-2xl'>{row.original.id}</p>
+		header: () => <p className='text-md text-center'>id</p>,
+		cell: ({ row }) => (
+			<Drawer>
+				<DrawerTrigger asChild>
+					<p className='text-center text-2xl'>id</p>
+				</DrawerTrigger>
+				<DrawerContent>
+					<span className='p-6 pb-10 text-justify text-xl'>
+						{row.original.id}
+					</span>
+				</DrawerContent>
+			</Drawer>
+		)
 	},
 	{
 		id: 'picture',
-		header: () => <p className='text-center text-lg'>Picture</p>,
+		header: () => <p className='text-md text-center'>Picture</p>,
 		enableHiding: false,
 		cell: ({ row }) => (
 			<img
 				alt={row.original.email}
-				src={getFileUrl(row.original.picture || 'fallback.png')}
+				src={getFileUrl(row.original.picture)}
 				width={50}
 				height={50}
 				className=' mx-auto h-[60px] w-[60px] rounded-md'
+				onError={e => {
+					e.currentTarget.src = getFileUrl('fallback.png')
+				}}
 			/>
 		)
 	},
 	{
 		id: 'Bio',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Info</p>,
+		header: () => <p className='text-md text-center'>Info</p>,
 		cell: ({ row }) => (
 			<div className=' gap-4'>
 				<h2 className='text-lg'>{row.original.fullName}</h2>
@@ -71,7 +85,7 @@ export const columns = ({
 	{
 		id: 'Joined at',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Joined at</p>,
+		header: () => <p className='text-md text-center'>Joined at</p>,
 		cell: ({ row }) => (
 			<div className='text-center'>
 				<p>{timeAgo(getTimeDate(row.original.createdAt))}</p>
@@ -82,7 +96,7 @@ export const columns = ({
 	{
 		id: 'Activities',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Activities</p>,
+		header: () => <p className='text-md text-center'>Activities</p>,
 		cell: ({ row }) => (
 			<div className='flex items-center justify-center'>
 				<Drawer>
@@ -98,46 +112,88 @@ export const columns = ({
 					</DrawerTrigger>
 					<DrawerContent>
 						{row.original.statistics.length > 0 ? (
-							<div className='mb-8'>
-								<ResponsiveContainer width='100%' height={150}>
-									<LineChart
-										height={150}
-										width={800}
-										data={row?.original.statistics.map(history => ({
-											...history,
-											readingTimeMin:
-												Math.round(history.readingTimeMs / 60_000) || 0,
-											name: getTimeDate(history.endDate).toLocaleDateString()
-										}))}
-										margin={{
-											top: 5,
-											right: 30,
-											left: 20,
-											bottom: 5
-										}}>
-										<XAxis dataKey='name' />
-										<YAxis />
-										<Tooltip
-											contentStyle={{ backgroundColor: Color.bordered }}
-											itemStyle={{ color: Color.white }}
-										/>
-										<Legend />
-										<Line
-											dot={false}
-											type='monotone'
-											dataKey='readingTimeMin'
-											stroke='#8884d8'
-										/>
-
-										<Line
-											dot={false}
-											type='monotone'
-											dataKey='progressDelta'
-											stroke='#82ca9d'
-										/>
-									</LineChart>
-								</ResponsiveContainer>
-							</div>
+							<ChartContainer
+								config={{}}
+								className='aspect-auto h-[250px] w-full'>
+								<AreaChart
+									data={row?.original.statistics.map(history => ({
+										...history,
+										readingTimeMin:
+											Math.round(history.readingTimeMs / 60_000) || 0,
+										name: getTimeDate(history.endDate).toLocaleDateString(),
+										date: history.endDate
+									}))}>
+									<defs>
+										<linearGradient id='color1' x1='0' y1='0' x2='0' y2='1'>
+											<stop
+												offset='5%'
+												stopColor={'#6E6E70'}
+												stopOpacity={0.9}
+											/>
+											<stop
+												offset='95%'
+												stopColor={'#28282A'}
+												stopOpacity={0.1}
+											/>
+										</linearGradient>
+										<linearGradient id='color2' x1='0' y1='0' x2='0' y2='1'>
+											<stop
+												offset='5%'
+												stopColor={Color.success}
+												stopOpacity={0.9}
+											/>
+											<stop
+												offset='95%'
+												stopColor={'#28282A'}
+												stopOpacity={0.1}
+											/>
+										</linearGradient>
+									</defs>
+									<XAxis
+										dataKey='date'
+										tickLine={false}
+										axisLine={false}
+										tickMargin={8}
+										minTickGap={32}
+										tickFormatter={value => {
+											const date = new Date(value)
+											return date.toLocaleDateString('en-US', {
+												month: 'short',
+												day: 'numeric'
+											})
+										}}
+									/>
+									<ChartTooltip
+										cursor={false}
+										content={
+											<ChartTooltipContent
+												indicator='dot'
+												labelFormatter={value =>
+													new Date(value).toLocaleDateString('en-US', {
+														month: 'short',
+														day: 'numeric'
+													})
+												}
+											/>
+										}
+									/>
+									<Area
+										dataKey='readingTimeMin'
+										type='natural'
+										fill='url(#color1)'
+										stroke={'#CBCBCD'}
+										stackId='a'
+									/>
+									<Area
+										dataKey='progressDelta'
+										type='natural'
+										stroke={'#CBCBCD'}
+										fill='url(#color2)'
+										stackId='a'
+									/>
+									<ChartLegend content={<ChartLegendContent />} />
+								</AreaChart>
+							</ChartContainer>
 						) : (
 							<div className='mx-auto mb-8 mt-4'>
 								<NothingFound
@@ -159,7 +215,7 @@ export const columns = ({
 	{
 		id: 'Library',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Library</p>,
+		header: () => <p className='text-md text-center'>Library</p>,
 		cell: ({ row }) => (
 			<div className=' max-w-[80px] items-center justify-center  gap-2'>
 				<Button size='sm' variant='muted' className='m-1 w-full'>
@@ -181,7 +237,11 @@ export const columns = ({
 		cell: ({ row }) => (
 			<div className=' max-w-[110px] items-center justify-center gap-1'>
 				{row.original.selectedGenres.map(genre => (
-					<GenreElement title={genre.name} svgUri={genre.icon} />
+					<GenreElement
+						key={genre.name}
+						title={genre.name}
+						svgUri={genre.icon}
+					/>
 				))}
 			</div>
 		)

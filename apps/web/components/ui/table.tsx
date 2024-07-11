@@ -4,7 +4,7 @@ import { forwardRef } from 'react'
 
 const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
 	({ className, ...properties }, reference) => (
-		<div className=' border-bordered border-collapse overflow-auto rounded border-[1px]'>
+		<div className='border-bordered border-collapse overflow-auto rounded border-[1px]'>
 			<table
 				ref={reference}
 				className={cn(

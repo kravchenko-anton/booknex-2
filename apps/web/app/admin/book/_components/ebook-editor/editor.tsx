@@ -1,10 +1,25 @@
 import { TrimContentMenu } from '@/app/admin/book/_components/ebook-editor/trim-content-menu'
 import { useBookCompose } from '@/app/admin/book/_components/ebook-editor/useBookCompose'
+import { getTagColor } from '@/app/admin/book/_components/ebook-tabs'
 import { DropZone, Input, TextArea } from '@/components/ui'
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle
+} from '@/components/ui/card'
+import {
+	ChartContainer,
+	ChartTooltip,
+	ChartTooltipContent
+} from '@/components/ui/chart'
 import ErrorMessage from '@/components/ui/error-message/error-message'
-import { errorToast } from '@/utils/toast'
+import { cn } from '@/utils'
+import { TapComponent } from '@/utils/framer-animation'
+import { errorToast, successToast } from '@/utils/toast'
 import type { UnfoldOutputImagesInner } from 'global/api-client'
-import { Color } from 'global/colors'
 import {
 	Copy,
 	HardDriveDownload,
@@ -14,9 +29,10 @@ import {
 import type { BaseFieldProperties } from 'global/types'
 import { postProcessingHtml } from 'global/utils/html-validation'
 import { CaseSensitive, ChevronDown, ChevronUp, Close, Combine } from 'icons'
+import * as React from 'react'
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
-import { Pie, PieChart, Tooltip } from 'recharts'
+import { Pie, PieChart } from 'recharts'
 
 const EbookComposer = <T extends Record<string, any>>({
 	control,
@@ -35,111 +51,153 @@ const EbookComposer = <T extends Record<string, any>>({
 				setImages,
 				images
 			})
-			console.log('errors', error)
+			const data =
+				books.state.length === 0
+					? []
+					: Object.entries(
+							[
+								...new DOMParser()
+									.parseFromString(
+										books.state
+											.map(book =>
+												book.chapters
+													.map(chapter => `${chapter.text}`.trim())
+													.join('')
+											)
+											.join(''),
+										'text/html'
+									)
+									.querySelectorAll('*')
+							]
+								.map(tag => tag.nodeName)
+								.reduce((accumulator, tag) => {
+									if (tag === 'P') return accumulator
+									if (tag === 'SPAN') return accumulator
+									if (tag === 'BODY') return accumulator
+									if (tag === 'HTML') return accumulator
+									if (tag === 'HEAD') return accumulator
+									if (tag === 'DIV') return accumulator
+									// @ts-ignore
+									accumulator[tag] = accumulator[tag] ? accumulator[tag] + 1 : 1
+									return accumulator
+								}, {})
+						).map(([name, value]) => ({ name, value, fill: getTagColor(name) }))
 			return (
 				<div className='md:w-max md:overflow-y-scroll '>
 					<div className='mb-4'>
-						<div>
-							<h1 className='mt-2  text-xl'>Book file</h1>
-							<div className='flex items-center justify-between'>
-								<div className='flex items-end gap-2'>
-									<DropZone
-										multiple
-										size='sm'
-										accept='.epub'
-										disabled={books.unfoldLoading}
-										onDropFile={files => {
-											books.upload(files)
-										}}
-										onFileDelete={(_file, index) => {
-											if (!books.state[index]?.id) return
-											books.delete({
-												bookId: books.state[index]?.id || ''
-											})
-										}}
-									/>
-									<HardDriveDownload
-										width={33}
-										height={33}
-										title='unStash eBook (download from storage latest stashed book)'
-										className='bg-foreground border-bordered cursor-pointer rounded border-[1px] p-1.5'
-										onClick={books.unStashEBook}
-									/>
-									<Copy
-										width={33}
-										height={33}
-										title='download ebook (for validation)'
-										className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
-										onClick={() => {
-											navigator.clipboard.writeText(
-												JSON.stringify(
-													postProcessingHtml(
-														books.state
-															.map(book =>
-																book.chapters
-																	.map(chapter => `${chapter.text}`.trim())
+						<div className='mb-4  block w-max justify-between gap-10  md:flex'>
+							<div className='mb-4 md:mb-0'>
+								<h1 className='mt-2  text-xl'>Book file</h1>
+								<div className='flex items-center justify-between'>
+									<div className='flex items-end gap-2'>
+										<DropZone
+											multiple
+											size='sm'
+											accept='.epub'
+											disabled={books.unfoldLoading}
+											onDropFile={files => {
+												books.upload(files)
+											}}
+											onFileDelete={(_file, index) => {
+												if (!books.state[index]?.id) return
+												books.delete({
+													bookId: books.state[index]?.id || ''
+												})
+											}}
+										/>
+										<TapComponent>
+											<HardDriveDownload
+												width={33}
+												height={33}
+												title='unStash eBook (download from storage latest stashed book)'
+												className='bg-foreground border-bordered cursor-pointer rounded border-[1px] p-1.5'
+												onClick={books.unStashEBook}
+											/>
+										</TapComponent>
+										<TapComponent>
+											<Copy
+												width={33}
+												height={33}
+												title='download ebook (for validation)'
+												className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
+												onClick={() => {
+													navigator.clipboard.writeText(
+														JSON.stringify(
+															postProcessingHtml(
+																books.state
+																	.map(book =>
+																		book.chapters
+																			.map(chapter => `${chapter.text}`.trim())
+																			.join('')
+																	)
 																	.join('')
 															)
-															.join('')
+														)
 													)
-												)
-											)
-										}}
-									/>
-									<div>
-										<HardDriveUpload
-											width={33}
-											height={33}
-											title='Stash eBook (save current book state to storage)'
-											className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
-											onClick={books.stashEBook}
-										/>
+													successToast('Ebook copied to clipboard')
+												}}
+											/>
+										</TapComponent>
+										<TapComponent>
+											<HardDriveUpload
+												width={33}
+												height={33}
+												title='Stash eBook (save current book state to storage)'
+												className='bg-bordered border-bordered cursor-pointer rounded border-[1px] p-1.5'
+												onClick={books.stashEBook}
+											/>
+										</TapComponent>
 									</div>
 								</div>
 							</div>
-							<PieChart width={730} height={250}>
-								<Pie
-									label
-									dataKey='value'
-									nameKey='name'
-									cx='50%'
-									cy='50%'
-									innerRadius={60}
-									outerRadius={80}
-									fill={Color.primary}
-									color={Color.white}
-									data={Object.entries(
-										[
-											...new DOMParser()
-												.parseFromString(
-													books.state
-														.map(book =>
-															book.chapters
-																.map(chapter => `${chapter.text}`.trim())
-																.join('')
-														)
-														.join(''),
-													'text/html'
-												)
-												.querySelectorAll('*')
-										]
-											.map(tag => tag.nodeName)
-											.reduce((accumulator, tag) => {
-												if (tag === 'P') return accumulator
-												if (tag === 'BODY') return accumulator
-												if (tag === 'HTML') return accumulator
-												if (tag === 'HEAD') return accumulator
-												// @ts-ignore
-												accumulator[tag] = accumulator[tag]
-													? // @ts-ignore
-														accumulator[tag] + 1
-													: 1
-												return accumulator
-											}, {})
-									).map(([name, value]) => ({ name, value }))}
-								/>
-								<Tooltip />
-							</PieChart>
+							<Card
+								className={cn(
+									'flex flex-col',
+									books.state.length === 0 ? 'hidden' : 'block'
+								)}>
+								<CardHeader className='items-center pb-0'>
+									<CardTitle>
+										HTML Elements{' '}
+										<span className='text-muted-foreground'>(by count)</span>
+									</CardTitle>
+									<CardDescription>
+										Shows the count of HTML elements used in the document
+									</CardDescription>
+								</CardHeader>
+								<CardContent className='flex-1 pb-0'>
+									<ChartContainer
+										className='mx-auto aspect-square max-h-[250px]'
+										config={{}}>
+										<PieChart>
+											<ChartTooltip
+												cursor={false}
+												content={<ChartTooltipContent hideLabel />}
+											/>
+											<Pie
+												data={data}
+												dataKey='value'
+												nameKey='name'
+												innerRadius={60}
+												strokeWidth={5}
+											/>
+										</PieChart>
+									</ChartContainer>
+								</CardContent>
+								<CardFooter className='flex-col gap-2 text-sm'>
+									<div className='flex items-center font-medium leading-none'>
+										All HTML elements used is{' '}
+										{data.reduce(
+											(accumulator, { value }) => accumulator + Number(value),
+											0
+										)}
+									</div>
+									<div className='text-gray flex items-center justify-center gap-2 text-center leading-none'>
+										<p className='text-gray font-mono'>
+											{data.map(({ name }) => name).join(', ')}
+										</p>
+									</div>
+								</CardFooter>
+							</Card>
 						</div>
 
 						<div

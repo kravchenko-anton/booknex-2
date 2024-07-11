@@ -13,14 +13,14 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	{
 		id: 'picture',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Picture</p>,
+		header: () => <p className='text-md text-center'>Picture</p>,
 		cell: ({ row }) => (
 			<Link href={secureRoutes.bookOverviewRoute(row.original.slug)}>
 				<Image
 					alt={row.original.title}
-					className=' mx-auto w-[400px] cursor-pointer rounded'
+					className='z-40 mx-auto cursor-pointer rounded'
 					src={getFileUrl(row.original.picture)}
-					width={200}
+					width={300}
 					height={250}
 				/>
 			</Link>
@@ -28,7 +28,7 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	},
 	{
 		id: 'Information',
-		header: () => <p className='text-center text-lg'>Information</p>,
+		header: () => <p className='text-md text-center'>Information</p>,
 		cell: ({ row }) => (
 			<Link href={secureRoutes.bookOverviewRoute(row.original.slug)}>
 				<button className='items-start justify-start text-left'>
@@ -41,7 +41,7 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 
 	{
 		id: 'description',
-		header: () => <p className='text-center text-lg'>Description</p>,
+		header: () => <p className='text-md text-center'>Description</p>,
 		cell: ({ row }) => (
 			<Drawer>
 				<DrawerTrigger asChild>
@@ -59,7 +59,7 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	{
 		id: 'visible',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Visible</p>,
+		header: () => <p className='text-md text-center'>Visible</p>,
 		cell: ({ row }) => (
 			<p className='text-center text-lg font-light'>
 				<b
@@ -75,7 +75,7 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	{
 		id: 'rating',
 		enableHiding: false,
-		header: () => <p className='w-[200px] text-center text-lg'>Rating</p>,
+		header: () => <p className='text-md w-[200px] text-center'>Rating</p>,
 		cell: ({ row }) => (
 			<p className=' text-center text-xl font-light'>
 				<b className='text-warning font-bold'>{row.original.rating}</b>
@@ -85,12 +85,12 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	{
 		id: 'reading time',
 		enableHiding: false,
-		header: () => <p className='w-[200px] text-center text-lg'>Reading time</p>,
+		header: () => <p className='text-md w-[200px] text-center'>Reading time</p>,
 		cell: ({ row }) => (
-			<p className='w-[100px] text-center text-xl font-light'>
+			<p className=' text-center text-xl font-light'>
 				<b
 					className={cn(
-						'font-bold',
+						'text-center font-bold',
 						row.original.readingTime === 0 ? 'text-danger' : 'text-gray'
 					)}>
 					{minutesToTime(row.original.readingTime)}{' '}
@@ -101,7 +101,7 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 	{
 		id: 'genres',
 		enableHiding: false,
-		header: () => <p className='text-center text-lg'>Genres</p>,
+		header: () => <p className='text-md text-center'>Genres</p>,
 		cell: ({ row }) => (
 			<div className=' max-w-[150px] items-center justify-center gap-1'>
 				{row.original.genres.map(genre => (
