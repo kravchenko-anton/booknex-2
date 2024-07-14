@@ -35,7 +35,7 @@ export type ProgressBarProperties = React.ComponentPropsWithRef<typeof View> & {
 	 * @optional
 	 */
 	/**
-	 * testID to be used on tests.
+	 * testID to be used on __tests__.
 	 */
 	testID?: string
 }

@@ -1,3 +1,4 @@
+'use client'
 import type { ReactNode } from 'react'
 import type { Path, PathValue } from 'react-hook-form'
 import { Controller } from 'react-hook-form'

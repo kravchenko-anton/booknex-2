@@ -1,3 +1,4 @@
+'use client'
 import type { Path, PathValue } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 import TextArea from './text-area'

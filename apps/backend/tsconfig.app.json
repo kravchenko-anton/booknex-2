@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"outDir": "../dist/out-tsc",
 		"module": "ES2022",
-		"types": ["node", "express", "multer"],
+		"types": ["node", "express", "multer", "jest", "mocha"],
 		"lib": ["es5", "es6", "dom", "dom.iterable"],
 		"emitDecoratorMetadata": true,
 		"strict": true,
@@ -15,6 +15,7 @@
 		"downlevelIteration": true,
 		"baseUrl": ".",
 		"experimentalDecorators": true,
+		"sourceRoot": "/",
 		"paths": {
 			"@/*": ["./*"],
 			"global/*": ["../../libs/global/*"]

@@ -1,6 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import type { Prisma } from '@prisma/client'
-import { adminErrors, globalErrors } from 'global/errors'
+import { globalErrors } from 'global/errors'
 import { slugify } from 'global/helpers/slugify'
 import { checkHtmlValid } from 'global/utils/html-validation'
 import { StorageService } from '../storage/storage.service'
@@ -103,17 +102,7 @@ export class BookService {
 			file: Buffer.from(JSON.stringify(uploadedEbook)),
 			fileName: dto.title + '.json'
 		})
-		const checkExist = await this.prisma.book.findUnique({
-			where: {
-				title: dto.title
-			},
 
-			select: {
-				id: true
-			}
-		})
-		if (checkExist)
-			throw serverError(HttpStatus.BAD_REQUEST, adminErrors.bookAlreadyExist)
 		await this.prisma.book.create({
 			data: bookCreateFields({
 				dto,
@@ -128,11 +117,7 @@ export class BookService {
 	}
 
 	async remove(slug: string) {
-		await this.checkExist({
-			adminVisible: true,
-			where: { slug }
-		})
-
+		//TODO: сделать так, чтобы при удалении книги удалялись все статистики по ней
 		await this.prisma.book.delete({ where: { slug } })
 	}
 
@@ -227,25 +212,5 @@ export class BookService {
 			mainGenreSlug: mainGenre.slug,
 			genreIds: genres.map(({ slug }) => ({ slug }))
 		}
-	}
-
-	async checkExist({
-		where,
-		adminVisible = false
-	}: {
-		where: Prisma.BookWhereUniqueInput
-		adminVisible?: boolean
-	}) {
-		const exist = await this.prisma.book.findUnique({
-			where: { ...where, ...(adminVisible ? {} : { isPublic: true }) },
-			select: {
-				id: true
-			}
-		})
-
-		if (!exist)
-			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-
-		return !!exist
 	}
 }

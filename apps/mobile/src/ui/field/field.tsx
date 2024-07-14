@@ -1,5 +1,6 @@
 import { cn } from '@/utils'
 import { Color, InnerColor } from 'global/colors'
+import React from 'react'
 import type { Path, PathValue } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
 import { TextInput, View } from 'react-native'
@@ -16,7 +17,7 @@ const Field = <T extends Record<string, any>>({
 	placeholderTextColor = Color.gray,
 	isArea = false,
 	...properties
-}: FieldProperties<T>): JSX.Element | null => (
+}: FieldProperties<T>) => (
 	<Controller
 		control={properties.control}
 		name={properties.name}

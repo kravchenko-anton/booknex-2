@@ -76,7 +76,6 @@ const EbookComposer = <T extends Record<string, any>>({
 									if (tag === 'BODY') return accumulator
 									if (tag === 'HTML') return accumulator
 									if (tag === 'HEAD') return accumulator
-									if (tag === 'DIV') return accumulator
 									// @ts-ignore
 									accumulator[tag] = accumulator[tag] ? accumulator[tag] + 1 : 1
 									return accumulator

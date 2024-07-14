@@ -100,6 +100,7 @@ export class UserService {
 					progressDelta: history.progressDelta,
 					startProgress: history.startProgress,
 					endProgress: history.endProgress,
+
 					scrollPosition: history.scrollPosition,
 					startDate: new Date(history.startDate),
 					userId: userId,

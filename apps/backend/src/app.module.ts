@@ -3,6 +3,7 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { Module, type MiddlewareConsumer } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { ThrottlerModule } from '@nestjs/throttler'
+import { providePrismaClientExceptionFilter } from 'nestjs-prisma'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
@@ -49,7 +50,7 @@ import { AppLoggerMiddleware } from './utils/logger/logger'
 		ReactionModule
 	],
 	controllers: [AppController],
-	providers: [AppService]
+	providers: [AppService, providePrismaClientExceptionFilter()]
 })
 export class AppModule {
 	configure(consumer: MiddlewareConsumer) {

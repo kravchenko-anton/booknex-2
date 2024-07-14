@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/node'
 import { json } from 'express'
 import helmet from 'helmet'
 import { OpenApiNestFactory } from 'nest-openapi-tools'
+import { PrismaClientExceptionFilter } from 'nestjs-prisma'
 import { AppModule } from './app.module'
 import { HttpExceptionFilter } from './utils/common/http-exception.filter'
 import { SentryFilter } from './utils/common/sentry'
@@ -27,6 +28,7 @@ async function bootstrap() {
 		environment: process.env.NODE_ENV || 'development'
 	}) // Sentry configuration
 	app.useGlobalFilters(new SentryFilter(httpAdapter))
+	app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter))
 
 	await app.listen(process.env.PORT || 3000)
 }

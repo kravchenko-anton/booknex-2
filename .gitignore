@@ -20,6 +20,7 @@ apps/application/package-lock.json
 apps/mobile/.env
 apps/mobile/.env.production
 # dependencies
+/dist
 node_modules
 
 # IDEs and editors
@@ -53,7 +54,6 @@ testem.log
 Thumbs.db
 package-lock.json
 .nx/cache
-/dist
 # Expo
 node_modules/
 .expo/

@@ -25,7 +25,7 @@ export const checkHtmlValid = async (html: string) => {
 	const request = await axios
 		.request({
 			method: 'POST',
-			// do extrack more that 20 words
+			// do extract more than 20 words
 			url: 'https://validator.w3.org/nu/?out=json',
 			data: postProcessingHtml(html),
 			headers: {

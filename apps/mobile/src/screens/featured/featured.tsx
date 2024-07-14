@@ -24,7 +24,6 @@ const Featured = () => {
 		select: data => data.data,
 		staleTime: 1000 * 60 * 60 * 24
 	})
-
 	useEffect(() => {
 		Sentry.metrics.increment('get-featured')
 	}, [isSuccess])

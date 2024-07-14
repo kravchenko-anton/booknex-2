@@ -27,6 +27,7 @@ module.exports = {
 		sourceType: 'module'
 	},
 	rules: {
+		'react/prop-types': 'off',
 		'unicorn/no-useless-promise-resolve-reject': 'off',
 		'unicorn/prefer-date-now': 'off',
 		'unicorn/no-abusive-eslint-disable': 'off',
@@ -39,7 +40,6 @@ module.exports = {
 				allowBind: false
 			}
 		],
-		'react/prop-types': ['error', { ignore: ['navigation'] }],
 		'arrow-body-style': ['error', 'as-needed'],
 		'react/self-closing-comp': ['error', { component: true, html: true }],
 		'@typescript-eslint/naming-convention': [

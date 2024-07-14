@@ -1,3 +1,4 @@
+'use client'
 import { cn } from '@/utils'
 import { tapAnimation } from '@/utils/framer-animation'
 import { motion } from 'framer-motion'
