@@ -8,13 +8,31 @@ import { globalErrors } from 'global/errors'
 @Injectable()
 export class ReactionService {
 	constructor(private readonly prisma: PrismaService) {}
+
 	async create(userId: string, createReactionDto: CreateReaction) {
-		const isUserExist = await this.prisma.user.findUnique({
-			where: { id: userId }
+		// Find all reactions in the same xpath
+		const reactionsInXpath = await this.prisma.reaction.findMany({
+			where: {
+				userId,
+				xpath: createReactionDto.xpath,
+				bookSlug: createReactionDto.bookSlug
+			}
 		})
-		if (!isUserExist) {
-			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+		// Check if reaction already exists in the same offset range and not create inside already created reaction other reaction
+		for (const reaction of reactionsInXpath) {
+			if (
+				(reaction.startOffset <= createReactionDto.startOffset &&
+					reaction.endOffset >= createReactionDto.startOffset) ||
+				(reaction.startOffset <= createReactionDto.endOffset &&
+					reaction.endOffset >= createReactionDto.endOffset)
+			) {
+				throw serverError(
+					HttpStatus.BAD_REQUEST,
+					globalErrors.reactionAlreadyExist
+				)
+			}
 		}
+
 		return this.prisma.reaction.create({
 			data: {
 				userId,
@@ -30,14 +48,9 @@ export class ReactionService {
 		if (!reaction) {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		}
-		const isUserExist = await this.prisma.user.findUnique({
-			where: { id: userId }
-		})
-		if (!isUserExist) {
-			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		}
 		return this.prisma.reaction.update({
 			where: {
+				userId: userId,
 				id: updateReactionDto.id
 			},
 			data: updateReactionDto
@@ -45,15 +58,6 @@ export class ReactionService {
 	}
 
 	async reactionByBook(bookSlug: string, userId: string) {
-		const isUserExist = await this.prisma.user.findUnique({
-			where: { id: userId }
-		})
-
-		if (!isUserExist) {
-			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		}
-		// do checking exist in ebook
-
 		return this.prisma.reaction.findMany({
 			where: {
 				bookSlug,
@@ -75,12 +79,6 @@ export class ReactionService {
 	}
 
 	async reactionList(userId: string) {
-		const isUserExist = await this.prisma.user.findUnique({
-			where: { id: userId }
-		})
-		if (!isUserExist) {
-			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		}
 		const reactionsCount = await this.prisma.reaction.groupBy({
 			by: ['bookSlug'],
 			_count: {
@@ -128,12 +126,6 @@ export class ReactionService {
 			where: { id }
 		})
 		if (!reactionById) {
-			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		}
-		const isUserExist = await this.prisma.user.findUnique({
-			where: { id: userId }
-		})
-		if (!isUserExist) {
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		}
 		return this.prisma.reaction.delete({

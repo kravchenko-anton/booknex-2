@@ -21,7 +21,8 @@ export const globalErrors = {
 	invalidValue: 'Invalid value provided',
 	somethingWrong: 'Something went wrong, please try again later',
 	unknownError: 'Unknown error, please try again later',
-	noValidParameters: 'No valid parameters'
+	noValidParameters: 'No valid parameters',
+	reactionAlreadyExist: 'Reaction already exist'
 }
 
 export const adminErrors = {

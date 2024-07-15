@@ -4,11 +4,11 @@ export const markSelectScript = `
 		instance.unmark();
 		reactions.forEach(({ xpath, startOffset, id, endOffset, text }) => {
 				const element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-					if (!element) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: 'Element not found' }));
-					if (!element || !text || !startOffset) return;
+					if (!element) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: '☠️ Element not found' }));
+					if (!text || !endOffset) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: '☠️ Element not found' }));
 					const containerText = slugify(element.textContent.slice(startOffset, endOffset));
 					const textSlug = slugify(text);
-					if (containerText !== textSlug) return;
+					if (containerText !== textSlug) return window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', payload: '☠️ Text not equal container text' }));
 						const instance = new Mark(element);
 							instance.markRanges([
 								{
@@ -17,7 +17,7 @@ export const markSelectScript = `
 								}
 							], {
 								element: 'mark',
-								className: id,
+								className: id
 						})})
 	}
 			

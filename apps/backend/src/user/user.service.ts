@@ -93,36 +93,18 @@ export class UserService {
 		)
 		await this.prisma.readingHistory.createMany({
 			skipDuplicates: true,
-			data: dto
-				.map(history => ({
-					readingTimeMs: history.readingTimeMs,
-					endDate: new Date(history.endDate),
-					progressDelta: history.progressDelta,
-					startProgress: history.startProgress,
-					endProgress: history.endProgress,
+			data: dto.map(history => ({
+				readingTimeMs: history.readingTimeMs,
+				endDate: new Date(history.endDate),
+				progressDelta: history.progressDelta,
+				startProgress: history.startProgress,
+				endProgress: history.endProgress,
 
-					scrollPosition: history.scrollPosition,
-					startDate: new Date(history.startDate),
-					userId: userId,
-					bookSlug: history.bookSlug
-				}))
-				//TODO: мейби поправить, может не так работать
-				.reduce<SyncHistoryType[]>((accumulator, history) => {
-					const lastElement = accumulator.at(-1)
-					if (
-						lastElement &&
-						Math.abs(
-							lastElement.startDate.getTime() - history.startDate.getTime()
-						) <
-							1000 * 60 * 60 * 24
-					) {
-						lastElement.readingTimeMs += history.readingTimeMs
-						lastElement.endProgress = history.endProgress
-						lastElement.progressDelta += history.progressDelta
-						return accumulator
-					}
-					return [...accumulator, history]
-				}, [])
+				scrollPosition: history.scrollPosition,
+				startDate: new Date(history.startDate),
+				userId: userId,
+				bookSlug: history.bookSlug
+			}))
 		})
 	}
 

@@ -100,7 +100,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
     	wrapReactionsInMarkTag(${JSON.stringify(reactionBookList)});
     `)
 	}, [reactionBookList, createReaction])
-
+	console.log(reactionBookList)
 	return {
 		ebook,
 		readerLoading,
