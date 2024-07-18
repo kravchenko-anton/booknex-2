@@ -40,7 +40,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		enabled: !!slug,
 		networkMode: 'offlineFirst',
 		gcTime: Number.MAX_SAFE_INTEGER,
-		staleTime: 0
+		staleTime: 1000 * 60 * 60 * 24 * 7
 	})
 
 	const {

@@ -17,11 +17,11 @@ import { useMutation } from '@tanstack/react-query'
 import type { ReadingHistory } from 'global/api-client'
 import { Color } from 'global/colors'
 import { MutationKeys } from 'global/utils/query-keys'
-import { useEffect, useState, type FC } from 'react'
+import { type FC, useEffect, useState } from 'react'
 import BootSplash from 'react-native-bootsplash'
 import {
-	SafeAreaProvider,
-	initialWindowMetrics
+	initialWindowMetrics,
+	SafeAreaProvider
 } from 'react-native-safe-area-context'
 import { GestureDetectorProvider } from 'react-native-screens/gesture-handler'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
@@ -52,7 +52,7 @@ const Navigation: FC = () => {
 	})
 	const [currentRoute, setCurrentRoute] = useState<
 		keyof TypeRootStackParameterListType | undefined
-	>(user ? 'Featured' : 'Welcome')
+	>(user ? (latestHistory?.bookSlug ? 'Reader' : 'Featured') : 'Welcome')
 
 	const navReference =
 		useNavigationContainerRef<TypeRootStackParameterListType>()
@@ -88,16 +88,15 @@ const Navigation: FC = () => {
 					ref={navReference}
 					fallback={<Loader />}
 					onReady={() => {
-						if (user && latestHistory)
+						if (user && latestHistory?.bookSlug)
 							navReference.navigate('Reader', {
 								slug: latestHistory.bookSlug,
-								initialScrollPosition: latestHistory.scrollPosition
+								startFromZero: false
 							})
 						if (user && initialHistory.length > 0) syncHistory(initialHistory)
 						BootSplash.hide({ fade: true })
 					}}>
 					<Stack.Navigator
-						initialRouteName={user ? 'Featured' : 'Welcome'}
 						screenOptions={{
 							stackAnimation: 'fade',
 							headerShown: false,

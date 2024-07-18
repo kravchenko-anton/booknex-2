@@ -1,17 +1,17 @@
 import api from '@/api'
 import type { ThemePackType } from '@/screens/reader/components/reader-customization/theme-pack'
-import { Icon, Title } from '@/ui'
+import { Title } from '@/ui'
+import SelectItem from '@/ui/select-list/select-list-item'
 import { SvgButton } from '@/ui/svg-button/svg-button'
 import { shareReaction } from '@/utils/share-text'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import * as Sentry from '@sentry/react-native'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ReactionByBookOutput, UpdateReaction } from 'global/api-client'
-import { Color } from 'global/colors'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Share, Trash } from 'icons'
 import React, { type FC, type RefObject } from 'react'
-import { Pressable, View } from 'react-native'
+import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { reactions } from '../../../../../../backend/src/book/ebook/helpers/reactions'
 
@@ -21,6 +21,7 @@ export interface ReactionModalProperties {
 	slug: string
 	activeReactionPressed: ReactionByBookOutput | null
 }
+
 export const ReactionInfo: FC<ReactionModalProperties> = ({
 	sheetRef,
 	activeReactionPressed,
@@ -63,6 +64,7 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
 		})
 		Sentry.metrics.increment('update-reaction')
 	}
+
 	return (
 		<BottomSheetModal
 			enableContentPanningGesture
@@ -85,7 +87,11 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
 				/>
 			)}>
 			<View className='mx-4'>
-				<Title className=' ' size={'xxl'} weight='bold' numberOfLines={2}>
+				<Title
+					color={colorScheme.colorPalette.text}
+					size={'xxl'}
+					weight='bold'
+					numberOfLines={2}>
 					{activeReactionPressed?.text}
 				</Title>
 				<FlatList
@@ -113,12 +119,6 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
 									? undefined
 									: () => {
 											if (!activeReactionPressed) return
-											console.log({
-												id: activeReactionPressed.id,
-												dto: {
-													type: item.title
-												}
-											})
 											updateReaction({
 												id: activeReactionPressed.id,
 												type: item.title
@@ -129,41 +129,27 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
 					)}
 				/>
 				<View className='mt-2'>
-					<Pressable
-						className='flex-row items-center gap-2'
-						onPress={() => {
-							shareReaction(String(activeReactionPressed?.text))
-						}}>
-						<Icon
-							icon={Share}
-							size={'sm'}
-							stroke={Color.gray}
-							variant='transparent'
-						/>
-						<Title size='md' weight='medium' color={Color.white}>
-							Share
-						</Title>
-					</Pressable>
-					<Pressable
+					<SelectItem
+						icon={Share}
+						title={'Share'}
+						color={colorScheme.colorPalette.text}
+						onPress={async () => {
+							await shareReaction(String(activeReactionPressed?.text))
+						}}
+					/>
+					<SelectItem
+						icon={Trash}
+						color={colorScheme.colorPalette.text}
 						disabled={removeReactionLoading || !activeReactionPressed}
-						className='flex-row items-center gap-2'
+						title={'Delete'}
 						style={{
 							opacity: removeReactionLoading || !activeReactionPressed ? 0.5 : 1
 						}}
 						onPress={() => {
 							if (removeReactionLoading || !activeReactionPressed) return
 							removeReaction(activeReactionPressed.id)
-						}}>
-						<Icon
-							icon={Trash}
-							size={'sm'}
-							stroke={Color.gray}
-							variant='transparent'
-						/>
-						<Title size='md' weight='medium' color={Color.white}>
-							Delete
-						</Title>
-					</Pressable>
+						}}
+					/>
 				</View>
 			</View>
 		</BottomSheetModal>

@@ -1,4 +1,5 @@
 import api from '@/api'
+import { errorToast } from '@/utils/toast'
 import * as Sentry from '@sentry/react-native'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { CreateReaction } from 'global/api-client'
@@ -21,7 +22,7 @@ export const useReactions = (bookSlug: string) => {
 	})
 
 	const createReaction = (data: CreateReaction) => {
-		if (createReactionLoading) return
+		if (createReactionLoading) return errorToast('Please wait a moment')
 		createReactionMutation(data).then(async () => {
 			await queryClient.invalidateQueries({
 				queryKey: QueryKeys.reaction.bySlug(bookSlug)
@@ -41,6 +42,7 @@ export const useReactions = (bookSlug: string) => {
 
 	return {
 		createReaction,
-		reactionBookList
+		reactionBookList,
+		isLoading: createReactionLoading
 	}
 }

@@ -36,7 +36,7 @@ export const useLibraryWithSync = () => {
 	}, [isSuccess])
 
 	useEffect(() => {
-		if (isConnected && history.length > 0 && isFocus) refetch()
+		if (isConnected && isFocus) refetch()
 	}, [])
 	return {
 		library,

@@ -14,6 +14,7 @@ interface SvgButtonProperties extends Omit<ButtonProperties, 'isLoading'> {
 	title: string
 	altEmoji: string
 }
+
 export const SvgButton = ({
 	svgUri,
 	title,
