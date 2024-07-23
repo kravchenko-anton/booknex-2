@@ -91,7 +91,7 @@ const Navigation: FC = () => {
 						if (user && latestHistory?.bookSlug)
 							navReference.navigate('Reader', {
 								slug: latestHistory.bookSlug,
-								startFromZero: false
+								initialScrollPosition: latestHistory.scrollPosition
 							})
 						if (user && initialHistory.length > 0) syncHistory(initialHistory)
 						BootSplash.hide({ fade: true })

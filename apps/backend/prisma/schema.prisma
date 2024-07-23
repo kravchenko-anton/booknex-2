@@ -8,38 +8,49 @@ datasource db {
 }
 
 model Genre {
-  id                String      @id @default(uuid())
+  id            String         @id @default(uuid())
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   slug          String         @unique
   name          String         @unique
   icon          String         @default("")
-  emoji      String            @default("")
+  emoji         String         @default("")
   users         User[]
   books         Book[]         @relation("BookGenre")
   mainBooks     Book[]         @relation("BookMajorGenre")
   bookTemplates BookTemplate[]
+
   @@index([slug], name: "genre_slug_index")
 }
 
+model Author {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
+  books     Book[]
+
+  @@index([name], name: "author_name_index")
+}
+
 model Book {
-  id            String   @id @default(uuid())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  title         String   @unique
-  slug          String   @unique
-  author        String
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String   @unique
+  slug      String   @unique
+
   description   String
-  recommendable Boolean  @default(true)
+  recommendable Boolean @default(true)
 
   picture String
   ebook   String
 
   // Minutes
-  readingTime Int @default(0)
+  readingTime    Int              @default(0)
   // Chapters count
-  chapters    Int @default(0)
-  pagesCount  Int @default(0)
+  chapters       Int              @default(0)
+  pagesCount     Int              @default(0)
   rating         Float            @default(0)
   isPublic       Boolean          @default(false)
   mainGenreId    String
@@ -50,26 +61,45 @@ model Book {
   readingBy      User[]           @relation("ReadingBooks")
   readingHistory ReadingHistory[]
   reactions      Reaction[]
-  similarBooks Book[] @relation("SimilarBooks")
-  similarBy    Book[] @relation("SimilarBooks")
+  similarBooks   Book[]           @relation("SimilarBooks")
+  similarBy      Book[]           @relation("SimilarBooks")
+  Collections    Collection[]
+  keyPoints      String
+
+  author   Author @relation(fields: [authorId], references: [id])
+  authorId String
+
   @@index([slug], name: "book_slug_index")
 }
 
+model Collection {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String   @unique
+  slug        String   @unique
+  description String
+  banner      String
+  books       Book[]
+
+  @@index([slug], name: "collection_slug_index")
+}
 
 model Reaction {
-  id        String    @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  type      String
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  type        String
   description String?
-  text      String
-  xpath     String
+  text        String
+  xpath       String
   startOffset Int
-  endOffset Int
-  user      User     @relation(fields: [userId], references: [id])
-  book      Book     @relation(fields: [bookSlug], references: [slug])
-  userId    String
+  endOffset   Int
+  user        User     @relation(fields: [userId], references: [id])
+  book        Book     @relation(fields: [bookSlug], references: [slug])
+  userId      String
   bookSlug    String
+
   @@index([id], name: "reaction_id_index")
 }
 
@@ -89,7 +119,7 @@ model BookTemplate {
 }
 
 model User {
-  id                String         @id @default(uuid())
+  id             String           @id @default(uuid())
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   email          String           @unique
@@ -112,7 +142,7 @@ model User {
 }
 
 model ReadingHistory {
-  id          String    @id @default(uuid())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -140,7 +170,6 @@ enum StorageFolderEnum {
   ebooks
   booksCovers
 }
-
 
 enum AuthType {
   email

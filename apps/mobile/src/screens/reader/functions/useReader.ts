@@ -40,7 +40,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
 		enabled: !!slug,
 		networkMode: 'offlineFirst',
 		gcTime: Number.MAX_SAFE_INTEGER,
-		staleTime: 1000 * 60 * 60 * 24 * 7
+		staleTime: 1000 * 60 * 60 * 24
 	})
 
 	const {
@@ -101,6 +101,7 @@ export const useReader = (slug: string, initialScrollPosition: number) => {
     `)
 	}, [reactionBookList, createReaction])
 	console.log(reactionBookList)
+
 	return {
 		ebook,
 		readerLoading,

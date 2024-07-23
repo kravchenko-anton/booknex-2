@@ -8,7 +8,9 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const { data: books } = useQuery({
 		queryKey: QueryKeys.bookTemplate.catalog.action(searchTerm, page),
 		queryFn: () => api.parser.catalog(searchTerm, +page),
-		select: data => data.data
+		select: data => data.data,
+		// 1 hour
+		staleTime: 1000 * 60 * 60
 	})
 
 	const { mutateAsync: deleteTemplate, isPending: deleteTemplateLoading } =

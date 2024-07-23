@@ -8,7 +8,8 @@ export const useQueries = ({ searchTerm = '', page = 0 }) => {
 	const { data: users } = useQuery({
 		queryKey: QueryKeys.users.catalog.action(searchTerm, page),
 		queryFn: () => api.user.catalog(searchTerm, +page),
-		select: data => data.data
+		select: data => data.data,
+		staleTime: 1000 * 60 * 60
 	})
 
 	const { mutateAsync: deleteUser, isPending: deleteUserLoading } = useMutation(

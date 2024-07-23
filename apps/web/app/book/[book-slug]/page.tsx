@@ -21,7 +21,8 @@ const Page = () => {
 		queryKey: QueryKeys.book.infoBySlug(slug),
 		queryFn: () => api.book.infoBySlug(slug),
 		select: data => data.data,
-		retry: false
+		retry: false,
+		staleTime: 1000 * 60 * 60
 	})
 	if (isError) return notFound()
 

@@ -5,6 +5,7 @@ import { LineHeightSettings } from '@/screens/reader/components/reader-customiza
 import { PageMarginSettings } from '@/screens/reader/components/reader-customization/ui/page-margin-settings'
 import { ThemeStyleSettings } from '@/screens/reader/components/reader-customization/ui/theme-style-settings'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
+import { Color } from 'global/colors'
 import type { FC, RefObject } from 'react'
 import { Pressable, View } from 'react-native'
 
@@ -35,6 +36,12 @@ const ReaderCustomization: FC<ReaderCustomizationProperties> = ({
 			enableOverDrag
 			snapPoints={[290, 290]}
 			ref={sheetRef}
+			style={{
+				borderColor: Color.bordered,
+				borderWidth: 1,
+				borderTopLeftRadius: 16,
+				borderTopRightRadius: 16
+			}}
 			handleIndicatorStyle={{
 				backgroundColor: colorScheme.colorPalette.text
 			}}

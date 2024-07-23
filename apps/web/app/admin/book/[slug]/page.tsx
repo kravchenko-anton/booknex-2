@@ -26,7 +26,9 @@ const Page = () => {
 	const { data: book } = useQuery({
 		queryKey: QueryKeys.book.overview.bySlug(slug),
 		queryFn: () => api.book.adminInfoBySlug(slug),
-		select: data => data.data
+		select: data => data.data,
+		// 1 hour
+		staleTime: 1000 * 60 * 60
 	})
 	const onUpdateSuccess = async () => {
 		await queryClient.invalidateQueries({

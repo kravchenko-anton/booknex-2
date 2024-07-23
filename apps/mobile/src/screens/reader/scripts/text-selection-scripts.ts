@@ -87,15 +87,19 @@ selectMenu.style.opacity = '0';
 selectMenu.style.display = 'none';
 selectMenu.style.pointerEvents = 'none';
 selectMenu.style.visibility = 'hidden';
+
+
 let isFirstSelection = true;
 document.addEventListener('click', (e) => {
 		isFirstSelection = true;
-	setTimeout(() => {
-		selectMenu.style.opacity = '0';
-	}, 50);
-		selectMenu.style.display = 'none';
-		selectMenu.style.pointerEvents = 'none';
-		selectMenu.style.visibility = 'hidden';
+	selectMenu.style.transform = 'scale(1)';
+    selectMenu.style.opacity = '0';
+    setTimeout(() => {
+        selectMenu.style.display = 'none';
+        selectMenu.style.pointerEvents = 'none';
+        selectMenu.style.visibility = 'hidden';
+    		selectMenu.style.transform = 'translateY(0)';
+    }, 100);
 });
 
 
@@ -111,13 +115,21 @@ document.addEventListener('contextmenu', (e) => {
 	{ startOffset, endOffset, xpath: getXPath(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode)}
 	 } }));
 	const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
-	selectMenu.style.top = (rect.top + window.scrollY - 60)  + 'px';
+	const screenHeight = window.innerHeight;
+	const screenWidth = window.innerWidth;
+	const isOverlappingBottom = screenHeight - rect.top < 500;
+	const topPosition =  (rect.top + window.scrollY - 250)  + 'px';
+	const bottomPosition = (rect.top + window.scrollY + 60) + 'px';
+		selectMenu.style.top = isOverlappingBottom ? topPosition : bottomPosition;
+
 	setTimeout(() => {
+		selectMenu.style.transform = 'scale(1.02)';
 		selectMenu.style.opacity = '1';
 	}, 50);
 	selectMenu.style.pointerEvents = 'auto';
 	selectMenu.style.display = 'flex';
 	selectMenu.style.visibility = 'visible';
+
 	
 	const startXpath = getXPath(activeSelection.getRangeAt(0).startContainer.parentNode);
 	const endXpath = getXPath(activeSelection.getRangeAt(0).endContainer.parentNode);
@@ -147,8 +159,9 @@ document.addEventListener('selectionchange', () => {
 		selectMenu.style.opacity = '0';
 	}, 50);
 		selectMenu.style.pointerEvents = 'none';
-		selectMenu.style.display = 'none';
 		selectMenu.style.visibility = 'hidden';
+		selectMenu.style.display = 'none';
+		selectMenu.style.transform = 'translateY(0)';
 	}
 	isFirstSelection = false;
 });

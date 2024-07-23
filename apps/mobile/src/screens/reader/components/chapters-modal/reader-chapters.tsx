@@ -8,7 +8,7 @@ import {
 	type BottomSheetSectionListMethods
 } from '@gorhom/bottom-sheet'
 import type { EbookOutputChaptersInner } from 'global/api-client'
-import { useMemo, useRef, type FC, type RefObject } from 'react'
+import { type FC, type RefObject, useMemo, useRef } from 'react'
 import { Pressable } from 'react-native'
 
 export interface ReaderChaptersProperties {
@@ -48,6 +48,12 @@ const ReaderChapters: FC<ReaderChaptersProperties> = ({
 			ref={sheetRef}
 			snapPoints={['40%', '80%']}
 			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
+			style={{
+				borderColor: colorScheme.colorPalette.background.lighter,
+				borderWidth: 1,
+				borderTopLeftRadius: 16,
+				borderTopRightRadius: 16
+			}}
 			backgroundStyle={{
 				backgroundColor: colorScheme.colorPalette.background.darker
 			}}

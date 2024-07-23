@@ -32,7 +32,7 @@ const ReadingButton: FC<BookReadingButtonProperties> = ({ slug }) => {
 			.invalidateQueries({
 				queryKey: QueryKeys.library
 			})
-			.then(() => navigate('Reader', { slug, startFromZero: true }))
+			.then(() => navigate('Reader', { slug, initialScrollPosition: 0 }))
 	}
 
 	return (

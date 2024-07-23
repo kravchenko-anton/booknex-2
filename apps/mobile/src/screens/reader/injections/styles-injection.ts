@@ -141,14 +141,11 @@ export const getStyleTag = ({
 
 	
 				#select-menu {
-        background: ${Color.foreground} !important;
+				display: block !important;
         color: ${colorPalette.text} !important;
         padding: 0 !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        height: 48px !important;
+        background: ${Color.transparent} !important;
         width: ${windowWidth * 0.95}px !important;
-        border-radius: 10px !important;
     }
 
 
@@ -156,9 +153,12 @@ export const getStyleTag = ({
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				width: 100% !important;
+				width:80% !important;
+        height: 50px !important;
+        background: ${colorPalette.background.lighter} !important;
+        border-radius: 100px !important;
 			}
-
+		
 		.select-menu-reaction .select-menu-reaction-item {
         padding: 7.5px 7.5px;
         &:first-child {
@@ -171,25 +171,42 @@ export const getStyleTag = ({
     }
 
     .select-default-menu {
-				display: flex;
-				align-items: center;
-				justify-content: flex-end;
-				padding-left:20px;
+    border-radius: 0px !important;
+    margin-top: 5px !important;
+    width: 70% !important;
+    margin-left: 2% !important;
+		background: ${colorPalette.background.lighter} !important;
+    margin-right: 10% !important;
+    display: block !important;
 	    }
-
-    .select-default-menu img {
-        stroke: ${colorPalette.text} !important;
-				padding: 10px 10px;
-				 &:first-child {
-            padding-left: 10px !important;
-        }
-
-				&:last-child {
-					padding-right: 15px !important;
-				}
-
-    }
-    
+	    
+	 .select-default-menu-item {
+	    	display: flex !important;
+	    	justify-content: start !important;
+	    	gap: 20px !important;
+	    	align-items: center !important;
+	    	padding: 0 15px !important;
+	    	height: 45px !important;	
+	    	
+	    	> p {
+	    		font-size: 18px !important;
+	    		color: ${colorPalette.text} !important;
+	    		padding: 0;
+	    		user-select: none !important;
+	    	}
+	    	> svg {
+					width: 26px !important;
+					height: 26px !important;
+					min-width: 26px !important;
+					min-height: 26px !important;
+					stroke: ${colorPalette.text} !important;
+					padding: 0;
+	    	}
+	    }
+	    
+	    :#select-default-menu-item:focus {
+	    	background: ${colorPalette.background.lighter} !important;
+	    }
     img {
     max-width: 80% !important;
     max-height: 100% !important;

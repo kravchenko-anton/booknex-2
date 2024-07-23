@@ -1,9 +1,10 @@
 import api from '@/api'
 import type { CompareReadingBooksType } from '@/screens/library/compareReadingBooks'
 import { useFinishBook } from '@/screens/reader/functions/useFinishBook'
-import { AnimatedIcon, Icon, Image, Title } from '@/ui'
+import { AnimatedIcon, Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
+import SelectItem from '@/ui/select-list/select-list-item'
 import { shareBookWithAuthor } from '@/utils/share-text'
 import { successToast } from '@/utils/toast'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
@@ -13,8 +14,8 @@ import type { UserLibraryOutputReadingBooksInner } from 'global/api-client'
 import { Color } from 'global/colors'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Check, Download, MoreHorizontal, Share, Trash } from 'icons'
-import { useRef, useState, type FC } from 'react'
-import { Pressable, View } from 'react-native'
+import React, { type FC, useRef, useState } from 'react'
+import { View } from 'react-native'
 import Animated, { JumpingTransition } from 'react-native-reanimated'
 
 interface ReadingListProperties {
@@ -128,6 +129,12 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 				ref={sheetReference}
 				snapPoints={[300]}
 				handleIndicatorStyle={{ backgroundColor: Color.gray }}
+				style={{
+					borderColor: Color.bordered,
+					borderWidth: 1,
+					borderTopLeftRadius: 16,
+					borderTopRightRadius: 16
+				}}
 				backgroundStyle={{
 					backgroundColor: Color.foreground
 				}}
@@ -158,30 +165,25 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 					</View>
 					<View className='border-bordered border-t-2' />
 					<View className='mt-2'>
-						<Pressable
-							className='mb-2 flex-row items-center gap-2'
+						<SelectItem
+							icon={Share}
+							title={'Share'}
+							color={Color.white}
 							onPress={() => {
 								shareBookWithAuthor(
 									String(activeBookModalContent?.title),
 									String(activeBookModalContent?.author)
 								)
 								sheetReference.current?.dismiss()
-							}}>
-							<Icon
-								icon={Share}
-								size={'sm'}
-								stroke={Color.gray}
-								variant='transparent'
-							/>
-							<Title size='md' weight='medium' color={Color.white}>
-								Share
-							</Title>
-						</Pressable>
+							}}
+						/>
 						{queryClient.getQueryData(
 							QueryKeys.ebook.bySlug(activeBookModalContent?.slug as string)
 						) === undefined && isConnected ? (
-							<Pressable
-								className='mb-2 mt-2 flex-row items-center gap-2'
+							<SelectItem
+								icon={Download}
+								title={'Download book to read offline'}
+								color={Color.white}
 								onPress={() => {
 									queryClient
 										.prefetchQuery({
@@ -198,20 +200,13 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 										})
 
 									sheetReference.current?.dismiss()
-								}}>
-								<Icon
-									icon={Download}
-									size={'sm'}
-									stroke={Color.gray}
-									variant='transparent'
-								/>
-								<Title size='md' weight='medium' color={Color.white}>
-									Download book to read offline
-								</Title>
-							</Pressable>
+								}}
+							/>
 						) : null}
-						<Pressable
-							className='mb-2 mt-2 flex-row items-center gap-2'
+						<SelectItem
+							icon={Check}
+							title={'Mark as read'}
+							color={Color.white}
 							onPress={() => {
 								if (activeBookModalContent?.slug && !finishReadingLoading) {
 									onFinish(activeBookModalContent?.slug).then(() => {
@@ -219,36 +214,19 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
 									})
 									sheetReference.current?.dismiss()
 								}
-							}}>
-							<Icon
-								icon={Check}
-								size={'sm'}
-								stroke={Color.gray}
-								variant='transparent'
-							/>
-							<Title size='md' weight='medium' color={Color.white}>
-								Mark as read
-							</Title>
-						</Pressable>
-
-						<Pressable
-							className='mt-2 flex-row items-center gap-2'
+							}}
+						/>
+						<SelectItem
+							icon={Trash}
+							title={'Remove from library'}
+							color={Color.white}
 							onPress={() => {
 								if (activeBookModalContent?.slug) {
 									onRemoveFromLibrary(activeBookModalContent?.slug)
 									sheetReference.current?.dismiss()
 								}
-							}}>
-							<Icon
-								icon={Trash}
-								size={'sm'}
-								stroke={Color.gray}
-								variant='transparent'
-							/>
-							<Title size='md' weight='medium' color={Color.white}>
-								Remove from library
-							</Title>
-						</Pressable>
+							}}
+						/>
 					</View>
 				</View>
 			</BottomSheetModal>

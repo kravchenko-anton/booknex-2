@@ -16,7 +16,9 @@ const Page: FC<NextPageProps> = ({ searchParams }) => {
 	const { data: books } = useQuery({
 		queryKey: QueryKeys.book.catalog.action(searchTerm, page),
 		queryFn: () => api.book.catalog(searchTerm, +page),
-		select: data => data.data
+		select: data => data.data,
+		// 1 hour
+		staleTime: 1000 * 60 * 60
 	})
 
 	return <BookCatalogTable books={books} page={+page} searchTerm={searchTerm} />

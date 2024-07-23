@@ -3,6 +3,8 @@ import {
 	calculateProgress,
 	scrollCalculateProgress
 } from '@/screens/reader/scripts/calculate-progress'
+import { finishBookButton } from '@/screens/reader/scripts/html-elements/finish-book'
+import { selectMenuHtml } from '@/screens/reader/scripts/html-elements/select-menu'
 import { markSelectScript } from '@/screens/reader/scripts/mark-select'
 import {
 	onSelectTextScript,
@@ -22,6 +24,7 @@ interface ComposeReaderViewHtmlProperties {
 		reactions: ReactionByBookOutput[]
 	}
 }
+
 export const composeReaderViewHtml = ({
 	title,
 	file,
@@ -35,6 +38,9 @@ export const composeReaderViewHtml = ({
 			<style>${defaultProperties.theme}</style>
 			
 			${file}
+			${finishBookButton}
+			${selectMenuHtml}
+			
 			<script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"  type="text/javascript" charset="utf-8" ></script>
 			<script>
 			 				

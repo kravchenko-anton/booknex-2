@@ -8,6 +8,7 @@ import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import * as Sentry from '@sentry/react-native'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ReactionByBookOutput, UpdateReaction } from 'global/api-client'
+import { Color } from 'global/colors'
 import { MutationKeys, QueryKeys } from 'global/utils/query-keys'
 import { Share, Trash } from 'icons'
 import React, { type FC, type RefObject } from 'react'
@@ -75,6 +76,12 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
 			ref={sheetRef}
 			snapPoints={[250]}
 			handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
+			style={{
+				borderColor: Color.bordered,
+				borderWidth: 1,
+				borderTopLeftRadius: 16,
+				borderTopRightRadius: 16
+			}}
 			backgroundStyle={{
 				backgroundColor: colorScheme.colorPalette.background.darker
 			}}

@@ -14,6 +14,7 @@ interface GoalSelectModalProperties {
 	currentGoal: number
 	refetch: () => void
 }
+
 const allowedGoals = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 150, 180]
 
 export const GoalSelectModal: FC<GoalSelectModalProperties> = ({
@@ -41,6 +42,12 @@ export const GoalSelectModal: FC<GoalSelectModalProperties> = ({
 			handleIndicatorStyle={{ backgroundColor: Color.gray }}
 			backgroundStyle={{
 				backgroundColor: Color.foreground
+			}}
+			style={{
+				borderColor: Color.bordered,
+				borderWidth: 1,
+				borderTopLeftRadius: 16,
+				borderTopRightRadius: 16
 			}}
 			backdropComponent={backdropProperties => (
 				<BottomSheetBackdrop
