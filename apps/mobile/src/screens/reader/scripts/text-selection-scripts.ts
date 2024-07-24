@@ -92,13 +92,11 @@ selectMenu.style.visibility = 'hidden';
 let isFirstSelection = true;
 document.addEventListener('click', (e) => {
 		isFirstSelection = true;
-	selectMenu.style.transform = 'scale(1)';
     selectMenu.style.opacity = '0';
     setTimeout(() => {
         selectMenu.style.display = 'none';
         selectMenu.style.pointerEvents = 'none';
         selectMenu.style.visibility = 'hidden';
-    		selectMenu.style.transform = 'translateY(0)';
     }, 100);
 });
 
@@ -123,7 +121,6 @@ document.addEventListener('contextmenu', (e) => {
 		selectMenu.style.top = isOverlappingBottom ? topPosition : bottomPosition;
 
 	setTimeout(() => {
-		selectMenu.style.transform = 'scale(1.02)';
 		selectMenu.style.opacity = '1';
 	}, 50);
 	selectMenu.style.pointerEvents = 'auto';
@@ -155,13 +152,13 @@ document.addEventListener('contextmenu', (e) => {
 
 document.addEventListener('selectionchange', () => {
 	if (!isFirstSelection) { 
-	setTimeout(() => {
+		setTimeout(() => {
 		selectMenu.style.opacity = '0';
 	}, 50);
-		selectMenu.style.pointerEvents = 'none';
+			selectMenu.style.pointerEvents = 'none';
 		selectMenu.style.visibility = 'hidden';
 		selectMenu.style.display = 'none';
-		selectMenu.style.transform = 'translateY(0)';
+
 	}
 	isFirstSelection = false;
 });

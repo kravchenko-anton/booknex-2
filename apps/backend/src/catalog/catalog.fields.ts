@@ -10,12 +10,6 @@ export const catalogSearchFields = (query: string) =>
 					mode: 'insensitive',
 					contains: query
 				}
-			},
-			{
-				author: {
-					contains: query,
-					mode: 'insensitive'
-				}
 			}
 		])
 	})

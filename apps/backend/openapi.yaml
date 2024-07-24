@@ -536,6 +536,13 @@ paths:
         - storage
       security:
         - bearer: []
+  /app-metrics:
+    get:
+      operationId: index
+      parameters: []
+      responses:
+        "200":
+          description: ""
   /parser/admin/catalog:
     get:
       operationId: catalog
@@ -870,6 +877,32 @@ paths:
         - 👍 Reaction
       security:
         - bearer: []
+  /reading/gpt-explain:
+    post:
+      operationId: gptExplain
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GptExplain"
+      responses:
+        "201":
+          description: ""
+  /reading/translate:
+    post:
+      operationId: translate
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TranslateText"
+      responses:
+        "201":
+          description: ""
 info:
   title: Booknex
   description: ""
@@ -955,7 +988,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
               rating:
                 type: number
@@ -993,7 +1033,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
               rating:
                 type: number
@@ -1019,7 +1066,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
               rating:
                 type: number
@@ -1187,7 +1241,14 @@ components:
         picture:
           type: string
         author:
-          type: string
+          type: object
+          properties:
+            id:
+              type: string
+              required: true
+            name:
+              type: string
+              required: true
         rating:
           type: number
       required:
@@ -1214,7 +1275,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
               rating:
                 type: number
@@ -1262,7 +1330,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
               rating:
                 type: number
@@ -1288,7 +1363,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
               rating:
                 type: number
@@ -1316,7 +1398,14 @@ components:
                   type: string
                   required: true
                 author:
-                  type: string
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      required: true
+                    name:
+                      type: string
+                      required: true
                   required: true
                 rating:
                   type: number
@@ -1367,7 +1456,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
               rating:
                 type: number
@@ -1434,7 +1530,14 @@ components:
         picture:
           type: string
         author:
-          type: string
+          type: object
+          properties:
+            id:
+              type: string
+              required: true
+            name:
+              type: string
+              required: true
         fromSameAuthor:
           type: array
           items:
@@ -1450,7 +1553,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
               rating:
                 type: number
@@ -1515,7 +1625,14 @@ components:
         picture:
           type: string
         author:
-          type: string
+          type: object
+          properties:
+            id:
+              type: string
+              required: true
+            name:
+              type: string
+              required: true
         createdAt:
           type: string
           format: date-time
@@ -1635,7 +1752,14 @@ components:
                 type: string
                 required: true
               author:
-                type: string
+                type: object
+                properties:
+                  id:
+                    type: string
+                    required: true
+                  name:
+                    type: string
+                    required: true
                 required: true
             required:
               - description
@@ -1661,9 +1785,9 @@ components:
       properties:
         title:
           type: string
-        author:
-          type: string
         slug:
+          type: string
+        authorId:
           type: string
         description:
           type: string
@@ -1713,6 +1837,8 @@ components:
           exclusiveMinimum: true
         picture:
           type: string
+        keyPoints:
+          type: string
         genres:
           type: array
           items:
@@ -1738,19 +1864,20 @@ components:
           minItems: 1
       required:
         - title
-        - author
         - slug
+        - authorId
         - description
         - ebook
         - rating
         - picture
+        - keyPoints
         - genres
     UpdateBookDto:
       type: object
       properties:
         title:
           type: string
-        author:
+        authorId:
           type: string
         description:
           type: string
@@ -1827,6 +1954,8 @@ components:
               - icon
               - emoji
           minItems: 1
+      required:
+        - authorId
     GoogleAuthDto:
       type: object
       properties:
@@ -2235,3 +2364,29 @@ components:
           type: number
         endOffset:
           type: number
+    GptExplain:
+      type: object
+      properties:
+        selectedText:
+          type: string
+        context:
+          type: string
+        bookTitle:
+          type: string
+      required:
+        - selectedText
+        - context
+        - bookTitle
+    TranslateText:
+      type: object
+      properties:
+        targetLang:
+          type: string
+        text:
+          type: string
+        context:
+          type: string
+      required:
+        - targetLang
+        - text
+        - context

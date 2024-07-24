@@ -1,5 +1,3 @@
-import { Color } from 'global/colors'
-
 export interface ThemePackType {
 	title: string
 	slug: string
@@ -31,132 +29,66 @@ export const themePack: ThemePackType[] = [
 	{
 		title: 'Dark',
 		slug: 'dark',
-		statusBar: statusBar.light,
+		statusBar: 'light',
 		colorPalette: {
 			mark: {
-				background: '#22333B',
-				text: '#fff',
-				hoverBackground: '#2C4251'
+				background: '#2C3E50', // Slightly lighter for better contrast
+				text: '#ECF0F1', // Softer white for less glare
+				hoverBackground: '#34495E' // Subtle hover effect
 			},
-			primary: '#4d92d3',
-			secondary: '#cf8e6d',
+			primary: '#4A90E2', // Slightly adjusted for better contrast
+			secondary: '#E67E22', // More vibrant for balance
 			background: {
-				normal: '#121212',
-				lighter: '#1a1a1a',
-				darker: '#0c0c0c'
+				normal: '#1E1E1E', // Slightly lighter for less contrast
+				lighter: '#2C2C2C',
+				darker: '#121212'
 			},
-			textSelection: '#285943',
-			text: '#fff'
+			textSelection: '#4CAF50', // More noticeable
+			text: '#ECF0F1' // Softer white for text
 		}
 	},
 	{
 		title: 'Light',
 		slug: 'light',
-		statusBar: statusBar.dark,
+		statusBar: 'dark',
 		colorPalette: {
-			primary: Color.primary,
-			secondary: '#rb8e6d',
+			primary: '#007BFF', // Clear, bright primary color
+			secondary: '#FF6F61', // Adjusted for consistency
 			background: {
-				normal: Color.white,
-				lighter: '#f9f9f9',
-				darker: '#f2f2f2'
+				normal: '#FFFFFF', // True white for clarity
+				lighter: '#F8F9FA',
+				darker: '#E9ECEF'
 			},
 			mark: {
-				background: '#7D387D',
-				text: '#FFF',
-				hoverBackground: '#8A4B8A'
+				background: '#D04F8C', // Improved contrast
+				text: '#FFFFFF',
+				hoverBackground: '#C62828' // Clear hover effect
 			},
-			textSelection: '#317259',
-			text: Color.black
+			textSelection: '#00C853', // More visible selection color
+			text: '#212121' // Darker text for better readability
 		}
 	},
 	{
 		title: 'Sepia',
 		slug: 'sepia',
-		statusBar: statusBar.dark,
+		statusBar: 'dark',
 		colorPalette: {
-			primary: '#c7a17a',
-			secondary: '#cf8e6d',
+			primary: '#D7BDAF', // Softer primary color
+			secondary: '#E67E22', // Harmonizes with sepia tones
 			background: {
-				normal: '#FBF0D9',
-				lighter: '#f7f1e3',
-				darker: '#eae3cf'
+				normal: '#FAF3E0', // Gentle beige for comfort
+				lighter: '#F5F0E8',
+				darker: '#EAE0D6'
 			},
 			mark: {
-				background: '#b5a08f',
-				text: '#fff',
-				hoverBackground: '#c7b8a5'
+				background: '#BFAE9F', // Balanced with the background
+				text: '#FFFFFF',
+				hoverBackground: '#D0B89D' // Smooth hover effect
 			},
-			textSelection: '#F0E1B9',
-			text: '#5F4B32'
+			textSelection: '#F4E1C9', // Enhanced visibility
+			text: '#6D4C41' // Clear, readable text
 		}
 	},
-	{
-		title: 'One Dark',
-		slug: 'one-dark',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#61afef',
-			secondary: '#e06c75',
-			background: {
-				normal: '#282c34',
-				lighter: '#2c313a',
-				darker: '#1e222a'
-			},
-			mark: {
-				background: '#4A6D7C',
-				text: '#fff',
-				hoverBackground: '#5B7F8F'
-			},
-			textSelection: '#3e4451',
-			text: '#abb2bf'
-		}
-	},
-	{
-		title: 'Gerry Dark',
-		slug: 'gerry-dark',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#ff6c6b',
-			secondary: '#f9c859',
-			background: {
-				normal: '#1f1f1f',
-				lighter: '#2b2b2b',
-				darker: '#131313'
-			},
-			mark: {
-				background: '#6A2E35',
-				text: '#fff',
-				hoverBackground: '#7E3A41'
-			},
-			textSelection: '#4f3f6f',
-			text: '#F4F3F2'
-		}
-	},
-	{
-		title: 'Dark purple',
-		slug: 'dark-purple',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#bb77b0',
-			secondary: '#ebbcba',
-			background: {
-				normal: '#1f1d2e',
-				lighter: '#272433',
-				darker: '#1a1928'
-			},
-			// get random mark color based on the theme
-			mark: {
-				background: '#55286F',
-				text: '#fff',
-				hoverBackground: '#6A3A8F'
-			},
-
-			textSelection: '#4f3f6f',
-			text: '#d3cedc'
-		}
-	},
-
 	{
 		title: 'Tokyo night',
 		slug: 'tokyo-night',
@@ -178,49 +110,6 @@ export const themePack: ThemePackType[] = [
 			text: '#b7bcd9'
 		}
 	},
-	{
-		title: 'Cobalt 2',
-		slug: 'cobalt-2',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#e1efff',
-			secondary: '#f07178',
-			background: {
-				normal: '#193549',
-				lighter: '#1d3e5e',
-				darker: '#142b40'
-			},
-			mark: {
-				background: '#2C4251',
-				text: '#fff',
-				hoverBackground: '#3C5565'
-			},
-			textSelection: '#3d4d5f',
-			text: '#b9c0cb'
-		}
-	},
-	{
-		title: 'Solarized',
-		slug: 'solarized',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#b58900',
-			secondary: '#cb4b16',
-			background: {
-				normal: '#002b36',
-				lighter: '#003847',
-				darker: '#001f26'
-			},
-			mark: {
-				background: '#073642',
-				text: '#fff',
-				hoverBackground: '#0F4A5A'
-			},
-			textSelection: '#586e75',
-			text: '#a8b4b5'
-		}
-	},
-
 	{
 		title: 'Kanagawa',
 		slug: 'kanagawa',
@@ -283,27 +172,6 @@ export const themePack: ThemePackType[] = [
 			},
 			textSelection: '#458588',
 			text: '#ebdbb2'
-		}
-	},
-	{
-		title: 'Twitch Dark',
-		slug: 'twitch-dark',
-		statusBar: statusBar.light,
-		colorPalette: {
-			primary: '#b48fea',
-			secondary: '#e9c55a',
-			background: {
-				normal: '#232324',
-				lighter: '#181817',
-				darker: '#141416'
-			},
-			mark: {
-				background: '#333344',
-				text: '#fff',
-				hoverBackground: '#444455'
-			},
-			textSelection: '#333333',
-			text: '#e6e5e9'
 		}
 	},
 	{

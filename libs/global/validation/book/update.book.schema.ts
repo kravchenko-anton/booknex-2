@@ -4,7 +4,7 @@ import { ShortGenreSchema } from '../genre/short-genre.schema'
 
 export const UpdateBookSchema = z.object({
 	title: z.string().optional(),
-	author: z.string().optional(),
+	authorId: z.string(),
 	description: z.string().max(1000).min(10).optional(),
 	ebook: z.array(EbookSchema).min(1).optional(),
 	isPublic: z.boolean().optional(),

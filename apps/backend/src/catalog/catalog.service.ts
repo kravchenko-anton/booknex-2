@@ -33,6 +33,14 @@ export class CatalogService {
 		const booksBySelectedGenres = userSelectedGenres.map(genre =>
 			this.prisma.book.findMany({
 				take: 10,
+				include: {
+					author: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				},
 				where: {
 					isPublic: true,
 					genres: {
@@ -64,6 +72,14 @@ export class CatalogService {
 		if (picksOfTheWeek) return picksOfTheWeek
 		const picks = await this.prisma.book.findMany({
 			take: 10,
+			include: {
+				author: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
+			},
 			where: {
 				isPublic: true,
 				slug: {
@@ -87,6 +103,14 @@ export class CatalogService {
 			},
 			orderBy: {
 				rating: 'desc'
+			},
+			include: {
+				author: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
 			}
 		})
 	}
@@ -94,6 +118,14 @@ export class CatalogService {
 	private newReleases(skippedBookSlugs: string[] = []) {
 		return this.prisma.book.findMany({
 			take: 10,
+			include: {
+				author: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
+			},
 			where: {
 				isPublic: true,
 				slug: {

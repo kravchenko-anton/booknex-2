@@ -6,7 +6,10 @@ export const ShortBookSchema = z.object({
 	slug: z.string(),
 	title: z.string(),
 	picture: z.string(),
-	author: z.string(),
+	author: z.object({
+		id: z.string(),
+		name: z.string()
+	}),
 	rating: z.number()
 })
 export const BookSchema = z

@@ -121,6 +121,7 @@ export class BookService {
 		await this.prisma.book.delete({ where: { slug } })
 	}
 
+	//TODO: переделать обновление  с такого на более лучшее
 	async update(slug: string, dto: UpdateBookDto) {
 		const book = await this.prisma.book.findUnique({
 			where: { slug },
@@ -132,9 +133,11 @@ export class BookService {
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
-		const { genres, title, ebook, ...rest } = dto
+		const { genres, title, ebook, authorId, ...rest } = dto
 
-		let updateData: UpdateBookDtoExtended = { ...rest }
+		let updateData: UpdateBookDtoExtended = {
+			...rest
+		}
 
 		if (ebook) {
 			const { uploadedEbook, readingTime, pagesCount, chaptersCount } =
@@ -181,6 +184,21 @@ export class BookService {
 			updateData = {
 				...updateData,
 				slug: slugify(title)
+			}
+		}
+		if (authorId) {
+			const author = await this.prisma.author.findUnique({
+				where: { id: authorId }
+			})
+			if (!author)
+				throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
+			updateData = {
+				...updateData,
+				author: {
+					connect: {
+						id: authorId
+					}
+				}
 			}
 		}
 

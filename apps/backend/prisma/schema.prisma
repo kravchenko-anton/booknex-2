@@ -24,11 +24,13 @@ model Genre {
 }
 
 model Author {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String   @unique
-  books     Book[]
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String   @unique
+  description String
+  picture     String
+  books       Book[]
 
   @@index([name], name: "author_name_index")
 }

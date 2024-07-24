@@ -7,6 +7,11 @@ export const returnBookObject: Pick<
 	slug: true,
 	title: true,
 	picture: true,
-	author: true,
+	author: {
+		select: {
+			id: true,
+			name: true
+		}
+	},
 	rating: true
 }

@@ -116,11 +116,13 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
 							title={item.title}
 							svgUri={item.svg}
 							size='sm'
-							variant={
-								activeReactionPressed?.type === item.title
-									? 'muted'
-									: 'foreground'
-							}
+							style={{
+								borderColor: Color.transparent,
+								backgroundColor:
+									activeReactionPressed?.type === item.title
+										? colorScheme.colorPalette.mark.hoverBackground
+										: colorScheme.colorPalette.mark.background
+							}}
 							onPress={
 								activeReactionPressed?.type === item.title
 									? undefined

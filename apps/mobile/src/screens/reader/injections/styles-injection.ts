@@ -157,6 +157,8 @@ export const getStyleTag = ({
         height: 50px !important;
         background: ${colorPalette.background.lighter} !important;
         border-radius: 100px !important;
+    margin-left: auto !important;
+        
 			}
 		
 		.select-menu-reaction .select-menu-reaction-item {
@@ -176,8 +178,10 @@ export const getStyleTag = ({
     width: 70% !important;
     margin-left: 2% !important;
 		background: ${colorPalette.background.lighter} !important;
-    margin-right: 10% !important;
+    margin-right: 5% !important;
     display: block !important;
+    margin-left: auto !important;
+    
 	    }
 	    
 	 .select-default-menu-item {

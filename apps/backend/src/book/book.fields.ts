@@ -8,7 +8,13 @@ export const infoBySlug = {
 	slug: true,
 	chapters: true,
 	picture: true,
-	author: true,
+	author: {
+		select: {
+			id: true,
+			name: true,
+			avatar: true
+		}
+	},
 	description: true,
 	mainGenre: false,
 	readingTime: true,
@@ -118,12 +124,13 @@ export const bookCreateFields = ({
 	pagesCount
 }: {
 	dto: {
+		keyPoints: string
 		title: string
 		picture: string
 		rating: number
 		description: string
 		slug: string
-		author: string
+		authorId: string
 	}
 	genreIds: { slug: string }[]
 	mainGenreSlug: string
@@ -142,7 +149,12 @@ export const bookCreateFields = ({
 		readingTime: readingTime,
 		description: dto.description,
 		ebook: ebookName,
-		author: dto.author,
+		author: {
+			connect: {
+				id: dto.authorId
+			}
+		},
+		keyPoints: dto.keyPoints,
 		genres: {
 			connect: genreIds
 		},

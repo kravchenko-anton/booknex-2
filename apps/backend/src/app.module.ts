@@ -3,6 +3,7 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { Module, type MiddlewareConsumer } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { ThrottlerModule } from '@nestjs/throttler'
+import { PrometheusModule } from '@willsoto/nestjs-prometheus'
 import { providePrismaClientExceptionFilter } from 'nestjs-prisma'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -18,6 +19,7 @@ import { RecommendationModule } from './recommendation/recommendation.module'
 import { StorageModule } from './storage/storage.module'
 import { UserModule } from './user/user.module'
 import { AppLoggerMiddleware } from './utils/logger/logger'
+import { ReadingModule } from './reading/reading.module';
 
 @Module({
 	imports: [
@@ -27,11 +29,13 @@ import { AppLoggerMiddleware } from './utils/logger/logger'
 			isGlobal: true,
 			validate: config => envConfigSchema.parse(config)
 		}),
-
 		GenreModule,
 		BookModule,
 		AuthModule,
 		StorageModule,
+		PrometheusModule.register({
+			path: '/app-metrics'
+		}),
 		ParserModule,
 		CacheModule.register({
 			isGlobal: true,
@@ -47,7 +51,8 @@ import { AppLoggerMiddleware } from './utils/logger/logger'
 		RecommendationModule,
 		HealthModule,
 		EbookModule,
-		ReactionModule
+		ReactionModule,
+		ReadingModule
 	],
 	controllers: [AppController],
 	providers: [AppService, providePrismaClientExceptionFilter()]

@@ -1,7 +1,6 @@
 import { ZodValidationPipe } from '@anatine/zod-nestjs'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import * as Sentry from '@sentry/node'
-import { json } from 'express'
 import helmet from 'helmet'
 import { OpenApiNestFactory } from 'nest-openapi-tools'
 import { PrismaClientExceptionFilter } from 'nestjs-prisma'
@@ -20,12 +19,15 @@ async function bootstrap() {
 	app.enableCors({})
 	app.use(helmet())
 	app.useGlobalPipes(new ZodValidationPipe())
-	app.use(json({ limit: '10mb' })) // For load ebook
-
 	await OpenApiNestFactory.configure(app, openApiConfig, typesGeneratorConfig)
 	Sentry.init({
 		dsn: process.env.SENTRY_DSN,
-		environment: process.env.NODE_ENV || 'development'
+		environment: process.env.NODE_ENV || 'development',
+		tracesSampleRate: 1,
+
+		// Set sampling rate for profiling
+		// This is relative to tracesSampleRate
+		profilesSampleRate: 1
 	}) // Sentry configuration
 	app.useGlobalFilters(new SentryFilter(httpAdapter))
 	app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter))
@@ -33,8 +35,6 @@ async function bootstrap() {
 	await app.listen(process.env.PORT || 3000)
 }
 
-// if been "Eror: Could not load the sharp modile using the win32-x64 runtime"
 // run yarn add sharp --ignore-engines
-
+// eslint-disable-next-line unicorn/prefer-top-level-await
 bootstrap()
-// eslint-disable-line unicorn/prefer-top-level-await

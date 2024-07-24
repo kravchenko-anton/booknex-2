@@ -63,6 +63,7 @@ models/user-catalog-output-data-inner-statistics-inner.ts
 models/user-catalog-output-data-inner.ts
 models/user-catalog-output.ts
 models/user-library-output-finished-books-inner.ts
+models/user-library-output-reading-books-inner-author.ts
 models/user-library-output-reading-books-inner-reading-history.ts
 models/user-library-output-reading-books-inner.ts
 models/user-library-output.ts
