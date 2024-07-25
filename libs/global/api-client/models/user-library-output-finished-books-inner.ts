@@ -28,7 +28,7 @@ export interface UserLibraryOutputFinishedBooksInner {
      * @type {string}
      * @memberof UserLibraryOutputFinishedBooksInner
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

@@ -73,7 +73,7 @@ export interface FullBook {
      * @type {string}
      * @memberof FullBook
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

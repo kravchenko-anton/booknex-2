@@ -1,8 +1,10 @@
 import type { GptExplain, TranslateText } from '@/src/reading/reading.dto'
 import type { EnvConfig } from '@/src/utils/config/env-config'
+import { serverError } from '@/src/utils/helpers/server-error'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import axios from 'axios'
+import type { TargetLanguageCode } from 'deepl-node'
+import * as deepl from 'deepl-node'
 import { PrismaService } from 'nestjs-prisma'
 import OpenAI from 'openai'
 
@@ -15,32 +17,50 @@ export class ReadingService {
 	private readonly openAi = new OpenAI({
 		apiKey: this.configService.get('OPENAI_API_KEY')
 	})
-
+	private readonly deepl = new deepl.Translator(
+		this.configService.get('DEEPL_API_KEY') as string
+	)
 	async translateText(dto: TranslateText) {
-		const response = await axios
-			.post('https://api.deepl.com/v2/translate', {
-				method: 'POST',
-				headers: {
-					Authorization: this.configService.get('DEEPL_API_KEY')
-				},
-				body: {
-					text: dto.text,
-					// eslint-disable-next-line @typescript-eslint/naming-convention
-					target_lang: dto.targetLang
-				}
-			})
-			.catch(error => {
-				console.error(error)
-				throw new Error('Failed to translate text')
-			})
-
-		return response.data
+		return this.deepl.translateText(
+			dto.text,
+			null,
+			dto.targetLang as TargetLanguageCode,
+			{
+				context: dto.context
+			}
+		)
 	}
 
 	async gptExplain(dto: GptExplain) {
-		return this.openAi.completions.create({
-			model: 'gpt-4o-mini',
-			prompt: `Given the text: "${dto.selectedText}", within the context of "${dto.context}" from the book "${dto.bookTitle}", provide a detailed explanation focusing on its significance and implications. Exclude this instruction from your response.`
-		})
+		return this.openAi.chat.completions
+			.create({
+				model: 'gpt-4o-mini',
+				messages: [
+					{
+						role: 'user',
+						content: `
+							Analyze the selected text from the book "${dto.bookTitle}".
+							Selected Text: "${dto.selectedText}"
+							Context: "${dto.context}"
+							Please provide:
+							1. Its significance within the context.
+							2. Its role in the narrative or character development.
+							3. The author's intended meaning.
+							4. Any subtextual meanings.
+							5. Its impact on the reader.
+							Summarize in 2-3 sentences.Without mentioning the title of the book or the character's name.
+							`
+					}
+				]
+			})
+			.catch(error => {
+				console.error(error)
+				throw serverError(300, 'Failed to generate explanation')
+			})
+			.then(response => {
+				if (!response.choices[0])
+					throw serverError(300, 'Failed to generate explanation')
+				return response.choices[0].message.content
+			})
 	}
 }

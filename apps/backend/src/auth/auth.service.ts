@@ -49,7 +49,7 @@ export class AuthService {
 				goalMinutes: 10,
 				selectedGenres: {
 					connect: popularGenres.map(genre => ({
-						slug: genre.slug
+						id: genre.id
 					}))
 				}
 			}
@@ -103,7 +103,7 @@ export class AuthService {
 				goalMinutes: 10,
 				selectedGenres: {
 					connect: popularGenres.map(genre => ({
-						slug: genre.slug
+						id: genre.id
 					}))
 				},
 				role: Role.user,
@@ -190,6 +190,7 @@ export class AuthService {
 			select: ReturnGenreObject
 		})
 	}
+
 	async checkEmailExist(email: string) {
 		const user = await this.prisma.user.findUnique({
 			where: {

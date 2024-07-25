@@ -11,23 +11,15 @@ import {
 import { statisticReduce } from '@/src/utils/services/statisticReduce.service'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
+import dayjs from 'dayjs'
+//@ts-ignore
+import utc from 'dayjs/plugin/utc'
 import { globalErrors } from 'global/errors'
 import { slugSelect } from '../utils/common/return.default.object'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import { returnUserObject } from './return.user.object'
 
-export interface SyncHistoryType {
-	readingTimeMs: number
-	endDate: Date
-	progressDelta: number
-	startProgress: number
-	endProgress: number
-	scrollPosition: number
-	startDate: Date
-	userId: string
-	bookSlug: string
-}
 @Injectable()
 export class UserService {
 	constructor(private readonly prisma: PrismaService) {}
@@ -48,62 +40,19 @@ export class UserService {
 
 	async syncHistory(dto: ReadingHistory[], userId: string) {
 		if (dto.length === 0) return
-		console.log(
-			'syncHistory',
-			dto.map(history => ({
-				readingTimeMs: history.readingTimeMs,
-				endDate: new Date(history.endDate),
-				progressDelta: history.progressDelta,
-				startProgress: history.startProgress,
-				endProgress: history.endProgress,
-				scrollPosition: history.scrollPosition,
-				startDate: new Date(history.startDate),
-				userId: userId,
-				bookSlug: history.bookSlug
-			})),
-			'🔵',
-			dto
-				.map(history => ({
-					readingTimeMs: history.readingTimeMs,
-					endDate: new Date(history.endDate),
-					progressDelta: history.progressDelta,
-					startProgress: history.startProgress,
-					endProgress: history.endProgress,
-					scrollPosition: history.scrollPosition,
-					startDate: new Date(history.startDate),
-					userId: userId,
-					bookSlug: history.bookSlug
-				}))
-				.reduce<SyncHistoryType[]>((accumulator, history) => {
-					const lastElement = accumulator.at(-1)
-					if (
-						lastElement &&
-						Math.abs(
-							lastElement.startDate.getTime() - history.startDate.getTime()
-						) <
-							1000 * 60 * 60 * 24
-					) {
-						lastElement.readingTimeMs += history.readingTimeMs
-						lastElement.endProgress = history.endProgress
-						lastElement.progressDelta += history.progressDelta
-						return accumulator
-					}
-					return [...accumulator, history]
-				}, [])
-		)
 		await this.prisma.readingHistory.createMany({
 			skipDuplicates: true,
 			data: dto.map(history => ({
 				readingTimeMs: history.readingTimeMs,
-				endDate: new Date(history.endDate),
+				endDate: dayjs(history.endDate).utc().toDate(),
 				progressDelta: history.progressDelta,
 				startProgress: history.startProgress,
 				endProgress: history.endProgress,
-
 				scrollPosition: history.scrollPosition,
-				startDate: new Date(history.startDate),
+				startDate: dayjs(history.startDate).utc().toDate(),
 				userId: userId,
-				bookSlug: history.bookSlug
+
+				bookId: history.bookId
 			}))
 		})
 	}
@@ -130,10 +79,10 @@ export class UserService {
 		const userHistory = await this.prisma.readingHistory.findMany({
 			where: { userId },
 			select: {
+				id: true,
 				endDate: true,
 				progressDelta: true,
 				readingTimeMs: true,
-				bookSlug: true,
 				startDate: true
 			}
 		})

@@ -32,10 +32,10 @@ export class BookController {
 	}
 
 	@Auth('admin')
-	@Get('/admin-info/by-slug/:slug')
+	@Get('/admin-info/by-id/:id')
 	@ApiOkResponse({ type: FullBook })
-	async adminInfoBySlug(@Param('slug') slug: string): Promise<FullBook> {
-		return this.bookService.infoBySlugAdmin(slug)
+	async adminInfoById(@Param('id') id: string): Promise<FullBook> {
+		return this.bookService.infoBySlugAdmin(id)
 	}
 
 	@Auth('admin')

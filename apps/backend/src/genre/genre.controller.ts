@@ -18,9 +18,9 @@ export class GenreController {
 	}
 
 	@Auth()
-	@Get('/by-slug/:slug')
+	@Get('/by-id/:slug')
 	@ApiOkResponse({ type: FindOneGenreOutput })
-	async bySlug(@Param('slug') genreSlug: string): Promise<FindOneGenreOutput> {
-		return this.genreService.bySlug(genreSlug)
+	async byId(@Param('id') genreId: string): Promise<FindOneGenreOutput> {
+		return this.genreService.byId(genreId)
 	}
 }

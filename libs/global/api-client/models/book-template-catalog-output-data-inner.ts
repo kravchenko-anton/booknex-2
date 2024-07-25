@@ -28,7 +28,7 @@ export interface BookTemplateCatalogOutputDataInner {
      * @type {string}
      * @memberof BookTemplateCatalogOutputDataInner
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

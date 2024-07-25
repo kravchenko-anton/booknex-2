@@ -31,7 +31,7 @@ export interface UserLibraryOutputReadingBooksInner {
      * @type {string}
      * @memberof UserLibraryOutputReadingBooksInner
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

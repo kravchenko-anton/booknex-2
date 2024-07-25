@@ -97,7 +97,7 @@ export const useReaderMessage = ({
 				xpath: payload.range.xpath,
 				text: payload.text,
 				type: payload.reaction,
-				bookSlug: slug
+				bookId: slug
 			})
 		}
 		if (type === ReaderMessageType.SelectionLimitFail)

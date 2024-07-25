@@ -5,7 +5,7 @@ import { slugify } from 'global/helpers/slugify'
 export const infoBySlug = {
 	title: true,
 	isPublic: true,
-	slug: true,
+	id: true,
 	chapters: true,
 	picture: true,
 	author: {
@@ -21,8 +21,8 @@ export const infoBySlug = {
 	rating: true,
 	genres: { select: ReturnGenreObject }
 }
-export const infoBySlugAdminFields: (slug: string) => Prisma.BookSelect = (
-	slug: string
+export const infoBySlugAdminFields: (bookId: string) => Prisma.BookSelect = (
+	bookId: string
 ) =>
 	Prisma.validator<Prisma.BookSelect>()({
 		id: true,
@@ -53,7 +53,7 @@ export const infoBySlugAdminFields: (slug: string) => Prisma.BookSelect = (
 
 		readingHistory: {
 			where: {
-				bookSlug: slug
+				bookId: bookId
 			},
 			orderBy: {
 				endDate: 'asc'
@@ -84,7 +84,7 @@ export const bookCatalogFields = ({
 			chapters: true,
 			title: true,
 			picture: true,
-			slug: true,
+			id: true,
 			genres: { select: ReturnGenreObject },
 			readingTime: true,
 			rating: true,
@@ -117,7 +117,7 @@ export const bookCatalogFields = ({
 export const bookCreateFields = ({
 	dto,
 	genreIds,
-	mainGenreSlug,
+	mainGenreId,
 	ebookName,
 	readingTime,
 	chaptersCount,
@@ -132,8 +132,8 @@ export const bookCreateFields = ({
 		slug: string
 		authorId: string
 	}
-	genreIds: { slug: string }[]
-	mainGenreSlug: string
+	genreIds: { id: string }[]
+	mainGenreId: string
 	ebookName: string
 	readingTime: number
 	chaptersCount: number
@@ -160,7 +160,7 @@ export const bookCreateFields = ({
 		},
 		mainGenre: {
 			connect: {
-				slug: mainGenreSlug
+				id: mainGenreId
 			}
 		}
 	})

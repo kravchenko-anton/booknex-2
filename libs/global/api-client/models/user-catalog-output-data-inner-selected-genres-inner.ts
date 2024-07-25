@@ -25,7 +25,7 @@ export interface UserCatalogOutputDataInnerSelectedGenresInner {
      * @type {string}
      * @memberof UserCatalogOutputDataInnerSelectedGenresInner
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

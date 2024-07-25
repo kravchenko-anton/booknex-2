@@ -281,11 +281,11 @@ paths:
         - 🔖 genre
       security:
         - bearer: []
-  "/genre/by-slug/{slug}":
+  "/genre/by-id/{slug}":
     get:
-      operationId: bySlug
+      operationId: byId
       parameters:
-        - name: slug
+        - name: id
           required: true
           in: path
           schema:
@@ -321,11 +321,11 @@ paths:
         - 📙 book
       security:
         - bearer: []
-  "/book/admin-info/by-slug/{slug}":
+  "/book/admin-info/by-id/{id}":
     get:
-      operationId: adminInfoBySlug
+      operationId: adminInfoById
       parameters:
-        - name: slug
+        - name: id
           required: true
           in: path
           schema:
@@ -822,7 +822,7 @@ paths:
         - 👍 Reaction
       security:
         - bearer: []
-  "/reaction/reaction-by-book/{bookSlug}":
+  "/reaction/reaction-by-bookId/{id}":
     get:
       operationId: reactionByBook
       parameters:
@@ -959,7 +959,7 @@ components:
           type: number
         scrollPosition:
           type: number
-        bookSlug:
+        bookId:
           type: string
       required:
         - startDate
@@ -969,7 +969,7 @@ components:
         - progressDelta
         - readingTimeMs
         - scrollPosition
-        - bookSlug
+        - bookId
     UserLibraryOutput:
       type: object
       properties:
@@ -978,7 +978,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1012,7 +1012,7 @@ components:
                 required: true
                 nullable: true
             required:
-              - slug
+              - id
               - title
               - picture
               - author
@@ -1023,7 +1023,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1046,7 +1046,7 @@ components:
                 type: number
                 required: true
             required:
-              - slug
+              - id
               - title
               - picture
               - author
@@ -1056,7 +1056,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1079,7 +1079,7 @@ components:
                 type: number
                 required: true
             required:
-              - slug
+              - id
               - title
               - picture
               - author
@@ -1144,7 +1144,7 @@ components:
                 items:
                   type: object
                   properties:
-                    slug:
+                    id:
                       type: string
                       required: true
                     name:
@@ -1157,7 +1157,7 @@ components:
                       type: string
                       required: true
                   required:
-                    - slug
+                    - id
                     - name
                     - icon
                     - emoji
@@ -1234,7 +1234,7 @@ components:
     ShortBook:
       type: object
       properties:
-        slug:
+        id:
           type: string
         title:
           type: string
@@ -1252,7 +1252,7 @@ components:
         rating:
           type: number
       required:
-        - slug
+        - id
         - title
         - picture
         - author
@@ -1265,7 +1265,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1288,7 +1288,7 @@ components:
                 type: number
                 required: true
             required:
-              - slug
+              - id
               - title
               - picture
               - author
@@ -1298,7 +1298,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               name:
@@ -1311,7 +1311,7 @@ components:
                 type: string
                 required: true
             required:
-              - slug
+              - id
               - name
               - icon
               - emoji
@@ -1320,7 +1320,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1343,7 +1343,7 @@ components:
                 type: number
                 required: true
             required:
-              - slug
+              - id
               - title
               - picture
               - author
@@ -1353,7 +1353,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1376,7 +1376,7 @@ components:
                 type: number
                 required: true
             required:
-              - slug
+              - id
               - title
               - picture
               - author
@@ -1388,7 +1388,7 @@ components:
             items:
               type: object
               properties:
-                slug:
+                id:
                   type: string
                   required: true
                 title:
@@ -1411,7 +1411,7 @@ components:
                   type: number
                   required: true
               required:
-                - slug
+                - id
                 - title
                 - picture
                 - author
@@ -1425,7 +1425,7 @@ components:
     ShortGenre:
       type: object
       properties:
-        slug:
+        id:
           type: string
         name:
           type: string
@@ -1434,7 +1434,7 @@ components:
         emoji:
           type: string
       required:
-        - slug
+        - id
         - name
         - icon
         - emoji
@@ -1446,7 +1446,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1469,12 +1469,12 @@ components:
                 type: number
                 required: true
             required:
-              - slug
+              - id
               - title
               - picture
               - author
               - rating
-        slug:
+        id:
           type: string
         name:
           type: string
@@ -1484,7 +1484,7 @@ components:
           type: string
       required:
         - books
-        - slug
+        - id
         - name
         - icon
         - emoji
@@ -1506,7 +1506,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               name:
@@ -1519,11 +1519,11 @@ components:
                 type: string
                 required: true
             required:
-              - slug
+              - id
               - name
               - icon
               - emoji
-        slug:
+        id:
           type: string
         title:
           type: string
@@ -1543,7 +1543,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1566,7 +1566,7 @@ components:
                 type: number
                 required: true
             required:
-              - slug
+              - id
               - title
               - picture
               - author
@@ -1578,7 +1578,7 @@ components:
         - rating
         - isPublic
         - genres
-        - slug
+        - id
         - title
         - picture
         - author
@@ -1601,7 +1601,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               name:
@@ -1614,11 +1614,11 @@ components:
                 type: string
                 required: true
             required:
-              - slug
+              - id
               - name
               - icon
               - emoji
-        slug:
+        id:
           type: string
         title:
           type: string
@@ -1686,7 +1686,7 @@ components:
         - rating
         - isPublic
         - genres
-        - slug
+        - id
         - title
         - picture
         - author
@@ -1724,7 +1724,7 @@ components:
                 items:
                   type: object
                   properties:
-                    slug:
+                    id:
                       type: string
                       required: true
                     name:
@@ -1737,12 +1737,12 @@ components:
                       type: string
                       required: true
                   required:
-                    - slug
+                    - id
                     - name
                     - icon
                     - emoji
                 required: true
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -1768,7 +1768,7 @@ components:
               - rating
               - isPublic
               - genres
-              - slug
+              - id
               - title
               - picture
               - author
@@ -1844,7 +1844,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               name:
@@ -1857,7 +1857,7 @@ components:
                 type: string
                 required: true
             required:
-              - slug
+              - id
               - name
               - icon
               - emoji
@@ -1936,7 +1936,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               name:
@@ -1949,7 +1949,7 @@ components:
                 type: string
                 required: true
             required:
-              - slug
+              - id
               - name
               - icon
               - emoji
@@ -2023,7 +2023,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               title:
@@ -2048,7 +2048,7 @@ components:
                 items:
                   type: object
                   properties:
-                    slug:
+                    id:
                       type: string
                       required: true
                     name:
@@ -2061,13 +2061,13 @@ components:
                       type: string
                       required: true
                   required:
-                    - slug
+                    - id
                     - name
                     - icon
                     - emoji
                 required: true
             required:
-              - slug
+              - id
               - title
               - author
               - description
@@ -2085,7 +2085,7 @@ components:
     BookTemplate:
       type: object
       properties:
-        slug:
+        id:
           type: string
         title:
           type: string
@@ -2104,7 +2104,7 @@ components:
           items:
             type: object
             properties:
-              slug:
+              id:
                 type: string
                 required: true
               name:
@@ -2117,12 +2117,12 @@ components:
                 type: string
                 required: true
             required:
-              - slug
+              - id
               - name
               - icon
               - emoji
       required:
-        - slug
+        - id
         - title
         - author
         - description
@@ -2281,7 +2281,7 @@ components:
     CreateReaction:
       type: object
       properties:
-        bookSlug:
+        bookId:
           type: string
         type:
           type: string
@@ -2296,7 +2296,7 @@ components:
         endOffset:
           type: number
       required:
-        - bookSlug
+        - bookId
         - type
         - text
         - xpath

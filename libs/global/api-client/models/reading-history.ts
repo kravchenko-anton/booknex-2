@@ -67,6 +67,6 @@ export interface ReadingHistory {
      * @type {string}
      * @memberof ReadingHistory
      */
-    'bookSlug': string;
+    'bookId': string;
 }
 

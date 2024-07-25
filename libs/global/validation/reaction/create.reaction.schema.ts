@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const CreateReactionSchema = z.object({
-	bookSlug: z.string(),
+	bookId: z.string(),
 	type: z.string(),
 	description: z.string().optional(),
 	text: z.string(),

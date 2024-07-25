@@ -72,7 +72,7 @@ const Page = () => {
 					<h1 className='mb-1 text-3xl'>{book.title}</h1>
 
 					<div className='flex items-center gap-5'>
-						<h1 className='text-gray text-xl'>{book.author}</h1>
+						<h1 className='text-gray text-xl'>{book.author.name}</h1>
 						<div className='flex items-center gap-2'>
 							<p className='text-warning  text-lg'>★ {book.rating}</p>
 						</div>

@@ -4,7 +4,6 @@ import {
 } from '@/src/parser/parser.fields'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { adminErrors } from 'global/errors'
-import { slugify } from 'global/helpers/slugify'
 import { serverError } from '../utils/helpers/server-error'
 import { PrismaService } from '../utils/services/prisma.service'
 import {
@@ -35,10 +34,10 @@ export class ParserService {
 		}
 	}
 
-	async remove(slug: string) {
+	async remove(id: string) {
 		return this.prisma.bookTemplate.delete({
 			where: {
-				slug
+				id
 			}
 		})
 	}
@@ -97,7 +96,6 @@ export class ParserService {
 							title: title.trim(),
 							author: author.name,
 							description,
-							slug: slugify(title),
 							picture,
 							rating,
 							genres: {

@@ -17,32 +17,26 @@
 /**
  * 
  * @export
- * @interface UserCatalogOutputDataInnerSelectedGenresInner
+ * @interface TranslateText
  */
-export interface UserCatalogOutputDataInnerSelectedGenresInner {
+export interface TranslateText {
     /**
      * 
      * @type {string}
-     * @memberof UserCatalogOutputDataInnerSelectedGenresInner
+     * @memberof TranslateText
      */
-    'slug': string;
+    'targetLang': string;
     /**
      * 
      * @type {string}
-     * @memberof UserCatalogOutputDataInnerSelectedGenresInner
+     * @memberof TranslateText
      */
-    'name': string;
+    'text': string;
     /**
      * 
      * @type {string}
-     * @memberof UserCatalogOutputDataInnerSelectedGenresInner
+     * @memberof TranslateText
      */
-    'icon': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCatalogOutputDataInnerSelectedGenresInner
-     */
-    'emoji': string;
+    'context': string;
 }
 

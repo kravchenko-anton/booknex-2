@@ -25,7 +25,7 @@ export class CatalogService {
 	async featured(userId: string) {
 		const alreadyUsedBookSlugs: string[] = []
 		const pushBooks = (books: ShortBook[]) => {
-			alreadyUsedBookSlugs.push(...books.map(book => book.slug))
+			alreadyUsedBookSlugs.push(...books.map(book => book.id))
 			return books
 		}
 		const userSelectedGenres =
@@ -45,7 +45,7 @@ export class CatalogService {
 					isPublic: true,
 					genres: {
 						some: {
-							slug: genre.slug
+							id: genre.id
 						}
 					},
 					slug: {

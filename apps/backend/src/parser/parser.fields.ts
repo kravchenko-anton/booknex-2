@@ -13,7 +13,7 @@ export const parserCatalogFields = ({
 		take: perPage,
 		select: Prisma.validator<Prisma.BookTemplateSelect>()({
 			title: true,
-			slug: true,
+			id: true,
 			rating: true,
 			description: true,
 			author: true,
@@ -48,13 +48,13 @@ export const parserCatalogFields = ({
 		})
 	}) as const
 
-export const bookTemplateByIdFields = (slug: string) => ({
+export const bookTemplateByIdFields = (id: string) => ({
 	where: {
-		slug
+		id
 	},
 	select: Prisma.validator<Prisma.BookTemplateSelect>()({
 		title: true,
-		slug: true,
+		id: true,
 		rating: true,
 		description: true,
 		author: true,

@@ -33,7 +33,7 @@ export const columns = (): ColumnDef<CatalogOutputDataInner, unknown>[] => [
 			<Link href={secureRoutes.bookOverviewRoute(row.original.slug)}>
 				<button className='items-start justify-start text-left'>
 					<h3 className='mb-1 text-xl'>{row.original.title}</h3>
-					<p>{row.original.author}</p>
+					<p>{row.original.author.name}</p>
 				</button>
 			</Link>
 		)

@@ -67,7 +67,7 @@ export interface CatalogOutputDataInner {
      * @type {string}
      * @memberof CatalogOutputDataInner
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

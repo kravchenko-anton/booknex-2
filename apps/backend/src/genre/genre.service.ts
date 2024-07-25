@@ -15,10 +15,10 @@ export class GenreService {
 		})
 	}
 
-	async bySlug(slug: string) {
+	async byId(genreId: string) {
 		const genre = await this.prisma.genre.findUnique({
 			where: {
-				slug
+				id: genreId
 			},
 			select: {
 				...ReturnGenreObject,

@@ -28,7 +28,7 @@ export interface ShortBook {
      * @type {string}
      * @memberof ShortBook
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

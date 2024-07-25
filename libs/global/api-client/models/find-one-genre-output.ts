@@ -34,7 +34,7 @@ export interface FindOneGenreOutput {
      * @type {string}
      * @memberof FindOneGenreOutput
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

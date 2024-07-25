@@ -2,10 +2,10 @@ import type { Prisma } from '@prisma/client'
 
 export const ReturnGenreObject: Pick<
 	Prisma.GenreSelect,
-	'name' | 'slug' | 'icon' | 'emoji'
+	'name' | 'id' | 'icon' | 'emoji'
 > = {
 	name: true,
 	icon: true,
-	slug: true,
+	id: true,
 	emoji: true
 }

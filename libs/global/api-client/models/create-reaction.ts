@@ -25,7 +25,7 @@ export interface CreateReaction {
      * @type {string}
      * @memberof CreateReaction
      */
-    'bookSlug': string;
+    'bookId': string;
     /**
      * 
      * @type {string}

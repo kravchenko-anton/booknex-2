@@ -25,7 +25,7 @@ export interface ShortGenre {
      * @type {string}
      * @memberof ShortGenre
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

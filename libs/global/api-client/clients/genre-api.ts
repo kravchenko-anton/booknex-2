@@ -33,15 +33,15 @@ export const GenreApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('bySlug', 'slug', slug)
-            const localVarPath = `/genre/by-slug/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        byId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('byId', 'id', id)
+            const localVarPath = `/genre/by-id/{slug}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -113,14 +113,14 @@ export const GenreApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async bySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindOneGenreOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.bySlug(slug, options);
+        async byId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindOneGenreOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.byId(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GenreApi.bySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GenreApi.byId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -146,12 +146,12 @@ export const GenreApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bySlug(slug: string, options?: any): AxiosPromise<FindOneGenreOutput> {
-            return localVarFp.bySlug(slug, options).then((request) => request(axios, basePath));
+        byId(id: string, options?: any): AxiosPromise<FindOneGenreOutput> {
+            return localVarFp.byId(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -173,13 +173,13 @@ export const GenreApiFactory = function (configuration?: Configuration, basePath
 export class GenreApi extends BaseAPI {
     /**
      * 
-     * @param {string} slug 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GenreApi
      */
-    public bySlug(slug: string, options?: RawAxiosRequestConfig) {
-        return GenreApiFp(this.configuration).bySlug(slug, options).then((request) => request(this.axios, this.basePath));
+    public byId(id: string, options?: RawAxiosRequestConfig) {
+        return GenreApiFp(this.configuration).byId(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

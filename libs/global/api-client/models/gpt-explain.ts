@@ -17,20 +17,26 @@
 /**
  * 
  * @export
- * @interface UserLibraryOutputReadingBooksInnerAuthor
+ * @interface GptExplain
  */
-export interface UserLibraryOutputReadingBooksInnerAuthor {
+export interface GptExplain {
     /**
      * 
      * @type {string}
-     * @memberof UserLibraryOutputReadingBooksInnerAuthor
+     * @memberof GptExplain
      */
-    'id'?: string;
+    'selectedText': string;
     /**
      * 
      * @type {string}
-     * @memberof UserLibraryOutputReadingBooksInnerAuthor
+     * @memberof GptExplain
      */
-    'name'?: string;
+    'context': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GptExplain
+     */
+    'bookTitle': string;
 }
 

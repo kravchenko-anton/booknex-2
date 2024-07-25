@@ -28,7 +28,7 @@ export interface BookTemplate {
      * @type {string}
      * @memberof BookTemplate
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

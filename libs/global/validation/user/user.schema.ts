@@ -66,7 +66,7 @@ export const HistorySchema = z.object({
 	progressDelta: z.number(),
 	readingTimeMs: z.number(),
 	scrollPosition: z.number(),
-	bookSlug: z.string()
+	bookId: z.string()
 })
 
 export const UserStatisticsSchema = z.object({

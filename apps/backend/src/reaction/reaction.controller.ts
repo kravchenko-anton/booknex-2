@@ -31,13 +31,13 @@ export class ReactionController {
 	}
 
 	@Auth()
-	@Get('/reaction-by-book/:bookSlug')
+	@Get('/reaction-by-bookId/:id')
 	@ApiOkResponse({ type: ReactionByBookOutput, isArray: true })
 	reactionByBook(
-		@Param('bookSlug') bookSlug: string,
+		@Param('bookSlug') id: string,
 		@CurrentUser('id') userId: string
 	): Promise<ReactionByBookOutput[]> {
-		return this.reactionService.reactionByBook(bookSlug, userId)
+		return this.reactionService.reactionByBook(id, userId)
 	}
 
 	@Auth()

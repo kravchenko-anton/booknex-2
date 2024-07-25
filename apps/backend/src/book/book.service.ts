@@ -38,9 +38,11 @@ export class BookService {
 			fromSameAuthor: await this.prisma.book.findMany({
 				where: {
 					isPublic: true,
-					author: book.author,
-					slug: {
-						not: book.slug
+					author: {
+						id: book.author.id
+					},
+					id: {
+						not: book.id
 					}
 				},
 				select: returnBookObject
@@ -48,10 +50,10 @@ export class BookService {
 		}
 	}
 
-	async infoBySlugAdmin(slug: string) {
+	async infoBySlugAdmin(id: string) {
 		const book = await this.prisma.book.findUnique({
-			where: { slug },
-			select: infoBySlugAdminFields(slug)
+			where: { id },
+			select: infoBySlugAdminFields(id)
 		})
 		if (!book)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
@@ -83,7 +85,7 @@ export class BookService {
 	}
 
 	async create(dto: CreateBookDto) {
-		const { genreIds, mainGenreSlug } = await this.getGenres(dto.genres)
+		const { genreIds, mainGenreId } = await this.getGenres(dto.genres)
 		const { readingTime, uploadedEbook, pagesCount, chaptersCount } =
 			useEbookCalculation(dto.ebook)
 
@@ -107,7 +109,7 @@ export class BookService {
 			data: bookCreateFields({
 				dto,
 				genreIds,
-				mainGenreSlug,
+				mainGenreId,
 				ebookName,
 				readingTime,
 				chaptersCount,
@@ -167,7 +169,7 @@ export class BookService {
 		}
 
 		if (genres) {
-			const { genreIds, mainGenreSlug } = await this.getGenres(genres)
+			const { genreIds, mainGenreId } = await this.getGenres(genres)
 			updateData = {
 				...updateData,
 				genres: {
@@ -175,7 +177,7 @@ export class BookService {
 				},
 				mainGenre: {
 					connect: {
-						slug: mainGenreSlug
+						id: mainGenreId
 					}
 				}
 			}
@@ -211,12 +213,12 @@ export class BookService {
 	async getGenres(genres: Book['genres']) {
 		const mainGenre = await this.prisma.genre.findFirst({
 			where: {
-				slug: {
-					in: genres.map(genre => genre.slug)
+				id: {
+					in: genres.map(genre => genre.id)
 				}
 			},
 			select: {
-				slug: true
+				id: true
 			},
 			orderBy: {
 				mainBooks: {
@@ -227,8 +229,8 @@ export class BookService {
 		if (genres.length < 2 || !mainGenre)
 			throw serverError(HttpStatus.BAD_REQUEST, globalErrors.somethingWrong)
 		return {
-			mainGenreSlug: mainGenre.slug,
-			genreIds: genres.map(({ slug }) => ({ slug }))
+			mainGenreId: mainGenre.id,
+			genreIds: genres.map(({ id }) => ({ id }))
 		}
 	}
 }

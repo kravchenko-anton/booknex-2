@@ -9,7 +9,7 @@ export interface CalculateUserStatisticsType {
 		endDate: Date
 		readingTimeMs: number
 		progressDelta: number
-		bookSlug: string
+		id: string
 	}[]
 	goalMinutes: number
 }

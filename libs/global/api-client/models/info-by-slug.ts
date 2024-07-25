@@ -70,7 +70,7 @@ export interface InfoBySlug {
      * @type {string}
      * @memberof InfoBySlug
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

@@ -3,7 +3,7 @@ import { ShortGenreSchema } from '../genre/short-genre.schema'
 import { BaseCatalogSchema } from '../index'
 
 export const ShortBookSchema = z.object({
-	slug: z.string(),
+	id: z.string(),
 	title: z.string(),
 	picture: z.string(),
 	author: z.object({

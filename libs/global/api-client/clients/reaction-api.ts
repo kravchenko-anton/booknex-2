@@ -83,7 +83,7 @@ export const ReactionApiAxiosParamCreator = function (configuration?: Configurat
         reactionByBook: async (bookSlug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bookSlug' is not null or undefined
             assertParamExists('reactionByBook', 'bookSlug', bookSlug)
-            const localVarPath = `/reaction/reaction-by-book/{bookSlug}`
+            const localVarPath = `/reaction/reaction-by-bookId/{id}`
                 .replace(`{${"bookSlug"}}`, encodeURIComponent(String(bookSlug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

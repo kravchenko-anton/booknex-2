@@ -15,7 +15,7 @@ export class ReactionService {
 			where: {
 				userId,
 				xpath: createReactionDto.xpath,
-				bookSlug: createReactionDto.bookSlug
+				bookId: createReactionDto.bookId
 			}
 		})
 		// Check if reaction already exists in the same offset range and not create inside already created reaction other reaction
@@ -57,10 +57,10 @@ export class ReactionService {
 		})
 	}
 
-	async reactionByBook(bookSlug: string, userId: string) {
+	async reactionByBook(booId: string, userId: string) {
 		return this.prisma.reaction.findMany({
 			where: {
-				bookSlug,
+				id: booId,
 				userId,
 				book: {
 					isPublic: true
@@ -80,7 +80,7 @@ export class ReactionService {
 
 	async reactionList(userId: string) {
 		const reactionsCount = await this.prisma.reaction.groupBy({
-			by: ['bookSlug'],
+			by: ['bookId'],
 			_count: {
 				id: true
 			},
@@ -96,11 +96,11 @@ export class ReactionService {
 				}
 			}
 		})
-		const bookSlugs = reactionsCount.map(reaction => reaction.bookSlug)
+		const booIds = reactionsCount.map(reaction => reaction.bookId)
 		const books = await this.prisma.book.findMany({
 			where: {
 				slug: {
-					in: bookSlugs
+					in: booIds
 				},
 				isPublic: true
 			},
@@ -112,7 +112,7 @@ export class ReactionService {
 			}
 		})
 		return reactionsCount.map(reaction => {
-			const book = books.find(book => book.slug === reaction.bookSlug)
+			const book = books.find(book => book.slug === reaction.bookId)
 			if (!book) return
 			return {
 				...book,
